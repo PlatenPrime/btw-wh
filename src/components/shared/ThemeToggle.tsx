@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTheme } from '@/useTheme';
+import { useTheme } from '@/hooks/useTheme/useTheme';
 
 export function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
