@@ -1,3 +1,10 @@
+import {LoginForm} from "@/pages/auth/components/LoginForm";
+
 export const LoginPage = () => {
-  return <div className="w-full max-w-sm">LoginForm</div>;
+  return (
+    <div className="h-screen flex flex-col gap-4 items-center justify-center ">
+      <h1 className="text-center text-3xl">Авторизація</h1>
+      <LoginForm />
+    </div>
+  );
 };
