@@ -1,5 +1,5 @@
 import axios from "@/lib/axios";
-import { type LoginFormData } from "@/modules/auth/types/loginFormData";
+import { type LoginFormData } from "@/modules/auth/components/LoginForm/useLoginForm";
 import { type RegistrationFormData } from "@/modules/auth/types/registrationFormData";
 import { type Role } from "@/modules/auth/types/role";
 import { type User } from "@/modules/auth/types/user";
