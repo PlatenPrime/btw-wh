@@ -5,7 +5,7 @@ export const NavLayout = () => {
     <div>
   
 
-      <nav className="flex justify-between w-[800px] mx-auto">
+      <nav className="flex justify-between  mx-auto">
         <NavLink to="/" end>
           Home
         </NavLink>

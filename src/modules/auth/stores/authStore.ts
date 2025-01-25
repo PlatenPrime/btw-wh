@@ -15,6 +15,7 @@ interface AuthState {
   setToken: (token: AuthState["token"]) => void;
   setTokenToLS: (token: AuthState["token"]) => void;
   setUserToLS: (user: User) => void;
+  getUserFromLS: () => void;
   login: (formData: LoginFormData) => Promise<User>;
   logout: () => void;
   registration: (formData: RegistrationFormData) => Promise<void>;
@@ -44,6 +45,11 @@ export const useAuthStore = create<AuthState>()((set) => ({
       set({ user });
       localStorage.setItem("user", JSON.stringify(user) as string);
     }
+  },
+
+  getUserFromLS: () => {
+    const user = localStorage.getItem("user");
+    if (user !== null) set({ user: JSON.parse(user) as User });
   },
 
   login: async (formData: LoginFormData) => {
