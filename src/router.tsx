@@ -10,6 +10,7 @@ import { HomePage } from "@/modules/home/pages/HomePage";
 import { PosesPage } from "@/modules/poses/pages/PosesPage";
 import { RacksPage } from "@/modules/racks/pages/RacksPage";
 import { BrowserRouter, Route, Routes } from "react-router";
+import { SettingsPage } from "@/modules/settings/pages/SettingsPage";
 
 const Router = () => {
   return (
@@ -29,6 +30,7 @@ const Router = () => {
               <Route path="/defs" element={<DefsPage />} />
               <Route path="/poses" element={<PosesPage />} />
               <Route path="/racks" element={<RacksPage />} />
+              <Route path="/settings" element={<SettingsPage />} />
 
               <Route path="*" element={<NotFoundPage />} />
             </Route>

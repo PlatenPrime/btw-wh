@@ -1,5 +1,5 @@
 import { Separator } from "@radix-ui/react-separator";
-import { SidebarTrigger } from "../ui/sidebar";
+import { SidebarTrigger } from "../../ui/sidebar";
 
 export default function Header({ children }: { children: React.ReactNode }) {
   return (
