@@ -17,25 +17,28 @@ const Router = () => {
     <BrowserRouter>
       <Routes>
         <Route element={<AuthLayout />}>
-          <Route path="/">
-            <Route path="/login" element={<LoginPage />} />
-            <Route element={<SidebarLayout />}>
-              <Route index element={<HomePage />} />
+          {/* <Route path="/" element={<LoginPage />} /> */}
 
-              <Route path="arts">
-                <Route index element={<ArtsPage />} />
-                <Route path="upload" element={<UploadArtsPage />} />
-              </Route>
+          <Route path="/login" element={<LoginPage />} />
 
-              <Route path="/asks" element={<AsksPage />} />
-              <Route path="/defs" element={<DefsPage />} />
-              <Route path="/poses" element={<PosesPage />} />
-              <Route path="/racks" element={<RacksPage />} />
-              <Route path="/settings" element={<SettingsPage />} />
 
-              <Route path="*" element={<NotFoundPage />} />
+          <Route element={<SidebarLayout />}>
+            <Route index element={<HomePage />} />
+
+            <Route path="arts">
+              <Route index element={<ArtsPage />} />
+              <Route path="upload" element={<UploadArtsPage />} />
             </Route>
+
+            <Route path="/asks" element={<AsksPage />} />
+            <Route path="/defs" element={<DefsPage />} />
+            <Route path="/poses" element={<PosesPage />} />
+            <Route path="/racks" element={<RacksPage />} />
+            <Route path="/settings" element={<SettingsPage />} />
+
+            <Route path="*" element={<NotFoundPage />} />
           </Route>
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
