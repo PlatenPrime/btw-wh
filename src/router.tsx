@@ -1,4 +1,4 @@
-import { NavLayout } from "@/components/shared/NavLayout";
+import { Layout } from "@/components/layout/Layout";
 import { ArtsPage } from "@/modules/arts/pages/ArtsPage";
 import { UploadArtsPage } from "@/modules/arts/pages/UploadArtsPage";
 import { AsksPage } from "@/modules/asks/pages/AsksPage";
@@ -9,6 +9,7 @@ import { HomePage } from "@/modules/home/pages/HomePage";
 import { PosesPage } from "@/modules/poses/pages/PosesPage";
 import { RacksPage } from "@/modules/racks/pages/RacksPage";
 import { BrowserRouter, Route, Routes } from "react-router";
+import NotFoundPage from "@/components/layout/NotFoundPage";
 
 const Router = () => {
   return (
@@ -16,7 +17,7 @@ const Router = () => {
       <Routes>
         <Route element={<AuthLayout />}>
           <Route path="/">
-            <Route element={<NavLayout />}>
+            <Route element={<Layout />}>
               <Route index element={<HomePage />} />
               <Route path="/login" element={<LoginPage />} />
 
@@ -28,6 +29,8 @@ const Router = () => {
               <Route path="/defs" element={<DefsPage />} />
               <Route path="/poses" element={<PosesPage />} />
               <Route path="/racks" element={<RacksPage />} />
+
+              <Route path="*" element={<NotFoundPage />} />
             </Route>
           </Route>
         </Route>
