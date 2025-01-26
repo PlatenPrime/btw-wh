@@ -1,4 +1,5 @@
 import { Layout } from "@/components/layout/Layout";
+import NotFoundPage from "@/components/layout/NotFoundPage";
 import { ArtsPage } from "@/modules/arts/pages/ArtsPage";
 import { UploadArtsPage } from "@/modules/arts/pages/UploadArtsPage";
 import { AsksPage } from "@/modules/asks/pages/AsksPage";
@@ -9,7 +10,6 @@ import { HomePage } from "@/modules/home/pages/HomePage";
 import { PosesPage } from "@/modules/poses/pages/PosesPage";
 import { RacksPage } from "@/modules/racks/pages/RacksPage";
 import { BrowserRouter, Route, Routes } from "react-router";
-import NotFoundPage from "@/components/layout/NotFoundPage";
 
 const Router = () => {
   return (
@@ -17,9 +17,9 @@ const Router = () => {
       <Routes>
         <Route element={<AuthLayout />}>
           <Route path="/">
+            <Route path="/login" element={<LoginPage />} />
             <Route element={<Layout />}>
               <Route index element={<HomePage />} />
-              <Route path="/login" element={<LoginPage />} />
 
               <Route path="/arts" element={<ArtsPage />}>
                 <Route path="upload" element={<UploadArtsPage />} />

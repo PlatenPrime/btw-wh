@@ -19,7 +19,11 @@ interface AuthState {
   login: (formData: LoginFormData) => Promise<User>;
   logout: () => void;
   registration: (formData: RegistrationFormData) => Promise<void>;
-  getMe: () => Promise<void>;
+  isAuth: () => Promise<boolean>;
+  getUserById: (id: string) => Promise<User | undefined>;
+  getRoles: () => Promise<Role[]| undefined> ;
+  getUsers: () => Promise<User[] | undefined> ;
+
 }
 
 export const useAuthStore = create<AuthState>()((set) => ({
@@ -85,7 +89,7 @@ export const useAuthStore = create<AuthState>()((set) => ({
     }
   },
 
-  getMe: async () => {
+  isAuth: async () => {
     try {
       const user = useAuthStore.getState().user;
       if (user !== null) {
@@ -95,9 +99,14 @@ export const useAuthStore = create<AuthState>()((set) => ({
           token: response.data.token,
           error: null,
         });
+        return true; 
+      } else {
+        return false; 
       }
-    } catch {
+    } catch (error) {
+      console.error("Невдала спроба автентифікації.", error);
       set({ error: "Невдала спроба автентифікації." });
+      return false; 
     }
   },
 

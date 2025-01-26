@@ -4,13 +4,16 @@ import { useNavigate } from "react-router";
 
 export const useCheckAuth = () => {
   const navigate = useNavigate();
-  const { getUserFromLS, getMe } = useAuthStore();
+  const { getUserFromLS, isAuth } = useAuthStore();
 
   useEffect(() => {
     const checkAuth = async () => {
       try {
         getUserFromLS();
-        await getMe();
+        const isAuthenticated =   await isAuth();
+        if (!isAuthenticated) {
+          navigate("/login"); 
+        }
       } catch (error) {
         console.error("Authorization error:", error);
         navigate("/login");
@@ -18,5 +21,5 @@ export const useCheckAuth = () => {
     };
 
     checkAuth();
-  }, [getMe, navigate, getUserFromLS]);
+  }, [isAuth, navigate, getUserFromLS]);
 };
