@@ -1,5 +1,4 @@
-import React from 'react';
-import { useTheme } from '@/hooks/useTheme/useTheme';
+import { useTheme } from "@/hooks/useTheme/useTheme";
 
 export function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
@@ -9,7 +8,7 @@ export function ThemeToggle() {
       onClick={toggleTheme}
       className="p-2 rounded bg-gray-200 dark:bg-gray-800"
     >
-      {theme === 'light' ? '🌞 Light' : '🌜 Dark'}
+      {theme === "light" ? "🌞 Light" : "🌜 Dark"}
     </button>
   );
 }
