@@ -1,7 +1,9 @@
-import * as React from "react"
+import * as React from "react";
 
-import {data} from "@/components/layout/sidebarData"
+import { data } from "@/components/layout/SidebarLayout/sidebarData";
+import { useLocation } from "react-router";
 
+import { ThemeToggle } from "@/components/shared/ThemeToggle";
 import {
   Sidebar,
   SidebarContent,
@@ -13,19 +15,25 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
-} from "@/components/ui/sidebar"
-import { Link } from "react-router"
-import { ThemeToggle } from "../shared/ThemeToggle"
+} from "@/components/ui/sidebar";
+import { Link } from "react-router";
 
 // This is sample data.
 
-
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const location = useLocation();
+
+  const checkIsActive = (url: string): boolean => {
+    if (location.pathname.slice(1) === url) {
+      return true;
+    }
+    return false;
+  };
+
   return (
     <Sidebar {...props}>
       <SidebarHeader>
-<ThemeToggle />
-
+        <ThemeToggle />
       </SidebarHeader>
       <SidebarContent>
         {/* We create a SidebarGroup for each parent. */}
@@ -36,7 +44,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               <SidebarMenu>
                 {item.items.map((item) => (
                   <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild isActive={item.isActive}>
+                    <SidebarMenuButton
+                      asChild
+                      isActive={checkIsActive(item.url)}
+                    >
                       <Link to={item.url}>{item.title}</Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
@@ -48,5 +59,5 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarContent>
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }

@@ -1,3 +1,5 @@
+import { Page } from "@/components/layout/PageLayout/Page";
+
 export const UploadArtsPage = () => {
-  return <div>UploadArtsPage</div>;
+  return <Page title="Оновлення артикулів">UploadArtsPage</Page>;
 };

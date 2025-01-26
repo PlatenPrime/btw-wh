@@ -1,3 +1,9 @@
+import { Page } from "@/components/layout/PageLayout/Page";
+
 export function SettingsPage() {
-  return <div>SettingsPage</div>;
+  return (
+    <Page title="Налаштування">
+      <div>SettingsPage</div>
+    </Page>
+  );
 }

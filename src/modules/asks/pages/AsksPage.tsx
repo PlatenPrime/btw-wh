@@ -1,3 +1,9 @@
+import { Page } from "@/components/layout/PageLayout/Page";
+
 export function AsksPage() {
-  return <div>AsksPage</div>;
+  return (
+    <Page title="Запити">
+      <div>AsksPage</div>
+    </Page>
+  );
 }

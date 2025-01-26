@@ -1,10 +1,9 @@
-import { Outlet } from "react-router";
+import { Page } from "@/components/layout/PageLayout/Page";
 
 export const HomePage = () => {
   return (
-    <div>
-      <h1 className="text-center text-3xl">Home Page</h1>
-      <Outlet />
-    </div>
+    <Page title="Головна сторінка">
+     BTW_WH
+    </Page>
   );
 };

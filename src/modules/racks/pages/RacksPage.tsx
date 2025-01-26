@@ -1,3 +1,9 @@
+import { Page } from "@/components/layout/PageLayout/Page";
+
 export function RacksPage() {
-  return <div>RacksPage</div>;
+  return (
+    <Page title="Стелажі">
+      <div>RacksPage</div>
+    </Page>
+  );
 }

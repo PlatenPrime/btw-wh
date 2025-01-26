@@ -1,5 +1,5 @@
-import { Layout } from "@/components/layout/Layout";
 import NotFoundPage from "@/components/layout/NotFoundPage";
+import { SidebarLayout } from "@/components/layout/SidebarLayout/SidebarLayout";
 import { ArtsPage } from "@/modules/arts/pages/ArtsPage";
 import { UploadArtsPage } from "@/modules/arts/pages/UploadArtsPage";
 import { AsksPage } from "@/modules/asks/pages/AsksPage";
@@ -9,8 +9,8 @@ import { DefsPage } from "@/modules/defs/pages/DefsPage";
 import { HomePage } from "@/modules/home/pages/HomePage";
 import { PosesPage } from "@/modules/poses/pages/PosesPage";
 import { RacksPage } from "@/modules/racks/pages/RacksPage";
-import { BrowserRouter, Route, Routes } from "react-router";
 import { SettingsPage } from "@/modules/settings/pages/SettingsPage";
+import { BrowserRouter, Route, Routes } from "react-router";
 
 const Router = () => {
   return (
@@ -19,10 +19,11 @@ const Router = () => {
         <Route element={<AuthLayout />}>
           <Route path="/">
             <Route path="/login" element={<LoginPage />} />
-            <Route element={<Layout />}>
+            <Route element={<SidebarLayout />}>
               <Route index element={<HomePage />} />
 
-              <Route path="/arts" element={<ArtsPage />}>
+              <Route path="arts">
+                <Route index element={<ArtsPage />} />
                 <Route path="upload" element={<UploadArtsPage />} />
               </Route>
 

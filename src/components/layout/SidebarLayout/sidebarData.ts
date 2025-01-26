@@ -7,7 +7,6 @@ export const data = {
         {
           title: "Артикули",
           url: "arts",
-          isActive: true,
         },
         {
           title: "Оновлення артикулів",
