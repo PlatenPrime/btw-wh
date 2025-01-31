@@ -1,5 +1,6 @@
 import NotFoundPage from "@/components/layout/NotFoundPage";
 import { SidebarLayout } from "@/components/layout/SidebarLayout/SidebarLayout";
+import { ArtByIdPage } from "@/modules/arts/pages/ArtByIdPage";
 import { ArtsPage } from "@/modules/arts/pages/ArtsPage";
 import { UploadArtsPage } from "@/modules/arts/pages/UploadArtsPage";
 import { AsksPage } from "@/modules/asks/pages/AsksPage";
@@ -21,12 +22,12 @@ const Router = () => {
 
           <Route path="/login" element={<LoginPage />} />
 
-
           <Route element={<SidebarLayout />}>
             <Route index element={<HomePage />} />
 
             <Route path="arts">
               <Route index element={<ArtsPage />} />
+              <Route path=":artId" element={<ArtByIdPage />} />
               <Route path="upload" element={<UploadArtsPage />} />
             </Route>
 
