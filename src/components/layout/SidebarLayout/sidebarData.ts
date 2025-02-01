@@ -15,40 +15,21 @@ export const data = {
       ],
     },
     {
-      title: "Запити",
-      url: "asks",
+      title: "Склад",
+      url: "№",
       items: [
         {
           title: "Запити",
           url: "asks",
         },
-      ],
-    },
-    {
-      title: "Дефіцити",
-      url: "defs",
-      items: [
         {
           title: "Дефіцити",
           url: "defs",
         },
-      ],
-    },
-    {
-      title: "Стелажі",
-      url: "racks",
-      items: [
         {
           title: "Ряди",
           url: "racks/rows",
         },
-      ],
-    },
-
-    {
-      title: "Позиції",
-      url: "poses",
-      items: [
         {
           title: "Позиції",
           url: "poses",

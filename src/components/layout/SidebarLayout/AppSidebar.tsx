@@ -3,6 +3,7 @@ import * as React from "react";
 import { data } from "@/components/layout/SidebarLayout/sidebarData";
 import { useLocation } from "react-router";
 
+import UserInfo from "@/components/layout/SidebarLayout/UserInfo";
 import { ThemeToggle } from "@/components/shared/ThemeToggle";
 import {
   Sidebar,
@@ -33,8 +34,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar {...props}>
       <SidebarHeader>
-        <ThemeToggle />
+        <UserInfo />
       </SidebarHeader>
+
       <SidebarContent>
         {/* We create a SidebarGroup for each parent. */}
         {data.navMain.map((item) => (
@@ -57,6 +59,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           </SidebarGroup>
         ))}
       </SidebarContent>
+      <ThemeToggle />
       <SidebarRail />
     </Sidebar>
   );

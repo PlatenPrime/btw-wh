@@ -1,14 +1,21 @@
 import { useTheme } from "@/hooks/useTheme/useTheme";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { Button } from "../ui/button";
+import { MoonStar, Sun } from "lucide-react";
 
 export function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <button
+    <Button
+      variant="outline"
       onClick={toggleTheme}
-      className="p-2 rounded bg-gray-200 dark:bg-gray-800"
+     
     >
-      {theme === "light" ? "🌞" : "🌜"}
-    </button>
+      <VisuallyHidden>Toggle theme</VisuallyHidden>
+      {theme === "light" ? <Sun /> : <MoonStar />}
+    </Button>
   );
 }
+
+

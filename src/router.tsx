@@ -18,7 +18,7 @@ const Router = () => {
     <BrowserRouter>
       <Routes>
         <Route element={<AuthLayout />}>
-          {/* <Route path="/" element={<LoginPage />} /> */}
+     
 
           <Route path="/login" element={<LoginPage />} />
 
