@@ -1,6 +1,6 @@
 import { useTheme } from "@/hooks/useTheme/useTheme";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { MoonStar, Sun } from "lucide-react";
 
 export function ThemeToggle() {

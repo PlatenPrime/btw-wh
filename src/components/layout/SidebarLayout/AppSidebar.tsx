@@ -4,7 +4,7 @@ import { data } from "@/components/layout/SidebarLayout/sidebarData";
 import { useLocation } from "react-router";
 
 import UserInfo from "@/components/layout/SidebarLayout/UserInfo";
-import { ThemeToggle } from "@/components/shared/ThemeToggle";
+import { ThemeToggle } from "@/components/shared/ThemeToggle/ThemeToggle";
 import {
   Sidebar,
   SidebarContent,
