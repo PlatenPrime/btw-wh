@@ -17,6 +17,7 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import { LogoutDialogButton } from "@/modules/auth/components/LogoutDialogButton/LogoutDialogButton";
 import { Link } from "react-router";
 
 // This is sample data.
@@ -34,7 +35,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar {...props}>
       <SidebarHeader>
-        <UserInfo />
+        <div className="flex items-center">
+          <UserInfo />
+          <ThemeToggle />
+        </div>
       </SidebarHeader>
 
       <SidebarContent>
@@ -59,7 +63,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           </SidebarGroup>
         ))}
       </SidebarContent>
-      <ThemeToggle />
+      <LogoutDialogButton />
       <SidebarRail />
     </Sidebar>
   );
