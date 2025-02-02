@@ -1,5 +1,5 @@
 import { useQueryArtById } from "@/modules/arts/api/useQueryArtById";
-import ArtImage from "../ArtImage/ArtImage";
+import { ArtCard } from "../ArtCard/ArtCard";
 
 interface ArtWidgetProps {
   id: string | undefined;
@@ -12,9 +12,8 @@ export function ArtWidget({ id }: ArtWidgetProps) {
   if (!art) return <p>Данных нет</p>;
 
   return (
-    <div>
-      {art?.nameukr || "Нет данных"}
-      <ArtImage artikul={ ""} />
+    <div className="grid grid-cols-1  lg:grid-cols-2 gap-2">
+      <ArtCard art={art} />
     </div>
   );
 }
