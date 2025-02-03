@@ -11,7 +11,7 @@ interface ArtCardProps {
 export function ArtCard({ art }: ArtCardProps) {
   return (
     <Card className="flex gap-8 p-4">
-      <div className=" grid w-[100px] place-items-center">
+      <div className=" grid w-[100px] ">
         <ArtImage artikul={art.artikul} />
       </div>
 
