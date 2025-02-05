@@ -1,19 +1,19 @@
 import axios from "@/lib/axios";
+import { IArt } from "@/modules/arts/types/IArt";
 import { useQuery } from "@tanstack/react-query";
-import { Art } from "@/modules/arts/types/Art";
 
-async function fetchArt(id: string): Promise<Art | undefined> {
+async function fetchArt(id: string): Promise<IArt | undefined> {
   if (!id) return;
-  const response = await axios.get<Art>(`/arts/${id}`);
+  const response = await axios.get<IArt>(`/arts/${id}`);
   console.log("response", response);
   return response.data;
 }
 
 export function useQueryArtById(id: string) {
-  return useQuery<Art | undefined>({
+  return useQuery<IArt | undefined>({
     queryKey: ["art", id],
     queryFn: () => fetchArt(id),
     enabled: !!id,
-    staleTime: 10*60*1000,
+    staleTime: 5 * 60 * 1000,
   });
 }

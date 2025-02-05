@@ -1,5 +1,7 @@
 import { useQueryArtById } from "@/modules/arts/api/useQueryArtById";
-import { ArtCard } from "../ArtCard/ArtCard";
+import { ArtCard } from "@/modules/arts/components/ArtCard/ArtCard";
+import { IArtInfo } from "@/modules/arts/types/IArtInfo";
+import { ArtInfo } from "@/modules/arts/components/ArtInfo/ArtInfo";
 
 interface ArtWidgetProps {
   id: string | undefined;
@@ -11,9 +13,22 @@ export function ArtWidget({ id }: ArtWidgetProps) {
   if (isLoading) return <p>Загрузка...</p>;
   if (!art) return <p>Данных нет</p>;
 
+
+
+const artInfo: IArtInfo = {
+artikul: "1102-0260",
+price: "0.00",
+sklad: 0,
+pogrebi: 0,
+mereghi: 0
+}
+
+
+
   return (
     <div className="grid grid-cols-1  lg:grid-cols-2 gap-2">
       <ArtCard art={art} />
+      <ArtInfo artInfo={artInfo} />
     </div>
   );
 }

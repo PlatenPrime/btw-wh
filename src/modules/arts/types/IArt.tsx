@@ -1,4 +1,4 @@
-export interface Art {
+export interface IArt {
   id: string;
   artikul: string;
   nameukr: string | undefined;
