@@ -1,5 +1,5 @@
-import Main from "./Main";
 import Header from "./Header";
+import Main from "./Main";
 
 type PageProps = {
   title: string;
@@ -8,9 +8,9 @@ type PageProps = {
 
 export function Page({ title, children }: PageProps) {
   return (
-    <div className="w-full h-screen overflow-y-auto">
+    <div className="flex flex-col h-screen">
       <Header>{title}</Header>
-      <Main>{children}</Main>
+      <Main >{children}</Main>
     </div>
   );
 }

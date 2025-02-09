@@ -12,14 +12,17 @@ interface ArtsLimitProps {
   setLimit: (limit: number) => void;
 }
 
-export default function ArtsLimit({
+export  function ArtsLimit({
     limit,
     setLimit
 }: ArtsLimitProps) {
   return (
-    <Select onValueChange={(value) => setLimit(+value)}>
+    <div className="w-40" >
+    <Select 
+    onValueChange={(value) => setLimit(+value)}
+    >
       <SelectTrigger >
-        <SelectValue placeholder={limit} />
+        <SelectValue placeholder={"На сторінці: " + limit} />
       </SelectTrigger>
       <SelectContent>
         <SelectItem value="10">10</SelectItem>
@@ -28,5 +31,6 @@ export default function ArtsLimit({
         <SelectItem value="100">100</SelectItem>
       </SelectContent>
     </Select>
+    </div>
   );
 }
