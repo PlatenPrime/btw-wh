@@ -1,5 +1,5 @@
 export interface IArt {
-  id: string;
+  _id: string;
   artikul: string;
   nameukr: string | undefined;
   namerus: string | undefined;

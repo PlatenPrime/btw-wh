@@ -1,6 +1,6 @@
 import axios from "@/lib/axios";
 import { IArt } from "@/modules/arts/types/IArt";
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 interface FetchArtsParams {
   page?: number;
@@ -40,5 +40,6 @@ export function useQueryArts({
     queryKey: ["arts", page, limit, search],
     queryFn: () => fetchArts({ page, limit, search }),
     staleTime: 5 * 60 * 1000,
+    placeholderData: keepPreviousData,
   });
 }
