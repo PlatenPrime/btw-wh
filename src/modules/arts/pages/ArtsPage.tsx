@@ -1,10 +1,16 @@
 import { Page } from "@/components/layout/PageLayout/Page";
 import { ArtsDashboard } from "@/modules/arts/components/ArtsDashboard/ArtsDashboard";
+import { Outlet } from "react-router";
 
 export const ArtsPage = () => {
   return (
     <Page title="Артикули">
-      <ArtsDashboard />
+      <div className="grid lg:grid-cols-2">
+        <ArtsDashboard />
+        <div className="hidden lg:block" >
+          <Outlet />
+        </div>
+      </div>
     </Page>
   );
 };

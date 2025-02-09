@@ -2,13 +2,12 @@ import { useQueryArtById } from "@/modules/arts/api/useQueryArtById";
 import { ArtCard } from "@/modules/arts/components/ArtWidget/ArtCard/ArtCard";
 import { ArtInfo } from "@/modules/arts/components/ArtWidget/ArtInfo/ArtInfo";
 import { IArtInfo } from "@/modules/arts/types/IArtInfo";
+import { useParams } from "react-router";
 
-interface ArtWidgetProps {
-  id: string | undefined;
-}
+export function ArtWidget() {
+  const { artId } = useParams();
 
-export function ArtWidget({ id }: ArtWidgetProps) {
-  const { data: art, isLoading } = useQueryArtById(id!);
+  const { data: art, isLoading } = useQueryArtById(artId!);
 
   if (isLoading) return <p>Загрузка...</p>;
   if (!art) return <p>Данных нет</p>;

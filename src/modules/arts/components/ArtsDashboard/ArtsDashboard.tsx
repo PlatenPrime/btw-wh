@@ -23,19 +23,17 @@ export function ArtsDashboard() {
   return (
     <div className="flex flex-col gap-4">
       <p>{isLoading && "loading..."}</p>
-      <div className="flex gap-2" >
-      <SearchInput delay={500} onSearch={handleSearch} />
-      <ArtsLimit limit={limit} setLimit={setLimit} />
+      <div className="flex gap-2">
+        <SearchInput delay={500} onSearch={handleSearch} />
+        <ArtsLimit limit={limit} setLimit={setLimit} />
       </div>
-   
-
-      <ArtsList data={data?.data} />
-   
       <ArtsPagination
         page={data?.page ?? 1}
         totalPages={data?.totalPages ?? 1}
         handlePageChange={setPage}
       />
+
+      <ArtsList data={data?.data} />
     </div>
   );
 }

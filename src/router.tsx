@@ -12,21 +12,21 @@ import { PosesPage } from "@/modules/poses/pages/PosesPage";
 import { RacksPage } from "@/modules/racks/pages/RacksPage";
 import { SettingsPage } from "@/modules/settings/pages/SettingsPage";
 import { BrowserRouter, Route, Routes } from "react-router";
+import { ArtWidget } from "@/modules/arts/components/ArtWidget/ArtWidget";
 
 const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route element={<AuthLayout />}>
-     
-
           <Route path="/login" element={<LoginPage />} />
 
           <Route element={<SidebarLayout />}>
             <Route index element={<HomePage />} />
 
-            <Route path="arts">
-              <Route index element={<ArtsPage />} />
+            <Route path="arts" element={<ArtsPage />}>
+              <Route path="widget/:artId" element={<ArtWidget />} />
+
               <Route path=":artId" element={<ArtByIdPage />} />
               <Route path="upload" element={<UploadArtsPage />} />
             </Route>

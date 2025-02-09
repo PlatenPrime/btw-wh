@@ -10,7 +10,7 @@ console.log(artId);
 
   return (
     <Page title="Артикули">
-      <ArtWidget id={artId} />
+      <ArtWidget />
     </Page>
   );
 }
