@@ -9,7 +9,7 @@ interface ArtsListProps {
 
 export function ArtsList({ data }: ArtsListProps) {
   return (
-    <ScrollArea className="h-96">
+    <ScrollArea className="h-[calc(100vh-250px)]">
       <div className="grid grid-cols-1 gap-2">
         {data?.map((art) => (
           <Link
