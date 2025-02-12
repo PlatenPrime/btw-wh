@@ -1,5 +1,6 @@
 import NotFoundPage from "@/components/layout/NotFoundPage";
 import { SidebarLayout } from "@/components/layout/SidebarLayout/SidebarLayout";
+import { ArtWidget } from "@/modules/arts/components/widget";
 import { ArtByIdPage } from "@/modules/arts/pages/ArtByIdPage";
 import { ArtsPage } from "@/modules/arts/pages/ArtsPage";
 import { UploadArtsPage } from "@/modules/arts/pages/UploadArtsPage";
@@ -12,7 +13,6 @@ import { PosesPage } from "@/modules/poses/pages/PosesPage";
 import { RacksPage } from "@/modules/racks/pages/RacksPage";
 import { SettingsPage } from "@/modules/settings/pages/SettingsPage";
 import { BrowserRouter, Route, Routes } from "react-router";
-import { ArtWidget } from "@/modules/arts/components/ArtWidget/ArtWidget";
 
 const Router = () => {
   return (

@@ -1,6 +1,6 @@
 import { useQueryArtById } from "@/modules/arts/api/useQueryArtById";
-import { ArtCard } from "@/modules/arts/components/ArtWidget/ArtCard/ArtCard";
-import { ArtInfo } from "@/modules/arts/components/ArtWidget/ArtInfo/ArtInfo";
+import { ArtCard } from "@/modules/arts/components/card";
+import { ArtInfo } from "@/modules/arts/components/info";
 import { IArtInfo } from "@/modules/arts/types/IArtInfo";
 import { useParams } from "react-router";
 
