@@ -1,5 +1,5 @@
 import { Page } from "@/components/layout/PageLayout/Page";
-import { ArtsDashboard } from "@/modules/arts/components/panel";
+import { ArtsDashboard } from "@/modules/arts/widgets/panel";
 import { Outlet } from "react-router";
 
 export const ArtsPage = () => {

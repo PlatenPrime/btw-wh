@@ -1,8 +1,8 @@
 import { SearchInput } from "@/components/shared/SearchInput/SearchInput";
 import { useQueryArts } from "@/modules/arts/api/useQueryArts";
-import { ArtsLimit } from "@/modules/arts/components/limit";
-import { ArtsList } from "@/modules/arts/components/list";
-import { ArtsPagination } from "@/modules/arts/components/pagination";
+import { ArtsLimit } from "@/modules/arts/features/limit";
+import { ArtsList } from "@/modules/arts/entities/list";
+import { ArtsPagination } from "@/modules/arts/features/pagination";
 import { useState } from "react";
 
 export function ArtsDashboard() {

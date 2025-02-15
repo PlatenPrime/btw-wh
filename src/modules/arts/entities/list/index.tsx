@@ -1,5 +1,5 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { ArtImage } from "@/modules/arts/components/image";
+import { ArtImage } from "@/modules/arts/entities/image";
 import { IArt } from "@/modules/arts/types/IArt";
 import { Link } from "react-router";
 

@@ -1,8 +1,8 @@
 import { Card, CardTitle } from "@/components/ui/card";
+import { ArtImage } from "@/modules/arts/entities/image";
+import { ZoomArtImageButton } from "@/modules/arts/features/zoomImageButton";
 import { IArt } from "@/modules/arts/types/IArt";
 import { MapPin } from "lucide-react";
-import { ZoomArtImageButton } from "@/modules/arts/components/zoomImageButton";
-import {ArtImage} from "@/modules/arts/components/image";
 
 interface ArtCardProps {
   art: IArt;

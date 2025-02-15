@@ -1,9 +1,9 @@
 import NotFoundPage from "@/components/layout/NotFoundPage";
 import { SidebarLayout } from "@/components/layout/SidebarLayout/SidebarLayout";
-import { ArtWidget } from "@/modules/arts/components/widget";
 import { ArtByIdPage } from "@/modules/arts/pages/ArtByIdPage";
 import { ArtsPage } from "@/modules/arts/pages/ArtsPage";
 import { UploadArtsPage } from "@/modules/arts/pages/UploadArtsPage";
+import { ArtWidget } from "@/modules/arts/widgets/art";
 import { AsksPage } from "@/modules/asks/pages/AsksPage";
 import { AuthLayout } from "@/modules/auth/components/AuthLayout/AuthLayout";
 import { LoginPage } from "@/modules/auth/pages/LoginPage";

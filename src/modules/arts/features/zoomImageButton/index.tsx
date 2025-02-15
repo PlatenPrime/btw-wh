@@ -6,7 +6,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { ArtImage } from "@/modules/arts/components/image";
+import { ArtImage } from "@/modules/arts/entities/image";
 import { ScanSearch } from "lucide-react";
 
 interface ZoomArtImageButtonProps {
