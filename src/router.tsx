@@ -3,7 +3,6 @@ import { SidebarLayout } from "@/components/layout/SidebarLayout/SidebarLayout";
 import { ArtByIdPage } from "@/modules/arts/pages/ArtByIdPage";
 import { ArtsPage } from "@/modules/arts/pages/ArtsPage";
 import { UploadArtsPage } from "@/modules/arts/pages/UploadArtsPage";
-import { ArtWidget } from "@/modules/arts/widgets/art";
 import { AsksPage } from "@/modules/asks/pages/AsksPage";
 import { AuthLayout } from "@/modules/auth/components/AuthLayout/AuthLayout";
 import { LoginPage } from "@/modules/auth/pages/LoginPage";
@@ -24,19 +23,18 @@ const Router = () => {
           <Route element={<SidebarLayout />}>
             <Route index element={<HomePage />} />
 
-            <Route path="arts" element={<ArtsPage />}>
-              <Route path="widget/:artId" element={<ArtWidget />} />
-
-              <Route path=":artId" element={<ArtByIdPage />} />
-              <Route path="upload" element={<UploadArtsPage />} />
+            <Route path="arts" >
+            <Route index element={<ArtsPage />} />;
+            <Route path=":artId" element={<ArtByIdPage />} />
+            <Route path="upload" element={<UploadArtsPage />} />
             </Route>
+
 
             <Route path="/asks" element={<AsksPage />} />
             <Route path="/defs" element={<DefsPage />} />
             <Route path="/poses" element={<PosesPage />} />
             <Route path="/racks" element={<RacksPage />} />
             <Route path="/settings" element={<SettingsPage />} />
-
             <Route path="*" element={<NotFoundPage />} />
           </Route>
           <Route path="*" element={<NotFoundPage />} />

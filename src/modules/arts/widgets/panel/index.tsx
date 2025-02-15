@@ -34,6 +34,8 @@ export function ArtsDashboard() {
       />
 
       <ArtsList data={data?.data} />
+
+      
     </div>
   );
 }

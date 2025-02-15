@@ -14,7 +14,7 @@ export function ArtsList({ data }: ArtsListProps) {
         {data?.map((art) => (
           <Link
             className="h-12 border flex gap-2 hover:bg-sidebar-accent  transition-all duration-300 ease-in-out"
-            to={`/arts/widget/${art._id}`}
+            to={`/arts/${art._id}`}
             key={art._id}
           >
             <div className="w-10">
