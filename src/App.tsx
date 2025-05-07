@@ -2,11 +2,12 @@ import "./App.css";
 import { ModeToggle } from "./components/mode-toggle";
 import { ThemeProvider } from "./components/theme-provider";
 import { Button } from "./components/ui/button";
+import { Layout } from "./pages/layout";
 
 function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <h1 className="text-3xl font-bold underline bg-background text-foreground">
+      {/* <h1 className="text-3xl font-bold underline bg-background text-foreground">
         Hello world!
       </h1>
       <Button variant="outline">Button</Button>
@@ -17,7 +18,8 @@ function App() {
         className="bg-zinc-950 dark:bg-white size-8
       "
       />
-      <div className="bg-primary text-primary-foreground ">Hello</div>
+      <div className="bg-primary text-primary-foreground ">Hello</div> */}
+      <Layout />
     </ThemeProvider>
   );
 }
