@@ -1,7 +1,5 @@
 import "./App.css";
-import { ModeToggle } from "./components/mode-toggle";
 import { ThemeProvider } from "./components/theme-provider";
-import { Button } from "./components/ui/button";
 import { Layout } from "./pages/layout";
 
 function App() {
