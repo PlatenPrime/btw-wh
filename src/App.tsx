@@ -1,4 +1,4 @@
-import "./App.css";
+
 import { ThemeProvider } from "./components/theme-provider";
 import { Layout } from "./pages/layout";
 
