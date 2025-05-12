@@ -54,12 +54,9 @@ export const appSidebarData = {
         },
         {
           title: "Послідовність",
-          url: "/refiling/utils",
+          url: "/refiling/path",
         },
-        {
-          title: "Утиліти",
-          url: "/refiling/utils",
-        },
+   
       ],
     },
   ],

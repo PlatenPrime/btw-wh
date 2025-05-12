@@ -12,18 +12,19 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import { appSidebarData } from "./data/app-sidebar-data";
 import { Link, useLocation } from "react-router";
+import { appSidebarData } from "./data/app-sidebar-data";
+import { ModeToggle } from "./mode-toggle";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-
-  const pathname = useLocation().pathname
-
-
+  const pathname = useLocation().pathname;
 
   return (
     <Sidebar {...props}>
-      <SidebarHeader>BTW</SidebarHeader>
+      <SidebarHeader className="flex flex-row items-center justify-between">
+        <span>BTW</span>
+        <ModeToggle />
+      </SidebarHeader>
       <SidebarContent>
         {/* We create a SidebarGroup for each parent. */}
         {appSidebarData.navMain.map((item) => (
@@ -33,7 +34,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               <SidebarMenu>
                 {item.items.map((item) => (
                   <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild isActive={pathname === item.url || pathname.startsWith(item.url + "/")}>
+                    <SidebarMenuButton
+                      asChild
+                      isActive={
+                        pathname === item.url ||
+                        pathname.startsWith(item.url + "/")
+                      }
+                    >
                       <Link to={item.url}>{item.title}</Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
