@@ -1,3 +1,9 @@
+import { ArtsList } from "@/components/modules/arts/artsList";
+
 export function Main() {
-  return <div>main</div>;
+  return (
+    <div>
+      <ArtsList />
+    </div>
+  );
 }

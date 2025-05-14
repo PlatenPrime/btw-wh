@@ -1,7 +1,3 @@
-import React from 'react'
-
-export  function Defs() {
-  return (
-    <div>defs</div>
-  )
+export function Defs() {
+  return <div>defs</div>;
 }
