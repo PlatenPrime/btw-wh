@@ -1,48 +1,33 @@
-// components/ui/PaginationControls.tsx
 import { Button } from "@/components/ui/button"
-import { useSearchParams } from "react-router"
 
-interface PaginationControlsProps {
-  page: number 
+type Props = {
+  currentPage: number
   totalPages: number
+  onPageChange: (page: number) => void
 }
 
-export function PaginationControls({ page, totalPages }: PaginationControlsProps) {
-  const [params, setParams] = useSearchParams()
-  const currentSearch = params.get("search") || ""
-
-  const goToPage = (newPage: number) => {
-    params.set("page", String(newPage))
-    if (currentSearch) {
-      params.set("search", currentSearch)
-    }
-    setParams(params)
-  }
-
+export function PaginationControls({ currentPage, totalPages, onPageChange }: Props) {
   return (
-    <div className="flex items-center justify-center gap-4 mt-6">
+    <div className="flex items-center gap-4">
       <Button
+        onClick={() => onPageChange(currentPage - 1)}
+        disabled={currentPage <= 1}
         variant="outline"
-        size="sm"
-        onClick={() => goToPage(page - 1)}
-        disabled={page <= 1}
       >
-        ← Previous
+        ← Назад
       </Button>
 
-      <span className="text-sm text-muted-foreground">
-        Page {page} of {totalPages}
+      <span className="text-sm">
+        Страница {currentPage} из {totalPages}
       </span>
 
       <Button
+        onClick={() => onPageChange(currentPage + 1)}
+        disabled={currentPage >= totalPages}
         variant="outline"
-        size="sm"
-        onClick={() => goToPage(page + 1)}
-        disabled={page >= totalPages}
       >
-        Next →
+        Вперёд →
       </Button>
-      
     </div>
   )
 }
