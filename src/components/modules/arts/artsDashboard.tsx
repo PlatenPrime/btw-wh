@@ -2,11 +2,12 @@ import { SelectLimit } from "@/components/select-limit";
 import { Input } from "@/components/ui/input"; // или твой input-компонент
 import { useSearchParams } from "react-router";
 import { PaginationControls } from "../../pagination-controls";
+import { ArtsList } from "./artList";
 import { useArtsQuery } from "./hooks/useArtsQuery";
 
-const limitOptions = [5, 10, 20, 50];
+const limitOptions = [5, 10, 20, 50, 100];
 
-export function ArtsList() {
+export function ArtsDashboard() {
   const [params, setParams] = useSearchParams();
   const page = Number(params.get("page") || 1);
   const search = params.get("search") || "";
@@ -39,7 +40,7 @@ export function ArtsList() {
   if (isError) return <div>Ошибка загрузки данных</div>;
 
   return (
-    <div className="space-y-4">
+    <main className="grid grid-cols-1 gap-4 p-4">
       <Input
         placeholder="Поиск..."
         value={search}
@@ -51,20 +52,17 @@ export function ArtsList() {
         limit={limit}
         setLimit={setLimit}
       />
-
-      <ul>
-        {data?.data.map((art) => (
-          <li key={art._id}>
-            <strong>{art.artikul}</strong> – {art.nameukr}
-          </li>
-        ))}
-      </ul>
-
+      
       <PaginationControls
         currentPage={data?.page ?? 1}
         totalPages={data?.totalPages ?? 1}
         onPageChange={handlePageChange}
       />
-    </div>
+
+      <p>Всього: {data?.total}</p>
+
+      <ArtsList arts={data?.data} />
+
+    </main>
   );
 }

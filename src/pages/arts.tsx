@@ -1,10 +1,10 @@
-import { ArtsList } from "@/components/modules/arts/artsDashboard";
+import { ArtsDashboard } from "@/components/modules/arts/artsDashboard";
 
 export function Arts() {
   return (
     <div>
       {" "}
-      <ArtsList />
+      <ArtsDashboard />
     </div>
   );
 }

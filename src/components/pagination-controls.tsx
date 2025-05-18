@@ -18,7 +18,7 @@ export function PaginationControls({ currentPage, totalPages, onPageChange }: Pr
       </Button>
 
       <span className="text-sm">
-        Страница {currentPage} из {totalPages}
+        Сторінка {currentPage} із {totalPages}
       </span>
 
       <Button
