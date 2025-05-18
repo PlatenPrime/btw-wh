@@ -1,17 +1,18 @@
 import { Image } from "@/components/image";
 import type { Art } from "./types/types";
+import { Card, CardDescription } from "@/components/ui/card";
 
 export function ArtListItem({ art }: { art: Art }) {
   const smallImageUrl = `https://sharik.ua/images/elements_big_prev/prev_${art.artikul}_m1.jpg`;
 
   return (
-    <li className="flex gap-2 ">
+    <Card className=" w-full flex flex-row gap-2 px-2 py-2 items-center">
       <Image
         src={smallImageUrl}
         alt={art.nameukr}
-        className="w-8 object-fit rounded-md"
+        className="w-16 object-fit rounded-md"
       />
-      <p className="mt-2 text-sm text-gray-600">Артикул: {art.artikul}</p>
-    </li>
+       <CardDescription>{art.nameukr}</CardDescription>
+    </Card>
   );
 }
