@@ -1,3 +1,10 @@
+import { ArtsList } from "@/components/modules/arts/artsDashboard";
+
 export function Arts() {
-  return <div>arts</div>;
+  return (
+    <div>
+      {" "}
+      <ArtsList />
+    </div>
+  );
 }

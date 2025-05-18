@@ -1,33 +1,8 @@
+import { SelectLimit } from "@/components/select-limit";
 import { Input } from "@/components/ui/input"; // или твой input-компонент
-import { useDebounce } from "@/hooks/useDebounce"; // не забудь debounce
-import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "react-router";
-import { PaginationControls } from "./PaginationControls";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-
-interface BtradeStock {
-  value: number;
-  date: string;
-  _id: string;
-}
-
-interface Art {
-  _id: string;
-  artikul: string;
-  nameukr: string;
-  namerus: string;
-  zone: string;
-  marker: string;
-  __v: number;
-  btradeStock: BtradeStock;
-}
-
-interface ResponseData {
-  data: Art[];
-  total: number;
-  page: number;
-  totalPages: number;
-}
+import { PaginationControls } from "../../pagination-controls";
+import { useArtsQuery } from "./hooks/useArtsQuery";
 
 const limitOptions = [5, 10, 20, 50];
 
@@ -37,19 +12,10 @@ export function ArtsList() {
   const search = params.get("search") || "";
   const limit = Number(params.get("limit") || 10);
 
-  const debouncedSearch = useDebounce(search, 400);
-
-const fetchArts = async (): Promise<ResponseData> => {
-  const res = await fetch(
-    `https://btw-wh.up.railway.app/api/arts?page=${page}&limit=${limit}&search=${debouncedSearch}`
-  );
-  return res.json();
-};
-
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["arts", { page, limit, search: debouncedSearch }],
-    queryFn: fetchArts,
-    placeholderData: (prev) => prev,
+  const { data, isLoading, isError } = useArtsQuery({
+    page,
+    limit,
+    search,
   });
 
   const handlePageChange = (newPage: number) => {
@@ -80,18 +46,11 @@ const fetchArts = async (): Promise<ResponseData> => {
         onChange={handleSearchChange}
       />
 
-      <Select value={String(limit)} onValueChange={(val) => setLimit(Number(val))}>
-        <SelectTrigger className="w-[100px]">
-          <SelectValue placeholder="Показать" />
-        </SelectTrigger>
-        <SelectContent>
-          {limitOptions.map((opt) => (
-            <SelectItem key={opt} value={String(opt)}>
-              {opt} 
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+      <SelectLimit
+        limitOptions={limitOptions}
+        limit={limit}
+        setLimit={setLimit}
+      />
 
       <ul>
         {data?.data.map((art) => (
