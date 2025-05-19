@@ -40,7 +40,7 @@ export function ArtsDashboard() {
   if (isError) return <div>Ошибка загрузки данных</div>;
 
   return (
-    <main className="grid grid-cols-1 gap-4 p-4">
+    <main className="max-w-screen grid grid-cols-1 gap-4 p-4 ">
       <Input
         placeholder="Поиск..."
         value={search}
