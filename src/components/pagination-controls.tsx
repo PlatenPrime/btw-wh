@@ -8,7 +8,7 @@ type Props = {
 
 export function PaginationControls({ currentPage, totalPages, onPageChange }: Props) {
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex justify-center items-center gap-4">
       <Button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage <= 1}
@@ -26,7 +26,7 @@ export function PaginationControls({ currentPage, totalPages, onPageChange }: Pr
         disabled={currentPage >= totalPages}
         variant="outline"
       >
-        Вперёд →
+        Далі →
       </Button>
     </div>
   )

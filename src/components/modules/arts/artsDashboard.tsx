@@ -4,6 +4,7 @@ import { useSearchParams } from "react-router";
 import { PaginationControls } from "../../pagination-controls";
 import { ArtsList } from "./artList";
 import { useArtsQuery } from "./hooks/useArtsQuery";
+import { FileText } from "lucide-react";
 
 const limitOptions = [5, 10, 20, 50, 100];
 
@@ -13,7 +14,7 @@ export function ArtsDashboard() {
   const search = params.get("search") || "";
   const limit = Number(params.get("limit") || 10);
 
-  const { data, isLoading, isError } = useArtsQuery({
+  const { data, isLoading, isError,  } = useArtsQuery({
     page,
     limit,
     search,
@@ -36,22 +37,34 @@ export function ArtsDashboard() {
     setParams(params);
   };
 
-  if (isLoading) return <div>Загрузка...</div>;
+
+  
+
+  if (isLoading) return <div>Завантаження...</div>;
+
   if (isError) return <div>Ошибка загрузки данных</div>;
 
   return (
     <main className="max-w-screen grid grid-cols-1 gap-4 p-4 ">
+
+      <section 
+        className="flex flex-col md:flex-row justify-center gap-4 items-center justify-between">
       <Input
         placeholder="Поиск..."
         value={search}
         onChange={handleSearchChange}
+        className="w-full md:w-1/3"
       />
-
       <SelectLimit
         limitOptions={limitOptions}
         limit={limit}
         setLimit={setLimit}
       />
+
+        <p className="flex" ><FileText /> {data?.total}</p>
+
+      
+      </section>
       
       <PaginationControls
         currentPage={data?.page ?? 1}
@@ -59,8 +72,8 @@ export function ArtsDashboard() {
         onPageChange={handlePageChange}
       />
 
-      <p>Всього: {data?.total}</p>
-
+    
+   
       <ArtsList arts={data?.data} />
 
     </main>

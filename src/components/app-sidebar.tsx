@@ -25,10 +25,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     <Sidebar {...props}>
       <SidebarHeader className="flex flex-row items-center justify-between">
         <Link to="/" className="font-bold text-2xl p-2 hover:text-sky-200">BTW</Link>
-        <Separator orientation="vertical" className="mr-2 h-4" />
+        <Separator orientation="vertical" className="mr-2 h-4 " />
         <ModeToggle />
-        <Separator orientation="vertical" className="mr-2 h-4" />
-        <SidebarTrigger className="-ml-1" />
+        <Separator orientation="vertical" className="mr-2 h-4 md:hidden" />
+        <SidebarTrigger className="-ml-1 md:hidden" />
       </SidebarHeader>
       <SidebarContent>
         {/* We create a SidebarGroup for each parent. */}

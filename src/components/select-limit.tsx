@@ -22,7 +22,7 @@ export function SelectLimit({
       value={String(limit)}
       onValueChange={(val) => setLimit(Number(val))}
     >
-      <SelectTrigger className="w-[100px]">
+      <SelectTrigger className="w-[80px]">
         <SelectValue placeholder="Показать" />
       </SelectTrigger>
       <SelectContent>
