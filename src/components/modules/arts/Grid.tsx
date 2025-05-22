@@ -20,10 +20,8 @@ export function Grid ({ arts }: ArtGridProps) {
   return (
   <ul
     className="
-   
       grid [grid-template-columns:repeat(auto-fill,minmax(220px,1fr))]
       gap-4
-  
       auto-rows-[1fr]
     "
   >
