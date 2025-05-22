@@ -1,7 +1,7 @@
-import { ArtsDashboard } from "@/components/modules/arts/artsDashboard";
+import { Dashboard } from "@/components/modules/arts/Dashboard";
 
 export function Arts() {
   return (
-      <ArtsDashboard />
+      <Dashboard />
   );
 }

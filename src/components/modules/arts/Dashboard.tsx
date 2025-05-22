@@ -2,13 +2,13 @@ import { SelectLimit } from "@/components/select-limit";
 import { Input } from "@/components/ui/input"; // или твой input-компонент
 import { useSearchParams } from "react-router";
 import { PaginationControls } from "../../pagination-controls";
-import { ArtsList } from "./artList";
+import { Grid } from "./Grid";
 import { useArtsQuery } from "./hooks/useArtsQuery";
 import { FileText } from "lucide-react";
 
 const limitOptions = [5, 10, 20, 50, 100];
 
-export function ArtsDashboard() {
+export function Dashboard() {
   const [params, setParams] = useSearchParams();
   const page = Number(params.get("page") || 1);
   const search = params.get("search") || "";
@@ -50,7 +50,7 @@ export function ArtsDashboard() {
       <section 
         className="flex flex-col md:flex-row justify-center gap-4 items-center justify-between">
       <Input
-        placeholder="Поиск..."
+        placeholder="Пошук артикулів"
         value={search}
         onChange={handleSearchChange}
         className="w-full md:w-1/3"
@@ -74,7 +74,7 @@ export function ArtsDashboard() {
 
     
    
-      <ArtsList arts={data?.data} />
+      <Grid arts={data?.data} />
 
     </main>
   );
