@@ -33,7 +33,7 @@ export function Dashboard() {
   const search = getParam(params, "search", "");
   const limit = Number(getParam(params, "limit", "10"));
 
-  const { data, isLoading, isError } = useArtsQuery({ page, limit, search });
+  const { data, isPending, isError,  fetchStatus } = useArtsQuery({ page, limit, search });
 
   const handlePageChange = useCallback(
     (newPage: number) => {
@@ -64,11 +64,18 @@ export function Dashboard() {
 
   const totalItems = useMemo(() => data?.total ?? 0, [data]);
 
-  if (isLoading) return <Status message="Завантаження..." />;
+  //  if (status === "pending") {return <p>Pending</p>}
+
+
+  if (isPending) return <Status message="Завантаження..." />;
   if (isError) return <Status message="Помилка завантаження даних" isError />;
+ 
 
   return (
     <main className="max-w-screen grid grid-cols-1 gap-4 p-4">
+
+      {fetchStatus === "fetching" && <p>Fetching</p>}
+     
       <Toolbar
         total={totalItems}
         search={search}
