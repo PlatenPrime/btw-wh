@@ -1,12 +1,13 @@
+import { FileText } from "lucide-react";
 import { useCallback, useMemo } from "react";
 import { useSearchParams } from "react-router";
-import { FileText } from "lucide-react";
 
 import { SelectLimit } from "@/components/select-limit";
 import { Input } from "@/components/ui/input";
-import { PaginationControls } from "../../pagination-controls";
 import { Grid } from "./Grid";
+import { GridSkeleton } from "./GridSkeleton";
 import { useArtsQuery } from "./hooks/useArtsQuery";
+import { PaginationControls } from "@/components/pagination-controls";
 
 const LIMIT_OPTIONS = [5, 10, 20, 50, 100];
 
@@ -33,7 +34,11 @@ export function Dashboard() {
   const search = getParam(params, "search", "");
   const limit = Number(getParam(params, "limit", "10"));
 
-  const { data, isPending, isError,  fetchStatus } = useArtsQuery({ page, limit, search });
+  const { data, isPending, isError, fetchStatus } = useArtsQuery({
+    page,
+    limit,
+    search,
+  });
 
   const handlePageChange = useCallback(
     (newPage: number) => {
@@ -44,38 +49,40 @@ export function Dashboard() {
 
   const handleSearchChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      updateSearchParams(params, {
-        search: e.target.value,
-        page: "1",
-      }, setParams);
+      updateSearchParams(
+        params,
+        {
+          search: e.target.value,
+          page: "1",
+        },
+        setParams
+      );
     },
     [params, setParams]
   );
 
   const handleLimitChange = useCallback(
     (newLimit: number) => {
-      updateSearchParams(params, {
-        limit: String(newLimit),
-        page: "1",
-      }, setParams);
+      updateSearchParams(
+        params,
+        {
+          limit: String(newLimit),
+          page: "1",
+        },
+        setParams
+      );
     },
     [params, setParams]
   );
 
   const totalItems = useMemo(() => data?.total ?? 0, [data]);
 
-  //  if (status === "pending") {return <p>Pending</p>}
-
-
-  if (isPending) return <Status message="Завантаження..." />;
   if (isError) return <Status message="Помилка завантаження даних" isError />;
- 
 
   return (
     <main className="max-w-screen grid grid-cols-1 gap-4 p-4">
+      
 
-      {fetchStatus === "fetching" && <p>Fetching</p>}
-     
       <Toolbar
         total={totalItems}
         search={search}
@@ -90,7 +97,12 @@ export function Dashboard() {
         onPageChange={handlePageChange}
       />
 
-      <Grid arts={data?.data} />
+
+
+      {isPending && <GridSkeleton />}
+      {!isPending && <Grid arts={data?.data} />}
+
+      {fetchStatus === "fetching" && <p>Шукаємо...</p>}
     </main>
   );
 }
@@ -128,7 +140,13 @@ function Toolbar({
   );
 }
 
-function Status({ message, isError = false }: { message: string; isError?: boolean }) {
+function Status({
+  message,
+  isError = false,
+}: {
+  message: string;
+  isError?: boolean;
+}) {
   return (
     <div className={`text-center text-lg ${isError ? "text-red-500" : ""}`}>
       {message}
