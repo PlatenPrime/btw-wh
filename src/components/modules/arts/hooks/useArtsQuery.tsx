@@ -19,7 +19,7 @@ export function useArtsQuery({
   filters = {},
   enabled = true,
 }: UseArtsQueryParams) {
-  const debouncedSearch = useDebounce(search, 400);
+  const debouncedSearch = useDebounce(search, 600);
 
   return useQuery<ArtResponseData>({
     queryKey: ["arts", { page, limit, search: debouncedSearch, ...filters }],
@@ -27,5 +27,6 @@ export function useArtsQuery({
       getArts({ page, limit, search: debouncedSearch, filters, signal }),
     placeholderData: (prev) => prev,
     enabled,
+    staleTime: 180_000,
   });
 }
