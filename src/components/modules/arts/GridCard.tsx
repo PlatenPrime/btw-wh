@@ -8,9 +8,10 @@ import {
 } from "@/components/ui/card";
 import type { Art } from "./types/types";
 import { Link } from "react-router";
+import { getBigImageUrl } from "./services/arts";
 
 export function ArtListCard({ art }: { art: Art }) {
-  const bigImageUrl = `https://sharik.ua/images/elements_big/${art.artikul}_m1.jpg`;
+ 
 
   return (
     <Link to={`/arts/${art.artikul}`} className="block h-full w-full">
@@ -21,7 +22,7 @@ export function ArtListCard({ art }: { art: Art }) {
 
         <CardContent className="flex justify-center">
           <Image
-            src={bigImageUrl}
+            src={getBigImageUrl(art.artikul)}
             alt={art.nameukr}
             // квадратное превью без «прыжков» сетки
             className="aspect-square w-full max-w-[10rem] object-cover rounded-md"

@@ -14,7 +14,7 @@ export const router = createBrowserRouter([
           { path: "dashboard", Component: Arts },
           { path: "update", Component: ArtsUpdate },
           { path: "utils", Component: ArtsUtils },
-          { path: ":art", Component: Art },
+          { path: ":artikul", Component: Art },
         ],
       },
       {
