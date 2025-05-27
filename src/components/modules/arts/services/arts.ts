@@ -11,6 +11,14 @@ export interface GetArtsParams {
   signal?: AbortSignal;
 }
 
+
+export interface GetBtradeArtInfo {
+  nameukr: string;
+  price: number;
+  quantity: number;
+  artikul: string;
+}
+
 export const getArts = async ({
   page,
   limit,
@@ -43,6 +51,15 @@ export const getArtByArtikul = async (
   const res = await apiClient.get<Art>(`/arts/artikul/${artikul}`, { signal });
   return res.data;
 };
+
+
+export const getBtradeInfoByArtikul = async (
+  artikul: string,
+  signal?: AbortSignal
+): Promise<GetBtradeArtInfo> => {
+  const res = await apiClient.get<GetBtradeArtInfo>(`/arts/btrade/${artikul}`, { signal });
+  return res.data;
+}
 
 export function getBigImageUrl(artikul: string | undefined): string {
   return `https://sharik.ua/images/elements_big/${artikul}_m1.jpg`;
