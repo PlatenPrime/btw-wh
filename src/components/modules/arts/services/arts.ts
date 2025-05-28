@@ -12,11 +12,11 @@ export interface GetArtsParams {
 }
 
 
-export interface GetBtradeArtInfo {
+export interface BtradeArtInfo {
   nameukr: string;
   price: number;
   quantity: number;
-  artikul: string;
+
 }
 
 export const getArts = async ({
@@ -56,8 +56,8 @@ export const getArtByArtikul = async (
 export const getBtradeInfoByArtikul = async (
   artikul: string,
   signal?: AbortSignal
-): Promise<GetBtradeArtInfo> => {
-  const res = await apiClient.get<GetBtradeArtInfo>(`/arts/btrade/${artikul}`, { signal });
+): Promise<BtradeArtInfo> => {
+  const res = await apiClient.get<BtradeArtInfo>(`/arts/btrade/${artikul}`, { signal });
   return res.data;
 }
 

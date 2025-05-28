@@ -1,16 +1,12 @@
 import { ArtCardContainer } from "@/components/modules/arts/ArtCardContainer";
-import { useBtradeArtInfoQuery } from "@/components/modules/arts/hooks/useBtradeArtInfoQuery";
+import { BtradeArtInfoContainer } from "@/components/modules/arts/BtradeArtInfoContainer";
 
 export function Art() {
-
-
-  const data = useBtradeArtInfoQuery("1102-0260"); 
-  
-  console.log("Products:", data); // Log the products to see the fetched data
-  // Example artikul, replace with actual value
   return (
-    <div>
+    <div className="flex flex-col gap-4">
+      <h1 className="text-2xl font-bold">Art Page</h1>
       <ArtCardContainer />
+      <BtradeArtInfoContainer />
     </div>
   );
 }
