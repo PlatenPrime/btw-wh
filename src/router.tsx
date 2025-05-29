@@ -1,7 +1,5 @@
-import { createBrowserRouter } from "react-router";
-// import App from "./App";
-// import { Art, Arts, ArtsUpdate, ArtsUtils, Ask, Asks, Defs, Main, Path, Row, Rows, Stock, Stocks, WhUtils, Zones } from "./pages";
-
+// router.tsx
+import { createHashRouter } from "react-router";
 import { lazy } from "react";
 
 const App = lazy(() => import("./App"));
@@ -27,7 +25,7 @@ const Stocks = lazy(() => import("./pages/stocks").then(module => ({ default: mo
 const WhUtils = lazy(() => import("./pages/whUtils").then(module => ({ default: module.WhUtils })));
 const Zones = lazy(() => import("./pages/zones").then(module => ({ default: module.Zones })));
 
-export const router = createBrowserRouter([
+export const router = createHashRouter([
   {
     path: "/",
     Component: App,
@@ -59,7 +57,7 @@ export const router = createBrowserRouter([
           { path: "asks", Component: Asks },
           { path: "asks/:ask", Component: Ask },
           { path: "defs", Component: Defs },
-          { path: "path", Component: Path }, 
+          { path: "path", Component: Path },
         ],
       },
     ],
