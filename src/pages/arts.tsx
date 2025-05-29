@@ -1,7 +1,12 @@
 import { Dashboard } from "@/components/modules/arts/Dashboard";
+import { SidebarInsetLayout } from "@/components/sidebar-inset-layout";
 
 export function Arts() {
   return (
-      <Dashboard />
+    <SidebarInsetLayout headerText="Артикули">
+      <main className=" p-4">
+        <Dashboard />
+      </main>
+    </SidebarInsetLayout>
   );
 }
