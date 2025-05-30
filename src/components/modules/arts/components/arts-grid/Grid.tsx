@@ -1,13 +1,15 @@
 // components/ArtGrid.tsx
-import { ArtListResponsiveItem } from "@/components/modules/arts/components/GridResponsiveItem";
+import { GridResponsiveItem } from "@/components/modules/arts/components/arts-grid/GridResponsiveItem";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
-import type { Art } from "../types/types";
+import type { Art } from "../../types/types";
+
 
 interface ArtGridProps {
   arts: Art[] | undefined;
+  isPending?: boolean;
 }
 
-export function Grid({ arts }: ArtGridProps) {
+export function Grid({ arts, isPending }: ArtGridProps) {
   const isMobile = useMediaQuery("(max-width: 768px)");
 
   if (!arts || arts.length === 0) {
@@ -22,9 +24,10 @@ export function Grid({ arts }: ArtGridProps) {
       auto-rows-[1fr]
     "
     >
+      {isPending && <p>Завантаження...</p>}
       {arts.map((art) => (
         <li key={art.artikul} className="flex">
-          <ArtListResponsiveItem art={art} isMobile={isMobile} />
+          <GridResponsiveItem isPending={isPending} art={art} isMobile={isMobile} />
         </li>
       ))}
     </ul>

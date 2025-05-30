@@ -1,4 +1,4 @@
-import { Dashboard } from "@/components/modules/arts/Dashboard";
+import { Dashboard } from "@/components/modules/arts/components/Dashboard";
 import { SidebarInsetLayout } from "@/components/sidebar-inset-layout";
 
 export function Arts() {

@@ -2,13 +2,12 @@ import { useCallback, useMemo } from "react";
 import { useSearchParams } from "react-router";
 
 import { PaginationControls } from "@/components/pagination-controls";
-import { Grid } from "./Grid";
-import { GridSkeleton } from "./GridSkeleton";
 import { useArtsQuery } from "../hooks/useArtsQuery";
-import { Toolbar } from "./Toolbar";
 import { getParam } from "../utils/getParam";
 import { updateSearchParams } from "../utils/updateSearchParams";
+import { Grid } from "./arts-grid/Grid";
 import { Status } from "./Status";
+import { Toolbar } from "./Toolbar";
 
 export function Dashboard() {
   const [params, setParams] = useSearchParams();
@@ -79,14 +78,11 @@ export function Dashboard() {
         totalPages={data?.totalPages ?? 1}
         onPageChange={handlePageChange}
         isPending={isPending}
-
       />
 
-      {isPending && <GridSkeleton />}
-      {!isPending && <Grid arts={data?.data} />}
+       <Grid arts={data?.data} isPending={isPending} />
 
       {fetchStatus === "fetching" && <p>Шукаємо...</p>}
     </main>
   );
 }
-
