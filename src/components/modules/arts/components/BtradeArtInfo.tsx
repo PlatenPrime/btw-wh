@@ -1,4 +1,4 @@
-import type { BtradeArtInfo } from "./services/arts";
+import type { BtradeArtInfo } from "../services/arts";
 
 export function BtradeArtInfo({ info }: { info: BtradeArtInfo }) {
 

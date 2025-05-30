@@ -6,11 +6,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { getBigImageUrl } from "./services/arts";
-import type { Art } from "./types/types";
+import { getBigImageUrl } from "../services/arts";
+import type { Art } from "../types/types";
 
 export function ArtCard({ artikul }: { artikul: Art | undefined }) {
-
   return (
     <Card className="flex h-full flex-col justify-between">
       <CardHeader className="text-center">

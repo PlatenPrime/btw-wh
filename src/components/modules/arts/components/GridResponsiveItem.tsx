@@ -1,6 +1,6 @@
+import type { Art } from "../types/types";
 import { ArtListCard } from "./GridCard";
 import { ArtListItem } from "./GridItem";
-import type { Art } from "./types/types";
 
 interface ArtListResponsiveItemProps {
   art: Art;

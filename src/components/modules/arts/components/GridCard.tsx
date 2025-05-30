@@ -6,9 +6,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import type { Art } from "./types/types";
+import type { Art } from "../types/types";
 import { Link } from "react-router";
-import { getBigImageUrl } from "./services/arts";
+import { getBigImageUrl } from "../services/arts";
 
 export function ArtListCard({ art }: { art: Art }) {
  

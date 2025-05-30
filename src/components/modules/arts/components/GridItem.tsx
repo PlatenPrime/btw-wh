@@ -1,8 +1,8 @@
 import { Image } from "@/components/image";
 import { Card, CardDescription } from "@/components/ui/card";
 import { Link } from "react-router";
-import type { Art } from "./types/types";
-import { getSmallImageUrl } from "./services/arts";
+import type { Art } from "../types/types";
+import { getSmallImageUrl } from "../services/arts";
 
 export function ArtListItem({ art }: { art: Art }) {
 

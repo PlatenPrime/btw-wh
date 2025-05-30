@@ -4,10 +4,10 @@ import { useSearchParams } from "react-router";
 import { PaginationControls } from "@/components/pagination-controls";
 import { Grid } from "./Grid";
 import { GridSkeleton } from "./GridSkeleton";
-import { useArtsQuery } from "./hooks/useArtsQuery";
+import { useArtsQuery } from "../hooks/useArtsQuery";
 import { Toolbar } from "./Toolbar";
-import { getParam } from "./utils/getParam";
-import { updateSearchParams } from "./utils/updateSearchParams";
+import { getParam } from "../utils/getParam";
+import { updateSearchParams } from "../utils/updateSearchParams";
 import { Status } from "./Status";
 
 export function Dashboard() {
