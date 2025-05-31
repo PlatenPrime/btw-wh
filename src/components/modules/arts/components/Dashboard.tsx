@@ -6,6 +6,7 @@ import { useArtsQuery } from "../hooks/useArtsQuery";
 import { getParam } from "../utils/getParam";
 import { updateSearchParams } from "../utils/updateSearchParams";
 import { Grid } from "./arts-grid/Grid";
+import { GridSkeleton } from "./arts-grid/GridSkeleton";
 import { Status } from "./Status";
 import { Toolbar } from "./Toolbar";
 
@@ -80,7 +81,7 @@ export function Dashboard() {
         isPending={isPending}
       />
 
-       <Grid arts={data?.data} isPending={isPending} />
+      {isPending ? <GridSkeleton /> : <Grid arts={data?.data} />}
 
       {fetchStatus === "fetching" && <p>Шукаємо...</p>}
     </main>
