@@ -63,7 +63,7 @@ export function Dashboard() {
   if (isError) return <Status message="Помилка завантаження даних" isError />;
 
   return (
-    <main className="max-w-screen grid grid-cols-1 gap-4 p-4">
+    <main className="max-w-screen grid grid-cols-1 gap-4 p-2">
       <Toolbar
         total={totalItems}
         search={search}

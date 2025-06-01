@@ -27,7 +27,7 @@ export function Toolbar({
 
   return (
     <section className="flex flex-col md:flex-row items-center md:justify-between gap-4 items-center">
-      <div className="flex items-center gap-2 w-full md:w-auto relative">
+      <div className="flex items-center gap-2 w-full md:w-[600px] relative">
         <Search className="pointer-events-none absolute top-1/2 left-2 size-4 -translate-y-1/2 opacity-50" />
         <Input
           placeholder="Пошук артикулів"
