@@ -1,3 +1,7 @@
+import { SidebarInsetLayout } from "@/components/sidebar-inset-layout";
+
 export  function Stocks() {
-  return <div>stocks</div>;
+  return  <SidebarInsetLayout headerText="Залишки">
+          <main className=" p-4"></main>
+        </SidebarInsetLayout>
 }

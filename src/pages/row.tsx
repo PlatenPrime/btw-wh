@@ -1,3 +1,7 @@
+import { SidebarInsetLayout } from "@/components/sidebar-inset-layout";
+
 export function Row() {
-  return <div>row</div>;
+  return  <SidebarInsetLayout headerText="Ряд">
+          <main className=" p-4"></main>
+        </SidebarInsetLayout>
 }

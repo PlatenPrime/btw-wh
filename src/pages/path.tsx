@@ -1,3 +1,7 @@
+import { SidebarInsetLayout } from "@/components/sidebar-inset-layout";
+
 export function Path() {
-  return <div>path</div>;
+  return  <SidebarInsetLayout headerText="Послідовність зняття">
+          <main className=" p-4"></main>
+        </SidebarInsetLayout>
 }
