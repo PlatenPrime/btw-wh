@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getBtradeInfoByArtikul } from "../services/arts";
+import { getBtradeInfoByArtikul } from "../api/getBtradeInfoByArtikul";
 
 export function useBtradeArtInfoQuery(artikul: string) {
     if (!artikul) {

@@ -1,13 +1,13 @@
 import { useMediaQuery } from "@/hooks/useMediaQuery";
-import type { Art } from "../../types/types";
+import type { ArtDto } from "../../types/dto";
 import { GridCard } from "./GridCard";
 import { GridItem } from "./GridItem";
 
-interface ArtGridProps {
-  arts: Art[] | undefined;
+interface GridProps {
+  arts: ArtDto[] | undefined;
 }
 
-export function Grid({ arts }: ArtGridProps) {
+export function Grid({ arts }: GridProps) {
   const isMobile = useMediaQuery("(max-width: 768px)");
 
   if (!arts || arts.length === 0) {

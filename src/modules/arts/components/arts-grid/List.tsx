@@ -1,8 +1,8 @@
-import type { Art } from "../../types/types";
+import type { ArtDto } from "../../types/dto";
 import { GridItem } from "./GridItem";
 
 interface ListProps {
-  items: Art[] | undefined;
+  items: ArtDto[] | undefined;
 }
 
 export function List({ items }: ListProps) {
@@ -11,7 +11,7 @@ export function List({ items }: ListProps) {
       className="
       grid
         grid-cols-1
-        gap-4
+        gap-2
         auto-rows-[1fr]
       "
     >

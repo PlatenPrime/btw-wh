@@ -1,5 +1,5 @@
-import { useArtQuery } from "@/components/modules/arts/hooks/useArtQuery";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useArtQuery } from "@/modules/arts/hooks/useArtQuery";
 import { ArtCard } from "./ArtCard";
 
 export function ArtCardContainer() {

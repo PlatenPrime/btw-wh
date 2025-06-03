@@ -8,10 +8,10 @@ import {
 } from "@/components/ui/card";
 import { Link } from "react-router";
 import { getBigImageUrl } from "../../services/arts";
-import type { Art } from "../../types/types";
+import type { ArtDto } from "../../types/dto";
 
 interface GridCardProps {
-  art: Art;
+  art: ArtDto;
 }
 
 export function GridCard({ art }: GridCardProps) {

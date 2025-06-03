@@ -1,10 +1,10 @@
-export interface BtradeStock {
+export interface BtradeStockDto {
   value: number;
   date: string;
   _id: string;
 }
 
-export interface Art {
+export interface ArtDto {
   _id: string;
   artikul: string;
   nameukr: string;
@@ -12,12 +12,18 @@ export interface Art {
   zone: string;
   marker: string;
   __v: number;
-  btradeStock: BtradeStock;
+  btradeStock: BtradeStockDto;
 }
 
-export interface ArtResponseData {
-  data: Art[];
+export interface ArtsDto {
+  data: ArtDto[];
   total: number;
   page: number;
   totalPages: number;
+}
+
+export interface BtradeArtInfoDto {
+  nameukr: string;
+  price: number;
+  quantity: number;
 }

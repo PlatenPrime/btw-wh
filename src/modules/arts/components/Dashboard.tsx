@@ -3,12 +3,12 @@ import { useSearchParams } from "react-router";
 
 import { PaginationControls } from "@/components/pagination-controls";
 import { useArtsQuery } from "../hooks/useArtsQuery";
-import { getParam } from "../utils/getParam";
-import { updateSearchParams } from "../utils/updateSearchParams";
+import { getParam } from "../../../utils/getParam";
+import { updateSearchParams } from "../../../utils/updateSearchParams";
 import { Grid } from "./arts-grid/Grid";
 import { GridSkeleton } from "./arts-grid/GridSkeleton";
-import { Status } from "./Status";
-import { Toolbar } from "./Toolbar";
+import { Status } from "./arts-grid/Status";
+import { Toolbar } from "./arts-grid/Toolbar";
 
 export function Dashboard() {
   const [params, setParams] = useSearchParams();

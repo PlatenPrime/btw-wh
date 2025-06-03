@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { useParams } from "react-router";
-import { useBtradeArtInfoQuery } from "../hooks/useBtradeArtInfoQuery";
+import { useBtradeArtInfoQuery } from "../../hooks/useBtradeArtInfoQuery";
 import { BtradeArtInfo } from "./BtradeArtInfo";
 
 export function BtradeArtInfoContainer() {

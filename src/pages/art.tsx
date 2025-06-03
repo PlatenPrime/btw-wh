@@ -1,6 +1,6 @@
-import { ArtCardContainer } from "@/components/modules/arts/components/ArtCardContainer";
-import { BtradeArtInfoContainer } from "@/components/modules/arts/components/BtradeArtInfoContainer";
 import { SidebarInsetLayout } from "@/components/sidebar-inset-layout";
+import { ArtCardContainer } from "@/modules/arts/components/art-info/ArtCardContainer";
+import { BtradeArtInfoContainer } from "@/modules/arts/components/art-info/BtradeArtInfoContainer";
 
 export function Art() {
   return (
