@@ -2,7 +2,7 @@ import { SelectLimit } from "@/components/select-limit";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { FetchStatus } from "@tanstack/react-query";
-import { Search } from "lucide-react";
+import { LoaderPinwheel, NotepadText, Search } from "lucide-react";
 
 export function Toolbar({
   total,
@@ -40,9 +40,9 @@ export function Toolbar({
       <div className="flex justify-between items-center gap-4 w-full md:w-auto">
         <p className="flex items-center gap-1 text-muted-foreground">
           {fetchStatus === "fetching" ? (
-            <span className="animate-spin">🔄</span>
+            <LoaderPinwheel className="animate-spin" />
           ) : (
-            <span>📊</span>
+            <NotepadText />
           )}
           {total}
         </p>

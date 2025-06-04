@@ -7,7 +7,7 @@ import { getParam } from "../../../utils/getParam";
 import { updateSearchParams } from "../../../utils/updateSearchParams";
 import { Grid } from "./arts-grid/Grid";
 import { GridSkeleton } from "./arts-grid/GridSkeleton";
-import { Status } from "./arts-grid/Status";
+import { Status } from "@/components/Status";
 import { Toolbar } from "./arts-grid/Toolbar";
 
 export function Dashboard() {
@@ -83,7 +83,7 @@ export function Dashboard() {
 
       {isPending ? <GridSkeleton /> : <Grid arts={data?.data} />}
 
-      {fetchStatus === "fetching" && <p>Шукаємо...</p>}
+    
     </main>
   );
 }
