@@ -7,7 +7,7 @@ import { getParam } from "../../../utils/getParam";
 import { updateSearchParams } from "../../../utils/updateSearchParams";
 import { Grid } from "./arts-grid/Grid";
 import { GridSkeleton } from "./arts-grid/GridSkeleton";
-import { Status } from "@/components/Status";
+import { Status } from "@/components/status";
 import { Toolbar } from "./arts-grid/Toolbar";
 
 export function Dashboard() {
