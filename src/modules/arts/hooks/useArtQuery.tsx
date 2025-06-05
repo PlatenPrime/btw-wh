@@ -2,11 +2,8 @@
 import { getArtByArtikul } from "@/modules/arts/api/getArtByArtikul";
 import type { ArtDto } from "@/modules/arts/types/dto";
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router";
 
-export function useArtQuery() {
-  const { artikul } = useParams<{ artikul: string }>();
-
+export function useArtQuery(artikul?: string) {
   return useQuery<ArtDto>({
     queryKey: ["art", artikul],
     queryFn: ({ signal }) => {
