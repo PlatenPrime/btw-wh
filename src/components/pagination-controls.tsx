@@ -25,7 +25,7 @@ export function PaginationControls({ currentPage, totalPages, onPageChange, isPe
         ← Назад
       </Button>
 
-      <span className="text-sm">
+      <span className="text-sm text-nowrap ">
         Сторінка {currentPage} із {totalPages}
       </span>
 

@@ -1,0 +1,65 @@
+import { useMemo } from "react";
+import type { ArtsDto } from "../types/dto";
+import { ArtsFetchIndicator } from "./arts-panel/ArtsFetchIndicator";
+import { SelectLimit } from "@/components/select-limit";
+import { SearchPanel } from "./arts-panel/SearchPanel";
+import { PaginationControls } from "@/components/pagination-controls";
+import { GridSkeleton } from "./arts-grid/GridSkeleton";
+import { Grid } from "./arts-grid/Grid";
+
+type DashboardViewProps = {
+  data: ArtsDto | undefined;
+  isPending: boolean;
+  fetchStatus: "idle" | "fetching" | "paused";
+  page: number;
+  search: string;
+  limit: number;
+  onPageChange: (page: number) => void;
+  onSearchChange: (search: string) => void;
+  onLimitChange: (limit: number) => void;
+};
+
+
+
+
+export function DashboardView({
+  data,
+  isPending,
+  fetchStatus,
+  search,
+  limit,
+  onPageChange,
+  onSearchChange,
+  onLimitChange,
+}: DashboardViewProps) {
+  const totalItems = useMemo(() => data?.total ?? 0, [data]);
+
+  return (
+    <main className="max-w-screen grid grid-cols-1 gap-4 p-2">
+      <div className="flex flex-col xl:flex-row items-center gap-4">
+        <div className="flex w-full xl:w-auto justify-between xl:justify-start gap-4">
+          <ArtsFetchIndicator total={totalItems} fetchStatus={fetchStatus} />
+          <SelectLimit
+            limitOptions={[5, 10, 20, 50, 100]}
+            limit={limit}
+            setLimit={onLimitChange}
+          />
+        </div>
+
+        <SearchPanel
+          search={search}
+          onSearchChange={(e) => onSearchChange(e.target.value)}
+        />
+
+        <PaginationControls
+          currentPage={data?.page ?? 1}
+          totalPages={data?.totalPages ?? 1}
+          onPageChange={onPageChange}
+          isPending={isPending}
+        />
+      </div>
+
+      {isPending ? <GridSkeleton /> : <Grid arts={data?.data ?? []} />}
+    </main>
+  );
+}
