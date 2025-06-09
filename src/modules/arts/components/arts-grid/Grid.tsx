@@ -28,7 +28,7 @@ export function Grid({ arts }: GridProps) {
               : "[grid-template-columns:repeat(auto-fill,minmax(220px,1fr))]"
           } 
           auto-rows-[1fr] 
-          gap-4
+          gap-2
         `}
     >
       {arts.map((art) => (

@@ -36,7 +36,12 @@ export function DashboardView({
 
   return (
     <main className="max-w-screen grid grid-cols-1 gap-4 p-2">
-      <div className="flex flex-col xl:flex-row items-center gap-4">
+      <div className="flex flex-col xl:flex-row items-center gap-4 xl:gap-8">
+
+        <SearchPanel
+          search={search}
+          onSearchChange={(e) => onSearchChange(e.target.value)}
+        />
         <div className="flex w-full xl:w-auto justify-between xl:justify-start gap-4">
           <ArtsFetchIndicator total={totalItems} fetchStatus={fetchStatus} />
           <SelectLimit
@@ -45,11 +50,6 @@ export function DashboardView({
             setLimit={onLimitChange}
           />
         </div>
-
-        <SearchPanel
-          search={search}
-          onSearchChange={(e) => onSearchChange(e.target.value)}
-        />
 
         <PaginationControls
           currentPage={data?.page ?? 1}

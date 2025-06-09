@@ -1,15 +1,17 @@
-// import { useParams } from "react-router";
+import { MapPin } from "lucide-react";
+import type { ArtDto } from "../../types/dto";
 
-import { BtradeArtInfoContainer } from "./BtradeArtInfoContainer";
+interface ArtInfoProps {
+  artInfo: ArtDto; // Replace 'any' with the actual type of artInfo
+}
 
-export function ArtInfo() {
-  //   const { artikul } = useParams<{ artikul: string }>();
+export function ArtInfo({ artInfo }: ArtInfoProps) {
+
 
   return (
-    <section>
-      {" "}
-      <h1 className="text-xl font-semibold mb-4">Інформація про артикул</h1>
-      <BtradeArtInfoContainer />
+    <section className="flex flex-col gap-2">
+      <h2 className="text-xl font-semibold mb-2">{artInfo.nameukr}</h2>
+        <p className="flex items-center gap-1 text-muted-foreground" > <MapPin /> {artInfo.zone}</p>
     </section>
   );
 }

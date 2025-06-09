@@ -1,20 +1,26 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import { useParams } from "react-router";
 import { useBtradeArtInfoQuery } from "../../hooks/useBtradeArtInfoQuery";
 import { BtradeArtInfo } from "./BtradeArtInfo";
+import { Status } from "@/components/status";
 
-export function BtradeArtInfoContainer() {
-  const { artikul } = useParams<{ artikul: string }>();
+interface BtradeArtInfoContainerProps {
+  artikul: string | undefined;
+  // The artikul parameter is used to fetch specific art information.
+}
 
+export function BtradeArtInfoContainer({
+  artikul,
+}: BtradeArtInfoContainerProps) {
   const {
     data: btradeArtInfo,
     isPending,
     error,
-  } = useBtradeArtInfoQuery(artikul || "");
+    isError
+  } = useBtradeArtInfoQuery(artikul ?? "");
 
   if (isPending) return <Skeleton className="h-16 w-full" />;
 
-  if (error) return <p>{error.message}</p>;
+  if (error) return <Status  isError={isError} message="Дані з sharik.ua відсутні" />;
   if (!btradeArtInfo) return <p>No information available</p>;
 
   return (

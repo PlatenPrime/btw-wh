@@ -1,17 +1,21 @@
-import { Button } from "@/components/ui/button"
-import { Skeleton } from "./ui/skeleton"
+import { Button } from "@/components/ui/button";
+import { NotepadText } from "lucide-react";
+import { Skeleton } from "./ui/skeleton";
 
 type Props = {
-  currentPage: number
-  totalPages: number
-  onPageChange: (page: number) => void
-  isPending?: boolean
-}
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+  isPending?: boolean;
+};
 
-export function PaginationControls({ currentPage, totalPages, onPageChange, isPending = false }: Props) {
-
-
- if (isPending) {
+export function PaginationControls({
+  currentPage,
+  totalPages,
+  onPageChange,
+  isPending = false,
+}: Props) {
+  if (isPending) {
     return <Skeleton className="h-12" />;
   }
 
@@ -25,9 +29,14 @@ export function PaginationControls({ currentPage, totalPages, onPageChange, isPe
         ← Назад
       </Button>
 
-      <span className="text-sm text-nowrap ">
-        Сторінка {currentPage} із {totalPages}
-      </span>
+      {totalPages <= 1 ? (
+        <span className="text-sm text-muted-foreground">0</span>
+      ) : (
+        <span className="text-sm flex items-center text-muted-foreground text-nowrap ">
+          <NotepadText />
+          {currentPage} / {totalPages}
+        </span>
+      )}
 
       <Button
         onClick={() => onPageChange(currentPage + 1)}
@@ -37,5 +46,5 @@ export function PaginationControls({ currentPage, totalPages, onPageChange, isPe
         Далі →
       </Button>
     </div>
-  )
+  );
 }

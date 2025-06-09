@@ -19,7 +19,7 @@ export function SidebarInsetLayout({
           <SidebarTrigger className="-ml-1" />
           <Separator orientation="vertical" className="mr-2 h-4" />
      
-          {headerText && <h1 className="text-2xl font-bold">{headerText}</h1>}
+          {headerText && <h1 className="text-2xl font-bold ">{headerText}</h1>}
         </div>
       </header>
 
