@@ -1,5 +1,5 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import { useArtQuery } from "../../../hooks/useArtQuery";
+import { useArtQuery } from "../../hooks/useArtQuery";
 import { ArtInfo } from "./view";
 
 interface ArtInfoContainerProps {

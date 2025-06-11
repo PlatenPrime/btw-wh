@@ -1,11 +1,11 @@
-import { useMemo } from "react";
-import type { ArtsDto } from "../types/dto";
-import { ArtsFetchIndicator } from "./arts-panel/ArtsFetchIndicator";
-import { SelectLimit } from "@/components/select-limit";
-import { SearchPanel } from "./arts-panel/SearchPanel";
 import { PaginationControls } from "@/components/pagination-controls";
-import { GridSkeleton } from "./arts-grid/GridSkeleton";
-import { Grid } from "./arts-grid/Grid";
+import { SelectLimit } from "@/components/select-limit";
+import { useMemo } from "react";
+import type { ArtsDto } from "../../types/dto";
+import { ArtsFetchIndicator } from "../dashboard-fetch-indicator";
+import { Grid } from "../dashboard-grid";
+import { GridSkeleton } from "../dashboard-grid/skeleton";
+import { SearchPanel } from "../dashboard-search";
 
 type DashboardViewProps = {
   data: ArtsDto | undefined;
@@ -18,9 +18,6 @@ type DashboardViewProps = {
   onSearchChange: (search: string) => void;
   onLimitChange: (limit: number) => void;
 };
-
-
-
 
 export function DashboardView({
   data,
@@ -37,7 +34,6 @@ export function DashboardView({
   return (
     <main className="max-w-screen grid grid-cols-1 gap-4 p-2">
       <div className="flex flex-col xl:flex-row items-center gap-4 xl:gap-8">
-
         <SearchPanel
           search={search}
           onSearchChange={(e) => onSearchChange(e.target.value)}

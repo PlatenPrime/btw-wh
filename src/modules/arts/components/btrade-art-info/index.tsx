@@ -1,6 +1,6 @@
 import { Status } from "@/components/status";
 import { Skeleton } from "@/components/ui/skeleton";
-import { BtradeArtInfo } from "@/modules/arts/components/art-card/btrade-art-info/view";
+import { BtradeArtInfo } from "./view";
 import { useBtradeArtInfoQuery } from "@/modules/arts/hooks/useBtradeArtInfoQuery";
 
 interface BtradeArtInfoContainerProps {

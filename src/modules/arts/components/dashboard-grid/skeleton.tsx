@@ -1,6 +1,6 @@
 import { useMediaQuery } from "@/hooks/useMediaQuery";
-import { GridCardSkeleton } from "./GridCardSkeleton";
-import { GridItemSkeleton } from "./GridItemSkeleton";
+import { GridCardSkeleton } from "../dashboard-grid-card/skeleton";
+import { GridItemSkeleton } from "../dashboard-list-item/skeleton";
 
 export function GridSkeleton() {
   const isMobile = useMediaQuery("(max-width: 768px)");

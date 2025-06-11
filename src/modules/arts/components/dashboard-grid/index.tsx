@@ -1,7 +1,7 @@
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import type { ArtDto } from "../../types/dto";
-import { GridCard } from "./GridCard";
-import { GridItem } from "./GridItem";
+import { GridCard } from "../dashboard-grid-card";
+import { GridItem } from "../dashboard-list-item";
 
 interface GridProps {
   arts: ArtDto[] | undefined;

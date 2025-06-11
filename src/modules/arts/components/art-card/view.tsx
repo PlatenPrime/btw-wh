@@ -1,5 +1,5 @@
-import { ArtInfoContainer } from "./art-info";
-import { BtradeArtInfoContainer } from "./btrade-art-info";
+import { ArtInfoContainer } from "../art-info";
+import { BtradeArtInfoContainer } from "@/modules/arts/components/btrade-art-info";
 
 export function ArtCard({ artikul }: { artikul: string | undefined }) {
   return (
