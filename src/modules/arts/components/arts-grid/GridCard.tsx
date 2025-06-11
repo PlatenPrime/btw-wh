@@ -1,13 +1,7 @@
 import { Image } from "@/components/image";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription } from "@/components/ui/card";
 import { Link } from "react-router";
-import { getBigImageUrl } from "../../services/arts";
+import { getBigImageUrl } from "../../services/art-image-url";
 import type { ArtDto } from "../../types/dto";
 
 interface GridCardProps {
@@ -18,9 +12,9 @@ export function GridCard({ art }: GridCardProps) {
   return (
     <Link to={`/arts/${art.artikul}`} className="block h-full w-full ">
       <Card className="flex h-full flex-col justify-between hover:shadow-2xl hover:shadow-gray-500 transition-shadow duration-300">
-        <CardHeader className="text-center">
+        {/* <CardHeader className="text-center">
           <CardTitle>{art.artikul}</CardTitle>
-        </CardHeader>
+        </CardHeader> */}
 
         <CardContent className="flex justify-center">
           <Image

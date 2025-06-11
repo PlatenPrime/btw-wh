@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import { useArtQuery } from "../../hooks/useArtQuery";
-import { ArtInfo } from "./ArtInfo";
+import { useArtQuery } from "../../../hooks/useArtQuery";
+import { ArtInfo } from "./view";
 
 interface ArtInfoContainerProps {
   artikul: string | undefined;
@@ -9,8 +9,8 @@ interface ArtInfoContainerProps {
 export function ArtInfoContainer({ artikul }: ArtInfoContainerProps) {
   const { data: artInfo, isPending, error } = useArtQuery(artikul);
 
-    if (isPending) return <Skeleton className="h-16 w-full" />;
-    if (error) return <p>Error: {error.message}</p>;
+  if (isPending) return <Skeleton className="h-16 w-full" />;
+  if (error) return <p>Error: {error.message}</p>;
 
   return <ArtInfo artInfo={artInfo} />;
 }

@@ -1,7 +1,7 @@
-import { Skeleton } from "@/components/ui/skeleton";
-import { useBtradeArtInfoQuery } from "../../hooks/useBtradeArtInfoQuery";
-import { BtradeArtInfo } from "./BtradeArtInfo";
 import { Status } from "@/components/status";
+import { Skeleton } from "@/components/ui/skeleton";
+import { BtradeArtInfo } from "@/modules/arts/components/art-card/btrade-art-info/view";
+import { useBtradeArtInfoQuery } from "@/modules/arts/hooks/useBtradeArtInfoQuery";
 
 interface BtradeArtInfoContainerProps {
   artikul: string | undefined;
@@ -15,12 +15,13 @@ export function BtradeArtInfoContainer({
     data: btradeArtInfo,
     isPending,
     error,
-    isError
+    isError,
   } = useBtradeArtInfoQuery(artikul ?? "");
 
   if (isPending) return <Skeleton className="h-16 w-full" />;
 
-  if (error) return <Status  isError={isError} message="Дані з sharik.ua відсутні" />;
+  if (error)
+    return <Status isError={isError} message="Дані з sharik.ua відсутні" />;
   if (!btradeArtInfo) return <p>No information available</p>;
 
   return (

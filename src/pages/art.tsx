@@ -1,5 +1,5 @@
 import { SidebarInsetLayout } from "@/components/sidebar-inset-layout";
-import { ArtCardContainer } from "@/modules/arts/components/art-info/ArtCardContainer";
+import { ArtCardContainer } from "@/modules/arts/components/art-card";
 import { useParams } from "react-router";
 
 export function Art() {

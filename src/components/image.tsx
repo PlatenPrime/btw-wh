@@ -5,7 +5,7 @@ interface ImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
 }
 
 const DEFAULT_FALLBACK =
-  "https://placehold.co/100x100?text=Артикул&font=roboto"; // Заглушка, можно заменить
+  "https://placehold.co/400x400?text=Артикул&font=roboto"; // Заглушка, можно заменить
 
 export const Image: React.FC<ImageProps> = ({
   src,

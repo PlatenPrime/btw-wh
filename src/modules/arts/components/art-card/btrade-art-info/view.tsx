@@ -14,8 +14,8 @@ export function BtradeArtInfo({ info }: BtradeArtInfoProps) {
 
   return (
     <section className="flex flex-col gap-2">
-      <p className="flex items-center gap-1 text-muted-foreground" ><DollarSign />{info.price} грн</p>
-      <p className="flex items-center gap-1 text-muted-foreground"><Warehouse />{info.quantity}</p>
+      <p className="flex items-center gap-1 text-muted-foreground" ><DollarSign className="text-emerald-500" />{info.price} грн</p>
+      <p className="flex items-center gap-1 text-muted-foreground"><Warehouse className="text-sky-500" />{info.quantity}</p>
     </section>
   );
 }
