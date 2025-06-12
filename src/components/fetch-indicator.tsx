@@ -1,21 +1,23 @@
-import { BookA, LoaderPinwheel } from "lucide-react";
+import { LoaderPinwheel } from "lucide-react";
 
-interface ArtsFetchIndicatorProps {
+interface FetchIndicatorProps {
   total: number;
   fetchStatus: string;
+  icon: React.ReactNode;
 }
 
-export function ArtsFetchIndicator({
+export function FetchIndicator({
   total,
   fetchStatus,
-}: ArtsFetchIndicatorProps) {
+  icon,
+}: FetchIndicatorProps) {
   return (
     <div className="flex justify-between items-center gap-4 w-full md:w-auto">
       <p className="flex items-center gap-1 text-muted-foreground">
         {fetchStatus === "fetching" ? (
           <LoaderPinwheel className="animate-spin" />
         ) : (
-          <BookA />
+          icon
         )}
         {total}
       </p>

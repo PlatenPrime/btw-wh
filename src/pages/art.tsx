@@ -1,4 +1,4 @@
-import { SidebarInsetLayout } from "@/components/sidebar-inset-layout";
+import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout";
 import { ArtCardContainer } from "@/modules/arts/components/art-card";
 import { useParams } from "react-router";
 

@@ -1,6 +1,5 @@
-
-import { ThemeProvider } from "./components/theme-provider";
-import { Layout } from "./components/layout";
+import { Layout } from "./components/layout/layout";
+import { ThemeProvider } from "./providers/theme-provider";
 
 function App() {
   return (

@@ -1,10 +1,10 @@
+import { FetchIndicator } from "@/components/fetch-indicator";
 import { PaginationControls } from "@/components/pagination-controls";
 import { SelectLimit } from "@/components/select-limit";
+import { BookA } from "lucide-react";
 import { useMemo } from "react";
 import type { ArtsDto } from "../../types/dto";
-import { ArtsFetchIndicator } from "../dashboard-fetch-indicator";
 import { Grid } from "../dashboard-grid";
-import { GridSkeleton } from "../dashboard-grid/skeleton";
 import { SearchPanel } from "../dashboard-search";
 
 type DashboardViewProps = {
@@ -32,14 +32,18 @@ export function DashboardView({
   const totalItems = useMemo(() => data?.total ?? 0, [data]);
 
   return (
-    <main className="max-w-screen grid grid-cols-1 gap-4 p-2">
-      <div className="flex flex-col xl:flex-row items-center gap-4 xl:gap-8">
+    <main className="max-w-screen grid grid-cols-1 gap-2 md:gap-4 p-2 md:p-4">
+      <div className="flex flex-col xl:flex-row items-center gap-4 ">
         <SearchPanel
           search={search}
           onSearchChange={(e) => onSearchChange(e.target.value)}
         />
         <div className="flex w-full xl:w-auto justify-between xl:justify-start gap-4">
-          <ArtsFetchIndicator total={totalItems} fetchStatus={fetchStatus} />
+          <FetchIndicator
+            total={totalItems}
+            fetchStatus={fetchStatus}
+            icon={<BookA />}
+          />
           <SelectLimit
             limitOptions={[5, 10, 20, 50, 100]}
             limit={limit}
@@ -55,7 +59,7 @@ export function DashboardView({
         />
       </div>
 
-      {isPending ? <GridSkeleton /> : <Grid arts={data?.data ?? []} />}
+      <Grid arts={data?.data ?? []} isPending={isPending} />
     </main>
   );
 }
