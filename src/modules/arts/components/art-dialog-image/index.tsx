@@ -20,12 +20,13 @@ export function ArtDialogImage({ artikul }: ArtImageProps) {
   return (
     <Dialog>
       {/* Оборачиваем preview-картинку в DialogTrigger, чтобы клик открывал диалог */}
-      <DialogTrigger asChild>
+      <DialogTrigger  asChild>
         <Image
           src={getSmallImageUrl(artikul)}
           alt={artikul}
-          className="w-16 rounded-md object-cover cursor-pointer"
+          className="w-20 rounded-md object-cover cursor-pointer"
           loading="lazy"
+       
         />
       </DialogTrigger>
 

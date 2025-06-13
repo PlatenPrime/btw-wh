@@ -1,5 +1,5 @@
-import { Skeleton } from "@/components/ui/skeleton";
 import { useArtQuery } from "../../hooks/useArtQuery";
+import { ArtInfoSkeleton } from "./skeleton";
 import { ArtInfo } from "./view";
 
 interface ArtInfoContainerProps {
@@ -9,7 +9,7 @@ interface ArtInfoContainerProps {
 export function ArtInfoContainer({ artikul }: ArtInfoContainerProps) {
   const { data: artInfo, isPending, error } = useArtQuery(artikul);
 
-  if (isPending) return <Skeleton className="h-16 w-full" />;
+  if (isPending) return <ArtInfoSkeleton />;
   if (error) return <p>Error: {error.message}</p>;
 
   return <ArtInfo artInfo={artInfo} />;

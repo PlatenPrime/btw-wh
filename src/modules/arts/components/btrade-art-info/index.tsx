@@ -5,11 +5,13 @@ import { useBtradeArtInfoQuery } from "@/modules/arts/hooks/useBtradeArtInfoQuer
 
 interface BtradeArtInfoContainerProps {
   artikul: string | undefined;
+  zone?: string; // zone is not used in this component but can be passed for future use
   // The artikul parameter is used to fetch specific art information.
 }
 
 export function BtradeArtInfoContainer({
   artikul,
+  zone, // zone is not used in this component but can be passed for future use
 }: BtradeArtInfoContainerProps) {
   const {
     data: btradeArtInfo,
@@ -18,7 +20,7 @@ export function BtradeArtInfoContainer({
     isError,
   } = useBtradeArtInfoQuery(artikul ?? "");
 
-  if (isPending) return <Skeleton className="h-16 w-full" />;
+  if (isPending) return <Skeleton className="h-8 w-full" />;
 
   if (error)
     return <Status isError={isError} message="Дані з sharik.ua відсутні" />;
@@ -26,7 +28,7 @@ export function BtradeArtInfoContainer({
 
   return (
     <div>
-      <BtradeArtInfo info={btradeArtInfo} />
+      <BtradeArtInfo zone={zone} info={btradeArtInfo} />
     </div>
   );
 }
