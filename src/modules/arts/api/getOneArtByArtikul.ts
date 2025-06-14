@@ -1,7 +1,7 @@
 import { apiClient } from "@/lib/apiClient";
 import type { ArtDto } from "../types/dto";
 
-export const getArtByArtikul = async (
+export const getOneArtByArtikul = async (
   artikul: string,
   signal?: AbortSignal
 ): Promise<ArtDto> => {

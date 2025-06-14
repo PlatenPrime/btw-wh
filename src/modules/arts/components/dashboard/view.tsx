@@ -10,7 +10,7 @@ import { SearchPanel } from "../dashboard-search";
 type DashboardViewProps = {
   data: ArtsDto | undefined;
   isPending: boolean;
-  fetchStatus: "idle" | "fetching" | "paused";
+  isFetching: boolean;
   page: number;
   search: string;
   limit: number;
@@ -22,7 +22,7 @@ type DashboardViewProps = {
 export function DashboardView({
   data,
   isPending,
-  fetchStatus,
+  isFetching = false,
   search,
   limit,
   onPageChange,
@@ -41,7 +41,7 @@ export function DashboardView({
         <div className="flex w-full xl:w-auto justify-between xl:justify-start gap-4">
           <FetchIndicator
             total={totalItems}
-            fetchStatus={fetchStatus}
+            isFetching={isFetching}
             icon={<BookA />}
           />
           <SelectLimit
@@ -59,7 +59,7 @@ export function DashboardView({
         />
       </div>
 
-      <Grid arts={data?.data ?? []} isPending={isPending} />
+      <Grid arts={data?.data ?? []} isPending={isPending} isFetching={isFetching}  />
     </main>
   );
 }

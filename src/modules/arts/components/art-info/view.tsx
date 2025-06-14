@@ -9,7 +9,7 @@ interface ArtInfoProps {
 export function ArtInfo({ artInfo }: ArtInfoProps) {
   return (
     <section className="flex flex-col gap-2">
-      <div className="flex gap-2 items-start">
+      <div className="flex gap-2 items-center">
         <ArtDialogImage artikul={artInfo.artikul}  />
         <div className="grid">
           <h2 className="text-xl font-semibold mb-2">{artInfo.nameukr}</h2>

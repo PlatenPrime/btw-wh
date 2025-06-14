@@ -1,7 +1,8 @@
+import { SERVER_URL } from '@/constants/server';
 import axios from 'axios';
 
 export const apiClient = axios.create({
-  baseURL: "https://btw-wh.up.railway.app/api",
+  baseURL: SERVER_URL,
   timeout: 10000,
 });
 

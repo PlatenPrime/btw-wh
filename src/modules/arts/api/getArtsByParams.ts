@@ -9,7 +9,7 @@ export interface GetArtsParams {
   signal?: AbortSignal;
 }
 
-export const getArts = async ({
+export const getArtsByParams = async ({
   page,
   limit,
   search = "",

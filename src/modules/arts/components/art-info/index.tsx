@@ -1,4 +1,4 @@
-import { useArtQuery } from "../../hooks/useArtQuery";
+import { useOneArtQuery } from "../../api/useOneArtQuery";
 import { ArtInfoSkeleton } from "./skeleton";
 import { ArtInfo } from "./view";
 
@@ -7,7 +7,7 @@ interface ArtInfoContainerProps {
 }
 
 export function ArtInfoContainer({ artikul }: ArtInfoContainerProps) {
-  const { data: artInfo, isPending, error } = useArtQuery(artikul);
+  const { data: artInfo, isPending, error } = useOneArtQuery(artikul);
 
   if (isPending) return <ArtInfoSkeleton />;
   if (error) return <p>Error: {error.message}</p>;

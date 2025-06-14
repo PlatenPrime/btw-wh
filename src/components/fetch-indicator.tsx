@@ -2,19 +2,19 @@ import { LoaderPinwheel } from "lucide-react";
 
 interface FetchIndicatorProps {
   total: number;
-  fetchStatus: string;
+  isFetching: boolean;
   icon: React.ReactNode;
 }
 
 export function FetchIndicator({
   total,
-  fetchStatus,
+  isFetching,
   icon,
 }: FetchIndicatorProps) {
   return (
     <div className="flex justify-between items-center gap-4 w-full md:w-auto">
       <p className="flex items-center gap-1 text-muted-foreground">
-        {fetchStatus === "fetching" ? (
+        {isFetching ? (
           <LoaderPinwheel className="animate-spin" />
         ) : (
           icon

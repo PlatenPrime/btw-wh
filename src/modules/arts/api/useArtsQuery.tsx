@@ -1,8 +1,8 @@
 // hooks/useArtsQuery.ts
 import { useDebounce } from "@/hooks/useDebounce";
 import type { ArtsDto } from "@/modules/arts/types/dto";
-import { useQuery } from "@tanstack/react-query";
-import { getArts } from "../api/getArts";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { getArtsByParams } from "./getArtsByParams";
 
 export interface UseArtsQueryParams {
   page: number;
@@ -19,14 +19,22 @@ export function useArtsQuery({
   filters = {},
   enabled = true,
 }: UseArtsQueryParams) {
-  const debouncedSearch = useDebounce(search, 600);
+  const debouncedSearch = useDebounce(search, 500);
 
   return useQuery<ArtsDto>({
     queryKey: ["arts", { page, limit, search: debouncedSearch, ...filters }],
-    queryFn: ({ signal }) =>
-      getArts({ page, limit, search: debouncedSearch, filters, signal }),
-    placeholderData: (prev) => prev,
+    queryFn: ({ signal}) =>
+      getArtsByParams({
+        page,
+        limit,
+        search: debouncedSearch,
+        filters,
+        signal,
+      }),
+    // placeholderData: (prev) => prev,
+    placeholderData: keepPreviousData,
     enabled,
-    staleTime: 180_000,
+    staleTime: 5 * 60  * 1000,
+
   });
 }
