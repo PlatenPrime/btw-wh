@@ -1,6 +1,7 @@
 import React from "react";
 import { Separator } from "../ui/separator";
 import { SidebarInset, SidebarTrigger } from "../ui/sidebar";
+import { Toaster } from "@/components/ui/sonner"
 
 export function SidebarInsetLayout({
   headerText,
@@ -20,7 +21,8 @@ export function SidebarInsetLayout({
         </div>
       </header>
 
-      <div className="mt-16 ">{children}</div>
+      <main className="mt-16 ">{children}</main>
+      <Toaster />
     </SidebarInset>
   );
 }
