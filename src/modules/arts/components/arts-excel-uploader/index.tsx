@@ -1,14 +1,28 @@
 import { apiClient } from "@/lib/apiClient"; // путь подкорректируй если нужно
+import type { AxiosResponse } from "axios";
 import React, { useState } from "react";
 import { toast } from "sonner";
 import * as XLSX from "xlsx";
 import type { UploadingArt } from "../../types";
 import { View } from "./view";
 
+type UpsertResponse = {
+  message: string;
+  result: {
+    insertedCount: number;
+    matchedCount: number;
+    modifiedCount: number;
+    deletedCount: number;
+    upsertedCount: number;
+    upsertedIds: Record<string, string>;
+    insertedIds: Record<string, string>;
+  };
+};
+
 export const ArtsExcelUploader = () => {
   const [parsedData, setParsedData] = useState<UploadingArt[] | null>(null);
   const [uploadProgress, setUploadProgress] = useState(0);
-  const [isUploadFinished, setIsUploadFinished] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
   const [preview, setPreview] = useState<UploadingArt[]>([]);
 
   const handleFileRead = (file: File): Promise<UploadingArt[]> => {
@@ -88,20 +102,25 @@ export const ArtsExcelUploader = () => {
     }
 
     try {
-      const response = await apiClient.post("/arts/upsert", parsedData, {
-        onUploadProgress: (e) => {
-          const percent = Math.round((e.loaded * 100) / (e.total || 1));
-          setUploadProgress(percent);
-        },
-      });
+      setIsUploading(true);
+      const response: AxiosResponse<UpsertResponse> = await apiClient.post(
+        "/arts/upsert",
+        parsedData,
+        {
+          onUploadProgress: (e) => {
+            const percent = Math.round((e.loaded * 100) / (e.total || 1));
+            setUploadProgress(percent);
+          },
+        }
+      );
       setUploadProgress(100);
       setTimeout(() => {
         setUploadProgress(0);
-        setIsUploadFinished(false);
+        setIsUploading(false);
       }, 2000);
       toast("Імпорт завершено ✅", {
         description: `Імпортовано записів: ${
-          response.data?.length ?? "невідомо"
+          response.data.result.modifiedCount ?? "невідомо"
         }`,
       });
 
@@ -126,7 +145,7 @@ export const ArtsExcelUploader = () => {
       preview={preview}
       parsedData={parsedData}
       uploadProgress={uploadProgress}
-      isUploadFinished={isUploadFinished}
+      isUploading={isUploading}
     />
   );
 };
