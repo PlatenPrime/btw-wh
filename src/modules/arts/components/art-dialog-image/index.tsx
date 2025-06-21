@@ -1,9 +1,6 @@
 import { Image } from "@/components/image";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import {
-  getBigImageUrl,
-  getSmallImageUrl,
-} from "@/modules/arts/services/art-image-url";
+import { getBigImageUrl, getSmallImageUrl } from "@/lib/art-image-url";
 
 interface ArtImageProps {
   artikul?: string;
@@ -20,13 +17,12 @@ export function ArtDialogImage({ artikul }: ArtImageProps) {
   return (
     <Dialog>
       {/* Оборачиваем preview-картинку в DialogTrigger, чтобы клик открывал диалог */}
-      <DialogTrigger  asChild>
+      <DialogTrigger asChild>
         <Image
           src={getSmallImageUrl(artikul)}
           alt={artikul}
           className="w-24 rounded-md object-cover cursor-pointer"
           loading="lazy"
-       
         />
       </DialogTrigger>
 

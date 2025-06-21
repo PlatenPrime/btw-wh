@@ -1,6 +1,6 @@
 import { Image } from "@/components/image";
 import { Card, CardDescription } from "@/components/ui/card";
-import { getSmallImageUrl } from "@/modules/arts/services/art-image-url";
+import { getSmallImageUrl } from "@/lib/art-image-url";
 import type { ArtDto } from "@/modules/arts/types/dto";
 import { Link } from "react-router";
 
