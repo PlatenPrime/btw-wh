@@ -1,8 +1,6 @@
-import { Image } from "@/components/image";
 import { ImageBlurContainer } from "@/components/img-blur-container";
-import { Card, CardContent, CardDescription } from "@/components/ui/card";
+import { Card, CardDescription } from "@/components/ui/card";
 import { Link } from "react-router";
-import { getSmallImageUrl } from "../../../../lib/art-image-url";
 import type { ArtDto } from "../../types/dto";
 
 interface GridCardProps {
@@ -18,18 +16,10 @@ export function GridCard({ art }: GridCardProps) {
         </CardHeader> */}
 
         <ImageBlurContainer
-          artikul={art.artikul}  
-          className="flex h-full  flex-col justify-between"
+          artikul={art.artikul}
+          preview={{ alt: art.nameukr }}
+          className="h-full"
         >
-          <CardContent className="flex justify-center pt-2">
-            <Image
-              src={getSmallImageUrl(art.artikul)}
-              alt={art.nameukr}
-              // квадратное превью без «прыжков» сетки
-              className="aspect-square w-full max-w-[6rem] object-cover rounded-md"
-            />
-          </CardContent>
-
           <CardDescription className="p-2 text-center text-foreground">
             {art.nameukr}
           </CardDescription>

@@ -5,7 +5,11 @@ import { useTheme } from "@/providers/theme-provider";
 
 interface ImageBlurContainerProps extends React.ComponentProps<"div"> {
   artikul: string;
-  overlay?: boolean; 
+  overlay?: boolean;
+  preview?: {
+    alt: string;
+    className?: string;
+  };
 }
 
 export function ImageBlurContainer({
@@ -13,34 +17,39 @@ export function ImageBlurContainer({
   artikul,
   children,
   overlay = true,
+  preview,
   ...props
 }: ImageBlurContainerProps) {
   const { theme } = useTheme();
+  const imageUrl = getSmallImageUrl(artikul);
 
   return (
-    <div
-      className={cn("relative isolate overflow-hidden rounded-xl", className)}
-      {...props}
-    >
-      {/* Размытая фоновая картинка */}
+    <div className={cn("relative isolate overflow-hidden rounded-xl", className)} {...props}>
       <Image
-        src={getSmallImageUrl(artikul)}
+        src={imageUrl}
         alt={artikul}
         className="absolute inset-0 h-full w-full object-cover blur-xl scale-125"
       />
 
-      {/* Затемнение (по желанию) */}
       {overlay && (
         <div
           className={cn(
-            "absolute inset-0 bg-black/50 backdrop-blur",
+            "absolute inset-0 backdrop-blur",
             theme === "dark" ? "bg-black/50" : "bg-white/50"
           )}
         />
       )}
 
-      {/* Контент поверх фона */}
-      <div className="relative z-10">{children}</div>
+      <div className="relative z-10 flex flex-col items-center justify-between h-full">
+        {preview && (
+          <Image
+            src={imageUrl}
+            alt={preview.alt}
+            className={cn("aspect-square w-full max-w-[6rem] object-cover rounded-md mt-2", preview.className)}
+          />
+        )}
+        {children}
+      </div>
     </div>
   );
 }
