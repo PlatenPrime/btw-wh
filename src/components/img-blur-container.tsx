@@ -35,7 +35,7 @@ export function ImageBlurContainer({
         <div
           className={cn(
             "absolute inset-0 backdrop-blur",
-            theme === "dark" ? "bg-black/50" : "bg-white/50"
+            theme === "dark" ? "bg-black/75" : "bg-white/50"
           )}
         />
       )}
