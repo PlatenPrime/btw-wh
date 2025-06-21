@@ -10,7 +10,13 @@ interface GridCardProps {
 export function GridCard({ art }: GridCardProps) {
   return (
     <Link to={`/arts/${art.artikul}`} className="block h-full w-full ">
-      <Card className=" hover:scale-102 hover:shadow-2xl hover:shadow-gray-500 transition-all duration-300 p-0  ">
+      <Card
+        className="h-full p-0 bg-background transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]
+             shadow-none hover:shadow-2xl shadow-muted-foreground
+             hover:scale-105 hover:-translate-y-1
+             hover:z-10 
+             ring-1 ring-gray-200 dark:ring-gray-700"
+      >
         {/* <CardHeader className="text-center">
           <CardTitle>{art.artikul}</CardTitle>
         </CardHeader> */}
