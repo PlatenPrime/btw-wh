@@ -9,7 +9,7 @@ interface GridCardProps {
 
 export function GridCard({ art }: GridCardProps) {
   return (
-    <Link to={`/arts/${art.artikul}`} className="block h-full w-full ">
+    <Link to={`/arts/${art.artikul}`} className="block h-full w-full  ">
       <Card
         className="h-full p-0 bg-background transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]
              shadow-none hover:shadow-2xl shadow-muted-foreground
@@ -17,14 +17,10 @@ export function GridCard({ art }: GridCardProps) {
              hover:z-10 
              ring-1 ring-gray-200 dark:ring-gray-700"
       >
-        {/* <CardHeader className="text-center">
-          <CardTitle>{art.artikul}</CardTitle>
-        </CardHeader> */}
-
         <ImageBlurContainer
           artikul={art.artikul}
-          preview={{ alt: art.nameukr }}
-          className="h-full"
+          imgData={{ alt: art.nameukr }}
+          className="h-full rounded-xl "
         >
           <CardDescription className="p-2 text-center text-foreground">
             {art.nameukr}

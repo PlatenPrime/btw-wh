@@ -7,7 +7,7 @@ export function useDashboardParams() {
 
   const page = Number(getParam(params, "page", "1"));
   const search = getParam(params, "search", "");
-  const limit = Number(getParam(params, "limit", "10"));
+  const limit = Number(getParam(params, "limit", "20"));
 
   const setPage = (newPage: number) =>
     updateSearchParams(params, { page: String(newPage) }, setParams);

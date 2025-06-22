@@ -6,7 +6,8 @@ import { useTheme } from "@/providers/theme-provider";
 interface ImageBlurContainerProps extends React.ComponentProps<"div"> {
   artikul: string;
   overlay?: boolean;
-  preview?: {
+  isMoreOverlay?: boolean;
+  imgData?: {
     alt: string;
     className?: string;
   };
@@ -17,14 +18,18 @@ export function ImageBlurContainer({
   artikul,
   children,
   overlay = true,
-  preview,
+  isMoreOverlay = false,
+  imgData,
   ...props
 }: ImageBlurContainerProps) {
   const { theme } = useTheme();
   const imageUrl = getSmallImageUrl(artikul);
 
   return (
-    <div className={cn("relative isolate overflow-hidden rounded-xl", className)} {...props}>
+    <div
+      className={cn("relative isolate overflow-hidden ", className)}
+      {...props}
+    >
       <Image
         src={imageUrl}
         alt={artikul}
@@ -40,12 +45,24 @@ export function ImageBlurContainer({
         />
       )}
 
+      {isMoreOverlay && (
+        <div
+          className={cn(
+            "absolute inset-0 ",
+            theme === "dark" ? "bg-black/25" : "bg-white/50"
+          )}
+        />
+      )}
+
       <div className="relative z-10 flex flex-col items-center justify-between h-full">
-        {preview && (
+        {imgData && (
           <Image
             src={imageUrl}
-            alt={preview.alt}
-            className={cn("aspect-square w-full max-w-[6rem] object-cover rounded-md mt-2", preview.className)}
+            alt={imgData.alt}
+            className={cn(
+              "aspect-square w-full max-w-[6rem] object-cover rounded-md mt-2",
+              imgData.className
+            )}
           />
         )}
         {children}

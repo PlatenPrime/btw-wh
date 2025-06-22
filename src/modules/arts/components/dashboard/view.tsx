@@ -45,7 +45,7 @@ export function DashboardView({
             icon={<BookA />}
           />
           <SelectLimit
-            limitOptions={[5, 10, 20, 50, 100]}
+            limitOptions={[ 20, 50, 100, 200,500]}
             limit={limit}
             setLimit={onLimitChange}
           />
