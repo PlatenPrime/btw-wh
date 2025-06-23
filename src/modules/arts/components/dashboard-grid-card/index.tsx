@@ -1,4 +1,4 @@
-import { ImageBlurContainer } from "@/components/img-blur-container";
+import { ImageBlurContainer } from "@/components/image/image-blur-container";
 import { Card, CardDescription } from "@/components/ui/card";
 import { Link } from "react-router";
 import type { ArtDto } from "../../types/dto";

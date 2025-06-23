@@ -1,4 +1,4 @@
-import { Image } from "@/components/image";
+import { Image } from "@/components/image/image";
 import { getSmallImageUrl } from "@/lib/art-image-url";
 import { cn } from "@/lib/utils";
 import { useTheme } from "@/providers/theme-provider";
@@ -33,7 +33,7 @@ export function ImageBlurContainer({
       <Image
         src={imageUrl}
         alt={artikul}
-        className="absolute inset-0 h-full w-full object-cover blur-xl scale-125"
+        className="absolute inset-0 h-full w-full object-cover blur-xl scale-200"
       />
 
       {overlay && (

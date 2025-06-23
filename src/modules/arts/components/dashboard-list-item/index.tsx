@@ -1,4 +1,4 @@
-import { Image } from "@/components/image";
+import { Image } from "@/components/image/image";
 import { Card, CardDescription } from "@/components/ui/card";
 import { getSmallImageUrl } from "@/lib/art-image-url";
 import type { ArtDto } from "@/modules/arts/types/dto";
