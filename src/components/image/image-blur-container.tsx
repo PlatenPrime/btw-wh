@@ -7,10 +7,6 @@ interface ImageBlurContainerProps extends React.ComponentProps<"div"> {
   artikul: string;
   overlay?: boolean;
   isMoreOverlay?: boolean;
-  imgData?: {
-    alt: string;
-    className?: string;
-  };
 }
 
 export function ImageBlurContainer({
@@ -18,8 +14,7 @@ export function ImageBlurContainer({
   artikul,
   children,
   overlay = true,
-  isMoreOverlay = false,
-  imgData,
+  isMoreOverlay = true,
   ...props
 }: ImageBlurContainerProps) {
   const { theme } = useTheme();
@@ -27,7 +22,7 @@ export function ImageBlurContainer({
 
   return (
     <div
-      className={cn("relative isolate overflow-hidden ", className)}
+      className={cn("relative isolate overflow-hidden", className)}
       {...props}
     >
       <Image
@@ -48,23 +43,13 @@ export function ImageBlurContainer({
       {isMoreOverlay && (
         <div
           className={cn(
-            "absolute inset-0 ",
+            "absolute inset-0",
             theme === "dark" ? "bg-black/25" : "bg-white/50"
           )}
         />
       )}
 
-      <div className="relative z-10 flex flex-col items-center justify-between h-full">
-        {imgData && (
-          <Image
-            src={imageUrl}
-            alt={imgData.alt}
-            className={cn(
-              "aspect-square w-full max-w-[6rem] object-cover rounded-md mt-2",
-              imgData.className
-            )}
-          />
-        )}
+      <div className="relative z-10 h-full w-full">
         {children}
       </div>
     </div>
