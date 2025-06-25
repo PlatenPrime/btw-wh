@@ -14,7 +14,7 @@ export function ImageBlurContainer({
   artikul,
   children,
   overlay = true,
-  isMoreOverlay = true,
+  isMoreOverlay = false,
   ...props
 }: ImageBlurContainerProps) {
   const { theme } = useTheme();

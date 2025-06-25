@@ -4,7 +4,7 @@ import { GridItemSkeleton } from "../dashboard-list-item/skeleton";
 
 export function GridSkeleton() {
   const isMobile = useMediaQuery("(max-width: 768px)");
-  const items = Array.from({ length: 10 }, (_, i) => i);
+  const items = Array.from({ length: 20 }, (_, i) => i);
 
   return (
     <ul

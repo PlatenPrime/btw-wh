@@ -26,7 +26,7 @@ export function GridCard({ art }: GridCardProps) {
             <Image
               src={imageUrl}
               alt={art.nameukr}
-              className="aspect-square w-full max-w-[6rem] object-cover rounded-md mt-2"
+              className="aspect-square w-full max-w-[6rem] object-cover rounded-lg mt-2 shadow-md shadow-muted-foreground "
             />
             <CardDescription className="p-2 text-center text-foreground">
               {art.nameukr}

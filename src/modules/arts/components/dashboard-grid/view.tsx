@@ -9,7 +9,7 @@ interface ViewProps {
   isFetching?: boolean;
 }
 
-export function View({ isMobile, arts, isFetching }: ViewProps) {
+export function View({ isMobile, arts, }: ViewProps) {
   if (!arts || arts.length === 0) {
     return (
       <div className="text-center text-muted-foreground">
@@ -25,7 +25,7 @@ export function View({ isMobile, arts, isFetching }: ViewProps) {
         isMobile
           ? "grid-cols-1 gap-2"
           : "[grid-template-columns:repeat(auto-fill,minmax(220px,1fr))]",
-        isFetching && "opacity-50"
+        // isFetching && "opacity-50"
       )}
     >
       {arts.map((art) => (
