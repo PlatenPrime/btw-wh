@@ -1,5 +1,5 @@
 import { useMediaQuery } from "@/hooks/useMediaQuery";
-import type { ArtDto } from "../../types/dto";
+import type { ArtDto } from "@/modules/arts/types/dto";
 import { GridSkeleton } from "./skeleton";
 import { View } from "./view";
 
@@ -9,7 +9,7 @@ interface GridProps {
   isFetching?: boolean;
 }
 
-export function Grid({ arts, isPending, isFetching}: GridProps) {
+export function Grid({ arts, isPending, isFetching }: GridProps) {
   const isMobile = useMediaQuery("(max-width: 768px)");
 
   if (isPending) {

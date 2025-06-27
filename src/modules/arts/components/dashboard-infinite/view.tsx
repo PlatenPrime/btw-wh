@@ -1,8 +1,8 @@
 // components/dashboard/view-infinite.tsx
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
-import type { ArtDto } from "../../types/dto";
-import { Grid } from "../dashboard-grid";
-import { SearchPanel } from "../dashboard-search";
+import type { ArtDto } from "@/modules/arts/types/dto";
+import { SearchPanel } from "./search";
+import { Grid } from "./grid";
 
 interface InfiniteViewProps {
   data: ArtDto[];
@@ -21,7 +21,6 @@ export function InfiniteView({
   fetchNextPage,
   hasNextPage,
   search,
-
   onSearchChange,
 }: InfiniteViewProps) {
   const bottomRef = useInfiniteScroll({
@@ -40,8 +39,18 @@ export function InfiniteView({
       </div>
 
       <Grid arts={data} isPending={isPending} isFetching={isFetchingNextPage} />
+      {isFetchingNextPage && (
+        <div className="text-center text-muted-foreground">Завантаження...</div>
+      )}
+      {!hasNextPage && !isFetchingNextPage && (
+        <div className="text-center text-muted-foreground">
+          Це все, більше немає
+        </div>
+      )}
 
-      <div ref={bottomRef} className="h-16" />
+      {/* This div is used to trigger the infinite scroll */}
+
+      <div ref={bottomRef} className="h-8" />
     </main>
   );
 }

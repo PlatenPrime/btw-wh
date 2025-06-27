@@ -2,7 +2,7 @@
 import { Status } from "@/components/status";
 import { useArtsInfiniteQuery } from "@/modules/arts/api/useArtsInfiniteQuery";
 import { useDashboardParams } from "../../hooks/useDashboardParams";
-import { InfiniteView } from "./InfiniteView";
+import { InfiniteView } from "./view";
 
 export function DashboardInfiniteContainer() {
   const { search, limit, setSearch,  } = useDashboardParams();
