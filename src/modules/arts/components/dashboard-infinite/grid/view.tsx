@@ -1,14 +1,13 @@
 import { cn } from "@/lib/utils";
-import type { ArtDto } from "@/modules/arts/types/dto";
 import { GridCard } from "@/modules/arts/components/dashboard-infinite/grid-card";
+import type { ArtDto } from "@/modules/arts/types/dto";
 
 interface ViewProps {
-  isMobile: boolean;
   arts: ArtDto[] | undefined;
   isFetching?: boolean;
 }
 
-export function View({ isMobile, arts }: ViewProps) {
+export function View({ arts }: ViewProps) {
   if (!arts || arts.length === 0) {
     return (
       <div className="text-center text-muted-foreground">
@@ -21,9 +20,8 @@ export function View({ isMobile, arts }: ViewProps) {
     <ul
       className={cn(
         "grid auto-rows-[1fr] gap-4",
-        isMobile
-          ? "grid-cols-1 gap-2"
-          : "[grid-template-columns:repeat(auto-fill,minmax(220px,1fr))]"
+        "grid-cols-1 ",
+        "md:[grid-template-columns:repeat(auto-fill,minmax(220px,1fr))]"
         // isFetching && "opacity-50"
       )}
     >
