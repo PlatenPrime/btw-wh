@@ -29,6 +29,8 @@ export function InfiniteView({
     fetchNextPage,
   });
 
+  const emptyData = data.length === 0 || !data;
+
   return (
     <main className="max-w-screen grid grid-cols-1 gap-2 md:gap-4 p-2 md:p-4">
       <div className="flex flex-col xl:flex-row items-center gap-4">
@@ -42,9 +44,9 @@ export function InfiniteView({
       {isFetchingNextPage && (
         <div className="text-center text-muted-foreground">Завантаження...</div>
       )}
-      {!hasNextPage && !isFetchingNextPage && (
+      {!hasNextPage && !isFetchingNextPage && !emptyData &&  (
         <div className="text-center text-muted-foreground">
-          Це все, більше немає
+          Кінець списку, більше немає даних
         </div>
       )}
 

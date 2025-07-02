@@ -22,7 +22,7 @@ export function View({ arts }: ViewProps) {
         "grid auto-rows-[1fr] gap-4",
         "grid-cols-1 ",
         "md:[grid-template-columns:repeat(auto-fill,minmax(220px,1fr))]"
-        // isFetching && "opacity-50"
+
       )}
     >
       {arts.map((art) => (
