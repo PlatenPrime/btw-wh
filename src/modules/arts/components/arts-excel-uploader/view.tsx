@@ -6,6 +6,7 @@ import { ProgressBar } from "./progress-bar";
 
 interface ViewProps {
   handleFileUpload: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleFileReadFromDrop: (file: File) => void;
   handleSendToServer: () => void;
   preview: UploadingArt[];
   parsedData: UploadingArt[] | null;
@@ -15,6 +16,7 @@ interface ViewProps {
 
 export function View({
   handleFileUpload,
+  handleFileReadFromDrop,
   handleSendToServer,
   preview,
   parsedData,
@@ -35,7 +37,7 @@ export function View({
         </p>
       </header>
 
-      <InputUploader handleFileUpload={handleFileUpload} />
+      <InputUploader handleFileUpload={handleFileUpload} handleFileReadFromDrop={handleFileReadFromDrop}/>
 
       <PreviewTable preview={preview} />
 

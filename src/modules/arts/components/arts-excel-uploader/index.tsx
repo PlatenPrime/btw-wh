@@ -73,6 +73,24 @@ export const ArtsExcelUploader = () => {
     });
   };
 
+  const handleFileReadFromDrop = async (file: File) => {
+    try {
+      const data = await handleFileRead(file);
+      setParsedData(data);
+      setPreview(data.slice(0, 20));
+      toast("Файл успішно прочитано ✅", {
+        description: `Знайдено записів: ${data.length}`,
+      });
+    } catch (error: unknown) {
+      const errorUpload = error as Error;
+      toast("Помилка обробки файлу ❌", {
+        description: errorUpload.message || "Помилка при читанні файлу",
+      });
+      console.error(errorUpload);
+    }
+  };
+  
+
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -138,9 +156,13 @@ export const ArtsExcelUploader = () => {
     }
   };
 
+
+
+
   return (
     <View
       handleFileUpload={handleFileUpload}
+      handleFileReadFromDrop={handleFileReadFromDrop}
       handleSendToServer={handleSendToServer}
       preview={preview}
       parsedData={parsedData}
