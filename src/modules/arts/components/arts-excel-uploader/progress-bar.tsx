@@ -25,7 +25,7 @@ export function ProgressBar({
       </div>
       <div className="w-full bg-gray-200 dark:bg-zinc-700 rounded-full h-3">
         <div
-          className="h-full bg-green-600 rounded-full transition-[width] ease-in-out duration-300"
+          className="h-full bg-emerald-600 rounded-full transition-[width] ease-in-out duration-300"
           style={{ width: `${uploadProgress}%` }}
         />
       </div>

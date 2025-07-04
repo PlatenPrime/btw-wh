@@ -24,20 +24,21 @@ export function View({
   isUploading,
 }: ViewProps) {
   return (
-    <div className="w-full grid gap-6  bg-card-background  border rounded-2xl shadow-lg p-6 ">
+    <div className="w-full grid gap-6  bg-card-background border  rounded-2xl shadow-lg p-6 ">
       <header className="space-y-2">
         <h2 className="text-2xl font-bold ">Імпорт з Excel</h2>
         <p className="text-sm text-muted-foreground">
-          Завантажте файл{" "}
-          <code className=" px-1 rounded">
-            .xlsx
-          </code>{" "}
-          з полями{" "}
+          Завантажте файл <code className=" px-1 rounded">.xlsx</code> з полями{" "}
           <span className="font-bold">artikul, zone, namerus, nameukr</span>
         </p>
       </header>
 
-      <InputUploader handleFileUpload={handleFileUpload} handleFileReadFromDrop={handleFileReadFromDrop}/>
+      <InputUploader
+        handleFileUpload={handleFileUpload}
+        handleFileReadFromDrop={handleFileReadFromDrop}
+        isUploading={isUploading}
+        uploadProgress={uploadProgress}
+      />
 
       <PreviewTable preview={preview} />
 

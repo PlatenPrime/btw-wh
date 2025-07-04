@@ -1,15 +1,20 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { FileSpreadsheet } from "lucide-react";
 import React, { useState } from "react";
 
 interface InputUploaderProps {
   handleFileUpload: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleFileReadFromDrop: (file: File) => void;
+  isUploading: boolean;
+  uploadProgress: number;
 }
 
 export function InputUploader({
   handleFileUpload,
   handleFileReadFromDrop,
+  isUploading,
+  uploadProgress,
 }: InputUploaderProps) {
   const [isDragOver, setIsDragOver] = useState(false);
 
@@ -26,8 +31,10 @@ export function InputUploader({
 
   return (
     <div
-      className={`grid w-full max-w-sm items-center gap-4 transition-colors rounded-xl ${
-        isDragOver ? "bg-emerald-100 border-emerald-400 dark:bg-emerald-900 dark:border-emerald-50 overflow-hidden" : ""
+      className={`relative transition-colors grid w-full max-w-sm items-center gap-4 border border-emerald-900  dark:border-emerald-400  rounded-2xl border-dashed p-6 ${
+        isDragOver
+          ? "bg-emerald-50 dark:bg-emerald-900 border-emerald-400 dark:border-emerald-600  "
+          : "bg-slate-500/10 border-gray-300"
       }`}
       onDragOver={(e) => {
         e.preventDefault();
@@ -36,32 +43,37 @@ export function InputUploader({
       onDragLeave={() => setIsDragOver(false)}
       onDrop={handleDrop}
     >
-      <div className="w-full py-9 bg-slate-500/10 rounded-2xl border border-gray-300 gap-3 grid border-dashed">
-        <div className="grid gap-2">
-          <h3 className="text-center text-foreground text-sm font-medium leading-snug">
-            Оберіть або перетягніть Excel файл:
-          </h3>
-          <div className="grid gap-1">
-            <h4 className="text-center text-muted-foreground text-xs leading-4">
-              Тільки формат <code>.xlsx</code>.
-            </h4>
-          </div>
-          <div className="flex items-center justify-center">
-            <Label htmlFor="excel-upload">
-              <Input
-                id="excel-upload"
-                type="file"
-                hidden
-                accept=".xlsx"
-                onChange={handleFileUpload}
-              />
-              <div className="flex w-28 h-9 px-2 flex-col bg-emerald-600 rounded-full shadow text-white text-xs font-semibold leading-4 items-center justify-center cursor-pointer focus:outline-none">
-                Вибрати
-              </div>
-            </Label>
-          </div>
-        </div>
+      <div className="grid gap-2 items-center text-center">
+        <FileSpreadsheet className="mx-auto w-8 h-8 text-emerald-600" />
+        <h3 className="text-foreground text-sm font-medium leading-snug">
+          Оберіть або перетягніть Excel файл
+        </h3>
+        <p className="text-muted-foreground text-xs leading-4">
+          Тільки формат <code>.xlsx</code>
+        </p>
+
+        <Label htmlFor="excel-upload" className="leading-4 w-fit mx-auto border border-emerald-600 rounded-full cursor-pointer flex justify-center items-center px-4 py-2 hover:bg-emerald-50 dark:hover:bg-emerald-900 text-foreground ">
+          <Input
+            id="excel-upload"
+            type="file"
+            hidden
+            accept=".xlsx"
+            onChange={handleFileUpload}
+          />
+          <p className=" ">
+            Вибрати файл
+          </p>
+        </Label>
       </div>
+
+      {/* {isUploading && (
+        <div className="absolute bottom-0 left-0 w-full h-2 bg-emerald-100 rounded-b-2xl overflow-hidden">
+          <div
+            className="h-full bg-emerald-500 transition-all"
+            style={{ width: `${uploadProgress}%` }}
+          />
+        </div>
+      )} */}
     </div>
   );
 }
