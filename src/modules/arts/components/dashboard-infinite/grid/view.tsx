@@ -10,7 +10,7 @@ interface ViewProps {
 export function View({ arts }: ViewProps) {
   if (!arts || arts.length === 0) {
     return (
-      <div className="text-center text-muted-foreground">
+      <div className="text-muted-foreground text-center">
         Немає даних для відображення
       </div>
     );
@@ -20,9 +20,8 @@ export function View({ arts }: ViewProps) {
     <ul
       className={cn(
         "grid auto-rows-[1fr] gap-4",
-        "grid-cols-1 ",
-        "md:[grid-template-columns:repeat(auto-fill,minmax(220px,1fr))]"
-
+        "grid-cols-1",
+        "md:[grid-template-columns:repeat(auto-fill,minmax(220px,1fr))]",
       )}
     >
       {arts.map((art) => (

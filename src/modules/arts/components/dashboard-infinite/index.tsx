@@ -5,7 +5,7 @@ import { useDashboardParams } from "../../hooks/useDashboardParams";
 import { InfiniteView } from "./view";
 
 export function DashboardInfiniteContainer() {
-  const { search, limit, setSearch,  } = useDashboardParams();
+  const { search, limit, setSearch } = useDashboardParams();
 
   const {
     data,
@@ -30,7 +30,6 @@ export function DashboardInfiniteContainer() {
       hasNextPage={hasNextPage}
       search={search}
       onSearchChange={setSearch}
-
     />
   );
 }

@@ -24,11 +24,11 @@ export function View({
   isUploading,
 }: ViewProps) {
   return (
-    <div className="w-full grid gap-6  bg-card-background border  rounded-2xl shadow-lg p-6 ">
+    <div className="bg-card-background grid w-full gap-6 rounded-2xl border p-6 shadow-lg">
       <header className="space-y-2">
-        <h2 className="text-2xl font-bold ">Імпорт з Excel</h2>
-        <p className="text-sm text-muted-foreground">
-          Завантажте файл <code className=" px-1 rounded">.xlsx</code> з полями{" "}
+        <h2 className="text-2xl font-bold">Імпорт з Excel</h2>
+        <p className="text-muted-foreground text-sm">
+          Завантажте файл <code className="rounded px-1">.xlsx</code> з полями{" "}
           <span className="font-bold">artikul, zone, namerus, nameukr</span>
         </p>
       </header>
@@ -45,7 +45,7 @@ export function View({
       <Button
         onClick={handleSendToServer}
         disabled={!parsedData}
-        className=" py-3 w-fit font-medium disabled:cursor-not-allowed"
+        className="w-fit py-3 font-medium disabled:cursor-not-allowed"
         variant="default"
       >
         Відправити

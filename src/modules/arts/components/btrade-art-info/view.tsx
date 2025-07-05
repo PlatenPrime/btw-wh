@@ -12,15 +12,15 @@ export function BtradeArtInfo({ info, zone }: BtradeArtInfoProps) {
   }
 
   return (
-    <div className="flex flex-wrap  gap-2">
-      <p className="flex items-center gap-1 text-muted-foreground text-nowrap">
+    <div className="flex flex-wrap gap-2">
+      <p className="text-muted-foreground flex items-center gap-1 text-nowrap">
         <MapPin size={16} className="text-orange-500" /> {zone}
       </p>
-      <p className="flex items-center gap-1 text-muted-foreground text-nowrap">
+      <p className="text-muted-foreground flex items-center gap-1 text-nowrap">
         <DollarSign size={16} className="text-emerald-500" />
         {info.price} грн
       </p>
-      <p className="flex items-center gap-1 text-muted-foreground text-nowrap">
+      <p className="text-muted-foreground flex items-center gap-1 text-nowrap">
         <Warehouse size={16} className="text-sky-500" />
         {info.quantity}
       </p>

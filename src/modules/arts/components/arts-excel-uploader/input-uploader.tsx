@@ -13,8 +13,6 @@ interface InputUploaderProps {
 export function InputUploader({
   handleFileUpload,
   handleFileReadFromDrop,
-  isUploading,
-  uploadProgress,
 }: InputUploaderProps) {
   const [isDragOver, setIsDragOver] = useState(false);
 
@@ -31,10 +29,10 @@ export function InputUploader({
 
   return (
     <div
-      className={`relative transition-colors grid w-full max-w-sm items-center gap-4 border border-emerald-900  dark:border-emerald-400  rounded-2xl border-dashed p-6 ${
+      className={`relative grid w-full max-w-sm items-center gap-4 rounded-2xl border border-dashed border-emerald-900 p-6 transition-colors dark:border-emerald-400 ${
         isDragOver
-          ? "bg-emerald-50 dark:bg-emerald-900 border-emerald-400 dark:border-emerald-600  "
-          : "bg-slate-500/10 border-gray-300"
+          ? "border-emerald-400 bg-emerald-50 dark:border-emerald-600 dark:bg-emerald-900"
+          : "border-gray-300 bg-slate-500/10"
       }`}
       onDragOver={(e) => {
         e.preventDefault();
@@ -43,16 +41,19 @@ export function InputUploader({
       onDragLeave={() => setIsDragOver(false)}
       onDrop={handleDrop}
     >
-      <div className="grid gap-2 items-center text-center">
-        <FileSpreadsheet className="mx-auto w-8 h-8 text-emerald-600" />
-        <h3 className="text-foreground text-sm font-medium leading-snug">
+      <div className="grid items-center gap-2 text-center">
+        <FileSpreadsheet className="mx-auto h-8 w-8 text-emerald-600" />
+        <h3 className="text-foreground text-sm leading-snug font-medium">
           Оберіть або перетягніть Excel файл
         </h3>
         <p className="text-muted-foreground text-xs leading-4">
           Тільки формат <code>.xlsx</code>
         </p>
 
-        <Label htmlFor="excel-upload" className="leading-4 w-fit mx-auto border border-emerald-600 rounded-full cursor-pointer flex justify-center items-center px-4 py-2 hover:bg-emerald-50 dark:hover:bg-emerald-900 text-foreground ">
+        <Label
+          htmlFor="excel-upload"
+          className="text-foreground mx-auto flex w-fit cursor-pointer items-center justify-center rounded-full border border-emerald-600 px-4 py-2 leading-4 hover:bg-emerald-50 dark:hover:bg-emerald-900"
+        >
           <Input
             id="excel-upload"
             type="file"
@@ -60,9 +61,7 @@ export function InputUploader({
             accept=".xlsx"
             onChange={handleFileUpload}
           />
-          <p className=" ">
-            Вибрати файл
-          </p>
+          <p className=" ">Вибрати файл</p>
         </Label>
       </div>
 

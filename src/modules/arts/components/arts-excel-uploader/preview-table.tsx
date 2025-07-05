@@ -1,13 +1,10 @@
 import type { UploadingArt } from "../../types";
 
-
 interface PreviewTableProps {
   preview: UploadingArt[];
 }
 
-
-
-export function PreviewTable({preview}: PreviewTableProps) {
+export function PreviewTable({ preview }: PreviewTableProps) {
   return (
     <div>
       {preview.length > 0 && (
@@ -16,10 +13,10 @@ export function PreviewTable({preview}: PreviewTableProps) {
             Попередній перегляд даних:
           </h3>
           <div className="max-h-48 overflow-auto">
-            <table className="w-full text-left text-sm ">
+            <table className="w-full text-left text-sm">
               <thead className="sticky top-0 bg-zinc-100 dark:bg-zinc-800">
                 <tr className="">
-                  <th className="px-3 py-2  text-center">artikul</th>
+                  <th className="px-3 py-2 text-center">artikul</th>
                   <th className="px-3 py-2 text-center">zone</th>
                   <th className="px-3 py-2">namerus</th>
                   <th className="px-3 py-2">nameukr</th>

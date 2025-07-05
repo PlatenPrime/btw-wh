@@ -3,12 +3,7 @@ interface ProgressBarProps {
   isUploading: boolean;
 }
 
-export function ProgressBar({
-  uploadProgress,
-  isUploading,
-}: ProgressBarProps) {
-
-
+export function ProgressBar({ uploadProgress, isUploading }: ProgressBarProps) {
   if (!isUploading) {
     return null; // Не показувати прогресбар, якщо завантаження завершено
   }
@@ -19,13 +14,13 @@ export function ProgressBar({
 
   return (
     <div>
-      <div className="flex justify-between mb-1 text-sm">
+      <div className="mb-1 flex justify-between text-sm">
         <span>Відправка на сервер...</span>
         <span>{uploadProgress}%</span>
       </div>
-      <div className="w-full bg-gray-200 dark:bg-zinc-700 rounded-full h-3">
+      <div className="h-3 w-full rounded-full bg-gray-200 dark:bg-zinc-700">
         <div
-          className="h-full bg-emerald-600 rounded-full transition-[width] ease-in-out duration-300"
+          className="h-full rounded-full bg-emerald-600 transition-[width] duration-300 ease-in-out"
           style={{ width: `${uploadProgress}%` }}
         />
       </div>

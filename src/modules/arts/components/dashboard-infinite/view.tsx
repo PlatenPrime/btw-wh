@@ -1,8 +1,8 @@
 // components/dashboard/view-infinite.tsx
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import type { ArtDto } from "@/modules/arts/types/dto";
-import { SearchPanel } from "./search";
 import { Grid } from "./grid";
+import { SearchPanel } from "./search";
 
 interface InfiniteViewProps {
   data: ArtDto[];
@@ -32,8 +32,8 @@ export function InfiniteView({
   const emptyData = data.length === 0 || !data;
 
   return (
-    <main className="max-w-screen grid grid-cols-1 gap-2 md:gap-4 p-2 md:p-4">
-      <div className="flex flex-col xl:flex-row items-center gap-4">
+    <main className="grid max-w-screen grid-cols-1 gap-2 p-2 md:gap-4 md:p-4">
+      <div className="flex flex-col items-center gap-4 xl:flex-row">
         <SearchPanel
           search={search}
           onSearchChange={(e) => onSearchChange(e.target.value)}
@@ -42,10 +42,10 @@ export function InfiniteView({
 
       <Grid arts={data} isPending={isPending} isFetching={isFetchingNextPage} />
       {isFetchingNextPage && (
-        <div className="text-center text-muted-foreground">Завантаження...</div>
+        <div className="text-muted-foreground text-center">Завантаження...</div>
       )}
-      {!hasNextPage && !isFetchingNextPage && !emptyData &&  (
-        <div className="text-center text-muted-foreground">
+      {!hasNextPage && !isFetchingNextPage && !emptyData && (
+        <div className="text-muted-foreground text-center">
           Кінець списку, більше немає даних
         </div>
       )}

@@ -9,10 +9,10 @@ interface ArtInfoProps {
 export function ArtInfo({ artInfo }: ArtInfoProps) {
   return (
     <section className="flex flex-col gap-2">
-      <div className="flex gap-2 items-center">
-        <ArtDialogImage artikul={artInfo.artikul}  />
+      <div className="flex items-center gap-2">
+        <ArtDialogImage artikul={artInfo.artikul} />
         <div className="grid">
-          <h2 className="text-xl font-semibold mb-2">{artInfo.nameukr}</h2>
+          <h2 className="mb-2 text-xl font-semibold">{artInfo.nameukr}</h2>
 
           <BtradeArtInfoContainer
             zone={artInfo.zone}

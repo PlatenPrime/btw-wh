@@ -21,17 +21,17 @@ export function ArtDialogImage({ artikul }: ArtImageProps) {
         <Image
           src={getSmallImageUrl(artikul)}
           alt={artikul}
-          className="w-24 rounded-md object-cover cursor-pointer"
+          className="w-24 cursor-pointer rounded-md object-cover"
           loading="lazy"
         />
       </DialogTrigger>
 
       {/* Само модальное окно */}
-      <DialogContent className="p-0 bg-transparent border shadow-none min-h-40 rounded-xl">
+      <DialogContent className="min-h-40 rounded-xl border bg-transparent p-0 shadow-none">
         <Image
           src={getBigImageUrl(artikul)}
           alt={artikul}
-          className="object-contain rounded-xl"
+          className="rounded-xl object-contain"
         />
       </DialogContent>
     </Dialog>

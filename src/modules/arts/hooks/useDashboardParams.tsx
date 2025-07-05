@@ -16,7 +16,11 @@ export function useDashboardParams() {
     updateSearchParams(params, { search: newSearch, page: "1" }, setParams);
 
   const setLimit = (newLimit: number) =>
-    updateSearchParams(params, { limit: String(newLimit), page: "1" }, setParams);
+    updateSearchParams(
+      params,
+      { limit: String(newLimit), page: "1" },
+      setParams,
+    );
 
   return { page, search, limit, setPage, setSearch, setLimit };
 }

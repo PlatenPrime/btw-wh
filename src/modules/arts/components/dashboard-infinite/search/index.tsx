@@ -8,7 +8,7 @@ interface SearchPanelProps {
 
 export function SearchPanel({ search, onSearchChange }: SearchPanelProps) {
   return (
-    <div className="flex items-center gap-2 w-full  relative">
+    <div className="relative flex w-full items-center gap-2">
       <Search className="pointer-events-none absolute top-1/2 left-2 size-4 -translate-y-1/2 opacity-50" />
       <Input
         placeholder="Пошук артикулів"
