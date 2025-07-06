@@ -1,0 +1,11 @@
+import "@/src/index.css";
+import { AuthProvider } from "@/src/modules/auth";
+import type { AppProps } from "next/app";
+
+export default function App({ Component, pageProps }: AppProps) {
+  return (
+    <AuthProvider>
+      <Component {...pageProps} />
+    </AuthProvider>
+  );
+}

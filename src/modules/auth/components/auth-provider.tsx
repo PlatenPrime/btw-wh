@@ -1,0 +1,154 @@
+import { createContext, useCallback, useEffect, useState } from "react";
+import * as api from "../api/authApi";
+import type {
+  AuthContextType,
+  AuthProviderProps,
+  RegisterData,
+  UpdateUserData,
+  User,
+} from "../types";
+
+export const AuthContext = createContext<AuthContextType | undefined>(
+  undefined,
+);
+
+export const AuthProvider = ({ children }: AuthProviderProps) => {
+  const [user, setUser] = useState<User | null>(null);
+  const [token, setToken] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // Load token from localStorage on mount
+  useEffect(() => {
+    const storedToken =
+      typeof window !== "undefined" ? localStorage.getItem("auth_token") : null;
+    const storedUser =
+      typeof window !== "undefined" ? localStorage.getItem("auth_user") : null;
+    if (storedToken && storedUser) {
+      setToken(storedToken);
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+
+  // Save token/user to localStorage
+  useEffect(() => {
+    if (token && user) {
+      localStorage.setItem("auth_token", token);
+      localStorage.setItem("auth_user", JSON.stringify(user));
+    } else {
+      localStorage.removeItem("auth_token");
+      localStorage.removeItem("auth_user");
+    }
+  }, [token, user]);
+
+  const login = useCallback(async (username: string, password: string) => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const data = await api.login(username, password);
+      setUser(data.user);
+      setToken(data.token);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("An unknown error occurred");
+      }
+      setUser(null);
+      setToken(null);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  const register = useCallback(
+    async (data: RegisterData) => {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const res = await api.register(data);
+        // Optionally auto-login after register
+        if (res.user && data.password) {
+          await login(data.username, data.password);
+        }
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError("An unknown error occurred");
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [login],
+  );
+
+  const logout = useCallback(() => {
+    setUser(null);
+    setToken(null);
+    setError(null);
+    localStorage.removeItem("auth_token");
+    localStorage.removeItem("auth_user");
+  }, []);
+
+  const updateUser = useCallback(
+    async (data: UpdateUserData) => {
+      if (!user || !token) return;
+      setIsLoading(true);
+      setError(null);
+      try {
+        const res = await api.updateUser(user._id, data, token);
+        setUser(res.user);
+        setToken(res.token || token);
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError("An unknown error occurred");
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [user, token],
+  );
+
+  const fetchCurrentUser = useCallback(async () => {
+    if (!user || !token) return;
+    setIsLoading(true);
+    setError(null);
+    try {
+      const res = await api.getMe(user._id, token);
+      setUser(res.user);
+      setToken(res.token || token);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("An unknown error occurred");
+      }
+      logout();
+    } finally {
+      setIsLoading(false);
+    }
+  }, [user, token, logout]);
+
+  return (
+    <AuthContext.Provider
+      value={{
+        user,
+        token,
+        isLoading,
+        error,
+        login,
+        register,
+        logout,
+        updateUser,
+        fetchCurrentUser,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
+};
