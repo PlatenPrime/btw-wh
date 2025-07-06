@@ -19,9 +19,9 @@ export function View({ arts }: ViewProps) {
   return (
     <ul
       className={cn(
-        "grid auto-rows-[1fr] gap-4",
+        "grid auto-rows-[1fr] gap-2",
         "grid-cols-1",
-        "md:[grid-template-columns:repeat(auto-fill,minmax(220px,1fr))]",
+        "md:[grid-template-columns:repeat(auto-fill,minmax(220px,1fr))] md:gap-4",
       )}
     >
       {arts.map((art) => (

@@ -1,11 +1,12 @@
 // components/dashboard/container-infinite.tsx
 import { Status } from "@/components/status";
 import { useArtsInfiniteQuery } from "@/modules/arts/api/useArtsInfiniteQuery";
-import { useDashboardParams } from "../../hooks/useDashboardParams";
+import { useState } from "react";
 import { InfiniteView } from "./view";
 
 export function DashboardInfiniteContainer() {
-  const { search, limit, setSearch } = useDashboardParams();
+  const [search, setSearch] = useState("");
+  const limit = 20;
 
   const {
     data,

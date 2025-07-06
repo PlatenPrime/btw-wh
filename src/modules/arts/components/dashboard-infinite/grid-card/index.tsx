@@ -22,7 +22,7 @@ export function GridCard({ art }: GridCardProps) {
               alt={art.nameukr}
               className="shadow-muted-foreground aspect-square w-full max-w-[6rem] rounded-lg object-cover shadow-md"
             />
-            <CardDescription className="text-foreground p-2 md:text-center">
+            <CardDescription className="text-foreground  text-shadow-lg p-2 md:text-center">
               {art.nameukr}
             </CardDescription>
           </div>

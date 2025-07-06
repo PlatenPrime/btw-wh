@@ -12,7 +12,7 @@ export function SidebarInsetLayout({
 }) {
   return (
     <SidebarInset className="relative">
-      <header className="fixed top-0 z-5 bg-background/90  w-full  flex h-16 shrink-0 items-center gap-2 border-b px-4 overflow-hidden">
+      <header className="fixed top-0 z-5 bg-background/80   w-full  flex h-16 shrink-0 items-center gap-2 border-b px-4 overflow-hidden">
         <div className="flex items-center ">
           <SidebarTrigger className="-ml-1" />
           <Separator orientation="vertical" className="mr-2 h-4" />
