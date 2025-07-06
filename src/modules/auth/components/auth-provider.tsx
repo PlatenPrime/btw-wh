@@ -1,4 +1,4 @@
-import { createContext, useCallback, useEffect, useState } from "react";
+import { createContext, useCallback, useEffect, useRef, useState } from "react";
 import * as api from "../api/authApi";
 import type {
   AuthContextType,
@@ -29,6 +29,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const isLoggingOut = useRef(false);
 
   // Load token from localStorage on mount
   useEffect(() => {
@@ -36,6 +37,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       typeof window !== "undefined" ? localStorage.getItem("auth_token") : null;
     const storedUser =
       typeof window !== "undefined" ? localStorage.getItem("auth_user") : null;
+    console.log(
+      "AuthProvider mount: storedUser",
+      storedUser,
+      "storedToken",
+      storedToken,
+    );
     if (storedToken && storedUser) {
       setToken(storedToken);
       setUser(JSON.parse(storedUser));
@@ -45,6 +52,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   // Save token/user to localStorage
   useEffect(() => {
+    if (isLoggingOut.current) return;
     if (token && user) {
       localStorage.setItem("auth_token", token);
       localStorage.setItem("auth_user", JSON.stringify(user));
@@ -106,13 +114,16 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   );
 
   const logout = useCallback(() => {
-    setIsLoading(true);
+    isLoggingOut.current = true;
     setUser(null);
     setToken(null);
     setError(null);
     localStorage.removeItem("auth_token");
     localStorage.removeItem("auth_user");
-    setIsLoading(false);
+    console.log("Logout: cleared auth localStorage");
+    setTimeout(() => {
+      isLoggingOut.current = false;
+    }, 100); // allow state to settle
   }, []);
 
   const updateUser = useCallback(

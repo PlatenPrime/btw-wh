@@ -15,7 +15,12 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { useAuth } from "@/modules/auth/hooks/useAuth";
-import { Link, Link as RouterLink, useLocation } from "react-router";
+import {
+  Link,
+  Link as RouterLink,
+  useLocation,
+  useNavigate,
+} from "react-router";
 import { appSidebarData } from "../data/app-sidebar-data";
 import { ModeToggle } from "../mode-toggle";
 import { Separator } from "../ui/separator";
@@ -23,6 +28,13 @@ import { Separator } from "../ui/separator";
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = useLocation().pathname;
   const { user, logout, isLoading } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    console.log("Logging out, navigating to /login");
+    navigate("/login", { replace: true });
+  };
 
   return (
     <Sidebar {...props}>
@@ -76,7 +88,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <Button
               size="sm"
               variant="outline"
-              onClick={logout}
+              onClick={handleLogout}
               className="mt-2 w-full"
             >
               Logout

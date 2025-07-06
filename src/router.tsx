@@ -1,6 +1,6 @@
 // router.tsx
 import { lazy } from "react";
-import { createHashRouter, Outlet } from "react-router";
+import { createHashRouter, Navigate, Outlet } from "react-router";
 import { ProtectedRoute } from "./modules/auth/components";
 
 const App = lazy(() => import("./App"));
@@ -127,5 +127,10 @@ export const router = createHashRouter([
         ],
       },
     ],
+  },
+  // Catch-all route for unauthenticated users
+  {
+    path: "*",
+    element: <Navigate to="/login" replace />,
   },
 ]);

@@ -11,10 +11,18 @@ export function ProtectedRoute({ children }: ProtectedRouteProps) {
   const location = useLocation();
 
   // Debug log
-  console.log("ProtectedRoute:", { user, isLoading });
+  console.log("ProtectedRoute:", {
+    user,
+    isLoading,
+    pathname: location.pathname,
+  });
 
   if (isLoading) return null; // or a loader
-  if (!user) {
+  if (
+    !user &&
+    location.pathname !== "/login" &&
+    location.pathname !== "/register"
+  ) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
   return <>{children}</>;
