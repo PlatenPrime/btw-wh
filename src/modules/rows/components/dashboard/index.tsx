@@ -14,7 +14,6 @@ export function Dashboard() {
     return (
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h1 className="text-foreground text-2xl font-bold">Ряди складу</h1>
           <div className="text-muted-foreground text-sm">Завантаження...</div>
         </div>
         <GridSkeleton />

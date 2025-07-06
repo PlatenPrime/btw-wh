@@ -75,7 +75,7 @@ export function RowForm({ row, onSuccess, onCancel }: RowFormProps) {
             {onCancel && (
               <Button
                 type="button"
-                variant="outline"
+                variant="destructive"
                 onClick={onCancel}
                 disabled={isSubmitting}
               >
