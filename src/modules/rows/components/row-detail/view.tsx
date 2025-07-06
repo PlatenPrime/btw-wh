@@ -4,18 +4,30 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import type { RowDto } from "@/modules/rows/types/dto";
 import { ArrowLeft, Plus, Warehouse } from "lucide-react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { DeleteRowDialog } from "../delete-row-dialog";
+import { RowDialog } from "../row-dialog";
 import { Breadcrumb } from "./breadcrumb";
 import { PalletsList } from "./pallets-list";
 import { RowStats } from "./row-stats";
 
 interface ViewProps {
   row: RowDto;
+  onRowUpdated?: () => void;
 }
 
-export function View({ row }: ViewProps) {
+export function View({ row, onRowUpdated }: ViewProps) {
+  const navigate = useNavigate();
   const palletCount = row.pallets.length;
   const isOccupied = palletCount > 0;
+
+  const handleRowDeleted = () => {
+    navigate("/wh/rows");
+  };
+
+  const handleRowUpdated = () => {
+    onRowUpdated?.();
+  };
 
   return (
     <div className="space-y-6">
@@ -49,10 +61,25 @@ export function View({ row }: ViewProps) {
             <Plus className="mr-2 h-4 w-4" />
             Додати палету
           </Button>
-          <Button size="sm">
-            <Plus className="mr-2 h-4 w-4" />
-            Редагувати
-          </Button>
+          <RowDialog
+            row={row}
+            trigger={
+              <Button size="sm">
+                <Plus className="mr-2 h-4 w-4" />
+                Редагувати
+              </Button>
+            }
+            onSuccess={handleRowUpdated}
+          />
+          <DeleteRowDialog
+            row={row}
+            trigger={
+              <Button variant="destructive" size="sm">
+                Видалити
+              </Button>
+            }
+            onSuccess={handleRowDeleted}
+          />
         </div>
       </div>
 
@@ -107,6 +134,24 @@ export function View({ row }: ViewProps) {
               </label>
               <p className="text-foreground text-lg font-semibold">
                 {isOccupied ? "Обмежено" : "Вільний ряд"}
+              </p>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-muted-foreground text-sm font-medium">
+                Створено
+              </label>
+              <p className="text-foreground text-sm">
+                {new Date(row.createdAt).toLocaleDateString()}
+              </p>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-muted-foreground text-sm font-medium">
+                Оновлено
+              </label>
+              <p className="text-foreground text-sm">
+                {new Date(row.updatedAt).toLocaleDateString()}
               </p>
             </div>
           </CardContent>

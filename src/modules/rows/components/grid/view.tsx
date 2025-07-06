@@ -5,9 +5,10 @@ import type { RowDto } from "@/modules/rows/types/dto";
 interface ViewProps {
   rows: RowDto[] | undefined;
   isFetching?: boolean;
+  onRowUpdated?: () => void;
 }
 
-export function View({ rows }: ViewProps) {
+export function View({ rows, onRowUpdated }: ViewProps) {
   if (!rows || rows.length === 0) {
     return (
       <div className="text-muted-foreground text-center">
@@ -26,7 +27,7 @@ export function View({ rows }: ViewProps) {
     >
       {rows.map((row) => (
         <li key={row._id} className="flex">
-          <GridCard row={row} />
+          <GridCard row={row} onRowUpdated={onRowUpdated} />
         </li>
       ))}
     </ul>

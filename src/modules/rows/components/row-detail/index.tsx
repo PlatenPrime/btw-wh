@@ -7,7 +7,11 @@ interface RowDetailProps {
 }
 
 export function RowDetail({ rowTitle }: RowDetailProps) {
-  const { data: row, isLoading, error } = useRowByTitleQuery(rowTitle);
+  const { data: row, isLoading, error, refetch } = useRowByTitleQuery(rowTitle);
+
+  const handleRowUpdated = () => {
+    refetch();
+  };
 
   if (isLoading) {
     return <RowDetailSkeleton />;
@@ -41,5 +45,5 @@ export function RowDetail({ rowTitle }: RowDetailProps) {
     );
   }
 
-  return <View row={row} />;
+  return <View row={row} onRowUpdated={handleRowUpdated} />;
 }

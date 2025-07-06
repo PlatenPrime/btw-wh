@@ -3,7 +3,12 @@ import { useRowsQuery } from "../../api/useRowsQuery";
 import { View } from "./view";
 
 export function Dashboard() {
-  const { data, isLoading, error } = useRowsQuery();
+  const { data, isLoading, error, refetch } = useRowsQuery();
+
+  const handleRowUpdated = () => {
+    console.log("Dashboard handleRowUpdated called, refetching data");
+    refetch();
+  };
 
   if (isLoading) {
     return (
@@ -43,5 +48,5 @@ export function Dashboard() {
     );
   }
 
-  return <View data={data} />;
+  return <View data={data} onRowUpdated={handleRowUpdated} />;
 }
