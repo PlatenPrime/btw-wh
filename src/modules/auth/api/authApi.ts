@@ -1,42 +1,71 @@
-import { RegisterData, UpdateUserData } from "../types";
-
-const BASE_URL = "/api/auth";
+import { SERVER_URL } from "../../../constants/server";
+import type { RegisterData, UpdateUserData } from "../types";
 
 export async function login(username: string, password: string) {
-  const res = await fetch(`${BASE_URL}/login`, {
+  const res = await fetch(`${SERVER_URL}auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username, password }),
   });
-  if (!res.ok) {
-    const error = await res.json();
-    throw new Error(error.message || "Login error");
+  const text = await res.text();
+  let data: unknown = null;
+  try {
+    data = text ? JSON.parse(text) : null;
+  } catch {
+    data = null;
   }
-  return res.json();
+  if (!res.ok) {
+    const message =
+      typeof data === "object" && data && "message" in data
+        ? (data as { message?: string }).message
+        : undefined;
+    throw new Error(message || "Login error");
+  }
+  return data;
 }
 
 export async function register(data: RegisterData) {
-  const res = await fetch(`${BASE_URL}/register`, {
+  const res = await fetch(`${SERVER_URL}auth/register`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
-  if (!res.ok) {
-    const error = await res.json();
-    throw new Error(error.message || "Registration error");
+  const text = await res.text();
+  let result: unknown = null;
+  try {
+    result = text ? JSON.parse(text) : null;
+  } catch {
+    result = null;
   }
-  return res.json();
+  if (!res.ok) {
+    const message =
+      typeof result === "object" && result && "message" in result
+        ? (result as { message?: string }).message
+        : undefined;
+    throw new Error(message || "Registration error");
+  }
+  return result;
 }
 
 export async function getMe(id: string, token: string) {
-  const res = await fetch(`${BASE_URL}/me/${id}`, {
+  const res = await fetch(`${SERVER_URL}auth/me/${id}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
-  if (!res.ok) {
-    const error = await res.json();
-    throw new Error(error.message || "User not found");
+  const text = await res.text();
+  let data: unknown = null;
+  try {
+    data = text ? JSON.parse(text) : null;
+  } catch {
+    data = null;
   }
-  return res.json();
+  if (!res.ok) {
+    const message =
+      typeof data === "object" && data && "message" in data
+        ? (data as { message?: string }).message
+        : undefined;
+    throw new Error(message || "User not found");
+  }
+  return data;
 }
 
 export async function updateUser(
@@ -44,7 +73,7 @@ export async function updateUser(
   data: UpdateUserData,
   token: string,
 ) {
-  const res = await fetch(`${BASE_URL}/users/${userId}`, {
+  const res = await fetch(`${SERVER_URL}auth/users/${userId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -52,9 +81,19 @@ export async function updateUser(
     },
     body: JSON.stringify(data),
   });
-  if (!res.ok) {
-    const error = await res.json();
-    throw new Error(error.message || "Update error");
+  const text = await res.text();
+  let result: unknown = null;
+  try {
+    result = text ? JSON.parse(text) : null;
+  } catch {
+    result = null;
   }
-  return res.json();
+  if (!res.ok) {
+    const message =
+      typeof result === "object" && result && "message" in result
+        ? (result as { message?: string }).message
+        : undefined;
+    throw new Error(message || "Update error");
+  }
+  return result;
 }

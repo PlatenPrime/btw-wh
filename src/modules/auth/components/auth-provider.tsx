@@ -12,10 +12,22 @@ export const AuthContext = createContext<AuthContextType | undefined>(
   undefined,
 );
 
+// Define the expected API response type
+type AuthApiResponse = {
+  user: User;
+  token: string;
+};
+
+function isAuthApiResponse(obj: unknown): obj is AuthApiResponse {
+  return (
+    typeof obj === "object" && obj !== null && "user" in obj && "token" in obj
+  );
+}
+
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   // Load token from localStorage on mount
@@ -28,6 +40,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       setToken(storedToken);
       setUser(JSON.parse(storedUser));
     }
+    setIsLoading(false);
   }, []);
 
   // Save token/user to localStorage
@@ -46,8 +59,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     setError(null);
     try {
       const data = await api.login(username, password);
-      setUser(data.user);
-      setToken(data.token);
+      if (isAuthApiResponse(data)) {
+        setUser(data.user);
+        setToken(data.token);
+      } else {
+        throw new Error("Invalid login response");
+      }
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message);
@@ -67,8 +84,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       setError(null);
       try {
         const res = await api.register(data);
-        // Optionally auto-login after register
-        if (res.user && data.password) {
+        if (
+          typeof res === "object" &&
+          res !== null &&
+          "user" in res &&
+          data.password
+        ) {
           await login(data.username, data.password);
         }
       } catch (err: unknown) {
@@ -85,11 +106,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   );
 
   const logout = useCallback(() => {
+    setIsLoading(true);
     setUser(null);
     setToken(null);
     setError(null);
     localStorage.removeItem("auth_token");
     localStorage.removeItem("auth_user");
+    setIsLoading(false);
   }, []);
 
   const updateUser = useCallback(
@@ -99,8 +122,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       setError(null);
       try {
         const res = await api.updateUser(user._id, data, token);
-        setUser(res.user);
-        setToken(res.token || token);
+        if (isAuthApiResponse(res)) {
+          setUser(res.user);
+          setToken(res.token || token);
+        } else {
+          throw new Error("Invalid updateUser response");
+        }
       } catch (err: unknown) {
         if (err instanceof Error) {
           setError(err.message);
@@ -120,8 +147,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     setError(null);
     try {
       const res = await api.getMe(user._id, token);
-      setUser(res.user);
-      setToken(res.token || token);
+      if (isAuthApiResponse(res)) {
+        setUser(res.user);
+        setToken(res.token || token);
+      } else {
+        throw new Error("Invalid fetchCurrentUser response");
+      }
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message);
