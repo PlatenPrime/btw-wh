@@ -13,7 +13,7 @@ export function GridCard({ row }: GridCardProps) {
   const isOccupied = palletCount > 0;
 
   return (
-    <Link to={`/wh/rows/${row._id}`} className="block h-full w-full">
+    <Link to={`/wh/rows/${row.title}`} className="block h-full w-full">
       <Card className="bg-background shadow-muted-foreground group h-full p-0 shadow-none ring-1 ring-gray-200 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:z-10 hover:shadow-2xl md:hover:-translate-y-1 md:hover:scale-105 dark:ring-gray-700">
         <CardHeader className="p-4 pb-2">
           <div className="flex items-start justify-between">
