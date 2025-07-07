@@ -38,7 +38,7 @@ export function DeleteRowDialog({
 
   const defaultTrigger = (
     <Button variant="destructive" size="sm">
-      Delete
+      Видалити
     </Button>
   );
 
@@ -47,26 +47,26 @@ export function DeleteRowDialog({
       <DialogTrigger asChild>{trigger || defaultTrigger}</DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Delete Row</DialogTitle>
+          <DialogTitle>Видалити ряд "{row.title}"?</DialogTitle>
           <DialogDescription>
-            Are you sure you want to delete "{row.title}"? This action cannot be
-            undone and will also delete all associated pallets and positions.
+          Ви впевнені, що хочете видалити ряд "{row.title}"? Цю дію неможливо скасувати, вона також призведе до видалення всіх пов'язаних палет та позицій.
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter>
-          <Button
-            variant="outline"
-            onClick={() => setOpen(false)}
-            disabled={deleteMutation.isPending}
-          >
-            Cancel
-          </Button>
+        <DialogFooter className="grid grid-cols-2 gap-2">
+         
           <Button
             variant="destructive"
             onClick={handleDelete}
             disabled={deleteMutation.isPending}
           >
-            {deleteMutation.isPending ? "Deleting..." : "Delete"}
+            {deleteMutation.isPending ? "Видалення.." : "Видалити"}
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => setOpen(false)}
+            disabled={deleteMutation.isPending}
+          >
+            Скасувати
           </Button>
         </DialogFooter>
       </DialogContent>

@@ -1,6 +1,5 @@
 import * as React from "react";
 
-import { Button } from "@/components/ui/button";
 import {
   Sidebar,
   SidebarContent,
@@ -15,15 +14,11 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { useAuth } from "@/modules/auth/hooks/useAuth";
-import {
-  Link,
-  Link as RouterLink,
-  useLocation,
-  useNavigate,
-} from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { appSidebarData } from "../data/app-sidebar-data";
 import { ModeToggle } from "../mode-toggle";
 import { Separator } from "../ui/separator";
+import { ProfileSidebarCard } from "./profile-sidebar-card";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = useLocation().pathname;
@@ -73,41 +68,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         ))}
       </SidebarContent>
       <SidebarRail />
-      <div className="mt-auto border-t p-4">
-        {isLoading ? null : user ? (
-          <div className="flex flex-col items-center gap-2">
-            {user.photo && (
-              <img
-                src={user.photo}
-                alt="User"
-                className="h-12 w-12 rounded-full"
-              />
-            )}
-            <div className="text-sm font-semibold">{user.fullname}</div>
-            <div className="text-xs text-gray-500">@{user.username}</div>
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={handleLogout}
-              className="mt-2 w-full"
-            >
-              Logout
-            </Button>
-            <RouterLink to="/profile" className="mt-1 text-xs text-blue-500">
-              Profile
-            </RouterLink>
-          </div>
-        ) : (
-          <div className="flex flex-col items-center gap-2">
-            <RouterLink to="/login" className="text-sm text-blue-500">
-              Login
-            </RouterLink>
-            <RouterLink to="/register" className="text-sm text-blue-500">
-              Register
-            </RouterLink>
-          </div>
-        )}
-      </div>
+      <ProfileSidebarCard
+        handleLogout={handleLogout}
+        isLoading={isLoading}
+        user={user}
+      />
     </Sidebar>
   );
 }

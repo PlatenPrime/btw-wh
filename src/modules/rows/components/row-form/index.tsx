@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
@@ -38,25 +38,24 @@ export function RowForm({ row, onSuccess, onCancel }: RowFormProps) {
       }
       onSuccess?.();
     } catch (error) {
-      console.error("Error saving row:", error);
-      setError(error instanceof Error ? error.message : "Failed to save row");
+      console.error("Помилка збереження ряду:", error);
+      setError(
+        error instanceof Error ? error.message : "Помилка збереження ряду:",
+      );
     }
   };
 
   return (
     <Card className="w-full max-w-md">
-      <CardHeader>
-        <CardTitle>{isEditing ? "Edit Row" : "Create New Row"}</CardTitle>
-      </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="title">Row Title</Label>
+            <Label htmlFor="title">Назва ряду</Label>
             <Input
               id="title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="Enter row title"
+              placeholder="XX-XX"
               required
               disabled={isSubmitting}
             />
@@ -64,13 +63,17 @@ export function RowForm({ row, onSuccess, onCancel }: RowFormProps) {
 
           {error && <div className="text-destructive text-sm">{error}</div>}
 
-          <div className="flex gap-2">
+          <div className="grid grid-cols-2 gap-2">
             <Button
               type="submit"
               disabled={isSubmitting || !title.trim()}
               className="flex-1"
             >
-              {isSubmitting ? "Saving..." : isEditing ? "Update" : "Create"}
+              {isSubmitting
+                ? "Зберігаю..."
+                : isEditing
+                  ? "Оновити"
+                  : "Створити"}
             </Button>
             {onCancel && (
               <Button
@@ -79,7 +82,7 @@ export function RowForm({ row, onSuccess, onCancel }: RowFormProps) {
                 onClick={onCancel}
                 disabled={isSubmitting}
               >
-                Cancel
+                Скасувати
               </Button>
             )}
           </div>

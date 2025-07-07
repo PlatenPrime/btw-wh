@@ -31,7 +31,7 @@ export function RowDialog({ row, trigger, onSuccess }: RowDialogProps) {
 
   const defaultTrigger = (
     <Button variant={row ? "outline" : "default"}>
-      {row ? "Edit Row" : "Create Row"}
+      {row ? "Редагувати" : "Створити"}
     </Button>
   );
 
@@ -40,7 +40,7 @@ export function RowDialog({ row, trigger, onSuccess }: RowDialogProps) {
       <DialogTrigger asChild>{trigger || defaultTrigger}</DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>{row ? "Edit Row" : "Create New Row"}</DialogTitle>
+          <DialogTitle>{row ? "Редагувати" : "Створити"}</DialogTitle>
         </DialogHeader>
         <RowForm row={row} onSuccess={handleSuccess} onCancel={handleCancel} />
       </DialogContent>
