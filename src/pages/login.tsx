@@ -19,7 +19,13 @@ export default function LoginPage() {
   }, [user, isLoading, navigate]);
 
   // Show nothing while loading auth state
-  if (isLoading) return null;
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <span className="text-muted-foreground">Завантаження...</span>
+      </div>
+    );
+  }
 
   return (
     <main className="min-h-screen flex items-center justify-center">

@@ -10,14 +10,9 @@ export function ProtectedRoute({ children }: ProtectedRouteProps) {
   const { user, isLoading } = useAuth();
   const location = useLocation();
 
-  // Debug log
-  console.log("ProtectedRoute:", {
-    user,
-    isLoading,
-    pathname: location.pathname,
-  });
 
-  if (isLoading) return null; // or a loader
+  if (isLoading)
+    return null // or a loader
   if (
     !user &&
     location.pathname !== "/login" &&

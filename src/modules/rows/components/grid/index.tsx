@@ -16,7 +16,7 @@ export function Grid({ rows, isPending, isFetching, onRowUpdated }: GridProps) {
 
   return (
     <>
-      <GridSkeleton />
+
       <View rows={rows} isFetching={isFetching} onRowUpdated={onRowUpdated} />
     </>
   );

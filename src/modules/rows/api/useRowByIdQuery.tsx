@@ -2,7 +2,7 @@ import { getRowById } from "@/modules/rows/api/getRowById";
 import type { RowDto } from "@/modules/rows/types/dto";
 import { useQuery } from "@tanstack/react-query";
 
-export function useRowQuery(rowId?: string) {
+export function useRowByIdQuery(rowId?: string) {
   return useQuery<RowDto>({
     queryKey: ["row", { rowId }],
     queryFn: ({ signal }) => {

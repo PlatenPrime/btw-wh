@@ -5,12 +5,14 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import React, { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
+import { useNavigate } from "react-router";
 
 export const LoginForm = () => {
   const { login, isLoading, error } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [formError, setFormError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,6 +23,7 @@ export const LoginForm = () => {
     }
     try {
       await login(username, password);
+      navigate("/", { replace: true });
     } catch (err: unknown) {
       if (err instanceof Error) {
         setFormError(err.message);

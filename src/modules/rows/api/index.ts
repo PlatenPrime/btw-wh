@@ -10,6 +10,6 @@ export { updateRow } from "./updateRow";
 export { useCreateRowMutation } from "./useCreateRowMutation";
 export { useDeleteRowMutation } from "./useDeleteRowMutation";
 export { useRowByTitleQuery } from "./useRowByTitleQuery";
-export { useRowQuery } from "./useRowQuery";
+export { useRowByIdQuery as useRowQuery } from "./useRowByIdQuery";
 export { useRowsQuery } from "./useRowsQuery";
 export { useUpdateRowMutation } from "./useUpdateRowMutation";
