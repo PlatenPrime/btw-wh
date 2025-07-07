@@ -31,9 +31,9 @@ export const LoginForm = () => {
   };
 
   return (
-    <Card className="mx-auto mt-10 max-w-sm p-6">
+    <Card className="mx-auto max-w-sm p-6">
       <form onSubmit={handleSubmit} className="space-y-4">
-        <h2 className="text-xl font-semibold">Login</h2>
+        <h2 className="text-center text-xl font-semibold">Авторизація</h2>
         <Separator />
         {formError && <Alert variant="destructive">{formError}</Alert>}
         {error && <Alert variant="destructive">{error}</Alert>}
@@ -54,7 +54,7 @@ export const LoginForm = () => {
           required
         />
         <Button type="submit" disabled={isLoading} className="w-full">
-          {isLoading ? "Logging in..." : "Login"}
+          {isLoading ? "Виконую вхід..." : "Вхід"}
         </Button>
       </form>
     </Card>

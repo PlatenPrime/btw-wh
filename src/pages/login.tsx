@@ -21,6 +21,10 @@ export default function LoginPage() {
   // Show nothing while loading auth state
   if (isLoading) return null;
 
-  return <LoginForm />;
+  return (
+    <main className="min-h-screen flex items-center justify-center">
+      <LoginForm />
+    </main>
+  );
 }
 //
