@@ -3,59 +3,91 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import React, { useState } from "react";
-import { useAuth } from "../hooks/useAuth";
+import { zodResolver } from "@hookform/resolvers/zod";
+import React from "react";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
+import { z } from "zod";
+import { useAuth } from "../hooks/useAuth";
+
+// Zod schema for login form
+const loginSchema = z.object({
+  username: z.string().min(3, "Логін мінімум три букви"),
+  password: z.string().min(3, "Пароль мінімум три букви"),
+});
+
+type LoginFormValues = z.infer<typeof loginSchema>;
 
 export const LoginForm = () => {
   const { login, isLoading, error } = useAuth();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [formError, setFormError] = useState<string | null>(null);
   const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setError,
+    setFocus,
+  } = useForm<LoginFormValues>({
+    resolver: zodResolver(loginSchema),
+    mode: "onSubmit",
+    reValidateMode: "onChange",
+    defaultValues: { username: "", password: "" },
+  });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setFormError(null);
-    if (!username || !password) {
-      setFormError("Username and password are required");
-      return;
-    }
+  React.useEffect(() => {
+    setFocus("username");
+  }, [setFocus]);
+
+  const onSubmit = async (data: LoginFormValues) => {
     try {
-      await login(username, password);
+      await login(data.username, data.password);
       navigate("/", { replace: true });
     } catch (err: unknown) {
       if (err instanceof Error) {
-        setFormError(err.message);
+        setError("root", { message: err.message });
       } else {
-        setFormError("An unknown error occurred");
+        setError("root", { message: "An unknown error occurred" });
       }
     }
   };
 
   return (
     <Card className="mx-auto max-w-sm p-6">
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
         <h2 className="text-center text-xl font-semibold">Авторизація</h2>
         <Separator />
-        {formError && <Alert variant="destructive">{formError}</Alert>}
+        {errors.root && (
+          <Alert variant="destructive">{errors.root.message}</Alert>
+        )}
         {error && <Alert variant="destructive">{error}</Alert>}
         <Input
           type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          placeholder="Логін"
           autoComplete="username"
-          required
+          aria-invalid={!!errors.username}
+          aria-describedby="username-error"
+          {...register("username")}
+          disabled={isLoading}
         />
+        {errors.username && (
+          <span id="username-error" className="block text-sm text-red-600">
+            {errors.username.message}
+          </span>
+        )}
         <Input
           type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Пароль"
           autoComplete="current-password"
-          required
+          aria-invalid={!!errors.password}
+          aria-describedby="password-error"
+          {...register("password")}
+          disabled={isLoading}
         />
+        {errors.password && (
+          <span id="password-error" className="block text-sm text-red-600">
+            {errors.password.message}
+          </span>
+        )}
         <Button type="submit" disabled={isLoading} className="w-full">
           {isLoading ? "Виконую вхід..." : "Вхід"}
         </Button>
