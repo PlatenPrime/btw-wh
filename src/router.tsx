@@ -61,6 +61,8 @@ const Zones = lazy(() =>
   import("./pages/zones").then((module) => ({ default: module.Zones })),
 );
 
+const PalletPage = lazy(() => import("./pages/pallet"));
+
 export const router = createHashRouter([
   {
     path: "/login",
@@ -125,6 +127,14 @@ export const router = createHashRouter([
           { path: "defs", element: <Defs /> },
           { path: "path", element: <Path /> },
         ],
+      },
+      {
+        path: "pallet/:palletId",
+        element: (
+          <ProtectedRoute>
+            <PalletPage />
+          </ProtectedRoute>
+        ),
       },
     ],
   },
