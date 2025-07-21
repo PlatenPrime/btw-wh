@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { PalletDetail } from "@/modules/pallets/components/pallet-detail";
+
 import { useNavigate, useParams } from "react-router";
 
 export default function PalletPage() {
@@ -20,7 +20,6 @@ export default function PalletPage() {
       >
         &larr; Назад
       </Button>
-      <PalletDetail palletId={palletId} />
     </div>
   );
 }
