@@ -1,4 +1,4 @@
-# Rows Module – API & Integration Guide
+если # Rows Module – API & Integration Guide
 
 ## Purpose
 
@@ -11,10 +11,16 @@ The Rows module manages warehouse rows, each containing multiple pallets. It pro
 ### Row
 
 ```typescript
+interface PalletShortDto {
+  _id: string;
+  title: string;
+  sector?: string;
+}
+
 interface Row {
   _id: string; // MongoDB ObjectId
   title: string; // Unique row name
-  pallets: string[]; // Array of Pallet ObjectIds
+  pallets: PalletShortDto[]; // Array of PalletShortDto
   createdAt: string; // ISO timestamp
   updatedAt: string; // ISO timestamp
 }
@@ -26,7 +32,9 @@ interface Row {
 {
   "_id": "64f8a1b2c3d4e5f6a7b8c9d0",
   "title": "Row A",
-  "pallets": ["64f8a1b2c3d4e5f6a7b8c9d1"],
+  "pallets": [
+    { "_id": "64f8a1b2c3d4e5f6a7b8c9d1", "title": "Pallet 1", "sector": "A" }
+  ],
   "createdAt": "2023-09-06T10:30:00.000Z",
   "updatedAt": "2023-09-06T10:30:00.000Z"
 }
@@ -78,7 +86,7 @@ interface Row {
 - **GET /api/rows/id/:id**
 - **Controller:** getRowById
 - **Params:** `id` (string, required)
-- **Response 200:** `Row`
+- **Response 200:** `Row` (with pallets: PalletShortDto[])
 - **Response 404:** `{ message: "Row not found" }`
 - **Response 500:** `{ message: "Server error", error }`
 
@@ -89,7 +97,7 @@ interface Row {
 - **GET /api/rows/title/:title**
 - **Controller:** getRowByTitle
 - **Params:** `title` (string, required)
-- **Response 200:** `Row`
+- **Response 200:** `Row` (with pallets: PalletShortDto[])
 - **Response 404:** `{ message: "Row not found" }`
 - **Response 500:** `{ message: "Server error", error }`
 
@@ -175,7 +183,7 @@ const row = await fetch(`/api/rows/id/${id}`).then((r) => r.json());
 
 ```typescript
 const row = await fetch(`/api/rows/title/${encodeURIComponent(title)}`).then(
-  (r) => r.json()
+  (r) => r.json(),
 );
 ```
 
@@ -203,7 +211,7 @@ const updatedRow = await fetch(`/api/rows/${id}`, {
 
 ```typescript
 const result = await fetch(`/api/rows/${id}`, { method: "DELETE" }).then((r) =>
-  r.json()
+  r.json(),
 );
 ```
 
@@ -224,7 +232,7 @@ const result = await fetch(`/api/rows/${id}`, { method: "DELETE" }).then((r) =>
 - **Cascading Deletes:** Deleting a row removes all its pallets and their positions.
 - **Title Uniqueness:** Row titles are unique. Creating/updating with a duplicate title returns 409.
 - **Timestamps:** `createdAt` and `updatedAt` are ISO strings, auto-managed.
-- **Relationships:** `pallets` is an array of Pallet ObjectIds. To fetch pallet details, query the pallets API.
+- **Relationships:** `pallets` is now an array of objects: `{ _id, title, sector }`. To fetch full pallet details, query the pallets API.
 
 ---
 

@@ -1,7 +1,13 @@
+export interface PalletShortDto {
+  _id: string;
+  title: string;
+  sector?: string;
+}
+
 export interface RowDto {
   _id: string;
   title: string;
-  pallets: string[];
+  pallets: PalletShortDto[];
   createdAt: string;
   updatedAt: string;
 }
@@ -12,7 +18,6 @@ export interface CreateRowDto {
 
 export interface UpdateRowDto {
   title?: string;
-  pallets?: string[];
 }
 
 export interface DeleteRowResponse {

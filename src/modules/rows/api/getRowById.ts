@@ -8,5 +8,6 @@ export const getRowById = async (
   const res = await apiClient.get<RowDto>(`/rows/id/${rowId}`, {
     signal,
   });
+  // pallets уже PalletShortDto[]
   return res.data;
 };

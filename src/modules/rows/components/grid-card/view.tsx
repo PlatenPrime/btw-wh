@@ -42,7 +42,7 @@ export function View({ row, onRowUpdated }: ViewProps) {
           </Link>
           <div className="flex items-center gap-2">
             <Badge
-              variant={isOccupied ? "default" : "secondary"}
+              variant={isOccupied ? "outline" : "secondary"}
               className="ml-2"
             >
               {palletCount}

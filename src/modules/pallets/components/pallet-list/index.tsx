@@ -1,0 +1,34 @@
+import type { PalletShortDto } from "@/modules/rows/types/dto";
+import { Package } from "lucide-react";
+import { PalletRowCard } from "../row-card";
+
+interface PalletListProps {
+  pallets: PalletShortDto[];
+}
+
+/**
+ * Список карточек палет для отображения в ряде
+ */
+export function PalletList({ pallets }: PalletListProps) {
+  if (!pallets.length) {
+    return (
+      <div className="py-8 text-center">
+        <Package className="text-muted-foreground/50 mx-auto h-12 w-12" />
+        <h3 className="text-muted-foreground mt-2 text-sm font-medium">
+          Палети не знайдено
+        </h3>
+        <p className="text-muted-foreground mt-1 text-xs">
+          Додайте палети для початку роботи
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+      {pallets.map((pallet, index) => (
+        <PalletRowCard key={pallet._id} pallet={pallet} index={index} />
+      ))}
+    </div>
+  );
+}

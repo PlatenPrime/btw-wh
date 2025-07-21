@@ -11,5 +11,6 @@ export const getRowByTitle = async (
       signal,
     },
   );
+  // pallets уже PalletShortDto[]
   return res.data;
 };

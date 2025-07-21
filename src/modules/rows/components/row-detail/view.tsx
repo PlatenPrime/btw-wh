@@ -1,9 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-
+import { PalletList } from "@/modules/pallets/components/pallet-list";
 import type { RowDto } from "@/modules/rows/types/dto";
 import { Plus } from "lucide-react";
-
 import { useNavigate } from "react-router";
 import { DeleteRowDialog } from "../delete-row-dialog";
 
@@ -13,7 +12,6 @@ interface ViewProps {
 
 export function View({ row }: ViewProps) {
   const navigate = useNavigate();
-
 
   const handleRowDeleted = () => {
     navigate("/wh/rows");
@@ -49,12 +47,7 @@ export function View({ row }: ViewProps) {
 
       <Separator />
 
-      {/* Main Content */}
-      <div className="grid gap-6 lg:grid-cols-3">
-        {/* Row Information */}
-
-      
-      </div>
+      <PalletList pallets={row.pallets} />
     </div>
   );
 }
