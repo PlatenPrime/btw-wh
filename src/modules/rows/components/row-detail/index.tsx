@@ -1,4 +1,4 @@
-import { useRowByTitleQuery } from "../../api/useRowByTitleQuery";
+import { useRowByTitleQuery } from "../../api/hooks/useRowByTitleQuery";
 import { RowDetailSkeleton } from "./skeleton";
 import { View } from "./view";
 

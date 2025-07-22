@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import type { RowDto, UpdateRowDto } from "../types/dto";
-import { updateRow } from "./updateRow";
+import { updateRow } from "@/modules/rows/api/";
+import type { RowDto, UpdateRowDto } from "@/modules/rows/api/types/dto";
 
 export function useUpdateRowMutation() {
   const queryClient = useQueryClient();

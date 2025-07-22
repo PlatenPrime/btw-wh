@@ -1,5 +1,5 @@
-import { getRowByTitle } from "@/modules/rows/api/getRowByTitle";
-import type { RowDto } from "@/modules/rows/types/dto";
+import { getRowByTitle } from "@/modules/rows/api/";
+import type { RowDto } from "@/modules/rows/api/types/dto";
 import { useQuery } from "@tanstack/react-query";
 
 export function useRowByTitleQuery(rowTitle?: string) {

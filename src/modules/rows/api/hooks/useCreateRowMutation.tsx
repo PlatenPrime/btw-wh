@@ -1,11 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteRow } from "./deleteRow";
+import { createRow } from "../index";
+import type { CreateRowDto } from "../types/dto";
 
-export function useDeleteRowMutation() {
+export function useCreateRowMutation() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (rowId: string) => deleteRow(rowId),
+    mutationFn: (data: CreateRowDto) => createRow(data),
     onSuccess: () => {
       // Invalidate and refetch rows list
       queryClient.invalidateQueries({ queryKey: ["rows"] });

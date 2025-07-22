@@ -1,4 +1,4 @@
-import type { PalletShortDto } from "@/modules/rows/types/dto";
+import type { PalletShortDto } from "@/modules/rows/api/types/dto";
 import { Columns4 } from "lucide-react";
 import { PalletRowCard } from "../row-card";
 

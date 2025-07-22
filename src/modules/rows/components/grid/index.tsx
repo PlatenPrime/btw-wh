@@ -1,4 +1,4 @@
-import type { RowDto } from "@/modules/rows/types/dto";
+import type { RowDto } from "@/modules/rows/api/types/dto";
 import { GridSkeleton } from "./skeleton";
 import { View } from "./view";
 
@@ -16,7 +16,6 @@ export function Grid({ rows, isPending, isFetching, onRowUpdated }: GridProps) {
 
   return (
     <>
-
       <View rows={rows} isFetching={isFetching} onRowUpdated={onRowUpdated} />
     </>
   );

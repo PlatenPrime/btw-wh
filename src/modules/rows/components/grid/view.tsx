@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
+import type { RowDto } from "@/modules/rows/api/types/dto";
 import { GridCard } from "@/modules/rows/components/grid-card";
-import type { RowDto } from "@/modules/rows/types/dto";
 
 interface ViewProps {
   rows: RowDto[] | undefined;

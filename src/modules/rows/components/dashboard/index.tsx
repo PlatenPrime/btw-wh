@@ -1,6 +1,8 @@
+import { Loading, LoadingError, LoadingNoData } from "@/components/loading-states";
 import { GridSkeleton } from "@/modules/rows/components/grid/skeleton";
-import { useRowsQuery } from "../../api/useRowsQuery";
+import { useRowsQuery } from "../../api/hooks/useRowsQuery";
 import { View } from "./view";
+
 
 export function Dashboard() {
   const { data, isLoading, error, refetch } = useRowsQuery();
@@ -11,40 +13,15 @@ export function Dashboard() {
   };
 
   if (isLoading) {
-    return (
-      <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <div className="text-muted-foreground text-sm">Завантаження...</div>
-        </div>
-        <GridSkeleton />
-      </div>
-    );
+    return <Loading skeleton={<GridSkeleton />} />;
   }
 
   if (error) {
-    return (
-      <div className="flex h-64 items-center justify-center">
-        <div className="text-center">
-          <h2 className="text-destructive text-lg font-semibold">
-            Помилка завантаження
-          </h2>
-          <p className="text-muted-foreground">
-            Не вдалося завантажити дані рядів
-          </p>
-        </div>
-      </div>
-    );
+    return <LoadingError description="Не вдалося завантажити дані рядів" />;
   }
 
   if (!data) {
-    return (
-      <div className="flex h-64 items-center justify-center">
-        <div className="text-center">
-          <h2 className="text-foreground text-lg font-semibold">Немає даних</h2>
-          <p className="text-muted-foreground">Ряди не знайдено</p>
-        </div>
-      </div>
-    );
+    return <LoadingNoData description="Ряди не знайдено" />;
   }
 
   return <View data={data} onRowUpdated={handleRowUpdated} />;

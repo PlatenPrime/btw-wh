@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useDeleteRowMutation } from "../../api/useDeleteRowMutation";
-import type { RowDto } from "../../types/dto";
+import { useDeleteRowMutation } from "../../api";
+import type { RowDto } from "../../api/types/dto";
 import DeleteRowDialogView from "./view";
 
 interface DeleteRowDialogProps {
@@ -14,7 +14,6 @@ export function DeleteRowDialog({
   trigger,
   onSuccess,
 }: DeleteRowDialogProps) {
-  
   const [open, setOpen] = useState(false);
   const deleteMutation = useDeleteRowMutation();
 

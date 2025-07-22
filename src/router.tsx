@@ -41,10 +41,14 @@ const Path = lazy(() =>
 );
 
 const Row = lazy(() =>
-  import("./pages/row").then((module) => ({ default: module.Row })),
+  import("./modules/rows/pages/row").then((module) => ({
+    default: module.Row,
+  })),
 );
 const Rows = lazy(() =>
-  import("./pages/rows").then((module) => ({ default: module.Rows })),
+  import("./modules/rows/pages/rows").then((module) => ({
+    default: module.Rows,
+  })),
 );
 
 const Stock = lazy(() =>

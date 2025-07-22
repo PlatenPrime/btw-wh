@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { PalletList } from "@/modules/pallets/components/pallet-list";
-import type { RowDto } from "@/modules/rows/types/dto";
+import type { RowDto } from "@/modules/rows/api/types/dto";
 import { Plus } from "lucide-react";
 import { useNavigate } from "react-router";
 import { DeleteRowDialog } from "../delete-row-dialog";

@@ -3,9 +3,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
-import { useCreateRowMutation } from "../../api/useCreateRowMutation";
-import { useUpdateRowMutation } from "../../api/useUpdateRowMutation";
-import type { CreateRowDto, RowDto, UpdateRowDto } from "../../types/dto";
+import type { CreateRowDto, RowDto, UpdateRowDto } from "../../api/types/dto";
+import { useCreateRowMutation } from "@/modules/rows/api/hooks/useCreateRowMutation";
+import { useUpdateRowMutation } from "@/modules/rows/api/hooks/useUpdateRowMutation";
 
 interface RowFormProps {
   row?: RowDto;

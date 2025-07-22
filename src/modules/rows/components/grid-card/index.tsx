@@ -1,4 +1,4 @@
-import type { RowDto } from "@/modules/rows/types/dto";
+import type { RowDto } from "@/modules/rows/api/types/dto";
 import { View } from "./view";
 
 interface GridCardProps {
