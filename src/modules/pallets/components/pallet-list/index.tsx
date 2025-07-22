@@ -1,5 +1,5 @@
 import type { PalletShortDto } from "@/modules/rows/types/dto";
-import { Package } from "lucide-react";
+import { Columns4 } from "lucide-react";
 import { PalletRowCard } from "../row-card";
 
 interface PalletListProps {
@@ -13,7 +13,7 @@ export function PalletList({ pallets }: PalletListProps) {
   if (!pallets.length) {
     return (
       <div className="py-8 text-center">
-        <Package className="text-muted-foreground/50 mx-auto h-12 w-12" />
+        <Columns4 className="text-muted-foreground/50 mx-auto h-12 w-12" />
         <h3 className="text-muted-foreground mt-2 text-sm font-medium">
           Палети не знайдено
         </h3>

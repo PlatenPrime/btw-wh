@@ -10,7 +10,6 @@ export function GridCardSkeleton() {
           <div className="flex items-start justify-between gap-4">
             <Skeleton className="size-6 rounded-full" />
             <Skeleton className="size-6 rounded-full" />
-            <Skeleton className="size-6 rounded-full" />
           </div>
         </div>
       </CardHeader>

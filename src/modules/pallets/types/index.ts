@@ -16,9 +16,15 @@ export interface IPallet {
   updatedAt?: string;
 }
 
+
+export interface RowData {
+  _id: string;
+  title: string;
+}
+
 export interface CreatePalletDto {
   title: string;
-  row: string;
+  rowData: RowData;
   sector?: string;
 }
 
