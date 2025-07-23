@@ -13,10 +13,10 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import type { RowDto } from "@/modules/rows/api/types/dto";
+import { DeleteRowDialog } from "@/modules/rows/components/dialogs/delete-row-dialog";
 import { Edit, MoreVertical, Trash2 } from "lucide-react";
 import { Link } from "react-router";
-import { DeleteRowDialog } from "@/modules/rows/components/dialogs/delete-row-dialog";
-import { RowDialog } from "@/modules/rows/components/dialogs/row-dialog";
+import { UpdateRowDialog } from "@/modules/rows/components/dialogs/update-row-dialog";
 
 interface ViewProps {
   row: RowDto;
@@ -25,7 +25,7 @@ interface ViewProps {
 
 export function View({ row, onRowUpdated }: ViewProps) {
   return (
-    <Card className="shadow-muted-foreground group/row h-full w-full bg-background hover:bg-orange-500 p-0 shadow-none ring-1 ring-gray-200 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ease-out hover:z-10 hover:shadow-2xl hover:shadow-orange-500  dark:ring-gray-700">
+    <Card className="shadow-muted-foreground group/row bg-background h-full w-full p-0 shadow-none ring-1 ring-gray-200 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ease-out hover:z-10 hover:bg-orange-500 hover:shadow-2xl hover:shadow-orange-500 dark:ring-gray-700">
       <CardHeader className="flex items-center justify-between p-2">
         <Link
           to={`/wh/rows/${row.title}`}
@@ -39,14 +39,14 @@ export function View({ row, onRowUpdated }: ViewProps) {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <RowDialog
+                <UpdateRowDialog
                   row={row}
                   trigger={
                     <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
                       <Edit className="h-4 w-4" />
                     </Button>
                   }
-                  onSuccess={onRowUpdated}
+                  onSuccess={onRowUpdated ?? (() => {})}
                 />
               </TooltipTrigger>
               <TooltipContent>

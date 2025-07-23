@@ -2,30 +2,23 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useCreateRowMutation } from "@/modules/rows/api/hooks/useCreateRowMutation";
-import { useUpdateRowMutation } from "@/modules/rows/api/hooks/useUpdateRowMutation";
-import { useState } from "react";
-import type {
-  CreateRowDto,
-  RowDto,
-  UpdateRowDto,
-} from "../../../api/types/dto";
 
-interface RowFormProps {
-  row?: RowDto;
-  onSuccess?: () => void;
-  onCancel?: () => void;
+import { useUpdateRowMutation } from "@/modules/rows/api/hooks/useUpdateRowMutation";
+import type { RowDto, UpdateRowDto } from "@/modules/rows/api/types/dto";
+import { useState } from "react";
+
+interface UpdateRowFormProps {
+  row: RowDto;
+  onSuccess: () => void;
+  onCancel: () => void;
 }
 
-export function RowForm({ row, onSuccess, onCancel }: RowFormProps) {
-  const [title, setTitle] = useState(row?.title || "");
+export function UpdateRowForm({ row, onSuccess, onCancel }: UpdateRowFormProps) {
+  const [title, setTitle] = useState(row.title);
   const [error, setError] = useState<string | null>(null);
 
-  const createMutation = useCreateRowMutation();
   const updateMutation = useUpdateRowMutation();
-
-  const isEditing = !!row;
-  const isSubmitting = createMutation.isPending || updateMutation.isPending;
+  const isSubmitting = updateMutation.isPending;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,14 +26,9 @@ export function RowForm({ row, onSuccess, onCancel }: RowFormProps) {
 
     setError(null);
     try {
-      if (isEditing) {
-        const updateData: UpdateRowDto = { title: title.trim() };
-        await updateMutation.mutateAsync({ rowId: row._id, data: updateData });
-      } else {
-        const createData: CreateRowDto = { title: title.trim() };
-        await createMutation.mutateAsync(createData);
-      }
-      onSuccess?.();
+      const updateData: UpdateRowDto = { title: title.trim() };
+      await updateMutation.mutateAsync({ rowId: row._id, data: updateData });
+      onSuccess();
     } catch (error) {
       console.error("Помилка збереження ряду:", error);
       setError(
@@ -73,11 +61,7 @@ export function RowForm({ row, onSuccess, onCancel }: RowFormProps) {
               disabled={isSubmitting || !title.trim()}
               className="flex-1"
             >
-              {isSubmitting
-                ? "Зберігаю..."
-                : isEditing
-                  ? "Оновити"
-                  : "Створити"}
+              {isSubmitting ? "Оновлюю..." : "Оновити"}
             </Button>
             {onCancel && (
               <Button

@@ -6,43 +6,46 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { useState } from "react";
 import type { RowDto } from "@/modules/rows/api/types/dto";
-import { RowForm } from "@/modules/rows/components/forms/row-form";
+import { UpdateRowForm } from "@/modules/rows/components/forms/update-row-form";
+import { useState } from "react";
 
-interface RowDialogProps {
-  row?: RowDto;
+interface UpdateRowDialogProps {
+  row: RowDto;
   trigger?: React.ReactNode;
-  onSuccess?: () => void;
+  onSuccess: () => void;
 }
 
-export function RowDialog({ row, trigger, onSuccess }: RowDialogProps) {
+export function UpdateRowDialog({
+  row,
+  trigger,
+  onSuccess,
+}: UpdateRowDialogProps) {
   const [open, setOpen] = useState(false);
 
   const handleSuccess = () => {
-    console.log("Row dialog success callback triggered");
     setOpen(false);
-    onSuccess?.();
+    onSuccess();
   };
 
   const handleCancel = () => {
     setOpen(false);
   };
 
-  const defaultTrigger = (
-    <Button variant={row ? "outline" : "default"}>
-      {row ? "Редагувати" : "Створити"}
-    </Button>
-  );
+  const defaultTrigger = <Button variant="outline">"Редагувати"</Button>;
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{trigger || defaultTrigger}</DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>{row ? "Редагувати" : "Створити"}</DialogTitle>
+          <DialogTitle> "Редагувати" </DialogTitle>
         </DialogHeader>
-        <RowForm row={row} onSuccess={handleSuccess} onCancel={handleCancel} />
+        <UpdateRowForm
+          row={row}
+          onSuccess={handleSuccess}
+          onCancel={handleCancel}
+        />
       </DialogContent>
     </Dialog>
   );

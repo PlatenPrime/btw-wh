@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { GridCardSkeleton } from "@/modules/rows/components/cards/grid-card/skeleton";
+import { GridCardSkeleton } from "@/modules/rows/components/cards/rows-grid-card/skeleton";
 
 export function GridSkeleton() {
   const skeletonItems = Array.from({ length: 15 }, (_, i) => i);

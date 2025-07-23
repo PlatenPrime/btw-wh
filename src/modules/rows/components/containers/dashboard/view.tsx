@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import type { RowDto } from "@/modules/rows/api/types/dto";
 import { Grid } from "@/modules/rows/components/containers/rows-grid";
-import { RowDialog } from "@/modules/rows/components/dialogs/row-dialog";
+import { CreateRowDialog } from "@/modules/rows/components/dialogs/create-row-dialog";
 import { Plus } from "lucide-react";
 
 interface ViewProps {
@@ -15,14 +15,14 @@ export function View({ data, onRowUpdated }: ViewProps) {
       <div className="flex items-center justify-between gap-4">
         <div className="text-muted-foreground">Всього рядів: {data.length}</div>
 
-        <RowDialog
+        <CreateRowDialog
           trigger={
             <Button>
               <Plus className="mr-2 h-4 w-4" />
               Створити ряд
             </Button>
           }
-          onSuccess={onRowUpdated}
+          onSuccess={onRowUpdated ?? (() => {})}
         />
       </div>
 
