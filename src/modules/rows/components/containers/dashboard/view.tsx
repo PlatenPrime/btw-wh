@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
-import { Grid } from "@/modules/rows/components/grid";
+import type { RowDto } from "@/modules/rows/api/types/dto";
+import { Grid } from "@/modules/rows/components/containers/rows-grid";
+import { RowDialog } from "@/modules/rows/components/dialogs/row-dialog";
 import { Plus } from "lucide-react";
-import type { RowDto } from "../../api/types/dto";
-import { RowDialog } from "../row-dialog";
 
 interface ViewProps {
   data: RowDto[];

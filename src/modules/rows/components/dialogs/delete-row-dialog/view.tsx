@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import type { UseMutationResult } from "@tanstack/react-query";
 import type { Dispatch, ReactNode, SetStateAction } from "react";
-import type { DeleteRowResponse, RowDto } from "../../api/types/dto";
+import type { DeleteRowResponse, RowDto } from "@/modules/rows/api/types/dto";
 
 interface DeleteRowDialogViewProps {
   row: RowDto;

@@ -15,8 +15,8 @@ import {
 import type { RowDto } from "@/modules/rows/api/types/dto";
 import { Edit, MoreVertical, Trash2 } from "lucide-react";
 import { Link } from "react-router";
-import { DeleteRowDialog } from "../delete-row-dialog";
-import { RowDialog } from "../row-dialog";
+import { DeleteRowDialog } from "@/modules/rows/components/dialogs/delete-row-dialog";
+import { RowDialog } from "@/modules/rows/components/dialogs/row-dialog";
 
 interface ViewProps {
   row: RowDto;
@@ -25,13 +25,13 @@ interface ViewProps {
 
 export function View({ row, onRowUpdated }: ViewProps) {
   return (
-    <Card className="shadow-muted-foreground group h-full w-full bg-orange-500 p-0 shadow-none ring-1 ring-gray-200 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ease-out hover:z-10 hover:shadow-2xl dark:bg-orange-700 dark:ring-gray-700">
+    <Card className="shadow-muted-foreground group/row h-full w-full bg-background hover:bg-orange-500 p-0 shadow-none ring-1 ring-gray-200 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ease-out hover:z-10 hover:shadow-2xl hover:shadow-orange-500  dark:ring-gray-700">
       <CardHeader className="flex items-center justify-between p-2">
         <Link
           to={`/wh/rows/${row.title}`}
-          className="bg-background flex-1 rounded-md p-2 transition-all duration-300 ease-out"
+          className="bg-background dark:group-hover/row:bg-foreground flex-1 rounded-md p-2 transition-all duration-300 ease-out"
         >
-          <CardTitle className="text-foreground group-hover:text-primary text-center text-lg font-semibold">
+          <CardTitle className="text-foreground dark:group-hover/row:text-secondary text-center text-lg font-semibold">
             {row.title}
           </CardTitle>
         </Link>

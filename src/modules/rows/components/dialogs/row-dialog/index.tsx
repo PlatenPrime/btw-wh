@@ -7,8 +7,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useState } from "react";
-import type { RowDto } from "../../api/types/dto";
-import { RowForm } from "../row-form";
+import type { RowDto } from "@/modules/rows/api/types/dto";
+import { RowForm } from "@/modules/rows/components/forms/row-form";
 
 interface RowDialogProps {
   row?: RowDto;

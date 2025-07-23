@@ -4,7 +4,7 @@ import { PalletList } from "@/modules/pallets/components/pallet-list";
 import type { RowDto } from "@/modules/rows/api/types/dto";
 import { Plus } from "lucide-react";
 import { useNavigate } from "react-router";
-import { DeleteRowDialog } from "../delete-row-dialog";
+import { DeleteRowDialog } from "@/modules/rows/components/dialogs/delete-row-dialog";
 // --- добавлено для диалога и формы ---
 import {
   Dialog,

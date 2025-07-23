@@ -1,8 +1,11 @@
-import { Loading, LoadingError, LoadingNoData } from "@/components/loading-states";
-import { GridSkeleton } from "@/modules/rows/components/grid/skeleton";
-import { useRowsQuery } from "../../api/hooks/useRowsQuery";
+import {
+  Loading,
+  LoadingError,
+  LoadingNoData,
+} from "@/components/loading-states";
+import { GridSkeleton } from "@/modules/rows/components/containers/rows-grid/skeleton";
+import { useRowsQuery } from "../../../api/hooks/useRowsQuery";
 import { View } from "./view";
-
 
 export function Dashboard() {
   const { data, isLoading, error, refetch } = useRowsQuery();
