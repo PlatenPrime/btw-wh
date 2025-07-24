@@ -1,14 +1,6 @@
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import type { RowDto } from "@/modules/rows/api/types/dto";
-import { UpdateRowForm } from "@/modules/rows/components/forms/update-row-form";
 import { useState } from "react";
+import { UpdateRowDialogView } from "./view";
 
 interface UpdateRowDialogProps {
   row: RowDto;
@@ -32,21 +24,14 @@ export function UpdateRowDialog({
     setOpen(false);
   };
 
-  const defaultTrigger = <Button variant="outline">"Редагувати"</Button>;
-
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>{trigger || defaultTrigger}</DialogTrigger>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle> "Редагувати" </DialogTitle>
-        </DialogHeader>
-        <UpdateRowForm
-          row={row}
-          onSuccess={handleSuccess}
-          onCancel={handleCancel}
-        />
-      </DialogContent>
-    </Dialog>
+    <UpdateRowDialogView
+      open={open}
+      setOpen={setOpen}
+      row={row}
+      trigger={trigger}
+      onSuccess={handleSuccess}
+      onCancel={handleCancel}
+    />
   );
 }

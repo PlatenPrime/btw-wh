@@ -1,6 +1,6 @@
 // Dashboard Components
-export { Dashboard } from "./containers/dashboard";
-export { View as DashboardView } from "./containers/dashboard/view";
+export { RowsDashboard as Dashboard } from "./containers/rows-dashboard";
+export { RowsDashboardView as DashboardView } from "./containers/rows-dashboard/view";
 
 // Grid Components
 export { Grid } from "./containers/rows-grid";
@@ -13,12 +13,10 @@ export { GridCardSkeleton } from "./cards/rows-grid-card/skeleton";
 
 // Row Detail Components
 export { RowDetail } from "./containers/row-detail";
-export { RowDetailSkeleton } from "./containers/row-detail/skeleton";
-export { View as RowDetailView } from "./containers/row-detail/view";
 
 // Form Components
+export { CreateRowDialog } from "./dialogs/create-row-dialog";
 export { DeleteRowDialog } from "./dialogs/delete-row-dialog";
+export { UpdateRowDialog } from "./dialogs/update-row-dialog";
 export { CreateRowForm } from "./forms/create-row-form";
 export { UpdateRowForm } from "./forms/update-row-form";
-export { CreateRowDialog } from "./dialogs/create-row-dialog";
-export { UpdateRowDialog } from "./dialogs/update-row-dialog";

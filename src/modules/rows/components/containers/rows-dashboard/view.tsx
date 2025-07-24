@@ -1,15 +1,16 @@
 import { Button } from "@/components/ui/button";
 import type { RowDto } from "@/modules/rows/api/types/dto";
+import type { RowsRefetch } from "@/modules/rows/api/types/types";
 import { Grid } from "@/modules/rows/components/containers/rows-grid";
 import { CreateRowDialog } from "@/modules/rows/components/dialogs/create-row-dialog";
 import { Plus } from "lucide-react";
 
 interface ViewProps {
   data: RowDto[];
-  onRowUpdated?: () => void;
+  refetch: RowsRefetch;
 }
 
-export function View({ data, onRowUpdated }: ViewProps) {
+export function RowsDashboardView({ data, refetch }: ViewProps) {
   return (
     <div className="grid gap-4">
       <div className="flex items-center justify-between gap-4">
@@ -22,11 +23,11 @@ export function View({ data, onRowUpdated }: ViewProps) {
               Створити ряд
             </Button>
           }
-          onSuccess={onRowUpdated ?? (() => {})}
+          onSuccess={() => refetch() ?? (() => {})}
         />
       </div>
 
-      <Grid rows={data} onRowUpdated={onRowUpdated} />
+      <Grid rows={data} refetch={refetch} />
     </div>
   );
 }

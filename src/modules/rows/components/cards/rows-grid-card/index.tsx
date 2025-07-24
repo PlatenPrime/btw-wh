@@ -1,11 +1,12 @@
 import type { RowDto } from "@/modules/rows/api/types/dto";
+import type { RowsRefetch } from "@/modules/rows/api/types/types";
 import { View } from "./view";
 
 interface GridCardProps {
   row: RowDto;
-  onRowUpdated?: () => void;
+  refetch: RowsRefetch;
 }
 
-export function GridCard({ row, onRowUpdated }: GridCardProps) {
-  return <View row={row} onRowUpdated={onRowUpdated} />;
+export function GridCard({ row, refetch }: GridCardProps) {
+  return <View row={row} refetch={refetch} />;
 }

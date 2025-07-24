@@ -1,6 +1,6 @@
 import { useRowByTitleQuery } from "../../../api/hooks/useRowByTitleQuery";
 import { RowDetailSkeleton } from "./skeleton";
-import { View } from "./view";
+import { RowDetailView } from "./view";
 
 interface RowDetailProps {
   rowTitle?: string;
@@ -41,5 +41,5 @@ export function RowDetail({ rowTitle }: RowDetailProps) {
     );
   }
 
-  return <View row={row} />;
+  return <RowDetailView row={row} />;
 }

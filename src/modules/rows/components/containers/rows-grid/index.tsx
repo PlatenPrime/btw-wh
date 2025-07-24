@@ -1,22 +1,23 @@
 import type { RowDto } from "@/modules/rows/api/types/dto";
 import { GridSkeleton } from "./skeleton";
 import { View } from "./view";
+import type { RowsRefetch } from "@/modules/rows/api/types/types";
 
 interface GridProps {
   rows: RowDto[] | undefined;
   isPending?: boolean;
   isFetching?: boolean;
-  onRowUpdated?: () => void;
+  refetch: RowsRefetch;
 }
 
-export function Grid({ rows, isPending, isFetching, onRowUpdated }: GridProps) {
+export function Grid({ rows, isPending, isFetching, refetch }: GridProps) {
   if (isPending) {
     return <GridSkeleton />;
   }
 
   return (
     <>
-      <View rows={rows} isFetching={isFetching} onRowUpdated={onRowUpdated} />
+      <View rows={rows} isFetching={isFetching} refetch={refetch} />
     </>
   );
 }

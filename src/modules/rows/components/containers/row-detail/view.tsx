@@ -24,7 +24,7 @@ interface ViewProps {
   row: RowDto;
 }
 
-export function View({ row }: ViewProps) {
+export function RowDetailView ({ row }: ViewProps) {
   const navigate = useNavigate();
   // --- состояние для формы ---
   const [title, setTitle] = React.useState("");

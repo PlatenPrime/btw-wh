@@ -5,15 +5,10 @@ import {
 } from "@/components/loading-states";
 import { GridSkeleton } from "@/modules/rows/components/containers/rows-grid/skeleton";
 import { useRowsQuery } from "../../../api/hooks/useRowsQuery";
-import { View } from "./view";
+import { RowsDashboardView } from "./view";
 
-export function Dashboard() {
+export function RowsDashboard() {
   const { data, isLoading, error, refetch } = useRowsQuery();
-
-  const handleRowUpdated = () => {
-    console.log("Dashboard handleRowUpdated called, refetching data");
-    refetch();
-  };
 
   if (isLoading) {
     return <Loading skeleton={<GridSkeleton />} />;
@@ -27,5 +22,5 @@ export function Dashboard() {
     return <LoadingNoData description="Ряди не знайдено" />;
   }
 
-  return <View data={data} onRowUpdated={handleRowUpdated} />;
+  return <RowsDashboardView data={data} refetch={refetch} />;
 }
