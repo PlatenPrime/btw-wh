@@ -1,4 +1,4 @@
-import type { ArtDto } from "@/modules/arts/types/dto";
+import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { GridSkeleton } from "./skeleton";
 import { View } from "./view";
 

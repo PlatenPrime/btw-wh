@@ -1,7 +1,7 @@
 // hooks/useArtsInfiniteQuery.ts
 import { useDebounce } from "@/hooks/useDebounce";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { getArtsByParams } from "./getArtsByParams";
+import { getArtsByParams } from "@/modules/arts/api/services/getArtsByParams";
 
 export interface UseArtsInfiniteQueryParams {
   limit: number;

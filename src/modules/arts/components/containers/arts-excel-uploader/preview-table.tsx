@@ -1,4 +1,4 @@
-import type { UploadingArt } from "../../types";
+import type { UploadingArt } from "@/modules/arts/api/types/arts";
 
 interface PreviewTableProps {
   preview: UploadingArt[];

@@ -1,5 +1,5 @@
 import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout";
-import { ArtsExcelUploader } from "@/modules/arts/components/arts-excel-uploader";
+import { ArtsExcelUploader } from "@/modules/arts/components/containers/arts-excel-uploader";
 
 export function ArtsUpdate() {
   return (

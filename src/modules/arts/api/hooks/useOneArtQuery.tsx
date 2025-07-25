@@ -1,6 +1,6 @@
 // hooks/useArtQuery.ts
-import { getOneArtByArtikul } from "@/modules/arts/api/getOneArtByArtikul";
-import type { ArtDto } from "@/modules/arts/types/dto";
+import { getOneArtByArtikul } from "@/modules/arts/api/services/getOneArtByArtikul";
+import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { useQuery } from "@tanstack/react-query";
 
 export function useOneArtQuery(artikul?: string) {

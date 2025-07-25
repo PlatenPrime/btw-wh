@@ -1,6 +1,6 @@
 // components/dashboard/container-infinite.tsx
 import { Status } from "@/components/status";
-import { useArtsInfiniteQuery } from "@/modules/arts/api/useArtsInfiniteQuery";
+import { useArtsInfiniteQuery } from "@/modules/arts/api/hooks/useArtsInfiniteQuery";
 import { useState } from "react";
 import { InfiniteView } from "./view";
 

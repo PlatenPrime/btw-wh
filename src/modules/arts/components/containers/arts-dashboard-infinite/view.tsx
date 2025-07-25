@@ -1,8 +1,8 @@
 // components/dashboard/view-infinite.tsx
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
-import type { ArtDto } from "@/modules/arts/types/dto";
-import { Grid } from "./grid";
-import { SearchPanel } from "./search";
+import type { ArtDto } from "@/modules/arts/api/types/dto";
+import { Grid } from "../arts-grid";
+import { SearchPanel } from "../../search";
 
 interface InfiniteViewProps {
   data: ArtDto[];

@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { GridCardSkeleton } from "@/modules/arts/components/dashboard-infinite/grid-card/skeleton";
+import { GridCardSkeleton } from "@/modules/arts/components/cards/arts-grid-card/skeleton";
 
 export function GridSkeleton() {
   const items = Array.from({ length: 20 }, (_, i) => i);

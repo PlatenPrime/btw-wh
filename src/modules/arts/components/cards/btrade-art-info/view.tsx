@@ -1,4 +1,4 @@
-import type { BtradeArtInfoDto } from "@/modules/arts/types/dto";
+import type { BtradeArtInfoDto } from "@/modules/arts/api/types/dto";
 import { DollarSign, MapPin, Warehouse } from "lucide-react";
 
 interface BtradeArtInfoProps {

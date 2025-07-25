@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import type { UploadingArt } from "../../types";
+import type { UploadingArt } from "@/modules/arts/api/types/arts";
 import { InputUploader } from "./input-uploader";
 import { PreviewTable } from "./preview-table";
 import { ProgressBar } from "./progress-bar";

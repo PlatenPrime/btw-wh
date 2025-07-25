@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
-import { GridCard } from "@/modules/arts/components/dashboard-infinite/grid-card";
-import type { ArtDto } from "@/modules/arts/types/dto";
+import type { ArtDto } from "@/modules/arts/api/types/dto";
+import { ArtsGridCard } from "@/modules/arts/components/cards/arts-grid-card";
 
 interface ViewProps {
   arts: ArtDto[] | undefined;
@@ -26,7 +26,7 @@ export function View({ arts }: ViewProps) {
     >
       {arts.map((art) => (
         <li key={art.artikul} className="flex">
-          <GridCard art={art} />
+          <ArtsGridCard art={art} />
         </li>
       ))}
     </ul>

@@ -1,5 +1,5 @@
-import { ArtDialogImage } from "@/modules/arts/components/art-dialog-image";
-import type { ArtDto } from "@/modules/arts/types/dto";
+import type { ArtDto } from "@/modules/arts/api/types/dto";
+import { ArtDialogImage } from "@/modules/arts/components/dialogs/art-dialog-image";
 import { BtradeArtInfoContainer } from "../btrade-art-info";
 
 interface ArtInfoProps {

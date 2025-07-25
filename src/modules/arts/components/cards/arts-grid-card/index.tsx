@@ -2,14 +2,14 @@ import { Image } from "@/components/image/image";
 import { ImageBlurContainer } from "@/components/image/image-blur-container";
 import { Card, CardDescription } from "@/components/ui/card";
 import { getSmallImageUrl } from "@/lib/art-image-url";
-import type { ArtDto } from "@/modules/arts/types/dto";
+import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { Link } from "react-router";
 
 interface GridCardProps {
   art: ArtDto;
 }
 
-export function GridCard({ art }: GridCardProps) {
+export function ArtsGridCard({ art }: GridCardProps) {
   const imageUrl = getSmallImageUrl(art.artikul); // можно и здесь вызывать
 
   return (
@@ -22,7 +22,7 @@ export function GridCard({ art }: GridCardProps) {
               alt={art.nameukr}
               className="shadow-muted-foreground aspect-square w-full max-w-[6rem] rounded-lg object-cover shadow-md"
             />
-            <CardDescription className="text-foreground  text-shadow-lg p-2 md:text-center">
+            <CardDescription className="text-foreground p-2 text-shadow-lg md:text-center">
               {art.nameukr}
             </CardDescription>
           </div>

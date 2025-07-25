@@ -1,4 +1,4 @@
-import { useOneArtQuery } from "../../api/useOneArtQuery";
+import { useOneArtQuery } from "@/modules/arts/api/hooks/useOneArtQuery";
 import { ArtInfoSkeleton } from "./skeleton";
 import { ArtInfo } from "./view";
 

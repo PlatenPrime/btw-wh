@@ -3,7 +3,7 @@ import type { AxiosResponse } from "axios";
 import React, { useState } from "react";
 import { toast } from "sonner";
 import * as XLSX from "xlsx";
-import type { UploadingArt } from "../../types";
+import type { UploadingArt } from "@/modules/arts/api/types/arts";
 import { View } from "./view";
 
 type UpsertResponse = {
@@ -42,14 +42,14 @@ export const ArtsExcelUploader = () => {
           const requiredFields = ["artikul", "zone", "namerus", "nameukr"];
 
           const missingFields = requiredFields.filter(
-            (field) => !Object.keys(json[0] || {}).includes(field)
+            (field) => !Object.keys(json[0] || {}).includes(field),
           );
 
           if (missingFields.length) {
             return reject(
               new Error(
-                `В документі відсутні поля: ${missingFields.join(", ")}`
-              )
+                `В документі відсутні поля: ${missingFields.join(", ")}`,
+              ),
             );
           }
 
@@ -89,7 +89,6 @@ export const ArtsExcelUploader = () => {
       console.error(errorUpload);
     }
   };
-  
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -129,7 +128,7 @@ export const ArtsExcelUploader = () => {
             const percent = Math.round((e.loaded * 100) / (e.total || 1));
             setUploadProgress(percent);
           },
-        }
+        },
       );
       setUploadProgress(100);
       setTimeout(() => {
@@ -155,9 +154,6 @@ export const ArtsExcelUploader = () => {
       console.error(error);
     }
   };
-
-
-
 
   return (
     <View
