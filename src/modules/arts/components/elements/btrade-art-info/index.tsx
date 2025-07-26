@@ -1,18 +1,18 @@
 import { Status } from "@/components/status";
-import { Skeleton } from "@/components/ui/skeleton";
 import { useBtradeArtInfoQuery } from "@/modules/arts/api/hooks/useBtradeArtInfoQuery";
-import { BtradeArtInfo } from "./view";
+import { BtradeArtInfoSkeleton } from "./skeleton";
+import { BtradeArtInfoView } from "./view";
 
-interface BtradeArtInfoContainerProps {
+interface BtradeArtInfoProps {
   artikul: string | undefined;
   zone?: string; // zone is not used in this component but can be passed for future use
   // The artikul parameter is used to fetch specific art information.
 }
 
-export function BtradeArtInfoContainer({
+export function BtradeArtInfo({
   artikul,
   zone, // zone is not used in this component but can be passed for future use
-}: BtradeArtInfoContainerProps) {
+}: BtradeArtInfoProps) {
   const {
     data: btradeArtInfo,
     isPending,
@@ -20,15 +20,16 @@ export function BtradeArtInfoContainer({
     isError,
   } = useBtradeArtInfoQuery(artikul ?? "");
 
-  if (isPending) return <Skeleton className="h-8 w-full" />;
+  if (isPending) return <BtradeArtInfoSkeleton />;
 
   if (error)
     return <Status isError={isError} message="Дані з sharik.ua відсутні" />;
+
   if (!btradeArtInfo) return <p>No information available</p>;
 
   return (
     <div>
-      <BtradeArtInfo zone={zone} info={btradeArtInfo} />
+      <BtradeArtInfoView zone={zone} info={btradeArtInfo} />
     </div>
   );
 }

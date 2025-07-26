@@ -1,20 +1,27 @@
 import { cn } from "@/lib/utils";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { ArtsGridCard } from "@/modules/arts/components/cards/arts-grid-card";
+import { ArtGridCardSkeleton } from "../../cards/arts-grid-card/skeleton";
 
 interface ViewProps {
   arts: ArtDto[] | undefined;
   isFetching?: boolean;
+  isPending?: boolean;
 }
 
-export function View({ arts }: ViewProps) {
-  if (!arts || arts.length === 0) {
+export function ArtsGridView({ arts, isPending }: ViewProps) {
+
+
+
+  
+  if (!isPending && (!arts || arts.length === 0)) {
     return (
       <div className="text-muted-foreground text-center">
         Немає даних для відображення
       </div>
     );
   }
+
 
   return (
     <ul
@@ -24,11 +31,20 @@ export function View({ arts }: ViewProps) {
         "md:[grid-template-columns:repeat(auto-fill,minmax(220px,1fr))] md:gap-4",
       )}
     >
-      {arts.map((art) => (
-        <li key={art.artikul} className="flex">
-          <ArtsGridCard art={art} />
-        </li>
-      ))}
+      {isPending &&
+        Array.from({ length: 20 }).map((_, i) => (
+          <li key={i} className="flex">
+            <ArtGridCardSkeleton />
+          </li>
+        ))}
+
+      {!isPending &&
+        arts &&
+        arts.map((art) => (
+          <li key={art.artikul} className="flex">
+            <ArtsGridCard art={art} />
+          </li>
+        ))}
     </ul>
   );
 }

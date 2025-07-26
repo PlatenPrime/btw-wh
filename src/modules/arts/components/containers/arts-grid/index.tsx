@@ -1,6 +1,5 @@
 import type { ArtDto } from "@/modules/arts/api/types/dto";
-import { GridSkeleton } from "./skeleton";
-import { View } from "./view";
+import { ArtsGridView } from "./view";
 
 interface GridProps {
   arts: ArtDto[] | undefined;
@@ -8,10 +7,8 @@ interface GridProps {
   isFetching?: boolean;
 }
 
-export function Grid({ arts, isPending, isFetching }: GridProps) {
-  if (isPending) {
-    return <GridSkeleton />;
-  }
-
-  return <View arts={arts} isFetching={isFetching} />;
+export function ArtsGrid({ arts, isPending, isFetching }: GridProps) {
+  return (
+    <ArtsGridView arts={arts} isFetching={isFetching} isPending={isPending} />
+  );
 }

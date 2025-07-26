@@ -1,8 +1,8 @@
 import { useParams } from "react-router";
-import { ArtDetail } from "./view";
+import { ArtDetailView } from "./view";
 
-export function ArtCardContainer() {
+export function ArtDetail() {
   const { artikul } = useParams<{ artikul: string }>();
 
-  return <ArtDetail artikul={artikul} />;
+  return <ArtDetailView artikul={artikul} />;
 }

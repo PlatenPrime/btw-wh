@@ -1,8 +1,8 @@
 // components/dashboard/view-infinite.tsx
+import { SearchPanel } from "@/components/search-panel";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
-import { Grid } from "../arts-grid";
-import { SearchPanel } from "../../search";
+import { ArtsGrid } from "../arts-grid";
 
 interface InfiniteViewProps {
   data: ArtDto[];
@@ -37,10 +37,15 @@ export function InfiniteView({
         <SearchPanel
           search={search}
           onSearchChange={(e) => onSearchChange(e.target.value)}
+          placeholder="Пошук артикулів"
         />
       </div>
 
-      <Grid arts={data} isPending={isPending} isFetching={isFetchingNextPage} />
+      <ArtsGrid
+        arts={data}
+        isPending={isPending}
+        isFetching={isFetchingNextPage}
+      />
       {isFetchingNextPage && (
         <div className="text-muted-foreground text-center">Завантаження...</div>
       )}

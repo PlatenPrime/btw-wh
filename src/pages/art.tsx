@@ -1,6 +1,6 @@
 import { ImageBlurContainer } from "@/components/image/image-blur-container";
 import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout";
-import { ArtCardContainer } from "@/modules/arts/components/containers/art-detail";
+import { ArtDetail } from "@/modules/arts/components/containers/art-detail";
 import { useParams } from "react-router";
 
 export function Art() {
@@ -10,7 +10,7 @@ export function Art() {
     <SidebarInsetLayout headerText={`Артикул: ${artikul || "невідомий"}`}>
       <ImageBlurContainer artikul={artikul || ""} isMoreOverlay={true}>
         <div className="flex min-h-screen w-full flex-col gap-2 p-2">
-          <ArtCardContainer />
+          <ArtDetail />
 
           <section className="rounded-md border p-4 shadow-sm">
             <h2 className="mb-2 text-xl font-semibold">Наявність на складах</h2>

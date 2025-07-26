@@ -6,7 +6,7 @@ interface BtradeArtInfoProps {
   zone?: string;
 }
 
-export function BtradeArtInfo({ info, zone }: BtradeArtInfoProps) {
+export function BtradeArtInfoView({ info, zone }: BtradeArtInfoProps) {
   if (!info) {
     return <p>No information available</p>;
   }
