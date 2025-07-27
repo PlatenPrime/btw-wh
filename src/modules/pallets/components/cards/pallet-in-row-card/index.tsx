@@ -1,18 +1,21 @@
 import { Card } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 import type { PalletShortDto } from "@/modules/rows/api/types/dto";
 import { Columns4 } from "lucide-react";
 
-interface PalletRowCardProps {
+interface PalletInRowCardProps {
   pallet: PalletShortDto;
   index: number;
 }
 
+const isEmptyStyle = "bg-muted-foreground/20";
+
 /**
  * Карточка палеты для отображения в списке ряда
  */
-export function PalletRowCard({ pallet }: PalletRowCardProps) {
+export function PalletInRowCard({ pallet }: PalletInRowCardProps) {
   return (
-    <Card className="hover:bg-muted/50 flex items-center justify-between rounded-lg border p-3 transition-colors">
+    <Card className={cn("hover:bg-muted/50 flex items-center justify-between rounded-lg border p-3 transition-colors", pallet.isEmpty && isEmptyStyle)}>
       <div className="flex items-center gap-2">
         <Columns4 className="text-muted-foreground h-4 w-4" />
         <span className="text-sm font-medium">{pallet.title}</span>
@@ -21,6 +24,8 @@ export function PalletRowCard({ pallet }: PalletRowCardProps) {
             {pallet.sector}
           </span>
         )}
+     
+
       </div>
     </Card>
   );

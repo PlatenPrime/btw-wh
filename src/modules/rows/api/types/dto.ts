@@ -2,6 +2,7 @@ export interface PalletShortDto {
   _id: string;
   title: string;
   sector?: string;
+  isEmpty: boolean;
 }
 
 export interface RowDto {
