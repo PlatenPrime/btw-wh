@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
+import { getPalletsByRowId } from "../services/getPalletsByRowId";
 import type { PalletListResponse } from "../types";
-import { getPalletsByRowId } from "./index";
 
 export function usePalletsByRowQuery(rowId?: string, enabled = true) {
   return useQuery<PalletListResponse>({

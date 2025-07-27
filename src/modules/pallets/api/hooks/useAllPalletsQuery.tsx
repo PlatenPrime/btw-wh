@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
+import { getAllPallets } from "../services/getAllPallets";
 import type { PalletListResponse } from "../types";
-import { getAllPallets } from "./index";
 
 export function useAllPalletsQuery(enabled = true) {
   return useQuery<PalletListResponse>({

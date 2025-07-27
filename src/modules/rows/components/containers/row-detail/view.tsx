@@ -2,9 +2,9 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { PalletList } from "@/modules/pallets/components/pallet-list";
 import type { RowDto } from "@/modules/rows/api/types/dto";
+import { DeleteRowDialog } from "@/modules/rows/components/dialogs/delete-row-dialog";
 import { Plus } from "lucide-react";
 import { useNavigate } from "react-router";
-import { DeleteRowDialog } from "@/modules/rows/components/dialogs/delete-row-dialog";
 // --- добавлено для диалога и формы ---
 import {
   Dialog,
@@ -17,14 +17,14 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { useCreatePalletMutation } from "@/modules/pallets/api/usePalletMutation";
+import { useCreatePalletMutation } from "@/modules/pallets/api/hooks";
 import * as React from "react";
 
 interface ViewProps {
   row: RowDto;
 }
 
-export function RowDetailView ({ row }: ViewProps) {
+export function RowDetailView({ row }: ViewProps) {
   const navigate = useNavigate();
   // --- состояние для формы ---
   const [title, setTitle] = React.useState("");

@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { movePalletPoses } from "./index";
+import { movePalletPoses } from "../services/movePalletPoses";
 
 export function useMovePalletPosesMutation(
   fromPalletId: string,

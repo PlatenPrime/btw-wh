@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
+import { UploadProgressBar } from "@/components/upload-progress-bar";
 import type { UploadingArt } from "@/modules/arts/api/types/arts";
 import { InputUploader } from "./input-uploader";
 import { PreviewTable } from "./preview-table";
-import { ProgressBar } from "./progress-bar";
 
 interface ViewProps {
   handleFileUpload: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -51,7 +51,10 @@ export function View({
         Відправити
       </Button>
 
-      <ProgressBar uploadProgress={uploadProgress} isUploading={isUploading} />
+      <UploadProgressBar
+        uploadProgress={uploadProgress}
+        isUploading={isUploading}
+      />
     </div>
   );
 }
