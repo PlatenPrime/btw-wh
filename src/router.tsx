@@ -9,10 +9,14 @@ const Login = lazy(() => import("./pages/login"));
 const Register = lazy(() => import("./pages/register"));
 
 const Art = lazy(() =>
-  import("./pages/art").then((module) => ({ default: module.Art })),
+  import("./modules/arts/pages/art").then((module) => ({
+    default: module.Art,
+  })),
 );
 const Arts = lazy(() =>
-  import("./pages/arts").then((module) => ({ default: module.Arts })),
+  import("./modules/arts/pages/arts").then((module) => ({
+    default: module.Arts,
+  })),
 );
 const ArtsUpdate = lazy(() =>
   import("./pages/artsUpdate").then((module) => ({
@@ -65,7 +69,7 @@ const Zones = lazy(() =>
   import("./pages/zones").then((module) => ({ default: module.Zones })),
 );
 
-const PalletPage = lazy(() => import("./pages/pallet"));
+const PalletPage = lazy(() => import("./modules/pallets/pages/pallet"));
 
 export const router = createHashRouter([
   {

@@ -1,6 +1,6 @@
 import type { PalletShortDto } from "@/modules/rows/api/types/dto";
 import { Columns4 } from "lucide-react";
-import { PalletInRowCard } from "../cards/pallet-in-row-card";
+import { PalletInRowCard } from "../../cards/pallet-in-row-card";
 
 interface PalletListProps {
   pallets: PalletShortDto[];
@@ -26,8 +26,8 @@ export function PalletList({ pallets }: PalletListProps) {
 
   return (
     <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
-      {pallets.map((pallet, index) => (
-        <PalletInRowCard key={pallet._id} pallet={pallet} index={index} />
+      {pallets.map((pallet) => (
+        <PalletInRowCard key={pallet._id} pallet={pallet} />
       ))}
     </div>
   );

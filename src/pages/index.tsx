@@ -1,7 +1,7 @@
+export { Art } from "../modules/arts/pages/art";
+export { Arts } from "../modules/arts/pages/arts";
 export { Row } from "../modules/rows/pages/row";
 export { Rows } from "../modules/rows/pages/rows";
-export { Art } from "./art";
-export { Arts } from "./arts";
 export { ArtsUpdate } from "./artsUpdate";
 export { ArtsUtils } from "./artsUtils";
 export { Ask } from "./ask";
