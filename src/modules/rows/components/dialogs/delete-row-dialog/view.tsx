@@ -11,6 +11,7 @@ import {
 import type { UseMutationResult } from "@tanstack/react-query";
 import type { Dispatch, ReactNode, SetStateAction } from "react";
 import type { DeleteRowResponse, RowDto } from "@/modules/rows/api/types/dto";
+import { Trash } from "lucide-react";
 
 interface DeleteRowDialogViewProps {
   row: RowDto;
@@ -36,6 +37,7 @@ export default function DeleteRowDialogView({
 }: DeleteRowDialogViewProps) {
   const defaultTrigger = (
     <Button variant="destructive" size="sm">
+      <Trash className="mr-2 h-4 w-4" />
       Видалити
     </Button>
   );
