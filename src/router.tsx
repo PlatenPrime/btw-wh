@@ -1,6 +1,6 @@
 // router.tsx
 import { lazy } from "react";
-import { createHashRouter, Navigate, Outlet } from "react-router";
+import { createHashRouter, Outlet } from "react-router";
 import { ProtectedRoute } from "./modules/auth/components";
 
 const App = lazy(() => import("./App"));
@@ -69,7 +69,21 @@ const Zones = lazy(() =>
   import("./pages/zones").then((module) => ({ default: module.Zones })),
 );
 
-const PalletPage = lazy(() => import("./modules/pallets/pages/pallet"));
+const PalletPage = lazy(() =>
+  import("./modules/pallets/pages/pallet").then((module) => ({
+    default: module.Pallet,
+  })),
+);
+const NotFound = lazy(() =>
+  import("./pages/not-found").then((module) => ({
+    default: module.NotFound,
+  })),
+);
+const Unauthorized = lazy(() =>
+  import("./pages/unauthorized").then((module) => ({
+    default: module.Unauthorized,
+  })),
+);
 
 export const router = createHashRouter([
   {
@@ -79,6 +93,10 @@ export const router = createHashRouter([
   {
     path: "/register",
     Component: Register,
+  },
+  {
+    path: "/unauthorized",
+    Component: Unauthorized,
   },
   {
     path: "/",
@@ -120,6 +138,7 @@ export const router = createHashRouter([
           { path: "stocks/:stock", element: <Stock /> },
           { path: "zones", element: <Zones /> },
           { path: "utils", element: <WhUtils /> },
+          { path: "pallets/:title", element: <PalletPage /> },
         ],
       },
       {
@@ -136,19 +155,16 @@ export const router = createHashRouter([
           { path: "path", element: <Path /> },
         ],
       },
+      
+      // 404 route - must be last in children array
       {
-        path: "pallet/:palletId",
+        path: "*",
         element: (
           <ProtectedRoute>
-            <PalletPage />
+            <NotFound />
           </ProtectedRoute>
         ),
       },
     ],
-  },
-  // Catch-all route for unauthenticated users
-  {
-    path: "*",
-    element: <Navigate to="/login" replace />,
   },
 ]);

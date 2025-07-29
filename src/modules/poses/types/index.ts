@@ -43,7 +43,7 @@ export interface CreatePosDto {
   comment: string;
 }
 
-export interface UpdatePosDto extends Partial<CreatePosDto> {}
+export type UpdatePosDto = Partial<CreatePosDto>;
 
 export interface BulkCreatePosDto {
   poses: CreatePosDto[];

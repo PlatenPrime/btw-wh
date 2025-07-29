@@ -1,5 +1,7 @@
 // Типы для Pallet
 
+import type { IPos } from "@/modules/poses/types";
+
 export interface PalletRowData {
   _id: string;
   title: string;
@@ -10,7 +12,7 @@ export interface IPallet {
   title: string;
   row: string;
   rowData: PalletRowData;
-  poses: string[];
+  poses: IPos[];
   sector?: string;
   createdAt?: string;
   updatedAt?: string;

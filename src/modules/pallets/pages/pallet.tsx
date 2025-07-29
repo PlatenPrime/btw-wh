@@ -1,25 +1,17 @@
-import { Button } from "@/components/ui/button";
+import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout";
+import { PalletDetailContainer } from "@/modules/pallets/components/containers/pallet-detail/container";
+import { useParams } from "react-router";
 
-import { useNavigate, useParams } from "react-router";
-
-export default function PalletPage() {
-  const { palletId } = useParams<{ palletId: string }>();
-  const navigate = useNavigate();
-
-  if (!palletId) {
-    return <div className="text-destructive">Не вказано palletId</div>;
-  }
-
+export function Pallet() {
+  const { title } = useParams<{ title: string }>();
+  
   return (
-    <div className="mx-auto max-w-4xl p-4">
-      <Button
-        variant="outline"
-        size="sm"
-        className="mb-4"
-        onClick={() => navigate(-1)}
-      >
-        &larr; Назад
-      </Button>
-    </div>
+    <SidebarInsetLayout headerText={`Палет: ${title || "невідомий"}`}>
+      <main className="p-4">
+        <PalletDetailContainer />
+      </main>
+    </SidebarInsetLayout>
   );
 }
+
+export default Pallet;

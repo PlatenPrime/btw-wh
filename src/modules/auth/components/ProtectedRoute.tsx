@@ -1,3 +1,4 @@
+import { Loader } from "@/components/loader";
 import type { ReactNode } from "react";
 import { Navigate, useLocation } from "react-router";
 import { useAuth } from "../hooks/useAuth";
@@ -10,15 +11,17 @@ export function ProtectedRoute({ children }: ProtectedRouteProps) {
   const { user, isLoading } = useAuth();
   const location = useLocation();
 
+  if (isLoading) {
+    return <Loader />;
+  }
 
-  if (isLoading)
-    return null // or a loader
   if (
     !user &&
     location.pathname !== "/login" &&
-    location.pathname !== "/register"
+    location.pathname !== "/register" &&
+    location.pathname !== "/unauthorized"
   ) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
+    return <Navigate to="/unauthorized" state={{ from: location }} replace />;
   }
   return <>{children}</>;
 }
