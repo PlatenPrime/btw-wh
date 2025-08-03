@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArtDialogImage } from "@/modules/arts/components/dialogs/art-dialog-image";
 
-import type { IPos } from "@/modules/poses/types";
+import type { IPos } from "@/modules/poses/api";
 
 interface PosInPalletCardProps {
   pos: IPos;

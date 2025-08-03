@@ -1,4 +1,4 @@
-import type { IPos } from "@/modules/poses/types";
+import type { IPos } from "@/modules/poses/api";
 import { PosesInPalletListEmpty } from "./empty-list";
 import { PosesInPalletListView } from "./view";
 

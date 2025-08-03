@@ -1,5 +1,5 @@
 import { PosInPalletCardView } from "./view";
-import type { IPos } from "@/modules/poses/types";
+import type { IPos } from "@/modules/poses/api";
 
 interface PosInPalletCardProps {
   pos: IPos;

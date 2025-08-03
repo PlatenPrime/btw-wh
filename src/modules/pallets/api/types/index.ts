@@ -1,6 +1,6 @@
 // Типы для Pallet
 
-import type { IPos } from "@/modules/poses/types";
+import type { IPos } from "@/modules/poses/api/types/index";
 
 export interface PalletRowData {
   _id: string;

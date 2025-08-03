@@ -56,4 +56,4 @@ export interface PosListResponse {
   totalPages: number;
 }
 
-export type PosResponse = IPos;
+export type PosResponse = IPos; 

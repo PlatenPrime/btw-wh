@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { PosInPalletCard } from "@/modules/poses/components/cards/pos-in-pallet-card";
-import type { IPos } from "@/modules/poses/types";
+import type { IPos } from "@/modules/poses/api";
 
 interface PosesInPalletListViewProps {
   poses: IPos[];

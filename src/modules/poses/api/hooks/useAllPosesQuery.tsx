@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import type { PosListResponse } from "../types";
-import { getAllPoses } from "./index";
+import { getAllPoses } from "../services/getAllPoses";
 
 export function useAllPosesQuery(
   params: Partial<{
@@ -11,12 +10,9 @@ export function useAllPosesQuery(
     artikul: string;
     sklad: string;
   }>,
-  enabled = true,
 ) {
-  return useQuery<PosListResponse>({
+  return useQuery({
     queryKey: ["poses", params],
     queryFn: ({ signal }) => getAllPoses(params, signal),
-    enabled,
-    staleTime: 5 * 60 * 1000,
   });
-}
+} 
