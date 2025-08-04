@@ -1,13 +1,17 @@
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArtDialogImage } from "@/modules/arts/components/dialogs/art-dialog-image";
+import { Edit, Trash } from "lucide-react";
+import { DeletePosDialog, UpdatePosDialog } from "../..";
 
 import type { IPos } from "@/modules/poses/api";
 
 interface PosInPalletCardProps {
   pos: IPos;
+  onSuccess?: () => void;
 }
 
-export function PosInPalletCardView({ pos }: PosInPalletCardProps) {
+export function PosInPalletCardView({ pos, onSuccess }: PosInPalletCardProps) {
   return (
     <Card className="p-3">
       <CardHeader className="flex items-center justify-start p-0 pb-2">
@@ -43,6 +47,29 @@ export function PosInPalletCardView({ pos }: PosInPalletCardProps) {
             <p className="text-muted-foreground text-xs">{pos.comment}</p>
           </div>
         )}
+
+        <div className="flex items-center justify-end gap-2 pt-2">
+          <UpdatePosDialog
+            pos={pos}
+            trigger={
+              <Button variant="outline" size="sm">
+                <Edit className="mr-2 h-4 w-4" />
+                Редагувати
+              </Button>
+            }
+            onSuccess={onSuccess}
+          />
+          <DeletePosDialog
+            pos={pos}
+            trigger={
+              <Button variant="destructive" size="sm">
+                <Trash className="mr-2 h-4 w-4" />
+                Видалити
+              </Button>
+            }
+            onSuccess={onSuccess}
+          />
+        </div>
       </CardContent>
     </Card>
   );
