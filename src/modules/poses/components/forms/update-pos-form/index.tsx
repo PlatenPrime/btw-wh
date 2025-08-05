@@ -16,7 +16,8 @@ export function UpdatePosForm({
 }: UpdatePosFormProps) {
   const [quant, setQuant] = useState(pos.quant);
   const [boxes, setBoxes] = useState(pos.boxes);
-  const [sklad, setSklad] = useState(pos.sklad || "");
+  const [sklad, setSklad] = useState(pos.sklad );
+  const [date, setDate] = useState(pos.date || "");
   const [comment, setComment] = useState(pos.comment);
   const [error, setError] = useState<string | null>(null);
 
@@ -32,7 +33,8 @@ export function UpdatePosForm({
         data: {
           quant,
           boxes,
-          sklad: sklad || undefined,
+          sklad,
+          date,
           comment,
         },
       });
@@ -52,6 +54,8 @@ export function UpdatePosForm({
       setBoxes={setBoxes}
       sklad={sklad}
       setSklad={setSklad}
+      date={date}
+      setDate={setDate}
       comment={comment}
       setComment={setComment}
       error={error}

@@ -37,7 +37,7 @@ export function UpdatePosDialogView({
       <DialogTrigger asChild>{trigger || defaultTrigger}</DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Редагувати позицію</DialogTitle>
+          <DialogTitle className="text-center">{pos.artikul}</DialogTitle>
         </DialogHeader>
         <UpdatePosForm pos={pos} onSuccess={onSuccess} onCancel={onCancel} />
       </DialogContent>

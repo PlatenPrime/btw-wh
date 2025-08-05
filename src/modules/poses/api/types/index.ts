@@ -24,7 +24,7 @@ export interface IPos {
   quant: number;
   boxes: number;
   date?: string;
-  sklad?: string;
+  sklad: string;
   createdAt?: string;
   updatedAt?: string;
   comment: string;

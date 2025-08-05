@@ -2,8 +2,15 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import React from "react";
+import { sklads, type ISklads } from "@/constants/sklad";
 
 interface UpdatePosFormViewProps {
   artikul: string;
@@ -13,6 +20,8 @@ interface UpdatePosFormViewProps {
   setBoxes: (value: number) => void;
   sklad: string;
   setSklad: (value: string) => void;
+  date: string;
+  setDate: (value: string) => void;
   comment: string;
   setComment: (value: string) => void;
   error: string | null;
@@ -29,6 +38,8 @@ export function UpdatePosFormView({
   setBoxes,
   sklad,
   setSklad,
+  date,
+  setDate,
   comment,
   setComment,
   error,
@@ -40,12 +51,9 @@ export function UpdatePosFormView({
     <Card className="w-full max-w-md">
       <CardContent>
         <form onSubmit={onSubmit} className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="artikul">Артикул {artikul}</Label>
-      
-          </div>
 
-          <div className="grid grid-cols-2 gap-4">
+
+          <div className="grid gap-4">
             <div className="space-y-2">
               <Label htmlFor="quant">Кількість</Label>
               <Input
@@ -60,7 +68,7 @@ export function UpdatePosFormView({
               />
             </div>
 
-            <div className="space-y-2">
+            <div className="grid gap-2">
               <Label htmlFor="boxes">Коробки</Label>
               <Input
                 id="boxes"
@@ -73,31 +81,43 @@ export function UpdatePosFormView({
                 min="0"
               />
             </div>
-          </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="sklad">Склад</Label>
-            <Input
-              id="sklad"
-              value={sklad}
-              onChange={(e) => setSklad(e.target.value)}
-              placeholder="Назва складу"
-              disabled={isSubmitting}
-            />
-          </div>
+            <div className="grid gap-2">
+              <Label htmlFor="sklad">Склад</Label>
+              <Select value={sklad} onValueChange={setSklad}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder={sklads[sklad as keyof ISklads]} />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="pogrebi">{sklads.pogrebi}</SelectItem>
+                  <SelectItem value="merezhi">{sklads.merezhi}</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
+             <div className="grid gap-2">
+              <Label htmlFor="date">Дата</Label>
+              <Input
+                id="date"
+                type="text"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                placeholder="MM.РР"
+                disabled={isSubmitting}
+              />
+            </div>
 
-
-          <div className="space-y-2">
-            <Label htmlFor="comment">Коментар</Label>
-            <Textarea
-              id="comment"
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-              placeholder="Додатковий коментар"
-              disabled={isSubmitting}
-              rows={3}
-            />
+            <div className="grid gap-2">
+              <Label htmlFor="comment">Коментар</Label>
+              <Textarea
+                id="comment"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                placeholder="Додатковий коментар"
+                disabled={isSubmitting}
+                rows={3}
+              />
+            </div>
           </div>
 
           {error && <div className="text-destructive text-sm">{error}</div>}

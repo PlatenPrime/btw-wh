@@ -27,7 +27,7 @@ export function ArtDialogImage({ artikul }: ArtImageProps) {
       </DialogTrigger>
 
       {/* Само модальное окно */}
-      <DialogContent className="min-h-40 rounded-xl border bg-transparent p-0 shadow-none">
+      <DialogContent className="min-h-40 rounded-xl border bg-white flex justify-center p-0 shadow-none">
         <Image
           src={getBigImageUrl(artikul)}
           alt={artikul}
