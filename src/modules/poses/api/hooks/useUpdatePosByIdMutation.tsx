@@ -1,14 +1,14 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createPos } from "../services/createPos";
-import type { CreatePosDto } from "../types/index";
+import { updatePos } from "../services/updatePos";
+import type { UpdatePosDto } from "../types/index";
 
-export function useCreatePosMutation(palletId: string) {
+export function useUpdatePosByIdMutation() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (data: CreatePosDto) => createPos(data),
+    mutationFn: ({ id, data }: { id: string; data: UpdatePosDto }) =>
+      updatePos(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["poses"] });
-      queryClient.invalidateQueries({ queryKey: ["poses", { palletId }] });
       queryClient.invalidateQueries({ queryKey: ["pallets"] });
     },
   });

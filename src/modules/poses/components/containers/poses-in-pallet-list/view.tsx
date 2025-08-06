@@ -1,7 +1,7 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 
-import { PosInPalletCard } from "@/modules/poses/components/cards/pos-in-pallet-card";
 import type { IPos } from "@/modules/poses/api";
+import { PosInPalletCard } from "@/modules/poses/components/cards/pos-in-pallet-card";
 
 interface PosesInPalletListViewProps {
   poses: IPos[];
@@ -10,9 +10,6 @@ interface PosesInPalletListViewProps {
 export function PosesInPalletListView({ poses }: PosesInPalletListViewProps) {
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>Позиції на палеті</CardTitle>
-      </CardHeader>
       <CardContent>
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {poses.map((pos, index) => (

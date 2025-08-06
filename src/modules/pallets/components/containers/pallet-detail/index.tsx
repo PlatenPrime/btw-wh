@@ -8,7 +8,16 @@ interface PalletDetailProps {
 }
 
 export function PalletDetail({ palletTitle }: PalletDetailProps) {
-  const { data: pallet, isLoading, error } = usePalletByTitleQuery(palletTitle);
+  const {
+    data: pallet,
+    isLoading,
+    error,
+    refetch,
+  } = usePalletByTitleQuery(palletTitle);
+
+  const handlePosCreated = () => {
+    refetch();
+  };
 
   if (isLoading) {
     return <PalletDetailSkeleton />;
@@ -22,5 +31,5 @@ export function PalletDetail({ palletTitle }: PalletDetailProps) {
     return <LoadingNoData description="Запитаний палет не існує" />;
   }
 
-  return <PalletDetailView pallet={pallet} />;
+  return <PalletDetailView pallet={pallet} onPosCreated={handlePosCreated} />;
 }

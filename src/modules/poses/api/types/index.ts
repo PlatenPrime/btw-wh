@@ -32,15 +32,15 @@ export interface IPos {
 }
 
 export interface CreatePosDto {
-  pallet: string;
-  row: string;
+  palletId: string;
+  rowId: string;
   artikul: string;
+  nameukr?: string;
   quant: number;
   boxes: number;
   date?: string;
   sklad?: string;
-  limit: number;
-  comment: string;
+  comment?: string;
 }
 
 export type UpdatePosDto = Partial<CreatePosDto>;
