@@ -15,9 +15,9 @@ import { sklads, type ISklads } from "@/constants/sklad";
 interface UpdatePosFormViewProps {
   artikul: string;
   quant: number;
-  setQuant: (value: number) => void;
+  setQuant: (value: string) => void;
   boxes: number;
-  setBoxes: (value: number) => void;
+  setBoxes: (value: string) => void;
   sklad: string;
   setSklad: (value: string) => void;
   date: string;
@@ -51,20 +51,17 @@ export function UpdatePosFormView({
     <Card className="w-full max-w-md">
       <CardContent>
         <form onSubmit={onSubmit} className="space-y-4">
-
-
           <div className="grid gap-4">
             <div className="space-y-2">
               <Label htmlFor="quant">Кількість</Label>
               <Input
                 id="quant"
-                type="number"
-                value={quant}
-                onChange={(e) => setQuant(Number(e.target.value))}
+                type="text"
+                value={quant === 0 ? "" : quant.toString()}
+                onChange={(e) => setQuant(e.target.value)}
                 placeholder="0"
                 required
                 disabled={isSubmitting}
-                min="0"
               />
             </div>
 
@@ -72,13 +69,12 @@ export function UpdatePosFormView({
               <Label htmlFor="boxes">Коробки</Label>
               <Input
                 id="boxes"
-                type="number"
-                value={boxes}
-                onChange={(e) => setBoxes(Number(e.target.value))}
+                type="text"
+                value={boxes === 0 ? "" : boxes.toString()}
+                onChange={(e) => setBoxes(e.target.value)}
                 placeholder="0"
                 required
                 disabled={isSubmitting}
-                min="0"
               />
             </div>
 
@@ -95,7 +91,7 @@ export function UpdatePosFormView({
               </Select>
             </div>
 
-             <div className="grid gap-2">
+            <div className="grid gap-2">
               <Label htmlFor="date">Дата</Label>
               <Input
                 id="date"

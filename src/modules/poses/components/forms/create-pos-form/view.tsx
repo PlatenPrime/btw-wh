@@ -19,9 +19,9 @@ interface CreatePosFormViewProps {
   artikul: string;
   setArtikul: (value: string) => void;
   quant: number;
-  setQuant: (value: number) => void;
+  setQuant: (value: string) => void;
   boxes: number;
-  setBoxes: (value: number) => void;
+  setBoxes: (value: string) => void;
   sklad: string;
   setSklad: (value: string) => void;
   date: string;
@@ -98,13 +98,12 @@ export function CreatePosFormView({
             <Label htmlFor="quant">Кількість товару *</Label>
             <Input
               id="quant"
-              type="number"
-              value={quant}
-              onChange={(e) => setQuant(Number(e.target.value))}
+              type="text"
+              value={quant === 0 ? "" : quant.toString()}
+              onChange={(e) => setQuant(e.target.value)}
               placeholder="0"
               required
               disabled={isSubmitting}
-              min="0"
             />
           </div>
 
@@ -113,13 +112,12 @@ export function CreatePosFormView({
             <Label htmlFor="boxes">Кількість коробок *</Label>
             <Input
               id="boxes"
-              type="number"
-              value={boxes}
-              onChange={(e) => setBoxes(Number(e.target.value))}
+              type="text"
+              value={boxes === 0 ? "" : boxes.toString()}
+              onChange={(e) => setBoxes(e.target.value)}
               placeholder="0"
               required
               disabled={isSubmitting}
-              min="0"
             />
           </div>
 
