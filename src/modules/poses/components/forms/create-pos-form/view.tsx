@@ -9,48 +9,34 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
+
 import { sklads, type ISklads } from "@/constants/sklad";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { ArtImage } from "@/modules/arts/components/elements/art-image";
 import type { IPos } from "@/modules/poses/api";
+import { useFormContext } from "react-hook-form";
+import type { CreatePosFormData } from "./schema";
 
 interface CreatePosFormViewProps {
+  form: ReturnType<typeof useFormContext<CreatePosFormData>>;
   artikul: string;
-  setArtikul: (value: string) => void;
-  quant: number;
-  setQuant: (value: string) => void;
-  boxes: number;
-  setBoxes: (value: string) => void;
-  sklad: string;
-  setSklad: (value: string) => void;
-  date: string;
-  setDate: (value: string) => void;
-  comment: string;
-  setComment: (value: string) => void;
-  error: string | null;
+  onArtikulChange: (value: string) => void;
+  onQuantChange: (value: string) => void;
+  onBoxesChange: (value: string) => void;
   isSubmitting: boolean;
   isArtLoading: boolean;
   artData?: ArtDto;
   existingPos?: IPos;
-  onSubmit: (e: React.FormEvent) => void;
+  onSubmit: (data: CreatePosFormData) => void;
   onCancel?: () => void;
 }
 
 export function CreatePosFormView({
+  form,
   artikul,
-  setArtikul,
-  quant,
-  setQuant,
-  boxes,
-  setBoxes,
-  sklad,
-  setSklad,
-  date,
-  setDate,
-  comment,
-  setComment,
-  error,
+  onArtikulChange,
+  onQuantChange,
+  onBoxesChange,
   isSubmitting,
   isArtLoading,
   artData,
@@ -58,10 +44,21 @@ export function CreatePosFormView({
   onSubmit,
   onCancel,
 }: CreatePosFormViewProps) {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { errors },
+  } = form;
+  const watchedValues = watch();
+
+  const handleFormSubmit = handleSubmit(onSubmit);
+
   return (
     <Card className="w-full max-w-md">
       <CardContent>
-        <form onSubmit={onSubmit} className="space-y-4">
+        <form onSubmit={handleFormSubmit} className="space-y-4">
           {/* Информация об артикуле */}
           {artData && (
             <div className="bg-muted/50 rounded-lg border p-3">
@@ -81,13 +78,18 @@ export function CreatePosFormView({
             <Input
               id="artikul"
               type="text"
-              value={artikul}
-              onChange={(e) => setArtikul(e.target.value)}
-              placeholder="ЦЦЦЦ-ЦЦЦЦ"
-              required
+              {...register("artikul")}
+              onChange={(e) => onArtikulChange(e.target.value)}
+              placeholder="1111-1111"
               disabled={isSubmitting}
               maxLength={9}
+              className={errors.artikul ? "border-destructive" : ""}
             />
+            {errors.artikul && (
+              <p className="text-destructive text-xs">
+                {errors.artikul.message}
+              </p>
+            )}
             {isArtLoading && (
               <p className="text-muted-foreground text-xs">Пошук артикула...</p>
             )}
@@ -99,12 +101,17 @@ export function CreatePosFormView({
             <Input
               id="quant"
               type="text"
-              value={quant === 0 ? "" : quant.toString()}
-              onChange={(e) => setQuant(e.target.value)}
+              value={
+                watchedValues.quant === 0 ? "" : watchedValues.quant.toString()
+              }
+              onChange={(e) => onQuantChange(e.target.value)}
               placeholder="0"
-              required
               disabled={isSubmitting}
+              className={errors.quant ? "border-destructive" : ""}
             />
+            {errors.quant && (
+              <p className="text-destructive text-xs">{errors.quant.message}</p>
+            )}
           </div>
 
           {/* Поле количества коробок */}
@@ -113,73 +120,66 @@ export function CreatePosFormView({
             <Input
               id="boxes"
               type="text"
-              value={boxes === 0 ? "" : boxes.toString()}
-              onChange={(e) => setBoxes(e.target.value)}
+              value={
+                watchedValues.boxes === 0 ? "" : watchedValues.boxes.toString()
+              }
+              onChange={(e) => onBoxesChange(e.target.value)}
               placeholder="0"
-              required
               disabled={isSubmitting}
+              className={errors.boxes ? "border-destructive" : ""}
             />
+            {errors.boxes && (
+              <p className="text-destructive text-xs">{errors.boxes.message}</p>
+            )}
           </div>
 
           {/* Поле склада */}
           <div className="space-y-2">
             <Label htmlFor="sklad">Склад</Label>
-            <Select value={sklad} onValueChange={setSklad}>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder={sklads[sklad as keyof ISklads]} />
+            <Select
+              value={watchedValues.sklad}
+              onValueChange={(value) =>
+                setValue("sklad", value, { shouldValidate: true })
+              }
+            >
+              <SelectTrigger
+                className={`w-full ${errors.sklad ? "border-destructive" : ""}`}
+              >
+                <SelectValue
+                  placeholder={sklads[watchedValues.sklad as keyof ISklads]}
+                />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="pogrebi">{sklads.pogrebi}</SelectItem>
                 <SelectItem value="merezhi">{sklads.merezhi}</SelectItem>
               </SelectContent>
             </Select>
+            {errors.sklad && (
+              <p className="text-destructive text-xs">{errors.sklad.message}</p>
+            )}
           </div>
 
-          {/* Поле даты */}
-          <div className="space-y-2">
-            <Label htmlFor="date">Дата</Label>
-            <Input
-              id="date"
-              type="text"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              placeholder="MM.РР"
-              disabled={isSubmitting}
-            />
-          </div>
-
-          {/* Поле комментария */}
-          <div className="space-y-2">
-            <Label htmlFor="comment">Коментар</Label>
-            <Textarea
-              id="comment"
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-              placeholder="Додатковий коментар"
-              disabled={isSubmitting}
-              rows={3}
-            />
-          </div>
+         
 
           {/* Уведомление о существующей позиции */}
           {existingPos && (
             <div className="rounded-lg border bg-blue-50 p-3 dark:bg-blue-950/20">
               <p className="text-sm text-blue-700 dark:text-blue-300">
-                Знайдено існуючу позицію з таким же артикулом. Кількість буде
-                додана до існуючої позиції.
+                Такий артикул вже є на палеті. При повній відповідності
+                кількість буде об'єднана
               </p>
             </div>
           )}
-
-          {/* Ошибка */}
-          {error && <div className="text-destructive text-sm">{error}</div>}
 
           {/* Кнопки */}
           <div className="grid grid-cols-2 gap-2">
             <Button
               type="submit"
               disabled={
-                isSubmitting || !artikul.trim() || quant <= 0 || boxes <= 0
+                isSubmitting ||
+                !artikul.trim() ||
+                watchedValues.quant <= 0 ||
+                watchedValues.boxes <= 0
               }
               className="flex-1"
             >

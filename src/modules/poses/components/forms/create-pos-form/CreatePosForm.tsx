@@ -4,8 +4,10 @@ import {
   useCreatePosMutation,
   useUpdatePosByIdMutation,
 } from "@/modules/poses/api";
-import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { CreatePosFormView } from "./view";
+import { createPosFormSchema, type CreatePosFormData, createPosFormDefaultValues } from "./schema";
 
 interface CreatePosFormProps {
   pallet: IPallet;
@@ -18,13 +20,14 @@ export function CreatePosForm({
   onSuccess,
   onCancel,
 }: CreatePosFormProps) {
-  const [artikul, setArtikul] = useState("");
-  const [quant, setQuant] = useState<number>(0);
-  const [boxes, setBoxes] = useState<number>(0);
-  const [sklad, setSklad] = useState("pogrebi");
-  const [date, setDate] = useState("");
-  const [comment, setComment] = useState("");
-  const [error, setError] = useState<string | null>(null);
+  const form = useForm<CreatePosFormData>({
+    resolver: zodResolver(createPosFormSchema),
+    defaultValues: createPosFormDefaultValues,
+    mode: "onChange",
+  });
+
+  const { watch, setValue, formState: { isSubmitting } } = form;
+  const artikul = watch("artikul");
 
   const createPosMutation = useCreatePosMutation(pallet._id);
   const updatePosMutation = useUpdatePosByIdMutation();
@@ -39,9 +42,7 @@ export function CreatePosForm({
   const existingPos = pallet.poses.find(
     (pos) =>
       pos.artikul === artikul &&
-      pos.sklad === sklad &&
-      pos.comment === comment &&
-      pos.date === date,
+      pos.sklad === watch("sklad")
   );
 
   // Обработчики для числовых полей без ведущих нулей
@@ -51,13 +52,13 @@ export function CreatePosForm({
 
     // Если поле пустое, устанавливаем 0
     if (numericValue === "") {
-      setQuant(0);
+      setValue("quant", 0, { shouldValidate: true });
       return;
     }
 
     // Конвертируем в число и устанавливаем
     const numValue = parseInt(numericValue, 10);
-    setQuant(numValue);
+    setValue("quant", numValue, { shouldValidate: true });
   };
 
   const handleBoxesChange = (value: string) => {
@@ -66,40 +67,24 @@ export function CreatePosForm({
 
     // Если поле пустое, устанавливаем 0
     if (numericValue === "") {
-      setBoxes(0);
+      setValue("boxes", 0, { shouldValidate: true });
       return;
     }
 
     // Конвертируем в число и устанавливаем
     const numValue = parseInt(numericValue, 10);
-    setBoxes(numValue);
+    setValue("boxes", numValue, { shouldValidate: true });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError(null);
-
-    // Валидация обязательных полей
-    if (!artikul.trim() || quant <= 0 || boxes <= 0) {
-      setError("Заповніть всі обов'язкові поля");
-      return;
-    }
-
-    // Валидация формата артикула
-    const artikulPattern = /^\d{4}-\d{4}$/;
-    if (!artikulPattern.test(artikul)) {
-      setError("Артикул повинен мати формат ЦЦЦЦ-ЦЦЦЦ");
-      return;
-    }
-
+  const onSubmit = async (data: CreatePosFormData) => {
     try {
       if (existingPos) {
         // Обновляем существующую позицию
         await updatePosMutation.mutateAsync({
           id: existingPos._id,
           data: {
-            quant: existingPos.quant + quant,
-            boxes: existingPos.boxes + boxes,
+            quant: existingPos.quant + data.quant,
+            boxes: existingPos.boxes + data.boxes,
           },
         });
       } else {
@@ -107,59 +92,39 @@ export function CreatePosForm({
         await createPosMutation.mutateAsync({
           palletId: pallet._id,
           rowId: pallet.row,
-          artikul,
+          artikul: data.artikul,
           nameukr: artData?.nameukr,
-          quant,
-          boxes,
-          sklad,
-          date,
-          comment,
+          quant: data.quant,
+          boxes: data.boxes,
+          sklad: data.sklad,
         });
       }
       onSuccess?.();
     } catch (error) {
-      setError("Помилка при створенні позиції");
       console.error("Error creating/updating pos:", error);
+      // Ошибка будет обработана в компоненте через formState
     }
   };
 
   // Обработка изменения артикула
   const handleArtikulChange = (value: string) => {
-    setArtikul(value);
-    setError(null);
-
-    // Проверяем формат при вводе
-    if (value.length > 0) {
-      const pattern = /^\d{0,4}-?\d{0,4}$/;
-      if (!pattern.test(value)) {
-        setError("Артикул повинен мати формат ЦЦЦЦ-ЦЦЦЦ");
-      }
-    }
+    setValue("artikul", value, { shouldValidate: true });
   };
 
-  const isSubmitting =
-    createPosMutation.isPending || updatePosMutation.isPending;
+  const isFormSubmitting = isSubmitting || createPosMutation.isPending || updatePosMutation.isPending;
 
   return (
     <CreatePosFormView
+      form={form}
       artikul={artikul}
-      setArtikul={handleArtikulChange}
-      quant={quant}
-      setQuant={handleQuantChange}
-      boxes={boxes}
-      setBoxes={handleBoxesChange}
-      sklad={sklad}
-      setSklad={setSklad}
-      date={date}
-      setDate={setDate}
-      comment={comment}
-      setComment={setComment}
-      error={error}
-      isSubmitting={isSubmitting}
+      onArtikulChange={handleArtikulChange}
+      onQuantChange={handleQuantChange}
+      onBoxesChange={handleBoxesChange}
+      isSubmitting={isFormSubmitting}
       isArtLoading={isArtLoading}
       artData={artData}
       existingPos={existingPos}
-      onSubmit={handleSubmit}
+      onSubmit={onSubmit}
       onCancel={onCancel}
     />
   );

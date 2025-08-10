@@ -11,7 +11,7 @@ export function PosesInPalletListView({ poses }: PosesInPalletListViewProps) {
   return (
     <Card>
       <CardContent>
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ">
           {poses.map((pos, index) => (
             <PosInPalletCard key={`${pos.artikul}-${index}`} pos={pos} />
           ))}

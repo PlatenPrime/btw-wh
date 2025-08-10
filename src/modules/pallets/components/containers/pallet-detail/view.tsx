@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import type { IPallet } from "@/modules/pallets/api/types";
 import { PalletInfo } from "@/modules/pallets/components/cards/pallet-info";
 import { PosesInPalletList } from "@/modules/poses/components/containers/poses-in-pallet-list";
@@ -20,11 +21,7 @@ export function PalletDetailView({
         <CreatePosDialog
           pallet={pallet}
           onSuccess={onPosCreated}
-          trigger={
-            <button className="ring-offset-background focus-visible:ring-ring bg-primary text-primary-foreground hover:bg-primary/90 inline-flex h-9 items-center justify-center rounded-md px-3 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50">
-              Додати позицію
-            </button>
-          }
+          trigger={<Button>Додати позицію</Button>}
         />
       </div>
       <PosesInPalletList poses={pallet.poses} />

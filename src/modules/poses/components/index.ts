@@ -1,5 +1,6 @@
 // Cards
 export { PosInPalletCardView } from "./cards/pos-in-pallet-card/view";
+export { StatItem } from "./cards/stat-item";
 
 // Dialogs
 export { DeletePosDialog } from "./dialogs/delete-pos-dialog";
