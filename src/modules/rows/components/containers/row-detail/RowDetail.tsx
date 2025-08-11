@@ -1,6 +1,6 @@
 import { useRowByTitleQuery } from "../../../api/hooks/useRowByTitleQuery";
 import { RowDetailSkeleton } from "./skeleton";
-import { RowDetailView } from "./view";
+import { RowDetailView } from "./RowDetailView";
 
 interface RowDetailProps {
   rowTitle?: string;

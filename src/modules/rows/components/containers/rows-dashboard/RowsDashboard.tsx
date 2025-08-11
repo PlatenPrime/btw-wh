@@ -5,7 +5,7 @@ import {
 } from "@/components/loading-states";
 import { GridSkeleton } from "@/modules/rows/components/containers/rows-grid/skeleton";
 import { useRowsQuery } from "../../../api/hooks/useRowsQuery";
-import { RowsDashboardView } from "./view";
+import { RowsDashboardView } from "./RowsDashboardView";
 
 export function RowsDashboard() {
   const { data, isLoading, error, refetch } = useRowsQuery();

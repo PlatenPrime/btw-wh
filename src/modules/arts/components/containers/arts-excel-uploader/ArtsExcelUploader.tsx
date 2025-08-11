@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { toast } from "sonner";
 import * as XLSX from "xlsx";
 import type { UploadingArt } from "@/modules/arts/api/types/arts";
-import { View } from "./view";
+import { View } from "./ViewComponent";
 
 type UpsertResponse = {
   message: string;
@@ -111,47 +111,44 @@ export const ArtsExcelUploader = () => {
   };
 
   const handleSendToServer = async () => {
-    if (!parsedData) {
-      toast("Немає данних для відправки", {
-        description: "Спочатку завантажте файл",
-      });
-      return;
-    }
+    if (!parsedData) return;
+
+    setIsUploading(true);
+    setUploadProgress(0);
 
     try {
-      setIsUploading(true);
       const response: AxiosResponse<UpsertResponse> = await apiClient.post(
         "/arts/upsert",
         parsedData,
         {
-          onUploadProgress: (e) => {
-            const percent = Math.round((e.loaded * 100) / (e.total || 1));
-            setUploadProgress(percent);
+          onUploadProgress: (progressEvent) => {
+            if (progressEvent.total) {
+              const progress = Math.round(
+                (progressEvent.loaded * 100) / progressEvent.total,
+              );
+              setUploadProgress(progress);
+            }
           },
         },
       );
-      setUploadProgress(100);
-      setTimeout(() => {
-        setUploadProgress(0);
-        setIsUploading(false);
-      }, 2000);
-      toast("Імпорт завершено ✅", {
-        description: `Імпортовано записів: ${
-          response.data.result.modifiedCount ?? "невідомо"
-        }`,
+
+      const { result } = response.data;
+
+      toast("Успішно завантажено ✅", {
+        description: `Вставлено: ${result.insertedCount}, Оновлено: ${result.modifiedCount}`,
       });
 
-      console.log(response.data);
+      setParsedData(null);
+      setPreview([]);
+      setUploadProgress(0);
     } catch (error: unknown) {
-      const errorResponse = error as {
-        response: { data: { message: string } };
-      };
-      toast("Помилка при імпорті ❌", {
-        description:
-          errorResponse.response?.data?.message ||
-          "Невідома помилка при імпорті",
+      const errorUpload = error as Error;
+      toast("Помилка завантаження ❌", {
+        description: errorUpload.message || "Помилка при завантаженні на сервер",
       });
-      console.error(error);
+      console.error(errorUpload);
+    } finally {
+      setIsUploading(false);
     }
   };
 

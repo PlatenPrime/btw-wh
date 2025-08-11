@@ -1,5 +1,5 @@
 // Cards
-export { PosInPalletCardView } from "./cards/pos-in-pallet-card/view";
+export { PosInPalletCardView } from "./cards/pos-in-pallet-card/PosInPalletCardView";
 export { StatItem } from "./cards/stat-item";
 
 // Dialogs

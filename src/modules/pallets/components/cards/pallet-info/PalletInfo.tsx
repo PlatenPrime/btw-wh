@@ -1,5 +1,5 @@
 import type { IPallet } from "@/modules/pallets/api/types";
-import { PalletInfoView } from "./view";
+import { PalletInfoView } from "./PalletInfoView";
 
 interface PalletInfoProps {
   pallet: IPallet;

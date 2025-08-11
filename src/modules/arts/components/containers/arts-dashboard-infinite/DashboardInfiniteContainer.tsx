@@ -2,7 +2,7 @@
 import { Status } from "@/components/status";
 import { useArtsInfiniteQuery } from "@/modules/arts/api/hooks/useArtsInfiniteQuery";
 import { useState } from "react";
-import { InfiniteView } from "./view";
+import { InfiniteView } from "./InfiniteView";
 
 export function DashboardInfiniteContainer() {
   const [search, setSearch] = useState("");

@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import type { IPallet } from "@/modules/pallets/api/types";
-import { PalletInfo } from "@/modules/pallets/components/cards/pallet-info";
-import { PosesInPalletList } from "@/modules/poses/components/containers/poses-in-pallet-list";
+import { PalletInfo } from "@/modules/pallets/components/cards/pallet-info/PalletInfo";
+import { PosesInPalletList } from "@/modules/poses/components/containers/poses-in-pallet-list/PosesInPalletList";
 import { CreatePosDialog } from "@/modules/poses/components/dialogs/create-pos-dialog";
 
 interface PalletDetailViewProps {

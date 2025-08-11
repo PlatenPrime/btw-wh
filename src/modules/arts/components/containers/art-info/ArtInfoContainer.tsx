@@ -1,6 +1,6 @@
 import { useOneArtQuery } from "@/modules/arts/api/hooks/useOneArtQuery";
 import { ArtInfoSkeleton } from "./skeleton";
-import { ArtInfoView } from "./view";
+import { ArtInfoView } from "./ArtInfoView";
 
 interface ArtInfoContainerProps {
   artikul: string | undefined;

@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import type { RowDto } from "@/modules/rows/api/types/dto";
 import type { RowsRefetch } from "@/modules/rows/api/types/types";
-import { Grid } from "@/modules/rows/components/containers/rows-grid";
+import { Grid } from "@/modules/rows/components/containers/rows-grid/Grid";
 import { CreateRowDialog } from "@/modules/rows/components/dialogs/create-row-dialog";
 import { Plus } from "lucide-react";
 

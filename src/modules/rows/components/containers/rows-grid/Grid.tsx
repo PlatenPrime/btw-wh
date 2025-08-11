@@ -1,6 +1,6 @@
 import type { RowDto } from "@/modules/rows/api/types/dto";
 import { GridSkeleton } from "./skeleton";
-import { View } from "./view";
+import { View } from "./GridView";
 import type { RowsRefetch } from "@/modules/rows/api/types/types";
 
 interface GridProps {

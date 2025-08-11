@@ -1,5 +1,5 @@
 import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout";
-import { RowsDashboard } from "@/modules/rows/components/containers/rows-dashboard";
+import { RowsDashboard } from "@/modules/rows/components/containers/rows-dashboard/RowsDashboard";
 
 export function Rows() {
   return (

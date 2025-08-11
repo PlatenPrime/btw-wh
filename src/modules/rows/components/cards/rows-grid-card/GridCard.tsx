@@ -1,6 +1,6 @@
 import type { RowDto } from "@/modules/rows/api/types/dto";
 import type { RowsRefetch } from "@/modules/rows/api/types/types";
-import { View } from "./view";
+import { View } from "./GridView";
 
 interface GridCardProps {
   row: RowDto;

@@ -1,6 +1,6 @@
 import { ImageBlurContainer } from "@/components/image/image-blur-container";
 import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout";
-import { ArtDetail } from "@/modules/arts/components/containers/art-detail";
+import { ArtDetail } from "@/modules/arts/components/containers/art-detail/ArtDetail";
 import { useParams } from "react-router";
 
 export function Art() {

@@ -1,5 +1,5 @@
 import { useParams } from "react-router";
-import { ArtDetailView } from "./view";
+import { ArtDetailView } from "./ArtDetailView";
 
 export function ArtDetail() {
   const { artikul } = useParams<{ artikul: string }>();

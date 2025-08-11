@@ -1,6 +1,6 @@
 import type { IPos } from "@/modules/poses/api";
 import { PosesInPalletListEmpty } from "./empty-list";
-import { PosesInPalletListView } from "./view";
+import { PosesInPalletListView } from "./PosesInPalletListView";
 
 interface PosesInPalletListProps {
   poses: IPos[];

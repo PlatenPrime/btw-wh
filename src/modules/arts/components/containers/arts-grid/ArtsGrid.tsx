@@ -1,5 +1,5 @@
 import type { ArtDto } from "@/modules/arts/api/types/dto";
-import { ArtsGridView } from "./view";
+import { ArtsGridView } from "./ArtsGridView";
 
 interface GridProps {
   arts: ArtDto[] | undefined;

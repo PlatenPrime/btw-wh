@@ -1,4 +1,4 @@
-import { ArtInfoContainer } from "../art-info";
+import { ArtInfoContainer } from "../art-info/ArtInfoContainer";
 
 export function ArtDetailView({ artikul }: { artikul: string | undefined }) {
   return (

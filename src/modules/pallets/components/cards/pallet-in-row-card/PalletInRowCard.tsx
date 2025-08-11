@@ -1,5 +1,5 @@
 import type { PalletShortDto } from "@/modules/rows/api/types/dto";
-import { PalletInRowCardView } from "./view";
+import { PalletInRowCardView } from "./PalletInRowCardView";
 
 interface PalletInRowCardProps {
   pallet: PalletShortDto;
@@ -10,4 +10,3 @@ interface PalletInRowCardProps {
 export function PalletInRowCard({ pallet }: PalletInRowCardProps) {
   return <PalletInRowCardView pallet={pallet} />;
 }
-

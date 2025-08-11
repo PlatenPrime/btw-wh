@@ -2,7 +2,7 @@
 import { SearchPanel } from "@/components/search-panel";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
-import { ArtsGrid } from "../arts-grid";
+import { ArtsGrid } from "../arts-grid/ArtsGrid";
 
 interface InfiniteViewProps {
   data: ArtDto[];

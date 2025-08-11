@@ -1,7 +1,7 @@
 import { LoadingError, LoadingNoData } from "@/components/loading-states";
 import { usePalletByTitleQuery } from "@/modules/pallets/api/hooks/usePalletByTitleQuery";
 import { PalletDetailSkeleton } from "./skeleton";
-import { PalletDetailView } from "./view";
+import { PalletDetailView } from "./PalletDetailView";
 
 interface PalletDetailProps {
   palletTitle?: string;

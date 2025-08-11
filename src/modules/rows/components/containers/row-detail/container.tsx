@@ -1,5 +1,5 @@
 import { useParams } from "react-router";
-import { RowDetail } from "./index";
+import { RowDetail } from "./RowDetail";
 
 export function RowDetailContainer() {
   const { row } = useParams<{ row: string }>();
