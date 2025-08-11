@@ -7,4 +7,4 @@ export { DeletePosDialog } from "./dialogs/delete-pos-dialog";
 export { UpdatePosDialog } from "./dialogs/update-pos-dialog";
 
 // Forms
-export { UpdatePosForm } from "./forms/update-pos-form";
+export { UpdatePosForm } from "./forms/update-pos-form/UpdatePosForm";

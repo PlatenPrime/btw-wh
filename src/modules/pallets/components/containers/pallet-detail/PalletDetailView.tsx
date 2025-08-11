@@ -15,9 +15,10 @@ export function PalletDetailView({
 }: PalletDetailViewProps) {
   return (
     <div className="grid gap-4">
-      <PalletInfo pallet={pallet} />
+      
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-semibold">Позиції на палеті</h2>
+        
+        <PalletInfo pallet={pallet} />
         <CreatePosDialog
           pallet={pallet}
           onSuccess={onPosCreated}

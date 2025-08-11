@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { InputQuant } from "@/components/ui/input-quant";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -96,42 +97,32 @@ export function CreatePosFormView({
           </div>
 
           {/* Поле количества товара */}
-          <div className="space-y-2">
-            <Label htmlFor="quant">Кількість товару *</Label>
-            <Input
-              id="quant"
-              type="text"
-              value={
-                watchedValues.quant === 0 ? "" : watchedValues.quant.toString()
-              }
-              onChange={(e) => onQuantChange(e.target.value)}
-              placeholder="0"
-              disabled={isSubmitting}
-              className={errors.quant ? "border-destructive" : ""}
-            />
-            {errors.quant && (
-              <p className="text-destructive text-xs">{errors.quant.message}</p>
-            )}
-          </div>
+          <InputQuant
+            id="quant"
+            label="Кількість товару *"
+            placeholder="Введіть кількість"
+            value={
+              watchedValues.quant === 0 ? "" : watchedValues.quant.toString()
+            }
+            onValueChange={onQuantChange}
+            error={errors.quant?.message}
+            disabled={isSubmitting}
+            className={errors.quant ? "border-destructive" : ""}
+          />
 
           {/* Поле количества коробок */}
-          <div className="space-y-2">
-            <Label htmlFor="boxes">Кількість коробок *</Label>
-            <Input
-              id="boxes"
-              type="text"
-              value={
-                watchedValues.boxes === 0 ? "" : watchedValues.boxes.toString()
-              }
-              onChange={(e) => onBoxesChange(e.target.value)}
-              placeholder="0"
-              disabled={isSubmitting}
-              className={errors.boxes ? "border-destructive" : ""}
-            />
-            {errors.boxes && (
-              <p className="text-destructive text-xs">{errors.boxes.message}</p>
-            )}
-          </div>
+          <InputQuant
+            id="boxes"
+            label="Кількість коробок *"
+            placeholder="Введіть кількість коробок"
+            value={
+              watchedValues.boxes === 0 ? "" : watchedValues.boxes.toString()
+            }
+            onValueChange={onBoxesChange}
+            error={errors.boxes?.message}
+            disabled={isSubmitting}
+            className={errors.boxes ? "border-destructive" : ""}
+          />
 
           {/* Поле склада */}
           <div className="space-y-2">
@@ -158,8 +149,6 @@ export function CreatePosFormView({
               <p className="text-destructive text-xs">{errors.sklad.message}</p>
             )}
           </div>
-
-         
 
           {/* Уведомление о существующей позиции */}
           {existingPos && (

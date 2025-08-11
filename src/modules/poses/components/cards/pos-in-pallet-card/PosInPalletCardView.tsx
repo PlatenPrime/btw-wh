@@ -7,6 +7,7 @@ import { DeletePosDialog, UpdatePosDialog } from "../..";
 import { StatItem } from "../stat-item";
 
 import type { IPos } from "@/modules/poses/api";
+import { Link } from "react-router";
 
 interface PosInPalletCardProps {
   pos: IPos;
@@ -23,7 +24,7 @@ export function PosInPalletCardView({ pos, onSuccess }: PosInPalletCardProps) {
           <ArtDialogImage artikul={pos.artikul} />
           <div className="flex flex-col justify-between gap-2">
             <CardTitle className="text-base leading-tight font-semibold">
-              {pos.artikul}
+             <Link to={`/arts/${pos.artikul}`} className="hover:text-blue-800 dark:hover:text-blue-200"> {pos.artikul} </Link> 
             </CardTitle>
             <span className="text-muted-foreground text-xs leading-tight">
               {pos.nameukr?.slice(10) || "Назва українською"}

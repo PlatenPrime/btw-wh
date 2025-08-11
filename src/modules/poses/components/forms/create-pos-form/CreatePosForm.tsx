@@ -4,10 +4,14 @@ import {
   useCreatePosMutation,
   useUpdatePosByIdMutation,
 } from "@/modules/poses/api";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CreatePosFormView } from "./view";
-import { createPosFormSchema, type CreatePosFormData, createPosFormDefaultValues } from "./schema";
+import { useForm } from "react-hook-form";
+import { CreatePosFormView } from "./CreatePosFormView";
+import {
+  createPosFormDefaultValues,
+  createPosFormSchema,
+  type CreatePosFormData,
+} from "./schema";
 
 interface CreatePosFormProps {
   pallet: IPallet;
@@ -26,7 +30,11 @@ export function CreatePosForm({
     mode: "onChange",
   });
 
-  const { watch, setValue, formState: { isSubmitting } } = form;
+  const {
+    watch,
+    setValue,
+    formState: { isSubmitting },
+  } = form;
   const artikul = watch("artikul");
 
   const createPosMutation = useCreatePosMutation(pallet._id);
@@ -40,9 +48,7 @@ export function CreatePosForm({
 
   // Поиск существующей позиции с таким же артикулом
   const existingPos = pallet.poses.find(
-    (pos) =>
-      pos.artikul === artikul &&
-      pos.sklad === watch("sklad")
+    (pos) => pos.artikul === artikul && pos.sklad === watch("sklad"),
   );
 
   // Обработчики для числовых полей без ведущих нулей
@@ -111,7 +117,8 @@ export function CreatePosForm({
     setValue("artikul", value, { shouldValidate: true });
   };
 
-  const isFormSubmitting = isSubmitting || createPosMutation.isPending || updatePosMutation.isPending;
+  const isFormSubmitting =
+    isSubmitting || createPosMutation.isPending || updatePosMutation.isPending;
 
   return (
     <CreatePosFormView
