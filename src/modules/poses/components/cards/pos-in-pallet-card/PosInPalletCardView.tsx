@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { sklads, type ISklads } from "@/constants/sklad";
 import { ArtDialogImage } from "@/modules/arts/components/dialogs/art-dialog-image";
-import { Edit, MessageCircle, Package, Trash, Warehouse } from "lucide-react";
+import { Circle, Edit, Package, Trash, Warehouse } from "lucide-react";
 import { DeletePosDialog, UpdatePosDialog } from "../..";
 import { StatItem } from "../stat-item";
 
@@ -24,7 +24,13 @@ export function PosInPalletCardView({ pos, onSuccess }: PosInPalletCardProps) {
           <ArtDialogImage artikul={pos.artikul} />
           <div className="flex flex-col justify-between gap-2">
             <CardTitle className="text-base leading-tight font-semibold">
-             <Link to={`/arts/${pos.artikul}`} className="hover:text-blue-800 dark:hover:text-blue-200"> {pos.artikul} </Link> 
+              <Link
+                to={`/arts/${pos.artikul}`}
+                className="hover:text-blue-800 dark:hover:text-blue-200"
+              >
+                {" "}
+                {pos.artikul}{" "}
+              </Link>
             </CardTitle>
             <span className="text-muted-foreground text-xs leading-tight">
               {pos.nameukr?.slice(10) || "Назва українською"}
@@ -66,7 +72,7 @@ export function PosInPalletCardView({ pos, onSuccess }: PosInPalletCardProps) {
       {/* Content with metrics */}
       <CardContent className="px-0">
         <div className="grid grid-cols-3 gap-1.5">
-          <StatItem icon={MessageCircle} value={pos.quant || 0} />
+          <StatItem icon={Circle} value={pos.quant || 0} />
           <StatItem icon={Package} value={pos.boxes || 0} />
           <StatItem
             icon={Warehouse}

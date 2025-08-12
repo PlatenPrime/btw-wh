@@ -14,10 +14,10 @@ export const StatItem = ({
 }: StatItemProps) => {
   return (
     <div
-      className={`bg-muted flex flex-col items-center gap-1 rounded-lg p-1.5 text-center ${className}`}
+      className={`bg-muted flex justify-center items-center gap-1 rounded-lg  text-center ${className}`}
     >
-      <Icon className="text-muted-foreground h-4 w-4" />
-      <span className="text-foreground text-sm font-semibold">{value}</span>
+      <Icon className="text-muted-foreground  size-[1cap]" />
+      <span className="text-foreground text-sm ">{value}</span>
 
     </div>
   );
