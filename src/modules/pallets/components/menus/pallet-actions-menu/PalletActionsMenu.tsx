@@ -6,7 +6,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Edit, Menu, Move, Package, Trash2 } from "lucide-react";
+import { BrushCleaning, Menu, Move, Trash2 } from "lucide-react";
 
 interface PalletActionsMenuProps {
   onRename?: () => void;
@@ -16,7 +16,6 @@ interface PalletActionsMenuProps {
 }
 
 export function PalletActionsMenu({
-  onRename,
   onClear,
   onMove,
   onDelete,
@@ -28,28 +27,24 @@ export function PalletActionsMenu({
           variant="ghost"
           size="icon"
           className="h-8 w-8"
-          aria-label="Действия с паллетой"
+          aria-label="Дії з паллетою"
         >
           <Menu className="h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">
-        <DropdownMenuItem onClick={onRename}>
-          <Edit className="mr-2 h-4 w-4" />
-          Переименовать
-        </DropdownMenuItem>
         <DropdownMenuItem onClick={onClear}>
-          <Package className="mr-2 h-4 w-4" />
-          Очистить
+          <BrushCleaning className="mr-2 h-4 w-4" />
+          Очистити
         </DropdownMenuItem>
         <DropdownMenuItem onClick={onMove}>
           <Move className="mr-2 h-4 w-4" />
-          Переставить
+          Переставити
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={onDelete} variant="destructive">
           <Trash2 className="mr-2 h-4 w-4" />
-          Удалить
+          Видалити
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

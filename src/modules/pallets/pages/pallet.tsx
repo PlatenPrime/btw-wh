@@ -1,28 +1,23 @@
 import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout";
 import { PalletDetailContainer } from "@/modules/pallets/components/containers/pallet-detail/container";
-import { PalletActionsMenu } from "@/modules/pallets/components/pallet-actions-menu";
+import { PalletActionsMenu } from "@/modules/pallets/components/menus/pallet-actions-menu/PalletActionsMenu";
 import { useParams } from "react-router";
 
 export function Pallet() {
   const { title } = useParams<{ title: string }>();
 
-  const handleRename = () => {
-    console.log("Переименовать паллету:", title);
-    // TODO: Реализовать диалог переименования
-  };
-
   const handleClear = () => {
-    console.log("Очистить паллету:", title);
+    console.log("Очистити палету:", title);
     // TODO: Реализовать диалог очистки
   };
 
   const handleMove = () => {
-    console.log("Переставить паллету:", title);
+    console.log("Переставити палету:", title);
     // TODO: Реализовать диалог перестановки
   };
 
   const handleDelete = () => {
-    console.log("Удалить паллету:", title);
+    console.log("Видалити палету:", title);
     // TODO: Реализовать диалог удаления
   };
 
@@ -31,7 +26,6 @@ export function Pallet() {
       headerText={`Палета: ${title || "невідома"}`}
       burger={
         <PalletActionsMenu
-          onRename={handleRename}
           onClear={handleClear}
           onMove={handleMove}
           onDelete={handleDelete}

@@ -1,1 +1,1 @@
-export { PalletActionsMenu } from "./pallet-actions-menu";
+export { PalletActionsMenu } from "./menus/pallet-actions-menu/PalletActionsMenu";
