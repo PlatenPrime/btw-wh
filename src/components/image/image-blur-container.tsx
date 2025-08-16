@@ -20,6 +20,14 @@ export function ImageBlurContainer({
   const { theme } = useTheme();
   const imageUrl = getSmallImageUrl(artikul);
 
+  if (theme === "dark") {
+    return (
+      <div className={cn("relative isolate overflow-hidden", className)} {...props}>
+        {children}
+      </div>
+    );
+  }
+
   return (
     <div
       className={cn("relative isolate overflow-hidden", className)}
@@ -35,7 +43,7 @@ export function ImageBlurContainer({
         <div
           className={cn(
             "absolute inset-0 backdrop-blur",
-            theme === "dark" ? "bg-black/75" : "bg-white/50"
+           "bg-white/50"
           )}
         />
       )}
@@ -44,7 +52,7 @@ export function ImageBlurContainer({
         <div
           className={cn(
             "absolute inset-0",
-            theme === "dark" ? "bg-black/25" : "bg-white/50"
+            "bg-white/50"
           )}
         />
       )}

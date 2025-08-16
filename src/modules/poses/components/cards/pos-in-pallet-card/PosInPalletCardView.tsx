@@ -26,7 +26,7 @@ export function PosInPalletCardView({ pos, onSuccess }: PosInPalletCardProps) {
             <CardTitle className="text-base leading-tight font-semibold">
               <Link
                 to={`/arts/${pos.artikul}`}
-                className="hover:text-blue-800 dark:hover:text-blue-200"
+                className="hover:text-blue-800 dark:hover:text-blue-200 transition-colors duration-300 ease-in-out"
               >
                 {" "}
                 {pos.artikul}{" "}
@@ -46,7 +46,7 @@ export function PosInPalletCardView({ pos, onSuccess }: PosInPalletCardProps) {
               <Button
                 variant="ghost"
                 size="sm"
-                className="hover:bg-primary/10 h-8 w-8 p-0"
+                className="hover:bg-primary/10 hover:text-yellow-800 dark:hover:text-yellow-200 h-8 w-8 p-0"
               >
                 <Edit className="h-4 w-4" />
               </Button>
