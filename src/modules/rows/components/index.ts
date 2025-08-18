@@ -4,11 +4,11 @@ export { RowsDashboardView as DashboardView } from "./containers/rows-dashboard/
 
 // Grid Components
 export { Grid } from "./containers/rows-grid/Grid";
-export { GridSkeleton } from "./containers/rows-grid/skeleton";
 export { View as GridView } from "./containers/rows-grid/GridView";
+export { GridSkeleton } from "./containers/rows-grid/skeleton";
 
 // Grid Card Components
-export { GridCard } from "./cards/rows-grid-card/GridCard";
+export { RowsGridCard as GridCard } from "./cards/rows-grid-card/GridCard";
 export { GridCardSkeleton } from "./cards/rows-grid-card/skeleton";
 
 // Row Detail Components

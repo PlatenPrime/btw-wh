@@ -1,13 +1,13 @@
 import { useRowByTitleQuery } from "../../../api/hooks/useRowByTitleQuery";
-import { RowDetailSkeleton } from "./skeleton";
 import { RowDetailView } from "./RowDetailView";
+import { RowDetailSkeleton } from "./skeleton";
 
 interface RowDetailProps {
   rowTitle?: string;
 }
 
 export function RowDetail({ rowTitle }: RowDetailProps) {
-  const { data: row, isLoading, error } = useRowByTitleQuery(rowTitle);
+  const { data: row, isLoading, error, refetch } = useRowByTitleQuery(rowTitle);
 
   if (isLoading) {
     return <RowDetailSkeleton />;
@@ -41,5 +41,5 @@ export function RowDetail({ rowTitle }: RowDetailProps) {
     );
   }
 
-  return <RowDetailView row={row} />;
+  return <RowDetailView row={row} refetch={refetch} />;
 }

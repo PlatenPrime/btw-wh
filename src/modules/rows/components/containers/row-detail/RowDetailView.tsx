@@ -1,6 +1,7 @@
 import { Separator } from "@/components/ui/separator";
 import { PalletList } from "@/modules/pallets/components/containers/pallet-list/PalletList";
 import type { RowDto } from "@/modules/rows/api/types/dto";
+import type { RowRefetch } from "@/modules/rows/api/types/types";
 import { DeleteRowDialog } from "@/modules/rows/components/dialogs/delete-row-dialog";
 import { useNavigate } from "react-router";
 
@@ -8,9 +9,10 @@ import { CreatePalletDialog } from "@/modules/pallets/components/dialogs/create-
 
 interface ViewProps {
   row: RowDto;
+  refetch: RowRefetch;
 }
 
-export function RowDetailView({ row }: ViewProps) {
+export function RowDetailView({ row, refetch }: ViewProps) {
   const navigate = useNavigate();
 
   const handleRowDeleted = () => {
@@ -29,7 +31,7 @@ export function RowDetailView({ row }: ViewProps) {
 
       <Separator />
 
-      <PalletList pallets={row.pallets} />
+      <PalletList pallets={row.pallets} refetch={refetch} rowId={row._id} />
     </div>
   );
 }

@@ -5,12 +5,12 @@ import { LinkRow } from "./link-row";
 import { TooltipDeleteRow } from "./tooltip-delete-row";
 import { TooltipEditRow } from "./tooltip-edit-row";
 
-interface ViewProps {
+interface RowsGridCardViewProps {
   row: RowDto;
   refetch: RowsRefetch;
 }
 
-export function View({ row, refetch }: ViewProps) {
+export function RowsGridCardView({ row, refetch }: RowsGridCardViewProps) {
   return (
     <Card className="shadow-muted-foreground group/row bg-background h-full w-full p-0 shadow-xs transition-all duration-500 ease-out hover:bg-orange-500 hover:shadow-2xl hover:shadow-orange-500">
       <CardHeader className="flex items-center justify-between p-2">
