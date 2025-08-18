@@ -1,6 +1,7 @@
 // router.tsx
 import { lazy } from "react";
 import { createHashRouter, Outlet } from "react-router";
+import { RouteErrorBoundary } from "./components/error-components/route-error-boundary";
 import { ProtectedRoute } from "./modules/auth/components";
 
 const App = lazy(() => import("./App"));
@@ -101,6 +102,7 @@ export const router = createHashRouter([
   {
     path: "/",
     Component: App,
+    errorElement: <RouteErrorBoundary />,
     children: [
       {
         index: true,
@@ -109,6 +111,7 @@ export const router = createHashRouter([
             <Main />
           </ProtectedRoute>
         ),
+        errorElement: <RouteErrorBoundary />,
       },
       {
         path: "arts",
@@ -117,11 +120,28 @@ export const router = createHashRouter([
             <Outlet />
           </ProtectedRoute>
         ),
+        errorElement: <RouteErrorBoundary />,
         children: [
-          { path: "dashboard", element: <Arts /> },
-          { path: "update", element: <ArtsUpdate /> },
-          { path: "utils", element: <ArtsUtils /> },
-          { path: ":artikul", element: <Art /> },
+          {
+            path: "dashboard",
+            element: <Arts />,
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "update",
+            element: <ArtsUpdate />,
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "utils",
+            element: <ArtsUtils />,
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: ":artikul",
+            element: <Art />,
+            errorElement: <RouteErrorBoundary />,
+          },
         ],
       },
       {
@@ -131,14 +151,43 @@ export const router = createHashRouter([
             <Outlet />
           </ProtectedRoute>
         ),
+        errorElement: <RouteErrorBoundary />,
         children: [
-          { path: "rows", element: <Rows /> },
-          { path: "rows/:row", element: <Row /> },
-          { path: "stocks", element: <Stocks /> },
-          { path: "stocks/:stock", element: <Stock /> },
-          { path: "zones", element: <Zones /> },
-          { path: "utils", element: <WhUtils /> },
-          { path: "pallets/:title", element: <PalletPage /> },
+          {
+            path: "rows",
+            element: <Rows />,
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "rows/:row",
+            element: <Row />,
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "stocks",
+            element: <Stocks />,
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "stocks/:stock",
+            element: <Stock />,
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "zones",
+            element: <Zones />,
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "utils",
+            element: <WhUtils />,
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "pallets/:title",
+            element: <PalletPage />,
+            errorElement: <RouteErrorBoundary />,
+          },
         ],
       },
       {
@@ -148,14 +197,31 @@ export const router = createHashRouter([
             <Outlet />
           </ProtectedRoute>
         ),
+        errorElement: <RouteErrorBoundary />,
         children: [
-          { path: "asks", element: <Asks /> },
-          { path: "asks/:ask", element: <Ask /> },
-          { path: "defs", element: <Defs /> },
-          { path: "path", element: <Path /> },
+          {
+            path: "asks",
+            element: <Asks />,
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "asks/:ask",
+            element: <Ask />,
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "defs",
+            element: <Defs />,
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "path",
+            element: <Path />,
+            errorElement: <RouteErrorBoundary />,
+          },
         ],
       },
-      
+
       // 404 route - must be last in children array
       {
         path: "*",
@@ -164,6 +230,7 @@ export const router = createHashRouter([
             <NotFound />
           </ProtectedRoute>
         ),
+        errorElement: <RouteErrorBoundary />,
       },
     ],
   },

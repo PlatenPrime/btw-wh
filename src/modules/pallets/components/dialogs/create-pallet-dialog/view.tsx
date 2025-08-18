@@ -1,3 +1,7 @@
+import {
+  FieldErrorDisplay,
+  FormErrorDisplay,
+} from "@/components/error-components";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -79,11 +83,7 @@ export function CreatePalletDialogView({
               {...register("title")}
               disabled={isSubmitting}
             />
-            {errors.title && (
-              <span id="title-error" className="block text-sm text-red-600">
-                {errors.title.message}
-              </span>
-            )}
+            {errors.title && <FieldErrorDisplay error={errors.title.message} />}
           </div>
           <div className="space-y-2">
             <Label htmlFor="pallet-sector" className="text-sm font-medium">
@@ -97,9 +97,7 @@ export function CreatePalletDialogView({
             />
           </div>
           {errors.root && (
-            <div className="text-destructive text-sm">
-              {errors.root.message}
-            </div>
+            <FormErrorDisplay error={errors.root.message} variant="compact" />
           )}
           <DialogFooter>
             <Button type="submit" disabled={isSubmitting}>
