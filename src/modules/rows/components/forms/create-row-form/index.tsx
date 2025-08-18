@@ -1,6 +1,8 @@
 import { useCreateRowMutation } from "@/modules/rows/api/hooks/useCreateRowMutation";
 import type { CreateRowDto } from "@/modules/rows/api/types/dto";
-import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { rowSchema, type RowFormValues } from "../schema";
 import { CreateRowFormView } from "./view";
 
 interface CreateRowFormProps {
@@ -9,36 +11,39 @@ interface CreateRowFormProps {
 }
 
 export function CreateRowForm({ onSuccess, onCancel }: CreateRowFormProps) {
-  const [title, setTitle] = useState("");
-  const [error, setError] = useState<string | null>(null);
+  const form = useForm<RowFormValues>({
+    resolver: zodResolver(rowSchema),
+    mode: "onSubmit",
+    reValidateMode: "onChange",
+    defaultValues: {
+      title: "",
+    },
+  });
 
   const createMutation = useCreateRowMutation();
   const isSubmitting = createMutation.isPending;
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!title.trim()) return;
-
-    setError(null);
+  const onSubmit = async (data: RowFormValues) => {
     try {
-      const createData: CreateRowDto = { title: title.trim() };
+      const createData: CreateRowDto = { title: data.title.trim() };
       await createMutation.mutateAsync(createData);
       onSuccess?.();
+      // Reset form after successful submission
+      form.reset();
     } catch (error) {
       console.error("Помилка створення ряду:", error);
-      setError(
-        error instanceof Error ? error.message : "Помилка створення ряду:",
-      );
+      form.setError("root", {
+        message:
+          error instanceof Error ? error.message : "Помилка створення ряду",
+      });
     }
   };
 
   return (
     <CreateRowFormView
-      title={title}
-      setTitle={setTitle}
-      error={error}
+      form={form}
       isSubmitting={isSubmitting}
-      onSubmit={handleSubmit}
+      onSubmit={onSubmit}
       onCancel={onCancel}
     />
   );

@@ -1,75 +1,67 @@
 import { useCreatePalletMutation } from "@/modules/pallets/api/hooks";
 import type { RowDto } from "@/modules/rows/api/types/dto";
-import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { palletSchema, type PalletFormValues } from "../../forms/schema";
 import { CreatePalletDialogView } from "./view";
 
+
+
 export function CreatePalletDialog({ row }: { row: RowDto }) {
-  const [open, setOpen] = useState(false);
-  const [formError, setFormError] = useState<string | null>(null);
-  const [title, setTitle] = useState("");
-  const [sector, setSector] = useState("");
+  const form = useForm<PalletFormValues>({
+    resolver: zodResolver(palletSchema),
+    mode: "onSubmit",
+    reValidateMode: "onChange",
+    defaultValues: {
+      title: "",
+      sector: "",
+    },
+  });
+
   const createPalletMutation = useCreatePalletMutation(row._id, row.title);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setFormError(null);
-    if (!title.trim()) {
-      setFormError("Назва палети обов'язкова");
-      return;
-    }
-    createPalletMutation.mutate(
-      {
-        title: title.trim(),
+  const onSubmit = async (data: PalletFormValues) => {
+    try {
+      await createPalletMutation.mutateAsync({
+        title: data.title.trim(),
         rowData: { _id: row._id, title: row.title },
-        sector: sector.trim() || undefined,
-      },
-      {
-        onSuccess: () => {
-          setOpen(false);
-          setTitle("");
-          setSector("");
-        },
-        onError: (err: unknown) => {
-          let message = "Помилка створення палети";
-          if (
-            typeof err === "object" &&
-            err !== null &&
-            "response" in err &&
-            typeof (err as { response?: unknown }).response === "object" &&
-            (err as { response?: unknown }).response !== null
-          ) {
-            const response = (err as { response?: unknown }).response as Record<
-              string,
-              unknown
-            >;
-            if (
-              "data" in response &&
-              typeof response.data === "object" &&
-              response.data !== null &&
-              "message" in (response.data as Record<string, unknown>)
-            ) {
-              message = String(
-                (response.data as Record<string, unknown>).message,
-              );
-            }
-          }
-          setFormError(message);
-        },
-      },
-    );
+        sector: data.sector?.trim() || undefined,
+      });
+      // Reset form and close dialog after successful submission
+      form.reset();
+      return true; // Signal success to close dialog
+    } catch (err: unknown) {
+      let message = "Помилка створення палети";
+      if (
+        typeof err === "object" &&
+        err !== null &&
+        "response" in err &&
+        typeof (err as { response?: unknown }).response === "object" &&
+        (err as { response?: unknown }).response !== null
+      ) {
+        const response = (err as { response?: unknown }).response as Record<
+          string,
+          unknown
+        >;
+        if (
+          "data" in response &&
+          typeof response.data === "object" &&
+          response.data !== null &&
+          "message" in (response.data as Record<string, unknown>)
+        ) {
+          message = String((response.data as Record<string, unknown>).message);
+        }
+      }
+      form.setError("root", { message });
+      return false; // Signal failure to keep dialog open
+    }
   };
 
   return (
     <CreatePalletDialogView
-      open={open}
-      setOpen={setOpen}
-      handleSubmit={handleSubmit}
-      title={title}
-      setTitle={setTitle}
-      sector={sector}
-      setSector={setSector}
-      formError={formError}
-      createPalletMutation={createPalletMutation}
+      form={form}
+      isSubmitting={createPalletMutation.isPending}
+      onSubmit={onSubmit}
     />
   );
 }

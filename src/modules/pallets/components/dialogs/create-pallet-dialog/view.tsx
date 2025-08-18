@@ -1,28 +1,57 @@
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogDescription, DialogTrigger, DialogTitle, DialogFooter, DialogClose } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import type { CreatePalletDto, IPallet } from "@/modules/pallets/api/types";
-import type { UseMutationResult } from "@tanstack/react-query";
+import { Label } from "@/components/ui/label";
 import { Plus } from "lucide-react";
+import { useState } from "react";
+import type { UseFormReturn } from "react-hook-form";
+import { type PalletFormValues } from "../../forms/schema";
 
 interface CreatePalletDialogViewProps {
-    open: boolean;
-    setOpen: (open: boolean) => void;
-    handleSubmit: (e: React.FormEvent) => void;
-    title: string;
-    setTitle: (title: string) => void;
-    sector: string;
-    setSector: (sector: string) => void;
-    formError: string | null;
-    createPalletMutation: UseMutationResult<IPallet, Error, CreatePalletDto, unknown>;
+  form: UseFormReturn<PalletFormValues>;
+  isSubmitting: boolean;
+  onSubmit: (data: PalletFormValues) => Promise<boolean>;
 }
 
+export function CreatePalletDialogView({
+  form,
+  isSubmitting,
+  onSubmit,
+}: CreatePalletDialogViewProps) {
+  const [open, setOpen] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = form;
 
-export  function CreatePalletDialogView({open, setOpen, handleSubmit, title, setTitle, sector, setSector, formError, createPalletMutation}: CreatePalletDialogViewProps) {
- 
+  const handleFormSubmit = handleSubmit(async (data) => {
+    const success = await onSubmit(data);
+    if (success) {
+      setOpen(false);
+      reset();
+    }
+  });
+
+  const handleOpenChange = (newOpen: boolean) => {
+    if (!newOpen) {
+      reset();
+    }
+    setOpen(newOpen);
+  };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         <Button variant="outline" size="sm">
           <Plus className="mr-2 h-4 w-4" />
@@ -36,37 +65,45 @@ export  function CreatePalletDialogView({open, setOpen, handleSubmit, title, set
             Введіть назву та (опціонально) сектор для нової палети
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleFormSubmit} className="space-y-4" noValidate>
           <div className="space-y-2">
-            <label className="text-sm font-medium" htmlFor="pallet-title">
+            <Label htmlFor="pallet-title" className="text-sm font-medium">
               Назва палети *
-            </label>
+            </Label>
             <Input
               id="pallet-title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
               placeholder="Введіть назву"
-              required
               autoFocus
+              aria-invalid={!!errors.title}
+              aria-describedby="title-error"
+              {...register("title")}
+              disabled={isSubmitting}
             />
+            {errors.title && (
+              <span id="title-error" className="block text-sm text-red-600">
+                {errors.title.message}
+              </span>
+            )}
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-medium" htmlFor="pallet-sector">
+            <Label htmlFor="pallet-sector" className="text-sm font-medium">
               Сектор (опціонально)
-            </label>
+            </Label>
             <Input
               id="pallet-sector"
-              value={sector}
-              onChange={(e) => setSector(e.target.value)}
               placeholder="Введіть сектор"
+              {...register("sector")}
+              disabled={isSubmitting}
             />
           </div>
-          {formError && (
-            <div className="text-destructive text-sm">{formError}</div>
+          {errors.root && (
+            <div className="text-destructive text-sm">
+              {errors.root.message}
+            </div>
           )}
           <DialogFooter>
-            <Button type="submit" disabled={createPalletMutation.isPending}>
-              {createPalletMutation.isPending ? "Додається..." : "Додати"}
+            <Button type="submit" disabled={isSubmitting}>
+              {isSubmitting ? "Додається..." : "Додати"}
             </Button>
             <DialogClose asChild>
               <Button type="button" variant="outline">
@@ -77,5 +114,5 @@ export  function CreatePalletDialogView({open, setOpen, handleSubmit, title, set
         </form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

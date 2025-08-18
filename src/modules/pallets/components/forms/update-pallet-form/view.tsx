@@ -2,64 +2,71 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import React from "react";
+import type { UseFormReturn } from "react-hook-form";
+import { type PalletFormValues } from "../schema";
 
 interface UpdatePalletFormViewProps {
-  title: string;
-  setTitle: (value: string) => void;
-  sector: string;
-  setSector: (value: string) => void;
-  error: string | null;
+  form: UseFormReturn<PalletFormValues>;
   isSubmitting: boolean;
-  onSubmit: (e: React.FormEvent) => void;
+  onSubmit: (data: PalletFormValues) => void;
   onCancel?: () => void;
 }
 
 export function UpdatePalletFormView({
-  title,
-  setTitle,
-  sector,
-  setSector,
-  error,
+  form,
   isSubmitting,
   onSubmit,
   onCancel,
 }: UpdatePalletFormViewProps) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = form;
+
   return (
     <Card className="w-full max-w-md">
       <CardContent>
-        <form onSubmit={onSubmit} className="space-y-4">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="space-y-4"
+          noValidate
+        >
           <div className="space-y-2">
             <Label htmlFor="title">Назва палети</Label>
             <Input
               id="title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
               placeholder="Введіть назву палети"
-              required
+              aria-invalid={!!errors.title}
+              aria-describedby="title-error"
+              {...register("title")}
               disabled={isSubmitting}
             />
+            {errors.title && (
+              <span id="title-error" className="block text-sm text-red-600">
+                {errors.title.message}
+              </span>
+            )}
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="sector">Сектор</Label>
             <Input
               id="sector"
-              value={sector}
-              onChange={(e) => setSector(e.target.value)}
               placeholder="Введіть сектор (необов'язково)"
+              {...register("sector")}
               disabled={isSubmitting}
             />
           </div>
 
-          {error && <div className="text-destructive text-sm">{error}</div>}
+          {errors.root && (
+            <div className="text-destructive text-sm">
+              {errors.root.message}
+            </div>
+          )}
 
           <div className="grid grid-cols-2 gap-2">
-            <Button
-              type="submit"
-              disabled={isSubmitting || !title.trim()}
-              className="flex-1"
-            >
+            <Button type="submit" disabled={isSubmitting} className="flex-1">
               {isSubmitting ? "Оновлюю..." : "Оновити"}
             </Button>
             {onCancel && (

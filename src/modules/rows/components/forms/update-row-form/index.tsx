@@ -1,6 +1,8 @@
 import { useUpdateRowMutation } from "@/modules/rows/api/hooks/useUpdateRowMutation";
 import type { RowDto, UpdateRowDto } from "@/modules/rows/api/types/dto";
-import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { rowSchema, type RowFormValues } from "../schema";
 import { UpdateRowFormView } from "./view";
 
 interface UpdateRowFormProps {
@@ -14,36 +16,37 @@ export function UpdateRowForm({
   onSuccess,
   onCancel,
 }: UpdateRowFormProps) {
-  const [title, setTitle] = useState(row.title);
-  const [error, setError] = useState<string | null>(null);
+  const form = useForm<RowFormValues>({
+    resolver: zodResolver(rowSchema),
+    mode: "onSubmit",
+    reValidateMode: "onChange",
+    defaultValues: {
+      title: row.title,
+    },
+  });
 
   const updateMutation = useUpdateRowMutation();
   const isSubmitting = updateMutation.isPending;
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!title.trim()) return;
-
-    setError(null);
+  const onSubmit = async (data: RowFormValues) => {
     try {
-      const updateData: UpdateRowDto = { title: title.trim() };
+      const updateData: UpdateRowDto = { title: data.title.trim() };
       await updateMutation.mutateAsync({ rowId: row._id, data: updateData });
       onSuccess();
     } catch (error) {
       console.error("Помилка збереження ряду:", error);
-      setError(
-        error instanceof Error ? error.message : "Помилка збереження ряду:",
-      );
+      form.setError("root", {
+        message:
+          error instanceof Error ? error.message : "Помилка збереження ряду",
+      });
     }
   };
 
   return (
     <UpdateRowFormView
-      title={title}
-      setTitle={setTitle}
-      error={error}
+      form={form}
       isSubmitting={isSubmitting}
-      onSubmit={handleSubmit}
+      onSubmit={onSubmit}
       onCancel={onCancel}
     />
   );

@@ -3,97 +3,147 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import React, { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import React from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import { useAuth } from "../hooks/useAuth";
 
+// Zod schema for register form
+const registerSchema = z.object({
+  username: z.string().min(3, "Username must be at least 3 characters"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
+  fullname: z.string().min(2, "Full name must be at least 2 characters"),
+  role: z.string().optional(),
+  telegram: z.string().optional(),
+  photo: z
+    .string()
+    .url("Please enter a valid URL")
+    .optional()
+    .or(z.literal("")),
+});
+
+type RegisterFormValues = z.infer<typeof registerSchema>;
+
 export const RegisterForm = () => {
-  const { register, isLoading, error } = useAuth();
-  const [form, setForm] = useState({
-    username: "",
-    password: "",
-    fullname: "",
-    role: "",
-    telegram: "",
-    photo: "",
+  const { register: registerUser, isLoading, error } = useAuth();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setError,
+    setFocus,
+  } = useForm<RegisterFormValues>({
+    resolver: zodResolver(registerSchema),
+    mode: "onSubmit",
+    reValidateMode: "onChange",
+    defaultValues: {
+      username: "",
+      password: "",
+      fullname: "",
+      role: "",
+      telegram: "",
+      photo: "",
+    },
   });
-  const [formError, setFormError] = useState<string | null>(null);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  React.useEffect(() => {
+    setFocus("username");
+  }, [setFocus]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setFormError(null);
-    if (!form.username || !form.password || !form.fullname) {
-      setFormError("Username, password, and fullname are required");
-      return;
-    }
+  const onSubmit = async (data: RegisterFormValues) => {
     try {
-      await register(form);
+      await registerUser(data);
     } catch (err: unknown) {
       if (err instanceof Error) {
-        setFormError(err.message);
+        setError("root", { message: err.message });
       } else {
-        setFormError("An unknown error occurred");
+        setError("root", { message: "An unknown error occurred" });
       }
     }
   };
 
   return (
     <Card className="mx-auto mt-10 max-w-sm p-6">
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
         <h2 className="text-xl font-semibold">Register</h2>
         <Separator />
-        {formError && <Alert variant="destructive">{formError}</Alert>}
+        {errors.root && (
+          <Alert variant="destructive">{errors.root.message}</Alert>
+        )}
         {error && <Alert variant="destructive">{error}</Alert>}
+
         <Input
           type="text"
-          name="username"
           placeholder="Username"
-          value={form.username}
-          onChange={handleChange}
           autoComplete="username"
-          required
+          aria-invalid={!!errors.username}
+          aria-describedby="username-error"
+          {...register("username")}
+          disabled={isLoading}
         />
+        {errors.username && (
+          <span id="username-error" className="block text-sm text-red-600">
+            {errors.username.message}
+          </span>
+        )}
+
         <Input
           type="password"
-          name="password"
           placeholder="Password"
-          value={form.password}
-          onChange={handleChange}
           autoComplete="new-password"
-          required
+          aria-invalid={!!errors.password}
+          aria-describedby="password-error"
+          {...register("password")}
+          disabled={isLoading}
         />
+        {errors.password && (
+          <span id="password-error" className="block text-sm text-red-600">
+            {errors.password.message}
+          </span>
+        )}
+
         <Input
           type="text"
-          name="fullname"
           placeholder="Full Name"
-          value={form.fullname}
-          onChange={handleChange}
-          required
+          autoComplete="name"
+          aria-invalid={!!errors.fullname}
+          aria-describedby="fullname-error"
+          {...register("fullname")}
+          disabled={isLoading}
         />
+        {errors.fullname && (
+          <span id="fullname-error" className="block text-sm text-red-600">
+            {errors.fullname.message}
+          </span>
+        )}
+
         <Input
           type="text"
-          name="role"
           placeholder="Role (optional)"
-          value={form.role}
-          onChange={handleChange}
+          {...register("role")}
+          disabled={isLoading}
         />
+
         <Input
           type="text"
-          name="telegram"
           placeholder="Telegram (optional)"
-          value={form.telegram}
-          onChange={handleChange}
+          {...register("telegram")}
+          disabled={isLoading}
         />
+
         <Input
           type="url"
-          name="photo"
           placeholder="Photo URL (optional)"
-          value={form.photo}
-          onChange={handleChange}
+          {...register("photo")}
+          disabled={isLoading}
         />
+        {errors.photo && (
+          <span className="block text-sm text-red-600">
+            {errors.photo.message}
+          </span>
+        )}
+
         <Button type="submit" disabled={isLoading} className="w-full">
           {isLoading ? "Registering..." : "Register"}
         </Button>

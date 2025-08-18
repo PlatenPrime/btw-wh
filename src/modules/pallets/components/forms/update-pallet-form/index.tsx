@@ -1,7 +1,9 @@
 import { useUpdatePalletMutation } from "@/modules/pallets/api/hooks/useUpdatePalletMutation";
 import type { UpdatePalletDto } from "@/modules/pallets/api/types";
 import type { PalletShortDto } from "@/modules/rows/api/types/dto";
-import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { palletSchema, type PalletFormValues } from "../schema";
 import { UpdatePalletFormView } from "./view";
 
 interface UpdatePalletFormProps {
@@ -17,42 +19,41 @@ export function UpdatePalletForm({
   onSuccess,
   onCancel,
 }: UpdatePalletFormProps) {
-  const [title, setTitle] = useState(pallet.title);
-  const [sector, setSector] = useState(pallet.sector || "");
-  const [error, setError] = useState<string | null>(null);
+  const form = useForm<PalletFormValues>({
+    resolver: zodResolver(palletSchema),
+    mode: "onSubmit",
+    reValidateMode: "onChange",
+    defaultValues: {
+      title: pallet.title,
+      sector: pallet.sector || "",
+    },
+  });
 
   const updateMutation = useUpdatePalletMutation(rowId);
   const isSubmitting = updateMutation.isPending;
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!title.trim()) return;
-
-    setError(null);
+  const onSubmit = async (data: PalletFormValues) => {
     try {
       const updateData: UpdatePalletDto = {
-        title: title.trim(),
-        sector: sector.trim() || undefined,
+        title: data.title.trim(),
+        sector: data.sector?.trim() || undefined,
       };
       await updateMutation.mutateAsync({ id: pallet._id, data: updateData });
       onSuccess();
     } catch (error) {
       console.error("Помилка збереження палети:", error);
-      setError(
-        error instanceof Error ? error.message : "Помилка збереження палети",
-      );
+      form.setError("root", {
+        message:
+          error instanceof Error ? error.message : "Помилка збереження палети",
+      });
     }
   };
 
   return (
     <UpdatePalletFormView
-      title={title}
-      setTitle={setTitle}
-      sector={sector}
-      setSector={setSector}
-      error={error}
+      form={form}
       isSubmitting={isSubmitting}
-      onSubmit={handleSubmit}
+      onSubmit={onSubmit}
       onCancel={onCancel}
     />
   );
