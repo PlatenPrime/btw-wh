@@ -1,11 +1,12 @@
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { sklads, type ISklads } from "@/constants/sklad";
 import { ArtDialogImage } from "@/modules/arts/components/dialogs/art-dialog-image";
-import { Circle, Edit, Package, Trash, Warehouse } from "lucide-react";
+import { Circle, Package, Warehouse } from "lucide-react";
 import { DeletePosDialog, UpdatePosDialog } from "../..";
 import { PosInfoItem } from "./PosInfoItem";
 
+import { DeleteTrigger } from "@/components/triggers/delete-trigger.tsx/DeleteTrigger";
+import { EditTrigger } from "@/components/triggers/edit-trigger/EditTrigger";
 import type { IPos } from "@/modules/poses/api";
 import { Link } from "react-router";
 
@@ -16,7 +17,7 @@ interface PosInPalletCardProps {
 
 export function PosInPalletCardView({ pos, onSuccess }: PosInPalletCardProps) {
   return (
-    <Card className="group relative justify-between gap-2 overflow-hidden p-2 transition-all duration-200 hover:shadow-md hover:bg-muted">
+    <Card className="group hover:bg-muted relative justify-between gap-2 overflow-hidden p-2 transition-all duration-200 hover:shadow-md">
       {/* Header with image, title and actions */}
       <CardHeader className="flex items-start gap-3 p-3 px-0 py-0 pb-2">
         {/* Image and title section */}
@@ -26,7 +27,7 @@ export function PosInPalletCardView({ pos, onSuccess }: PosInPalletCardProps) {
             <CardTitle className="text-base leading-tight font-semibold">
               <Link
                 to={`/arts/${pos.artikul}`}
-                className="hover:text-blue-800 dark:hover:text-blue-200 transition-colors duration-300 ease-in-out"
+                className="transition-colors duration-300 ease-in-out hover:text-blue-800 dark:hover:text-blue-200"
               >
                 {" "}
                 {pos.artikul}{" "}
@@ -42,28 +43,12 @@ export function PosInPalletCardView({ pos, onSuccess }: PosInPalletCardProps) {
         <div className="grid gap-0">
           <UpdatePosDialog
             pos={pos}
-            trigger={
-              <Button
-                variant="ghost"
-                size="sm"
-                className="hover:bg-primary/10 hover:text-yellow-800 dark:hover:text-yellow-200 h-8 w-8 p-0"
-              >
-                <Edit className="h-4 w-4" />
-              </Button>
-            }
+            trigger={<EditTrigger />}
             onSuccess={onSuccess}
           />
           <DeletePosDialog
             pos={pos}
-            trigger={
-              <Button
-                variant="ghost"
-                size="sm"
-                className="hover:bg-destructive/10 hover:text-destructive h-8 w-8 p-0"
-              >
-                <Trash className="h-4 w-4" />
-              </Button>
-            }
+            trigger={<DeleteTrigger />}
             onSuccess={onSuccess}
           />
         </div>

@@ -6,7 +6,7 @@ export function LinkRow({ row }: { row: RowDto }) {
   return (
     <Link
       to={`/wh/rows/${row.title}`}
-      className="bg-background dark:group-hover/row:bg-foreground flex-1 rounded-md p-2 transition-all duration-300 ease-out"
+      className="bg-background group-hover/row:bg-orange-100 dark:group-hover/row:bg-orange-100 flex-1 rounded-lg p-2 transition-all duration-300 ease-out"
     >
       <CardTitle className="text-foreground dark:group-hover/row:text-secondary text-center text-lg font-semibold">
         {row.title}

@@ -1,9 +1,9 @@
 import { apiClient } from "@/lib/apiClient"; // путь подкорректируй если нужно
+import type { UploadingArt } from "@/modules/arts/api/types/arts";
 import type { AxiosResponse } from "axios";
 import React, { useState } from "react";
 import { toast } from "sonner";
-import * as XLSX from "xlsx";
-import type { UploadingArt } from "@/modules/arts/api/types/arts";
+import { read, utils } from "xlsx";
 import { View } from "./ViewComponent";
 
 type UpsertResponse = {
@@ -19,7 +19,7 @@ type UpsertResponse = {
   };
 };
 
-export const ArtsExcelUploader = () => {
+const ArtsExcelUploader = () => {
   const [parsedData, setParsedData] = useState<UploadingArt[] | null>(null);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
@@ -32,10 +32,10 @@ export const ArtsExcelUploader = () => {
       reader.onload = (event) => {
         try {
           const data = new Uint8Array(event.target?.result as ArrayBuffer);
-          const workbook = XLSX.read(data, { type: "array" });
+          const workbook = read(data, { type: "array" });
 
           const sheet = workbook.Sheets[workbook.SheetNames[0]];
-          const json = XLSX.utils.sheet_to_json(sheet, {
+          const json = utils.sheet_to_json(sheet, {
             defval: "",
           }) as UploadingArt[];
 
@@ -144,7 +144,8 @@ export const ArtsExcelUploader = () => {
     } catch (error: unknown) {
       const errorUpload = error as Error;
       toast("Помилка завантаження ❌", {
-        description: errorUpload.message || "Помилка при завантаженні на сервер",
+        description:
+          errorUpload.message || "Помилка при завантаженні на сервер",
       });
       console.error(errorUpload);
     } finally {
@@ -164,3 +165,6 @@ export const ArtsExcelUploader = () => {
     />
   );
 };
+
+export { ArtsExcelUploader };
+export default ArtsExcelUploader;

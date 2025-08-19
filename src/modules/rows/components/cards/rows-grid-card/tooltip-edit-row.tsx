@@ -1,14 +1,13 @@
-import { Button } from "@/components/ui/button";
+import { EditTrigger } from "@/components/triggers/edit-trigger/EditTrigger";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Edit } from "lucide-react";
-import { UpdateRowDialog } from "../../dialogs/update-row-dialog";
 import type { RowDto } from "@/modules/rows/api/types/dto";
 import type { RowsRefetch } from "@/modules/rows/api/types/types";
+import { UpdateRowDialog } from "../../dialogs/update-row-dialog";
 
 interface TooltipEditRowProps {
   row: RowDto;
@@ -22,11 +21,7 @@ export function TooltipEditRow({ row, refetch }: TooltipEditRowProps) {
         <TooltipTrigger asChild>
           <UpdateRowDialog
             row={row}
-            trigger={
-              <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-                <Edit className="h-4 w-4" />
-              </Button>
-            }
+            trigger={<EditTrigger />}
             onSuccess={() => refetch() ?? (() => {})}
           />
         </TooltipTrigger>

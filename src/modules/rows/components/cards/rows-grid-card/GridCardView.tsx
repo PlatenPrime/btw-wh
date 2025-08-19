@@ -12,7 +12,7 @@ interface RowsGridCardViewProps {
 
 export function RowsGridCardView({ row, refetch }: RowsGridCardViewProps) {
   return (
-    <Card className="shadow-muted-foreground group/row bg-background h-full w-full p-0 shadow-xs transition-all duration-500 ease-out hover:bg-orange-500 hover:shadow-2xl hover:shadow-orange-500">
+    <Card className="shadow-muted-foreground group/row bg-background h-full w-full p-0 shadow-xs transition-all duration-500 ease-out hover:bg-muted-background hover:shadow-xl shadow-orange-500">
       <CardHeader className="flex items-center justify-between p-2">
         <LinkRow row={row} />
         <div className="flex items-center gap-2">
