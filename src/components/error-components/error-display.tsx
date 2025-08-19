@@ -38,10 +38,10 @@ export function ErrorDisplay({
       ? error
       : error instanceof Error
         ? error.message
-        : "Неизвестная ошибка";
+        : "Невідома помилка";
   const errorName = error instanceof Error ? error.name : undefined;
 
-  // Определяем тип ошибки для соответствующей иконки
+  // Визначаємо тип помилки для відповідної іконки
   const getErrorIcon = () => {
     if (errorName?.includes("Network") || errorMessage.includes("network")) {
       return <Wifi className="h-4 w-4" />;
@@ -60,18 +60,18 @@ export function ErrorDisplay({
 
   const getErrorType = () => {
     if (errorName?.includes("Network") || errorMessage.includes("network")) {
-      return "Сетевая ошибка";
+      return "Мережева помилка";
     }
     if (errorName?.includes("Auth") || errorMessage.includes("unauthorized")) {
-      return "Ошибка авторизации";
+      return "Помилка авторизації";
     }
     if (
       errorName?.includes("Validation") ||
       errorMessage.includes("validation")
     ) {
-      return "Ошибка валидации";
+      return "Помилка валідації";
     }
-    return "Ошибка приложения";
+    return "Помилка додатку";
   };
 
   const errorType = getErrorType();
@@ -89,7 +89,7 @@ export function ErrorDisplay({
 
   if (variant === "fullscreen") {
     return (
-      <div className="bg-background flex min-h-screen items-center justify-center p-4">
+      <div className="bg-background flex min-h-screen w-full items-center justify-center p-4">
         <Card className="w-full max-w-2xl">
           <CardHeader className="text-center">
             <div className="bg-destructive/10 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full">
@@ -99,13 +99,13 @@ export function ErrorDisplay({
               {title || errorType}
             </CardTitle>
             <CardDescription className="text-muted-foreground">
-              {description || "Произошла ошибка при выполнении операции"}
+              {description || "Сталася помилка при виконанні операції"}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             <Alert variant="destructive">
               {errorIcon}
-              <AlertTitle>Детали ошибки</AlertTitle>
+              <AlertTitle>Деталі помилки</AlertTitle>
               <AlertDescription>{errorMessage}</AlertDescription>
             </Alert>
 
@@ -118,7 +118,7 @@ export function ErrorDisplay({
                     className="flex-1 sm:flex-none"
                   >
                     <RefreshCw className="mr-2 h-4 w-4" />
-                    Попробовать снова
+                    Спробувати знову
                   </Button>
                 )}
                 {onGoBack && (
@@ -136,7 +136,7 @@ export function ErrorDisplay({
                     variant="outline"
                     className="flex-1 sm:flex-none"
                   >
-                    На главную
+                    На головну
                   </Button>
                 )}
               </div>
@@ -160,7 +160,7 @@ export function ErrorDisplay({
               {title || errorType}
             </CardTitle>
             <CardDescription>
-              {description || "Произошла ошибка при выполнении операции"}
+              {description || "Сталася помилка при виконанні операції"}
             </CardDescription>
           </div>
         </div>
@@ -171,7 +171,7 @@ export function ErrorDisplay({
       <CardContent className="space-y-4">
         <Alert variant="destructive">
           {errorIcon}
-          <AlertTitle>Описание ошибки</AlertTitle>
+          <AlertTitle>Опис помилки</AlertTitle>
           <AlertDescription>{errorMessage}</AlertDescription>
         </Alert>
 
@@ -180,7 +180,7 @@ export function ErrorDisplay({
             {onRetry && (
               <Button onClick={onRetry} variant="default" size="sm">
                 <RefreshCw className="mr-2 h-3 w-3" />
-                Попробовать снова
+                Спробувати знову
               </Button>
             )}
             {onGoBack && (
@@ -190,7 +190,7 @@ export function ErrorDisplay({
             )}
             {onGoHome && (
               <Button onClick={onGoHome} variant="outline" size="sm">
-                На главную
+                На головну
               </Button>
             )}
           </div>

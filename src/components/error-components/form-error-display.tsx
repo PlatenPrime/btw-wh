@@ -60,7 +60,7 @@ export function FormErrorDisplay({
   );
 }
 
-// Компонент для отображения ошибок валидации полей
+// Компонент для відображення помилок валідації полів
 export interface FieldErrorDisplayProps {
   error?: string | null;
   className?: string;

@@ -1,3 +1,4 @@
+import { ErrorComponentsExample } from "@/components/error-components/example-usage";
 import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout";
 
 export function Main() {
@@ -7,6 +8,7 @@ export function Main() {
         <h1 className="md:text-3xl text-3xl lg:text-6xl font-bold text-center ">
           Btrade Warehouse App
         </h1>
+        <ErrorComponentsExample />
       </main>
     </SidebarInsetLayout>
   );

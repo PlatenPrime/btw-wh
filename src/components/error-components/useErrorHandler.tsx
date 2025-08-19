@@ -24,7 +24,7 @@ export function useErrorHandler() {
     } else if (error instanceof Error) {
       errorMessage = error.message;
 
-      // Определяем тип ошибки
+      // Визначаємо тип помилки
       if (error.name.includes("Network") || error.message.includes("network")) {
         errorType = "network";
       } else if (
@@ -39,7 +39,7 @@ export function useErrorHandler() {
         errorType = "validation";
       }
     } else {
-      errorMessage = "Неизвестная ошибка";
+      errorMessage = "Невідома помилка";
     }
 
     setErrorState({
@@ -48,7 +48,7 @@ export function useErrorHandler() {
       errorType,
     });
 
-    // Логируем ошибку в development режиме
+    // Логуємо помилку в development режимі
     if (import.meta.env.DEV) {
       console.error("Error handled:", error);
     }
@@ -64,7 +64,7 @@ export function useErrorHandler() {
 
   const retry = useCallback(() => {
     clearError();
-    // Здесь можно добавить логику повторной попытки
+    // Тут можна додати логіку повторної спроби
   }, [clearError]);
 
   const goBack = useCallback(() => {

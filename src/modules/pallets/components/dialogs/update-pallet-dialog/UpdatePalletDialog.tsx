@@ -1,6 +1,6 @@
 import type { PalletShortDto } from "@/modules/rows/api/types/dto";
 import { useState } from "react";
-import { UpdatePalletDialogView } from "./view";
+import { UpdatePalletDialogView } from "./UpdatePalletDialogView";
 
 interface UpdatePalletDialogProps {
   pallet: PalletShortDto;

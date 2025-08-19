@@ -1,1 +1,1 @@
-export { UpdatePalletDialog } from "./index.tsx";
+export { UpdatePalletDialog } from "./UpdatePalletDialog";

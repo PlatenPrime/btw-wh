@@ -46,7 +46,7 @@ export const LoginForm = () => {
       if (err instanceof Error) {
         setError("root", { message: err.message });
       } else {
-        setError("root", { message: "An unknown error occurred" });
+        setError("root", { message: "Сталася невідома помилка" });
       }
     }
   };

@@ -71,13 +71,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         setUser(data.user);
         setToken(data.token);
       } else {
-        throw new Error("Invalid login response");
+        throw new Error("Невірна відповідь сервера при вході");
       }
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message);
       } else {
-        setError("An unknown error occurred");
+        setError("Сталася невідома помилка");
       }
       setUser(null);
       setToken(null);
@@ -104,7 +104,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         if (err instanceof Error) {
           setError(err.message);
         } else {
-          setError("An unknown error occurred");
+          setError("Сталася невідома помилка");
         }
       } finally {
         setIsLoading(false);
@@ -137,13 +137,15 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
           setUser(res.user);
           setToken(res.token || token);
         } else {
-          throw new Error("Invalid updateUser response");
+          throw new Error(
+            "Невірна відповідь сервера при оновленні користувача",
+          );
         }
       } catch (err: unknown) {
         if (err instanceof Error) {
           setError(err.message);
         } else {
-          setError("An unknown error occurred");
+          setError("Сталася невідома помилка");
         }
       } finally {
         setIsLoading(false);
@@ -162,13 +164,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         setUser(res.user);
         setToken(res.token || token);
       } else {
-        throw new Error("Invalid fetchCurrentUser response");
+        throw new Error("Невірна відповідь сервера при отриманні користувача");
       }
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message);
       } else {
-        setError("An unknown error occurred");
+        setError("Сталася невідома помилка");
       }
       logout();
     } finally {

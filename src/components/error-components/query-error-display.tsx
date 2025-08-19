@@ -34,9 +34,9 @@ export function QueryErrorDisplay({
   className,
 }: QueryErrorDisplayProps) {
   const errorMessage =
-    error instanceof Error ? error.message : "Неизвестная ошибка";
+    error instanceof Error ? error.message : "Невідома помилка";
 
-  // Определяем тип ошибки для соответствующей иконки и цвета
+  // Визначаємо тип помилки для відповідної іконки та кольору
   const getErrorIcon = () => {
     if (errorMessage.includes("network") || errorMessage.includes("fetch")) {
       return <Wifi className="h-4 w-4" />;
@@ -49,15 +49,15 @@ export function QueryErrorDisplay({
 
   const getErrorType = () => {
     if (errorMessage.includes("network") || errorMessage.includes("fetch")) {
-      return "Сетевая ошибка";
+      return "Мережева помилка";
     }
     if (errorMessage.includes("unauthorized") || errorMessage.includes("401")) {
-      return "Ошибка авторизации";
+      return "Помилка авторизації";
     }
     if (errorMessage.includes("not found") || errorMessage.includes("404")) {
-      return "Данные не найдены";
+      return "Дані не знайдено";
     }
-    return "Ошибка загрузки";
+    return "Помилка завантаження";
   };
 
   const errorType = getErrorType();
@@ -65,19 +65,14 @@ export function QueryErrorDisplay({
 
   if (variant === "compact") {
     return (
-      <Alert variant="destructive" className={className}>
+      <Alert variant="destructive" className="flex flex-col gap-2">
         {errorIcon}
         <AlertTitle>{title || errorType}</AlertTitle>
         <AlertDescription>{description || errorMessage}</AlertDescription>
         {onRetry && (
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={onRetry}
-            className="mt-2 h-8 text-xs"
-          >
-            <RefreshCw className="mr-1 h-3 w-3" />
-            Повторить
+          <Button variant="outline" size="sm" onClick={onRetry} className="">
+            <RefreshCw className="h-4 w-4" />
+            <span className="text-xs">Повторити</span>
           </Button>
         )}
       </Alert>
@@ -96,13 +91,13 @@ export function QueryErrorDisplay({
               {title || errorType}
             </CardTitle>
             <CardDescription className="text-muted-foreground">
-              {description || "Произошла ошибка при загрузке данных"}
+              {description || "Сталася помилка при завантаженні даних"}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             <Alert variant="destructive">
               {errorIcon}
-              <AlertTitle>Детали ошибки</AlertTitle>
+              <AlertTitle>Деталі помилки</AlertTitle>
               <AlertDescription>{errorMessage}</AlertDescription>
             </Alert>
 
@@ -115,7 +110,7 @@ export function QueryErrorDisplay({
                     className="flex-1 sm:flex-none"
                   >
                     <RefreshCw className="mr-2 h-4 w-4" />
-                    Попробовать снова
+                    Спробувати знову
                   </Button>
                 )}
                 {onGoBack && (
@@ -133,7 +128,7 @@ export function QueryErrorDisplay({
                     variant="outline"
                     className="flex-1 sm:flex-none"
                   >
-                    На главную
+                    На головну
                   </Button>
                 )}
               </div>
@@ -157,7 +152,7 @@ export function QueryErrorDisplay({
               {title || errorType}
             </CardTitle>
             <CardDescription>
-              {description || "Произошла ошибка при загрузке данных"}
+              {description || "Сталася помилка при завантаженні даних"}
             </CardDescription>
           </div>
         </div>
@@ -168,7 +163,7 @@ export function QueryErrorDisplay({
       <CardContent className="space-y-4">
         <Alert variant="destructive">
           {errorIcon}
-          <AlertTitle>Описание ошибки</AlertTitle>
+          <AlertTitle>Опис помилки</AlertTitle>
           <AlertDescription>{errorMessage}</AlertDescription>
         </Alert>
 
@@ -177,7 +172,7 @@ export function QueryErrorDisplay({
             {onRetry && (
               <Button onClick={onRetry} variant="default" size="sm">
                 <RefreshCw className="mr-2 h-3 w-3" />
-                Попробовать снова
+                Спробувати знову
               </Button>
             )}
             {onGoBack && (
@@ -187,7 +182,7 @@ export function QueryErrorDisplay({
             )}
             {onGoHome && (
               <Button onClick={onGoHome} variant="outline" size="sm">
-                На главную
+                На головну
               </Button>
             )}
           </div>

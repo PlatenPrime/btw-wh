@@ -15,13 +15,13 @@ import {
 } from "./index";
 
 /**
- * Пример использования всех компонентов для обработки ошибок
- * Этот компонент демонстрирует различные способы отображения ошибок
+ * Приклад використання всіх компонентів для обробки помилок
+ * Цей компонент демонструє різні способи відображення помилок
  */
 export function ErrorComponentsExample() {
   const { errorState, handleError, retry, goBack, goHome } = useErrorHandler();
 
-  // Примеры различных типов ошибок
+  // Приклади різних типів помилок
   const networkError = new Error("Failed to fetch data from server");
   const authError = new Error("Unauthorized access to resource");
   const validationError = new Error("Invalid input data");
@@ -43,13 +43,13 @@ export function ErrorComponentsExample() {
     handleError(notFoundError);
   };
 
-  // Если есть ошибка, показываем ErrorDisplay
+  // Якщо є помилка, показуємо ErrorDisplay
   if (errorState.hasError) {
     return (
       <ErrorDisplay
         error={errorState.error}
-        title="Произошла ошибка"
-        description="В приложении произошла ошибка. Выберите действие для продолжения."
+        title="Виникла помилка"
+        description="Виникла помилка. Виберіть дію для продовження."
         variant="fullscreen"
         onRetry={retry}
         onGoBack={goBack}
@@ -61,51 +61,53 @@ export function ErrorComponentsExample() {
   return (
     <div className="container mx-auto space-y-8 p-6">
       <div className="text-center">
-        <h1 className="mb-2 text-3xl font-bold">Примеры компонентов ошибок</h1>
+        <h1 className="mb-2 text-3xl font-bold">
+          Приклади компонентів помилок
+        </h1>
         <p className="text-muted-foreground">
-          Демонстрация различных способов отображения ошибок в приложении
+          Демонстрація різних способів відображення помилок в додатку
         </p>
       </div>
 
-      {/* Кнопки для генерации ошибок */}
+      {/* Кнопки для генерації помилок */}
       <Card>
         <CardHeader>
-          <CardTitle>Генерация ошибок</CardTitle>
+          <CardTitle>Генерація помилок</CardTitle>
           <CardDescription>
-            Нажмите на кнопки, чтобы увидеть различные типы ошибок
+            Натисніть на кнопки, щоб побачити різні типи помилок
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-wrap gap-2">
           <Button onClick={handleNetworkError} variant="outline">
-            Сетевая ошибка
+            Мережева помилка
           </Button>
           <Button onClick={handleAuthError} variant="outline">
-            Ошибка авторизации
+            Помилка авторизації
           </Button>
           <Button onClick={handleValidationError} variant="outline">
-            Ошибка валидации
+            Помилка валідації
           </Button>
           <Button onClick={handleNotFoundError} variant="outline">
-            Ресурс не найден
+            Ресурс не знайдено
           </Button>
         </CardContent>
       </Card>
 
-      {/* Примеры различных вариантов отображения */}
+      {/* Приклади різних варіантів відображення */}
       <div className="grid gap-6 md:grid-cols-2">
         {/* ErrorDisplay - default variant */}
         <Card>
           <CardHeader>
             <CardTitle>ErrorDisplay - Default</CardTitle>
             <CardDescription>
-              Карточка с полной информацией об ошибке
+              Картка з повною інформацією про помилку
             </CardDescription>
           </CardHeader>
           <CardContent>
             <ErrorDisplay
-              error="Пример ошибки для демонстрации"
-              title="Демонстрационная ошибка"
-              description="Это пример того, как выглядит ErrorDisplay в режиме default"
+              error="Приклад помилки для демонстрації"
+              title="Демонстраційна помилка"
+              description="Це приклад того, як виглядає ErrorDisplay в режимі default"
               variant="default"
               onRetry={() => console.log("Retry clicked")}
               onGoBack={() => console.log("Go back clicked")}
@@ -118,11 +120,11 @@ export function ErrorComponentsExample() {
         <Card>
           <CardHeader>
             <CardTitle>ErrorDisplay - Compact</CardTitle>
-            <CardDescription>Компактное отображение ошибки</CardDescription>
+            <CardDescription>Компактне відображення помилки</CardDescription>
           </CardHeader>
           <CardContent>
             <ErrorDisplay
-              error="Компактная ошибка"
+              error="Компактна помилка"
               variant="compact"
               onRetry={() => console.log("Retry clicked")}
             />
@@ -133,9 +135,7 @@ export function ErrorComponentsExample() {
         <Card>
           <CardHeader>
             <CardTitle>QueryErrorDisplay</CardTitle>
-            <CardDescription>
-              Специализированный для React Query
-            </CardDescription>
+            <CardDescription>Спеціалізований для React Query</CardDescription>
           </CardHeader>
           <CardContent>
             <QueryErrorDisplay
@@ -150,11 +150,11 @@ export function ErrorComponentsExample() {
         <Card>
           <CardHeader>
             <CardTitle>FormErrorDisplay</CardTitle>
-            <CardDescription>Для отображения ошибок в формах</CardDescription>
+            <CardDescription>Для відображення помилок у формах</CardDescription>
           </CardHeader>
           <CardContent>
             <FormErrorDisplay
-              error="Ошибка валидации формы"
+              error="Помилка валідації форми"
               variant="compact"
               onDismiss={() => console.log("Dismiss clicked")}
             />
@@ -165,10 +165,10 @@ export function ErrorComponentsExample() {
         <Card>
           <CardHeader>
             <CardTitle>FieldErrorDisplay</CardTitle>
-            <CardDescription>Для ошибок валидации полей</CardDescription>
+            <CardDescription>Для помилок валідації полів</CardDescription>
           </CardHeader>
           <CardContent>
-            <FieldErrorDisplay error="Поле обязательно для заполнения" />
+            <FieldErrorDisplay error="Поле обов'язково для заповнення" />
           </CardContent>
         </Card>
 
@@ -177,16 +177,15 @@ export function ErrorComponentsExample() {
           <CardHeader>
             <CardTitle>ErrorDisplay - Fullscreen</CardTitle>
             <CardDescription>
-              Полноэкранное отображение (в реальном приложении занимает весь
-              экран)
+              Повноекранне відображення (в реальному додатку займає весь екран)
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="bg-muted/50 rounded-lg border p-4">
               <ErrorDisplay
-                error="Полноэкранная ошибка"
-                title="Критическая ошибка"
-                description="Это пример полноэкранного отображения ошибки"
+                error="Повноекранна помилка"
+                title="Критична помилка"
+                description="Це приклад повноекранного відображення помилки"
                 variant="fullscreen"
                 onRetry={() => console.log("Retry clicked")}
                 onGoHome={() => console.log("Go home clicked")}
@@ -196,32 +195,32 @@ export function ErrorComponentsExample() {
         </Card>
       </div>
 
-      {/* Информация о компонентах */}
+      {/* Інформація про компоненти */}
       <Card>
         <CardHeader>
-          <CardTitle>О компонентах</CardTitle>
-          <CardDescription>Краткое описание возможностей</CardDescription>
+          <CardTitle>Про компоненти</CardTitle>
+          <CardDescription>Короткий опис можливостей</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid gap-4 md:grid-cols-2">
             <div>
-              <h4 className="mb-2 font-semibold">Основные возможности:</h4>
+              <h4 className="mb-2 font-semibold">Основні можливості:</h4>
               <ul className="text-muted-foreground space-y-1 text-sm">
-                <li>• Автоматическое определение типа ошибки</li>
-                <li>• Три варианта отображения</li>
-                <li>• Встроенные действия (повторить, назад, домой)</li>
-                <li>• Адаптивный дизайн</li>
-                <li>• Поддержка тем</li>
+                <li>• Автоматичне визначення типу помилки</li>
+                <li>• Три варіанти відображення</li>
+                <li>• Вбудовані дії (повторити, назад, додому)</li>
+                <li>• Адаптивний дизайн</li>
+                <li>• Підтримка тем</li>
               </ul>
             </div>
             <div>
-              <h4 className="mb-2 font-semibold">Типы ошибок:</h4>
+              <h4 className="mb-2 font-semibold">Типи помилок:</h4>
               <ul className="text-muted-foreground space-y-1 text-sm">
-                <li>• Сетевые ошибки</li>
-                <li>• Ошибки авторизации</li>
-                <li>• Ошибки валидации</li>
-                <li>• Ошибки "не найдено"</li>
-                <li>• Общие ошибки приложения</li>
+                <li>• Мережеві помилки</li>
+                <li>• Помилки авторизації</li>
+                <li>• Помилки валідації</li>
+                <li>• Помилки "не знайдено"</li>
+                <li>• Загальні помилки додатку</li>
               </ul>
             </div>
           </div>

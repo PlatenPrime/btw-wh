@@ -9,14 +9,14 @@ export function RouteErrorBoundary() {
   const error = useRouteError();
   const navigate = useNavigate();
 
-  // Обрабатываем различные типы ошибок роутера
+  // Обробляємо різні типи помилок роутера
   if (isRouteErrorResponse(error)) {
     if (error.status === 404) {
       return (
         <ErrorDisplay
-          error="Страница не найдена"
-          title="404 - Страница не найдена"
-          description="Запрашиваемая страница не существует или была перемещена"
+          error="Сторінку не знайдено"
+          title="404 - Сторінку не знайдено"
+          description="Запитана сторінка не існує або була переміщена"
           variant="fullscreen"
           onGoHome={() => navigate("/")}
           onGoBack={() => navigate(-1)}
@@ -27,9 +27,9 @@ export function RouteErrorBoundary() {
     if (error.status === 401) {
       return (
         <ErrorDisplay
-          error="Неавторизованный доступ"
-          title="401 - Неавторизованный доступ"
-          description="Для доступа к этой странице необходимо войти в систему"
+          error="Неавторизований доступ"
+          title="401 - Неавторизований доступ"
+          description="Для доступу до цієї сторінки необхідно увійти в систему"
           variant="fullscreen"
           onGoHome={() => navigate("/")}
           onGoBack={() => navigate(-1)}
@@ -40,9 +40,9 @@ export function RouteErrorBoundary() {
     if (error.status === 403) {
       return (
         <ErrorDisplay
-          error="Доступ запрещен"
-          title="403 - Доступ запрещен"
-          description="У вас нет прав для доступа к этой странице"
+          error="Доступ заборонено"
+          title="403 - Доступ заборонено"
+          description="У вас немає прав для доступу до цієї сторінки"
           variant="fullscreen"
           onGoHome={() => navigate("/")}
           onGoBack={() => navigate(-1)}
@@ -53,9 +53,9 @@ export function RouteErrorBoundary() {
     if (error.status === 500) {
       return (
         <ErrorDisplay
-          error="Внутренняя ошибка сервера"
-          title="500 - Внутренняя ошибка сервера"
-          description="Произошла ошибка на сервере. Попробуйте позже"
+          error="Внутрішня помилка сервера"
+          title="500 - Внутрішня помилка сервера"
+          description="Сталася помилка на сервері. Спробуйте пізніше"
           variant="fullscreen"
           onRetry={() => window.location.reload()}
           onGoHome={() => navigate("/")}
@@ -63,13 +63,13 @@ export function RouteErrorBoundary() {
       );
     }
 
-    // Общая ошибка HTTP
+    // Загальна помилка HTTP
     return (
       <ErrorDisplay
         error={`HTTP ${error.status}: ${error.statusText}`}
-        title={`Ошибка ${error.status}`}
+        title={`Помилка ${error.status}`}
         description={
-          error.data?.message || "Произошла ошибка при загрузке страницы"
+          error.data?.message || "Сталася помилка при завантаженні сторінки"
         }
         variant="fullscreen"
         onRetry={() => window.location.reload()}
@@ -79,13 +79,13 @@ export function RouteErrorBoundary() {
     );
   }
 
-  // Обрабатываем JavaScript ошибки
+  // Обробляємо JavaScript помилки
   if (error instanceof Error) {
     return (
       <ErrorDisplay
         error={error}
-        title="Произошла ошибка"
-        description="В приложении произошла неожиданная ошибка"
+        title="Сталася помилка"
+        description="В додатку сталася неочікувана помилка"
         variant="fullscreen"
         onRetry={() => window.location.reload()}
         onGoHome={() => navigate("/")}
@@ -94,12 +94,12 @@ export function RouteErrorBoundary() {
     );
   }
 
-  // Неизвестная ошибка
+  // Невідома помилка
   return (
     <ErrorDisplay
-      error="Неизвестная ошибка"
-      title="Что-то пошло не так"
-      description="Произошла неизвестная ошибка в приложении"
+      error="Невідома помилка"
+      title="Щось пішло не так"
+      description="Сталася невідома помилка в додатку"
       variant="fullscreen"
       onRetry={() => window.location.reload()}
       onGoHome={() => navigate("/")}

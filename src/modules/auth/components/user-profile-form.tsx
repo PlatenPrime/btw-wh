@@ -10,12 +10,12 @@ import { useAuth } from "../hooks/useAuth";
 
 // Zod schema for user profile form
 const userProfileSchema = z.object({
-  fullname: z.string().min(2, "Full name must be at least 2 characters"),
+  fullname: z.string().min(2, "Повне ім'я повинно містити мінімум 2 символи"),
   password: z.string().optional(),
   telegram: z.string().optional(),
   photo: z
     .string()
-    .url("Please enter a valid URL")
+    .url("Будь ласка, введіть правильну URL адресу")
     .optional()
     .or(z.literal("")),
 });
@@ -56,7 +56,7 @@ export const UserProfileForm = () => {
       if (err instanceof Error) {
         setError("root", { message: err.message });
       } else {
-        setError("root", { message: "An unexpected error occurred." });
+        setError("root", { message: "Сталася неочікувана помилка." });
       }
     }
   };
@@ -64,7 +64,7 @@ export const UserProfileForm = () => {
   return (
     <Card className="mx-auto mt-10 max-w-sm p-6">
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
-        <h2 className="text-xl font-semibold">Update Profile</h2>
+        <h2 className="text-xl font-semibold">Оновити профіль</h2>
         <Separator />
         {errors.root && (
           <Alert variant="destructive">{errors.root.message}</Alert>
@@ -73,7 +73,7 @@ export const UserProfileForm = () => {
 
         <Input
           type="text"
-          placeholder="Full Name"
+          placeholder="Повне ім'я"
           autoComplete="name"
           aria-invalid={!!errors.fullname}
           aria-describedby="fullname-error"
@@ -88,7 +88,7 @@ export const UserProfileForm = () => {
 
         <Input
           type="password"
-          placeholder="New Password (optional)"
+          placeholder="Новий пароль (необов'язково)"
           autoComplete="new-password"
           {...register("password")}
           disabled={isLoading}
@@ -96,14 +96,14 @@ export const UserProfileForm = () => {
 
         <Input
           type="text"
-          placeholder="Telegram (optional)"
+          placeholder="Telegram (необов'язково)"
           {...register("telegram")}
           disabled={isLoading}
         />
 
         <Input
           type="url"
-          placeholder="Photo URL (optional)"
+          placeholder="URL фото (необов'язково)"
           aria-invalid={!!errors.photo}
           aria-describedby="photo-error"
           {...register("photo")}
@@ -116,7 +116,7 @@ export const UserProfileForm = () => {
         )}
 
         <Button type="submit" disabled={isLoading} className="w-full">
-          {isLoading ? "Updating..." : "Update Profile"}
+          {isLoading ? "Оновлюю..." : "Оновити профіль"}
         </Button>
       </form>
     </Card>

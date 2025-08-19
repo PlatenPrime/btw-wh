@@ -33,45 +33,45 @@ export function UpdatePosForm({
 
   const updatePosMutation = useUpdatePosMutation(pos);
 
-  // Обработчики для числовых полей без ведущих нулей
+  // Обробники для числових полів без провідних нулів
   const handleQuantChange = (value: string) => {
-    // Убираем все нецифровые символы
+    // Прибираємо всі нецифрові символи
     const numericValue = value.replace(/\D/g, "");
 
-    // Если поле пустое, оставляем пустым для лучшего UX
+    // Якщо поле порожнє, залишаємо порожнім для кращого UX
     if (numericValue === "") {
       setValue("quant", "", { shouldValidate: true });
       return;
     }
 
-    // Если введен только 0, оставляем как есть
+    // Якщо введено тільки 0, залишаємо як є
     if (numericValue === "0") {
       setValue("quant", "0", { shouldValidate: true });
       return;
     }
 
-    // Убираем лидирующие нули для ненулевых значений
+    // Прибираємо провідні нулі для ненульових значень
     const cleanValue = numericValue.replace(/^0+/, "");
     setValue("quant", cleanValue, { shouldValidate: true });
   };
 
   const handleBoxesChange = (value: string) => {
-    // Убираем все нецифровые символы
+    // Прибираємо всі нецифрові символи
     const numericValue = value.replace(/\D/g, "");
 
-    // Если поле пустое, оставляем пустым для лучшего UX
+    // Якщо поле порожнє, залишаємо порожнім для кращого UX
     if (numericValue === "") {
       setValue("boxes", "", { shouldValidate: true });
       return;
     }
 
-    // Если введен только 0, оставляем как есть
+    // Якщо введено тільки 0, залишаємо як є
     if (numericValue === "0") {
       setValue("boxes", "0", { shouldValidate: true });
       return;
     }
 
-    // Убираем лидирующие нули для ненулевых значений
+    // Прибираємо провідні нулі для ненульових значень
     const cleanValue = numericValue.replace(/^0+/, "");
     setValue("boxes", cleanValue, { shouldValidate: true });
   };
@@ -89,7 +89,7 @@ export function UpdatePosForm({
       onSuccess?.();
     } catch (error) {
       console.error("Error updating pos:", error);
-      // Ошибка будет обработана в компоненте через formState
+      // Помилка буде оброблена в компоненті через formState
     }
   };
 

@@ -1,13 +1,12 @@
-import { SERVER_URL } from '@/constants/server';
-import axios from 'axios';
+import { SERVER_URL } from "@/constants/server";
+import axios from "axios";
 
 export const apiClient = axios.create({
   baseURL: SERVER_URL,
   timeout: 10000,
 });
 
-
-// // 🔐 Интерцептор запроса — добавим токен (если появится)
+// // 🔐 Інтерцептор запиту — додамо токен (якщо з'явиться)
 // apiClient.interceptors.request.use(
 //   (config) => {
 //     const token = localStorage.getItem("accessToken");
@@ -19,7 +18,7 @@ export const apiClient = axios.create({
 //   (error) => Promise.reject(error)
 // );
 
-// // ⚠️ Интерцептор ответа — обработка ошибок
+// // ⚠️ Інтерцептор відповіді — обробка помилок
 // apiClient.interceptors.response.use(
 //   (response) => response,
 //   (error) => {
@@ -27,12 +26,12 @@ export const apiClient = axios.create({
 //       const { status } = error.response;
 
 //       if (status === 401) {
-//         console.warn("Неавторизован. Попробуй войти заново.");
-//         // Можешь тут делать logout, redirect и т.п.
+//         console.warn("Неавторизовано. Спробуй увійти заново.");
+//         // Можеш тут робити logout, redirect і т.п.
 //       }
 
 //       if (status === 500) {
-//         console.error("Ошибка сервера. Попробуй позже.");
+//         console.error("Помилка сервера. Спробуй пізніше.");
 //       }
 //     }
 //     return Promise.reject(error);

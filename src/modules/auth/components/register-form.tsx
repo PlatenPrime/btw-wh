@@ -11,14 +11,14 @@ import { useAuth } from "../hooks/useAuth";
 
 // Zod schema for register form
 const registerSchema = z.object({
-  username: z.string().min(3, "Username must be at least 3 characters"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
-  fullname: z.string().min(2, "Full name must be at least 2 characters"),
+  username: z.string().min(3, "Логін повинен містити мінімум 3 символи"),
+  password: z.string().min(6, "Пароль повинен містити мінімум 6 символів"),
+  fullname: z.string().min(2, "Повне ім'я повинно містити мінімум 2 символи"),
   role: z.string().optional(),
   telegram: z.string().optional(),
   photo: z
     .string()
-    .url("Please enter a valid URL")
+    .url("Будь ласка, введіть правильну URL адресу")
     .optional()
     .or(z.literal("")),
 });
@@ -58,7 +58,7 @@ export const RegisterForm = () => {
       if (err instanceof Error) {
         setError("root", { message: err.message });
       } else {
-        setError("root", { message: "An unknown error occurred" });
+        setError("root", { message: "Сталася невідома помилка" });
       }
     }
   };
@@ -66,7 +66,7 @@ export const RegisterForm = () => {
   return (
     <Card className="mx-auto mt-10 max-w-sm p-6">
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
-        <h2 className="text-xl font-semibold">Register</h2>
+        <h2 className="text-xl font-semibold">Реєстрація</h2>
         <Separator />
         {errors.root && (
           <Alert variant="destructive">{errors.root.message}</Alert>
@@ -75,7 +75,7 @@ export const RegisterForm = () => {
 
         <Input
           type="text"
-          placeholder="Username"
+          placeholder="Логін"
           autoComplete="username"
           aria-invalid={!!errors.username}
           aria-describedby="username-error"
@@ -90,7 +90,7 @@ export const RegisterForm = () => {
 
         <Input
           type="password"
-          placeholder="Password"
+          placeholder="Пароль"
           autoComplete="new-password"
           aria-invalid={!!errors.password}
           aria-describedby="password-error"
@@ -105,7 +105,7 @@ export const RegisterForm = () => {
 
         <Input
           type="text"
-          placeholder="Full Name"
+          placeholder="Повне ім'я"
           autoComplete="name"
           aria-invalid={!!errors.fullname}
           aria-describedby="fullname-error"
@@ -120,21 +120,21 @@ export const RegisterForm = () => {
 
         <Input
           type="text"
-          placeholder="Role (optional)"
+          placeholder="Роль (необов'язково)"
           {...register("role")}
           disabled={isLoading}
         />
 
         <Input
           type="text"
-          placeholder="Telegram (optional)"
+          placeholder="Telegram (необов'язково)"
           {...register("telegram")}
           disabled={isLoading}
         />
 
         <Input
           type="url"
-          placeholder="Photo URL (optional)"
+          placeholder="URL фото (необов'язково)"
           {...register("photo")}
           disabled={isLoading}
         />
@@ -145,7 +145,7 @@ export const RegisterForm = () => {
         )}
 
         <Button type="submit" disabled={isLoading} className="w-full">
-          {isLoading ? "Registering..." : "Register"}
+          {isLoading ? "Реєструю..." : "Зареєструватися"}
         </Button>
       </form>
     </Card>
