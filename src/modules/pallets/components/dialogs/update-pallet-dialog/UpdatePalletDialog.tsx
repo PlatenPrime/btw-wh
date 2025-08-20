@@ -6,20 +6,17 @@ interface UpdatePalletDialogProps {
   pallet: PalletShortDto;
   rowId: string;
   trigger?: React.ReactNode;
-  onSuccess: () => void;
 }
 
 export function UpdatePalletDialog({
   pallet,
   rowId,
   trigger,
-  onSuccess,
 }: UpdatePalletDialogProps) {
   const [open, setOpen] = useState(false);
 
   const handleSuccess = () => {
     setOpen(false);
-    onSuccess();
   };
 
   const handleCancel = () => {

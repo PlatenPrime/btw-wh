@@ -10,6 +10,8 @@ export function useUpdatePalletMutation(rowId: string) {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["pallets"] });
       queryClient.invalidateQueries({ queryKey: ["pallets", { rowId }] });
+      // Also invalidate any cached row queries to refresh row detail data
+      queryClient.invalidateQueries({ queryKey: ["row"] });
     },
   });
 }

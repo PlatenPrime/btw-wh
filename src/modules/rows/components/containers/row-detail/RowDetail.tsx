@@ -1,45 +1,26 @@
+import { LoadingError, LoadingNoData } from "@/components/loading-states";
 import { useRowByTitleQuery } from "../../../api/hooks/useRowByTitleQuery";
+import { RowDetailSkeleton } from "./RowDetailSkeleton";
 import { RowDetailView } from "./RowDetailView";
-import { RowDetailSkeleton } from "./skeleton";
 
 interface RowDetailProps {
   rowTitle?: string;
 }
 
 export function RowDetail({ rowTitle }: RowDetailProps) {
-  const { data: row, isLoading, error, refetch } = useRowByTitleQuery(rowTitle);
+  const { data: row, isLoading, error } = useRowByTitleQuery(rowTitle);
 
   if (isLoading) {
     return <RowDetailSkeleton />;
   }
 
   if (error) {
-    return (
-      <div className="flex h-64 items-center justify-center">
-        <div className="text-center">
-          <h2 className="text-destructive text-lg font-semibold">
-            Помилка завантаження
-          </h2>
-          <p className="text-muted-foreground">
-            Не вдалося завантажити дані ряду
-          </p>
-        </div>
-      </div>
-    );
+    return <LoadingError description="Не вдалося завантажити дані рядів" />;
   }
 
   if (!row) {
-    return (
-      <div className="flex h-64 items-center justify-center">
-        <div className="text-center">
-          <h2 className="text-foreground text-lg font-semibold">
-            Ряд не знайдено
-          </h2>
-          <p className="text-muted-foreground">Запитаний ряд не існує</p>
-        </div>
-      </div>
-    );
+    return <LoadingNoData description="Ряд не знайдено" />;
   }
 
-  return <RowDetailView row={row} refetch={refetch} />;
+  return <RowDetailView row={row} />;
 }

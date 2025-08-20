@@ -3,7 +3,8 @@ import type { RowDto } from "@/modules/rows/api/types/dto";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { palletSchema, type PalletFormValues } from "../../forms/schema";
-import { CreatePalletDialogView } from "./view";
+import { CreatePalletDialogView } from "./CreatePalletDialogView";
+import { useState } from "react";
 
 
 
@@ -17,6 +18,8 @@ export function CreatePalletDialog({ row }: { row: RowDto }) {
       sector: "",
     },
   });
+
+  const [open, setOpen] = useState(false);
 
   const createPalletMutation = useCreatePalletMutation(row._id, row.title);
 
@@ -57,11 +60,33 @@ export function CreatePalletDialog({ row }: { row: RowDto }) {
     }
   };
 
+  const {
+    handleSubmit,
+    reset,
+  } = form;
+
+  const handleFormSubmit = handleSubmit(async (data) => {
+    const success = await onSubmit(data);
+    if (success) {
+      setOpen(false);
+      reset();
+    }
+  });
+
+  const handleOpenChange = (newOpen: boolean) => {
+    if (!newOpen) {
+      reset();
+    }
+    setOpen(newOpen);
+  };
+
   return (
     <CreatePalletDialogView
+      open={open}
       form={form}
       isSubmitting={createPalletMutation.isPending}
-      onSubmit={onSubmit}
+      onSubmit={handleFormSubmit}
+      onOpenChange={handleOpenChange}
     />
   );
 }

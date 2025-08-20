@@ -16,46 +16,31 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Plus } from "lucide-react";
-import { useState } from "react";
 import type { UseFormReturn } from "react-hook-form";
 import { type PalletFormValues } from "../../forms/schema";
 
 interface CreatePalletDialogViewProps {
   form: UseFormReturn<PalletFormValues>;
   isSubmitting: boolean;
-  onSubmit: (data: PalletFormValues) => Promise<boolean>;
+  onSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 }
 
 export function CreatePalletDialogView({
   form,
   isSubmitting,
   onSubmit,
+  open,
+  onOpenChange,
 }: CreatePalletDialogViewProps) {
-  const [open, setOpen] = useState(false);
   const {
     register,
-    handleSubmit,
     formState: { errors },
-    reset,
   } = form;
 
-  const handleFormSubmit = handleSubmit(async (data) => {
-    const success = await onSubmit(data);
-    if (success) {
-      setOpen(false);
-      reset();
-    }
-  });
-
-  const handleOpenChange = (newOpen: boolean) => {
-    if (!newOpen) {
-      reset();
-    }
-    setOpen(newOpen);
-  };
-
   return (
-    <Dialog open={open} onOpenChange={handleOpenChange}>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
         <Button variant="outline" size="sm">
           <Plus className="mr-2 h-4 w-4" />
@@ -69,7 +54,7 @@ export function CreatePalletDialogView({
             Введіть назву та (опціонально) сектор для нової палети
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleFormSubmit} className="space-y-4" noValidate>
+        <form onSubmit={onSubmit} className="space-y-4" noValidate>
           <div className="space-y-2">
             <Label htmlFor="pallet-title" className="text-sm font-medium">
               Назва палети *

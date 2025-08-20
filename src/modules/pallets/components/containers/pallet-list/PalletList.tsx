@@ -1,18 +1,16 @@
 import type { PalletShortDto } from "@/modules/rows/api/types/dto";
-import type { RowRefetch } from "@/modules/rows/api/types/types";
 import { Columns4 } from "lucide-react";
 import { PalletInRowCard } from "../../cards/pallet-in-row-card/PalletInRowCard";
 
 interface PalletListProps {
   pallets: PalletShortDto[];
-  refetch: RowRefetch;
   rowId: string;
 }
 
 /**
  * Список карточек палет для отображения в ряде
  */
-export function PalletList({ pallets, refetch, rowId }: PalletListProps) {
+export function PalletList({ pallets, rowId }: PalletListProps) {
   if (!pallets.length) {
     return (
       <div className="py-8 text-center">
@@ -30,12 +28,7 @@ export function PalletList({ pallets, refetch, rowId }: PalletListProps) {
   return (
     <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
       {pallets.map((pallet) => (
-        <PalletInRowCard
-          key={pallet._id}
-          pallet={pallet}
-          refetch={refetch}
-          rowId={rowId}
-        />
+        <PalletInRowCard key={pallet._id} pallet={pallet} rowId={rowId} />
       ))}
     </div>
   );
