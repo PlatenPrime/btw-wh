@@ -6,13 +6,13 @@ import DeleteRowDialogView from "./view";
 interface DeleteRowDialogProps {
   row: RowDto;
   trigger?: React.ReactNode;
-  
+  onSuccess: () => void;
 }
 
 export function DeleteRowDialog({
   row,
   trigger,
-
+  onSuccess
 }: DeleteRowDialogProps) {
   const [open, setOpen] = useState(false);
   const deleteMutation = useDeleteRowMutation();
@@ -21,6 +21,7 @@ export function DeleteRowDialog({
     try {
       await deleteMutation.mutateAsync(row._id);
       setOpen(false);
+      onSuccess()
    
     } catch (error) {
       console.error("Error deleting row:", error);

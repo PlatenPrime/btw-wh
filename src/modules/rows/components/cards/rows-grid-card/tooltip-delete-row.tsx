@@ -42,6 +42,7 @@ export function TooltipDeleteRow({ row }: TooltipDeleteRowProps) {
                       Видалити
                     </div>
                   }
+                  onSuccess={()=>{}}
                 />
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
