@@ -4,15 +4,15 @@ import { CreateRowDialogView } from "./view";
 
 interface CreateRowDialogProps {
   trigger?: React.ReactNode;
-  onSuccess: () => void;
+
 }
 
-export function CreateRowDialog({ trigger, onSuccess }: CreateRowDialogProps) {
+export function CreateRowDialog({ trigger}: CreateRowDialogProps) {
   const [open, setOpen] = useState(false);
 
   const handleSuccess = () => {
     setOpen(false);
-    onSuccess();
+
   };
 
   const handleCancel = () => {

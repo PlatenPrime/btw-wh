@@ -1,15 +1,13 @@
 import { cn } from "@/lib/utils";
 import type { RowDto } from "@/modules/rows/api/types/dto";
-import type { RowsRefetch } from "@/modules/rows/api/types/types";
 import { RowsGridCard } from "@/modules/rows/components/cards/rows-grid-card/GridCard";
 
 interface ViewProps {
   rows: RowDto[] | undefined;
   isFetching?: boolean;
-  refetch: RowsRefetch;
 }
 
-export function View({ rows, refetch }: ViewProps) {
+export function View({ rows }: ViewProps) {
   if (!rows || rows.length === 0) {
     return (
       <div className="text-muted-foreground text-center">
@@ -28,7 +26,7 @@ export function View({ rows, refetch }: ViewProps) {
     >
       {rows.map((row) => (
         <li key={row._id} className="flex">
-          <RowsGridCard row={row} refetch={refetch} />
+          <RowsGridCard row={row} />
         </li>
       ))}
     </ul>

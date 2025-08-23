@@ -8,7 +8,7 @@ import { useRowsQuery } from "../../../api/hooks/useRowsQuery";
 import { RowsDashboardView } from "./RowsDashboardView";
 
 export function RowsDashboard() {
-  const { data, isLoading, error, refetch } = useRowsQuery();
+  const { data, isLoading, error} = useRowsQuery();
 
   if (isLoading) {
     return <Loading skeleton={<GridSkeleton />} />;
@@ -22,5 +22,5 @@ export function RowsDashboard() {
     return <LoadingNoData description="Ряди не знайдено" />;
   }
 
-  return <RowsDashboardView data={data} refetch={refetch} />;
+  return <RowsDashboardView data={data}  />;
 }

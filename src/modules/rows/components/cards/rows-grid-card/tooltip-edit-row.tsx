@@ -6,24 +6,18 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import type { RowDto } from "@/modules/rows/api/types/dto";
-import type { RowsRefetch } from "@/modules/rows/api/types/types";
 import { UpdateRowDialog } from "../../dialogs/update-row-dialog";
 
 interface TooltipEditRowProps {
   row: RowDto;
-  refetch: RowsRefetch;
 }
 
-export function TooltipEditRow({ row, refetch }: TooltipEditRowProps) {
+export function TooltipEditRow({ row }: TooltipEditRowProps) {
   return (
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          <UpdateRowDialog
-            row={row}
-            trigger={<EditTrigger />}
-            onSuccess={() => refetch() ?? (() => {})}
-          />
+          <UpdateRowDialog row={row} trigger={<EditTrigger />} />
         </TooltipTrigger>
         <TooltipContent>
           <p>Edit Row</p>
