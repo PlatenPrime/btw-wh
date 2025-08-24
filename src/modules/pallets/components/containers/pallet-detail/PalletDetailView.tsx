@@ -5,6 +5,7 @@ import { PosesInPalletList } from "@/modules/poses/components/containers/poses-i
 import { CreatePosDialog } from "@/modules/poses/components/dialogs/create-pos-dialog/CreatePosDialog";
 import { useNavigate } from "react-router";
 import { DeletePalletDialog } from "../../dialogs/delete-pallet-dialog/DeletePalletDialog";
+import { ClearPalletDialog } from "../../dialogs/clear-pallet-dialog/ClearPalletDialog";
 
 interface PalletDetailViewProps {
   pallet: IPallet;
@@ -33,6 +34,7 @@ export function PalletDetailView({
         />
         <div>
           <DeletePalletDialog pallet={pallet} onSuccess={handleDelete} />
+          <ClearPalletDialog pallet={pallet} onSuccess={()=> {}} />
         </div>
       </div>
       <PosesInPalletList poses={pallet.poses} />

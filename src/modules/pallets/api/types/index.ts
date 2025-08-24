@@ -43,3 +43,8 @@ export type PalletResponse = IPallet;
 export interface DeletePalletResponse {
   message: string;
 }
+
+
+export interface ClearPalletResponse {
+  message: string;
+}

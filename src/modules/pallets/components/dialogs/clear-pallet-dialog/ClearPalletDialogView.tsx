@@ -1,4 +1,4 @@
-import { DeleteTrigger } from "@/components/triggers/delete-trigger.tsx/DeleteTrigger";
+import { ClearTrigger } from "@/components/triggers/clear-trigger.tsx/ClearTrigger";
 import {
   Button,
   Dialog,
@@ -9,46 +9,38 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui";
-import type {
-  DeletePalletResponse,
-  IPallet,
-} from "@/modules/pallets/api/types";
+import type { ClearPalletResponse, IPallet } from "@/modules/pallets/api/types";
 
 import type { UseMutationResult } from "@tanstack/react-query";
 import { type Dispatch, type ReactNode, type SetStateAction } from "react";
 
-interface DeletePalletDialogViewProps {
+interface ClearPalletDialogViewProps {
   pallet: IPallet;
-  handleDelete: () => void | Promise<void>;
-  deleteMutation: UseMutationResult<
-    DeletePalletResponse,
-    unknown,
-    string,
-    unknown
-  >;
+  handleClear: () => void | Promise<void>;
+  clearMutation: UseMutationResult<ClearPalletResponse, Error, void, unknown>;
   trigger?: ReactNode;
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-export  function DeletePalletDialogView({
+export function ClearPalletDialogView({
   pallet,
-  handleDelete,
-  deleteMutation,
+  handleClear,
+  clearMutation,
   trigger,
   open,
   setOpen,
-}: DeletePalletDialogViewProps) {
+}: ClearPalletDialogViewProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild className="">
-        {trigger || <DeleteTrigger />}
+        {trigger || <ClearTrigger />}
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Видалити палету "{pallet.title}"?</DialogTitle>
+          <DialogTitle>Очистити палету "{pallet.title}"?</DialogTitle>
           <DialogDescription>
-            Ви впевнені, що хочете видалити палету "{pallet.title}"? Цю дію
+            Ви впевнені, що хочете очистити палету "{pallet.title}"? Цю дію
             неможливо скасувати, вона також призведе до видалення всіх
             пов'язаних позицій.
           </DialogDescription>
@@ -56,15 +48,15 @@ export  function DeletePalletDialogView({
         <DialogFooter className="grid grid-cols-2 gap-2">
           <Button
             variant="destructive"
-            onClick={handleDelete}
-            disabled={deleteMutation.isPending}
+            onClick={handleClear}
+            disabled={clearMutation.isPending}
           >
-            {deleteMutation.isPending ? "Видалення.." : "Видалити"}
+            {clearMutation.isPending ? "Очищення.." : "Очистити"}
           </Button>
           <Button
             variant="outline"
             onClick={() => setOpen(false)}
-            disabled={deleteMutation.isPending}
+            disabled={clearMutation.isPending}
           >
             Скасувати
           </Button>
