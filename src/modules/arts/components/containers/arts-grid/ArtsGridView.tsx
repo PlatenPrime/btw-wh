@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { ArtsGridCard } from "@/modules/arts/components/cards/arts-grid-card/ArtsGridCard";
-import { ArtGridCardSkeleton } from "../../cards/arts-grid-card/skeleton";
+import { ArtGridCardSkeleton } from "../../cards/arts-grid-card/ArtGridCardSkeleton";
 
 interface ViewProps {
   arts: ArtDto[] | undefined;

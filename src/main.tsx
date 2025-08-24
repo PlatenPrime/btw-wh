@@ -5,7 +5,7 @@ import { createRoot } from "react-dom/client";
 import { RouterProvider } from "react-router";
 import { Loader } from "./components/loader.tsx";
 import "./index.css";
-import { AuthProvider } from "./modules/auth/components/auth-provider";
+import { AuthProvider } from "./modules/auth/providers/auth-provider/auth-provider.tsx";
 import { router } from "./router.tsx";
 
 const queryClient = new QueryClient();

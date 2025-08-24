@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import type { PalletShortDto } from "@/modules/rows/api/types/dto";
 import { Columns4 } from "lucide-react";
 import { Link } from "react-router";
-import { UpdatePalletDialog } from "../../dialogs/update-pallet-dialog";
+import { UpdatePalletDialog } from "@/modules/pallets/components/dialogs/update-pallet-dialog/UpdatePalletDialog";
 
 interface PalletInRowCardProps {
   pallet: PalletShortDto;

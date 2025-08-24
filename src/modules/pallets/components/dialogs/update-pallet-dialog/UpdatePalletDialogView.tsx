@@ -7,7 +7,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import type { PalletShortDto } from "@/modules/rows/api/types/dto";
-import { UpdatePalletForm } from "../../forms/update-pallet-form";
+import { UpdatePalletForm } from "@/modules/pallets/components/forms/update-pallet-form/UpdatePalletForm";
 
 interface UpdatePalletDialogViewProps {
   open: boolean;

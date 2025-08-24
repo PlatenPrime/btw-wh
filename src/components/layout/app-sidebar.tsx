@@ -13,7 +13,7 @@ import {
   SidebarRail,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { useAuth } from "@/modules/auth/hooks/useAuth";
+import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 import { Link, useLocation, useNavigate } from "react-router";
 import { appSidebarData } from "../data/app-sidebar-data";
 import { ModeToggle } from "../mode-toggle";

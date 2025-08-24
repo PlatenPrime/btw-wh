@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import type { RowDto } from "@/modules/rows/api/types/dto";
-import { Grid } from "@/modules/rows/components/containers/rows-grid/Grid";
-import { CreateRowDialog } from "@/modules/rows/components/dialogs/create-row-dialog";
+import { RowsGrid } from "@/modules/rows/components/containers/rows-grid/RowsGrid";
+import { CreateRowDialog } from "@/modules/rows/components/dialogs/create-row-dialog/CreateRowDialog";
 import { Plus } from "lucide-react";
 
 interface ViewProps {
@@ -21,11 +21,10 @@ export function RowsDashboardView({ data }: ViewProps) {
               Створити ряд
             </Button>
           }
-          
         />
       </div>
 
-      <Grid rows={data}  />
+      <RowsGrid rows={data} />
     </div>
   );
 }

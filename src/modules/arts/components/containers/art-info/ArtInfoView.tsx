@@ -1,9 +1,9 @@
 import type { ArtDto } from "@/modules/arts/api/types/dto";
-import { ArtDialogImage } from "@/modules/arts/components/dialogs/art-dialog-image";
+import { ArtDialogImage } from "@/modules/arts/components/dialogs/art-dialog-image/ArtDialogImage";
 import { BtradeArtInfo } from "../../elements/btrade-art-info/BtradeArtInfo";
 
 interface ArtInfoProps {
-  artData: ArtDto; 
+  artData: ArtDto;
 }
 
 export function ArtInfoView({ artData }: ArtInfoProps) {

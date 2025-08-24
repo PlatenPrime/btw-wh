@@ -14,7 +14,7 @@ export const PosInfoItem = ({
 }: StatItemProps) => {
   return (
     <div
-      className={`bg-muted flex items-center justify-center gap-1 rounded-lg text-center ${className}`}
+      className={` flex items-center justify-center gap-1 rounded-lg text-center ${className}`}
     >
       <Icon className="text-muted-foreground size-[1cap]" />
       <span className="text-foreground text-sm">{value}</span>

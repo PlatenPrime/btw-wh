@@ -6,8 +6,8 @@ import { ProtectedRoute } from "./modules/auth/components";
 
 const App = lazy(() => import("./App"));
 
-const Login = lazy(() => import("./pages/login"));
-const Register = lazy(() => import("./pages/register"));
+const Login = lazy(() => import("@//modules/auth/pages/login"));
+const Register = lazy(() => import("./modules/auth/pages/register"));
 
 const Art = lazy(() =>
   import("./modules/arts/pages/art").then((module) => ({
@@ -81,7 +81,7 @@ const NotFound = lazy(() =>
   })),
 );
 const Unauthorized = lazy(() =>
-  import("./pages/unauthorized").then((module) => ({
+  import("./modules/auth/pages/unauthorized").then((module) => ({
     default: module.Unauthorized,
   })),
 );

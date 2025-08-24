@@ -1,4 +1,4 @@
-import type { User } from "@/modules/auth";
+import type { User } from "@/modules/auth/api/types";
 import { Button } from "../ui/button";
 
 interface ProfileSidebarCardProps {

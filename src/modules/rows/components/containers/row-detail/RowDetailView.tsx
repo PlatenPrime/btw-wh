@@ -1,7 +1,7 @@
 import { Separator } from "@/components/ui/separator";
 import { PalletList } from "@/modules/pallets/components/containers/pallet-list/PalletList";
 import type { RowDto } from "@/modules/rows/api/types/dto";
-import { DeleteRowDialog } from "@/modules/rows/components/dialogs/delete-row-dialog";
+import { DeleteRowDialog } from "@/modules/rows/components/dialogs/delete-row-dialog/DeleteRowDialog";
 import { useNavigate } from "react-router";
 
 import { CreatePalletDialog } from "@/modules/pallets/components/dialogs/create-pallet-dialog/CreatePalletDialog";

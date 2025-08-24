@@ -3,15 +3,15 @@ import {
   LoadingError,
   LoadingNoData,
 } from "@/components/loading-states";
-import { GridSkeleton } from "@/modules/rows/components/containers/rows-grid/skeleton";
+import { RowsGridSkeleton } from "@/modules/rows/components/containers/rows-grid/RowsGridSkeleton";
 import { useRowsQuery } from "../../../api/hooks/useRowsQuery";
 import { RowsDashboardView } from "./RowsDashboardView";
 
 export function RowsDashboard() {
-  const { data, isLoading, error} = useRowsQuery();
+  const { data, isLoading, error } = useRowsQuery();
 
   if (isLoading) {
-    return <Loading skeleton={<GridSkeleton />} />;
+    return <Loading skeleton={<RowsGridSkeleton />} />;
   }
 
   if (error) {
@@ -22,5 +22,5 @@ export function RowsDashboard() {
     return <LoadingNoData description="Ряди не знайдено" />;
   }
 
-  return <RowsDashboardView data={data}  />;
+  return <RowsDashboardView data={data} />;
 }
