@@ -38,3 +38,8 @@ export interface UpdatePalletDto {
 
 export type PalletListResponse = IPallet[];
 export type PalletResponse = IPallet;
+
+
+export interface DeletePalletResponse {
+  message: string;
+}

@@ -1,6 +1,6 @@
 import { DeleteTrigger } from "@/components/triggers/delete-trigger.tsx/DeleteTrigger";
-import { Button } from "@/components/ui/button";
 import {
+  Button,
   Dialog,
   DialogContent,
   DialogDescription,
@@ -8,16 +8,20 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import type { DeleteRowResponse, RowDto } from "@/modules/rows/api/types/dto";
-import type { UseMutationResult } from "@tanstack/react-query";
-import type { Dispatch, ReactNode, SetStateAction } from "react";
+} from "@/components/ui";
+import type {
+  DeletePalletResponse,
+  IPallet,
+} from "@/modules/pallets/api/types";
 
-interface DeleteRowDialogViewProps {
-  row: RowDto;
+import type { UseMutationResult } from "@tanstack/react-query";
+import { type Dispatch, type ReactNode, type SetStateAction } from "react";
+
+interface DeletePalletDialogViewProps {
+  pallet: IPallet;
   handleDelete: () => void | Promise<void>;
   deleteMutation: UseMutationResult<
-    DeleteRowResponse,
+    DeletePalletResponse,
     unknown,
     string,
     unknown
@@ -27,14 +31,14 @@ interface DeleteRowDialogViewProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function DeleteRowDialogView({
-  row,
+export default function DeletePalletDialogView({
+  pallet,
   handleDelete,
   deleteMutation,
   trigger,
   open,
   setOpen,
-}: DeleteRowDialogViewProps) {
+}: DeletePalletDialogViewProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild className="">
@@ -42,11 +46,11 @@ export default function DeleteRowDialogView({
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Видалити ряд "{row.title}"?</DialogTitle>
+          <DialogTitle>Видалити ряд "{pallet.title}"?</DialogTitle>
           <DialogDescription>
-            Ви впевнені, що хочете видалити ряд "{row.title}"? Цю дію неможливо
-            скасувати, вона також призведе до видалення всіх пов'язаних палет та
-            позицій.
+            Ви впевнені, що хочете видалити палету "{pallet.title}"? Цю дію
+            неможливо скасувати, вона також призведе до видалення всіх
+            пов'язаних позицій.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="grid grid-cols-2 gap-2">

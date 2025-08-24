@@ -13,7 +13,7 @@ interface DeleteRowMenuProps {
   row: RowDto;
 }
 
-export function RowMenu({ row }: DeleteRowMenuProps) {
+export function RowCardMenu({ row }: DeleteRowMenuProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

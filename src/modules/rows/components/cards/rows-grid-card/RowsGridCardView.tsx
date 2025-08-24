@@ -2,8 +2,8 @@ import { EditTrigger } from "@/components/triggers/edit-trigger/EditTrigger";
 import { Card, CardHeader } from "@/components/ui/card";
 import type { RowDto } from "@/modules/rows/api/types/dto";
 import { UpdateRowDialog } from "../../dialogs/update-row-dialog/UpdateRowDialog";
-import { RowMenu } from "../../menus/row-menu/RowMenu";
 import { RowLink } from "../../elements/RowLink";
+import { RowCardMenu } from "../../menus/row-card-menu/RowCardMenu";
 
 interface RowsGridCardViewProps {
   row: RowDto;
@@ -16,7 +16,7 @@ export function RowsGridCardView({ row }: RowsGridCardViewProps) {
         <RowLink row={row} />
         <div className="flex items-center gap-2">
           <UpdateRowDialog row={row} trigger={<EditTrigger />} />
-          <RowMenu row={row} />
+          <RowCardMenu row={row} />
         </div>
       </CardHeader>
     </Card>
