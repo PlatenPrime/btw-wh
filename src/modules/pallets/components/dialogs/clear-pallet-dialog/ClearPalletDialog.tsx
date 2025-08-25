@@ -19,7 +19,7 @@ export function ClearPalletDialog({
   const [open, setOpen] = useState(false);
 
 
-const clearMutation = useDeletePalletPosesMutation(pallet._id );
+const clearMutation = useDeletePalletPosesMutation({palletId:pallet._id, palletTitle: pallet.title} );
 
   const handleClear = async () => {
     try {

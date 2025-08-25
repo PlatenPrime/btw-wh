@@ -31,7 +31,7 @@ interface DeletePalletDialogViewProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-export  function DeletePalletDialogView({
+export function DeletePalletDialogView({
   pallet,
   handleDelete,
   deleteMutation,

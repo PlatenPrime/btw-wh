@@ -21,7 +21,7 @@ export function SidebarInsetLayout({
         <div className="flex items-center ">
           <SidebarTrigger className="-ml-1" />
           <Separator orientation="vertical" className="mr-2 h-4" />
-           <h1 className="text-xl font-bold ">{headerText ?? ""} </h1>
+           <h1 className="text-lg font-semibold ">{headerText ?? ""} </h1>
         </div>
         {burger}
       </header>
