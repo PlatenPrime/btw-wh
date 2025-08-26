@@ -1,14 +1,13 @@
 import { apiClient } from "@/lib/apiClient";
 
 export const movePalletPoses = async (
-  fromPalletId: string,
-  toPalletId: string,
-  positionIds: string[],
+  sourcePalletId: string,
+  targetPalletId: string,
   signal?: AbortSignal,
-): Promise<{ message: string }> => {
-  const res = await apiClient.post<{ message: string }>(
+): Promise<{ message: string; targetPallet?: unknown }> => {
+  const res = await apiClient.post<{ message: string; targetPallet?: unknown }>(
     "/pallets/move-poses",
-    { fromPalletId, toPalletId, positionIds },
+    { sourcePalletId, targetPalletId },
     { signal },
   );
   return res.data;

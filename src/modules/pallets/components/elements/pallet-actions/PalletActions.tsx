@@ -1,9 +1,9 @@
 import { Card, CardContent } from "@/components/ui";
 import type { IPallet } from "@/modules/pallets/api/types";
+import { ClearPalletDialog } from "@/modules/pallets/components/dialogs/clear-pallet-dialog/ClearPalletDialog";
+import { DeletePalletDialog } from "@/modules/pallets/components/dialogs/delete-pallet-dialog/DeletePalletDialog";
+import { MovePalletPosesDialog } from "@/modules/pallets/components/dialogs/move-pallet-poses-dialog/MovePalletPosesDialog";
 import { useNavigate } from "react-router";
-import { ClearPalletDialog } from "../../dialogs/clear-pallet-dialog/ClearPalletDialog";
-import { DeletePalletDialog } from "../../dialogs/delete-pallet-dialog/DeletePalletDialog";
-import { MovePalletPosesDialog } from "../../dialogs/move-pallet-poses-dialog/MovePalletPosesDialog";
 
 interface PalletActionsProps {
   pallet: IPallet;

@@ -1,21 +1,30 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { movePalletPoses } from "../services/movePalletPoses";
+import type { IPallet } from "../types";
 
-export function useMovePalletPosesMutation(
-  fromPalletId: string,
-  toPalletId: string,
-) {
+interface UseMovePalletPosesMutationArgs {
+  pallet: IPallet;
+
+}
+
+export function useMovePalletPosesMutation({
+  pallet
+}: UseMovePalletPosesMutationArgs) {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (positionIds: string[]) =>
-      movePalletPoses(fromPalletId, toPalletId, positionIds),
+    mutationFn: (targetPalletId: string) =>
+      movePalletPoses(pallet._id, targetPalletId),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["poses", { palletId: fromPalletId }],
+        queryKey: ["pallet", { title: pallet.title }],
       });
       queryClient.invalidateQueries({
-        queryKey: ["poses", { palletId: toPalletId }],
+        queryKey: ["row", { title: pallet.rowData.title }],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["pallets", { option: "all" }],
+      });
+  
     },
   });
 }

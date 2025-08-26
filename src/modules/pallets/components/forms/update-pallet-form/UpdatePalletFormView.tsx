@@ -29,10 +29,10 @@ export function UpdatePalletFormView({
       <CardContent>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="space-y-4"
+          className="grid gap-4"
           noValidate
         >
-          <div className="space-y-2">
+          <div className="grid gap-2">
             <Label htmlFor="title">Назва палети</Label>
             <Input
               id="title"
@@ -49,7 +49,7 @@ export function UpdatePalletFormView({
             )}
           </div>
 
-          <div className="space-y-2">
+          <div className="grid gap-2">
             <Label htmlFor="sector">Сектор</Label>
             <Input
               id="sector"

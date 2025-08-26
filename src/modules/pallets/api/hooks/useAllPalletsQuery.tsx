@@ -4,7 +4,7 @@ import type { PalletListResponse } from "../types";
 
 export function useAllPalletsQuery(enabled = true) {
   return useQuery<PalletListResponse>({
-    queryKey: ["pallets", "all"],
+    queryKey: ["pallets", {option: "all" }],
     queryFn: ({ signal }) => getAllPallets(signal),
     enabled,
     staleTime: 5 * 60 * 1000,
