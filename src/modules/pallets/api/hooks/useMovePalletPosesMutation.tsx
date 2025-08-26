@@ -22,7 +22,7 @@ export function useMovePalletPosesMutation({
         queryKey: ["row", { title: pallet.rowData.title }],
       });
       queryClient.invalidateQueries({
-        queryKey: ["pallets", { option: "all" }],
+        queryKey: ["pallets", { option: "empty" }],
       });
   
     },

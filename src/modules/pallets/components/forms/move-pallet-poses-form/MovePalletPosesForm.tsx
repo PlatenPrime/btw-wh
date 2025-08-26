@@ -1,7 +1,6 @@
 import { FormErrorDisplay } from "@/components/error-components/form-error-display";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useAllPalletsQuery } from "@/modules/pallets/api/hooks/useAllPalletsQuery";
 import type { IPallet } from "@/modules/pallets/api/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
@@ -9,6 +8,7 @@ import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { useEmptyPalletsQuery } from "@/modules/pallets/api/hooks/useEmptyPalletsQuery";
 import { MovePalletPosesFormView } from "./MovePalletPosesFormView";
 
 const schema = z.object({
@@ -39,7 +39,7 @@ export function MovePalletPosesForm({
     defaultValues: { toPalletId: "" },
   });
 
-  const { data: pallets, isLoading, isError, error } = useAllPalletsQuery();
+  const { data: pallets, isLoading, isError, error } = useEmptyPalletsQuery();
 
   const filteredPallets = useMemo(() => {
     if (!pallets) return [] as IPallet[];
