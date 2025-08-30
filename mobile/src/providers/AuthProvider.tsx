@@ -1,34 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { createContext, useCallback, useEffect, useRef, useState } from 'react';
-
-export interface User {
-  _id: string;
-  username: string;
-  email: string;
-}
-
-export interface AuthContextType {
-  user: User | null;
-  token: string | null;
-  isLoading: boolean;
-  error: string | null;
-  login: (username: string, password: string) => Promise<void>;
-  register: (data: RegisterData) => Promise<void>;
-  logout: () => void;
-  updateUser: (data: UpdateUserData) => Promise<void>;
-  fetchCurrentUser: () => Promise<void>;
-}
-
-export interface RegisterData {
-  username: string;
-  email: string;
-  password: string;
-}
-
-export interface UpdateUserData {
-  username?: string;
-  email?: string;
-}
+import type {
+  AuthContextType,
+  RegisterData,
+  UpdateUserData,
+  User,
+} from '../modules/auth/api/types';
 
 interface AuthProviderProps {
   children: React.ReactNode;
@@ -95,7 +72,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const mockUser: User = {
         _id: '1',
         username,
-        email: `${username}@example.com`,
+        fullname: username,
+        role: 'user',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       };
       const mockToken = 'mock_token_' + Date.now();
 

@@ -1,7 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import { ArtDetailScreen } from '../screens/arts/ArtDetailScreen';
 import { ArtsListScreen } from '../screens/arts/ArtsListScreen';
-import { ArtsUpdateScreen } from '../screens/arts/ArtsUpdateScreen';
 import { ArtsUtilsScreen } from '../screens/arts/ArtsUtilsScreen';
 import { ArtsStackParamList } from './types';
 
@@ -24,11 +23,6 @@ export function ArtsStackNavigator() {
         name="ArtDetail"
         component={ArtDetailScreen}
         options={{ title: 'Деталі артикулу' }}
-      />
-      <Stack.Screen
-        name="ArtsUpdate"
-        component={ArtsUpdateScreen}
-        options={{ title: 'Оновити базу' }}
       />
       <Stack.Screen name="ArtsUtils" component={ArtsUtilsScreen} options={{ title: 'Утиліти' }} />
     </Stack.Navigator>

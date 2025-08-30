@@ -1,6 +1,8 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import { PalletDetailScreen } from '../screens/pallets/PalletDetailScreen';
+import { AddPalletScreen } from '../screens/pallets/AddPalletScreen';
+// import { PalletDetailScreen } from '../screens/pallets/PalletDetailScreen';
 import { PalletsListScreen } from '../screens/pallets/PalletsListScreen';
+import { PosesScreen } from '../screens/poses/PosesScreen';
 import { PalletsStackParamList } from './types';
 
 const Stack = createStackNavigator<PalletsStackParamList>();
@@ -22,10 +24,20 @@ export function PalletsStackNavigator() {
         component={PalletsListScreen}
         options={{ title: 'Паллети' }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="PalletDetail"
         component={PalletDetailScreen}
         options={{ title: 'Деталі паллети' }}
+      /> */}
+      <Stack.Screen
+        name="Poses"
+        component={PosesScreen}
+        options={{ title: 'Позиції на паллеті' }}
+      />
+      <Stack.Screen
+        name="AddPallet"
+        component={AddPalletScreen}
+        options={{ title: 'Додати паллету' }}
       />
     </Stack.Navigator>
   );

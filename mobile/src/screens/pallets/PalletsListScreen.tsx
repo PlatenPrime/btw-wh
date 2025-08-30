@@ -8,19 +8,22 @@ type NavigationProp = StackNavigationProp<PalletsStackParamList>;
 export function PalletsListScreen() {
   const navigation = useNavigation<NavigationProp>();
 
-  const menuItems = [
+  const menuItems: Array<{
+    title: string;
+    route: 'AddPallet';
+    description: string;
+  }> = [
     {
-      title: 'Переглянути паллети',
-      route: 'PalletsList',
-      description: 'Список всіх паллет на складі',
+      title: 'Додати паллету',
+      route: 'AddPallet',
+      description: 'Створити нову паллету',
     },
-    { title: 'Додати паллету', route: 'PalletsList', description: 'Створити нову паллету' },
   ];
 
   const renderMenuItem = ({ item }: { item: (typeof menuItems)[0] }) => (
     <TouchableOpacity
       className="mb-3 rounded-lg bg-slate-800 p-4"
-      onPress={() => navigation.navigate(item.route as keyof PalletsStackParamList)}>
+      onPress={() => navigation.navigate(item.route)}>
       <Text className="mb-2 text-lg font-semibold text-slate-50">{item.title}</Text>
       <Text className="text-slate-400">{item.description}</Text>
     </TouchableOpacity>

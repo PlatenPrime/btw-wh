@@ -9,15 +9,13 @@ export function ArtsListScreen() {
   const navigation = useNavigation<NavigationProp>();
 
   const menuItems = [
-    { title: 'Список артикулів', route: 'ArtsList', description: 'Перегляд всіх артикулів' },
-    { title: 'Оновити базу', route: 'ArtsUpdate', description: 'Оновлення бази артикулів' },
-    { title: 'Утиліти', route: 'ArtsUtils', description: 'Корисні інструменти' },
+    { title: 'Утиліти', route: 'ArtsUtils' as const, description: 'Корисні інструменти' },
   ];
 
   const renderMenuItem = ({ item }: { item: (typeof menuItems)[0] }) => (
     <TouchableOpacity
       className="mb-3 rounded-lg bg-slate-800 p-4"
-      onPress={() => navigation.navigate(item.route as keyof ArtsStackParamList)}>
+      onPress={() => navigation.navigate(item.route)}>
       <Text className="mb-2 text-lg font-semibold text-slate-50">{item.title}</Text>
       <Text className="text-slate-400">{item.description}</Text>
     </TouchableOpacity>

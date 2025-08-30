@@ -13,7 +13,6 @@ export type MainTabParamList = {
 export type ArtsStackParamList = {
   ArtsList: undefined;
   ArtDetail: { artikul: string };
-  ArtsUpdate: undefined;
   ArtsUtils: undefined;
 };
 
@@ -29,7 +28,14 @@ export type WarehouseStackParamList = {
 
 export type PalletsStackParamList = {
   PalletsList: undefined;
-  PalletDetail: { title: string };
+  // PalletDetail: { title: string };
+  Poses: { palletId: string };
+  AddPallet: undefined;
+};
+
+export type PosesStackParamList = {
+  PosesList: { palletId: string };
+  PoseDetail: { poseId: string; palletId: string };
 };
 
 export type AuthStackParamList = {
