@@ -1,37 +1,35 @@
 {
   "name": "mobile",
   "version": "1.0.0",
-  "main": "index.ts",
   "scripts": {
-    "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web",
-    "build:android": "eas build --platform android",
-    "build:android-apk": "eas build --platform android --profile preview",
-    "submit": "eas submit --platform android"
+    "start": "expo start",
+    "prebuild": "expo prebuild",
+    "lint": "eslint \"**/*.{js,jsx,ts,tsx}\" && prettier -c \"**/*.{js,jsx,ts,tsx,json}\"",
+    "format": "eslint \"**/*.{js,jsx,ts,tsx}\" --fix && prettier \"**/*.{js,jsx,ts,tsx,json}\" --write",
+    "web": "expo start --web"
   },
   "dependencies": {
-    "@react-navigation/drawer": "^7.5.7",
-    "@react-navigation/native": "^7.1.17",
-    "@tanstack/react-query": "^5.85.5",
-    "expo": "~53.0.22",
-    "expo-secure-store": "~14.2.4",
+    "expo": "53.0.22",
     "expo-status-bar": "~2.2.3",
-    "nativewind": "^4.1.23",
+    "nativewind": "latest",
     "react": "19.0.0",
-    "react-native": "0.79.6",
-    "react-native-css-interop": "^0.1.22",
-    "react-native-gesture-handler": "~2.24.0",
+    "react-native": "0.79.5",
     "react-native-reanimated": "~3.17.4",
-    "react-native-safe-area-context": "5.4.0",
-    "react-native-screens": "~4.11.1",
-    "tailwindcss": "^3.4.17"
+    "react-native-safe-area-context": "5.4.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.25.2",
+    "@babel/core": "^7.20.0",
     "@types/react": "~19.0.10",
+    "eslint": "^9.25.1",
+    "eslint-config-expo": "^9.2.0",
+    "eslint-config-prettier": "^10.1.2",
+    "prettier": "^3.2.5",
+    "prettier-plugin-tailwindcss": "^0.5.11",
+    "tailwindcss": "^3.4.0",
     "typescript": "~5.8.3"
   },
+  "main": "node_modules/expo/AppEntry.js",
   "private": true
 }
