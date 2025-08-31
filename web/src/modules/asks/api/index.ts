@@ -5,7 +5,6 @@ export { getAskById } from "./services/getAskById";
 export {
   getAsksByDate,
   type GetAsksByDateParams,
-  type GetAsksByDateResponse,
 } from "./services/getAsksByDate";
 export { updateAskById, type UpdateAskRequest } from "./services/updateAskById";
 
@@ -21,4 +20,4 @@ export { useUpdateAsk } from "./hooks/useUpdateAsk";
 
 // Types
 export { validAskStatuses } from "./types/dto";
-export type { AskDto, AskStatus, AskUserData } from "./types/dto";
+export type { AskDto, AskStatus, AskUserData, GetAsksByDateResponse } from "./types/dto";

@@ -1,16 +1,9 @@
 import { apiClient } from "@/lib/apiClient";
-import type { AskDto } from "../types/dto";
+import type { GetAsksByDateResponse } from "./../types/dto";
 
 export interface GetAsksByDateParams {
   date: string; // формат даты в виде строки (например, "2024-01-15")
   signal?: AbortSignal;
-}
-
-export interface GetAsksByDateResponse {
-  message: string;
-  data: AskDto[];
-  date: string;
-  count: number;
 }
 
 export const getAsksByDate = async ({

@@ -1,7 +1,7 @@
 import { useDebounce } from "@/hooks/useDebounce";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import type { GetAsksByDateResponse } from "../services/getAsksByDate";
 import { getAsksByDate } from "../services/getAsksByDate";
+import type { GetAsksByDateResponse } from "../types/dto";
 
 export interface UseAsksByDateQueryParams {
   date: string;
