@@ -26,12 +26,11 @@ export type WarehouseStackParamList = {
   WhUtils: undefined;
 };
 
-export type PalletsStackParamList = {
-  PalletsList: undefined;
-  // PalletDetail: { title: string };
-  Poses: { palletId: string };
-  AddPallet: undefined;
-};
+  export type PalletsStackParamList = {
+    PalletsList: undefined;
+    Poses: { palletId: string };
+    AddPallet: undefined;
+  };
 
 export type PosesStackParamList = {
   PosesList: { palletId: string };
@@ -41,4 +40,9 @@ export type PosesStackParamList = {
 export type AuthStackParamList = {
   Login: undefined;
   Register: undefined;
+};
+
+export type ProfileStackParamList = {
+  Profile: undefined;
+
 };

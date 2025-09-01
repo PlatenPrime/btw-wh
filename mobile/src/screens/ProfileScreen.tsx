@@ -9,7 +9,6 @@ export function ProfileScreen() {
       <View className="mb-4 rounded-lg bg-slate-800 p-6">
         <Text className="mb-2 text-xl font-bold text-slate-50">Профіль користувача</Text>
         <Text className="mb-4 text-slate-300">{user?.username || 'Невідомий користувач'}</Text>
-        <Text className="text-sm text-slate-400">Email: {user?.email || 'Не вказано'}</Text>
       </View>
 
       <TouchableOpacity onPress={logout} className="rounded-lg bg-red-600 p-4">

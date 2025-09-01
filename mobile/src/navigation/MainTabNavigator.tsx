@@ -1,8 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { ProfileScreen } from '../screens/ProfileScreen';
 import { ArtsStackNavigator } from './ArtsStackNavigator';
 import { PalletsStackNavigator } from './PalletsStackNavigator';
+import { ProfileStackNavigator } from './ProfileStackNavigator';
 import { MainTabParamList } from './types';
 import { WarehouseStackNavigator } from './WarehouseStackNavigator';
 
@@ -40,7 +40,7 @@ export function MainTabNavigator() {
         options={{ title: 'Склад' }}
       />
       <Tab.Screen name="Pallets" component={PalletsStackNavigator} options={{ title: 'Паллети' }} />
-      <Tab.Screen name="Profile" component={ProfileScreen} options={{ title: 'Профіль' }} />
+      <Tab.Screen name="Profile" component={ProfileStackNavigator} options={{ title: 'Профіль' }} />
     </Tab.Navigator>
   );
 }
