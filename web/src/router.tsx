@@ -29,10 +29,14 @@ const ArtsUtils = lazy(() =>
 );
 
 const Ask = lazy(() =>
-  import("./pages/ask").then((module) => ({ default: module.Ask })),
+  import("./modules/asks/pages/ask").then((module) => ({
+    default: module.Ask,
+  })),
 );
 const Asks = lazy(() =>
-  import("./pages/asks").then((module) => ({ default: module.Asks })),
+  import("./modules/asks/pages/asks").then((module) => ({
+    default: module.Asks,
+  })),
 );
 
 const Defs = lazy(() =>

@@ -20,10 +20,10 @@ export function AskerData({ date, askerData }: AskerDataProps) {
       </div>
       <div className="flex items-center gap-2">
         <Avatar>
-          <AvatarImage src={askerData.photo} />
-          <AvatarFallback>{askerData.fullname.charAt(0)}</AvatarFallback>
+          <AvatarImage src={askerData?.photo} />
+          <AvatarFallback>{askerData?.fullname.charAt(0)}</AvatarFallback>
         </Avatar>
-        <span className="text-foreground font-mono">{askerData.fullname}</span>
+        <span className="text-foreground font-mono">{askerData?.fullname}</span>
       </div>
     </div>
   );
