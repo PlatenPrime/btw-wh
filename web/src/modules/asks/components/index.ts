@@ -1,5 +1,5 @@
 // Containers
-export * from "./containers/ask-list";
+export * from "./containers/asks-container";
 
 // Cards
 export * from "./asks-list-card";

@@ -1,11 +1,11 @@
 import { Card } from "@/components/ui/card";
 import { formatDisplayDate } from "@/utils/date";
 
-interface NoAsksCardProps {
+interface AsksListEmptyProps {
   selectedDate: Date;
 }
 
-export function NoAsksCard({ selectedDate }: NoAsksCardProps) {
+export function AsksListEmpty({ selectedDate }: AsksListEmptyProps) {
   return (
     <Card className="p-8 text-center">
       <div className="space-y-2">

@@ -13,7 +13,7 @@ export function AskerData({ date, askerData }: AskerDataProps) {
     <div className="grid gap-2">
       <div className="flex items-center gap-2">
         <CalendarIcon className="h-4 w-4" />
-        <span className="text-foreground font-mono text-xs">
+        <span className="text-foreground ">
           {" "}
           {formatDate(date)}
         </span>
@@ -23,7 +23,7 @@ export function AskerData({ date, askerData }: AskerDataProps) {
           <AvatarImage src={askerData?.photo} />
           <AvatarFallback>{askerData?.fullname.charAt(0)}</AvatarFallback>
         </Avatar>
-        <span className="text-foreground font-mono">{askerData?.fullname}</span>
+        <span className="text-foreground ">{askerData?.fullname}</span>
       </div>
     </div>
   );

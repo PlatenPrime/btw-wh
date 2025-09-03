@@ -28,8 +28,8 @@ export function DateNavigation({
   onDateSelect,
 }: DateNavigationProps) {
   return (
-    <Card className="p-4">
-      <div className="flex items-center justify-between">
+    <Card className=" p-2">
+      <div className="flex items-center justify-between gap-2">
         <Button
           variant="outline"
           size="icon"
@@ -40,9 +40,7 @@ export function DateNavigation({
         </Button>
 
         <div className="flex items-center gap-3">
-          <span className="text-lg font-medium">
-            {getDateLabel(selectedDate)}
-          </span>
+         
 
           <Popover>
             <PopoverTrigger asChild>
@@ -70,6 +68,9 @@ export function DateNavigation({
         >
           <ChevronRight className="h-4 w-4" />
         </Button>
+        <span className=" font-medium">
+            {getDateLabel(selectedDate)}
+          </span>
       </div>
     </Card>
   );
