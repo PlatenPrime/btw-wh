@@ -17,7 +17,7 @@ export function AsksListCardView({
   statusText,
 }: AsksListCardViewProps) {
   return (
-    <Card className="flex flex-row flex-wrap gap-4 items-center p-2">
+    <Card className="flex flex-row  gap-4 items-start p-2">
       <AskImageStatus
         statusVariant={statusVariant}
         statusText={statusText}
