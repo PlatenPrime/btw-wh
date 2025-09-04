@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/sidebar";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 import { Link, useLocation, useNavigate } from "react-router";
-import { appSidebarData } from "../data/app-sidebar-data";
+import { appSidebarData } from "../../constants/app-sidebar-data";
 import { ModeToggle } from "../mode-toggle";
 import { Separator } from "../ui/separator";
 import { ProfileSidebarCard } from "./profile-sidebar-card";
