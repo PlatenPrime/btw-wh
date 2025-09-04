@@ -1,10 +1,10 @@
 import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout";
-import { ArtsInfiniteDashboard } from "@/modules/arts/components/containers/arts-infinite-dashboard/ArtsInfiniteDashboard";
+import { ArtsFetcher } from "../components/fetchers/arts-fetcher/ArtsFetcher";
 
 export function Arts() {
   return (
     <SidebarInsetLayout headerText="Артикули">
-      <ArtsInfiniteDashboard />
+      <ArtsFetcher />
     </SidebarInsetLayout>
   );
 }

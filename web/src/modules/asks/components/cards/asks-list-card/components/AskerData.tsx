@@ -21,7 +21,7 @@ export function AskerData({ date, askerData }: AskerDataProps) {
       </div>
       <div className="flex items-center gap-2">
         <CalendarIcon className="h-4 w-4" />
-        <span className="text-foreground text-sm ">
+        <span className="text-muted-foreground text-xs ">
           {" "}
           {formatDate(date)}
         </span>

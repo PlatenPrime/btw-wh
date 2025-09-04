@@ -1,6 +1,6 @@
 // hooks/useArtsInfiniteQuery.ts
 import { useDebounce } from "@/hooks/useDebounce";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { keepPreviousData, useInfiniteQuery } from "@tanstack/react-query";
 import { getArtsByParams } from "@/modules/arts/api/services/getArtsByParams";
 
 export interface UseArtsInfiniteQueryParams {
@@ -35,5 +35,6 @@ export function useArtsInfiniteQuery({
     initialPageParam: 1,
     enabled,
     staleTime: 5 * 60 * 1000,
+    placeholderData: keepPreviousData,
   });
 }
