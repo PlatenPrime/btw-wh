@@ -10,18 +10,18 @@ export function AskInfo({ nameukr, quant, com }: AskInfoProps) {
   return (
     <div>
       <div className="flex items-center gap-2">
-        <span className="text-foreground font-bold ">{nameukr}</span>
+        <span className="text-foreground font-semibold ">{nameukr}</span>
       </div>
-      <div className="flex items-center gap-2">
-        <CircleIcon className="h-4 w-4" />
+      {quant !== 0 &&  <div className="flex items-center gap-2">
+        <CircleIcon className="h-4 w-4" color="blue" />
         <span className="text-foreground ">
           {quant}
         </span>
-      </div>
-      <div className="flex items-center gap-2">
-        <NotebookTextIcon className="h-4 w-4" />
+      </div>}
+      {com !== "" && <div className="flex items-center gap-2">
+        <NotebookTextIcon className="h-4 w-4" color="blue" />
         <span className="text-foreground   italic">{com}</span>
-      </div>
+      </div>}
     </div>
   );
 }

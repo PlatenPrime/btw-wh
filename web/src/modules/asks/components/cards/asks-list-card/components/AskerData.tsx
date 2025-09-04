@@ -11,19 +11,20 @@ interface AskerDataProps {
 export function AskerData({ date, askerData }: AskerDataProps) {
   return (
     <div className="grid gap-2">
+      
+      <div className="flex items-center gap-2">
+        <Avatar className="size-4" >
+          <AvatarImage src={askerData?.photo} alt={askerData?.fullname}  />
+          <AvatarFallback>{askerData?.fullname.charAt(0)}</AvatarFallback>
+        </Avatar>
+        <span className="text-foreground text-sm ">{askerData?.fullname}</span>
+      </div>
       <div className="flex items-center gap-2">
         <CalendarIcon className="h-4 w-4" />
-        <span className="text-foreground ">
+        <span className="text-foreground text-sm ">
           {" "}
           {formatDate(date)}
         </span>
-      </div>
-      <div className="flex items-center gap-2">
-        <Avatar>
-          <AvatarImage src={askerData?.photo} />
-          <AvatarFallback>{askerData?.fullname.charAt(0)}</AvatarFallback>
-        </Avatar>
-        <span className="text-foreground ">{askerData?.fullname}</span>
       </div>
     </div>
   );
