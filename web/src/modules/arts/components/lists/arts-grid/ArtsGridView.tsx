@@ -1,7 +1,6 @@
 import { cn } from "@/lib/utils";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { ArtsGridCard } from "@/modules/arts/components/cards/arts-grid-card/ArtsGridCard";
-import { ArtGridCardSkeleton } from "../../cards/arts-grid-card/ArtGridCardSkeleton";
 
 interface ViewProps {
   arts: ArtDto[] | undefined;
@@ -10,10 +9,6 @@ interface ViewProps {
 }
 
 export function ArtsGridView({ arts, isPending }: ViewProps) {
-
-
-
-  
   if (!isPending && (!arts || arts.length === 0)) {
     return (
       <div className="text-muted-foreground text-center">
@@ -21,7 +16,6 @@ export function ArtsGridView({ arts, isPending }: ViewProps) {
       </div>
     );
   }
-
 
   return (
     <ul
@@ -31,13 +25,6 @@ export function ArtsGridView({ arts, isPending }: ViewProps) {
         "md:[grid-template-columns:repeat(auto-fill,minmax(220px,1fr))] md:gap-4",
       )}
     >
-      {isPending &&
-        Array.from({ length: 20 }).map((_, i) => (
-          <li key={i} className="flex">
-            <ArtGridCardSkeleton />
-          </li>
-        ))}
-
       {!isPending &&
         arts &&
         arts.map((art) => (
