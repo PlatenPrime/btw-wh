@@ -1,16 +1,16 @@
+import { getBtradeArtDataByArtikul } from "@/modules/arts/api/services/getBtradeArtDataByArtikul";
 import { useQuery } from "@tanstack/react-query";
-import { getBtradeInfoByArtikul } from "@/modules/arts/api/services/getBtradeInfoByArtikul";
 
-export function useBtradeArtInfoQuery(artikul: string) {
+export function useBtradeArtDataQuery(artikul: string) {
   if (!artikul) {
-    throw new Error("Artikul is required for useBtradeArtInfoQuery");
+    throw new Error("Artikul is required for useBtradeArtDataQuery");
   }
 
   return useQuery({
     queryKey: ["btradeArtInfo", { artikul }],
     queryFn: async ({ signal }) => {
       if (!artikul) throw new Error("Artikul is missing");
-      return getBtradeInfoByArtikul(artikul, signal);
+      return getBtradeArtDataByArtikul(artikul, signal);
     },
     enabled: !!artikul,
     staleTime: 5 * 60 * 1000, // 5 minutes

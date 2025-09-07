@@ -9,7 +9,7 @@ export function ArtGridCardSkeleton() {
           <div className="flex h-full items-center md:flex-col md:justify-between md:pt-2">
             <Skeleton className="aspect-square w-8 rounded-lg shadow-md md:w-full md:max-w-[6rem]" />
             <div className="p-2 md:text-center">
-              <Skeleton className="h-4 w-16 md:w-20" />
+              <Skeleton className="h-4 w-32 md:w-20" />
             </div>
           </div>
         </div>

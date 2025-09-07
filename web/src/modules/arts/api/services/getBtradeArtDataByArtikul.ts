@@ -1,9 +1,9 @@
 import { apiClient } from "@/lib/apiClient";
 import type { BtradeArtInfoDto } from "../types/dto";
 
-export const getBtradeInfoByArtikul = async (
+export const getBtradeArtDataByArtikul = async (
   artikul: string,
-  signal?: AbortSignal
+  signal?: AbortSignal,
 ): Promise<BtradeArtInfoDto> => {
   const res = await apiClient.get<BtradeArtInfoDto>(`/arts/btrade/${artikul}`, {
     signal,
