@@ -5,16 +5,12 @@ import { useTheme } from "@/providers/theme-provider";
 
 interface ImageBlurContainerProps extends React.ComponentProps<"div"> {
   artikul: string;
-  overlay?: boolean;
-  isMoreOverlay?: boolean;
 }
 
 export function ImageBlurContainer({
   className,
   artikul,
   children,
-  overlay = true,
-  isMoreOverlay = false,
   ...props
 }: ImageBlurContainerProps) {
   const { theme } = useTheme();
@@ -22,7 +18,10 @@ export function ImageBlurContainer({
 
   if (theme === "dark") {
     return (
-      <div className={cn("relative isolate overflow-hidden", className)} {...props}>
+      <div
+        className={cn("relative isolate overflow-hidden", className)}
+        {...props}
+      >
         {children}
       </div>
     );
@@ -30,36 +29,27 @@ export function ImageBlurContainer({
 
   return (
     <div
-      className={cn("relative isolate overflow-hidden", className)}
+      className={cn("group relative isolate overflow-hidden", className)}
       {...props}
     >
+      {/* Блюр фон — показывается только на hover */}
       <Image
         src={imageUrl}
         alt={artikul}
-        className="absolute inset-0 h-full w-full object-cover blur-xl scale-200"
+        className={cn(
+          "absolute inset-0 h-full w-full scale-200 object-cover opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-100",
+        )}
       />
 
-      {overlay && (
-        <div
-          className={cn(
-            "absolute inset-0 backdrop-blur",
-           "bg-white/50"
-          )}
-        />
-      )}
+      {/* Полупрозрачный слой поверх блюра */}
+      <div
+        className={cn(
+          "absolute inset-0 bg-white/50 opacity-0 backdrop-blur transition-opacity duration-300 group-hover:opacity-100",
+        )}
+      />
 
-      {isMoreOverlay && (
-        <div
-          className={cn(
-            "absolute inset-0",
-            "bg-white/50"
-          )}
-        />
-      )}
-
-      <div className="relative z-10 h-full w-full">
-        {children}
-      </div>
+      {/* Контент всегда виден */}
+      <div className="relative z-10 h-full w-full">{children}</div>
     </div>
   );
 }

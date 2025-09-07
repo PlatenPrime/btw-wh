@@ -11,8 +11,8 @@ interface RowsGridCardViewProps {
 
 export function RowsGridCardView({ row }: RowsGridCardViewProps) {
   return (
-    <Card className="shadow-muted-foreground group/row bg-background hover:bg-muted-background h-full w-full p-0 shadow-xs shadow-orange-500 transition-all duration-500 ease-out hover:shadow-xl">
-      <CardHeader className="flex items-center justify-between p-2">
+    <Card className="shadow-muted-foreground group/row bg-background hover:bg-muted-background h-full w-full p-0 shadow-xs hover:shadow-orange-500 transition-all duration-500 ease-out hover:shadow-xl">
+      <CardHeader className="flex items-center justify-between p-0">
         <RowLink row={row} />
         <div className="flex items-center gap-2">
           <UpdateRowDialog row={row} trigger={<EditTrigger />} />

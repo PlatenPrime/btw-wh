@@ -4,12 +4,10 @@ import { ArtsGridCard } from "@/modules/arts/components/cards/arts-grid-card/Art
 
 interface ViewProps {
   arts: ArtDto[] | undefined;
-  isFetching?: boolean;
-  isPending?: boolean;
 }
 
-export function ArtsGridView({ arts, isPending }: ViewProps) {
-  if (!isPending && (!arts || arts.length === 0)) {
+export function ArtsGridView({ arts }: ViewProps) {
+  if (!arts || arts.length === 0) {
     return (
       <div className="text-muted-foreground text-center">
         Немає даних для відображення
@@ -25,8 +23,7 @@ export function ArtsGridView({ arts, isPending }: ViewProps) {
         "md:[grid-template-columns:repeat(auto-fill,minmax(220px,1fr))] md:gap-4",
       )}
     >
-      {!isPending &&
-        arts &&
+      {arts &&
         arts.map((art) => (
           <li key={art.artikul} className="flex">
             <ArtsGridCard art={art} />

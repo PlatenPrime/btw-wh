@@ -1,4 +1,3 @@
-import { ImageBlurContainer } from "@/components/image/image-blur-container";
 import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout";
 import { ArtDetail } from "@/modules/arts/components/containers/art-detail/ArtDetail";
 import { useParams } from "react-router";
@@ -8,22 +7,20 @@ export function Art() {
 
   return (
     <SidebarInsetLayout headerText={`Артикул: ${artikul || "невідомий"}`}>
-      <ImageBlurContainer artikul={artikul || ""} isMoreOverlay={true}>
-        <div className="flex min-h-screen w-full flex-col gap-2 p-2">
-          <ArtDetail />
+      <div className="flex min-h-screen w-full flex-col gap-2 p-2">
+        <ArtDetail />
 
-          <section className="rounded-md border p-4 shadow-sm">
-            <h2 className="mb-2 text-xl font-semibold">Наявність на складах</h2>
-            <p>Погреби</p>
-            <p>Погреби</p>
-            <p>Погреби</p>
-            <p>Погреби</p>
-            <p>Погреби</p>
-            <p>Погреби</p>
-            <p>Мережі</p>
-          </section>
-        </div>
-      </ImageBlurContainer>
+        <section className="rounded-md border p-4 shadow-sm">
+          <h2 className="mb-2 text-xl font-semibold">Наявність на складах</h2>
+          <p>Погреби</p>
+          <p>Погреби</p>
+          <p>Погреби</p>
+          <p>Погреби</p>
+          <p>Погреби</p>
+          <p>Погреби</p>
+          <p>Мережі</p>
+        </section>
+      </div>
     </SidebarInsetLayout>
   );
 }

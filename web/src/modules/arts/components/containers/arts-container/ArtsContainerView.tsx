@@ -1,10 +1,10 @@
-import { SearchPanel } from "@/components/search-panel";
+import { SearchPanel } from "@/components/search-components/search-panel/SearchPanel";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { ArtsGrid } from "../../lists/arts-grid/ArtsGrid";
 
 interface ArtsContainerViewProps {
   data: ArtDto[];
-  isFetching: boolean;
+  isFetchingNextPage: boolean;
   hasNextPage: boolean;
   search: string;
   onSearchChange: React.Dispatch<React.SetStateAction<string>>;
@@ -14,7 +14,7 @@ interface ArtsContainerViewProps {
 
 export function ArtsContainerView({
   data,
-  isFetching,
+  isFetchingNextPage,
   hasNextPage,
   search,
   onSearchChange,
@@ -30,13 +30,13 @@ export function ArtsContainerView({
           placeholder="Пошук артикулів"
         />
       </div>
-      <ArtsGrid arts={data} isFetching={isFetching} />
+      <ArtsGrid arts={data}  />
       <div ref={bottomRef} className="h-8" />
 
-      {isFetching && (
+      {isFetchingNextPage && (
         <div className="text-muted-foreground text-center">Завантаження...</div>
       )}
-      {!hasNextPage && !isFetching && !isEmptyData && (
+      {!hasNextPage && !isFetchingNextPage && !isEmptyData && (
         <div className="text-muted-foreground text-center">
           Кінець списку, більше немає даних
         </div>

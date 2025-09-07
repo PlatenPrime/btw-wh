@@ -4,7 +4,7 @@ import { ArtsContainerView } from "./ArtsContainerView";
 
 interface ArtsContainerProps {
   data: ArtDto[];
-  isFetching: boolean;
+  isFetchingNextPage: boolean;
   hasNextPage: boolean;
   fetchNextPage: () => void;
   search: string;
@@ -13,7 +13,7 @@ interface ArtsContainerProps {
 
 export function ArtsContainer({
   data,
-  isFetching,
+  isFetchingNextPage,
   hasNextPage,
   fetchNextPage,
   search,
@@ -21,7 +21,7 @@ export function ArtsContainer({
 }: ArtsContainerProps) {
   const bottomRef = useInfiniteScroll({
     hasNextPage,
-    isFetching,
+    isFetchingNextPage,
     fetchNextPage,
   });
 
@@ -30,7 +30,7 @@ export function ArtsContainer({
   return (
     <ArtsContainerView
       data={data}
-      isFetching={isFetching}
+      isFetchingNextPage={isFetchingNextPage}
       hasNextPage={hasNextPage}
       search={search}
       onSearchChange={onSearchChange}

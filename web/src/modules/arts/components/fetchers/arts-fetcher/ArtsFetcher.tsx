@@ -12,7 +12,6 @@ export function ArtsFetcher() {
   const {
     data,
     isLoading,
-    isPending,
     isFetchingNextPage,
     fetchNextPage,
     hasNextPage,
@@ -22,7 +21,7 @@ export function ArtsFetcher() {
     search,
   });
 
-  if (isLoading || isPending) return <ArtsContainerSkeleton />;
+  if (isLoading ) return <ArtsContainerSkeleton />;
 
   if (error)
     return (
@@ -41,7 +40,7 @@ export function ArtsFetcher() {
   return (
     <ArtsContainer
       data={flatData}
-      isFetching={isFetchingNextPage}
+      isFetchingNextPage={isFetchingNextPage}
       hasNextPage={hasNextPage}
       fetchNextPage={fetchNextPage}
       search={search}

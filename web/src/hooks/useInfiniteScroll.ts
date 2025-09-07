@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 
 interface UseInfiniteScrollOptions {
   hasNextPage: boolean;
-  isFetching: boolean;
+  isFetchingNextPage: boolean;
   fetchNextPage: () => void;
   rootMargin?: string;
   threshold?: number;
@@ -11,7 +11,7 @@ interface UseInfiniteScrollOptions {
 
 export function useInfiniteScroll({
   hasNextPage,
-  isFetching,
+  isFetchingNextPage,
   fetchNextPage,
   rootMargin = "200px", // заранее догружаем
   threshold = 0,
@@ -19,7 +19,7 @@ export function useInfiniteScroll({
   const bottomRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (!hasNextPage || isFetching) return;
+    if (!hasNextPage || isFetchingNextPage) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -39,7 +39,7 @@ export function useInfiniteScroll({
     return () => {
       if (el) observer.unobserve(el);
     };
-  }, [hasNextPage, isFetching, fetchNextPage, rootMargin, threshold]);
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage, rootMargin, threshold]);
 
   return bottomRef;
 }
