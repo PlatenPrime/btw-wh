@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Plus } from "lucide-react";
 import type { UseFormReturn } from "react-hook-form";
-import { type PalletFormValues } from "../../forms/schema";
+import { type PalletFormValues } from "@/modules/pallets/components/forms/schema";
 
 interface CreatePalletDialogViewProps {
   form: UseFormReturn<PalletFormValues>;

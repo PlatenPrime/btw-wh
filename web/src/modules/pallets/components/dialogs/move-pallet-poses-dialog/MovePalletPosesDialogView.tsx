@@ -7,8 +7,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui";
-import { useMovePalletPosesMutation } from "@/modules/pallets/api/hooks/useMovePalletPosesMutation";
-import type { IPallet } from "@/modules/pallets/api/types";
+import { useMovePalletPosesMutation } from "@/modules/pallets/api/hooks/mutations/useMovePalletPosesMutation";
+import type { IPallet } from "@/modules/pallets/api/types"; 
 import { MovePalletPosesForm } from "@/modules/pallets/components/forms/move-pallet-poses-form/MovePalletPosesForm";
 
 interface MovePalletPosesDialogViewProps {

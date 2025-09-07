@@ -7,7 +7,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import type { IPallet } from "@/modules/pallets/api/types";
-import { CreatePosForm } from "../../forms/create-pos-form/CreatePosForm";
+import { CreatePosForm } from "@/modules/poses/components/forms/create-pos-form/CreatePosForm";
 
 interface CreatePosDialogViewProps {
   open: boolean;

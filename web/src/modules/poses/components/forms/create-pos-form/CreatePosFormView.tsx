@@ -14,7 +14,7 @@ import {
 import { sklads, type ISklads } from "@/constants/sklad";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { ArtImage } from "@/modules/arts/components/elements/art-image/ArtImage";
-import type { IPos } from "@/modules/poses/api";
+import type { IPos } from "@/modules/poses/api/types";
 import { useFormContext } from "react-hook-form";
 import type { CreatePosFormData } from "./schema";
 

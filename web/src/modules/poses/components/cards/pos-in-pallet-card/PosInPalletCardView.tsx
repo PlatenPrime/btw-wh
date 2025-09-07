@@ -7,7 +7,7 @@ import { PosInfoItem } from "./PosInfoItem";
 
 import { DeleteTrigger } from "@/components/triggers/delete-trigger.tsx/DeleteTrigger";
 import { EditTrigger } from "@/components/triggers/edit-trigger/EditTrigger";
-import type { IPos } from "@/modules/poses/api";
+import type { IPos } from "@/modules/poses/api/types";
 import { Link } from "react-router";
 import { DeletePosDialog } from "@/modules/poses/components/dialogs/delete-pos-dialog/DeletePosDialog";
 import { UpdatePosDialog } from "@/modules/poses/components/dialogs/update-pos-dialog/UpdatePosDialog";

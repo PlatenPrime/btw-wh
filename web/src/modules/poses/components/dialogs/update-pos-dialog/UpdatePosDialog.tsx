@@ -1,4 +1,4 @@
-import type { IPos } from "@/modules/poses/api";
+import type { IPos } from "@/modules/poses/api/types";
 import { useState } from "react";
 import { UpdatePosDialogView } from "./UpdatePosDialogView";
 

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getPosById } from "../services/getPosById";
+import { getPosById } from "@/modules/poses/api/services/queries/getPosById";
 
 export function usePosByIdQuery(id: string) {
   return useQuery({

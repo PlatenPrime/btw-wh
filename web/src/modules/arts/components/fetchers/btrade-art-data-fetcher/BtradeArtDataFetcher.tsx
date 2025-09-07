@@ -1,8 +1,8 @@
 import { ErrorDisplay } from "@/components/error-components";
 import { LoadingNoData } from "@/components/loading-states/loading-nodata";
-import { useBtradeArtDataQuery } from "@/modules/arts/api/hooks/useBtradeArtDataQuery";
-import { BtradeArtData } from "../../elements/btrade-art-data/BtradeArtData";
-import { BtradeArtDataSkeleton } from "../../elements/btrade-art-data/BtradeArtDataSkeleton";
+import { useBtradeArtDataQuery } from "@/modules/arts/api/hooks/queries/useBtradeArtDataQuery";
+import { BtradeArtData } from "@/modules/arts/components/elements/btrade-art-data/BtradeArtData";
+import { BtradeArtDataSkeleton } from "@/modules/arts/components/elements/btrade-art-data/BtradeArtDataSkeleton";
 
 interface BtradeArtDataFetcherProps {
   artikul: string | undefined;

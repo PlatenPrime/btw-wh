@@ -8,7 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import type { IPos } from "@/modules/poses/api";
+import type { IPos } from "@/modules/poses/api/types";
 import type { UseMutationResult } from "@tanstack/react-query";
 import { Trash } from "lucide-react";
 import type { Dispatch, ReactNode, SetStateAction } from "react";

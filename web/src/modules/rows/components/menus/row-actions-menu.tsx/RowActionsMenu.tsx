@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Menu } from "lucide-react";
 import { useNavigate } from "react-router";
-import { DeleteRowDialog } from "../../dialogs/delete-row-dialog/DeleteRowDialog";
+import { DeleteRowDialog } from "@/modules/rows/components/dialogs/delete-row-dialog/DeleteRowDialog";
 import type { RowDto } from "@/modules/rows/api/types/dto";
 
 interface RowActionsMenuProps {

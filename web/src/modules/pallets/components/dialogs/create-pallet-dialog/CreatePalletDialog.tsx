@@ -1,8 +1,8 @@
-import { useCreatePalletMutation } from "@/modules/pallets/api/hooks";
+import { useCreatePalletMutation } from "@/modules/pallets/api/hooks/mutations/useCreatePalletMutation";
 import type { RowDto } from "@/modules/rows/api/types/dto";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { palletSchema, type PalletFormValues } from "../../forms/schema";
+import { palletSchema, type PalletFormValues } from "@/modules/pallets/components/forms/schema";
 import { CreatePalletDialogView } from "./CreatePalletDialogView";
 import { useState } from "react";
 

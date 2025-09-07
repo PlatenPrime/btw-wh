@@ -1,10 +1,10 @@
 import { ErrorDisplay } from "@/components/error-components/error-display";
 import { LoadingNoData } from "@/components/loading-states/loading-nodata";
-import { useAsksByDateQuery } from "@/modules/asks/api";
+import { useAsksByDateQuery } from "@/modules/asks/api/hooks/queries/useAsksByDateQuery";
 import { format } from "date-fns";
 import { useState } from "react";
-import { AsksContainer } from "../../containers/asks-container/AsksContainer";
-import { AsksContainerSkeleton } from "../../containers/asks-container/AsksContainerSkeleton";
+import { AsksContainer } from "@/modules/asks/components/containers/asks-container/AsksContainer";
+import { AsksContainerSkeleton } from "@/modules/asks/components/containers/asks-container/AsksContainerSkeleton";
 
 export function AsksFetcher() {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());

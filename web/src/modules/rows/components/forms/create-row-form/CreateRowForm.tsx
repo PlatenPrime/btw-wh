@@ -1,4 +1,4 @@
-import { useCreateRowMutation } from "@/modules/rows/api/hooks/useCreateRowMutation";
+import { useCreateRowMutation } from "@/modules/rows/api/hooks/mutations/useCreateRowMutation";
 import type { CreateRowDto } from "@/modules/rows/api/types/dto";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";

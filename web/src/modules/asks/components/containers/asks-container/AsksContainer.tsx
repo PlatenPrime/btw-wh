@@ -1,4 +1,4 @@
-import { type GetAsksByDateResponse } from "@/modules/asks/api";
+import { type GetAsksByDateResponse } from "@/modules/asks/api/types/dto";
 import { addDays, subDays } from "date-fns";
 import { AsksContainerView } from "./AsksContainerView";
 

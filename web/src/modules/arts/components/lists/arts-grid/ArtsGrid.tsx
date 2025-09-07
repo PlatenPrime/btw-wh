@@ -3,7 +3,6 @@ import { ArtsGridView } from "./ArtsGridView";
 
 interface GridProps {
   arts: ArtDto[] | undefined;
-
   isFetchingNextPage?: boolean;
 }
 

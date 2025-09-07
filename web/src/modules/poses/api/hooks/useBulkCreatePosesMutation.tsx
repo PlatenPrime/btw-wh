@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { bulkCreatePoses } from "../services/bulkCreatePoses";
-import type { BulkCreatePosDto } from "../types/index";
+import { bulkCreatePoses } from "@/modules/poses/api/services/mutations/bulkCreatePoses";
+import type { BulkCreatePosDto } from "@/modules/poses/api/types";
 
 export function useBulkCreatePosesMutation(palletId: string) {
   const queryClient = useQueryClient();

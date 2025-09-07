@@ -1,4 +1,4 @@
-import { useDeletePalletMutation } from "@/modules/pallets/api/hooks";
+import { useDeletePalletMutation } from "@/modules/pallets/api/hooks/mutations/useDeletePalletMutation";
 import type { IPallet } from "@/modules/pallets/api/types";
 import { useState } from "react";
 import {DeletePalletDialogView} from "./DeletePalletDialogView";

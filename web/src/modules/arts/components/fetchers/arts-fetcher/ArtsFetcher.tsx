@@ -1,9 +1,9 @@
 import { ErrorDisplay } from "@/components/error-components/error-display";
 import { LoadingNoData } from "@/components/loading-states/loading-nodata";
-import { useArtsInfiniteQuery } from "@/modules/arts/api/hooks/useArtsInfiniteQuery";
+import { useArtsInfiniteQuery } from "@/modules/arts/api/hooks/queries/useArtsInfiniteQuery";
 import { useState } from "react";
-import { ArtsContainer } from "../../containers/arts-container/ArtsContainer";
-import { ArtsContainerSkeleton } from "../../containers/arts-container/ArtsContainerSkeleton";
+import { ArtsContainer } from "@/modules/arts/components/containers/arts-container/ArtsContainer";
+import { ArtsContainerSkeleton } from "@/modules/arts/components/containers/arts-container/ArtsContainerSkeleton";
 
 export function ArtsFetcher() {
   const [search, setSearch] = useState("");

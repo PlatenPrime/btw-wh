@@ -4,7 +4,7 @@ import {
   LoadingNoData,
 } from "@/components/loading-states";
 import { RowsGridSkeleton } from "@/modules/rows/components/containers/rows-grid/RowsGridSkeleton";
-import { useRowsQuery } from "../../../api/hooks/useRowsQuery";
+import { useRowsQuery } from "@/modules/rows/api/hooks/queries/useRowsQuery";
 import { RowsDashboardView } from "./RowsDashboardView";
 
 export function RowsDashboard() {

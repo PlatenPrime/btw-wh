@@ -20,7 +20,7 @@ const Arts = lazy(() =>
   })),
 );
 const ArtsUpdate = lazy(() =>
-  import("./pages/artsUpdate").then((module) => ({
+  import("./modules/arts/pages/artsUpdate").then((module) => ({
     default: module.ArtsUpdate,
   })),
 );

@@ -8,7 +8,7 @@ import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { useEmptyPalletsQuery } from "@/modules/pallets/api/hooks/useEmptyPalletsQuery";
+import { useEmptyPalletsQuery } from "@/modules/pallets/api/hooks/queries/useEmptyPalletsQuery";
 import { MovePalletPosesFormView } from "./MovePalletPosesFormView";
 
 const schema = z.object({

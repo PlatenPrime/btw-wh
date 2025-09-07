@@ -1,10 +1,10 @@
 export { Art } from "../modules/arts/pages/art";
 export { Arts } from "../modules/arts/pages/arts";
+export { ArtsUpdate } from "../modules/arts/pages/artsUpdate";
 export { Ask } from "../modules/asks/pages/ask";
 export { Asks } from "../modules/asks/pages/asks";
 export { Row } from "../modules/rows/pages/row";
 export { Rows } from "../modules/rows/pages/rows";
-export { ArtsUpdate } from "./artsUpdate";
 export { ArtsUtils } from "./artsUtils";
 export { Defs } from "./defs";
 export { Main } from "./main";

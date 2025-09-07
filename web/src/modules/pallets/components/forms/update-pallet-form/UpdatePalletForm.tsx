@@ -1,4 +1,4 @@
-import { useUpdatePalletMutation } from "@/modules/pallets/api/hooks/useUpdatePalletMutation";
+import { useUpdatePalletMutation } from "@/modules/pallets/api/hooks/mutations/useUpdatePalletMutation";
 import type { UpdatePalletDto } from "@/modules/pallets/api/types";
 import type { PalletShortDto } from "@/modules/rows/api/types/dto";
 import { zodResolver } from "@hookform/resolvers/zod";

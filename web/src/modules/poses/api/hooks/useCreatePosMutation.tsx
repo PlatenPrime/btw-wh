@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createPos } from "../services/createPos";
-import type { CreatePosDto } from "../types/index";
+import { createPos } from "@/modules/poses/api/services/mutations/createPos";
+import type { CreatePosDto } from "@/modules/poses/api/types";
 
 export function useCreatePosMutation(palletId: string) {
   const queryClient = useQueryClient();

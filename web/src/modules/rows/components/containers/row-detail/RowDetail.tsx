@@ -1,7 +1,7 @@
 import { LoadingError, LoadingNoData } from "@/components/loading-states";
-import { useRowByTitleQuery } from "../../../api/hooks/useRowByTitleQuery";
-import { RowDetailSkeleton } from "./RowDetailSkeleton";
-import { RowDetailView } from "./RowDetailView";
+import { useRowByTitleQuery } from "@/modules/rows/api/hooks/queries/useRowByTitleQuery";
+import { RowDetailSkeleton } from "@/modules/rows/components/containers/row-detail/RowDetailSkeleton";
+import { RowDetailView } from "@/modules/rows/components/containers/row-detail/RowDetailView";
 
 interface RowDetailProps {
   rowTitle?: string;

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getAllPoses } from "../services/getAllPoses";
+import { getAllPoses } from "@/modules/poses/api/services/queries/getAllPoses";
 
 export function useAllPosesQuery(
   params: Partial<{
