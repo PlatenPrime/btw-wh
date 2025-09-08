@@ -1,54 +1,170 @@
-# React + TypeScript + Vite
+# BTW Warehouse Management System - Web
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Веб-приложение системы управления складом для управления артикулами, паллетами, позициями и запросами на пополнение.
 
-Currently, two official plugins are available:
+## 🚀 Технологии
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Frontend Framework**: React 19.1.0 + TypeScript 5.8.3
+- **Build Tool**: Vite 6.3.5 с оптимизацией сборки
+- **Styling**: Tailwind CSS 4.1.5 + Radix UI компоненты
+- **State Management**: TanStack React Query 5.76.0 для серверного состояния
+- **Routing**: React Router 7.6.3 с lazy loading
+- **Forms**: React Hook Form 7.60.0 + Zod 3.25.75 для валидации
+- **HTTP Client**: Axios 1.9.0
+- **UI Components**: Radix UI (Dialog, Dropdown, Select, Tooltip и др.)
+- **Icons**: Lucide React 0.507.0
+- **Excel Processing**: XLSX 0.18.5
+- **Testing**: Vitest 3.2.4 + Testing Library
 
-## Expanding the ESLint configuration
+## 📁 Структура проекта
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```
+web/
+├── src/
+│   ├── modules/            # Бизнес-модули
+│   │   ├── arts/           # Управление артикулами
+│   │   ├── asks/           # Запросы на пополнение
+│   │   ├── auth/           # Аутентификация
+│   │   ├── pallets/        # Управление паллетами
+│   │   ├── poses/          # Позиции на складе
+│   │   └── rows/           # Ряды склада
+│   ├── components/         # Переиспользуемые компоненты
+│   │   ├── ui/             # Базовые UI компоненты
+│   │   ├── layout/         # Компоненты макета
+│   │   ├── error-components/ # Обработка ошибок
+│   │   └── loading-states/ # Состояния загрузки
+│   ├── pages/              # Страницы приложения
+│   ├── providers/          # React провайдеры
+│   ├── hooks/              # Кастомные хуки
+│   ├── lib/                # Утилиты и конфигурация
+│   └── router.tsx          # Конфигурация роутинга
+├── public/                 # Статические ресурсы
+└── dist/                   # Собранное приложение
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🏗️ Модули системы
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### 1. **Arts** (Артикулы)
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+- Управление каталогом артикулов
+- Поиск и фильтрация
+- Загрузка данных из Excel
+- Детальная информация по артикулам
+- Интеграция с внешними системами (Btrade)
+
+### 2. **Asks** (Запросы на пополнение)
+
+- Создание и управление запросами
+- Навигация по датам
+- Обработка запросов
+- История изменений
+
+### 3. **Auth** (Аутентификация)
+
+- Регистрация и авторизация пользователей
+- Защищенные маршруты
+- Управление профилем пользователя
+- JWT токены
+
+### 4. **Pallets** (Паллеты)
+
+- Создание и управление паллетами
+- Перемещение позиций между паллетами
+- Очистка паллет
+- Группировка по рядам
+
+### 5. **Poses** (Позиции)
+
+- Управление позициями на складе
+- Связь с паллетами и рядами
+- CRUD операции
+- Фильтрация и поиск
+
+### 6. **Rows** (Ряды)
+
+- Управление рядами на складе
+- Организация пространства
+- Связь с паллетами
+
+## 🏛️ Архитектура модулей
+
+Каждый модуль следует единой архитектуре **Fetchers → Containers → Skeletons**:
+
+### Fetchers
+
+- **Назначение**: Получение данных и управление состояниями загрузки
+- **Ответственность**:
+  - Вызов API хуков
+  - Обработка состояний (loading, error, no data)
+  - Рендеринг соответствующих компонентов
+
+### Containers
+
+- **Назначение**: Бизнес-логика и обработка данных
+- **Ответственность**:
+  - Обработка пагинации, поиска, фильтрации
+  - Управление состоянием компонента
+  - Передача данных в View компоненты
+
+### Skeletons
+
+- **Назначение**: Отображение состояния загрузки
+- **Ответственность**:
+  - Имитация структуры реального контента
+  - Улучшение UX во время загрузки
+
+### Структура модуля
+
 ```
+modules/{entity}/
+├── api/
+│   ├── hooks/           # React Query хуки
+│   ├── services/        # API сервисы
+│   └── types/           # TypeScript типы
+├── components/
+│   ├── containers/      # Container компоненты
+│   ├── fetchers/        # Fetcher компоненты
+│   ├── cards/           # Карточки элементов
+│   ├── dialogs/         # Модальные окна
+│   ├── forms/           # Формы
+│   └── lists/           # Списки
+└── pages/               # Страницы модуля
+```
+
+## 🔄 Поток данных
+
+```
+Page → Fetcher → Container → ContainerView → UI Components
+  ↓       ↓         ↓            ↓
+API   Loading   Business    Presentation
+     States    Logic       Layer
+```
+
+## 🚀 Запуск проекта
+
+```bash
+npm install
+npm run dev
+```
+
+## 📦 Сборка
+
+```bash
+npm run build
+```
+
+## 🧪 Тестирование
+
+```bash
+npm run test
+npm run test:ui
+```
+
+## 📋 Доступные команды
+
+- `npm run dev` - запуск в режиме разработки
+- `npm run build` - сборка для продакшена
+- `npm run preview` - предварительный просмотр собранного приложения
+- `npm run lint` - проверка кода линтером
+- `npm run test` - запуск тестов
+- `npm run test:ui` - запуск тестов с UI интерфейсом
