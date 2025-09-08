@@ -1,6 +1,6 @@
 import { useUpdatePalletMutation } from "@/modules/pallets/api/hooks/mutations/useUpdatePalletMutation";
 import type { UpdatePalletDto } from "@/modules/pallets/api/types";
-import type { PalletShortDto } from "@/modules/rows/api/types/dto";
+import type { PalletShortDto } from "@/modules/pallets/api/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { palletSchema, type PalletFormValues } from "../schema";

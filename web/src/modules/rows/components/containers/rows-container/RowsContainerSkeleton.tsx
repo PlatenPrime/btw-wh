@@ -1,5 +1,5 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import { RowsGridSkeleton } from "@/modules/rows/components/containers/rows-grid/RowsGridSkeleton";
+import { RowsGridSkeleton } from "@/modules/rows/components/lists/rows-grid/RowsGridSkeleton";
 
 export function RowsContainerSkeleton() {
   return (

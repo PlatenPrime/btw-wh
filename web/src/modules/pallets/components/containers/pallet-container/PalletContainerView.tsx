@@ -1,19 +1,19 @@
 import { Button } from "@/components/ui/button";
-import type { IPallet } from "@/modules/pallets/api/types";
+import type { PalletResponse } from "@/modules/pallets/api/types";
 import { PalletInfo } from "@/modules/pallets/components/elements/pallet-info/PalletInfo";
 import { PosesInPalletList } from "@/modules/poses/components/containers/poses-in-pallet-list/PosesInPalletList";
 import { CreatePosDialog } from "@/modules/poses/components/dialogs/create-pos-dialog/CreatePosDialog";
 import { PalletActions } from "../../elements/pallet-actions/PalletActions";
 
-interface PalletDetailViewProps {
-  pallet: IPallet;
+interface PalletContainerViewProps {
+  pallet: PalletResponse;
   onPosCreated?: () => void;
 }
 
-export function PalletDetailView({
+export function PalletContainerView({
   pallet,
   onPosCreated,
-}: PalletDetailViewProps) {
+}: PalletContainerViewProps) {
   return (
     <div className="grid gap-4">
       <div className="flex flex-wrap items-center justify-between gap-2">

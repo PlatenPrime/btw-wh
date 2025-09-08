@@ -1,14 +1,10 @@
-export interface PalletShortDto {
-  _id: string;
-  title: string;
-  sector?: string;
-  isEmpty: boolean;
-}
+import type { PalletShortListResponse } from "@/modules/pallets/api/types";
+
 
 export interface RowDto {
   _id: string;
   title: string;
-  pallets: PalletShortDto[];
+  pallets: PalletShortListResponse[];
   createdAt: string;
   updatedAt: string;
 }

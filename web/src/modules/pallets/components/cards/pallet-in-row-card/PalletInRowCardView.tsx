@@ -1,7 +1,7 @@
 import { EditTrigger } from "@/components/triggers/edit-trigger/EditTrigger";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import type { PalletShortDto } from "@/modules/rows/api/types/dto";
+import type { PalletShortDto } from "@/modules/pallets/api/types";
 import { Columns4 } from "lucide-react";
 import { Link } from "react-router";
 import { UpdatePalletDialog } from "@/modules/pallets/components/dialogs/update-pallet-dialog/UpdatePalletDialog";

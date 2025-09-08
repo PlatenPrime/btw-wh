@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export function PalletDetailSkeleton() {
+export function PalletContainerSkeleton() {
   return (
     <div className="grid gap-4">
       {/* Header skeleton */}

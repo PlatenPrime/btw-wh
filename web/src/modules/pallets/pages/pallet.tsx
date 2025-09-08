@@ -1,5 +1,5 @@
 import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout";
-import { PalletDetailContainer } from "@/modules/pallets/components/containers/pallet-detail/container";
+import { PalletFetcher } from "@/modules/pallets/components/fetchers";
 import { useParams } from "react-router";
 
 export function Pallet() {
@@ -8,7 +8,7 @@ export function Pallet() {
   return (
     <SidebarInsetLayout headerText={`Палета: ${title || "невідома"}`}>
       <main className="p-4">
-        <PalletDetailContainer />
+        <PalletFetcher palletTitle={title} />
       </main>
     </SidebarInsetLayout>
   );

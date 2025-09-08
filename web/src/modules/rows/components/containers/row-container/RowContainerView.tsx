@@ -1,5 +1,5 @@
 import { Separator } from "@/components/ui/separator";
-import { PalletList } from "@/modules/pallets/components/containers/pallet-list/PalletList";
+import { PalletsByRowFetcher } from "@/modules/pallets/components/fetchers";
 import type { RowDto } from "@/modules/rows/api/types/dto";
 import { DeleteRowDialog } from "@/modules/rows/components/dialogs/delete-row-dialog/DeleteRowDialog";
 import { useNavigate } from "react-router";
@@ -29,7 +29,7 @@ export function RowContainerView({ row }: RowContainerViewProps) {
 
       <Separator />
 
-      <PalletList pallets={row.pallets} rowId={row._id} />
+      <PalletsByRowFetcher rowId={row._id} />
     </div>
   );
 }

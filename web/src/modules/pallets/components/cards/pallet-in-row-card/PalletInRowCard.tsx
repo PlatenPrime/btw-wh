@@ -1,4 +1,4 @@
-import type { PalletShortDto } from "@/modules/rows/api/types/dto";
+import type { PalletShortDto } from "@/modules/pallets/api/types";
 import { PalletInRowCardView } from "./PalletInRowCardView";
 
 interface PalletInRowCardProps {

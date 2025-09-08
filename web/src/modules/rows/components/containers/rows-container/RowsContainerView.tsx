@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import type { RowDto } from "@/modules/rows/api/types/dto";
-import { RowsGrid } from "@/modules/rows/components/containers/rows-grid/RowsGrid";
 import { CreateRowDialog } from "@/modules/rows/components/dialogs/create-row-dialog/CreateRowDialog";
+import { RowsGrid } from "@/modules/rows/components/lists/rows-grid/RowsGrid";
 import { Plus } from "lucide-react";
 
 interface RowsContainerViewProps {

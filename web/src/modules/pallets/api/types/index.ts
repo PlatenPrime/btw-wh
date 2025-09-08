@@ -2,6 +2,13 @@
 
 import type { IPos } from "@/modules/poses/api/types/index";
 
+export interface PalletShortDto {
+  _id: string;
+  title: string;
+  sector?: string;
+  isEmpty: boolean;
+}
+
 export interface PalletRowData {
   _id: string;
   title: string;
@@ -37,6 +44,7 @@ export interface UpdatePalletDto {
 }
 
 export type PalletListResponse = IPallet[];
+export type PalletShortListResponse = PalletShortDto[];
 export type PalletResponse = IPallet;
 
 

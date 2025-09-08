@@ -1,16 +1,16 @@
-import type { PalletShortDto } from "@/modules/rows/api/types/dto";
+import type { PalletShortDto } from "@/modules/pallets/api/types";
 import { Columns4 } from "lucide-react";
 import { PalletInRowCard } from "../../cards/pallet-in-row-card/PalletInRowCard";
 
-interface PalletListProps {
+interface PalletsByRowContainerViewProps {
   pallets: PalletShortDto[];
   rowId: string;
 }
 
-/**
- * Список карточек палет для отображения в ряде
- */
-export function PalletList({ pallets, rowId }: PalletListProps) {
+export function PalletsByRowContainerView({
+  pallets,
+  rowId,
+}: PalletsByRowContainerViewProps) {
   if (!pallets.length) {
     return (
       <div className="py-8 text-center">
