@@ -1,5 +1,5 @@
 import type { IPos } from "@/modules/poses/api/types";
-import { useUpdatePosMutation } from "@/modules/poses/api/hooks/useUpdatePosMutation";
+import { useUpdatePosMutation } from "@/modules/poses/api/hooks/mutations/useUpdatePosMutation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { UpdatePosFormView } from "./UpdatePosFormView";

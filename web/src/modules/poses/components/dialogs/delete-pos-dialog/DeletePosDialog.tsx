@@ -1,5 +1,5 @@
 import type { IPos } from "@/modules/poses/api/types";
-import { useDeletePosMutation } from "@/modules/poses/api/hooks/useDeletePosMutation";
+import { useDeletePosMutation } from "@/modules/poses/api/hooks/mutations/useDeletePosMutation";
 import { useState } from "react";
 import { DeletePosDialogView } from "./DeletePosDialogView";
 

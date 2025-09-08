@@ -7,46 +7,31 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui";
-import { useMovePalletPosesMutation } from "@/modules/pallets/api/hooks/mutations/useMovePalletPosesMutation";
-import type { IPallet } from "@/modules/pallets/api/types"; 
+import type { IPallet } from "@/modules/pallets/api/types";
 import { MovePalletPosesForm } from "@/modules/pallets/components/forms/move-pallet-poses-form/MovePalletPosesForm";
+import type { UseMutationResult } from "@tanstack/react-query";
 
 interface MovePalletPosesDialogViewProps {
   open: boolean;
   setOpen: (open: boolean) => void;
-  onSuccess: () => void;
   onCancel: () => void;
   pallet: IPallet;
+  handleSubmit: (targetPalletId: string) => void;
+  isSourceEmpty: boolean;
+  moveMutation: UseMutationResult<unknown, unknown, string, unknown>;
+  mutationError: string | null;
 }
 
 export function MovePalletPosesDialogView({
   open,
   setOpen,
-  onSuccess,
   onCancel,
   pallet,
+  handleSubmit,
+  isSourceEmpty,
+  moveMutation,
+  mutationError,
 }: MovePalletPosesDialogViewProps) {
-  const moveMutation = useMovePalletPosesMutation({
-    pallet,
-  });
-
-  const handleSubmit = async (targetPalletId: string) => {
-    // clear previous error before new attempt
-    moveMutation.reset();
-    await moveMutation.mutateAsync(targetPalletId);
-    onSuccess();
-    setOpen(false);
-  };
-
-  const mutationError = moveMutation.error
-    ? moveMutation.error instanceof Error
-      ? moveMutation.error.message
-      : "Помилка переміщення позицій"
-    : null;
-
-  const isSourceEmpty =
-    !Array.isArray(pallet.poses) || pallet.poses.length === 0;
-
   return (
     <Dialog
       open={open}

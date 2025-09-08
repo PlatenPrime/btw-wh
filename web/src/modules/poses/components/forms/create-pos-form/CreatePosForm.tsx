@@ -1,8 +1,8 @@
 import type { IPallet } from "@/modules/pallets/api/types";
 
 import { useOneArtQuery } from "@/modules/arts/api/hooks/queries/useOneArtQuery";
-import { useCreatePosMutation } from "@/modules/poses/api/hooks/useCreatePosMutation";
-import { useUpdatePosByIdMutation } from "@/modules/poses/api/hooks/useUpdatePosByIdMutation";
+import { useCreatePosMutation } from "@/modules/poses/api/hooks/mutations/useCreatePosMutation";
+import { useUpdatePosByIdMutation } from "@/modules/poses/api/hooks/mutations/useUpdatePosByIdMutation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { CreatePosFormView } from "./CreatePosFormView";

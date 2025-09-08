@@ -6,11 +6,11 @@ import { useNavigate } from "react-router";
 
 import { CreatePalletDialog } from "@/modules/pallets/components/dialogs/create-pallet-dialog/CreatePalletDialog";
 
-interface RowDetailViewProps {
+interface RowContainerViewProps {
   row: RowDto;
 }
 
-export function RowDetailView({ row }: RowDetailViewProps) {
+export function RowContainerView({ row }: RowContainerViewProps) {
   const navigate = useNavigate();
 
   const handleRowDeleted = () => {

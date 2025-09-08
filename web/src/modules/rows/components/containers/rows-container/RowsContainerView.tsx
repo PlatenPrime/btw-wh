@@ -4,11 +4,11 @@ import { RowsGrid } from "@/modules/rows/components/containers/rows-grid/RowsGri
 import { CreateRowDialog } from "@/modules/rows/components/dialogs/create-row-dialog/CreateRowDialog";
 import { Plus } from "lucide-react";
 
-interface ViewProps {
+interface RowsContainerViewProps {
   data: RowDto[];
 }
 
-export function RowsDashboardView({ data }: ViewProps) {
+export function RowsContainerView({ data }: RowsContainerViewProps) {
   return (
     <div className="grid gap-4">
       <div className="flex items-center justify-between gap-4">

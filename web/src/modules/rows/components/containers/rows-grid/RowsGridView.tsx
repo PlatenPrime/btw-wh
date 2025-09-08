@@ -3,19 +3,10 @@ import type { RowDto } from "@/modules/rows/api/types/dto";
 import { RowsGridCard } from "@/modules/rows/components/cards/rows-grid-card/RowsGridCard";
 
 interface ViewProps {
-  rows: RowDto[] | undefined;
-  isFetching?: boolean;
+  rows: RowDto[];
 }
 
 export function RowsGridView({ rows }: ViewProps) {
-  if (!rows || rows.length === 0) {
-    return (
-      <div className="text-muted-foreground text-center">
-        Немає рядів для відображення
-      </div>
-    );
-  }
-
   return (
     <ul
       className={cn(

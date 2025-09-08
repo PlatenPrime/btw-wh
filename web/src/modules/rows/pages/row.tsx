@@ -1,5 +1,5 @@
 import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout";
-import { RowDetail } from "@/modules/rows/components/containers/row-detail/RowDetail";
+import { RowFetcher } from "@/modules/rows/components/fetchers";
 import { useParams } from "react-router";
 
 export function Row() {
@@ -7,7 +7,7 @@ export function Row() {
   return (
     <SidebarInsetLayout headerText={`Ряд: ${row || "невідомий"}`}>
       <main className="p-4">
-        <RowDetail rowTitle={row} />
+        <RowFetcher rowTitle={row} />
       </main>
     </SidebarInsetLayout>
   );
