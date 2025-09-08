@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import type { PalletResponse } from "@/modules/pallets/api/types";
 import { PalletInfo } from "@/modules/pallets/components/elements/pallet-info/PalletInfo";
-import { PosesInPalletList } from "@/modules/poses/components/containers/poses-in-pallet-list/PosesInPalletList";
 import { CreatePosDialog } from "@/modules/poses/components/dialogs/create-pos-dialog/CreatePosDialog";
+import { PosesByPalletFetcher } from "@/modules/poses/components/fetchers";
 import { PalletActions } from "../../elements/pallet-actions/PalletActions";
 
 interface PalletContainerViewProps {
@@ -27,7 +27,7 @@ export function PalletContainerView({
 
         <PalletActions pallet={pallet} />
       </div>
-      <PosesInPalletList poses={pallet.poses} />
+      <PosesByPalletFetcher palletId={pallet._id} />
     </div>
   );
 }

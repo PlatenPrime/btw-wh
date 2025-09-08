@@ -1,5 +1,5 @@
 import type { RowDto } from "@/modules/rows/api/types/dto";
-import { RowContainerView } from "./RowContainerView";
+import { RowContainerView } from "@/modules/rows/components/containers/row-container/RowContainerView";
 
 interface RowContainerProps {
   row: RowDto;

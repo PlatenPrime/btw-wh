@@ -1,10 +1,9 @@
 import { Separator } from "@/components/ui/separator";
-import { PalletsByRowFetcher } from "@/modules/pallets/components/fetchers";
+import { CreatePalletDialog } from "@/modules/pallets/components/dialogs/create-pallet-dialog/CreatePalletDialog";
 import type { RowDto } from "@/modules/rows/api/types/dto";
 import { DeleteRowDialog } from "@/modules/rows/components/dialogs/delete-row-dialog/DeleteRowDialog";
 import { useNavigate } from "react-router";
-
-import { CreatePalletDialog } from "@/modules/pallets/components/dialogs/create-pallet-dialog/CreatePalletDialog";
+import { PalletsList } from "@/modules/pallets/components/lists/pallets-list/PalletsList";
 
 interface RowContainerViewProps {
   row: RowDto;
@@ -29,7 +28,7 @@ export function RowContainerView({ row }: RowContainerViewProps) {
 
       <Separator />
 
-      <PalletsByRowFetcher rowId={row._id} />
+      <PalletsList pallets={row.pallets} rowId={row._id} />
     </div>
   );
 }
