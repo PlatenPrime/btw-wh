@@ -6,7 +6,7 @@ export interface CreateAskRequest {
   nameukr?: string;
   quant?: number;
   com?: string;
-  asker: string;
+  askerId: string;
 }
 
 export const createAsk = async (data: CreateAskRequest): Promise<AskDto> => {

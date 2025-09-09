@@ -1,6 +1,7 @@
+import { DateNavigation } from "@/components/date-navigation/DateNavigation";
 import type { GetAsksByDateResponse } from "@/modules/asks/api/types/dto";
-import { AsksList } from "../../lists/asks-list/AsksList";
-import { DateNavigation } from "./components/date-navigation/DateNavigation";
+import { CreateAskDialog } from "@/modules/asks/components/dialogs/create-ask-dialog/CreateAskDialog";
+import { AsksList } from "@/modules/asks/components/lists/asks-list/AsksList";
 
 interface AsksContainerViewProps {
   selectedDate: Date;
@@ -21,16 +22,15 @@ export function AsksContainerView({
 }: AsksContainerViewProps) {
   return (
     <div className="grid gap-4">
-      <div className="flex items-center justify-between gap-2 flex-wrap">
+      <div className="flex flex-wrap items-center justify-between gap-2">
         <DateNavigation
           selectedDate={selectedDate}
           onPreviousDay={onPreviousDay}
           onNextDay={onNextDay}
           onDateSelect={onDateSelect}
         />
-        <p className="text-foreground text-center">
-          Всього:{" "}{data.count}
-        </p>
+        <CreateAskDialog />
+        <p className="text-foreground text-center">Всього: {data.count}</p>
       </div>
       <div className={isFetching ? "opacity-50" : ""}>
         <AsksList data={data} selectedDate={selectedDate} />

@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { AsksListSkeleton } from "@/modules/asks/components/lists/asks-list/AsksListSkeleton";
-import { DateNavigationSkeleton } from "./components/date-navigation/DateNavigationSkeleton";
+import { DateNavigationSkeleton } from "../../../../../components/date-navigation/DateNavigationSkeleton";
 
 export function AsksContainerSkeleton() {
   return (
