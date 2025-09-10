@@ -1,15 +1,21 @@
 import { ErrorDisplay } from "@/components/error-components/error-display";
 import { LoadingNoData } from "@/components/loading-states/loading-nodata";
 import { useRowsQuery } from "@/modules/rows/api/hooks/queries/useRowsQuery";
-import {
-  RowsContainer,
-  RowsContainerSkeleton,
-} from "@/modules/rows/components/containers/rows-container";
+import type { RowDto } from "@/modules/rows/api/types/dto";
+import type { ComponentType } from "react";
 
-export function RowsFetcher() {
+interface RowsFetcherProps {
+  ContainerComponent: ComponentType<{ data: RowDto[] }>;
+  SkeletonComponent: ComponentType;
+}
+
+export function RowsFetcher({
+  ContainerComponent,
+  SkeletonComponent,
+}: RowsFetcherProps) {
   const { data, isLoading, error } = useRowsQuery();
 
-  if (isLoading) return <RowsContainerSkeleton />;
+  if (isLoading) return <SkeletonComponent />;
 
   if (error)
     return (
@@ -22,5 +28,5 @@ export function RowsFetcher() {
 
   if (!data) return <LoadingNoData description="Ряди не знайдено" />;
 
-  return <RowsContainer data={data} />;
+  return <ContainerComponent data={data} />;
 }

@@ -3,11 +3,26 @@ import { LoadingNoData } from "@/components/loading-states/loading-nodata";
 import { useAsksByDateQuery } from "@/modules/asks/api/hooks/queries/useAsksByDateQuery";
 import { format } from "date-fns";
 import { useState } from "react";
-import { AsksContainer } from "@/modules/asks/components/containers/asks-container/AsksContainer";
-import { AsksContainerSkeleton } from "@/modules/asks/components/containers/asks-container/AsksContainerSkeleton";
+import type { GetAsksByDateResponse } from "@/modules/asks/api/types/dto";
+import type { ComponentType } from "react";
 
-export function AsksFetcher() {
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+interface AsksFetcherProps {
+  ContainerComponent: ComponentType<{
+    data: GetAsksByDateResponse;
+    isFetching: boolean;
+    selectedDate: Date;
+    setSelectedDate: React.Dispatch<React.SetStateAction<Date>>;
+  }>;
+  SkeletonComponent: ComponentType;
+  initialDate?: Date;
+}
+
+export function AsksFetcher({
+  ContainerComponent,
+  SkeletonComponent,
+  initialDate = new Date(),
+}: AsksFetcherProps) {
+  const [selectedDate, setSelectedDate] = useState<Date>(initialDate);
 
   // Форматируем дату для API (YYYY-MM-DD)
   const dateString = format(selectedDate, "yyyy-MM-dd");
@@ -16,7 +31,7 @@ export function AsksFetcher() {
     date: dateString,
   });
 
-  if (isLoading) return <AsksContainerSkeleton />;
+  if (isLoading) return <SkeletonComponent />;
 
   if (error)
     return (
@@ -31,7 +46,7 @@ export function AsksFetcher() {
     return <LoadingNoData description="Немає даних для відображення" />;
 
   return (
-    <AsksContainer
+    <ContainerComponent
       data={data}
       isFetching={isFetching}
       selectedDate={selectedDate}

@@ -1,13 +1,31 @@
 import { ErrorDisplay } from "@/components/error-components/error-display";
 import { LoadingNoData } from "@/components/loading-states/loading-nodata";
 import { useArtsInfiniteQuery } from "@/modules/arts/api/hooks/queries/useArtsInfiniteQuery";
+import type { ArtDto } from "@/modules/arts/api/types/dto";
+import type { ComponentType } from "react";
 import { useState } from "react";
-import { ArtsContainer } from "@/modules/arts/components/containers/arts-container/ArtsContainer";
-import { ArtsContainerSkeleton } from "@/modules/arts/components/containers/arts-container/ArtsContainerSkeleton";
 
-export function ArtsFetcher() {
-  const [search, setSearch] = useState("");
-  const limit = 20;
+interface ArtsFetcherProps {
+  ContainerComponent: ComponentType<{
+    data: ArtDto[];
+    isFetchingNextPage: boolean;
+    hasNextPage: boolean;
+    fetchNextPage: () => void;
+    search: string;
+    onSearchChange: React.Dispatch<React.SetStateAction<string>>;
+  }>;
+  SkeletonComponent: ComponentType;
+  limit?: number;
+  initialSearch?: string;
+}
+
+export function ArtsFetcher({
+  ContainerComponent,
+  SkeletonComponent,
+  limit = 20,
+  initialSearch = "",
+}: ArtsFetcherProps) {
+  const [search, setSearch] = useState(initialSearch);
 
   const {
     data,
@@ -21,7 +39,7 @@ export function ArtsFetcher() {
     search,
   });
 
-  if (isLoading ) return <ArtsContainerSkeleton />;
+  if (isLoading) return <SkeletonComponent />;
 
   if (error)
     return (
@@ -38,7 +56,7 @@ export function ArtsFetcher() {
   const flatData = data?.pages.flatMap((page) => page.data) ?? [];
 
   return (
-    <ArtsContainer
+    <ContainerComponent
       data={flatData}
       isFetchingNextPage={isFetchingNextPage}
       hasNextPage={hasNextPage}

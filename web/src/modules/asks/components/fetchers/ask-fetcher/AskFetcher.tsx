@@ -1,19 +1,23 @@
 import { ErrorDisplay } from "@/components/error-components/error-display";
 import { LoadingNoData } from "@/components/loading-states/loading-nodata";
 import { useAskQuery } from "@/modules/asks/api/hooks/queries/useAskQuery";
-import {
-  AskContainer,
-  AskContainerSkeleton,
-} from "@/modules/asks/components/containers/ask-container";
+import type { AskDto } from "@/modules/asks/api/types/dto";
+import type { ComponentType } from "react";
 
 interface AskFetcherProps {
   id: string;
+  ContainerComponent: ComponentType<{ askData: AskDto }>;
+  SkeletonComponent: ComponentType;
 }
 
-export function AskFetcher({ id }: AskFetcherProps) {
+export function AskFetcher({
+  id,
+  ContainerComponent,
+  SkeletonComponent,
+}: AskFetcherProps) {
   const { data: askData, isLoading, error } = useAskQuery({ id });
 
-  if (isLoading) return <AskContainerSkeleton />;
+  if (isLoading) return <SkeletonComponent />;
 
   if (error)
     return (
@@ -27,5 +31,5 @@ export function AskFetcher({ id }: AskFetcherProps) {
   if (!askData)
     return <LoadingNoData description="Немає даних для відображення" />;
 
-  return <AskContainer askData={askData.data} />;
+  return <ContainerComponent askData={askData.data} />;
 }

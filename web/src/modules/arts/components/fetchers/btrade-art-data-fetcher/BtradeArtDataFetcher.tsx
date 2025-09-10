@@ -1,17 +1,19 @@
 import { ErrorDisplay } from "@/components/error-components";
 import { LoadingNoData } from "@/components/loading-states/loading-nodata";
 import { useBtradeArtDataQuery } from "@/modules/arts/api/hooks/queries/useBtradeArtDataQuery";
-import { BtradeArtData } from "@/modules/arts/components/elements/btrade-art-data/BtradeArtData";
-import { BtradeArtDataSkeleton } from "@/modules/arts/components/elements/btrade-art-data/BtradeArtDataSkeleton";
+import type { BtradeArtInfoDto } from "@/modules/arts/api/types/dto";
+import type { ComponentType } from "react";
 
 interface BtradeArtDataFetcherProps {
   artikul: string | undefined;
-  zone: string;
+  ContainerComponent: ComponentType<{ data: BtradeArtInfoDto }>;
+  SkeletonComponent: ComponentType;
 }
 
 export function BtradeArtDataFetcher({
   artikul,
-  zone,
+  ContainerComponent,
+  SkeletonComponent,
 }: BtradeArtDataFetcherProps) {
   const {
     data: btradeArtData,
@@ -19,7 +21,7 @@ export function BtradeArtDataFetcher({
     error,
   } = useBtradeArtDataQuery(artikul ?? "");
 
-  if (isLoading) return <BtradeArtDataSkeleton />;
+  if (isLoading) return <SkeletonComponent />;
 
   if (error)
     return (
@@ -33,5 +35,5 @@ export function BtradeArtDataFetcher({
   if (!btradeArtData)
     return <LoadingNoData description="Немає даних для відображення" />;
 
-  return <BtradeArtData artikul={artikul} zone={zone} data={btradeArtData} />;
+  return <ContainerComponent data={btradeArtData} />;
 }

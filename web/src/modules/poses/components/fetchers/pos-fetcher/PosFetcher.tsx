@@ -1,19 +1,23 @@
 import { ErrorDisplay } from "@/components/error-components/error-display";
 import { LoadingNoData } from "@/components/loading-states/loading-nodata";
 import { usePosByIdQuery } from "@/modules/poses/api/hooks/queries/usePosByIdQuery";
-import {
-  PosContainer,
-  PosContainerSkeleton,
-} from "@/modules/poses/components/containers/pos-container";
+import type { IPos } from "@/modules/poses/api/types";
+import type { ComponentType } from "react";
 
 interface PosFetcherProps {
   posId: string;
+  ContainerComponent: ComponentType<{ pos: IPos }>;
+  SkeletonComponent: ComponentType;
 }
 
-export function PosFetcher({ posId }: PosFetcherProps) {
+export function PosFetcher({
+  posId,
+  ContainerComponent,
+  SkeletonComponent,
+}: PosFetcherProps) {
   const { data: pos, isLoading, error } = usePosByIdQuery(posId);
 
-  if (isLoading) return <PosContainerSkeleton />;
+  if (isLoading) return <SkeletonComponent />;
 
   if (error)
     return (
@@ -26,5 +30,5 @@ export function PosFetcher({ posId }: PosFetcherProps) {
 
   if (!pos) return <LoadingNoData description="Позицію не знайдено" />;
 
-  return <PosContainer pos={pos} />;
+  return <ContainerComponent pos={pos} />;
 }

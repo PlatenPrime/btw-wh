@@ -1,5 +1,6 @@
 import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout";
 import { AskFetcher } from "@/modules/asks/components/fetchers/ask-fetcher";
+import { AskContainer, AskContainerSkeleton } from "@/modules/asks/components/containers/ask-container";
 import { useParams } from "react-router";
 
 export function Ask() {
@@ -20,7 +21,11 @@ export function Ask() {
   return (
     <SidebarInsetLayout headerText="Запит">
       <main className="p-4">
-        <AskFetcher id={id} />
+        <AskFetcher
+          id={id}
+          ContainerComponent={AskContainer}
+          SkeletonComponent={AskContainerSkeleton}
+        />
       </main>
     </SidebarInsetLayout>
   );

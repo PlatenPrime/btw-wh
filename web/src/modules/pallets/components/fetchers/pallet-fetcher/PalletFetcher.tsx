@@ -1,16 +1,20 @@
 import { ErrorDisplay } from "@/components/error-components/error-display";
 import { LoadingNoData } from "@/components/loading-states/loading-nodata";
 import { usePalletByTitleQuery } from "@/modules/pallets/api/hooks/queries/usePalletByTitleQuery";
-import {
-  PalletContainer,
-  PalletContainerSkeleton,
-} from "@/modules/pallets/components/containers/pallet-container";
+import type { IPallet } from "@/modules/pallets/api/types";
+import type { ComponentType } from "react";
 
 interface PalletFetcherProps {
   palletTitle?: string;
+  ContainerComponent: ComponentType<{ pallet: IPallet; onPosCreated?: () => void }>;
+  SkeletonComponent: ComponentType;
 }
 
-export function PalletFetcher({ palletTitle }: PalletFetcherProps) {
+export function PalletFetcher({
+  palletTitle,
+  ContainerComponent,
+  SkeletonComponent,
+}: PalletFetcherProps) {
   const {
     data: pallet,
     isLoading,
@@ -22,7 +26,7 @@ export function PalletFetcher({ palletTitle }: PalletFetcherProps) {
     refetch();
   };
 
-  if (isLoading) return <PalletContainerSkeleton />;
+  if (isLoading) return <SkeletonComponent />;
 
   if (error)
     return (
@@ -35,5 +39,5 @@ export function PalletFetcher({ palletTitle }: PalletFetcherProps) {
 
   if (!pallet) return <LoadingNoData description="Запитаний палет не існує" />;
 
-  return <PalletContainer pallet={pallet} onPosCreated={handlePosCreated} />;
+  return <ContainerComponent pallet={pallet} onPosCreated={handlePosCreated} />;
 }

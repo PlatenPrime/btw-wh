@@ -2,7 +2,6 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { ArtDialogImage } from "@/modules/arts/components/dialogs/art-dialog-image/ArtDialogImage";
-import { BtradeArtDataFetcher } from "@/modules/arts/components/fetchers/btrade-art-data-fetcher/BtradeArtDataFetcher";
 import type { AskDto } from "@/modules/asks/api/types/dto";
 import { format } from "date-fns";
 import { uk } from "date-fns/locale";
@@ -44,12 +43,6 @@ export function AskContainerView({ askData }: AskContainerViewProps) {
 
       <CardContent className="space-y-6">
         {/* Данные артикула */}
-        <div className="space-y-4">
-          <h3 className="text-lg font-semibold">Інформація про артикул</h3>
-          {askData.artikul && (
-            <BtradeArtDataFetcher artikul={askData.artikul} zone="" />
-          )}
-        </div>
 
         <Separator />
 

@@ -1,19 +1,23 @@
 import { ErrorDisplay } from "@/components/error-components/error-display";
 import { LoadingNoData } from "@/components/loading-states/loading-nodata";
 import { usePalletsByRowQuery } from "@/modules/pallets/api/hooks/queries/usePalletsByRowQuery";
-import {
-  PalletsByRowContainer,
-  PalletsByRowContainerSkeleton,
-} from "@/modules/pallets/components/containers/pallets-by-row-container";
+import type { PalletShortDto } from "@/modules/pallets/api/types";
+import type { ComponentType } from "react";
 
 interface PalletsByRowFetcherProps {
   rowId?: string;
+  ContainerComponent: ComponentType<{ pallets: PalletShortDto[]; rowId: string }>;
+  SkeletonComponent: ComponentType;
 }
 
-export function PalletsByRowFetcher({ rowId }: PalletsByRowFetcherProps) {
+export function PalletsByRowFetcher({
+  rowId,
+  ContainerComponent,
+  SkeletonComponent,
+}: PalletsByRowFetcherProps) {
   const { data, isLoading, error } = usePalletsByRowQuery(rowId);
 
-  if (isLoading) return <PalletsByRowContainerSkeleton />;
+  if (isLoading) return <SkeletonComponent />;
 
   if (error)
     return (
@@ -27,5 +31,5 @@ export function PalletsByRowFetcher({ rowId }: PalletsByRowFetcherProps) {
   if (!data || !data.length)
     return <LoadingNoData description="Палети не знайдено" />;
 
-  return <PalletsByRowContainer pallets={data} rowId={rowId || ""} />;
+  return <ContainerComponent pallets={data} rowId={rowId || ""} />;
 }
