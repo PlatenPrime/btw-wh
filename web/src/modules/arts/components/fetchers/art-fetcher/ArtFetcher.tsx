@@ -1,17 +1,23 @@
 import { ErrorDisplay } from "@/components/error-components/error-display";
 import { LoadingNoData } from "@/components/loading-states/loading-nodata";
 import { useOneArtQuery } from "@/modules/arts/api/hooks/queries/useOneArtQuery";
-import { ArtContainer } from "@/modules/arts/components/containers/art-container/ArtContainer";
-import { ArtContainerSkeleton } from "@/modules/arts/components/containers/art-container/ArtContainerSkeleton";
+import type { ArtDto } from "@/modules/arts/api/types/dto";
+import type { ComponentType } from "react";
 
 interface ArtFetcherProps {
   artikul: string;
+  ContainerComponent: ComponentType<{ artData: ArtDto }>;
+  SkeletonComponent: ComponentType;
 }
 
-export function ArtFetcher({ artikul }: ArtFetcherProps) {
+export function ArtFetcher({
+  artikul,
+  ContainerComponent,
+  SkeletonComponent,
+}: ArtFetcherProps) {
   const { data: artData, isLoading, error } = useOneArtQuery(artikul);
 
-  if (isLoading) return <ArtContainerSkeleton />;
+  if (isLoading) return <SkeletonComponent />;
 
   if (error)
     return (
@@ -25,5 +31,5 @@ export function ArtFetcher({ artikul }: ArtFetcherProps) {
   if (!artData)
     return <LoadingNoData description="Немає даних для відображення" />;
 
-  return <ArtContainer artData={artData} />;
+  return <ContainerComponent artData={artData} />;
 }

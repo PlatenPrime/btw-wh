@@ -27,16 +27,26 @@ fetchers/
 **Пример**:
 
 ```typescript
-export function ArtFetcher({ artikul }: ArtFetcherProps) {
+interface ArtFetcherProps {
+  artikul: string;
+  ContainerComponent: ComponentType<{ artData: ArtDto }>;
+  SkeletonComponent: ComponentType;
+}
+
+export function ArtFetcher({
+  artikul,
+  ContainerComponent,
+  SkeletonComponent
+}: ArtFetcherProps) {
   const { data: artData, isLoading, error } = useOneArtQuery(artikul);
 
-  if (isLoading) return <ArtContainerSkeleton />;
+  if (isLoading) return <SkeletonComponent />;
 
   if (error) return <ErrorDisplay error={error} />;
 
   if (!artData) return <LoadingNoData />;
 
-  return <ArtContainer artData={artData} />;
+  return <ContainerComponent artData={artData} />;
 }
 ```
 
@@ -45,6 +55,33 @@ export function ArtFetcher({ artikul }: ArtFetcherProps) {
 - Вызов соответствующих API хуков
 - Обработка состояний: loading, error, no data
 - Рендеринг соответствующих компонентов в зависимости от состояния
+
+**Гибкая архитектура**:
+
+Fetchers теперь поддерживают передачу компонентов для отображения данных и скелетонов, что обеспечивает максимальную гибкость:
+
+```typescript
+// Использование с оригинальными компонентами
+<ArtFetcher
+  artikul="some-artikul"
+  ContainerComponent={ArtContainer}
+  SkeletonComponent={ArtContainerSkeleton}
+/>
+
+// Использование с кастомными компонентами
+<ArtFetcher
+  artikul="some-artikul"
+  ContainerComponent={CustomArtDisplay}
+  SkeletonComponent={CustomSkeleton}
+/>
+```
+
+**Преимущества гибкой архитектуры**:
+
+- **Переиспользуемость**: Один фетчер для разных UI компонентов
+- **Типобезопасность**: TypeScript проверяет совместимость компонентов
+- **Композиция**: Легко комбинировать разные компоненты
+- **Тестируемость**: Можно передавать моки для тестирования
 
 ### 2. Containers
 
