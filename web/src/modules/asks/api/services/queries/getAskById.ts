@@ -1,7 +1,7 @@
 import { apiClient } from "@/lib/apiClient";
-import type { AskDto } from "@/modules/asks/api/types/dto";
+import type { GetAskByIdResponse } from "@/modules/asks/api/types/dto";
 
-export const getAskById = async (id: string): Promise<AskDto> => {
-  const res = await apiClient.get<AskDto>(`/asks/${id}`);
+export const getAskById = async (id: string): Promise<GetAskByIdResponse> => {
+  const res = await apiClient.get<GetAskByIdResponse>(`/asks/${id}`);
   return res.data;
 };

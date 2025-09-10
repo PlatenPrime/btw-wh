@@ -1,6 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
-import type { AskDto } from "@/modules/asks/api/types/dto";
 import { getAskById } from "@/modules/asks/api/services/queries/getAskById";
+import type { GetAskByIdResponse } from "@/modules/asks/api/types/dto";
+import { useQuery } from "@tanstack/react-query";
 
 export interface UseAskQueryParams {
   id: string;
@@ -8,7 +8,7 @@ export interface UseAskQueryParams {
 }
 
 export function useAskQuery({ id, enabled = true }: UseAskQueryParams) {
-  return useQuery<AskDto>({
+  return useQuery<GetAskByIdResponse>({
     queryKey: ["asks", id],
     queryFn: () => getAskById(id),
     enabled: enabled && !!id,

@@ -209,7 +209,7 @@ export const router = createHashRouter([
             errorElement: <RouteErrorBoundary />,
           },
           {
-            path: "asks/:ask",
+            path: "asks/:id",
             element: <Ask />,
             errorElement: <RouteErrorBoundary />,
           },

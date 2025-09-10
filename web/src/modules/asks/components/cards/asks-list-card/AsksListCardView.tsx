@@ -29,6 +29,7 @@ export function AsksListCardView({
           nameukr={ask.nameukr || ask.artikul}
           quant={ask.quant || 0}
           com={ask.com || ""}
+          id={ask._id}
         />
         <AskerData date={ask.createdAt} askerData={ask.askerData} />
       </div>

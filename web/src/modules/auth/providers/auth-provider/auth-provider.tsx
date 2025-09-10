@@ -37,12 +37,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       typeof window !== "undefined" ? localStorage.getItem("auth_token") : null;
     const storedUser =
       typeof window !== "undefined" ? localStorage.getItem("auth_user") : null;
-    console.log(
-      "AuthProvider mount: storedUser",
-      storedUser,
-      "storedToken",
-      storedToken,
-    );
+;
     if (storedToken && storedUser) {
       setToken(storedToken);
       setUser(JSON.parse(storedUser));

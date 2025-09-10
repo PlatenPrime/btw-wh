@@ -30,3 +30,9 @@ export interface AskDto {
     count: number;
   }
   
+
+  export interface GetAskByIdResponse {
+    message: string;
+    data: AskDto;
+  }
+  
