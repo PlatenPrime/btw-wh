@@ -1,8 +1,8 @@
 import { type BadgeProps } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import type { AskDto } from "@/modules/asks/api/types/dto";
+import { AskImageStatus } from "@/modules/asks/components/elements/ask-image-status/AskImageStatus";
 import { AskerData } from "./components/AskerData";
-import { AskImageStatus } from "./components/AskImageStatus";
 import { AskInfo } from "./components/AskInfo";
 
 interface AsksListCardViewProps {
@@ -17,7 +17,7 @@ export function AsksListCardView({
   statusText,
 }: AsksListCardViewProps) {
   return (
-    <Card className="flex flex-row  gap-4 items-start p-2">
+    <Card className="flex flex-row items-start gap-4 p-2">
       <AskImageStatus
         statusVariant={statusVariant}
         statusText={statusText}

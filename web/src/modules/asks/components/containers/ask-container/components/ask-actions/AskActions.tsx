@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui";
+import { Card, CardContent } from "@/components/ui";
 import { Check } from "lucide-react";
 
 interface AskActionsProps {
@@ -6,15 +6,16 @@ interface AskActionsProps {
 }
 
 export function AskActions({ actions }: AskActionsProps) {
+
+
+if (actions.length === 0) return null;
+
   return (
     <Card className="grid gap-2 p-1">
-      <CardHeader>
-        <CardTitle>Дії</CardTitle>
-      </CardHeader>
       <CardContent>
         {actions.map((action, index) => (
           <p key={index} className="flex items-center gap-2">
-            <Check className="h-4 w-4" />
+            <Check className="h-4 w-4 shrink-0" />
             <span key={index} className="text-sm">
               {" "}
               {action}
