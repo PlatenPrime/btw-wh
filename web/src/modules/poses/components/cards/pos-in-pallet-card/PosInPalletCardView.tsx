@@ -8,9 +8,9 @@ import { PosInfoItem } from "./PosInfoItem";
 import { DeleteTrigger } from "@/components/triggers/delete-trigger.tsx/DeleteTrigger";
 import { EditTrigger } from "@/components/triggers/edit-trigger/EditTrigger";
 import type { IPos } from "@/modules/poses/api/types";
-import { Link } from "react-router";
 import { DeletePosDialog } from "@/modules/poses/components/dialogs/delete-pos-dialog/DeletePosDialog";
 import { UpdatePosDialog } from "@/modules/poses/components/dialogs/update-pos-dialog/UpdatePosDialog";
+import { Link } from "react-router";
 
 interface PosInPalletCardProps {
   pos: IPos;
@@ -59,12 +59,12 @@ export function PosInPalletCardView({ pos, onSuccess }: PosInPalletCardProps) {
       {/* Content with metrics */}
       <CardContent className="px-0">
         <div className="grid grid-cols-3 gap-1.5">
-          <PosInfoItem icon={Circle} value={pos.quant || 0} />
-          <PosInfoItem icon={Package} value={pos.boxes || 0} />
           <PosInfoItem
             icon={Warehouse}
             value={sklads[pos.sklad as keyof ISklads] || pos.sklad}
           />
+          <PosInfoItem icon={Package} value={pos.boxes || 0} />
+          <PosInfoItem icon={Circle} value={pos.quant || 0} />
         </div>
       </CardContent>
     </Card>
