@@ -31,5 +31,14 @@ export function PosesByArtikulFetcher({
   if (!data || data.total === 0)
     return <LoadingNoData description="Позиції не знайдено" />;
 
+  // Дополнительная проверка структуры данных
+  if (!data.pogrebi || !data.merezhi) {
+    return (
+      <div className="text-muted-foreground py-8 text-center">
+        Некоректна структура даних
+      </div>
+    );
+  }
+
   return <ContainerComponent data={data} />;
 }
