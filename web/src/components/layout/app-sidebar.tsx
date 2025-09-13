@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/sidebar";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 import { Link, useLocation, useNavigate } from "react-router";
-import { appSidebarData } from "../../constants/app-sidebar-data";
+import { appSidebarData, getIcon } from "../../constants/app-sidebar-data";
 import { ModeToggle } from "../mode-toggle";
 import { Separator } from "../ui/separator";
 import { ProfileSidebarCard } from "./profile-sidebar-card";
@@ -58,7 +58,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                         pathname.startsWith(item.url + "/")
                       }
                     >
-                      <Link to={item.url}>{item.title}</Link>
+                      <Link to={item.url} className="flex items-center gap-2">
+                        {getIcon(item.iconName)}
+                        {item.title}
+                      </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}
