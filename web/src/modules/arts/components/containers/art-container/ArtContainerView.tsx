@@ -8,8 +8,9 @@ interface ArtContainerViewProps {
 
 export function ArtContainerView({ artData }: ArtContainerViewProps) {
   return (
-    <section className="flex flex-col gap-6">
+    <section className="grid gap-4">
       <ArtDetailCard artData={artData} />
+
       <PosesByArtikulContainer artikul={artData.artikul} />
     </section>
   );

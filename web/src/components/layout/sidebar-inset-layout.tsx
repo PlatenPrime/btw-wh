@@ -28,6 +28,9 @@ export function SidebarInsetLayout({
 
       <main className="mt-10 ">{children}</main>
       <Toaster />
+<footer className="h-10">
+
+</footer>
     </SidebarInset>
   );
 }

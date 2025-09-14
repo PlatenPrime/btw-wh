@@ -3,7 +3,7 @@ import { ArtDetailCardSkeleton } from "@/modules/arts/components/cards/art-detai
 
 export function ArtContainerSkeleton() {
   return (
-    <section className="flex flex-col gap-6">
+    <section className="flex flex-col gap-4">
       <ArtDetailCardSkeleton />
 
       {/* Скелетон для секции позиций */}
