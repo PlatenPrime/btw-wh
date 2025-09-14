@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { BtradeArtDataSkeleton } from "@/modules/arts/components/elements/btrade-art-data/BtradeArtDataSkeleton";
+import { BtradeArtDataSkeleton } from "@/modules/arts/components/containers/btrade-art-data-container/BtradeArtDataSkeleton";
 
 export function AskContainerSkeleton() {
   return (

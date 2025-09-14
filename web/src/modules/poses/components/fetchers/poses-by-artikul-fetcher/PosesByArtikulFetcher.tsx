@@ -28,7 +28,7 @@ export function PosesByArtikulFetcher({
       />
     );
 
-  if (!data || data.total === 0)
+  if (!data )
     return <LoadingNoData description="Позиції не знайдено" />;
 
   // Дополнительная проверка структуры данных

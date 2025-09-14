@@ -1,19 +1,18 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import { BtradeArtDataSkeleton } from "../../elements/btrade-art-data/BtradeArtDataSkeleton";
+import { ArtDetailCardSkeleton } from "@/modules/arts/components/cards/art-detail-card/ArtDetailCardSkeleton";
 
 export function ArtContainerSkeleton() {
   return (
-    <section className="flex flex-col gap-2">
-      <div className="flex items-center gap-2">
-        {/* Скелетон для изображения товара */}
-        <Skeleton className="h-20 w-20 rounded-md" />
+    <section className="flex flex-col gap-6">
+      <ArtDetailCardSkeleton />
 
-        <div className="grid">
-          {/* Скелетон для названия товара */}
-          <Skeleton className="mb-2 h-6 w-64" />
-
-          {/* Используем существующий скелетон для данных Btrade */}
-          <BtradeArtDataSkeleton />
+      {/* Скелетон для секции позиций */}
+      <div className="space-y-4">
+        <Skeleton className="h-6 w-32" />
+        <div className="space-y-2">
+          <Skeleton className="h-10 w-full" />
+          <Skeleton className="h-10 w-full" />
+          <Skeleton className="h-10 w-full" />
         </div>
       </div>
     </section>

@@ -1,18 +1,15 @@
 import type { BtradeArtInfoDto } from "@/modules/arts/api/types/dto";
-import { BtradeArtInfoView } from "./BtradeArtInfoView";
+import { BtradeArtDataContainerView } from "./BtradeArtDataContainerView";
 
-interface BtradeArtDataProps {
+interface BtradeArtDataContainerProps {
   data: BtradeArtInfoDto;
   // The artikul parameter is used to fetch specific art information.
 }
 
-export function BtradeArtData({
-
-  data,
-}: BtradeArtDataProps) {
+export function BtradeArtDataContainer({ data }: BtradeArtDataContainerProps) {
   return (
     <div>
-      <BtradeArtInfoView  data={data} />
+      <BtradeArtDataContainerView data={data} />
     </div>
   );
 }

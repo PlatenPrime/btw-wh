@@ -1,8 +1,9 @@
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import type { GetPosesByArtikulResponse } from "@/modules/poses/api/types";
 import { Circle, Package, Warehouse } from "lucide-react";
 import { Link } from "react-router";
+import { TotalItem } from "./components/total-item/TotalItem";
 
 interface PosesByArtikulContainerViewProps {
   data: GetPosesByArtikulResponse;
@@ -13,52 +14,22 @@ export function PosesByArtikulContainerView({
 }: PosesByArtikulContainerViewProps) {
   const { pogrebi, merezhi, totalQuant, totalBoxes } = data;
 
-  // Проверяем, что данные существуют
-  if (!pogrebi || !merezhi) {
-    return (
-      <div className="text-muted-foreground py-8 text-center">
-        Данные о позициях недоступны
-      </div>
-    );
-  }
-
   return (
-    <div className="space-y-6">
+    <div className="grid gap-6">
       {/* Общая статистика */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Загальна кількість
-            </CardTitle>
-            <Circle className="text-muted-foreground h-4 w-4" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{totalQuant || 0}</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Загальна кількість коробок
-            </CardTitle>
-            <Package className="text-muted-foreground h-4 w-4" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{totalBoxes || 0}</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Позицій знайдено
-            </CardTitle>
-            <Warehouse className="text-muted-foreground h-4 w-4" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{data.total || 0}</div>
-          </CardContent>
-        </Card>
+      <div className="flex gap-4">
+        <TotalItem
+          quant={data.total}
+          icon={<Warehouse className="text-muted-foreground h-4 w-4" />}
+        />
+          <TotalItem
+            quant={totalBoxes}
+            icon={<Package className="text-muted-foreground h-4 w-4" />}
+          />
+        <TotalItem
+          quant={totalQuant}
+          icon={<Circle className="text-muted-foreground h-4 w-4" />}
+        />
       </div>
 
       {/* Позиции по складам */}
