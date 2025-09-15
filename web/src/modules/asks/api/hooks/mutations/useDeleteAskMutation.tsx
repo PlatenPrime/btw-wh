@@ -7,8 +7,8 @@ export function useDeleteAskMutation(id: string) {
   return useMutation({
     mutationFn: () => deleteAskById(id),
     onSuccess: () => {
-      // Удаляем конкретный запрос из кэша
-      queryClient.invalidateQueries({ queryKey: ["asks", id] });
+      // Удаляем конкретный запрос из кэша вместо инвалидации
+      queryClient.removeQueries({ queryKey: ["asks", id] });
       // Инвалидируем все списки asks
       queryClient.invalidateQueries({
         queryKey: ["asks"],

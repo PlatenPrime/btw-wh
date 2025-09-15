@@ -9,21 +9,22 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import type { AskDto } from "@/modules/asks/api/types/dto";
 
-export function AskDeleteButtonView({
-  askData,
-  handleDeleteAsk,
-  isPending,
-  open,
-  setOpen,
-}: {
-  askData: AskDto;
-  handleDeleteAsk: () => void;
-  isPending: boolean;
+interface DeleteAskDialogViewProps {
   open: boolean;
   setOpen: (open: boolean) => void;
-}) {
+  handleDelete: () => void;
+  isPending: boolean;
+  artikul: string;
+}
+
+export function DeleteAskDialogView({
+  open,
+  setOpen,
+  handleDelete,
+  isPending,
+  artikul,
+}: DeleteAskDialogViewProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -31,16 +32,16 @@ export function AskDeleteButtonView({
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Видалити запит "{askData.artikul}"?</DialogTitle>
+          <DialogTitle>Видалити запит "{artikul}"?</DialogTitle>
           <DialogDescription>
-            Ви впевнені, що хочете видалити запит "{askData.artikul}"? Цю дію
-            неможливо скасувати.
+            Ви впевнені, що хочете видалити запит "{artikul}"? Цю дію неможливо
+            скасувати.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="grid grid-cols-2 gap-2">
           <Button
             variant="destructive"
-            onClick={handleDeleteAsk}
+            onClick={handleDelete}
             disabled={isPending}
           >
             {isPending ? "Видалення..." : "Видалити"}
