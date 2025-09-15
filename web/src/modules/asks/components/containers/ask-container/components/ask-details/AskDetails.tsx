@@ -16,7 +16,7 @@ export function AskDetails({ askData }: AskDetailsProps) {
   const statusInfo = statusConfig[askData.status];
 
   return (
-    <Card className="w-full">
+    <Card className="w-full p-0">
       <CardHeader className="flex flex-row items-start gap-2 p-2">
         <AskImageStatus
           statusVariant={statusInfo?.variant}

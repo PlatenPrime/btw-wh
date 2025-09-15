@@ -1,5 +1,6 @@
 import type { AskDto } from "@/modules/asks/api/types/dto";
 import { AskActions } from "./components/ask-actions/AskActions";
+import { AskControlButtons } from "./components/ask-control-buttons/AskControlButtons";
 import { AskDetails } from "./components/ask-details/AskDetails";
 
 interface AskContainerViewProps {
@@ -8,7 +9,9 @@ interface AskContainerViewProps {
 
 export function AskContainerView({ askData }: AskContainerViewProps) {
   return (
-    <section className="grid gap-2">
+    <section className="grid gap-4">
+      <AskControlButtons askData={askData} />
+
       <AskDetails askData={askData} />
 
       <AskActions actions={askData.actions} />
