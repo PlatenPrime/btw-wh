@@ -2,7 +2,6 @@ import { Container } from "@/components/container";
 import { CalendarDate } from "@/components/date/CalendarDate";
 import { Card, CardContent } from "@/components/ui/card";
 import { UserAvatarName } from "@/components/user/UserAvatarName";
-import { statusConfig } from "@/modules/arts/constants/status";
 import type { AskDto } from "@/modules/asks/api/types/dto";
 import { AskCom } from "@/modules/asks/components/elements/ask-com/AskCom";
 import { AskImageStatus } from "@/modules/asks/components/elements/ask-image-status/AskImageStatus";
@@ -14,15 +13,12 @@ interface AskDetailsProps {
 }
 
 export function AskDetails({ askData }: AskDetailsProps) {
-  const statusInfo = statusConfig[askData.status];
-
   return (
     <Container>
       <Card className="p-0">
         <CardContent className="flex flex-row items-start gap-2 p-2">
           <AskImageStatus
-            statusVariant={statusInfo?.variant}
-            statusText={statusInfo?.text}
+            statusText={askData.status}
             artikul={askData.artikul}
           />
 
