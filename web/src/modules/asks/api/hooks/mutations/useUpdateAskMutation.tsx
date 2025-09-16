@@ -1,10 +1,10 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   updateAskById,
   type UpdateAskRequest,
 } from "@/modules/asks/api/services/mutations/updateAskById";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export function useUpdateAsk() {
+export function useUpdateAskMutation() {
   const queryClient = useQueryClient();
 
   return useMutation({

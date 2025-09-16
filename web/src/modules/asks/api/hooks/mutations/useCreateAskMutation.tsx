@@ -1,7 +1,10 @@
+import {
+  createAsk,
+  type CreateAskRequest,
+} from "@/modules/asks/api/services/mutations/createAsk";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createAsk, type CreateAskRequest } from "@/modules/asks/api/services/mutations/createAsk";
 
-export function useCreateAsk() {
+export function useCreateAskMutation() {
   const queryClient = useQueryClient();
 
   return useMutation({

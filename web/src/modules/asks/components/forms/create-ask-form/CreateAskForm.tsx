@@ -1,5 +1,5 @@
 import { useOneArtQuery } from "@/modules/arts/api/hooks/queries/useOneArtQuery";
-import { useCreateAsk } from "@/modules/asks/api/hooks/mutations/useCreateAsk";
+import { useCreateAskMutation } from "@/modules/asks/api/hooks/mutations/useCreateAskMutation";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
@@ -32,7 +32,7 @@ export function CreateAskForm({ onSuccess, onCancel }: CreateAskFormProps) {
   } = form;
   const artikul = watch("artikul");
 
-  const createAskMutation = useCreateAsk();
+  const createAskMutation = useCreateAskMutation();
 
   // Поиск артикула при вводе 9 символов
   const shouldSearchArt = artikul.length === 9;
