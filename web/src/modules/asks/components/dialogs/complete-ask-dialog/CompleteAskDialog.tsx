@@ -1,5 +1,5 @@
+import { CompleteAskDialogView } from "@/modules/asks/components/dialogs/complete-ask-dialog/CompleteAskDialogView";
 import { useState } from "react";
-import { ExecuteAskDialogView } from "@/modules/asks/components/dialogs/execute-ask-dialog/ExecuteAskDialogView.tsx";
 
 interface ExecuteAskDialogProps {
   handleExecuteAsk: () => void;
@@ -7,7 +7,7 @@ interface ExecuteAskDialogProps {
   artikul: string;
 }
 
-export function ExecuteAskDialog({
+export function CompleteAskDialog({
   handleExecuteAsk,
   isPending,
   artikul,
@@ -24,7 +24,7 @@ export function ExecuteAskDialog({
   };
 
   return (
-    <ExecuteAskDialogView
+    <CompleteAskDialogView
       open={open}
       setOpen={setOpen}
       handleExecute={handleExecute}

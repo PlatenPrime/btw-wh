@@ -18,7 +18,7 @@ interface ExecuteAskDialogViewProps {
   artikul: string;
 }
 
-export function ExecuteAskDialogView({
+export function CompleteAskDialogView({
   open,
   setOpen,
   handleExecute,

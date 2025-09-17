@@ -1,8 +1,12 @@
+import { CalendarDate } from "@/components/shared/date/CalendarDate";
+import { UserAvatarName } from "@/components/shared/user/UserAvatarName";
 import { Card } from "@/components/ui/card";
 import type { AskDto } from "@/modules/asks/api/types/dto";
 import { AskImageStatus } from "@/modules/asks/components/elements/ask-image-status/AskImageStatus";
-import { AskerData } from "@/modules/asks/components/cards/asks-list-card/components/AskerData.tsx";
-import { AskInfo } from "@/modules/asks/components/cards/asks-list-card/components/AskInfo.tsx";
+import { Link } from "react-router";
+import { AskCom } from "../../elements/ask-com/AskCom";
+import { AskNameukr } from "../../elements/ask-nameukr/AskNameukr";
+import { AskQuant } from "../../elements/ask-quant/AskQuant";
 
 interface AsksListCardViewProps {
   ask: AskDto;
@@ -19,13 +23,18 @@ export function AsksListCardView({
       <AskImageStatus statusText={statusText} artikul={ask.artikul} />
 
       <div className="grid gap-2">
-        <AskInfo
-          nameukr={ask.nameukr || ask.artikul}
-          quant={ask.quant || 0}
-          com={ask.com || ""}
-          id={ask._id}
+        <Link to={`${ask._id}`} className="text-foreground hover:underline">
+          <AskNameukr nameukr={ask.nameukr || ask.artikul} />
+        </Link>
+        <AskQuant quant={ask.quant || 0} />
+        <AskCom com={ask.com || ""} />
+        <UserAvatarName
+          photoUrl={ask.askerData?.photo}
+          fullname={ask.askerData?.fullname}
+          className="text-sm"
+          size="xs"
         />
-        <AskerData date={ask.createdAt} askerData={ask.askerData} />
+        <CalendarDate date={ask.createdAt} />
       </div>
     </Card>
   );

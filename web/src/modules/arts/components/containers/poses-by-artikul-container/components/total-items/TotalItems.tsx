@@ -9,7 +9,7 @@ interface TotalItemsProps {
 
 export function TotalItems({ data }: TotalItemsProps) {
   return (
-    <Container className="flex gap-4">
+    <Container className="flex items-center justify-center gap-4">
       <TotalItem
         quant={data.total}
         icon={<NotepadText className="text-muted-foreground m-0 size-[1cap]" />}

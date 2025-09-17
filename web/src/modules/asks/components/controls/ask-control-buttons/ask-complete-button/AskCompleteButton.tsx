@@ -1,10 +1,10 @@
 import { useCompleteAskMutation } from "@/modules/asks/api/hooks/mutations/useCompleteAskMutation";
 import type { AskDto } from "@/modules/asks/api/types/dto";
-import { ExecuteAskDialog } from "@/modules/asks/components/dialogs/execute-ask-dialog/ExecuteAskDialog";
+import { CompleteAskDialog } from "@/modules/asks/components/dialogs/complete-ask-dialog/CompleteAskDialog";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 import { toast } from "sonner";
 
-export function AskExecuteButton({ askData }: { askData: AskDto }) {
+export function AskCompleteButton({ askData }: { askData: AskDto }) {
   const { user } = useAuth();
   const executeAskMutation = useCompleteAskMutation(askData._id);
 
@@ -25,7 +25,7 @@ export function AskExecuteButton({ askData }: { askData: AskDto }) {
   };
 
   return (
-    <ExecuteAskDialog
+    <CompleteAskDialog
       handleExecuteAsk={handleExecuteAsk}
       isPending={executeAskMutation.isPending}
       artikul={askData.artikul}
