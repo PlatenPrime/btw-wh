@@ -1,3 +1,4 @@
+import { CancelTrigger } from "@/components/shared/triggers/cancel-trigger/CancelTrigger";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -27,9 +28,8 @@ export function RejectAskDialogView({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="destructive" size="sm">
-          ВІДМОВИТИ
-        </Button>
+        <CancelTrigger />
+
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

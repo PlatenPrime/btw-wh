@@ -1,4 +1,4 @@
-import { useExecuteAskMutation } from "@/modules/asks/api/hooks/mutations/useExecuteAskMutation";
+import { useCompleteAskMutation } from "@/modules/asks/api/hooks/mutations/useCompleteAskMutation";
 import type { AskDto } from "@/modules/asks/api/types/dto";
 import { ExecuteAskDialog } from "@/modules/asks/components/dialogs/execute-ask-dialog/ExecuteAskDialog";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
@@ -6,7 +6,7 @@ import { toast } from "sonner";
 
 export function AskExecuteButton({ askData }: { askData: AskDto }) {
   const { user } = useAuth();
-  const executeAskMutation = useExecuteAskMutation(askData._id);
+  const executeAskMutation = useCompleteAskMutation(askData._id);
 
   const handleExecuteAsk = async () => {
     if (!user) {

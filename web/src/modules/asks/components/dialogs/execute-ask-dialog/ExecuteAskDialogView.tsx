@@ -1,3 +1,4 @@
+import { CheckTrigger } from "@/components/shared/triggers/check-trigger/CheckTrigger";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -27,9 +28,7 @@ export function ExecuteAskDialogView({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="default" size="sm">
-          ВИКОНАТИ
-        </Button>
+        <CheckTrigger />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
