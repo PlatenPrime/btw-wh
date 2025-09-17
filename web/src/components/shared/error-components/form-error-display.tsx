@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { AlertCircle, X } from "lucide-react";
-import { Alert, AlertDescription } from "../ui/alert";
-import { Button } from "../ui/button";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
 
 export interface FormErrorDisplayProps {
   error?: string | null;
@@ -51,7 +51,7 @@ export function FormErrorDisplay({
           variant="ghost"
           size="sm"
           onClick={onDismiss}
-          className="text-destructive hover:bg-destructive/10 absolute top-2 right-2 h-auto p-1"
+          className="text-destructive hover:bg-destructive/10 absolute right-2 top-2 h-auto p-1"
         >
           <X className="h-3 w-3" />
         </Button>

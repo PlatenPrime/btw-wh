@@ -1,6 +1,6 @@
 import { type GetAsksByDateResponse } from "@/modules/asks/api/types/dto";
 import { addDays, subDays } from "date-fns";
-import { AsksContainerView } from "./AsksContainerView";
+import { AsksContainerView } from "@/modules/asks/components/containers/asks-container/AsksContainerView.tsx";
 
 interface AsksContainerProps {
   data: GetAsksByDateResponse;

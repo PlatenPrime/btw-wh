@@ -1,4 +1,4 @@
-import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout";
+import { SidebarInsetLayout } from '@/components/shared/layout/sidebar-inset-layout';
 import { RowFetcher } from "@/modules/rows/components/fetchers";
 import { RowContainer, RowContainerSkeleton } from "@/modules/rows/components/containers/row-container";
 import { useParams } from "react-router";

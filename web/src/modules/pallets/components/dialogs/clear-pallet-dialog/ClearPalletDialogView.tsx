@@ -1,4 +1,4 @@
-import { ClearTrigger } from "@/components/triggers/clear-trigger.tsx/ClearTrigger";
+import { ClearTrigger } from '@/components/shared/triggers/clear-trigger/ClearTrigger';
 import {
   Button,
   Dialog,

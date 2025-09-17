@@ -1,5 +1,5 @@
-import { ErrorDisplay } from "@/components/error-components";
-import { LoadingNoData } from "@/components/loading-states/loading-nodata";
+import { ErrorDisplay } from '@/components/shared/error-components';
+import { LoadingNoData } from '@/components/shared/loading-states/loading-nodata';
 import { useBtradeArtDataQuery } from "@/modules/arts/api/hooks/queries/useBtradeArtDataQuery";
 import type { BtradeArtInfoDto } from "@/modules/arts/api/types/dto";
 import type { ComponentType } from "react";

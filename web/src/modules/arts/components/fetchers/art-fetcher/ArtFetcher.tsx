@@ -1,5 +1,5 @@
-import { ErrorDisplay } from "@/components/error-components/error-display";
-import { LoadingNoData } from "@/components/loading-states/loading-nodata";
+import { ErrorDisplay } from '@/components/shared/error-components/error-display';
+import { LoadingNoData } from '@/components/shared/loading-states/loading-nodata';
 import { useOneArtQuery } from "@/modules/arts/api/hooks/queries/useOneArtQuery";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import type { ComponentType } from "react";

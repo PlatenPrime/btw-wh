@@ -1,5 +1,5 @@
-import { FormErrorDisplay } from "@/components/error-components/form-error-display";
-import { MoveTrigger } from "@/components/triggers/move-trigger.tsx/MoveTrigger";
+import { FormErrorDisplay } from '@/components/shared/error-components/form-error-display';
+import { MoveTrigger } from '@/components/shared/triggers/move-trigger/MoveTrigger';
 import {
   Dialog,
   DialogContent,

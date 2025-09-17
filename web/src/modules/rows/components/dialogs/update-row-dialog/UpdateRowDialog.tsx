@@ -1,6 +1,6 @@
 import type { RowDto } from "@/modules/rows/api/types/dto";
 import { useState } from "react";
-import { UpdateRowDialogView } from "./UpdateRowDialogView";
+import { UpdateRowDialogView } from "@/modules/rows/components/dialogs/update-row-dialog/UpdateRowDialogView.tsx";
 
 interface UpdateRowDialogProps {
   row: RowDto;

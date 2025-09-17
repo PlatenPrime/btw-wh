@@ -1,14 +1,14 @@
-import { AlertTriangle, ArrowLeft, Home, RefreshCw } from "lucide-react";
-import { Component, type ErrorInfo, type ReactNode } from "react";
-import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
-import { Button } from "../ui/button";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../ui/card";
+} from "@/components/ui/card";
+import { AlertTriangle, ArrowLeft, Home, RefreshCw } from "lucide-react";
+import { Component, type ErrorInfo, type ReactNode } from "react";
 
 interface Props {
   children: ReactNode;
@@ -95,7 +95,7 @@ export class ErrorBoundary extends Component<Props, State> {
                   <summary className="text-muted-foreground cursor-pointer font-medium">
                     Техническая информация (только для разработчиков)
                   </summary>
-                  <pre className="text-muted-foreground mt-2 text-xs whitespace-pre-wrap">
+                  <pre className="text-muted-foreground mt-2 whitespace-pre-wrap text-xs">
                     {this.state.errorInfo.componentStack}
                   </pre>
                 </details>

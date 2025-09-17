@@ -1,4 +1,4 @@
-import { FormErrorDisplay } from "@/components/error-components/form-error-display";
+import { FormErrorDisplay } from '@/components/shared/error-components/form-error-display';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import type { IPallet } from "@/modules/pallets/api/types";
@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { useEmptyPalletsQuery } from "@/modules/pallets/api/hooks/queries/useEmptyPalletsQuery";
-import { MovePalletPosesFormView } from "./MovePalletPosesFormView";
+import { MovePalletPosesFormView } from "@/modules/pallets/components/forms/move-pallet-poses-form/MovePalletPosesFormView.tsx";
 
 const schema = z.object({
   toPalletId: z.string().min(1, "Оберіть паллету"),

@@ -5,12 +5,12 @@ import { useCreatePosMutation } from "@/modules/poses/api/hooks/mutations/useCre
 import { useUpdatePosByIdMutation } from "@/modules/poses/api/hooks/mutations/useUpdatePosByIdMutation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { CreatePosFormView } from "./CreatePosFormView";
+import { CreatePosFormView } from "@/modules/poses/components/forms/create-pos-form/CreatePosFormView.tsx";
 import {
   createPosFormDefaultValues,
   createPosFormSchema,
   type CreatePosFormData,
-} from "./schema";
+} from "@/modules/poses/components/forms/create-pos-form/schema.ts";
 
 interface CreatePosFormProps {
   pallet: IPallet;

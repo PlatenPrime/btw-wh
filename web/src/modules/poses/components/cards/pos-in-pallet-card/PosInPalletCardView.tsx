@@ -3,10 +3,10 @@ import { sklads, type ISklads } from "@/constants/sklad";
 import { ArtDialogImage } from "@/modules/arts/components/dialogs/art-dialog-image/ArtDialogImage";
 import { Circle, Package, Warehouse } from "lucide-react";
 
-import { PosInfoItem } from "./PosInfoItem";
+import { PosInfoItem } from "@/modules/poses/components/cards/pos-in-pallet-card/PosInfoItem.tsx";
 
-import { DeleteTrigger } from "@/components/triggers/delete-trigger.tsx/DeleteTrigger";
-import { EditTrigger } from "@/components/triggers/edit-trigger/EditTrigger";
+import { DeleteTrigger } from '@/components/shared/triggers/delete-trigger/DeleteTrigger';
+import { EditTrigger } from '@/components/shared/triggers/edit-trigger/EditTrigger';
 import type { IPos } from "@/modules/poses/api/types";
 import { DeletePosDialog } from "@/modules/poses/components/dialogs/delete-pos-dialog/DeletePosDialog";
 import { UpdatePosDialog } from "@/modules/poses/components/dialogs/update-pos-dialog/UpdatePosDialog";

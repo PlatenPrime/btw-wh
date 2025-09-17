@@ -1,5 +1,5 @@
 import type { RowDto } from "@/modules/rows/api/types/dto";
-import { RowsGridCardView } from "./RowsGridCardView";
+import { RowsGridCardView } from "@/modules/rows/components/cards/rows-grid-card/RowsGridCardView.tsx";
 
 interface GridCardProps {
   row: RowDto;

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { RejectAskDialogView } from "./RejectAskDialogView";
+import { RejectAskDialogView } from "@/modules/asks/components/dialogs/reject-ask-dialog/RejectAskDialogView.tsx";
 
 interface RejectAskDialogProps {
   handleRejectAsk: () => void;

@@ -8,7 +8,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { z } from "zod";
-import { useAuth } from "../../../api/hooks/useAuth";
+import { useAuth } from "@/modules/auth/api/hooks/useAuth.ts";
 
 // Zod schema for login form
 const loginSchema = z.object({

@@ -6,7 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useAuth } from "../../../api/hooks/useAuth";
+import { useAuth } from "@/modules/auth/api/hooks/useAuth.ts";
 
 // Zod schema for user profile form
 const userProfileSchema = z.object({

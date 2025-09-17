@@ -1,4 +1,4 @@
-import { FieldErrorDisplay } from "@/components/error-components/form-error-display";
+import { FieldErrorDisplay } from '@/components/shared/error-components/form-error-display';
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";

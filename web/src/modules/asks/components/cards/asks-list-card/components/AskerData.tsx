@@ -1,5 +1,5 @@
-import { CalendarDate } from "@/components/date/CalendarDate";
-import { UserAvatarName } from "@/components/user/UserAvatarName";
+import { CalendarDate } from '@/components/shared/date/CalendarDate';
+import { UserAvatarName } from '@/components/shared/user/UserAvatarName';
 import type { AskUserData } from "@/modules/asks/api/types/dto";
 
 interface AskerDataProps {

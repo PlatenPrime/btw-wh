@@ -1,7 +1,7 @@
-import { Loader } from "@/components/loader";
+import { Loader } from "@/components/shared/loading-states/loader.tsx";
+import { useAuth } from "@/modules/auth/api/hooks/useAuth.ts";
 import type { ReactNode } from "react";
 import { Navigate, useLocation } from "react-router";
-import { useAuth } from "../api/hooks/useAuth";
 
 interface ProtectedRouteProps {
   children: ReactNode;

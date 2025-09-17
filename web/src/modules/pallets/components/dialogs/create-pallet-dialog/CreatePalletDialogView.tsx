@@ -1,7 +1,7 @@
 import {
   FieldErrorDisplay,
   FormErrorDisplay,
-} from "@/components/error-components";
+} from '@/components/shared/error-components';
 import { Button } from "@/components/ui/button";
 import {
   Dialog,

@@ -1,7 +1,7 @@
-import { Container } from "@/components/container";
+import { Container } from '@/components/shared/container';
 import type { WarehouseData } from "@/modules/poses/api/types";
 import { Circle, Package } from "lucide-react";
-import { PalletLink } from "../pallet-link/PalletLink";
+import { PalletLink } from "@/modules/arts/components/containers/poses-by-artikul-container/components/pallet-link/PalletLink.tsx";
 
 export function SkladPosesList({
   skladData,

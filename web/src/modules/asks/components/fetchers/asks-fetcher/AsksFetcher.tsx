@@ -1,5 +1,5 @@
-import { ErrorDisplay } from "@/components/error-components/error-display";
-import { LoadingNoData } from "@/components/loading-states/loading-nodata";
+import { ErrorDisplay } from '@/components/shared/error-components/error-display';
+import { LoadingNoData } from '@/components/shared/loading-states/loading-nodata';
 import { useAsksByDateQuery } from "@/modules/asks/api/hooks/queries/useAsksByDateQuery";
 import { format } from "date-fns";
 import { useState } from "react";

@@ -1,7 +1,7 @@
 import { useDeletePalletPosesMutation } from "@/modules/pallets/api/hooks/mutations/useDeletePalletPosesMutation";
 import type { IPallet } from "@/modules/pallets/api/types";
 import { useState } from "react";
-import {ClearPalletDialogView} from "./ClearPalletDialogView";
+import {ClearPalletDialogView} from "@/modules/pallets/components/dialogs/clear-pallet-dialog/ClearPalletDialogView.tsx";
 
 interface DeletePalletDialogProps {
   pallet: IPallet;

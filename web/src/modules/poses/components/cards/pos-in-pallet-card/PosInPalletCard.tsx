@@ -1,4 +1,4 @@
-import { PosInPalletCardView } from "./PosInPalletCardView";
+import { PosInPalletCardView } from "@/modules/poses/components/cards/pos-in-pallet-card/PosInPalletCardView.tsx";
 import type { IPos } from "@/modules/poses/api/types";
 
 interface PosInPalletCardProps {

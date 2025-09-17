@@ -1,6 +1,6 @@
 import type { PalletShortDto } from "@/modules/pallets/api/types";
-import { PalletsListEmpty } from "./PalletsListEmpty";
-import { PalletsListView } from "./PalletsListView";
+import { PalletsListEmpty } from "@/modules/pallets/components/lists/pallets-list/PalletsListEmpty.tsx";
+import { PalletsListView } from "@/modules/pallets/components/lists/pallets-list/PalletsListView.tsx";
 
 interface PalletsListProps {
   pallets: PalletShortDto[];

@@ -1,5 +1,5 @@
 import type { PalletShortDto } from "@/modules/pallets/api/types";
-import { PalletInRowCardView } from "./PalletInRowCardView";
+import { PalletInRowCardView } from "@/modules/pallets/components/cards/pallet-in-row-card/PalletInRowCardView.tsx";
 
 interface PalletInRowCardProps {
   pallet: PalletShortDto;

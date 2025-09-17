@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ExecuteAskDialogView } from "./ExecuteAskDialogView";
+import { ExecuteAskDialogView } from "@/modules/asks/components/dialogs/execute-ask-dialog/ExecuteAskDialogView.tsx";
 
 interface ExecuteAskDialogProps {
   handleExecuteAsk: () => void;

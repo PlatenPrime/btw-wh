@@ -1,6 +1,6 @@
-import { SearchPanel } from "@/components/search-components/search-panel/SearchPanel";
+import { SearchPanel } from '@/components/shared/search-components/search-panel/SearchPanel';
 import type { ArtDto } from "@/modules/arts/api/types/dto";
-import { ArtsGrid } from "../../lists/arts-grid/ArtsGrid";
+import { ArtsGrid } from "@/modules/arts/components/lists/arts-grid/ArtsGrid.tsx";
 
 interface ArtsContainerViewProps {
   data: ArtDto[];

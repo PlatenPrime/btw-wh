@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CreateAskDialogView } from "./CreateAskDialogView";
+import { CreateAskDialogView } from "@/modules/asks/components/dialogs/create-ask-dialog/CreateAskDialogView.tsx";
 
 interface CreateAskDialogProps {
   trigger?: React.ReactNode;

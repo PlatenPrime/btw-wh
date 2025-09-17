@@ -4,7 +4,7 @@ import type { AxiosResponse } from "axios";
 import React, { useState } from "react";
 import { toast } from "sonner";
 import { read, utils } from "xlsx";
-import { View } from "./ViewComponent";
+import { View } from "@/modules/arts/components/containers/arts-excel-uploader/ViewComponent.tsx";
 
 type UpsertResponse = {
   message: string;

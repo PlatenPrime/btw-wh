@@ -1,4 +1,4 @@
-import { Container } from "@/components/container";
+import { Container } from '@/components/shared/container';
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { BtradeArtDataContainer } from "@/modules/arts/components/containers/btrade-art-data-container/BtradeArtDataContainer";
 import { BtradeArtDataSkeleton } from "@/modules/arts/components/containers/btrade-art-data-container/BtradeArtDataSkeleton";

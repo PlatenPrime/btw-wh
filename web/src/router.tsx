@@ -1,8 +1,8 @@
 // router.tsx
+import { RouteErrorBoundary } from "@/components/shared/error-components/route-error-boundary";
+import { ProtectedRoute } from "@/modules/auth/components/index.ts";
 import { lazy } from "react";
 import { createHashRouter, Outlet } from "react-router";
-import { RouteErrorBoundary } from "./components/error-components/route-error-boundary";
-import { ProtectedRoute } from "./modules/auth/components";
 
 const App = lazy(() => import("./App"));
 

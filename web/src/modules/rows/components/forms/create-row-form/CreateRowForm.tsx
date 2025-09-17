@@ -2,8 +2,8 @@ import { useCreateRowMutation } from "@/modules/rows/api/hooks/mutations/useCrea
 import type { CreateRowDto } from "@/modules/rows/api/types/dto";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { rowSchema, type RowFormValues } from "../schema";
-import { CreateRowFormView } from "./CreateRowFormView";
+import { rowSchema, type RowFormValues } from "@/modules/rows/components/forms/schema.ts";
+import { CreateRowFormView } from "@/modules/rows/components/forms/create-row-form/CreateRowFormView.tsx";
 
 interface CreateRowFormProps {
   onSuccess?: () => void;

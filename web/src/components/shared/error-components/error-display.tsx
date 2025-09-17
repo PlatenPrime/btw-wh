@@ -1,17 +1,17 @@
-import { AlertTriangle, RefreshCw, Shield, Wifi } from "lucide-react";
-import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
-import { Badge } from "../ui/badge";
-import { Button } from "../ui/button";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../ui/card";
+} from "@/components/ui/card";
+import { AlertTriangle, FileText, RefreshCw, Shield, Wifi } from "lucide-react";
 
-export interface QueryErrorDisplayProps {
-  error: Error | unknown;
+export interface ErrorDisplayProps {
+  error: Error | string | unknown;
   title?: string;
   description?: string;
   onRetry?: () => void;
@@ -22,7 +22,7 @@ export interface QueryErrorDisplayProps {
   className?: string;
 }
 
-export function QueryErrorDisplay({
+export function ErrorDisplay({
   error,
   title,
   description,
@@ -32,32 +32,46 @@ export function QueryErrorDisplay({
   variant = "default",
   showActions = true,
   className,
-}: QueryErrorDisplayProps) {
+}: ErrorDisplayProps) {
   const errorMessage =
-    error instanceof Error ? error.message : "Невідома помилка";
+    typeof error === "string"
+      ? error
+      : error instanceof Error
+        ? error.message
+        : "Невідома помилка";
+  const errorName = error instanceof Error ? error.name : undefined;
 
-  // Визначаємо тип помилки для відповідної іконки та кольору
+  // Визначаємо тип помилки для відповідної іконки
   const getErrorIcon = () => {
-    if (errorMessage.includes("network") || errorMessage.includes("fetch")) {
+    if (errorName?.includes("Network") || errorMessage.includes("network")) {
       return <Wifi className="h-4 w-4" />;
     }
-    if (errorMessage.includes("unauthorized") || errorMessage.includes("401")) {
+    if (errorName?.includes("Auth") || errorMessage.includes("unauthorized")) {
       return <Shield className="h-4 w-4" />;
+    }
+    if (
+      errorName?.includes("Validation") ||
+      errorMessage.includes("validation")
+    ) {
+      return <FileText className="h-4 w-4" />;
     }
     return <AlertTriangle className="h-4 w-4" />;
   };
 
   const getErrorType = () => {
-    if (errorMessage.includes("network") || errorMessage.includes("fetch")) {
+    if (errorName?.includes("Network") || errorMessage.includes("network")) {
       return "Мережева помилка";
     }
-    if (errorMessage.includes("unauthorized") || errorMessage.includes("401")) {
+    if (errorName?.includes("Auth") || errorMessage.includes("unauthorized")) {
       return "Помилка авторизації";
     }
-    if (errorMessage.includes("not found") || errorMessage.includes("404")) {
-      return "Дані не знайдено";
+    if (
+      errorName?.includes("Validation") ||
+      errorMessage.includes("validation")
+    ) {
+      return "Помилка валідації";
     }
-    return "Помилка завантаження";
+    return "Помилка додатку";
   };
 
   const errorType = getErrorType();
@@ -65,23 +79,17 @@ export function QueryErrorDisplay({
 
   if (variant === "compact") {
     return (
-      <Alert variant="destructive" className="flex flex-col gap-2">
+      <Alert variant="destructive" className={className}>
         {errorIcon}
         <AlertTitle>{title || errorType}</AlertTitle>
         <AlertDescription>{description || errorMessage}</AlertDescription>
-        {onRetry && (
-          <Button variant="outline" size="sm" onClick={onRetry} className="">
-            <RefreshCw className="h-4 w-4" />
-            <span className="text-xs">Повторити</span>
-          </Button>
-        )}
       </Alert>
     );
   }
 
   if (variant === "fullscreen") {
     return (
-      <div className="bg-background flex min-h-screen items-center justify-center p-4">
+      <div className="bg-background flex min-h-screen w-full items-center justify-center p-4">
         <Card className="w-full max-w-2xl">
           <CardHeader className="text-center">
             <div className="bg-destructive/10 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full">
@@ -91,7 +99,7 @@ export function QueryErrorDisplay({
               {title || errorType}
             </CardTitle>
             <CardDescription className="text-muted-foreground">
-              {description || "Сталася помилка при завантаженні даних"}
+              {description || "Сталася помилка при виконанні операції"}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -152,7 +160,7 @@ export function QueryErrorDisplay({
               {title || errorType}
             </CardTitle>
             <CardDescription>
-              {description || "Сталася помилка при завантаженні даних"}
+              {description || "Сталася помилка при виконанні операції"}
             </CardDescription>
           </div>
         </div>

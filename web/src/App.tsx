@@ -1,6 +1,6 @@
-import { ErrorBoundary } from "./components/error-components";
-import { Layout } from "./components/layout/layout";
-import { ThemeProvider } from "./providers/theme-provider";
+import { ErrorBoundary } from "@/components/shared/error-components";
+import { Layout } from "@/components/shared/layout/layout";
+import { ThemeProvider } from "@/providers/theme-provider.tsx";
 
 function App() {
   return (

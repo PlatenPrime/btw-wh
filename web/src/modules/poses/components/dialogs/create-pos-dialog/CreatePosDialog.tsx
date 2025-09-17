@@ -1,6 +1,6 @@
 import type { IPallet } from "@/modules/pallets/api/types";
 import { useState } from "react";
-import { CreatePosDialogView } from "./CreatePosDialogView";
+import { CreatePosDialogView } from "@/modules/poses/components/dialogs/create-pos-dialog/CreatePosDialogView.tsx";
 
 interface CreatePosDialogProps {
   pallet: IPallet;

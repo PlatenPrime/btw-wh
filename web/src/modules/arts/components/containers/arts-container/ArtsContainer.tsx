@@ -1,6 +1,6 @@
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
-import { ArtsContainerView } from "./ArtsContainerView";
+import { ArtsContainerView } from "@/modules/arts/components/containers/arts-container/ArtsContainerView.tsx";
 
 interface ArtsContainerProps {
   data: ArtDto[];

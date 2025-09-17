@@ -1,5 +1,5 @@
 import type { IPos } from "@/modules/poses/api/types";
-import { PosContainerView } from "./PosContainerView";
+import { PosContainerView } from "@/modules/poses/components/containers/pos-container/PosContainerView.tsx";
 
 interface PosContainerProps {
   pos: IPos;

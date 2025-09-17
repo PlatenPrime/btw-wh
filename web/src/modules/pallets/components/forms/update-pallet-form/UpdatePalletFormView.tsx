@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import type { UseFormReturn } from "react-hook-form";
-import { type PalletFormValues } from "../schema";
+import { type PalletFormValues } from "@/modules/pallets/components/forms/schema.ts";
 
 interface UpdatePalletFormViewProps {
   form: UseFormReturn<PalletFormValues>;

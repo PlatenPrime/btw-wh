@@ -1,6 +1,6 @@
 import type { GetAsksByDateResponse } from "@/modules/asks/api/types/dto";
-import { AsksListEmpty } from "./AsksListEmpty";
-import { AsksListView } from "./AsksListView";
+import { AsksListEmpty } from "@/modules/asks/components/lists/asks-list/AsksListEmpty.tsx";
+import { AsksListView } from "@/modules/asks/components/lists/asks-list/AsksListView.tsx";
 
 interface AsksProps {
   data: GetAsksByDateResponse;

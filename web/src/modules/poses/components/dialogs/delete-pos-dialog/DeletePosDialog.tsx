@@ -1,7 +1,7 @@
 import type { IPos } from "@/modules/poses/api/types";
 import { useDeletePosMutation } from "@/modules/poses/api/hooks/mutations/useDeletePosMutation";
 import { useState } from "react";
-import { DeletePosDialogView } from "./DeletePosDialogView";
+import { DeletePosDialogView } from "@/modules/poses/components/dialogs/delete-pos-dialog/DeletePosDialogView.tsx";
 
 interface DeletePosDialogProps {
   pos: IPos;

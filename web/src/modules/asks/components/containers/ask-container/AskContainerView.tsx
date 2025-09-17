@@ -1,7 +1,7 @@
 import type { AskDto } from "@/modules/asks/api/types/dto";
-import { AskActions } from "./components/ask-actions/AskActions";
-import { AskControlButtons } from "../../controls/ask-control-buttons/AskControlButtons";
-import { AskDetails } from "./components/ask-details/AskDetails";
+import { AskActions } from "@/modules/asks/components/containers/ask-container/components/ask-actions/AskActions.tsx";
+import { AskControlButtons } from "@/modules/asks/components/controls/ask-control-buttons/AskControlButtons.tsx";
+import { AskDetails } from "@/modules/asks/components/containers/ask-container/components/ask-details/AskDetails.tsx";
 
 interface AskContainerViewProps {
   askData: AskDto;

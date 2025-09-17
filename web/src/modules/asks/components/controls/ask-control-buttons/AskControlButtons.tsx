@@ -1,9 +1,9 @@
-import { Container } from "@/components/container";
+import { Container } from '@/components/shared/container';
 import { Card, CardContent } from "@/components/ui";
 import type { AskDto } from "@/modules/asks/api/types/dto";
-import { AskDeleteButton } from "./ask-delete-button/AskDeleteButton";
-import { AskExecuteButton } from "./ask-execute-button/AskExecuteButton";
-import { AskRejectButton } from "./ask-reject-button/AskRejectButton";
+import { AskDeleteButton } from "@/modules/asks/components/controls/ask-control-buttons/ask-delete-button/AskDeleteButton.tsx";
+import { AskExecuteButton } from "@/modules/asks/components/controls/ask-control-buttons/ask-execute-button/AskExecuteButton.tsx";
+import { AskRejectButton } from "@/modules/asks/components/controls/ask-control-buttons/ask-reject-button/AskRejectButton.tsx";
 
 interface AskControlButtonsProps {
   askData: AskDto;

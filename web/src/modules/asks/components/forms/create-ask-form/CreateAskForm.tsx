@@ -4,12 +4,12 @@ import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { CreateAskFormView } from "./CreateAskFormView";
+import { CreateAskFormView } from "@/modules/asks/components/forms/create-ask-form/CreateAskFormView.tsx";
 import {
   createAskFormDefaultValues,
   createAskFormSchema,
   type CreateAskFormData,
-} from "./schema";
+} from "@/modules/asks/components/forms/create-ask-form/schema.ts";
 
 interface CreateAskFormProps {
   onSuccess?: () => void;

@@ -1,4 +1,4 @@
-import { EditTrigger } from "@/components/triggers/edit-trigger/EditTrigger";
+import { EditTrigger } from '@/components/shared/triggers/edit-trigger/EditTrigger';
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import type { PalletShortDto } from "@/modules/pallets/api/types";

@@ -1,4 +1,4 @@
-import { Container } from "@/components/container";
+import { Container } from '@/components/shared/container';
 import { Card, CardContent } from "@/components/ui";
 import { Check } from "lucide-react";
 

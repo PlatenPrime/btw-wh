@@ -1,6 +1,6 @@
 import type { PalletShortDto } from "@/modules/pallets/api/types";
 import { Columns4 } from "lucide-react";
-import { PalletInRowCard } from "../../cards/pallet-in-row-card/PalletInRowCard";
+import { PalletInRowCard } from "@/modules/pallets/components/cards/pallet-in-row-card/PalletInRowCard.tsx";
 
 interface PalletsByRowContainerViewProps {
   pallets: PalletShortDto[];

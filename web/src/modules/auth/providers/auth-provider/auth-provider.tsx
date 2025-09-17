@@ -1,5 +1,5 @@
+import * as api from "@/modules/auth/api/services/index.ts";
 import { createContext, useCallback, useEffect, useRef, useState } from "react";
-import * as api from "../../api/services";
 import type {
   AuthContextType,
   AuthProviderProps,
@@ -37,7 +37,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       typeof window !== "undefined" ? localStorage.getItem("auth_token") : null;
     const storedUser =
       typeof window !== "undefined" ? localStorage.getItem("auth_user") : null;
-;
     if (storedToken && storedUser) {
       setToken(storedToken);
       setUser(JSON.parse(storedUser));

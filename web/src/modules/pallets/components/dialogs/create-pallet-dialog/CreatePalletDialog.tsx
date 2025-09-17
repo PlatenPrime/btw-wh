@@ -3,7 +3,7 @@ import type { RowDto } from "@/modules/rows/api/types/dto";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { palletSchema, type PalletFormValues } from "@/modules/pallets/components/forms/schema";
-import { CreatePalletDialogView } from "./CreatePalletDialogView";
+import { CreatePalletDialogView } from "@/modules/pallets/components/dialogs/create-pallet-dialog/CreatePalletDialogView.tsx";
 import { useState } from "react";
 
 

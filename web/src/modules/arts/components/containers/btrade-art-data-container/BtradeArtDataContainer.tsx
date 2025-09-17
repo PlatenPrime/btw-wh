@@ -1,5 +1,5 @@
 import type { BtradeArtInfoDto } from "@/modules/arts/api/types/dto";
-import { BtradeArtDataContainerView } from "./BtradeArtDataContainerView";
+import { BtradeArtDataContainerView } from "@/modules/arts/components/containers/btrade-art-data-container/BtradeArtDataContainerView.tsx";
 
 interface BtradeArtDataContainerProps {
   data: BtradeArtInfoDto;

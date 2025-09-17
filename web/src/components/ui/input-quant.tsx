@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { forwardRef } from "react";
-import { Input } from "./input";
-import { Label } from "./label";
+import { Input } from "@/components/ui/input.tsx";
+import { Label } from "@/components/ui/label.tsx";
 
 interface InputQuantProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange"> {

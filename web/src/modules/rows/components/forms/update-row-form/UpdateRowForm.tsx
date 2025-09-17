@@ -2,8 +2,8 @@ import { useUpdateRowMutation } from "@/modules/rows/api/hooks/mutations/useUpda
 import type { RowDto, UpdateRowDto } from "@/modules/rows/api/types/dto";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { rowSchema, type RowFormValues } from "../schema";
-import { UpdateRowFormView } from "./UpdateRowFormView";
+import { rowSchema, type RowFormValues } from "@/modules/rows/components/forms/schema.ts";
+import { UpdateRowFormView } from "@/modules/rows/components/forms/update-row-form/UpdateRowFormView.tsx";
 
 interface UpdateRowFormProps {
   row: RowDto;

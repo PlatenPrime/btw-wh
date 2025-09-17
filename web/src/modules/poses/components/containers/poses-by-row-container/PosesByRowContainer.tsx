@@ -1,5 +1,5 @@
 import type { IPos } from "@/modules/poses/api/types";
-import { PosesByRowContainerView } from "./PosesByRowContainerView";
+import { PosesByRowContainerView } from "@/modules/poses/components/containers/poses-by-row-container/PosesByRowContainerView.tsx";
 
 interface PosesByRowContainerProps {
   poses: IPos[];

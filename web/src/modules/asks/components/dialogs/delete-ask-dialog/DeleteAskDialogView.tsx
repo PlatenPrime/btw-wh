@@ -1,4 +1,4 @@
-import { DeleteTrigger } from "@/components/triggers/delete-trigger.tsx/DeleteTrigger";
+import { DeleteTrigger } from "@/components/shared/triggers/delete-trigger/DeleteTrigger";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,

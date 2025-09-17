@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { DeleteAskDialogView } from "./DeleteAskDialogView";
+import { DeleteAskDialogView } from "@/modules/asks/components/dialogs/delete-ask-dialog/DeleteAskDialogView.tsx";
 
 interface DeleteAskDialogProps {
   handleDeleteAsk: () => void;

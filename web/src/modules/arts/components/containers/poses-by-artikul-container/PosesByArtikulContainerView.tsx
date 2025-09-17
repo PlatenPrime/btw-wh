@@ -1,6 +1,6 @@
 import type { GetPosesByArtikulResponse } from "@/modules/poses/api/types";
-import { SkladPosesList } from "./components/sklad-poses-list/SkladPosesList";
-import { TotalItems } from "./components/total-items/TotalItems";
+import { SkladPosesList } from "@/modules/arts/components/containers/poses-by-artikul-container/components/sklad-poses-list/SkladPosesList.tsx";
+import { TotalItems } from "@/modules/arts/components/containers/poses-by-artikul-container/components/total-items/TotalItems.tsx";
 
 interface PosesByArtikulContainerViewProps {
   data: GetPosesByArtikulResponse;

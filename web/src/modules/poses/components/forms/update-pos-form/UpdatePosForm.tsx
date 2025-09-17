@@ -2,12 +2,12 @@ import type { IPos } from "@/modules/poses/api/types";
 import { useUpdatePosMutation } from "@/modules/poses/api/hooks/mutations/useUpdatePosMutation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { UpdatePosFormView } from "./UpdatePosFormView";
+import { UpdatePosFormView } from "@/modules/poses/components/forms/update-pos-form/UpdatePosFormView.tsx";
 import {
   createUpdatePosFormDefaultValues,
   updatePosFormSchema,
   type UpdatePosFormData,
-} from "./schema";
+} from "@/modules/poses/components/forms/update-pos-form/schema.ts";
 
 interface UpdatePosFormProps {
   pos: IPos;

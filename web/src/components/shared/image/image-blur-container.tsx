@@ -1,4 +1,4 @@
-import { Image } from "@/components/image/image";
+import { Image } from '@/components/shared/image/image';
 import { getSmallImageUrl } from "@/lib/art-image-url";
 import { cn } from "@/lib/utils";
 import { useTheme } from "@/providers/theme-provider";

@@ -1,5 +1,5 @@
 import type { PalletResponse } from "@/modules/pallets/api/types";
-import { PalletContainerView } from "./PalletContainerView";
+import { PalletContainerView } from "@/modules/pallets/components/containers/pallet-container/PalletContainerView.tsx";
 
 interface PalletContainerProps {
   pallet: PalletResponse;

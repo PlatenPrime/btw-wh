@@ -1,7 +1,7 @@
-import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout";
-import { ArtsFetcher } from "../components/fetchers/arts-fetcher/ArtsFetcher";
-import { ArtsContainer } from "../components/containers/arts-container/ArtsContainer";
-import { ArtsContainerSkeleton } from "../components/containers/arts-container/ArtsContainerSkeleton";
+import { SidebarInsetLayout } from '@/components/shared/layout/sidebar-inset-layout';
+import { ArtsFetcher } from "@/modules/arts/components/fetchers/arts-fetcher/ArtsFetcher.tsx";
+import { ArtsContainer } from "@/modules/arts/components/containers/arts-container/ArtsContainer.tsx";
+import { ArtsContainerSkeleton } from "@/modules/arts/components/containers/arts-container/ArtsContainerSkeleton.tsx";
 
 export function Arts() {
   return (

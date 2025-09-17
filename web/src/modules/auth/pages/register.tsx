@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
-import { useAuth } from "../api/hooks/useAuth";
+import { useAuth } from "@/modules/auth/api/hooks/useAuth.ts";
 import { RegisterForm } from "@/modules/auth/components/forms/register-form/RegisterForm";
 
 export default function RegisterPage() {

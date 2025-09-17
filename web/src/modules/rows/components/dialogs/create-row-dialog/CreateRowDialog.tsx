@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { CreateRowDialogView } from "./CreateRowDialogView";
+import { CreateRowDialogView } from "@/modules/rows/components/dialogs/create-row-dialog/CreateRowDialogView.tsx";
 
 interface CreateRowDialogProps {
   trigger?: React.ReactNode;

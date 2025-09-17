@@ -1,4 +1,4 @@
-import { Image } from "@/components/image/image";
+import { Image } from '@/components/shared/image/image';
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { getBigImageUrl, getSmallImageUrl } from "@/lib/art-image-url";
 

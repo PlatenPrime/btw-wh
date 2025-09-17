@@ -7,7 +7,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import type { IPos } from "@/modules/poses/api/types";
-import { UpdatePosForm } from "../../forms/update-pos-form/UpdatePosForm";
+import { UpdatePosForm } from "@/modules/poses/components/forms/update-pos-form/UpdatePosForm.tsx";
 
 interface UpdatePosDialogProps {
   open: boolean;

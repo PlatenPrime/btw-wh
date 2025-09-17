@@ -1,7 +1,7 @@
-import { Container } from "@/components/container";
-import { CalendarDate } from "@/components/date/CalendarDate";
+import { Container } from '@/components/shared/container';
+import { CalendarDate } from '@/components/shared/date/CalendarDate';
 import { Card, CardContent } from "@/components/ui/card";
-import { UserAvatarName } from "@/components/user/UserAvatarName";
+import { UserAvatarName } from '@/components/shared/user/UserAvatarName';
 import type { AskDto } from "@/modules/asks/api/types/dto";
 import { AskCom } from "@/modules/asks/components/elements/ask-com/AskCom";
 import { AskImageStatus } from "@/modules/asks/components/elements/ask-image-status/AskImageStatus";

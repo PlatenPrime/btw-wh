@@ -1,5 +1,5 @@
-import { Image } from "@/components/image/image";
-import { ImageBlurContainer } from "@/components/image/image-blur-container";
+import { Image } from '@/components/shared/image/image';
+import { ImageBlurContainer } from '@/components/shared/image/image-blur-container';
 import { Card, CardDescription } from "@/components/ui/card";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { Link } from "react-router";

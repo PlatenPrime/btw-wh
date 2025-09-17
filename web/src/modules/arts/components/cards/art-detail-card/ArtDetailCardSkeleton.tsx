@@ -1,6 +1,6 @@
-import { Container } from "@/components/container";
+import { Container } from '@/components/shared/container';
 import { Skeleton } from "@/components/ui/skeleton";
-import { BtradeArtDataSkeleton } from "../../containers/btrade-art-data-container/BtradeArtDataSkeleton";
+import { BtradeArtDataSkeleton } from "@/modules/arts/components/containers/btrade-art-data-container/BtradeArtDataSkeleton.tsx";
 
 export function ArtDetailCardSkeleton() {
   return (

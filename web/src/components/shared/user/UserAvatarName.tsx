@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface UserAvatarNameProps {
   photoUrl: string | undefined;
@@ -8,7 +8,12 @@ interface UserAvatarNameProps {
   size?: "xs" | "sm" | "md" | "lg";
 }
 
-export function UserAvatarName({ photoUrl, fullname, className, size = "sm" }: UserAvatarNameProps) {
+export function UserAvatarName({
+  photoUrl,
+  fullname,
+  className,
+  size = "sm",
+}: UserAvatarNameProps) {
   const sizeMap = {
     xs: "size-4",
     sm: "size-6",

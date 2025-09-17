@@ -1,4 +1,4 @@
-import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout";
+import { SidebarInsetLayout } from '@/components/shared/layout/sidebar-inset-layout';
 import { PalletFetcher } from "@/modules/pallets/components/fetchers";
 import { PalletContainer, PalletContainerSkeleton } from "@/modules/pallets/components/containers/pallet-container";
 import { useParams } from "react-router";

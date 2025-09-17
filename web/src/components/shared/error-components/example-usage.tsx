@@ -1,18 +1,18 @@
-import { Button } from "../ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "../ui/card";
 import {
   ErrorDisplay,
   FieldErrorDisplay,
   FormErrorDisplay,
   QueryErrorDisplay,
   useErrorHandler,
-} from "./index";
+} from "@/components/shared/error-components/index.ts";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 /**
  * Приклад використання всіх компонентів для обробки помилок

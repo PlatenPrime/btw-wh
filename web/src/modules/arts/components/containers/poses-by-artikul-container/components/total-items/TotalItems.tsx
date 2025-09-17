@@ -1,7 +1,7 @@
 import type { GetPosesByArtikulResponse } from "@/modules/poses/api/types";
 import { Circle, NotepadText, Package } from "lucide-react";
-import { TotalItem } from "./TotalItem";
-import { Container } from "@/components/container";
+import { TotalItem } from "@/modules/arts/components/containers/poses-by-artikul-container/components/total-items/TotalItem.tsx";
+import { Container } from '@/components/shared/container';
 
 interface TotalItemsProps {
   data: GetPosesByArtikulResponse;

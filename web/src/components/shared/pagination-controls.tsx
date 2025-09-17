@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { NotepadText } from "lucide-react";
-import { Skeleton } from "./ui/skeleton";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type Props = {
   currentPage: number;
@@ -20,7 +20,7 @@ export function PaginationControls({
   }
 
   return (
-    <div className="flex justify-between md:justify-center items-center gap-4 w-full md:w-auto">
+    <div className="flex w-full items-center justify-between gap-4 md:w-auto md:justify-center">
       <Button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage <= 1}
@@ -30,9 +30,9 @@ export function PaginationControls({
       </Button>
 
       {totalPages <= 1 ? (
-        <span className="text-sm text-muted-foreground">0</span>
+        <span className="text-muted-foreground text-sm">0</span>
       ) : (
-        <span className="text-sm flex items-center text-muted-foreground text-nowrap ">
+        <span className="text-muted-foreground flex items-center text-nowrap text-sm">
           <NotepadText />
           {currentPage} / {totalPages}
         </span>

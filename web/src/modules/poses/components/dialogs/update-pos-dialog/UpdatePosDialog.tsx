@@ -1,6 +1,6 @@
 import type { IPos } from "@/modules/poses/api/types";
 import { useState } from "react";
-import { UpdatePosDialogView } from "./UpdatePosDialogView";
+import { UpdatePosDialogView } from "@/modules/poses/components/dialogs/update-pos-dialog/UpdatePosDialogView.tsx";
 
 interface UpdatePosDialogProps {
   pos: IPos;

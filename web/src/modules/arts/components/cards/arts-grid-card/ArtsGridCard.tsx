@@ -1,6 +1,6 @@
 import { getSmallImageUrl } from "@/lib/art-image-url";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
-import { ArtsGridCardView } from "./ArtsGridCardView";
+import { ArtsGridCardView } from "@/modules/arts/components/cards/arts-grid-card/ArtsGridCardView.tsx";
 
 interface GridCardProps {
   art: ArtDto;

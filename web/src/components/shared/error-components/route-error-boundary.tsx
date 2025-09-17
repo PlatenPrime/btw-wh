@@ -3,7 +3,7 @@ import {
   useNavigate,
   useRouteError,
 } from "react-router-dom";
-import { ErrorDisplay } from "./error-display";
+import { ErrorDisplay } from "@/components/shared/error-components/error-display.tsx";
 
 export function RouteErrorBoundary() {
   const error = useRouteError();

@@ -1,5 +1,5 @@
-import { SearchPanelSkeleton } from "@/components/search-components/search-panel/SearchPanelSkeleton";
-import { ArtsGridSkeleton } from "../../lists/arts-grid/ArtsGridSkeleton";
+import { SearchPanelSkeleton } from '@/components/shared/search-components/search-panel/SearchPanelSkeleton';
+import { ArtsGridSkeleton } from "@/modules/arts/components/lists/arts-grid/ArtsGridSkeleton.tsx";
 
 export function ArtsContainerSkeleton() {
   return (

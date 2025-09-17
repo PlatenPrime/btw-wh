@@ -1,7 +1,7 @@
 import { useMovePalletPosesMutation } from "@/modules/pallets/api/hooks/mutations/useMovePalletPosesMutation";
 import type { IPallet } from "@/modules/pallets/api/types";
 import { useState } from "react";
-import { MovePalletPosesDialogView } from "./MovePalletPosesDialogView";
+import { MovePalletPosesDialogView } from "@/modules/pallets/components/dialogs/move-pallet-poses-dialog/MovePalletPosesDialogView.tsx";
 
 interface MovePalletPosesDialogProps {
   pallet: IPallet;

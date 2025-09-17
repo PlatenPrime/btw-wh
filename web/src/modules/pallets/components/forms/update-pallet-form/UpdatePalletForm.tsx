@@ -3,8 +3,8 @@ import type { UpdatePalletDto } from "@/modules/pallets/api/types";
 import type { PalletShortDto } from "@/modules/pallets/api/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { palletSchema, type PalletFormValues } from "../schema";
-import { UpdatePalletFormView } from "./UpdatePalletFormView";
+import { palletSchema, type PalletFormValues } from "@/modules/pallets/components/forms/schema.ts";
+import { UpdatePalletFormView } from "@/modules/pallets/components/forms/update-pallet-form/UpdatePalletFormView.tsx";
 
 interface UpdatePalletFormProps {
   pallet: PalletShortDto;

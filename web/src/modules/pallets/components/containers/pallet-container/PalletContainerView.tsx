@@ -4,7 +4,7 @@ import { PalletInfo } from "@/modules/pallets/components/elements/pallet-info/Pa
 import { CreatePosDialog } from "@/modules/poses/components/dialogs/create-pos-dialog/CreatePosDialog";
 import { PosesByPalletFetcher } from "@/modules/poses/components/fetchers";
 import { PosesByPalletContainer, PosesByPalletContainerSkeleton } from "@/modules/poses/components/containers/poses-by-pallet-container";
-import { PalletActions } from "../../elements/pallet-actions/PalletActions";
+import { PalletActions } from "@/modules/pallets/components/elements/pallet-actions/PalletActions.tsx";
 
 interface PalletContainerViewProps {
   pallet: PalletResponse;
