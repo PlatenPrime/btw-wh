@@ -131,6 +131,8 @@ export function AskPosEditForm({
         throw new Error("Не можна зняти більше коробок, ніж є в наявності");
       }
 
+      onSuccess?.();
+
       // Оновлюємо позицію
       await updatePosMutation.mutateAsync({
         id: pos._id,
@@ -147,15 +149,17 @@ export function AskPosEditForm({
           ? `Знято товару: ${removedQuantNum} шт., коробок: ${removedBoxesNum} шт. з палети ${pos.palletData?.title || "невідома паллета"}`
           : `Додано товару: ${Math.abs(removedQuantNum)} шт., коробок: ${Math.abs(removedBoxesNum)} шт. до палети ${pos.palletData?.title || "невідома паллета"}`;
 
-      await updateAskActionsMutation.mutateAsync({
-        id: askId,
-        data: {
-          action: actionText,
-          userId: user._id,
-        },
-      });
 
-      onSuccess?.();
+          
+          await updateAskActionsMutation.mutateAsync({
+            id: askId,
+            data: {
+              action: actionText,
+              userId: user._id,
+            },
+          });
+          
+
     } catch (error) {
       console.error("Error updating pos:", error);
       // Ошибка будет обработана в компоненте через formState

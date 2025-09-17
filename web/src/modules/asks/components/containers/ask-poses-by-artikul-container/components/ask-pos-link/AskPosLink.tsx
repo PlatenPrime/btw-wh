@@ -19,7 +19,7 @@ export function AskPosLink({ pos, askId }: AskPosLinkProps) {
               <div className="grid grid-cols-3">
                 <div className="min-w-0 flex-1">
                   <h4 className="truncate font-medium">
-                    {pos.palletData?.title || "Неизвестная паллета"}
+                    {pos.palletData?.title || "Невідома палета"}
                   </h4>
                 </div>
 

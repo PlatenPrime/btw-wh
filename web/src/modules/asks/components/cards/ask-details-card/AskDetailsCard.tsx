@@ -13,7 +13,7 @@ interface AskDetailsCardProps {
 
 export function AskDetailsCard({ askData }: AskDetailsCardProps) {
   return (
-    <Card className="p-0">
+    <Card className="p-0 w-full">
       <CardContent className="flex flex-row items-start gap-2 p-2">
         <AskImageStatus statusText={askData.status} artikul={askData.artikul} />
 

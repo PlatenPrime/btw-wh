@@ -23,7 +23,7 @@ export function AsksListCardView({
       <AskImageStatus statusText={statusText} artikul={ask.artikul} />
 
       <div className="grid gap-2">
-        <Link to={`${ask._id}`} className="text-foreground hover:underline">
+        <Link to={`${ask._id}`} className="text-foreground hover:underline text-sm">
           <AskNameukr nameukr={ask.nameukr || ask.artikul} />
         </Link>
         <AskQuant quant={ask.quant || 0} />

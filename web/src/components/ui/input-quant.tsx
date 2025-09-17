@@ -74,7 +74,7 @@ export const InputQuant = forwardRef<HTMLInputElement, InputQuantProps>(
         )}
         <Input
           ref={ref}
-          type="text"
+          type="number"
           placeholder={placeholder}
           onChange={handleChange}
           className={cn("w-full", className)}

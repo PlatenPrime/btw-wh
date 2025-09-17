@@ -16,8 +16,8 @@ export function RejectAskDialog({
 
   const handleReject = async () => {
     try {
-      await handleRejectAsk();
       setOpen(false);
+      await handleRejectAsk();
     } catch (error) {
       console.error("Error rejecting ask:", error);
     }

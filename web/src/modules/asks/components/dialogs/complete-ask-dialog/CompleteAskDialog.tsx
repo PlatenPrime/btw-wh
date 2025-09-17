@@ -16,8 +16,8 @@ export function CompleteAskDialog({
 
   const handleExecute = async () => {
     try {
-      await handleExecuteAsk();
       setOpen(false);
+      await handleExecuteAsk();
     } catch (error) {
       console.error("Error executing ask:", error);
     }
