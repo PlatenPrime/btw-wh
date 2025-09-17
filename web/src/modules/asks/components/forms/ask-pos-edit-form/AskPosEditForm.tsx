@@ -1,15 +1,15 @@
-import type { PosResponse } from "@/modules/poses/api/types";
-import { useUpdatePosByIdMutation } from "@/modules/poses/api/hooks/mutations/useUpdatePosByIdMutation";
 import { useUpdateAskActionsByIdMutation } from "@/modules/asks/api/hooks/mutations/useUpdateAskActionsByIdMutation";
-import { useAuth } from "@/modules/auth/api/hooks/useAuth";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import { AskPosEditFormView } from "@/modules/asks/components/forms/ask-pos-edit-form/AskPosEditFormView.tsx";
 import {
-  createAskPosEditFormDefaultValues,
   askPosEditFormSchema,
+  createAskPosEditFormDefaultValues,
   type AskPosEditFormData,
 } from "@/modules/asks/components/forms/ask-pos-edit-form/schema.ts";
+import { useAuth } from "@/modules/auth/api/hooks/useAuth";
+import { useUpdatePosByIdMutation } from "@/modules/poses/api/hooks/mutations/useUpdatePosByIdMutation";
+import type { PosResponse } from "@/modules/poses/api/types";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 
 interface AskPosEditFormProps {
   pos: PosResponse;
@@ -43,39 +43,69 @@ export function AskPosEditForm({
   const updatePosMutation = useUpdatePosByIdMutation();
   const updateAskActionsMutation = useUpdateAskActionsByIdMutation();
 
-  // Обработчики для числовых полей без ведущих нулей
+  // Обработчики для числовых полей с поддержкой отрицательных чисел
   const handleRemovedQuantChange = (value: string) => {
-    const numericValue = value.replace(/\D/g, "");
+    // Разрешаем только цифры и знак минус в начале
+    const cleanValue = value.replace(/[^0-9-]/g, "");
 
-    if (numericValue === "") {
+    // Проверяем, что минус только в начале
+    const hasMinus = cleanValue.includes("-");
+    const numericPart = cleanValue.replace(/-/g, "");
+
+    if (hasMinus && !cleanValue.startsWith("-")) {
+      // Если минус не в начале, убираем его
+      setValue("removedQuant", numericPart, { shouldValidate: true });
+      return;
+    }
+
+    if (cleanValue === "" || cleanValue === "-") {
       setValue("removedQuant", "0", { shouldValidate: true });
       return;
     }
 
-    if (numericValue === "0") {
-      setValue("removedQuant", "0", { shouldValidate: true });
+    if (numericPart === "0") {
+      setValue("removedQuant", hasMinus ? "-0" : "0", { shouldValidate: true });
       return;
     }
 
-    const cleanValue = numericValue.replace(/^0+/, "");
-    setValue("removedQuant", cleanValue, { shouldValidate: true });
+    // Убираем ведущие нули, но сохраняем знак
+    const finalValue = hasMinus
+      ? `-${numericPart.replace(/^0+/, "") || "0"}`
+      : numericPart.replace(/^0+/, "") || "0";
+
+    setValue("removedQuant", finalValue, { shouldValidate: true });
   };
 
   const handleRemovedBoxesChange = (value: string) => {
-    const numericValue = value.replace(/\D/g, "");
+    // Разрешаем только цифры и знак минус в начале
+    const cleanValue = value.replace(/[^0-9-]/g, "");
 
-    if (numericValue === "") {
+    // Проверяем, что минус только в начале
+    const hasMinus = cleanValue.includes("-");
+    const numericPart = cleanValue.replace(/-/g, "");
+
+    if (hasMinus && !cleanValue.startsWith("-")) {
+      // Если минус не в начале, убираем его
+      setValue("removedBoxes", numericPart, { shouldValidate: true });
+      return;
+    }
+
+    if (cleanValue === "" || cleanValue === "-") {
       setValue("removedBoxes", "0", { shouldValidate: true });
       return;
     }
 
-    if (numericValue === "0") {
-      setValue("removedBoxes", "0", { shouldValidate: true });
+    if (numericPart === "0") {
+      setValue("removedBoxes", hasMinus ? "-0" : "0", { shouldValidate: true });
       return;
     }
 
-    const cleanValue = numericValue.replace(/^0+/, "");
-    setValue("removedBoxes", cleanValue, { shouldValidate: true });
+    // Убираем ведущие нули, но сохраняем знак
+    const finalValue = hasMinus
+      ? `-${numericPart.replace(/^0+/, "") || "0"}`
+      : numericPart.replace(/^0+/, "") || "0";
+
+    setValue("removedBoxes", finalValue, { shouldValidate: true });
   };
 
   const onSubmit = async (data: AskPosEditFormData) => {
@@ -88,28 +118,35 @@ export function AskPosEditForm({
       const removedQuantNum = parseInt(data.removedQuant, 10);
       const removedBoxesNum = parseInt(data.removedBoxes, 10);
 
-      // Проверяем, что не пытаемся убрать больше чем есть
-      if (removedQuantNum > pos.quant) {
+      // Вычисляем новые значения
+      const newQuant = pos.quant - removedQuantNum;
+      const newBoxes = pos.boxes - removedBoxesNum;
+
+      // Проверяем, что новые значения не отрицательные
+      if (newQuant < 0) {
         throw new Error("Не можна зняти більше товару, ніж є в наявності");
       }
 
-      if (removedBoxesNum > pos.boxes) {
+      if (newBoxes < 0) {
         throw new Error("Не можна зняти більше коробок, ніж є в наявності");
       }
 
-      // Оновлюємо позицію - віднімаємо зняте кількість
+      // Оновлюємо позицію
       await updatePosMutation.mutateAsync({
         id: pos._id,
         data: {
-          quant: pos.quant - removedQuantNum,
-          boxes: pos.boxes - removedBoxesNum,
+          quant: newQuant,
+          boxes: newBoxes,
           sklad: pos.sklad,
         },
       });
 
       // Додаємо дію в ask
-      const actionText = `Знято товару: ${removedQuantNum} шт., коробок: ${removedBoxesNum} шт. з палети ${pos.palletData?.title || "невідома паллета"}`;
-      
+      const actionText =
+        removedQuantNum >= 0
+          ? `Знято товару: ${removedQuantNum} шт., коробок: ${removedBoxesNum} шт. з палети ${pos.palletData?.title || "невідома паллета"}`
+          : `Додано товару: ${Math.abs(removedQuantNum)} шт., коробок: ${Math.abs(removedBoxesNum)} шт. до палети ${pos.palletData?.title || "невідома паллета"}`;
+
       await updateAskActionsMutation.mutateAsync({
         id: askId,
         data: {
@@ -125,7 +162,10 @@ export function AskPosEditForm({
     }
   };
 
-  const isFormSubmitting = isSubmitting || updatePosMutation.isPending || updateAskActionsMutation.isPending;
+  const isFormSubmitting =
+    isSubmitting ||
+    updatePosMutation.isPending ||
+    updateAskActionsMutation.isPending;
 
   // Вычисляем остатки
   const remainingQuant = pos.quant - parseInt(removedQuant, 10);

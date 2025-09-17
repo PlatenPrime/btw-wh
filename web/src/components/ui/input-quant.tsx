@@ -1,7 +1,7 @@
-import { cn } from "@/lib/utils";
-import { forwardRef } from "react";
 import { Input } from "@/components/ui/input.tsx";
 import { Label } from "@/components/ui/label.tsx";
+import { cn } from "@/lib/utils";
+import { forwardRef } from "react";
 
 interface InputQuantProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange"> {
@@ -31,24 +31,35 @@ export const InputQuant = forwardRef<HTMLInputElement, InputQuantProps>(
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
 
-      // Убираем все нецифровые символы
-      const numericValue = value.replace(/\D/g, "");
+      // Разрешаем только цифры и знак минус в начале
+      const cleanValue = value.replace(/[^0-9-]/g, "");
 
-      // Если поле пустое, передаем пустую строку
-      if (numericValue === "") {
+      // Проверяем, что минус только в начале
+      const hasMinus = cleanValue.includes("-");
+      const numericPart = cleanValue.replace(/-/g, "");
+
+      if (hasMinus && !cleanValue.startsWith("-")) {
+        // Если минус не в начале, убираем его
+        onValueChange(numericPart);
+        return;
+      }
+
+      if (cleanValue === "" || cleanValue === "-") {
         onValueChange("");
         return;
       }
 
-      // Если введен только 0, передаем как есть
-      if (numericValue === "0") {
-        onValueChange("0");
+      if (numericPart === "0") {
+        onValueChange(hasMinus ? "-0" : "0");
         return;
       }
 
-      // Убираем лидирующие нули для ненулевых значений
-      const cleanValue = numericValue.replace(/^0+/, "");
-      onValueChange(cleanValue);
+      // Убираем ведущие нули, но сохраняем знак
+      const finalValue = hasMinus
+        ? `-${numericPart.replace(/^0+/, "") || "0"}`
+        : numericPart.replace(/^0+/, "") || "0";
+
+      onValueChange(finalValue);
     };
 
     return (
