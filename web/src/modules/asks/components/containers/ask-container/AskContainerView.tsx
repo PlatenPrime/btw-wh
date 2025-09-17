@@ -19,7 +19,7 @@ export function AskContainerView({ askData }: AskContainerViewProps) {
 
       {/* Позиции по артикулу */}
       {askData.artikul && (
-        <AskPosesByArtikulContainer artikul={askData.artikul} />
+        <AskPosesByArtikulContainer artikul={askData.artikul} askId={askData._id} />
       )}
     </section>
   );

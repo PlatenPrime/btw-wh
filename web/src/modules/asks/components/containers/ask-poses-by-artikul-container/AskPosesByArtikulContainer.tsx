@@ -4,15 +4,17 @@ import { AskPosesByArtikulContainerView } from "./AskPosesByArtikulContainerView
 
 interface AskPosesByArtikulContainerProps {
   artikul: string;
+  askId: string;
 }
 
 export function AskPosesByArtikulContainer({
   artikul,
+  askId,
 }: AskPosesByArtikulContainerProps) {
   return (
     <PosesByArtikulFetcher
       artikul={artikul}
-      ContainerComponent={AskPosesByArtikulContainerView}
+      ContainerComponent={(props) => <AskPosesByArtikulContainerView {...props} askId={askId} />}
       SkeletonComponent={AskPosesByArtikulContainerSkeleton}
     />
   );
