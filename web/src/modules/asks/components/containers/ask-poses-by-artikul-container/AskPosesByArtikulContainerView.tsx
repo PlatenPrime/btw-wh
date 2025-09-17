@@ -14,7 +14,7 @@ export function AskPosesByArtikulContainerView({
   const { pogrebi, merezhi } = data;
 
   return (
-    <div className="grid gap-4">
+    <div className="grid gap-2">
       {/* Заголовок секции */}
 
 
@@ -22,7 +22,7 @@ export function AskPosesByArtikulContainerView({
       <TotalItems data={data} />
 
       {/* Позиции по складам */}
-      <div className="grid items-start gap-4 lg:grid-cols-2">
+      <div className="grid items-start gap-2 lg:grid-cols-2">
         <AskSkladPosesList skladData={pogrebi} title="Погреби" askId={askId} />
         <AskSkladPosesList skladData={merezhi} title="Мережі" askId={askId} />
       </div>

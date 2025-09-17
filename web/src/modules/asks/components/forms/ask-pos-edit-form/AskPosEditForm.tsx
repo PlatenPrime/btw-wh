@@ -90,14 +90,14 @@ export function AskPosEditForm({
 
       // Проверяем, что не пытаемся убрать больше чем есть
       if (removedQuantNum > pos.quant) {
-        throw new Error("Нельзя убрать больше товара, чем есть в наличии");
+        throw new Error("Не можна зняти більше товару, ніж є в наявності");
       }
 
       if (removedBoxesNum > pos.boxes) {
-        throw new Error("Нельзя убрать больше коробок, чем есть в наличии");
+        throw new Error("Не можна зняти більше коробок, ніж є в наявності");
       }
 
-      // Обновляем позицию - вычитаем убранное количество
+      // Оновлюємо позицію - віднімаємо зняте кількість
       await updatePosMutation.mutateAsync({
         id: pos._id,
         data: {
@@ -107,8 +107,8 @@ export function AskPosEditForm({
         },
       });
 
-      // Добавляем действие в ask
-      const actionText = `Убрано товара: ${removedQuantNum} шт., коробок: ${removedBoxesNum} шт. с позиции ${pos.palletData?.title || "неизвестная паллета"}`;
+      // Додаємо дію в ask
+      const actionText = `Знято товару: ${removedQuantNum} шт., коробок: ${removedBoxesNum} шт. з палети ${pos.palletData?.title || "невідома паллета"}`;
       
       await updateAskActionsMutation.mutateAsync({
         id: askId,

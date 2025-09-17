@@ -39,7 +39,7 @@ export function AskPosEditDialogView({
       <DialogTrigger asChild>{trigger || defaultTrigger}</DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-center">{pos.artikul}</DialogTitle>
+          <DialogTitle className="text-center">{pos.palletData?.title}</DialogTitle>
         </DialogHeader>
         <AskPosEditForm 
           pos={pos} 

@@ -10,7 +10,7 @@ interface AskContainerViewProps {
 
 export function AskContainerView({ askData }: AskContainerViewProps) {
   return (
-    <section className="grid gap-4">
+    <section className="grid gap-2">
       <AskControlButtons askData={askData} />
 
       <AskDetails askData={askData} />

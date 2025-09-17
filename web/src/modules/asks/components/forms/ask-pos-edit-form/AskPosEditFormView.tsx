@@ -45,8 +45,8 @@ export function AskPosEditFormView({
           <div className="grid gap-4">
             {/* Информация о текущих остатках */}
             <div className="grid gap-2 p-3 bg-muted/50 rounded-lg">
-              <Label className="text-sm font-medium">Текущие остатки:</Label>
-              <div className="grid grid-cols-2 gap-2 text-sm">
+              <Label className="text-sm font-medium">Поточні залишки:</Label>
+              <div className="grid gap-2 text-sm">
                 <div>
                   <span className="text-muted-foreground">Товар:</span> {pos.quant} шт.
                 </div>
@@ -59,8 +59,8 @@ export function AskPosEditFormView({
             {/* Поля для ввода убранного количества */}
             <InputQuant
               id="removedQuant"
-              label="Убрано товара"
-              placeholder="Введите количество"
+              label="Знято товару"
+              placeholder="Введіть кількість"
               value={removedQuantValue || ""}
               onValueChange={onRemovedQuantChange}
               error={errors.removedQuant?.message}
@@ -70,8 +70,8 @@ export function AskPosEditFormView({
 
             <InputQuant
               id="removedBoxes"
-              label="Убрано коробок"
-              placeholder="Введите количество коробок"
+              label="Знято коробок"
+              placeholder="Введіть кількість коробок"
               value={removedBoxesValue || ""}
               onValueChange={onRemovedBoxesChange}
               error={errors.removedBoxes?.message}
@@ -82,9 +82,9 @@ export function AskPosEditFormView({
             {/* Отображение остатков после операции */}
             <div className="grid gap-2 p-3 bg-green-50 dark:bg-green-950/20 rounded-lg border border-green-200 dark:border-green-800">
               <Label className="text-sm font-medium text-green-700 dark:text-green-300">
-                Останется после операции:
+                Залишиться після операції:
               </Label>
-              <div className="grid grid-cols-2 gap-2 text-sm">
+              <div className="grid  gap-2 text-sm">
                 <div className={remainingQuant < 0 ? "text-red-600 dark:text-red-400" : "text-green-700 dark:text-green-300"}>
                   <span className="text-muted-foreground">Товар:</span> {remainingQuant} шт.
                 </div>
@@ -94,7 +94,7 @@ export function AskPosEditFormView({
               </div>
               {(remainingQuant < 0 || remainingBoxes < 0) && (
                 <p className="text-red-600 dark:text-red-400 text-xs mt-1">
-                  Внимание: Нельзя убрать больше, чем есть в наличии!
+                  Увага: Не можна зняти більше, ніж є в наявності!
                 </p>
               )}
             </div>
@@ -106,7 +106,7 @@ export function AskPosEditFormView({
               disabled={isSubmitting || remainingQuant < 0 || remainingBoxes < 0}
               className="flex-1"
             >
-              {isSubmitting ? "Обновляю..." : "Подтвердить"}
+              {isSubmitting ? "Оновлюю..." : "Підтвердити"}
             </Button>
             {onCancel && (
               <Button
@@ -115,7 +115,7 @@ export function AskPosEditFormView({
                 onClick={onCancel}
                 disabled={isSubmitting}
               >
-                Отмена
+                Скасувати
               </Button>
             )}
           </div>
