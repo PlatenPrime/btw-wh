@@ -1,14 +1,14 @@
-import { ErrorBoundary } from "@/components/shared/error-components";
-import { Layout } from "@/components/shared/layout/layout";
-import { ThemeProvider } from "@/providers/theme-provider.tsx";
+import { SidebarProvider } from "./components/ui/sidebar";
+
+import { Outlet } from "react-router";
+import { AppSidebar } from "./components/shared/sidebar/app-sidebar";
 
 function App() {
   return (
-    <ErrorBoundary>
-      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <Layout />
-      </ThemeProvider>
-    </ErrorBoundary>
+    <SidebarProvider>
+      <AppSidebar />
+      <Outlet />
+    </SidebarProvider>
   );
 }
 

@@ -1,7 +1,8 @@
 import * as React from "react";
 
-import { ProfileSidebarCard } from "@/components/shared/layout/profile-sidebar-card.tsx";
 import { ModeToggle } from "@/components/shared/mode-toggle.tsx";
+import { ProfileSidebarCard } from "@/components/shared/sidebar/profile-sidebar-card";
+import { Separator } from "@/components/ui/separator";
 import {
   Sidebar,
   SidebarContent,
@@ -15,10 +16,9 @@ import {
   SidebarRail,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import { appSidebarData, getIcon } from "@/constants/app-sidebar-data";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 import { Link, useLocation, useNavigate } from "react-router";
-import { appSidebarData, getIcon } from "@/constants/app-sidebar-data";
-import { Separator } from "@/components/ui/separator";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = useLocation().pathname;

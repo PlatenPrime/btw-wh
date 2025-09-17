@@ -1,7 +1,7 @@
-import { SidebarInsetLayout } from '@/components/shared/layout/sidebar-inset-layout';
-import { AsksFetcher } from "@/modules/asks/components/fetchers/asks-fetcher/AsksFetcher.tsx";
+import { SidebarInsetLayout } from "@/components/shared/sidebar/sidebar-inset-layout";
 import { AsksContainer } from "@/modules/asks/components/containers/asks-container/AsksContainer.tsx";
 import { AsksContainerSkeleton } from "@/modules/asks/components/containers/asks-container/AsksContainerSkeleton.tsx";
+import { AsksFetcher } from "@/modules/asks/components/fetchers/asks-fetcher/AsksFetcher.tsx";
 
 export function Asks() {
   return (

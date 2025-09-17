@@ -1,6 +1,9 @@
-import { SidebarInsetLayout } from '@/components/shared/layout/sidebar-inset-layout';
+import { SidebarInsetLayout } from "@/components/shared/sidebar/sidebar-inset-layout";
+import {
+  AskContainer,
+  AskContainerSkeleton,
+} from "@/modules/asks/components/containers/ask-container";
 import { AskFetcher } from "@/modules/asks/components/fetchers/ask-fetcher";
-import { AskContainer, AskContainerSkeleton } from "@/modules/asks/components/containers/ask-container";
 import { useParams } from "react-router";
 
 export function Ask() {

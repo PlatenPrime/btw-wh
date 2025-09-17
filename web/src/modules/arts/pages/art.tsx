@@ -1,8 +1,8 @@
-import { SidebarInsetLayout } from '@/components/shared/layout/sidebar-inset-layout';
-import { useParams } from "react-router";
+import { SidebarInsetLayout } from "@/components/shared/sidebar/sidebar-inset-layout";
 import { ArtContainer } from "@/modules/arts/components/containers/art-container/ArtContainer.tsx";
 import { ArtContainerSkeleton } from "@/modules/arts/components/containers/art-container/ArtContainerSkeleton.tsx";
 import { ArtFetcher } from "@/modules/arts/components/fetchers/art-fetcher/ArtFetcher.tsx";
+import { useParams } from "react-router";
 
 export function Art() {
   const { artikul } = useParams<{ artikul: string }>();

@@ -1,6 +1,9 @@
-import { SidebarInsetLayout } from '@/components/shared/layout/sidebar-inset-layout';
+import { SidebarInsetLayout } from "@/components/shared/sidebar/sidebar-inset-layout";
+import {
+  RowsContainer,
+  RowsContainerSkeleton,
+} from "@/modules/rows/components/containers/rows-container";
 import { RowsFetcher } from "@/modules/rows/components/fetchers";
-import { RowsContainer, RowsContainerSkeleton } from "@/modules/rows/components/containers/rows-container";
 
 export function Rows() {
   return (

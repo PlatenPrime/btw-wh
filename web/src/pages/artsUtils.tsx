@@ -1,9 +1,9 @@
-import { SidebarInsetLayout } from '@/components/shared/layout/sidebar-inset-layout';
+import { SidebarInsetLayout } from "@/components/shared/sidebar/sidebar-inset-layout";
 
 export function ArtsUtils() {
   return (
     <SidebarInsetLayout headerText="Утиліти артикулів">
-      <main className=" p-4"></main>
+      <main className="p-4"></main>
     </SidebarInsetLayout>
   );
 }

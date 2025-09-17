@@ -1,6 +1,9 @@
-import { SidebarInsetLayout } from '@/components/shared/layout/sidebar-inset-layout';
+import { SidebarInsetLayout } from "@/components/shared/sidebar/sidebar-inset-layout";
+import {
+  PalletContainer,
+  PalletContainerSkeleton,
+} from "@/modules/pallets/components/containers/pallet-container";
 import { PalletFetcher } from "@/modules/pallets/components/fetchers";
-import { PalletContainer, PalletContainerSkeleton } from "@/modules/pallets/components/containers/pallet-container";
 import { useParams } from "react-router";
 
 export function Pallet() {

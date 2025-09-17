@@ -1,6 +1,9 @@
-import { SidebarInsetLayout } from '@/components/shared/layout/sidebar-inset-layout';
+import { SidebarInsetLayout } from "@/components/shared/sidebar/sidebar-inset-layout";
+import {
+  RowContainer,
+  RowContainerSkeleton,
+} from "@/modules/rows/components/containers/row-container";
 import { RowFetcher } from "@/modules/rows/components/fetchers";
-import { RowContainer, RowContainerSkeleton } from "@/modules/rows/components/containers/row-container";
 import { useParams } from "react-router";
 
 export function Row() {
