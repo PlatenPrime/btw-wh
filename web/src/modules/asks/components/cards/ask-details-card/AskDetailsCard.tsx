@@ -17,14 +17,14 @@ export function AskDetailsCard({ askData }: AskDetailsCardProps) {
       <CardContent className="flex flex-row items-start gap-2 p-2">
         <AskImageStatus statusText={askData.status} artikul={askData.artikul} />
 
-        <div className="grid gap-2">
+        <div className="grid gap-2 text-sm">
           <AskNameukr nameukr={askData.nameukr || askData.artikul} />
           <AskQuant quant={askData.quant} />
           <AskCom com={askData.com} />
           <UserAvatarName
             photoUrl={askData.askerData?.photo}
             fullname={askData.askerData?.fullname}
-            className="text-sm"
+            className=""
             size="xs"
           />
           <CalendarDate date={askData.createdAt} />

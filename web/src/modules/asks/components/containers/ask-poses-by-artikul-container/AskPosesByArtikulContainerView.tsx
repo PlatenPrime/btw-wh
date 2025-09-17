@@ -19,7 +19,7 @@ export function AskPosesByArtikulContainerView({
 
 
       {/* Общая статистика */}
-      <TotalItems data={data} />
+      {/* <TotalItems data={data} /> */}
 
       {/* Позиции по складам */}
       <div className="grid items-start gap-2 lg:grid-cols-2">
