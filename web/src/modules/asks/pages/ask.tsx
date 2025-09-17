@@ -12,7 +12,7 @@ export function Ask() {
   if (!id) {
     return (
       <SidebarInsetLayout headerText="Запит">
-        <main className="p-4">
+        <main className="p-2">
           <div className="text-muted-foreground text-center">
             ID запиту не знайдено
           </div>
@@ -23,7 +23,7 @@ export function Ask() {
 
   return (
     <SidebarInsetLayout headerText="Запит">
-      <main className="p-4">
+      <main className="p-2">
         <AskFetcher
           id={id}
           ContainerComponent={AskContainer}
