@@ -18,6 +18,7 @@ interface CreateAskFormViewProps {
   artData?: ArtDto;
   onSubmit: (data: CreateAskFormData) => void;
   onCancel?: () => void;
+  isArtikulPreFilled?: boolean; // Флаг для предзаполненного артикула
 }
 
 export function CreateAskFormView({
@@ -30,6 +31,7 @@ export function CreateAskFormView({
   artData,
   onSubmit,
   onCancel,
+  isArtikulPreFilled = false,
 }: CreateAskFormViewProps) {
   const {
     register,
@@ -76,7 +78,7 @@ export function CreateAskFormView({
               {...register("artikul")}
               onChange={(e) => onArtikulChange(e.target.value)}
               placeholder="1111-1111"
-              disabled={isSubmitting}
+              disabled={isSubmitting || isArtikulPreFilled}
               maxLength={9}
               className={errors.artikul ? "border-destructive" : ""}
             />
@@ -87,6 +89,11 @@ export function CreateAskFormView({
             )}
             {isArtLoading && (
               <p className="text-muted-foreground text-xs">Пошук артикула...</p>
+            )}
+            {isArtikulPreFilled && (
+              <p className="text-muted-foreground text-xs">
+                Артикул вибрано зі сторінки товару
+              </p>
             )}
           </div>
 

@@ -1,12 +1,17 @@
-import { useState } from "react";
 import { CreateAskDialogView } from "@/modules/asks/components/dialogs/create-ask-dialog/CreateAskDialogView.tsx";
+import { useState } from "react";
 
 interface CreateAskDialogProps {
   trigger?: React.ReactNode;
   onSuccess?: () => void;
+  preFilledArtikul?: string; // Предзаполненный артикул для страницы артикула
 }
 
-export function CreateAskDialog({ trigger, onSuccess }: CreateAskDialogProps) {
+export function CreateAskDialog({
+  trigger,
+  onSuccess,
+  preFilledArtikul,
+}: CreateAskDialogProps) {
   const [open, setOpen] = useState(false);
 
   const handleSuccess = () => {
@@ -25,6 +30,7 @@ export function CreateAskDialog({ trigger, onSuccess }: CreateAskDialogProps) {
       trigger={trigger}
       onSuccess={handleSuccess}
       onCancel={handleCancel}
+      preFilledArtikul={preFilledArtikul}
     />
   );
 }

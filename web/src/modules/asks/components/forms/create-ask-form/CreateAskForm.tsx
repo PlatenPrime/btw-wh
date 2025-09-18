@@ -1,27 +1,35 @@
 import { useOneArtQuery } from "@/modules/arts/api/hooks/queries/useOneArtQuery";
 import { useCreateAskMutation } from "@/modules/asks/api/hooks/mutations/useCreateAskMutation";
-import { useAuth } from "@/modules/auth/api/hooks/useAuth";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import { CreateAskFormView } from "@/modules/asks/components/forms/create-ask-form/CreateAskFormView.tsx";
 import {
   createAskFormDefaultValues,
   createAskFormSchema,
   type CreateAskFormData,
 } from "@/modules/asks/components/forms/create-ask-form/schema.ts";
+import { useAuth } from "@/modules/auth/api/hooks/useAuth";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 
 interface CreateAskFormProps {
   onSuccess?: () => void;
   onCancel?: () => void;
+  preFilledArtikul?: string; // Предзаполненный артикул для страницы артикула
 }
 
-export function CreateAskForm({ onSuccess, onCancel }: CreateAskFormProps) {
+export function CreateAskForm({
+  onSuccess,
+  onCancel,
+  preFilledArtikul,
+}: CreateAskFormProps) {
   const { user } = useAuth();
 
   const form = useForm<CreateAskFormData>({
     resolver: zodResolver(createAskFormSchema),
-    defaultValues: createAskFormDefaultValues,
+    defaultValues: {
+      ...createAskFormDefaultValues,
+      artikul: preFilledArtikul || createAskFormDefaultValues.artikul,
+    },
     mode: "onChange",
   });
 
@@ -34,7 +42,7 @@ export function CreateAskForm({ onSuccess, onCancel }: CreateAskFormProps) {
 
   const createAskMutation = useCreateAskMutation();
 
-  // Поиск артикула при вводе 9 символов
+  // Поиск артикула при вводе 9 символов или если артикул предзаполнен
   const shouldSearchArt = artikul.length === 9;
   const { data: artData, isPending: isArtLoading } = useOneArtQuery(
     shouldSearchArt ? artikul : undefined,
@@ -82,9 +90,6 @@ export function CreateAskForm({ onSuccess, onCancel }: CreateAskFormProps) {
       return;
     }
 
-    console.log(data);
-    console.log(currentArtData);
-    console.log(user);
 
     try {
       await createAskMutation.mutateAsync({
@@ -119,6 +124,7 @@ export function CreateAskForm({ onSuccess, onCancel }: CreateAskFormProps) {
       artData={currentArtData}
       onSubmit={onSubmit}
       onCancel={onCancel}
+      isArtikulPreFilled={!!preFilledArtikul}
     />
   );
 }

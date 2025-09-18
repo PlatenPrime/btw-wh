@@ -15,6 +15,7 @@ interface CreateAskDialogViewProps {
   trigger?: React.ReactNode;
   onSuccess: () => void;
   onCancel: () => void;
+  preFilledArtikul?: string; // Предзаполненный артикул для страницы артикула
 }
 
 const defaultTrigger = (
@@ -30,6 +31,7 @@ export function CreateAskDialogView({
   trigger,
   onSuccess,
   onCancel,
+  preFilledArtikul,
 }: CreateAskDialogViewProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -40,7 +42,11 @@ export function CreateAskDialogView({
             Створити новий запит
           </DialogTitle>
         </DialogHeader>
-        <CreateAskForm onSuccess={onSuccess} onCancel={onCancel} />
+        <CreateAskForm
+          onSuccess={onSuccess}
+          onCancel={onCancel}
+          preFilledArtikul={preFilledArtikul}
+        />
       </DialogContent>
     </Dialog>
   );
