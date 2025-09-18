@@ -1,3 +1,1 @@
-export { PosesByArtikulContainer } from "./PosesByArtikulContainer";
-export { PosesByArtikulContainerSkeleton } from "./PosesByArtikulContainerSkeleton";
-export { PosesByArtikulContainerView } from "./PosesByArtikulContainerView";
+export { ArtPosesByArtikulContainer as PosesByArtikulContainer } from "./ArtPosesByArtikulContainer";

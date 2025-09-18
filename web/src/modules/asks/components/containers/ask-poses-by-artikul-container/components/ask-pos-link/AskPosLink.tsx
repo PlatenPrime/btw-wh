@@ -1,13 +1,13 @@
 import { Card, CardContent } from "@/components/ui/card";
-import type { PosResponse } from "@/modules/poses/api/types";
 import { AskPosEditDialog } from "@/modules/asks/components/dialogs/ask-pos-edit-dialog/AskPosEditDialog";
+import type { PosResponse } from "@/modules/poses/api/types";
 
-interface AskPosLinkProps {
+interface AskPosEditTriggerProps {
   pos: PosResponse;
   askId: string;
 }
 
-export function AskPosLink({ pos, askId }: AskPosLinkProps) {
+export function AskPosEditTrigger({ pos, askId }: AskPosEditTriggerProps) {
   return (
     <Card key={pos._id} className="p-0">
       <CardContent className="p-0">
@@ -15,7 +15,7 @@ export function AskPosLink({ pos, askId }: AskPosLinkProps) {
           pos={pos}
           askId={askId}
           trigger={
-            <div className="hover:bg-muted/25 cursor-pointer block rounded-md px-2 py-1 transition-colors">
+            <div className="hover:bg-muted/25 block cursor-pointer rounded-md px-2 py-1 transition-colors">
               <div className="grid grid-cols-3">
                 <div className="min-w-0 flex-1">
                   <h4 className="truncate font-medium">

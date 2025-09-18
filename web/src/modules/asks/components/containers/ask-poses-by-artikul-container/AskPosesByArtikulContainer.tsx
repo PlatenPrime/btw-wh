@@ -1,6 +1,6 @@
-import { PosesByArtikulFetcher } from "@/modules/poses/components/fetchers/poses-by-artikul-fetcher/PosesByArtikulFetcher";
-import { AskPosesByArtikulContainerSkeleton } from "./AskPosesByArtikulContainerSkeleton.tsx";
-import { AskPosesByArtikulContainerView } from "./AskPosesByArtikulContainerView.tsx";
+import type { PosResponse } from "@/modules/poses/api/types";
+import { PosesByArtikulContainer as CommonPosesByArtikulContainer } from "@/modules/poses/components/containers/poses-by-artikul-container";
+import { AskPosEditTrigger } from "./components/ask-pos-link/AskPosLink";
 
 interface AskPosesByArtikulContainerProps {
   artikul: string;
@@ -12,10 +12,11 @@ export function AskPosesByArtikulContainer({
   askId,
 }: AskPosesByArtikulContainerProps) {
   return (
-    <PosesByArtikulFetcher
+    <CommonPosesByArtikulContainer
       artikul={artikul}
-      ContainerComponent={(props) => <AskPosesByArtikulContainerView {...props} askId={askId} />}
-      SkeletonComponent={AskPosesByArtikulContainerSkeleton}
+      renderPos={(pos: PosResponse) => (
+        <AskPosEditTrigger pos={pos} askId={askId} />
+      )}
     />
   );
 }
