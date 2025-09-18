@@ -1,4 +1,5 @@
-import { DateNavigation } from '@/components/shared/date-navigation/DateNavigation';
+import { Container } from "@/components/shared/container";
+import { DateNavigation } from "@/components/shared/date-navigation/DateNavigation";
 import type { GetAsksByDateResponse } from "@/modules/asks/api/types/dto";
 import { CreateAskDialog } from "@/modules/asks/components/dialogs/create-ask-dialog/CreateAskDialog";
 import { AsksList } from "@/modules/asks/components/lists/asks-list/AsksList";
@@ -21,20 +22,23 @@ export function AsksContainerView({
   onDateSelect,
 }: AsksContainerViewProps) {
   return (
-    <div className="grid gap-4">
-      <div className="flex flex-wrap items-center justify-between gap-2">
+    <main className="grid gap-2">
+      <Container className="flex flex-wrap items-center justify-between gap-2">
         <DateNavigation
           selectedDate={selectedDate}
           onPreviousDay={onPreviousDay}
           onNextDay={onNextDay}
           onDateSelect={onDateSelect}
         />
-        <CreateAskDialog />
-        <p className="text-foreground text-center">Всього: {data.count}</p>
-      </div>
-      <div className={isFetching ? "opacity-50" : ""}>
+        <div className="flex w-full items-center justify-between gap-2 lg:max-w-fit">
+          <p className="text-foreground font-medium">Всього: {data.count}</p>
+          <CreateAskDialog />
+        </div>
+      </Container>
+
+      <Container className={isFetching ? "opacity-50" : ""}>
         <AsksList data={data} selectedDate={selectedDate} />
-      </div>
-    </div>
+      </Container>
+    </main>
   );
 }

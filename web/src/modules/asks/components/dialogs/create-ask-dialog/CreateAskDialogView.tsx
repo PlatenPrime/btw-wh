@@ -20,7 +20,7 @@ interface CreateAskDialogViewProps {
 const defaultTrigger = (
   <Button variant="outline">
     <PlusIcon />
-    Додати запит
+    Запит
   </Button>
 );
 

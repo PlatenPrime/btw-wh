@@ -81,9 +81,9 @@
 
 .dark {
   --background: oklch(0.2 0.05 260);         /* тёмный navy */
-  --foreground: oklch(0.92 0.02 260);        /* почти белый с синеватым */
-  --card: oklch(0.25 0.04 260);
-  --card-foreground: oklch(0.92 0.02 260);
+  --foreground: oklch(0.88 0.02 260);        /* почти белый с синеватым */
+  --card: oklch(0.26 0.05 260);
+  --card-foreground: oklch(0.88 0.02 260);
   --popover: oklch(0.25 0.04 260);
   --popover-foreground: oklch(0.95 0.02 260);
   --primary: oklch(0.7 0.1 265);
@@ -103,8 +103,8 @@
   --chart-3: oklch(0.72 0.15 120);
   --chart-4: oklch(0.58 0.2 300);
   --chart-5: oklch(0.65 0.18 30);
-  --sidebar: oklch(0.25 0.04 260);
-  --sidebar-foreground: oklch(0.95 0.02 260);
+  --sidebar: oklch(0.2 0.05 260);
+  --sidebar-foreground: oklch(0.88 0.02 260);
   --sidebar-primary: oklch(0.55 0.15 265);
   --sidebar-primary-foreground: oklch(0.95 0.02 260);
   --sidebar-accent: oklch(0.3 0.05 260);

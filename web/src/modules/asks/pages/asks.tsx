@@ -6,7 +6,7 @@ import { AsksFetcher } from "@/modules/asks/components/fetchers/asks-fetcher/Ask
 export function Asks() {
   return (
     <SidebarInsetLayout headerText="Запити">
-      <main className="p-4">
+      <main className="p-2">
         <AsksFetcher
           ContainerComponent={AsksContainer}
           SkeletonComponent={AsksContainerSkeleton}
