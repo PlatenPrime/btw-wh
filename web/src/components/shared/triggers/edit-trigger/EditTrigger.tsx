@@ -10,7 +10,7 @@ export function EditTrigger({ onClick }: EditTriggerProps) {
     <Button
       variant="ghost"
       size="sm"
-      className="hover:bg-edit/10 hover:text-edit h-8 w-8 p-0"
+      className="hover:bg-edit/10 text-edit  h-8 w-8 p-0"
       onClick={onClick}
     >
       <Edit className="h-4 w-4" />

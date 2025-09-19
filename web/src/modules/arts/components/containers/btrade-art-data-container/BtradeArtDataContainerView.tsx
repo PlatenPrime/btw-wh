@@ -9,12 +9,12 @@ export function BtradeArtDataContainerView({
   data,
 }: BtradeArtDataContainerViewProps) {
   return (
-    <div className="grid">
-      <p className="text-foreground flex items-center text-nowrap gap-1">
+    <div className="flex gap-2">
+      <p className="text-foreground flex items-center text-nowrap">
         <Warehouse size={12} className="text-sky-500" />
         {data.quantity}
       </p>
-      <p className="text-foreground flex items-center text-nowrap gap-1">
+      <p className="text-foreground flex items-center text-nowrap">
         <DollarSign size={12} className="text-emerald-500" />
         {data.price} грн
       </p>

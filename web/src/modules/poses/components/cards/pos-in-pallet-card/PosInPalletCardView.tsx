@@ -19,7 +19,7 @@ interface PosInPalletCardProps {
 
 export function PosInPalletCardView({ pos, onSuccess }: PosInPalletCardProps) {
   return (
-    <Card className="group hover:bg-muted relative justify-between gap-2 overflow-hidden p-2 transition-all duration-200 hover:shadow-md">
+    <Card className="group hover:bg-muted/50 relative justify-between gap-2 overflow-hidden p-2 transition-all duration-200 hover:shadow-md">
       {/* Header with image, title and actions */}
       <CardHeader className="flex items-start gap-3 p-3 px-0 py-0 pb-2">
         {/* Image and title section */}

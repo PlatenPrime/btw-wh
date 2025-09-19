@@ -10,7 +10,7 @@ export function CancelTrigger({ onClick }: CancelTriggerProps) {
     <Button
       variant="ghost"
       size="sm"
-      className="hover:bg-destructive/10 hover:text-destructive h-8 w-8 p-0"
+      className="hover:bg-rose-500/10 text-rose-500 hover:text-rose-400 h-8 w-8 p-0"
       onClick={onClick}
     >
       <Ban className="h-4 w-4" />

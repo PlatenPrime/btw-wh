@@ -10,7 +10,7 @@ export function MoveTrigger({ onClick }: EditTriggerProps) {
     <Button
       variant="ghost"
       size="sm"
-      className="hover:bg-edit/10 hover:text-edit h-8 w-8 p-0"
+      className="hover:bg-purple-500/10 text-purple-500 hover:text-purple-400 h-8 w-8 p-0"
       onClick={onClick}
     >
       <Move className="h-4 w-4" />

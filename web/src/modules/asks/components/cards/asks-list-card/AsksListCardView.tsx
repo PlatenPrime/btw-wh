@@ -4,8 +4,8 @@ import { Card } from "@/components/ui/card";
 import type { AskDto } from "@/modules/asks/api/types/dto";
 import { AskImageStatus } from "@/modules/asks/components/elements/ask-image-status/AskImageStatus";
 import { Link } from "react-router";
+import { ArtNameukr } from "../../../../arts/components/elements/art-nameukr/ArtNameukr";
 import { AskCom } from "../../elements/ask-com/AskCom";
-import { AskNameukr } from "../../elements/ask-nameukr/AskNameukr";
 import { AskQuant } from "../../elements/ask-quant/AskQuant";
 
 interface AsksListCardViewProps {
@@ -23,8 +23,11 @@ export function AsksListCardView({
       <AskImageStatus statusText={statusText} artikul={ask.artikul} />
 
       <div className="grid gap-2">
-        <Link to={`${ask._id}`} className="text-foreground hover:underline text-sm">
-          <AskNameukr nameukr={ask.nameukr || ask.artikul} />
+        <Link
+          to={`${ask._id}`}
+          className="text-foreground text-sm hover:underline"
+        >
+          <ArtNameukr nameukr={ask.nameukr || ask.artikul} />
         </Link>
         <AskQuant quant={ask.quant || 0} />
         <AskCom com={ask.com || ""} />

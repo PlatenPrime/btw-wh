@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -6,8 +5,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import type { PosResponse } from "@/modules/poses/api/types";
 import { AskPosEditForm } from "@/modules/asks/components/forms/ask-pos-edit-form/AskPosEditForm.tsx";
+import type { PosResponse } from "@/modules/poses/api/types";
 
 interface AskPosEditDialogViewProps {
   open: boolean;
@@ -18,12 +17,6 @@ interface AskPosEditDialogViewProps {
   onSuccess: () => void;
   onCancel: () => void;
 }
-
-const defaultTrigger = (
-  <Button variant="outline" size="sm">
-    Редактировать
-  </Button>
-);
 
 export function AskPosEditDialogView({
   open,
@@ -36,16 +29,18 @@ export function AskPosEditDialogView({
 }: AskPosEditDialogViewProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>{trigger || defaultTrigger}</DialogTrigger>
+      {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-center">{pos.palletData?.title}</DialogTitle>
+          <DialogTitle className="text-center">
+            {pos.palletData?.title}
+          </DialogTitle>
         </DialogHeader>
-        <AskPosEditForm 
-          pos={pos} 
+        <AskPosEditForm
+          pos={pos}
           askId={askId}
-          onSuccess={onSuccess} 
-          onCancel={onCancel} 
+          onSuccess={onSuccess}
+          onCancel={onCancel}
         />
       </DialogContent>
     </Dialog>

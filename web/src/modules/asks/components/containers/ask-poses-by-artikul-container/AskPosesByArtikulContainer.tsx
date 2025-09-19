@@ -1,6 +1,6 @@
 import type { PosResponse } from "@/modules/poses/api/types";
 import { PosesByArtikulContainer as CommonPosesByArtikulContainer } from "@/modules/poses/components/containers/poses-by-artikul-container";
-import { AskPosEditTrigger } from "./components/ask-pos-link/AskPosLink";
+import { AskPos } from "./components/ask-pos/AskPos";
 
 interface AskPosesByArtikulContainerProps {
   artikul: string;
@@ -14,9 +14,7 @@ export function AskPosesByArtikulContainer({
   return (
     <CommonPosesByArtikulContainer
       artikul={artikul}
-      renderPos={(pos: PosResponse) => (
-        <AskPosEditTrigger pos={pos} askId={askId} />
-      )}
+      renderPos={(pos: PosResponse) => <AskPos pos={pos} askId={askId} />}
     />
   );
 }
