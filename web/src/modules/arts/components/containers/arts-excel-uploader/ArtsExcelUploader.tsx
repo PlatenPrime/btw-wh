@@ -1,10 +1,10 @@
 import { apiClient } from "@/lib/apiClient"; // путь подкорректируй если нужно
 import type { UploadingArt } from "@/modules/arts/api/types/arts";
+import { View } from "@/modules/arts/components/containers/arts-excel-uploader/ViewComponent.tsx";
 import type { AxiosResponse } from "axios";
 import React, { useState } from "react";
 import { toast } from "sonner";
 import { read, utils } from "xlsx";
-import { View } from "@/modules/arts/components/containers/arts-excel-uploader/ViewComponent.tsx";
 
 type UpsertResponse = {
   message: string;
@@ -40,6 +40,7 @@ const ArtsExcelUploader = () => {
           }) as UploadingArt[];
 
           const requiredFields = ["artikul", "zone", "namerus", "nameukr"];
+          // limit и marker - опциональные поля
 
           const missingFields = requiredFields.filter(
             (field) => !Object.keys(json[0] || {}).includes(field),
@@ -54,12 +55,28 @@ const ArtsExcelUploader = () => {
           }
 
           const formatted = json
-            .map((row) => ({
-              artikul: row.artikul?.toString().trim(),
-              zone: row.zone?.toString().trim(),
-              namerus: row.namerus?.toString().trim(),
-              nameukr: row.nameukr?.toString().trim(),
-            }))
+            .map((row) => {
+              const baseData: UploadingArt = {
+                artikul: row.artikul?.toString().trim(),
+                zone: row.zone?.toString().trim(),
+                namerus: row.namerus?.toString().trim(),
+                nameukr: row.nameukr?.toString().trim(),
+              };
+
+              // Добавляем limit только если он не пустой
+              const limitValue = row.limit?.toString().trim();
+              if (limitValue && !isNaN(Number(limitValue))) {
+                baseData.limit = Number(limitValue);
+              }
+
+              // Добавляем marker только если он не пустой
+              const markerValue = row.marker?.toString().trim();
+              if (markerValue) {
+                baseData.marker = markerValue;
+              }
+
+              return baseData;
+            })
             .filter((row) => row.artikul);
 
           resolve(formatted);

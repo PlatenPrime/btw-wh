@@ -10,7 +10,8 @@ export interface ArtDto {
   nameukr: string;
   namerus: string;
   zone: string;
-  marker: string;
+  limit?: number;
+  marker?: string;
   __v: number;
   btradeStock: BtradeStockDto;
 }

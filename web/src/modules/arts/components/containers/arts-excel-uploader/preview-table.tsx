@@ -20,6 +20,8 @@ export function PreviewTable({ preview }: PreviewTableProps) {
                   <th className="px-3 py-2 text-center">zone</th>
                   <th className="px-3 py-2">namerus</th>
                   <th className="px-3 py-2">nameukr</th>
+                  <th className="px-3 py-2">limit</th>
+                  <th className="px-3 py-2">marker</th>
                 </tr>
               </thead>
               <tbody>
@@ -29,6 +31,8 @@ export function PreviewTable({ preview }: PreviewTableProps) {
                     <td className="px-3 py-1 text-center">{row.zone}</td>
                     <td className="px-3 py-1">{row.namerus}</td>
                     <td className="px-3 py-1">{row.nameukr}</td>
+                    <td className="px-3 py-1">{row.limit}</td>
+                    <td className="px-3 py-1">{row.marker}</td>
                   </tr>
                 ))}
               </tbody>
