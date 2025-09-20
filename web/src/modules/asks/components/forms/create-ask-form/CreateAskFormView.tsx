@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { InputQuant } from "@/components/ui/input-quant";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
@@ -98,21 +99,16 @@ export function CreateAskFormView({
           </div>
 
           {/* Поле количества */}
-          <div className="space-y-2">
-            <Label htmlFor="quant">Кількість</Label>
-            <Input
-              id="quant"
-              type="text"
-              value={watchedValues.quant?.toString() || ""}
-              onChange={(e) => onQuantChange(e.target.value)}
-              placeholder="0"
-              disabled={isSubmitting}
-              className={errors.quant ? "border-destructive" : ""}
-            />
-            {errors.quant && (
-              <p className="text-destructive text-xs">{errors.quant.message}</p>
-            )}
-          </div>
+          <InputQuant
+            id="quant"
+            label="Кількість"
+            placeholder="Введіть кількість"
+            value={watchedValues.quant || ""}
+            onValueChange={onQuantChange}
+            error={errors.quant?.message}
+            disabled={isSubmitting}
+            className={errors.quant ? "border-destructive" : ""}
+          />
 
           {/* Поле комментария */}
           <div className="space-y-2">

@@ -3,16 +3,15 @@ import { z } from "zod";
 export const askPosEditFormSchema = z.object({
   removedQuant: z
     .string()
-    .min(1, "Кількість убраного товару є обов'язковою")
-    .regex(
-      /^-?(0|[1-9]\d*)$/,
+    .refine(
+      (val) => val === "" || /^-?(0|[1-9]\d*)$/.test(val),
       "Кількість повинна бути цілим числом (може бути від'ємним)",
-    ),
+    )
+    .refine((val) => val !== "", "Кількість знятого товару є обов'язковою"),
   removedBoxes: z
     .string()
-    .min(1, "Кількість убраних коробок є обов'язковою")
-    .regex(
-      /^-?(0|[1-9]\d*)$/,
+    .refine(
+      (val) => val === "" || /^-?(0|[1-9]\d*)$/.test(val),
       "Кількість коробок повинна бути цілим числом (може бути від'ємним)",
     ),
 });
@@ -20,6 +19,6 @@ export const askPosEditFormSchema = z.object({
 export type AskPosEditFormData = z.infer<typeof askPosEditFormSchema>;
 
 export const createAskPosEditFormDefaultValues = (): AskPosEditFormData => ({
-  removedQuant: "0",
-  removedBoxes: "0",
+  removedQuant: "",
+  removedBoxes: "",
 });

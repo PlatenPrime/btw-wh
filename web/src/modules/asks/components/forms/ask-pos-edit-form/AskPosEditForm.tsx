@@ -59,7 +59,7 @@ export function AskPosEditForm({
     }
 
     if (cleanValue === "" || cleanValue === "-") {
-      setValue("removedQuant", "0", { shouldValidate: true });
+      setValue("removedQuant", "", { shouldValidate: true });
       return;
     }
 
@@ -91,7 +91,7 @@ export function AskPosEditForm({
     }
 
     if (cleanValue === "" || cleanValue === "-") {
-      setValue("removedBoxes", "0", { shouldValidate: true });
+      setValue("removedBoxes", "", { shouldValidate: true });
       return;
     }
 
@@ -116,7 +116,8 @@ export function AskPosEditForm({
 
     try {
       const removedQuantNum = parseInt(data.removedQuant, 10);
-      const removedBoxesNum = parseInt(data.removedBoxes, 10);
+      const removedBoxesNum =
+        data.removedBoxes === "" ? 0 : parseInt(data.removedBoxes, 10);
 
       // Вычисляем новые значения
       const newQuant = pos.quant - removedQuantNum;
@@ -149,17 +150,13 @@ export function AskPosEditForm({
           ? `Знято товару: ${removedQuantNum} шт., коробок: ${removedBoxesNum} шт. з палети ${pos.palletData?.title || "невідома паллета"}`
           : `Додано товару: ${Math.abs(removedQuantNum)} шт., коробок: ${Math.abs(removedBoxesNum)} шт. до палети ${pos.palletData?.title || "невідома паллета"}`;
 
-
-          
-          await updateAskActionsMutation.mutateAsync({
-            id: askId,
-            data: {
-              action: actionText,
-              userId: user._id,
-            },
-          });
-          
-
+      await updateAskActionsMutation.mutateAsync({
+        id: askId,
+        data: {
+          action: actionText,
+          userId: user._id,
+        },
+      });
     } catch (error) {
       console.error("Error updating pos:", error);
       // Ошибка будет обработана в компоненте через formState
@@ -172,8 +169,10 @@ export function AskPosEditForm({
     updateAskActionsMutation.isPending;
 
   // Вычисляем остатки
-  const remainingQuant = pos.quant - parseInt(removedQuant, 10);
-  const remainingBoxes = pos.boxes - parseInt(removedBoxes, 10);
+  const remainingQuant =
+    pos.quant - (removedQuant === "" ? 0 : parseInt(removedQuant, 10));
+  const remainingBoxes =
+    pos.boxes - (removedBoxes === "" ? 0 : parseInt(removedBoxes, 10));
 
   return (
     <AskPosEditFormView

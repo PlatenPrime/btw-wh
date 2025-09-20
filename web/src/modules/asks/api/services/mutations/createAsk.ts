@@ -4,7 +4,7 @@ import type { AskDto } from "@/modules/asks/api/types/dto";
 export interface CreateAskRequest {
   artikul: string;
   nameukr?: string;
-  quant?: number;
+  quant?: string; // Changed from number to string
   com?: string;
   askerId: string;
 }

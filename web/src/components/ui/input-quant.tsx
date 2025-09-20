@@ -2,16 +2,25 @@ import { Input } from "@/components/ui/input.tsx";
 import { Label } from "@/components/ui/label.tsx";
 import { cn } from "@/lib/utils";
 import { forwardRef } from "react";
+import type { ControllerRenderProps } from "react-hook-form";
 
 interface InputQuantProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange"> {
+  extends Omit<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    "onChange" | "value"
+  > {
   label?: string;
   placeholder?: string;
   error?: string;
-  onValueChange: (value: string) => void;
+  onValueChange?: (value: string) => void;
   className?: string;
   labelClassName?: string;
   errorClassName?: string;
+  value?: string | number;
+  // Поддержка react-hook-form
+  name?: string;
+  // Для работы с Controller
+  field?: ControllerRenderProps<Record<string, unknown>, string>;
 }
 
 export const InputQuant = forwardRef<HTMLInputElement, InputQuantProps>(
@@ -24,15 +33,17 @@ export const InputQuant = forwardRef<HTMLInputElement, InputQuantProps>(
       className,
       labelClassName,
       errorClassName,
+      value,
+      field,
       ...props
     },
     ref,
   ) => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const value = e.target.value;
+      const inputValue = e.target.value;
 
       // Разрешаем только цифры и знак минус в начале
-      const cleanValue = value.replace(/[^0-9-]/g, "");
+      const cleanValue = inputValue.replace(/[^0-9-]/g, "");
 
       // Проверяем, что минус только в начале
       const hasMinus = cleanValue.includes("-");
@@ -40,27 +51,34 @@ export const InputQuant = forwardRef<HTMLInputElement, InputQuantProps>(
 
       if (hasMinus && !cleanValue.startsWith("-")) {
         // Если минус не в начале, убираем его
-        onValueChange(numericPart);
+        const finalValue = numericPart;
+        if (field) field.onChange(finalValue);
+        if (onValueChange) onValueChange(finalValue);
         return;
       }
 
       if (cleanValue === "" || cleanValue === "-") {
-        onValueChange("");
+        const finalValue = "";
+        if (field) field.onChange(finalValue);
+        if (onValueChange) onValueChange(finalValue);
         return;
       }
 
-      if (numericPart === "0") {
-        onValueChange(hasMinus ? "-0" : "0");
-        return;
-      }
-
-      // Убираем ведущие нули, но сохраняем знак
+      // Убираем ведущие нули
       const finalValue = hasMinus
         ? `-${numericPart.replace(/^0+/, "") || "0"}`
         : numericPart.replace(/^0+/, "") || "0";
 
-      onValueChange(finalValue);
+      if (field) field.onChange(finalValue);
+      if (onValueChange) onValueChange(finalValue);
     };
+
+    // Форматируем значение для отображения - пустое поле показываем как пустое
+    const currentValue = field?.value ?? value;
+    const displayValue =
+      currentValue === undefined || currentValue === null || currentValue === ""
+        ? ""
+        : String(currentValue);
 
     return (
       <div className="space-y-2">
@@ -74,8 +92,9 @@ export const InputQuant = forwardRef<HTMLInputElement, InputQuantProps>(
         )}
         <Input
           ref={ref}
-          type="number"
+          type="text"
           placeholder={placeholder}
+          value={displayValue}
           onChange={handleChange}
           className={cn("w-full", className)}
           {...props}

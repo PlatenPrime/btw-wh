@@ -63,7 +63,7 @@ export function AskPosEditFormView({
               id="removedQuant"
               label="Знято товару "
               placeholder="Введіть кількість (може бути від'ємним)"
-              value={removedQuantValue || ""}
+              value={removedQuantValue === "0" ? "" : removedQuantValue || ""}
               onValueChange={onRemovedQuantChange}
               error={errors.removedQuant?.message}
               required
@@ -74,10 +74,9 @@ export function AskPosEditFormView({
               id="removedBoxes"
               label="Знято коробок "
               placeholder="Введіть кількість коробок (може бути від'ємним)"
-              value={removedBoxesValue || ""}
+              value={removedBoxesValue === "0" ? "" : removedBoxesValue || ""}
               onValueChange={onRemovedBoxesChange}
               error={errors.removedBoxes?.message}
-              required
               disabled={isSubmitting}
             />
 
@@ -134,7 +133,10 @@ export function AskPosEditFormView({
             <Button
               type="submit"
               disabled={
-                isSubmitting || remainingQuant < 0 || remainingBoxes < 0
+                isSubmitting ||
+                remainingQuant < 0 ||
+                remainingBoxes < 0 ||
+                removedQuantValue === ""
               }
               className="flex-1"
             >

@@ -1,10 +1,6 @@
-import {
-  FieldErrorDisplay,
-  FormErrorDisplay,
-} from "@/components/shared/error-components";
+import { FormErrorDisplay } from "@/components/shared/error-components";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { InputQuant } from "@/components/ui/input-quant";
 import { useUpdateArtLimitMutation } from "@/modules/arts/api/hooks/mutations/useUpdateArtLimitMutation";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -53,29 +49,32 @@ export function UpdateArtLimitForm({
   };
 
   const {
-    register,
     handleSubmit,
+    setValue,
+    watch,
     formState: { errors },
   } = form;
 
+  const limitValue = watch("limit");
+
+  const handleLimitChange = (value: string) => {
+    setValue("limit", value === "" ? 0 : Number(value), {
+      shouldValidate: true,
+    });
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
-      <div className="space-y-2">
-        <Label htmlFor="art-limit" className="text-sm font-medium">
-          Ліміт артикулу *
-        </Label>
-        <Input
-          id="art-limit"
-          type="number"
-          placeholder="Введіть ліміт"
-          autoFocus
-          aria-invalid={!!errors.limit}
-          aria-describedby="limit-error"
-          {...register("limit", { valueAsNumber: true })}
-          disabled={isSubmitting}
-        />
-        {errors.limit && <FieldErrorDisplay error={errors.limit.message} />}
-      </div>
+      <InputQuant
+        id="art-limit"
+        label="Ліміт артикулу *"
+        placeholder="Введіть ліміт"
+        value={limitValue === 0 ? "" : limitValue.toString()}
+        onValueChange={handleLimitChange}
+        error={errors.limit?.message}
+        autoFocus
+        disabled={isSubmitting}
+      />
 
       {errors.root && (
         <FormErrorDisplay error={errors.root.message} variant="compact" />

@@ -73,15 +73,8 @@ export function CreateAskForm({
     // Убираем все нецифровые символы
     const numericValue = value.replace(/\D/g, "");
 
-    // Если поле пустое, устанавливаем undefined
-    if (numericValue === "") {
-      setValue("quant", undefined, { shouldValidate: true });
-      return;
-    }
-
-    // Конвертируем в число и устанавливаем
-    const numValue = parseInt(numericValue, 10);
-    setValue("quant", numValue, { shouldValidate: true });
+    // Устанавливаем значение как есть (строка)
+    setValue("quant", numericValue, { shouldValidate: true });
   };
 
   const onSubmit = async (data: CreateAskFormData) => {
@@ -90,12 +83,11 @@ export function CreateAskForm({
       return;
     }
 
-
     try {
       await createAskMutation.mutateAsync({
         artikul: data.artikul,
         nameukr: currentArtData?.nameukr,
-        quant: data.quant,
+        quant: data.quant || "", // Ensure string type
         com: data.com,
         askerId: user._id,
       });
