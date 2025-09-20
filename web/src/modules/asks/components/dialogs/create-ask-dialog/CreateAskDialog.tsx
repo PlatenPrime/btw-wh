@@ -2,13 +2,11 @@ import { CreateAskDialogView } from "@/modules/asks/components/dialogs/create-as
 import { useState } from "react";
 
 interface CreateAskDialogProps {
-  trigger?: React.ReactNode;
   onSuccess?: () => void;
   preFilledArtikul?: string; // Предзаполненный артикул для страницы артикула
 }
 
 export function CreateAskDialog({
-  trigger,
   onSuccess,
   preFilledArtikul,
 }: CreateAskDialogProps) {
@@ -27,7 +25,6 @@ export function CreateAskDialog({
     <CreateAskDialogView
       open={open}
       setOpen={setOpen}
-      trigger={trigger}
       onSuccess={handleSuccess}
       onCancel={handleCancel}
       preFilledArtikul={preFilledArtikul}

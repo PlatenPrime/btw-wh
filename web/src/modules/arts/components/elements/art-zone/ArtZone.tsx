@@ -7,7 +7,7 @@ interface ArtZoneProps {
 
 export function ArtZone({ artData }: ArtZoneProps) {
   return (
-    <p className="text-foreground flex items-center gap-1 text-nowrap">
+    <p className="text-foreground flex items-center  text-nowrap">
       <MapPin size={12} className="text-orange-500" />
       {artData.zone}
     </p>

@@ -1,4 +1,4 @@
-import AskTrigger from "@/components/shared/triggers/ask-trigger/AskTrigger";
+import { EditTrigger } from "@/components/shared/triggers/edit-trigger/EditTrigger";
 import {
   Dialog,
   DialogContent,
@@ -6,40 +6,41 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { CreateAskForm } from "@/modules/asks/components/forms/create-ask-form/CreateAskForm";
+import type { ArtDto } from "@/modules/arts/api/types/dto";
+import { UpdateArtLimitForm } from "@/modules/arts/components/forms/update-art-limit-form/UpdateArtLimitForm";
 
-interface CreateAskDialogViewProps {
+interface UpdateArtLimitDialogViewProps {
   open: boolean;
   setOpen: (open: boolean) => void;
-
+  artData: ArtDto;
+  trigger?: React.ReactNode;
   onSuccess: () => void;
   onCancel: () => void;
-  preFilledArtikul?: string; // Предзаполненный артикул для страницы артикула
 }
 
-export function CreateAskDialogView({
+export function UpdateArtLimitDialogView({
   open,
   setOpen,
+  artData,
 
   onSuccess,
   onCancel,
-  preFilledArtikul,
-}: CreateAskDialogViewProps) {
+}: UpdateArtLimitDialogViewProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <AskTrigger />
+        <EditTrigger />
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="text-center">
-            Створити новий запит
+            Артикул: {artData.artikul}
           </DialogTitle>
         </DialogHeader>
-        <CreateAskForm
+        <UpdateArtLimitForm
+          artData={artData}
           onSuccess={onSuccess}
           onCancel={onCancel}
-          preFilledArtikul={preFilledArtikul}
         />
       </DialogContent>
     </Dialog>

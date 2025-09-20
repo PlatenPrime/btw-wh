@@ -3,5 +3,5 @@ interface ArtNameukrProps {
 }
 
 export function ArtNameukr({ nameukr }: ArtNameukrProps) {
-  return <span className="text-foreground">{nameukr}</span>;
+  return <span className="text-foreground font-medium">{nameukr}</span>;
 }
