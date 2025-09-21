@@ -13,7 +13,7 @@ export function AskContainerView({ askData }: AskContainerViewProps) {
   return (
     <section className="grid gap-2">
       <Container className="grid gap-2 lg:grid-cols-2">
-        <div className="flex gap-2 w-full" >
+        <div className="flex w-full gap-2">
           <AskDetailsCard askData={askData} />
           <AskControlButtons askData={askData} />
         </div>

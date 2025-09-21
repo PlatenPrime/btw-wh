@@ -6,12 +6,18 @@ import type { ReactNode } from "react";
 
 export interface PosesByArtikulContainerProps {
   artikul: string;
-  renderPos: (pos: PosResponse, additionalProps?: unknown) => ReactNode;
-  additionalProps?: unknown;
+  renderPos: (
+    pos: PosResponse,
+    additionalProps?: Record<string, unknown>,
+  ) => ReactNode;
+  additionalProps?: Record<string, unknown>;
 }
 
 export interface PosesByArtikulContainerViewProps {
   data: GetPosesByArtikulResponse;
-  renderPos: (pos: PosResponse, additionalProps?: unknown) => ReactNode;
-  additionalProps?: unknown;
+  renderPos: (
+    pos: PosResponse,
+    additionalProps?: Record<string, unknown>,
+  ) => ReactNode;
+  additionalProps?: Record<string, unknown>;
 }

@@ -1,20 +1,16 @@
-import { Skeleton } from "@/components/ui/skeleton";
+import { Container } from "@/components/shared/container";
 import { ArtDetailCardSkeleton } from "@/modules/arts/components/cards/art-detail-card/ArtDetailCardSkeleton";
+import { ArtControlButtonsSkeleton } from "@/modules/arts/components/control/art-control-buttons/ArtControlButtonsSkeleton";
+import { PosesByArtikulContainerSkeleton } from "@/modules/poses/components/containers/poses-by-artikul-container";
 
 export function ArtContainerSkeleton() {
   return (
-    <section className="flex flex-col gap-4">
-      <ArtDetailCardSkeleton />
-
-      {/* Скелетон для секции позиций */}
-      <div className="space-y-4">
-        <Skeleton className="h-6 w-32" />
-        <div className="space-y-2">
-          <Skeleton className="h-10 w-full" />
-          <Skeleton className="h-10 w-full" />
-          <Skeleton className="h-10 w-full" />
-        </div>
-      </div>
+    <section className="grid gap-2">
+      <Container className="flex w-full gap-2">
+        <ArtDetailCardSkeleton />
+        <ArtControlButtonsSkeleton />
+      </Container>
+      <PosesByArtikulContainerSkeleton />
     </section>
   );
 }

@@ -12,14 +12,11 @@ export function AskActions({ actions }: AskActionsProps) {
     <Card className="p-1">
       <CardContent className="flex flex-col gap-2">
         {actions.map((action, index) => (
-          <p key={index} className="flex items-start gap-2">
+          <div key={index} className="flex items-start gap-2">
             <UserCheck className="h-4 w-4 shrink-0" />
-            <span key={index} className="text-xs">
-              {" "}
-              {action}
-            </span>
+            <span className="text-xs"> {action}</span>
             <hr />
-          </p>
+          </div>
         ))}
       </CardContent>
     </Card>
