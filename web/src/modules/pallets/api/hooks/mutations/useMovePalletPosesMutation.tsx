@@ -23,6 +23,9 @@ export function useMovePalletPosesMutation({
       queryClient.invalidateQueries({
         queryKey: ["pallets", { option: "empty" }],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["poses", { by: "pallet", palletId: pallet._id }],
+      });
     },
   });
 }
