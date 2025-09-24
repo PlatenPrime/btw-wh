@@ -1,12 +1,13 @@
 import { useCreatePalletMutation } from "@/modules/pallets/api/hooks/mutations/useCreatePalletMutation";
+import { CreatePalletDialogView } from "@/modules/pallets/components/dialogs/create-pallet-dialog/CreatePalletDialogView.tsx";
+import {
+  palletSchema,
+  type PalletFormValues,
+} from "@/modules/pallets/components/forms/schema";
 import type { RowDto } from "@/modules/rows/api/types/dto";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { palletSchema, type PalletFormValues } from "@/modules/pallets/components/forms/schema";
-import { CreatePalletDialogView } from "@/modules/pallets/components/dialogs/create-pallet-dialog/CreatePalletDialogView.tsx";
 import { useState } from "react";
-
-
+import { useForm } from "react-hook-form";
 
 export function CreatePalletDialog({ row }: { row: RowDto }) {
   const form = useForm<PalletFormValues>({
@@ -16,6 +17,7 @@ export function CreatePalletDialog({ row }: { row: RowDto }) {
     defaultValues: {
       title: "",
       sector: "",
+      isDef: false,
     },
   });
 
@@ -29,6 +31,7 @@ export function CreatePalletDialog({ row }: { row: RowDto }) {
         title: data.title.trim(),
         rowData: { _id: row._id, title: row.title },
         sector: data.sector?.trim() || undefined,
+        isDef: data.isDef,
       });
       // Reset form and close dialog after successful submission
       form.reset();
@@ -60,10 +63,7 @@ export function CreatePalletDialog({ row }: { row: RowDto }) {
     }
   };
 
-  const {
-    handleSubmit,
-    reset,
-  } = form;
+  const { handleSubmit, reset } = form;
 
   const handleFormSubmit = handleSubmit(async (data) => {
     const success = await onSubmit(data);

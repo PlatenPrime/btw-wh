@@ -1,10 +1,15 @@
 import { useUpdatePalletMutation } from "@/modules/pallets/api/hooks/mutations/useUpdatePalletMutation";
-import type { UpdatePalletDto } from "@/modules/pallets/api/types";
-import type { PalletShortDto } from "@/modules/pallets/api/types";
+import type {
+  PalletShortDto,
+  UpdatePalletDto,
+} from "@/modules/pallets/api/types";
+import {
+  palletSchema,
+  type PalletFormValues,
+} from "@/modules/pallets/components/forms/schema.ts";
+import { UpdatePalletFormView } from "@/modules/pallets/components/forms/update-pallet-form/UpdatePalletFormView.tsx";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { palletSchema, type PalletFormValues } from "@/modules/pallets/components/forms/schema.ts";
-import { UpdatePalletFormView } from "@/modules/pallets/components/forms/update-pallet-form/UpdatePalletFormView.tsx";
 
 interface UpdatePalletFormProps {
   pallet: PalletShortDto;
@@ -26,6 +31,7 @@ export function UpdatePalletForm({
     defaultValues: {
       title: pallet.title,
       sector: pallet.sector || "",
+      isDef: pallet.isDef,
     },
   });
 
@@ -37,6 +43,7 @@ export function UpdatePalletForm({
       const updateData: UpdatePalletDto = {
         title: data.title.trim(),
         sector: data.sector?.trim() || undefined,
+        isDef: data.isDef,
       };
       await updateMutation.mutateAsync({ id: pallet._id, data: updateData });
       onSuccess();

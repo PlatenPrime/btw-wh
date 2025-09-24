@@ -1,7 +1,7 @@
 import {
   FieldErrorDisplay,
   FormErrorDisplay,
-} from '@/components/shared/error-components';
+} from "@/components/shared/error-components";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -15,9 +15,10 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { type PalletFormValues } from "@/modules/pallets/components/forms/schema";
 import { Plus } from "lucide-react";
 import type { UseFormReturn } from "react-hook-form";
-import { type PalletFormValues } from "@/modules/pallets/components/forms/schema";
 
 interface CreatePalletDialogViewProps {
   form: UseFormReturn<PalletFormValues>;
@@ -36,8 +37,12 @@ export function CreatePalletDialogView({
 }: CreatePalletDialogViewProps) {
   const {
     register,
+    watch,
+    setValue,
     formState: { errors },
   } = form;
+
+  const isDefValue = watch("isDef");
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -78,6 +83,17 @@ export function CreatePalletDialogView({
               id="pallet-sector"
               placeholder="Введіть сектор"
               {...register("sector")}
+              disabled={isSubmitting}
+            />
+          </div>
+          <div className="flex items-center justify-between">
+            <Label htmlFor="pallet-isDef" className="text-sm font-medium">
+              Аналіз
+            </Label>
+            <Switch
+              id="pallet-isDef"
+              checked={isDefValue}
+              onCheckedChange={(checked: boolean) => setValue("isDef", checked)}
               disabled={isSubmitting}
             />
           </div>

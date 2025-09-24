@@ -7,6 +7,7 @@ export interface PalletShortDto {
   title: string;
   sector?: string;
   isEmpty: boolean;
+  isDef: boolean;
 }
 
 export interface PalletRowData {
@@ -21,10 +22,10 @@ export interface IPallet {
   rowData: PalletRowData;
   poses: IPos[];
   sector?: string;
+  isDef: boolean;
   createdAt?: string;
   updatedAt?: string;
 }
-
 
 export interface RowData {
   _id: string;
@@ -35,23 +36,23 @@ export interface CreatePalletDto {
   title: string;
   rowData: RowData;
   sector?: string;
+  isDef: boolean;
 }
 
 export interface UpdatePalletDto {
   title?: string;
   row?: string;
   sector?: string;
+  isDef?: boolean;
 }
 
 export type PalletListResponse = IPallet[];
 export type PalletShortListResponse = PalletShortDto[];
 export type PalletResponse = IPallet;
 
-
 export interface DeletePalletResponse {
   message: string;
 }
-
 
 export interface ClearPalletResponse {
   message: string;

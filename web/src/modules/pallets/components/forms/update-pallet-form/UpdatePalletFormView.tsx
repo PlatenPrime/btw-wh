@@ -2,8 +2,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import type { UseFormReturn } from "react-hook-form";
+import { Switch } from "@/components/ui/switch";
 import { type PalletFormValues } from "@/modules/pallets/components/forms/schema.ts";
+import type { UseFormReturn } from "react-hook-form";
 
 interface UpdatePalletFormViewProps {
   form: UseFormReturn<PalletFormValues>;
@@ -21,8 +22,12 @@ export function UpdatePalletFormView({
   const {
     register,
     handleSubmit,
+    watch,
+    setValue,
     formState: { errors },
   } = form;
+
+  const isDefValue = watch("isDef");
 
   return (
     <Card className="w-full max-w-md">
@@ -55,6 +60,16 @@ export function UpdatePalletFormView({
               id="sector"
               placeholder="Введіть сектор (необов'язково)"
               {...register("sector")}
+              disabled={isSubmitting}
+            />
+          </div>
+
+          <div className="flex items-center justify-between">
+            <Label htmlFor="isDef">Аналіз</Label>
+            <Switch
+              id="isDef"
+              checked={isDefValue}
+              onCheckedChange={(checked: boolean) => setValue("isDef", checked)}
               disabled={isSubmitting}
             />
           </div>
