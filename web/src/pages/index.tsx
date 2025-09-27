@@ -6,7 +6,7 @@ export { Asks } from "../modules/asks/pages/asks";
 export { Row } from "../modules/rows/pages/row";
 export { Rows } from "../modules/rows/pages/rows";
 export { ArtsUtils } from "./artsUtils";
-export { Defs } from "./defs";
+export { Defs } from "../modules/defs/pages/defs";
 export { Main } from "./main";
 export { Path } from "./path";
 export { Stock } from "./stock";

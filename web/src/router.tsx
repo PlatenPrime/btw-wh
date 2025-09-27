@@ -40,7 +40,9 @@ const Asks = lazy(() =>
 );
 
 const Defs = lazy(() =>
-  import("./pages/defs").then((module) => ({ default: module.Defs })),
+  import("./modules/defs/pages/defs").then((module) => ({
+    default: module.Defs,
+  })),
 );
 const Main = lazy(() =>
   import("./pages/main").then((module) => ({ default: module.Main })),
