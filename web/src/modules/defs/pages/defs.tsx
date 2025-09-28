@@ -5,7 +5,7 @@ import { LatestDefsFetcher } from "@/modules/defs/components/fetchers/latest-def
 export function Defs() {
   return (
     <SidebarInsetLayout headerText="Дефіцити">
-      <main className="p-4">
+      <main className="p-2 grid gap-2">
         <DefControls />
         <LatestDefsFetcher />
       </main>

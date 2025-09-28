@@ -1,63 +1,43 @@
+import { Container } from "@/components/shared/container";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useCalculateDefsMutation } from "@/modules/defs/api/hooks/mutations/useCalculateDefsMutation";
 import { Calculator, CheckCircle2 } from "lucide-react";
-import { useEffect, useState } from "react";
 
-export function DefControlsView() {
-  const calculateMutation = useCalculateDefsMutation();
-  const [lastSuccessTime, setLastSuccessTime] = useState<number>(0);
+interface DefControlsViewProps {
+  handleCalculate: () => void;
+  isPending: boolean;
+  isRecentlyStarted: boolean;
+}
 
-  const handleCalculate = () => {
-    calculateMutation.mutate();
-  };
-
-  useEffect(() => {
-    if (calculateMutation.isSuccess) {
-      setLastSuccessTime(Date.now());
-    }
-  }, [calculateMutation.isSuccess]);
-
-  const isRecentlyStarted =
-    calculateMutation.isSuccess && Date.now() - lastSuccessTime < 10000; // 10 секунд
-
+export function DefControlsView({
+  handleCalculate,
+  isPending,
+  isRecentlyStarted,
+}: DefControlsViewProps) {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Calculator className="h-5 w-5" />
-          Управление дефицитами
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="flex flex-col gap-4">
-          <p className="text-muted-foreground text-sm">
-            Запустите расчет дефицитов для обновления данных о товарах,
-            требующих пополнения на складе. Процесс выполняется в фоне.
-          </p>
-          <Button
-            onClick={handleCalculate}
-            disabled={calculateMutation.isPending}
-            className="w-full sm:w-auto"
-            variant={isRecentlyStarted ? "secondary" : "default"}
-          >
-            {isRecentlyStarted ? (
-              <>
-                <CheckCircle2 className="mr-2 h-4 w-4 text-green-600" />
-                Запущено
-              </>
-            ) : (
-              <>
-                <Calculator className="mr-2 h-4 w-4" />
-                Рассчитать дефициты
-              </>
-            )}
-          </Button>
-          {calculateMutation.isPending && (
-            <p className="text-muted-foreground text-sm">Запускаем расчет...</p>
+    <Container className="flex justify-center">
+      <div className="flex flex-col gap-4">
+        <Button
+          onClick={handleCalculate}
+          disabled={isPending}
+          className="w-full sm:w-auto"
+          variant={isRecentlyStarted ? "default" : "outline"} 
+        >
+          {isRecentlyStarted ? (
+            <>
+              <CheckCircle2 className=" h-4 w-4 text-green-600" />
+              Запущено
+            </>
+          ) : (
+            <>
+              <Calculator className=" h-4 w-4" />
+              Розрахувати дефіцити
+            </>
           )}
-        </div>
-      </CardContent>
-    </Card>
+        </Button>
+        {isPending && (
+          <p className="text-muted-foreground text-sm">Запускаємо розрахунок</p>
+        )}
+      </div>
+    </Container>
   );
 }
