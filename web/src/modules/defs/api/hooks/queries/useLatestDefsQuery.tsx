@@ -7,8 +7,6 @@ export function useLatestDefsQuery() {
     queryFn: () => getLatestDefs(),
     staleTime: 5 * 60 * 1000, // 5 минут
     retry: 1,
-    // Добавляем polling для автоматического обновления после расчета
-    refetchInterval: 30000, // Каждые 30 секунд
-    refetchIntervalInBackground: true,
+    // Убираем polling - данные обновляются только после завершения расчета
   });
 }

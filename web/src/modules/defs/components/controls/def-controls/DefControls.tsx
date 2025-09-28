@@ -1,29 +1,69 @@
 import { useCalculateDefsMutation } from "@/modules/defs/api/hooks/mutations/useCalculateDefsMutation";
+import { useDefsCalculationStatus } from "@/modules/defs/api/hooks/queries/useDefsCalculationStatus";
 import { DefControlsView } from "@/modules/defs/components/controls/def-controls/DefControlsView";
+import { CalculationConfirmationDialog } from "@/modules/defs/components/dialogs/calculation-confirmation-dialog/CalculationConfirmationDialog";
+import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
 export function DefControls() {
   const calculateMutation = useCalculateDefsMutation();
-  const [lastSuccessTime, setLastSuccessTime] = useState<number>(0);
+  const queryClient = useQueryClient();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const handleCalculate = () => {
+  // Получаем статус расчета
+  const { data: statusData } = useDefsCalculationStatus({
+    enabled: true,
+  });
+
+  const handleCalculateClick = () => {
+    setIsDialogOpen(true);
+  };
+
+  const handleConfirmCalculation = () => {
     calculateMutation.mutate();
+    setIsDialogOpen(false);
+  };
+
+  const handleCloseDialog = () => {
+    setIsDialogOpen(false);
   };
 
   useEffect(() => {
     if (calculateMutation.isSuccess) {
-      setLastSuccessTime(Date.now());
-    }
-  }, [calculateMutation.isSuccess]);
+      // Ждем 2 секунды, чтобы сервер успел запустить процесс
+      const timeoutId = setTimeout(() => {
+        // Принудительно обновляем статус расчета после успешного запуска
+        queryClient.invalidateQueries({
+          queryKey: ["defs", "calculation-status"],
+        });
+        // Принудительно запускаем refetch
+        queryClient.refetchQueries({
+          queryKey: ["defs", "calculation-status"],
+        });
+      }, 2000);
 
-  const isRecentlyStarted =
-    calculateMutation.isSuccess && Date.now() - lastSuccessTime < 10000; // 10 секунд
+      return () => clearTimeout(timeoutId);
+    }
+  }, [calculateMutation.isSuccess, queryClient]);
+
+  // Определяем состояние кнопки на основе реального статуса расчета
+  const isCalculationRunning = statusData?.data?.isRunning ?? false;
+  const isRecentlyStarted = calculateMutation.isSuccess && isCalculationRunning;
 
   return (
-    <DefControlsView
-      handleCalculate={handleCalculate}
-      isPending={calculateMutation.isPending}
-      isRecentlyStarted={isRecentlyStarted}
-    />
+    <>
+      <DefControlsView
+        handleCalculate={handleCalculateClick}
+        isPending={calculateMutation.isPending}
+        isRecentlyStarted={isRecentlyStarted}
+      />
+
+      <CalculationConfirmationDialog
+        isOpen={isDialogOpen}
+        onClose={handleCloseDialog}
+        onConfirm={handleConfirmCalculation}
+        isPending={calculateMutation.isPending}
+      />
+    </>
   );
 }

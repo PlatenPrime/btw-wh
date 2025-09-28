@@ -44,6 +44,9 @@ export interface DefsCalculationStatus {
   estimatedTimeRemaining?: number;
   startedAt?: string;
   lastUpdate?: string;
+  currentStep?: string;
+  totalItems?: number;
+  processedItems?: number;
 }
 
 export interface DefsCalculationStatusResponse {
