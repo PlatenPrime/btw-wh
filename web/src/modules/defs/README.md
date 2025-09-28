@@ -39,8 +39,9 @@ POST /api/defs/calculate
   "success": true,
   "message": "Deficit calculation completed and saved successfully",
   "data": {
-    "totalItems": 150,
-    "totalDeficits": 23,
+    "total": 23,
+    "totalCriticalDefs": 15,
+    "totalLimitDefs": 8,
     "createdAt": "2024-01-15T10:30:00.000Z"
   }
 }
@@ -75,25 +76,17 @@ Authorization: Bearer <token>
   "data": {
     "_id": "65a1b2c3d4e5f6789012345",
     "result": {
-      "ART001": {
-        "nameukr": "Название товара",
-        "quant": 5,
-        "boxes": 1,
-        "sharikQuant": 15,
-        "difQuant": 10,
-        "limit": 20
-      },
-      "ART002": {
-        "nameukr": "Другой товар",
-        "quant": 0,
-        "boxes": 0,
-        "sharikQuant": 8,
-        "difQuant": -5,
-        "limit": 10
+      "1102-3101": {
+        "nameukr": "1102-3101 Кулька І 12\"/01 Пастель білий \"МАКСІ\",500од",
+        "quant": 115000,
+        "sharikQuant": 49500,
+        "difQuant": -65500,
+        "defLimit": 115500
       }
     },
-    "totalDeficits": 1,
-    "totalItems": 2,
+    "total": 1,
+    "totalCriticalDefs": 1,
+    "totalLimitDefs": 0,
     "createdAt": "2024-01-15T10:30:00.000Z",
     "updatedAt": "2024-01-15T10:30:00.000Z"
   }
@@ -117,12 +110,11 @@ Authorization: Bearer <token>
 
 ```typescript
 interface IDeficitItem {
-  nameukr?: string; // Название товара на украинском
+  nameukr: string; // Название товара на украинском
   quant: number; // Текущий остаток на складе
-  boxes: number; // Количество коробок
   sharikQuant: number; // Остаток по данным Sharik
   difQuant: number; // Разница (sharikQuant - quant)
-  limit?: number; // Минимальный лимит товара
+  defLimit: number; // Сумма лимита артикула и quant
 }
 ```
 
@@ -133,8 +125,9 @@ interface IDeficitItem {
 ```typescript
 interface IDefcalc {
   result: IDeficitCalculationResult; // Объект с дефицитами по артикулам
-  totalDeficits: number; // Общее количество дефицитных товаров
-  totalItems: number; // Общее количество обработанных товаров
+  total: number; // Общее количество найденных дефицитов
+  totalCriticalDefs: number; // Критические дефициты (sharikQuant <= quant)
+  totalLimitDefs: number; // Дефициты в лимите (sharikQuant <= defLimit но > quant)
   createdAt: Date; // Дата создания
   updatedAt: Date; // Дата обновления
 }
@@ -142,10 +135,11 @@ interface IDefcalc {
 
 ## Логика фильтрации дефицитов
 
-Система определяет товар как дефицитный, если выполняется одно из условий:
+Система определяет тип дефицита по следующим условиям:
 
-1. **`difQuant <= 0`** - реальный дефицит (остаток на складе меньше или равен нулю)
-2. **`quant <= limit`** - приближение к лимиту (текущий остаток меньше или равен установленному лимиту)
+1. **Критический дефицит** - `sharikQuant <= quant` (остаток на сайте меньше или равен остатку на складе)
+2. **Дефицит в лимите** - `sharikQuant <= defLimit` но `sharikQuant > quant` (остаток на сайте меньше лимита, но больше остатка на складе)
+3. **`defLimit`** - сумма лимита артикула и `quant` (когда `sharikQuant` пересекает это значение, дефицит становится в лимите)
 
 ### ❌ Ошибка расчета
 
@@ -185,16 +179,17 @@ const response = await fetch("/api/defs/latest", {
 const { success, data } = await response.json();
 
 if (success && data) {
-  const deficits = Object.entries(data.result)
-    .filter(([artikul, item]) => item.difQuant <= 0)
-    .map(([artikul, item]) => ({
-      artikul,
-      name: item.nameukr,
-      currentStock: item.quant,
-      requiredStock: item.sharikQuant,
-      deficit: Math.abs(item.difQuant),
-      limit: item.limit,
-    }));
+  const deficits = Object.entries(data.result).map(([artikul, item]) => ({
+    artikul,
+    name: item.nameukr,
+    currentStock: item.quant,
+    requiredStock: item.sharikQuant,
+    deficit: Math.abs(item.difQuant),
+    defLimit: item.defLimit,
+    isCritical: item.sharikQuant <= item.quant,
+    isInLimit:
+      item.sharikQuant <= item.defLimit && item.sharikQuant > item.quant,
+  }));
 }
 ```
 
@@ -210,7 +205,9 @@ const response = await fetch("/api/defs/calculate", {
 });
 
 const result = await response.json();
-console.log(`Найдено дефицитов: ${result.data.totalDeficits}`);
+console.log(`Найдено дефицитов: ${result.data.total}`);
+console.log(`Критических: ${result.data.totalCriticalDefs}`);
+console.log(`В лимите: ${result.data.totalLimitDefs}`);
 ```
 
 ### Отображение статистики
@@ -218,15 +215,11 @@ console.log(`Найдено дефицитов: ${result.data.totalDeficits}`);
 ```typescript
 // Получение статистики по дефицитам
 const getDeficitStats = (data: IDefcalc) => {
-  const items = Object.values(data.result);
-
   return {
-    total: data.totalItems,
-    deficits: data.totalDeficits,
-    critical: items.filter((item) => item.difQuant <= 0).length,
-    nearLimit: items.filter(
-      (item) => item.difQuant > 0 && item.limit && item.quant <= item.limit
-    ).length,
+    total: data.total,
+    deficits: data.total,
+    critical: data.totalCriticalDefs,
+    nearLimit: data.totalLimitDefs,
   };
 };
 ```

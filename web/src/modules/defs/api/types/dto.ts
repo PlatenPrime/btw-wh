@@ -1,10 +1,9 @@
 export interface DeficitItem {
-  nameukr?: string; // Название товара на украинском
+  nameukr: string; // Название товара на украинском
   quant: number; // Текущий остаток на складе
-  boxes: number; // Количество коробок
   sharikQuant: number; // Остаток по данным Sharik
   difQuant: number; // Разница (sharikQuant - quant)
-  limit?: number; // Минимальный лимит товара
+  defLimit: number; // Сумма лимита артикула и quant
 }
 
 export interface DeficitCalculationResult {
@@ -14,8 +13,9 @@ export interface DeficitCalculationResult {
 export interface Defcalc {
   _id: string;
   result: DeficitCalculationResult; // Объект с дефицитами по артикулам
-  totalDeficits: number; // Общее количество дефицитных товаров
-  totalItems: number; // Общее количество обработанных товаров
+  total: number; // Общее количество найденных дефицитов
+  totalCriticalDefs: number; // Критические дефициты (sharikQuant <= quant)
+  totalLimitDefs: number; // Дефициты в лимите (sharikQuant <= defLimit но > quant)
   createdAt: string; // Дата создания
   updatedAt: string; // Дата обновления
   __v: number;
@@ -25,8 +25,9 @@ export interface CalculateDefsResponse {
   success: boolean;
   message: string;
   data: {
-    totalItems: number;
-    totalDeficits: number;
+    total: number;
+    totalCriticalDefs: number;
+    totalLimitDefs: number;
     createdAt: string;
   };
 }

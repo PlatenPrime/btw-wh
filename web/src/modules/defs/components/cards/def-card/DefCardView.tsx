@@ -14,12 +14,12 @@ export function DefCardView({ artikul, defItem }: DefCardViewProps) {
   return (
     <Card
       className={cn(
-        "bg-background shadow-muted-foreground h-full p-2 shadow-none ring-1 ring-gray-200 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:shadow-2xl  dark:ring-gray-700",
+        "bg-background shadow-muted-foreground h-full flex-col justify-between p-2 shadow-none ring-1 ring-gray-200 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:shadow-2xl dark:ring-gray-700",
         "text-sm",
       )}
     >
       {/* Image and name */}
-      <div className="flex items-center justify-between gap-2  text-sm">
+      <div className="flex items-center justify-between gap-2 text-sm">
         <ArtDialogImage artikul={artikul} />
         <ArtNameukr nameukr={defItem.nameukr || artikul} />
         <div className="grid place-items-center">
@@ -45,8 +45,15 @@ export function DefCardView({ artikul, defItem }: DefCardViewProps) {
           <span className="font-medium">{defItem.sharikQuant}</span>
         </div>
         <div className="flex justify-between text-xs">
-          <span className="text-muted-foreground">Дефіцит:</span>
-          <span className="font-medium text-red-600 dark:text-red-400">
+          <span className="text-muted-foreground">Вітрина:</span>
+          <span
+            className={cn(
+              "font-medium",
+              defItem.difQuant <= 0
+                ? "text-red-600 dark:text-red-400"
+                : "text-yellow-600 dark:text-yellow-400",
+            )}
+          >
             {defItem.difQuant}
           </span>
         </div>

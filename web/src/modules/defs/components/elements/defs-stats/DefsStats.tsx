@@ -8,14 +8,10 @@ interface DefsStatsProps {
 
 export function DefsStats({ defsData }: DefsStatsProps) {
   const stats = useMemo(() => {
-    const items = Object.values(defsData.result);
-
     return {
-      deficits: defsData.totalDeficits,
-      critical: items.filter((item) => item.difQuant <= 0).length,
-      nearLimit: items.filter(
-        (item) => item.difQuant > 0 && item.limit && item.quant <= item.limit,
-      ).length,
+      deficits: defsData.total,
+      critical: defsData.totalCriticalDefs,
+      nearLimit: defsData.totalLimitDefs,
     };
   }, [defsData]);
 
