@@ -1,7 +1,13 @@
 import { SidebarInsetLayout } from "@/components/shared/sidebar/sidebar-inset-layout";
+import {
+  CalculationStatusContainer,
+  CalculationStatusSkeleton,
+} from "@/modules/defs/components/containers/calculation-status-container";
+import { DefsContainer } from "@/modules/defs/components/containers/defs-container/DefsContainer";
+import { DefsContainerSkeleton } from "@/modules/defs/components/containers/defs-container/DefsContainerSkeleton";
 import { DefControls } from "@/modules/defs/components/controls/def-controls/DefControls";
+import { CalculationStatusFetcher } from "@/modules/defs/components/fetchers/calc-defs-status-fetcher/CalculationStatusFetcher";
 import { LatestDefsFetcher } from "@/modules/defs/components/fetchers/latest-defs-fetcher/LatestDefsFetcher";
-import { CalculationStatusFetcher } from "@/modules/defs/components/status/calculation-status/CalculationStatusFetcher";
 import { useEffect, useState } from "react";
 
 export function Defs() {
@@ -26,10 +32,15 @@ export function Defs() {
           <CalculationStatusFetcher
             enabled={true}
             onStatusChange={handleStatusChange}
+            ContainerComponent={CalculationStatusContainer}
+            SkeletonComponent={CalculationStatusSkeleton}
           />
         )}
 
-        <LatestDefsFetcher />
+        <LatestDefsFetcher
+          ContainerComponent={DefsContainer}
+          SkeletonComponent={DefsContainerSkeleton}
+        />
       </main>
     </SidebarInsetLayout>
   );

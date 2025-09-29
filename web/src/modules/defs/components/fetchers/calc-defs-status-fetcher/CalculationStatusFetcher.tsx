@@ -1,14 +1,22 @@
 import { useDefsCalculationStatus } from "@/modules/defs/api/hooks/queries/useDefsCalculationStatus";
-import { CalculationStatus } from "@/modules/defs/components/status/calculation-status/CalculationStatus";
+import type { DefsCalculationStatus } from "@/modules/defs/api/types/dto";
+import type { ComponentType } from "react";
 
 interface CalculationStatusFetcherProps {
   enabled: boolean;
   onStatusChange?: (isRunning: boolean) => void;
+  ContainerComponent: ComponentType<{
+    status: DefsCalculationStatus;
+    isLoading: boolean;
+  }>;
+  SkeletonComponent: ComponentType;
 }
 
 export function CalculationStatusFetcher({
   enabled,
   onStatusChange,
+  ContainerComponent,
+  SkeletonComponent,
 }: CalculationStatusFetcherProps) {
   const { data, isLoading, error } = useDefsCalculationStatus({
     enabled,
@@ -28,12 +36,12 @@ export function CalculationStatusFetcher({
 
   // Показываем состояние загрузки
   if (isLoading) {
-    return <CalculationStatus status={{ isRunning: true }} isLoading={true} />;
+    return <SkeletonComponent />;
   }
 
   // Показываем данные если есть
   if (data?.data) {
-    return <CalculationStatus status={data.data} isLoading={false} />;
+    return <ContainerComponent status={data.data} isLoading={false} />;
   }
 
   // Не показываем ничего, если нет данных

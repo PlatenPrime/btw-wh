@@ -9,9 +9,9 @@ export function useCalculateDefsMutation() {
     mutationFn: () => calculateDefs(),
     onMutate: () => {
       // Немедленно уведомляем о запуске процесса
-      toast.info("Расчет дефицитов запущен", {
+      toast.info("Розрахунок дефіцитів запущено", {
         description:
-          "Процесс выполняется в фоне. Данные обновятся автоматически по завершении.",
+          "Процес виконується в фоновому режимі. Дані оновляться автоматично після завершення.",
         duration: 5000,
       });
 
@@ -20,14 +20,14 @@ export function useCalculateDefsMutation() {
     },
     onSuccess: () => {
       // Просто показываем, что запрос отправлен
-      toast.success("Запрос на расчет отправлен", {
-        description: "Расчет выполняется в фоне",
+      toast.success("Запит на розрахунок відправлено", {
+        description: "Розрахунок виконується в фоновому режимі",
         duration: 3000,
       });
     },
     onError: (error: Error) => {
-      toast.error("Ошибка при отправке запроса", {
-        description: error?.message || "Не удалось запустить расчет",
+      toast.error("Помилка при відправці запиту", {
+        description: error?.message || "Не вдалося запустити розрахунок",
       });
     },
   });

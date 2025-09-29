@@ -9,8 +9,7 @@ interface DefsContainerViewProps {
 export function DefsContainerView({ defsData }: DefsContainerViewProps) {
   return (
     <div className="grid gap-2">
-
-      <DefsStats defsData={defsData} />  
+      <DefsStats defsData={defsData} />
       <DefsGrid defsData={defsData} />
     </div>
   );

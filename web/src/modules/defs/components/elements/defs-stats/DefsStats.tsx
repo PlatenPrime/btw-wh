@@ -15,5 +15,5 @@ export function DefsStats({ defsData }: DefsStatsProps) {
     };
   }, [defsData]);
 
-  return <DefsStatsView defsData={defsData} stats={stats} />;
+  return <DefsStatsView stats={stats} />;
 }

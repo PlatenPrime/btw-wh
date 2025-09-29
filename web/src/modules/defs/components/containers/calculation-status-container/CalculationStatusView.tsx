@@ -17,7 +17,7 @@ export function CalculationStatusView({
     if (seconds < 60) return `${seconds} сек`;
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
-    return `${minutes} мин ${remainingSeconds} сек`;
+    return `${minutes} хв ${remainingSeconds} сек`;
   };
 
   const formatDate = (dateString: string) => {
@@ -36,7 +36,7 @@ export function CalculationStatusView({
         <div className="flex items-center gap-2">
           <Loader2 className="h-5 w-5 animate-spin text-blue-600" />
           <h3 className="text-lg font-semibold">
-            Расчет дефицитов выполняется
+            Розрахунок дефіцитів виконується
           </h3>
           <Badge variant="default" className="bg-blue-100 text-blue-800">
             Запуск...
@@ -44,9 +44,11 @@ export function CalculationStatusView({
         </div>
 
         <div className="bg-muted rounded-lg p-3">
-          <p className="text-sm font-medium">Инициализация процесса расчета</p>
+          <p className="text-sm font-medium">
+            Ініціалізація процесу розрахунку
+          </p>
           <p className="text-muted-foreground mt-1 text-xs">
-            Получение данных о статусе...
+            Отримання даних про статус...
           </p>
         </div>
       </Container>
@@ -59,7 +61,7 @@ export function CalculationStatusView({
         <div className="flex items-center gap-2">
           <Loader2 className="h-5 w-5 animate-spin text-blue-600" />
           <h3 className="text-lg font-semibold">
-            Расчет дефицитов выполняется
+            Розрахунок дефіцитів виконується
           </h3>
           <Badge variant="default" className="bg-blue-100 text-blue-800">
             Активно
@@ -69,7 +71,7 @@ export function CalculationStatusView({
         {status.progress !== undefined && (
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
-              <span>Прогресс</span>
+              <span>Прогрес</span>
               <span className="font-medium">{status.progress}%</span>
             </div>
             <Progress value={status.progress} className="h-2" />
@@ -82,7 +84,7 @@ export function CalculationStatusView({
             {status.processedItems !== undefined &&
               status.totalItems !== undefined && (
                 <p className="text-muted-foreground mt-1 text-xs">
-                  Обработано: {status.processedItems} из {status.totalItems}
+                  Оброблено: {status.processedItems} з {status.totalItems}
                 </p>
               )}
           </div>
@@ -93,7 +95,7 @@ export function CalculationStatusView({
             <div className="flex items-center gap-2">
               <Clock className="text-muted-foreground h-4 w-4" />
               <div>
-                <p className="font-medium">Начато</p>
+                <p className="font-medium">Розпочато</p>
                 <p className="text-muted-foreground">
                   {formatDate(status.startedAt)}
                 </p>
@@ -106,7 +108,7 @@ export function CalculationStatusView({
               <div className="flex items-center gap-2">
                 <Clock className="text-muted-foreground h-4 w-4" />
                 <div>
-                  <p className="font-medium">Осталось времени</p>
+                  <p className="font-medium">Залишилось часу</p>
                   <p className="text-muted-foreground">
                     {formatTime(status.estimatedTimeRemaining)}
                   </p>
@@ -123,24 +125,15 @@ export function CalculationStatusView({
     <Container className="p-4">
       <div className="flex items-center gap-2">
         <CheckCircle2 className="h-5 w-5 text-green-600" />
-        <h3 className="text-lg font-semibold">Расчет дефицитов завершен</h3>
-        <Badge variant="secondary" className="bg-green-100 text-green-800">
-          Завершено
-        </Badge>
+        <h3 className="text-lg font-semibold">
+          Розрахунок дефіцитів завершено
+        </h3>
       </div>
 
       {status.lastUpdate && (
         <div className="text-muted-foreground mt-3 flex items-center gap-2 text-sm">
           <Clock className="h-4 w-4" />
-          <span>Последнее обновление: {formatDate(status.lastUpdate)}</span>
-        </div>
-      )}
-
-      {status.progress === 100 && (
-        <div className="mt-3 rounded-lg bg-green-50 p-3">
-          <p className="text-sm font-medium text-green-800">
-            Расчет успешно завершен!
-          </p>
+          <span>Останнє оновлення: {formatDate(status.lastUpdate)}</span>
         </div>
       )}
     </Container>
