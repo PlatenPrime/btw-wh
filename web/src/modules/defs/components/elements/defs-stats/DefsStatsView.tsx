@@ -20,10 +20,10 @@ export function DefsStatsView({
   onFilterChange,
 }: DefsStatsViewProps) {
   return (
-    <Container className="flex gap-2">
+    <Container className="flex flex-col gap-2 sm:flex-row">
       <Card
         className={cn(
-          "flex cursor-pointer flex-row gap-2 p-2 text-sm transition-all duration-200 hover:shadow-md",
+          "flex cursor-pointer flex-row justify-between gap-2 p-2 py-1 text-sm transition-all duration-200 hover:shadow-md",
           activeFilter === "all" &&
             "bg-orange-50 ring-2 ring-orange-300 dark:bg-orange-950/20 dark:ring-orange-700",
         )}
@@ -36,7 +36,7 @@ export function DefsStatsView({
       </Card>
       <Card
         className={cn(
-          "flex cursor-pointer flex-row gap-2 p-2 text-sm transition-all duration-200 hover:shadow-md",
+          "flex cursor-pointer flex-row justify-between gap-2 p-2 py-1 text-sm transition-all duration-200 hover:shadow-md",
           activeFilter === "critical" &&
             "bg-red-50 ring-2 ring-red-300 dark:bg-red-950/20 dark:ring-red-700",
         )}
@@ -49,7 +49,7 @@ export function DefsStatsView({
       </Card>
       <Card
         className={cn(
-          "flex cursor-pointer flex-row gap-2 p-2 text-sm transition-all duration-200 hover:shadow-md",
+          "flex cursor-pointer flex-row justify-between gap-2 p-2 py-1 text-sm transition-all duration-200 hover:shadow-md",
           activeFilter === "limited" &&
             "bg-yellow-50 ring-2 ring-yellow-300 dark:bg-yellow-950/20 dark:ring-yellow-700",
         )}
