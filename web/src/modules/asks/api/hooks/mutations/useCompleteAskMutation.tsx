@@ -11,6 +11,8 @@ export function useCompleteAskMutation(id: string) {
       queryClient.invalidateQueries({ queryKey: ["asks", id] });
       // Инвалидируем все списки asks
       queryClient.invalidateQueries({ queryKey: ["asks"] });
+      // Инвалидируем кеш дефицитов, чтобы обновить информацию о существующих заявках
+      queryClient.invalidateQueries({ queryKey: ["defs", "latest"] });
     },
   });
 }

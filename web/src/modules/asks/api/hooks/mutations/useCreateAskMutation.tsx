@@ -12,6 +12,9 @@ export function useCreateAskMutation() {
     onSuccess: () => {
       // Инвалидируем кеш для asks, чтобы обновить список
       queryClient.invalidateQueries({ queryKey: ["asks"] });
+
+      // Инвалидируем кеш дефицитов, чтобы обновить информацию о существующих заявках
+      queryClient.invalidateQueries({ queryKey: ["defs", "latest"] });
     },
   });
 }

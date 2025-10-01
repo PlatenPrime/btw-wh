@@ -2,8 +2,9 @@ import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { ArtDialogImage } from "@/modules/arts/components/dialogs/art-dialog-image/ArtDialogImage";
 import { ArtNameukr } from "@/modules/arts/components/elements/art-nameukr/ArtNameukr";
-import { CreateAskDialog } from "@/modules/asks/components/dialogs/create-ask-dialog/CreateAskDialog";
 import type { DeficitItem } from "@/modules/defs/api/types/dto";
+import { DefAskButton } from "@/modules/defs/components/elements/def-ask-button/DefAskButton";
+import { Clock, Info, User } from "lucide-react";
 
 interface DefCardViewProps {
   artikul: string;
@@ -11,6 +12,8 @@ interface DefCardViewProps {
 }
 
 export function DefCardView({ artikul, defItem }: DefCardViewProps) {
+  const hasExistingAsk = defItem.existingAsk !== null;
+
   return (
     <Card
       className={cn(
@@ -22,10 +25,41 @@ export function DefCardView({ artikul, defItem }: DefCardViewProps) {
       <div className="flex items-center justify-between gap-2 text-sm">
         <ArtDialogImage artikul={artikul} />
         <ArtNameukr nameukr={defItem.nameukr || artikul} />
-        <div className="grid place-items-center">
-          <CreateAskDialog preFilledArtikul={artikul} />
-        </div>
+        <DefAskButton artikul={artikul} existingAsk={defItem.existingAsk} />
       </div>
+
+      {/* Existing ask info */}
+      {hasExistingAsk && defItem.existingAsk && (
+        <div className="rounded-md border border-amber-200 bg-amber-50 p-2 dark:border-amber-800 dark:bg-amber-950/20">
+          <div className=" flex items-center gap-1">
+            <Info className="h-3 w-3 text-amber-600 dark:text-amber-400" />
+            <span className="text-xs font-medium text-amber-800 dark:text-amber-200">
+              Заявка створена
+            </span>
+          </div>
+          <div className="space-y-1 text-xs text-amber-700 dark:text-amber-300">
+            <div className="flex items-center gap-1">
+              <User className="h-3 w-3" />
+              <span>{defItem.existingAsk.askerName}</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <Clock className="h-3 w-3" />
+              <span>
+                {new Date(defItem.existingAsk.createdAt).toLocaleDateString(
+                  "uk-UA",
+                  {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  },
+                )}
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Stock info */}
       <div className="space-y-1 px-2 pb-2">
