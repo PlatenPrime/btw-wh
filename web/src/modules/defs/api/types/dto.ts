@@ -12,6 +12,7 @@ export interface DeficitItem {
   sharikQuant: number; // Остаток по данным Sharik
   difQuant: number; // Разница (sharikQuant - quant)
   defLimit: number; // Сумма лимита артикула и quant
+  status: "limited" | "critical"; // Статус дефицита
   existingAsk: ExistingAsk | null; // Информация о существующей заявке
 }
 
