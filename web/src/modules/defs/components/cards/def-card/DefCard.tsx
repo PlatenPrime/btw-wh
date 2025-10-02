@@ -7,5 +7,7 @@ interface DefCardProps {
 }
 
 export function DefCard({ artikul, defItem }: DefCardProps) {
+
+
   return <DefCardView artikul={artikul} defItem={defItem} />;
 }
