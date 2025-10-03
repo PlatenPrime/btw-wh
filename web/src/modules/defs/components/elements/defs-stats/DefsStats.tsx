@@ -1,4 +1,4 @@
-import type { Defcalc, DeficitItem } from "@/modules/defs/api/types/dto";
+import type { Def, DeficitItem } from "@/modules/defs/api/types/dto";
 import {
   DefsStatsView,
   type DeficitFilter,
@@ -6,7 +6,7 @@ import {
 import { useMemo, useState } from "react";
 
 interface DefsStatsProps {
-  defsData: Defcalc;
+  defsData: Def;
   onFilterChange: (filter: DeficitFilter) => void;
 }
 

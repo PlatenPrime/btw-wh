@@ -28,25 +28,25 @@ export function CalculationConfirmationDialogView({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Calculator className="h-5 w-5" />
-            Запуск расчета дефицитов
+            Запуск розрахунку дефіцитів
           </DialogTitle>
           <DialogDescription>
-            Расчет дефицитов может занять несколько минут. Процесс будет
-            выполняться в фоновом режиме, и вы сможете отслеживать прогресс в
-            реальном времени.
+            Розрахунок дефіцитів може зайняти кілька хвилин. Процес буде
+            виконуватися у фоновому режимі, і ви зможете відстежувати прогрес у
+            реальному часі.
           </DialogDescription>
         </DialogHeader>
 
         <div className="bg-muted flex items-center gap-2 rounded-lg p-4">
           <Clock className="text-muted-foreground h-4 w-4" />
           <span className="text-muted-foreground text-sm">
-            Ожидаемое время выполнения: 2-5 минут
+            Очікуваний час виконання: 6-8 хвилин
           </span>
         </div>
 
         <DialogFooter className="gap-2">
           <Button variant="outline" onClick={onClose} disabled={isPending}>
-            Отмена
+            Скасувати
           </Button>
           <Button
             onClick={onConfirm}
@@ -59,7 +59,7 @@ export function CalculationConfirmationDialogView({
                 Запуск...
               </>
             ) : (
-              "Запустить расчет"
+              "Запустити"
             )}
           </Button>
         </DialogFooter>

@@ -5,7 +5,7 @@ import { Calculator, CheckCircle2 } from "lucide-react";
 interface DefControlsViewProps {
   handleCalculate: () => void;
   isPending: boolean;
-  isRecentlyStarted: boolean;
+  isRecentlyStarted: boolean; // true когда расчет выполняется (isRunning === true)
 }
 
 export function DefControlsView({
@@ -14,8 +14,8 @@ export function DefControlsView({
   isRecentlyStarted,
 }: DefControlsViewProps) {
   return (
-    <Container className="flex justify-center">
-      <div className="flex flex-col gap-4">
+    <Container className="flex justify-center items-center gap-2">
+      
         <Button
           onClick={handleCalculate}
           disabled={isPending || isRecentlyStarted}
@@ -42,7 +42,7 @@ export function DefControlsView({
             Розрахунок виконується
           </p>
         )}
-      </div>
+
     </Container>
   );
 }

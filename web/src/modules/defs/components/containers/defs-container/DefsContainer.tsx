@@ -1,8 +1,8 @@
-import type { Defcalc } from "@/modules/defs/api/types/dto";
+import type { Def } from "@/modules/defs/api/types/dto";
 import { DefsContainerView } from "@/modules/defs/components/containers/defs-container/DefsContainerView";
 
 interface DefsContainerProps {
-  defsData: Defcalc;
+  defsData: Def;
 }
 
 export function DefsContainer({ defsData }: DefsContainerProps) {

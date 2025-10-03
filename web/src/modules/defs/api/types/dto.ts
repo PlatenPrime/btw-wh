@@ -20,7 +20,7 @@ export interface DeficitCalculationResult {
   [artikul: string]: DeficitItem;
 }
 
-export interface Defcalc {
+export interface Def {
   _id: string;
   result: DeficitCalculationResult; // Объект с дефицитами по артикулам
   total: number; // Общее количество найденных дефицитов
@@ -44,7 +44,7 @@ export interface CalculateDefsResponse {
 
 export interface GetLatestDefsResponse {
   success: boolean;
-  data: Defcalc;
+  data: Def;
   message?: string;
 }
 

@@ -1,11 +1,11 @@
-import type { Defcalc, DeficitItem } from "@/modules/defs/api/types/dto";
+import type { Def, DeficitItem } from "@/modules/defs/api/types/dto";
 import { DefsStats } from "@/modules/defs/components/elements/defs-stats/DefsStats";
 import type { DeficitFilter } from "@/modules/defs/components/elements/defs-stats/DefsStatsView";
 import { DefsGrid } from "@/modules/defs/components/lists/defs-grid/DefsGrid";
 import { useMemo, useState } from "react";
 
 interface DefsContainerViewProps {
-  defsData: Defcalc;
+  defsData: Def;
 }
 
 // Fallback функция для определения статуса дефицита

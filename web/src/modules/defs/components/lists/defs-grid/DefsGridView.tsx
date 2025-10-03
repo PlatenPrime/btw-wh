@@ -1,11 +1,11 @@
 import { Container } from "@/components/shared/container";
-import type { Defcalc, DeficitItem } from "@/modules/defs/api/types/dto";
+import type { Def, DeficitItem } from "@/modules/defs/api/types/dto";
 import { DefCard } from "@/modules/defs/components/cards/def-card/DefCard";
 import type { DeficitFilter } from "@/modules/defs/components/elements/defs-stats/DefsStatsView";
 import { DefsGridEmpty } from "./DefsGridEmpty";
 
 interface DefsGridViewProps {
-  defsData: Defcalc;
+  defsData: Def;
   filter: DeficitFilter;
 }
 

@@ -48,7 +48,7 @@ export function DefControls() {
 
   // Определяем состояние кнопки на основе реального статуса расчета
   const isCalculationRunning = statusData?.data?.isRunning ?? false;
-  const isRecentlyStarted = calculateMutation.isSuccess && isCalculationRunning;
+  const isRecentlyStarted = isCalculationRunning;
 
   return (
     <>

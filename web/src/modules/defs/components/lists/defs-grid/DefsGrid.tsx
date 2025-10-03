@@ -1,9 +1,9 @@
-import type { Defcalc } from "@/modules/defs/api/types/dto";
+import type { Def } from "@/modules/defs/api/types/dto";
 import type { DeficitFilter } from "@/modules/defs/components/elements/defs-stats/DefsStatsView";
 import { DefsGridView } from "@/modules/defs/components/lists/defs-grid/DefsGridView";
 
 interface DefsGridProps {
-  defsData: Defcalc;
+  defsData: Def;
   filter: DeficitFilter;
 }
 
