@@ -163,3 +163,50 @@
   scrollbar-width: thin;
   scrollbar-color: var(--muted) var(--background);
 }
+
+/* Улучшения для мобильных диалогов */
+@media (max-width: 640px) {
+  [data-slot="dialog-content"] {
+    /* Убираем анимацию zoom на мобильных для лучшей производительности */
+    animation: none !important;
+    transform: none !important;
+  }
+  
+  /* Улучшаем скролл на мобильных */
+  [data-slot="dialog-content"] .overflow-y-auto {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+}
+
+/* Предотвращаем скролл body при открытом диалоге на мобильных */
+body:has([data-slot="dialog-content"][data-state="open"]) {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+/* Улучшаем фокус на мобильных */
+@media (max-width: 640px) {
+  input:focus,
+  textarea:focus,
+  select:focus {
+    transform: scale(1.02);
+    transition: transform 0.2s ease;
+  }
+  
+  /* Автоматическая прокрутка к активному полю */
+  input:focus,
+  textarea:focus,
+  select:focus {
+    scroll-margin-top: 20px;
+  }
+  
+  /* Улучшаем видимость активного поля */
+  input:focus,
+  textarea:focus,
+  select:focus {
+    box-shadow: 0 0 0 2px hsl(var(--ring));
+    outline: none;
+  }
+}
