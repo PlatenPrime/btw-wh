@@ -17,11 +17,11 @@ export function PalletActions({ pallet }: PalletActionsProps) {
   };
 
   return (
-    <Card className="p-0">
-      <CardContent className="p-0">
-        <DeletePalletDialog pallet={pallet} onSuccess={handleDelete} />
+    <Card className="p-0 flex w-full lg:w-fit">
+      <CardContent className="flex flex-wrap items-center justify-between gap-4 p-0 ">
         <ClearPalletDialog pallet={pallet} onSuccess={() => {}} />
         <MovePalletPosesDialog pallet={pallet} />
+        <DeletePalletDialog pallet={pallet} onSuccess={handleDelete} />
       </CardContent>
     </Card>
   );

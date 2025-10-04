@@ -1,11 +1,11 @@
 import type { IPallet } from "@/modules/pallets/api/types";
-import { useState } from "react";
 import { CreatePosDialogView } from "@/modules/poses/components/dialogs/create-pos-dialog/CreatePosDialogView.tsx";
+import { useState } from "react";
 
 interface CreatePosDialogProps {
   pallet: IPallet;
   trigger?: React.ReactNode;
-  onSuccess?: () => void;
+  onSuccess?: (newPosId?: string) => void;
 }
 
 export function CreatePosDialog({
@@ -15,9 +15,9 @@ export function CreatePosDialog({
 }: CreatePosDialogProps) {
   const [open, setOpen] = useState(false);
 
-  const handleSuccess = () => {
+  const handleSuccess = (newPosId?: string) => {
     setOpen(false);
-    onSuccess?.();
+    onSuccess?.(newPosId);
   };
 
   const handleCancel = () => {

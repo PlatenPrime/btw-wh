@@ -3,18 +3,18 @@ import type { IPallet } from "@/modules/pallets/api/types";
 import { useOneArtQuery } from "@/modules/arts/api/hooks/queries/useOneArtQuery";
 import { useCreatePosMutation } from "@/modules/poses/api/hooks/mutations/useCreatePosMutation";
 import { useUpdatePosByIdMutation } from "@/modules/poses/api/hooks/mutations/useUpdatePosByIdMutation";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import { CreatePosFormView } from "@/modules/poses/components/forms/create-pos-form/CreatePosFormView.tsx";
 import {
   createPosFormDefaultValues,
   createPosFormSchema,
   type CreatePosFormData,
 } from "@/modules/poses/components/forms/create-pos-form/schema.ts";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 
 interface CreatePosFormProps {
   pallet: IPallet;
-  onSuccess?: () => void;
+  onSuccess?: (newPosId?: string) => void;
   onCancel?: () => void;
 }
 
@@ -92,9 +92,10 @@ export function CreatePosForm({
             boxes: existingPos.boxes + data.boxes,
           },
         });
+        onSuccess?.(existingPos._id);
       } else {
         // Создаем новую позицию
-        await createPosMutation.mutateAsync({
+        const newPos = await createPosMutation.mutateAsync({
           palletId: pallet._id,
           rowId: pallet.row,
           artikul: data.artikul,
@@ -103,8 +104,8 @@ export function CreatePosForm({
           boxes: data.boxes,
           sklad: data.sklad,
         });
+        onSuccess?.(newPos._id);
       }
-      onSuccess?.();
     } catch (error) {
       console.error("Error creating/updating pos:", error);
       // Ошибка будет обработана в компоненте через formState

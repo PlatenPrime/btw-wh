@@ -14,7 +14,7 @@ interface CreatePosDialogViewProps {
   setOpen: (open: boolean) => void;
   pallet: IPallet;
   trigger?: React.ReactNode;
-  onSuccess: () => void;
+  onSuccess: (newPosId?: string) => void;
   onCancel: () => void;
 }
 

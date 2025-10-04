@@ -3,8 +3,12 @@ import { PosesByPalletContainerView } from "@/modules/poses/components/container
 
 interface PosesByPalletContainerProps {
   poses: IPos[];
+  newPosIds?: string[];
 }
 
-export function PosesByPalletContainer({ poses }: PosesByPalletContainerProps) {
-  return <PosesByPalletContainerView poses={poses} />;
+export function PosesByPalletContainer({
+  poses,
+  newPosIds = [],
+}: PosesByPalletContainerProps) {
+  return <PosesByPalletContainerView poses={poses} newPosIds={newPosIds} />;
 }

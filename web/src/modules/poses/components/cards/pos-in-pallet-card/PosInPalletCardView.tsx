@@ -5,8 +5,9 @@ import { Circle, Package, Warehouse } from "lucide-react";
 
 import { PosInfoItem } from "@/modules/poses/components/cards/pos-in-pallet-card/PosInfoItem.tsx";
 
-import { DeleteTrigger } from '@/components/shared/triggers/delete-trigger/DeleteTrigger';
-import { EditTrigger } from '@/components/shared/triggers/edit-trigger/EditTrigger';
+import { DeleteTrigger } from "@/components/shared/triggers/delete-trigger/DeleteTrigger";
+import { EditTrigger } from "@/components/shared/triggers/edit-trigger/EditTrigger";
+import { cn } from "@/lib/utils";
 import type { IPos } from "@/modules/poses/api/types";
 import { DeletePosDialog } from "@/modules/poses/components/dialogs/delete-pos-dialog/DeletePosDialog";
 import { UpdatePosDialog } from "@/modules/poses/components/dialogs/update-pos-dialog/UpdatePosDialog";
@@ -14,12 +15,23 @@ import { Link } from "react-router";
 
 interface PosInPalletCardProps {
   pos: IPos;
+  isNew?: boolean;
   onSuccess?: () => void;
 }
 
-export function PosInPalletCardView({ pos, onSuccess }: PosInPalletCardProps) {
+export function PosInPalletCardView({
+  pos,
+  isNew = false,
+  onSuccess,
+}: PosInPalletCardProps) {
   return (
-    <Card className="group hover:bg-muted/50 relative justify-between gap-2 overflow-hidden p-2 transition-all duration-200 hover:shadow-md">
+    <Card
+      className={cn(
+        "group hover:bg-muted/50 relative justify-between gap-2 overflow-hidden p-2 transition-all duration-200 hover:shadow-md",
+        isNew &&
+          " ring-2 ring-green-500/50 ",
+      )}
+    >
       {/* Header with image, title and actions */}
       <CardHeader className="flex items-start gap-3 p-3 px-0 py-0 pb-2">
         {/* Image and title section */}
