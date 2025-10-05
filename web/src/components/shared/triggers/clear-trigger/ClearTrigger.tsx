@@ -10,7 +10,7 @@ export function ClearTrigger({ onClick }: ClearTriggerProps) {
     <Button
       variant="ghost"
       size="sm"
-      className="hover:bg-rose-500/10 text-rose-500 hover:text-rose-400 h-8 w-8 p-0"
+      className="hover:bg-pink-500/10 text-pink-500 hover:text-pink-400 h-8 w-8 p-0"
       onClick={onClick}
     >
       <BrushCleaning className="h-4 w-4" />
