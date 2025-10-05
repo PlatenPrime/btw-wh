@@ -1,15 +1,13 @@
 import { useDeletePalletPosesMutation } from "@/modules/pallets/api/hooks/mutations/useDeletePalletPosesMutation";
 import type { IPallet } from "@/modules/pallets/api/types";
+import { ClearPalletDialogView } from "@/modules/pallets/components/dialogs/clear-pallet-dialog/ClearPalletDialogView.tsx";
 import { useState } from "react";
-import {ClearPalletDialogView} from "@/modules/pallets/components/dialogs/clear-pallet-dialog/ClearPalletDialogView.tsx";
 
 interface DeletePalletDialogProps {
   pallet: IPallet;
   trigger?: React.ReactNode;
   onSuccess: () => void;
 }
-
-
 
 export function ClearPalletDialog({
   pallet,
@@ -18,8 +16,10 @@ export function ClearPalletDialog({
 }: DeletePalletDialogProps) {
   const [open, setOpen] = useState(false);
 
-
-const clearMutation = useDeletePalletPosesMutation({palletId:pallet._id, palletTitle: pallet.title} );
+  const clearMutation = useDeletePalletPosesMutation({
+    palletId: pallet._id,
+    palletTitle: pallet.title,
+  });
 
   const handleClear = async () => {
     try {

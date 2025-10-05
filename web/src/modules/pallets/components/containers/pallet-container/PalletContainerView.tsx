@@ -1,7 +1,8 @@
+import { Container } from "@/components/shared/container";
 import { Button } from "@/components/ui/button";
 import type { PalletResponse } from "@/modules/pallets/api/types";
-import { PalletActions } from "@/modules/pallets/components/elements/pallet-actions/PalletActions.tsx";
 import { PalletInfo } from "@/modules/pallets/components/elements/pallet-info/PalletInfo";
+import { PalletContol } from "@/modules/pallets/controls/pallet-control/PalletControl";
 import {
   PosesByPalletContainer,
   PosesByPalletContainerSkeleton,
@@ -30,7 +31,7 @@ export function PalletContainerView({
 
   return (
     <div className="grid gap-4">
-      <div className="flex flex-wrap items-center justify-between gap-2">
+      <Container className="flex flex-wrap items-center justify-between gap-2">
         <PalletInfo pallet={pallet} />
 
         <CreatePosDialog
@@ -39,8 +40,8 @@ export function PalletContainerView({
           trigger={<Button variant="outline">Додати позицію</Button>}
         />
 
-        <PalletActions pallet={pallet} />
-      </div>
+        <PalletContol pallet={pallet} />
+      </Container>
       <PosesByPalletFetcher
         palletId={pallet._id}
         ContainerComponent={PosesByPalletContainer}

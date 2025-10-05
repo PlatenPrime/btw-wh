@@ -5,13 +5,10 @@ import { Circle, Package, Warehouse } from "lucide-react";
 
 import { PosInfoItem } from "@/modules/poses/components/cards/pos-in-pallet-card/PosInfoItem.tsx";
 
-import { DeleteTrigger } from "@/components/shared/triggers/delete-trigger/DeleteTrigger";
-import { EditTrigger } from "@/components/shared/triggers/edit-trigger/EditTrigger";
 import { cn } from "@/lib/utils";
 import type { IPos } from "@/modules/poses/api/types";
-import { DeletePosDialog } from "@/modules/poses/components/dialogs/delete-pos-dialog/DeletePosDialog";
-import { UpdatePosDialog } from "@/modules/poses/components/dialogs/update-pos-dialog/UpdatePosDialog";
 import { Link } from "react-router";
+import { PosCardActionMenu } from "./components/pos-card-action-menu/PosCardActionMenu";
 
 interface PosInPalletCardProps {
   pos: IPos;
@@ -27,56 +24,50 @@ export function PosInPalletCardView({
   return (
     <Card
       className={cn(
-        "group hover:bg-muted/50 relative justify-between gap-2 overflow-hidden p-2 transition-all duration-200 hover:shadow-md",
-        isNew &&
-          " ring-2 ring-green-500/50 ",
+        "group relative flex h-32 flex-col justify-between gap-2 overflow-hidden p-2 transition-all duration-200 hover:shadow-lg",
+        isNew && "ring-2 ring-green-500/50",
       )}
     >
       {/* Header with image, title and actions */}
-      <CardHeader className="flex items-start gap-3 p-3 px-0 py-0 pb-2">
+      <CardHeader className="flex min-h-0 flex-shrink-0 items-start gap-3 p-0 pb-2">
         {/* Image and title section */}
-        <div className="flex flex-1 items-start gap-3">
+        <div className="flex min-h-0 flex-1 items-start gap-3">
           <ArtDialogImage artikul={pos.artikul} />
-          <div className="flex flex-col justify-between gap-2">
-            <CardTitle className="text-base leading-tight font-semibold">
+          <div className="flex min-h-0 flex-1 flex-col justify-between gap-1">
+            <CardTitle className="truncate text-base leading-tight font-semibold">
               <Link
                 to={`/arts/${pos.artikul}`}
                 className="transition-colors duration-300 ease-in-out hover:text-blue-800 dark:hover:text-blue-200"
               >
-                {" "}
-                {pos.artikul}{" "}
+                {pos.artikul}
               </Link>
             </CardTitle>
-            <span className="text-muted-foreground text-xs leading-tight">
+            <span className="text-muted-foreground line-clamp-2 text-xs leading-tight">
               {pos.nameukr?.slice(10) || "Назва українською"}
             </span>
           </div>
         </div>
 
-        {/* Actions section */}
-        <div className="grid gap-0">
-          <UpdatePosDialog
-            pos={pos}
-            trigger={<EditTrigger />}
-            onSuccess={onSuccess}
-          />
-          <DeletePosDialog
-            pos={pos}
-            trigger={<DeleteTrigger />}
-            onSuccess={onSuccess}
-          />
-        </div>
+        <PosCardActionMenu pos={pos} onSuccess={onSuccess || (() => {})} />
       </CardHeader>
 
       {/* Content with metrics */}
-      <CardContent className="px-0">
+      <CardContent className="flex-shrink-0 p-0">
         <div className="grid grid-cols-3 gap-1.5">
           <PosInfoItem
             icon={Warehouse}
             value={sklads[pos.sklad as keyof ISklads] || pos.sklad}
           />
-          <PosInfoItem icon={Package} value={pos.boxes || 0} />
-          <PosInfoItem icon={Circle} value={pos.quant || 0} />
+          <PosInfoItem
+            icon={Package}
+            value={pos.boxes || 0}
+            className={cn(pos.boxes === 0 && "text-destructive")}
+          />
+          <PosInfoItem
+            icon={Circle}
+            value={pos.quant || 0}
+            className={cn(pos.quant === 0 && "text-destructive")}
+          />
         </div>
       </CardContent>
     </Card>

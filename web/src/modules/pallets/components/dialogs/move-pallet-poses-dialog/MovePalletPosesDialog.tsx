@@ -1,7 +1,7 @@
 import { useMovePalletPosesMutation } from "@/modules/pallets/api/hooks/mutations/useMovePalletPosesMutation";
 import type { IPallet } from "@/modules/pallets/api/types";
-import { useState } from "react";
 import { MovePalletPosesDialogView } from "@/modules/pallets/components/dialogs/move-pallet-poses-dialog/MovePalletPosesDialogView.tsx";
+import { useState } from "react";
 
 interface MovePalletPosesDialogProps {
   pallet: IPallet;
@@ -21,7 +21,6 @@ export function MovePalletPosesDialog({ pallet }: MovePalletPosesDialogProps) {
   const handleCancel = () => {
     setOpen(false);
   };
-
 
   const handleSubmit = async (targetPalletId: string) => {
     // clear previous error before new attempt
