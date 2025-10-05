@@ -39,7 +39,12 @@ export function UpdatePosDialogView({
         <DialogHeader>
           <DialogTitle className="text-center">{pos.artikul}</DialogTitle>
         </DialogHeader>
-        <UpdatePosForm pos={pos} onSuccess={onSuccess} onCancel={onCancel} />
+        <UpdatePosForm
+          pos={pos}
+          onSuccess={onSuccess}
+          onCancel={onCancel}
+          isDialogOpen={open}
+        />
       </DialogContent>
     </Dialog>
   );

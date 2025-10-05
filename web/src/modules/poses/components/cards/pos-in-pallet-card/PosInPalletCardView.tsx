@@ -3,12 +3,12 @@ import { sklads, type ISklads } from "@/constants/sklad";
 import { ArtDialogImage } from "@/modules/arts/components/dialogs/art-dialog-image/ArtDialogImage";
 import { Circle, Package, Warehouse } from "lucide-react";
 
-import { PosInfoItem } from "@/modules/poses/components/cards/pos-in-pallet-card/PosInfoItem.tsx";
+import { PosCardActions } from "@/modules/poses/components/cards/pos-in-pallet-card/components/pos-card-actions/PosCardActions";
+import { PosInfoItem } from "@/modules/poses/components/cards/pos-in-pallet-card/components/pos-info-item/PosInfoItem";
 
 import { cn } from "@/lib/utils";
 import type { IPos } from "@/modules/poses/api/types";
 import { Link } from "react-router";
-import { PosCardActionMenu } from "./components/pos-card-action-menu/PosCardActionMenu";
 
 interface PosInPalletCardProps {
   pos: IPos;
@@ -48,7 +48,7 @@ export function PosInPalletCardView({
           </div>
         </div>
 
-        <PosCardActionMenu pos={pos} onSuccess={onSuccess || (() => {})} />
+        <PosCardActions pos={pos} onSuccess={onSuccess || (() => {})} />
       </CardHeader>
 
       {/* Content with metrics */}

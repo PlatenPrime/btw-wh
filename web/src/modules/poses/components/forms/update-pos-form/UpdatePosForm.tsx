@@ -1,24 +1,27 @@
+import { useUpdatePosByIdMutation } from "@/modules/poses/api/hooks/mutations/useUpdatePosByIdMutation";
 import type { IPos } from "@/modules/poses/api/types";
-import { useUpdatePosMutation } from "@/modules/poses/api/hooks/mutations/useUpdatePosMutation";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import { UpdatePosFormView } from "@/modules/poses/components/forms/update-pos-form/UpdatePosFormView.tsx";
 import {
   createUpdatePosFormDefaultValues,
   updatePosFormSchema,
   type UpdatePosFormData,
 } from "@/modules/poses/components/forms/update-pos-form/schema.ts";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
 
 interface UpdatePosFormProps {
   pos: IPos;
   onSuccess?: () => void;
   onCancel?: () => void;
+  isDialogOpen?: boolean;
 }
 
 export function UpdatePosForm({
   pos,
   onSuccess,
   onCancel,
+  isDialogOpen = true,
 }: UpdatePosFormProps) {
   const form = useForm<UpdatePosFormData>({
     resolver: zodResolver(updatePosFormSchema),
@@ -31,7 +34,14 @@ export function UpdatePosForm({
     formState: { isSubmitting },
   } = form;
 
-  const updatePosMutation = useUpdatePosMutation(pos);
+  const updatePosMutation = useUpdatePosByIdMutation();
+
+  // Сбрасываем состояние формы при открытии диалога
+  useEffect(() => {
+    if (isDialogOpen) {
+      form.reset(createUpdatePosFormDefaultValues(pos));
+    }
+  }, [isDialogOpen, form, pos]);
 
   // Обробники для числових полів без провідних нулів
   const handleQuantChange = (value: string) => {
@@ -93,7 +103,8 @@ export function UpdatePosForm({
     }
   };
 
-  const isFormSubmitting = isSubmitting || updatePosMutation.isPending;
+  // Блокируем поля только если форма отправляется
+  const isFormSubmitting = isSubmitting;
 
   return (
     <UpdatePosFormView
