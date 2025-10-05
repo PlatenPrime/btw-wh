@@ -1,3 +1,4 @@
+import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -48,21 +49,16 @@ export function DeletePosDialogView({
             неможливо скасувати.
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter className="grid grid-cols-2 gap-2">
-          <Button
+        <DialogFooter>
+          <DialogActions
+            onCancel={() => setOpen(false)}
+            onSubmit={handleDelete}
+            cancelText="Скасувати"
+            submitText="Видалити"
+            isSubmitting={deleteMutation.isPending}
             variant="destructive"
-            onClick={handleDelete}
-            disabled={deleteMutation.isPending}
-          >
-            {deleteMutation.isPending ? "Видалення.." : "Видалити"}
-          </Button>
-          <Button
-            variant="outline"
-            onClick={() => setOpen(false)}
-            disabled={deleteMutation.isPending}
-          >
-            Скасувати
-          </Button>
+            className="w-full"
+          />
         </DialogFooter>
       </DialogContent>
     </Dialog>

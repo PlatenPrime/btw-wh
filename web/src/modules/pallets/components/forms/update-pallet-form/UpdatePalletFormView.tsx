@@ -1,3 +1,4 @@
+import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -80,21 +81,20 @@ export function UpdatePalletFormView({
             </div>
           )}
 
-          <div className="grid grid-cols-2 gap-2">
-            <Button type="submit" disabled={isSubmitting} className="flex-1">
+          {onCancel ? (
+            <DialogActions
+              onCancel={onCancel}
+              onSubmit={handleSubmit(onSubmit)}
+              cancelText="Скасувати"
+              submitText="Оновити"
+              isSubmitting={isSubmitting}
+              className="w-full"
+            />
+          ) : (
+            <Button type="submit" disabled={isSubmitting} className="w-full">
               {isSubmitting ? "Оновлюю..." : "Оновити"}
             </Button>
-            {onCancel && (
-              <Button
-                type="button"
-                variant="destructive"
-                onClick={onCancel}
-                disabled={isSubmitting}
-              >
-                Скасувати
-              </Button>
-            )}
-          </div>
+          )}
         </form>
       </CardContent>
     </Card>

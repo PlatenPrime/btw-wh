@@ -1,3 +1,4 @@
+import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { InputQuant } from "@/components/ui/input-quant";
@@ -129,7 +130,21 @@ export function AskPosEditFormView({
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-2">
+          {onCancel ? (
+            <DialogActions
+              onCancel={onCancel}
+              onSubmit={handleSubmit(onSubmit)}
+              cancelText="Скасувати"
+              submitText="Підтвердити"
+              isSubmitting={isSubmitting}
+              isDisabled={
+                remainingQuant < 0 ||
+                remainingBoxes < 0 ||
+                removedQuantValue === ""
+              }
+              className="w-full"
+            />
+          ) : (
             <Button
               type="submit"
               disabled={
@@ -138,21 +153,11 @@ export function AskPosEditFormView({
                 remainingBoxes < 0 ||
                 removedQuantValue === ""
               }
-              className="flex-1"
+              className="w-full"
             >
               {isSubmitting ? "Оновлюю..." : "Підтвердити"}
             </Button>
-            {onCancel && (
-              <Button
-                type="button"
-                variant="outline"
-                onClick={onCancel}
-                disabled={isSubmitting}
-              >
-                Скасувати
-              </Button>
-            )}
-          </div>
+          )}
         </form>
       </CardContent>
     </Card>

@@ -1,5 +1,5 @@
-import { DeleteTrigger } from '@/components/shared/triggers/delete-trigger/DeleteTrigger';
-import { Button } from "@/components/ui/button";
+import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
+import { DeleteTrigger } from "@/components/shared/triggers/delete-trigger/DeleteTrigger";
 import {
   Dialog,
   DialogContent,
@@ -49,21 +49,16 @@ export default function DeleteRowDialogView({
             позицій.
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter className="grid grid-cols-2 gap-2">
-          <Button
+        <DialogFooter>
+          <DialogActions
+            onCancel={() => setOpen(false)}
+            onSubmit={handleDelete}
+            cancelText="Скасувати"
+            submitText="Видалити"
+            isSubmitting={deleteMutation.isPending}
             variant="destructive"
-            onClick={handleDelete}
-            disabled={deleteMutation.isPending}
-          >
-            {deleteMutation.isPending ? "Видалення.." : "Видалити"}
-          </Button>
-          <Button
-            variant="outline"
-            onClick={() => setOpen(false)}
-            disabled={deleteMutation.isPending}
-          >
-            Скасувати
-          </Button>
+            className="w-full"
+          />
         </DialogFooter>
       </DialogContent>
     </Dialog>

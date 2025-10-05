@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { InputQuant } from "@/components/ui/input-quant";
@@ -127,22 +127,15 @@ export function CreateAskFormView({
           </div>
 
           {/* Кнопки */}
-          <div className="grid grid-cols-2 gap-2">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={onCancel}
-              disabled={isSubmitting}
-            >
-              Скасувати
-            </Button>
-            <Button
-              type="submit"
-              disabled={isSubmitting || !artikul || artikul.length !== 9}
-            >
-              {isSubmitting ? "Створення..." : "Створити запит"}
-            </Button>
-          </div>
+          <DialogActions
+            onCancel={onCancel}
+            onSubmit={handleFormSubmit}
+            cancelText="Скасувати"
+            submitText="Створити запит"
+            isSubmitting={isSubmitting}
+            isDisabled={!artikul || artikul.length !== 9}
+            className="w-full"
+          />
         </form>
       </CardContent>
     </Card>

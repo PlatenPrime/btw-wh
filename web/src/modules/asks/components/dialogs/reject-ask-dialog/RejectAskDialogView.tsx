@@ -1,5 +1,5 @@
+import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
 import { CancelTrigger } from "@/components/shared/triggers/cancel-trigger/CancelTrigger";
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -29,7 +29,6 @@ export function RejectAskDialogView({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <CancelTrigger />
-
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -39,21 +38,16 @@ export function RejectAskDialogView({
             змінить статус запиту на "відмінено".
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter className="grid grid-cols-2 gap-2">
-          <Button
+        <DialogFooter>
+          <DialogActions
+            onCancel={() => setOpen(false)}
+            onSubmit={handleReject}
+            cancelText="Скасувати"
+            submitText="Відмовити"
+            isSubmitting={isPending}
             variant="destructive"
-            onClick={handleReject}
-            disabled={isPending}
-          >
-            {isPending ? "Відмова..." : "Відмовити"}
-          </Button>
-          <Button
-            variant="outline"
-            onClick={() => setOpen(false)}
-            disabled={isPending}
-          >
-            Скасувати
-          </Button>
+            className="w-full"
+          />
         </DialogFooter>
       </DialogContent>
     </Dialog>

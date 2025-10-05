@@ -1,3 +1,4 @@
+import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
 import {
   FieldErrorDisplay,
   FormErrorDisplay,
@@ -5,10 +6,8 @@ import {
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -100,16 +99,14 @@ export function CreatePalletDialogView({
           {errors.root && (
             <FormErrorDisplay error={errors.root.message} variant="compact" />
           )}
-          <DialogFooter>
-            <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Додається..." : "Додати"}
-            </Button>
-            <DialogClose asChild>
-              <Button type="button" variant="outline">
-                Скасувати
-              </Button>
-            </DialogClose>
-          </DialogFooter>
+          <DialogActions
+            onCancel={() => onOpenChange(false)}
+            onSubmit={onSubmit}
+            cancelText="Скасувати"
+            submitText="Додати"
+            isSubmitting={isSubmitting}
+            className="w-full"
+          />
         </form>
       </DialogContent>
     </Dialog>

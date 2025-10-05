@@ -1,3 +1,4 @@
+import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { InputQuant } from "@/components/ui/input-quant";
@@ -92,25 +93,25 @@ export function UpdatePosFormView({
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-2">
+          {onCancel ? (
+            <DialogActions
+              onCancel={onCancel}
+              onSubmit={handleSubmit(onSubmit)}
+              cancelText="Скасувати"
+              submitText="Оновити"
+              isSubmitting={isSubmitting}
+              isDisabled={!artikul.trim()}
+              className="w-full"
+            />
+          ) : (
             <Button
               type="submit"
               disabled={isSubmitting || !artikul.trim()}
-              className="flex-1"
+              className="w-full"
             >
               {isSubmitting ? "Оновлюю..." : "Оновити"}
             </Button>
-            {onCancel && (
-              <Button
-                type="button"
-                variant="outline"
-                onClick={onCancel}
-                disabled={isSubmitting}
-              >
-                Скасувати
-              </Button>
-            )}
-          </div>
+          )}
         </form>
       </CardContent>
     </Card>

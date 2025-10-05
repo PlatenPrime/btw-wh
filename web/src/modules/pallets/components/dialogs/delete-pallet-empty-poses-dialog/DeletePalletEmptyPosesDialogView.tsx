@@ -1,6 +1,6 @@
+import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
 import { ClearZeroTrigger } from "@/components/shared/triggers/clear-zero-trigger/ClearZeroTrigger";
 import {
-  Button,
   Dialog,
   DialogContent,
   DialogDescription,
@@ -42,25 +42,20 @@ export function DeletePalletEmptyPosesDialogView({
             Видалити порожні позиції палети "{pallet.title}"?
           </DialogTitle>
           <DialogDescription>
-            Ви впевнені, що хочете видалити тільки порожні позиції? Цю дію неможливо
-            скасувати.
+            Ви впевнені, що хочете видалити тільки порожні позиції? Цю дію
+            неможливо скасувати.
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter className="grid grid-cols-2 gap-2">
-          <Button
+        <DialogFooter>
+          <DialogActions
+            onCancel={() => setOpen(false)}
+            onSubmit={handleDelete}
+            cancelText="Скасувати"
+            submitText="Видалити порожні"
+            isSubmitting={deleteMutation.isPending}
             variant="destructive"
-            onClick={handleDelete}
-            disabled={deleteMutation.isPending}
-          >
-            {deleteMutation.isPending ? "Видалення.." : "Видалити порожні"}
-          </Button>
-          <Button
-            variant="outline"
-            onClick={() => setOpen(false)}
-            disabled={deleteMutation.isPending}
-          >
-            Скасувати
-          </Button>
+            className="w-full"
+          />
         </DialogFooter>
       </DialogContent>
     </Dialog>

@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button";
+import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import type { UseFormReturn } from "react-hook-form";
 import { type RowFormValues } from "@/modules/rows/components/forms/schema.ts";
+import type { UseFormReturn } from "react-hook-form";
 
 interface UpdateRowFormViewProps {
   form: UseFormReturn<RowFormValues>;
@@ -55,19 +55,14 @@ export function UpdateRowFormView({
             </div>
           )}
 
-          <div className="grid grid-cols-2 gap-2">
-            <Button type="submit" disabled={isSubmitting} className="flex-1">
-              {isSubmitting ? "Оновлюю..." : "Оновити"}
-            </Button>
-            <Button
-              type="button"
-              variant="destructive"
-              onClick={onCancel}
-              disabled={isSubmitting}
-            >
-              Скасувати
-            </Button>
-          </div>
+          <DialogActions
+            onCancel={onCancel}
+            onSubmit={handleSubmit(onSubmit)}
+            cancelText="Скасувати"
+            submitText="Оновити"
+            isSubmitting={isSubmitting}
+            className="w-full"
+          />
         </form>
       </CardContent>
     </Card>

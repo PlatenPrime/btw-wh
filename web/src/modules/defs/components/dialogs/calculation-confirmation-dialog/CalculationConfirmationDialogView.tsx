@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
 import {
   Dialog,
   DialogContent,
@@ -44,24 +44,15 @@ export function CalculationConfirmationDialogView({
           </span>
         </div>
 
-        <DialogFooter className="gap-2">
-          <Button variant="outline" onClick={onClose} disabled={isPending}>
-            Скасувати
-          </Button>
-          <Button
-            onClick={onConfirm}
-            disabled={isPending}
-            className="min-w-[120px]"
-          >
-            {isPending ? (
-              <>
-                <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-                Запуск...
-              </>
-            ) : (
-              "Запустити"
-            )}
-          </Button>
+        <DialogFooter>
+          <DialogActions
+            onCancel={onClose}
+            onSubmit={onConfirm}
+            cancelText="Скасувати"
+            submitText="Запустити"
+            isSubmitting={isPending}
+            className="w-full"
+          />
         </DialogFooter>
       </DialogContent>
     </Dialog>

@@ -1,9 +1,8 @@
-import { FormErrorDisplay } from '@/components/shared/error-components/form-error-display';
-import { Button } from "@/components/ui/button";
+import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
+import { FormErrorDisplay } from "@/components/shared/error-components/form-error-display";
 import { Input } from "@/components/ui/input";
 import type { IPallet } from "@/modules/pallets/api/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -97,15 +96,14 @@ export function MovePalletPosesForm({
         isLoading={isLoading}
       />
 
-      <div className="flex items-center justify-end gap-2">
-        <Button type="button" variant="outline" onClick={onCancel}>
-          Скасувати
-        </Button>
-        <Button type="submit" disabled={isSubmitting} aria-busy={isSubmitting}>
-          {isSubmitting && <Loader2 className="animate-spin" />}
-          Підтвердити
-        </Button>
-      </div>
+      <DialogActions
+        onCancel={onCancel}
+        onSubmit={form.handleSubmit(onSubmit)}
+        cancelText="Скасувати"
+        submitText="Підтвердити"
+        isSubmitting={isSubmitting}
+        className="w-full"
+      />
     </form>
   );
 }

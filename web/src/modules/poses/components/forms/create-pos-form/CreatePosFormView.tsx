@@ -1,3 +1,4 @@
+import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -161,7 +162,21 @@ export function CreatePosFormView({
           )}
 
           {/* Кнопки */}
-          <div className="grid grid-cols-2 gap-2">
+          {onCancel ? (
+            <DialogActions
+              onCancel={onCancel}
+              onSubmit={handleFormSubmit}
+              cancelText="Скасувати"
+              submitText="Створити"
+              isSubmitting={isSubmitting}
+              isDisabled={
+                !artikul.trim() ||
+                watchedValues.quant <= 0 ||
+                watchedValues.boxes <= 0
+              }
+              className="w-full"
+            />
+          ) : (
             <Button
               type="submit"
               disabled={
@@ -170,21 +185,11 @@ export function CreatePosFormView({
                 watchedValues.quant <= 0 ||
                 watchedValues.boxes <= 0
               }
-              className="flex-1"
+              className="w-full"
             >
               {isSubmitting ? "Створюю..." : "Створити"}
             </Button>
-            {onCancel && (
-              <Button
-                type="button"
-                variant="outline"
-                onClick={onCancel}
-                disabled={isSubmitting}
-              >
-                Скасувати
-              </Button>
-            )}
-          </div>
+          )}
         </form>
       </CardContent>
     </Card>

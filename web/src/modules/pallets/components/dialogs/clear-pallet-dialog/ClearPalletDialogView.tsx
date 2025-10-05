@@ -1,6 +1,6 @@
-import { ClearTrigger } from '@/components/shared/triggers/clear-trigger/ClearTrigger';
+import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
+import { ClearTrigger } from "@/components/shared/triggers/clear-trigger/ClearTrigger";
 import {
-  Button,
   Dialog,
   DialogContent,
   DialogDescription,
@@ -45,21 +45,16 @@ export function ClearPalletDialogView({
             пов'язаних позицій.
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter className="grid grid-cols-2 gap-2">
-          <Button
+        <DialogFooter>
+          <DialogActions
+            onCancel={() => setOpen(false)}
+            onSubmit={handleClear}
+            cancelText="Скасувати"
+            submitText="Очистити"
+            isSubmitting={clearMutation.isPending}
             variant="destructive"
-            onClick={handleClear}
-            disabled={clearMutation.isPending}
-          >
-            {clearMutation.isPending ? "Очищення.." : "Очистити"}
-          </Button>
-          <Button
-            variant="outline"
-            onClick={() => setOpen(false)}
-            disabled={clearMutation.isPending}
-          >
-            Скасувати
-          </Button>
+            className="w-full"
+          />
         </DialogFooter>
       </DialogContent>
     </Dialog>

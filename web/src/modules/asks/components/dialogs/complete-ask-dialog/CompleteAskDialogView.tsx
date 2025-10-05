@@ -1,5 +1,5 @@
+import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
 import { CheckTrigger } from "@/components/shared/triggers/check-trigger/CheckTrigger";
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -38,21 +38,15 @@ export function CompleteAskDialogView({
             статус запиту на "виконано".
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter className="grid grid-cols-2 gap-2">
-          <Button
-            variant="default"
-            onClick={handleExecute}
-            disabled={isPending}
-          >
-            {isPending ? "Виконання..." : "Виконати"}
-          </Button>
-          <Button
-            variant="outline"
-            onClick={() => setOpen(false)}
-            disabled={isPending}
-          >
-            Скасувати
-          </Button>
+        <DialogFooter>
+          <DialogActions
+            onCancel={() => setOpen(false)}
+            onSubmit={handleExecute}
+            cancelText="Скасувати"
+            submitText="Виконати"
+            isSubmitting={isPending}
+            className="w-full"
+          />
         </DialogFooter>
       </DialogContent>
     </Dialog>

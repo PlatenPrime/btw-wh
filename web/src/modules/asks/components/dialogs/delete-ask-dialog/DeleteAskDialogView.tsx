@@ -1,5 +1,5 @@
+import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
 import { DeleteTrigger } from "@/components/shared/triggers/delete-trigger/DeleteTrigger";
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -38,21 +38,16 @@ export function DeleteAskDialogView({
             скасувати.
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter className="grid grid-cols-2 gap-2">
-          <Button
+        <DialogFooter>
+          <DialogActions
+            onCancel={() => setOpen(false)}
+            onSubmit={handleDelete}
+            cancelText="Скасувати"
+            submitText="Видалити"
+            isSubmitting={isPending}
             variant="destructive"
-            onClick={handleDelete}
-            disabled={isPending}
-          >
-            {isPending ? "Видалення..." : "Видалити"}
-          </Button>
-          <Button
-            variant="outline"
-            onClick={() => setOpen(false)}
-            disabled={isPending}
-          >
-            Скасувати
-          </Button>
+            className="w-full"
+          />
         </DialogFooter>
       </DialogContent>
     </Dialog>

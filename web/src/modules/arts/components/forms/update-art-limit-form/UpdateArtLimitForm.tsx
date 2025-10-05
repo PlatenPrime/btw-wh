@@ -1,5 +1,5 @@
+import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
 import { FormErrorDisplay } from "@/components/shared/error-components";
-import { Button } from "@/components/ui/button";
 import { InputQuant } from "@/components/ui/input-quant";
 import { useUpdateArtLimitMutation } from "@/modules/arts/api/hooks/mutations/useUpdateArtLimitMutation";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
@@ -80,14 +80,14 @@ export function UpdateArtLimitForm({
         <FormErrorDisplay error={errors.root.message} variant="compact" />
       )}
 
-      <div className="flex justify-end gap-2">
-        <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Збереження..." : "Зберегти"}
-        </Button>
-        <Button type="button" variant="outline" onClick={onCancel}>
-          Скасувати
-        </Button>
-      </div>
+      <DialogActions
+        onCancel={onCancel}
+        onSubmit={handleSubmit(onSubmit)}
+        cancelText="Скасувати"
+        submitText="Зберегти"
+        isSubmitting={isSubmitting}
+        className="w-full"
+      />
     </form>
   );
 }
