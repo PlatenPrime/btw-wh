@@ -11,7 +11,7 @@ interface PosCardActionsProps {
 
 export function PosCardActions({ pos, onSuccess }: PosCardActionsProps) {
   return (
-    <div className="flex gap-1">
+    <div className="grid  gap-1">
       <UpdatePosDialog
         pos={pos}
         trigger={

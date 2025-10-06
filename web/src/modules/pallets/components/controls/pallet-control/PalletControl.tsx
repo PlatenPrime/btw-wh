@@ -10,7 +10,7 @@ interface PalletActionsProps {
   pallet: IPallet;
 }
 
-export function PalletContol({ pallet }: PalletActionsProps) {
+export function PalletControl({ pallet }: PalletActionsProps) {
   const navigate = useNavigate();
 
   const handleDelete = () => {
