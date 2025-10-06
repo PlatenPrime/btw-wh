@@ -1,4 +1,4 @@
-import { Container } from "@/components/shared/container";
+import { Container } from "@/components/shared/containers/Container";
 import { Skeleton } from "@/components/ui/skeleton";
 import { PalletsListSkeleton } from "@/modules/pallets/components/lists/pallets-list/PalletsListSkeleton";
 

@@ -1,4 +1,4 @@
-import { Container } from "@/components/shared/container";
+import { Container } from "@/components/shared/containers/Container";
 import type { IPos } from "@/modules/poses/api/types";
 import { PosInPalletCard } from "@/modules/poses/components/cards/pos-in-pallet-card/PosInPalletCard";
 

@@ -1,4 +1,4 @@
-import { Container } from "@/components/shared/container";
+import { Container } from "@/components/shared/containers/Container";
 import type { AskDto } from "@/modules/asks/api/types/dto";
 import { AskDetailsCard } from "@/modules/asks/components/cards/ask-details-card/AskDetailsCard";
 import { AskActions } from "@/modules/asks/components/containers/ask-container/components/ask-actions/AskActions.tsx";

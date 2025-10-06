@@ -1,4 +1,4 @@
-import { Container } from "@/components/shared/container";
+import { Container } from "@/components/shared/containers/Container";
 import { CreatePalletDialog } from "@/modules/pallets/components/dialogs/create-pallet-dialog/CreatePalletDialog";
 import { PalletsList } from "@/modules/pallets/components/lists/pallets-list/PalletsList";
 import type { RowDto } from "@/modules/rows/api/types/dto";

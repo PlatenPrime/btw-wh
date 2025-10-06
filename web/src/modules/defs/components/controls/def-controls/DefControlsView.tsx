@@ -1,4 +1,4 @@
-import { Container } from "@/components/shared/container";
+import { Container } from "@/components/shared/containers/Container";
 import { Button } from "@/components/ui/button";
 import { Calculator, CheckCircle2 } from "lucide-react";
 
@@ -14,35 +14,31 @@ export function DefControlsView({
   isRecentlyStarted,
 }: DefControlsViewProps) {
   return (
-    <Container className="flex justify-center items-center gap-2">
-      
-        <Button
-          onClick={handleCalculate}
-          disabled={isPending || isRecentlyStarted}
-          className="w-full sm:w-auto"
-          variant={isRecentlyStarted ? "default" : "outline"}
-        >
-          {isRecentlyStarted ? (
-            <>
-              <CheckCircle2 className="h-4 w-4 text-green-600" />
-              Запущено
-            </>
-          ) : (
-            <>
-              <Calculator className="h-4 w-4" />
-              Розрахувати дефіцити
-            </>
-          )}
-        </Button>
-        {isPending && (
-          <p className="text-muted-foreground text-sm">Запускаємо розрахунок</p>
+    <Container className="flex items-center justify-center gap-2">
+      <Button
+        onClick={handleCalculate}
+        disabled={isPending || isRecentlyStarted}
+        className="w-full sm:w-auto"
+        variant={isRecentlyStarted ? "default" : "outline"}
+      >
+        {isRecentlyStarted ? (
+          <>
+            <CheckCircle2 className="h-4 w-4 text-green-600" />
+            Запущено
+          </>
+        ) : (
+          <>
+            <Calculator className="h-4 w-4" />
+            Розрахувати дефіцити
+          </>
         )}
-        {isRecentlyStarted && !isPending && (
-          <p className="text-muted-foreground text-sm">
-            Розрахунок виконується
-          </p>
-        )}
-
+      </Button>
+      {isPending && (
+        <p className="text-muted-foreground text-sm">Запускаємо розрахунок</p>
+      )}
+      {isRecentlyStarted && !isPending && (
+        <p className="text-muted-foreground text-sm">Розрахунок виконується</p>
+      )}
     </Container>
   );
 }

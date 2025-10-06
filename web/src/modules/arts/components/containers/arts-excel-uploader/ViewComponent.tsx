@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { UploadProgressBar } from '@/components/shared/upload-progress-bar';
+import { UploadProgressBar } from '@/components/shared/progress/UploadProgressBar';
 import type { UploadingArt } from "@/modules/arts/api/types/arts";
 import { InputUploader } from "@/modules/arts/components/containers/arts-excel-uploader/input-uploader.tsx";
 import { PreviewTable } from "@/modules/arts/components/containers/arts-excel-uploader/preview-table.tsx";

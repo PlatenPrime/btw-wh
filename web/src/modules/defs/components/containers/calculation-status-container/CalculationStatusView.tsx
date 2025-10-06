@@ -1,4 +1,4 @@
-import { Container } from "@/components/shared/container";
+import { Container } from "@/components/shared/containers/Container";
 import { Progress } from "@/components/ui";
 import { Badge } from "@/components/ui/badge";
 import type { DefsCalculationStatus } from "@/modules/defs/api/types/dto";

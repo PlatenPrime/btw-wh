@@ -1,4 +1,4 @@
-import { SidebarInsetLayout } from "@/components/shared/sidebar/sidebar-inset-layout";
+import { SidebarInsetLayout } from "@/components/shared/layout/SidebarInsetLayout";
 import { LazyArtsExcelUploader } from "@/modules/arts/components/containers/arts-excel-uploader/LazyArtsExcelUploader";
 
 export function ArtsUpdate() {

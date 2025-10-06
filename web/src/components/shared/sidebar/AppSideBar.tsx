@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { ModeToggle } from "@/components/shared/mode-toggle.tsx";
-import { ProfileSidebarCard } from "@/components/shared/sidebar/profile-sidebar-card";
+import { ProfileSidebarCard } from "@/components/shared/sidebar/profile-sidebar-card/ProfileSidebarCard";
 import { Separator } from "@/components/ui/separator";
 import {
   Sidebar,
@@ -15,8 +15,9 @@ import {
   SidebarMenuItem,
   SidebarRail,
   SidebarTrigger,
+  useSidebar,
 } from "@/components/ui/sidebar";
-import { appSidebarData, getIcon } from "@/constants/app-sidebar-data";
+import { appSidebarData, getIcon } from "@/components/shared/sidebar/data/app-sidebar-data";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 import { Link, useLocation, useNavigate } from "react-router";
 
@@ -24,6 +25,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = useLocation().pathname;
   const { user, logout, isLoading } = useAuth();
   const navigate = useNavigate();
+  const { isMobile, setOpenMobile } = useSidebar();
 
   const handleLogout = () => {
     logout();
@@ -31,10 +33,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     navigate("/login", { replace: true });
   };
 
+  const handleNavigation = (url: string) => {
+    // Закрываем мобильный сайдбар при навигации
+    if (isMobile) {
+      setOpenMobile(false);
+    }
+    navigate(url);
+  };
+
   return (
     <Sidebar {...props}>
       <SidebarHeader className="flex flex-row items-center justify-between">
-        <Link to="/" className="p-2 text-2xl font-bold hover:text-sky-200">
+        <Link to="/" className="p-2 text-2xl font-bold hover:text-sky-500">
           BTW
         </Link>
         <Separator orientation="vertical" className="mr-2 h-4" />
@@ -58,10 +68,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                         pathname.startsWith(item.url + "/")
                       }
                     >
-                      <Link to={item.url} className="flex items-center gap-2">
+                      <button
+                        onClick={() => handleNavigation(item.url)}
+                        className="flex w-full items-center gap-2 text-left"
+                      >
                         {getIcon(item.iconName)}
                         {item.title}
-                      </Link>
+                      </button>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}

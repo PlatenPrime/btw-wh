@@ -1,4 +1,4 @@
-import { Container } from "@/components/shared/container";
+import { Container } from "@/components/shared/containers/Container";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export function CalculationStatusSkeleton() {

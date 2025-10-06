@@ -1,4 +1,4 @@
-import { SidebarInsetLayout } from "@/components/shared/sidebar/sidebar-inset-layout";
+import { SidebarInsetLayout } from "@/components/shared/layout/SidebarInsetLayout";
 import { ArtsContainer } from "@/modules/arts/components/containers/arts-container/ArtsContainer.tsx";
 import { ArtsContainerSkeleton } from "@/modules/arts/components/containers/arts-container/ArtsContainerSkeleton.tsx";
 import { ArtsFetcher } from "@/modules/arts/components/fetchers/arts-fetcher/ArtsFetcher.tsx";

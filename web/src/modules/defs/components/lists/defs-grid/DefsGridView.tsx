@@ -1,4 +1,4 @@
-import { Container } from "@/components/shared/container";
+import { Container } from "@/components/shared/containers/Container";
 import type { Def, DeficitItem } from "@/modules/defs/api/types/dto";
 import { DefCard } from "@/modules/defs/components/cards/def-card/DefCard";
 import type { DeficitFilter } from "@/modules/defs/components/elements/defs-stats/DefsStatsView";

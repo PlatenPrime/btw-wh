@@ -1,8 +1,8 @@
-import { Container } from "@/components/shared/container";
+import { Container } from "@/components/shared/containers/Container";
 import { Button } from "@/components/ui/button";
 import type { PalletResponse } from "@/modules/pallets/api/types";
-import { PalletInfo } from "@/modules/pallets/components/elements/pallet-info/PalletInfo";
 import { PalletControl } from "@/modules/pallets/components/controls/pallet-control/PalletControl";
+import { PalletInfo } from "@/modules/pallets/components/elements/pallet-info/PalletInfo";
 import {
   PosesByPalletContainer,
   PosesByPalletContainerSkeleton,
