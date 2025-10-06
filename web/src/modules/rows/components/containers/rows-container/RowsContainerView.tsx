@@ -1,8 +1,10 @@
+import { Container } from "@/components/shared/container";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import type { RowDto } from "@/modules/rows/api/types/dto";
 import { CreateRowDialog } from "@/modules/rows/components/dialogs/create-row-dialog/CreateRowDialog";
 import { RowsGrid } from "@/modules/rows/components/lists/rows-grid/RowsGrid";
-import { Plus } from "lucide-react";
+import { Plus, Rows3 } from "lucide-react";
 
 interface RowsContainerViewProps {
   data: RowDto[];
@@ -10,21 +12,27 @@ interface RowsContainerViewProps {
 
 export function RowsContainerView({ data }: RowsContainerViewProps) {
   return (
-    <div className="grid gap-4">
-      <div className="flex items-center justify-between gap-4">
-        <div className="text-muted-foreground">Всього рядів: {data.length}</div>
+    <div className="grid gap-2">
+      <Container className="flex items-center justify-between gap-4">
+        <p className="flex items-center gap-2">
+          <Rows3 className="h-4 w-4" /> {data.length}
+        </p>
 
         <CreateRowDialog
           trigger={
-            <Button>
-              <Plus className="mr-2 h-4 w-4" />
+            <Button variant="outline">
+              <Plus className="h-4 w-4" />
               Створити ряд
             </Button>
           }
         />
-      </div>
+      </Container>
 
-      <RowsGrid rows={data} />
+      <Separator />
+
+      <Container>
+        <RowsGrid rows={data} />
+      </Container>
     </div>
   );
 }
