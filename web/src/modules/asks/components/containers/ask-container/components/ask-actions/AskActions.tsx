@@ -6,11 +6,12 @@ interface AskActionsProps {
 }
 
 export function AskActions({ actions }: AskActionsProps) {
-  if (actions.length === 0) return null;
+
 
   return (
     <Card className="p-1">
       <CardContent className="flex flex-col gap-2">
+        <p>Дії по запиту</p>
         {actions.map((action, index) => (
           <div key={index} className="flex items-start gap-2">
             <UserCheck className="h-4 w-4 shrink-0" />

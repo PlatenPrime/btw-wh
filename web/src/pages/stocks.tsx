@@ -1,4 +1,4 @@
-import { SidebarInsetLayout } from "@/components/shared/layout/SidebarInsetLayout";
+import { SidebarInsetLayout } from "@/components/layout/SidebarInsetLayout";
 
 export function Stocks() {
   return (

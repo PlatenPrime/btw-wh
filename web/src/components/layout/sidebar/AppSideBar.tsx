@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { ModeToggle } from "@/components/shared/mode-toggle.tsx";
-import { ProfileSidebarCard } from "@/components/shared/sidebar/profile-sidebar-card/ProfileSidebarCard";
+import { ProfileSidebarCard } from "@/components/layout/sidebar/profile-sidebar-card/ProfileSidebarCard";
 import { Separator } from "@/components/ui/separator";
 import {
   Sidebar,
@@ -17,7 +17,7 @@ import {
   SidebarTrigger,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { appSidebarData, getIcon } from "@/components/shared/sidebar/data/app-sidebar-data";
+import { appSidebarData, getIcon } from "@/components/layout/sidebar/data/app-sidebar-data";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 import { Link, useLocation, useNavigate } from "react-router";
 
@@ -67,6 +67,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                         pathname === item.url ||
                         pathname.startsWith(item.url + "/")
                       }
+                      className="hover:cursor-pointer"
                     >
                       <button
                         onClick={() => handleNavigation(item.url)}

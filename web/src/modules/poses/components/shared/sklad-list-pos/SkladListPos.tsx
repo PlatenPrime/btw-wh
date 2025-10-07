@@ -9,13 +9,11 @@ interface SkladListPosProps {
 export function SkladListPos({ pos, onClick }: SkladListPosProps) {
   const isBoxesEmpty = pos.boxes === 0;
   const isQuantEmpty = pos.quant === 0;
-  const isPosEmpty = isBoxesEmpty && isQuantEmpty;
 
   return (
     <div
       className={cn(
-        "hover:bg-muted/25 block cursor-pointer rounded-md px-2 py-1 transition-colors",
-        isPosEmpty ? "opacity-50" : "",
+        "hover:bg-muted/25 block cursor-pointer rounded-md px-2 py-1 transition-colors"
       )}
       onClick={onClick}
     >
@@ -29,7 +27,7 @@ export function SkladListPos({ pos, onClick }: SkladListPosProps) {
         <span
           className={cn(
             "flex items-center justify-center gap-1",
-            isBoxesEmpty ? "text-muted-foreground" : "",
+            isBoxesEmpty ? "text-destructive" : "",
           )}
         >
           {pos.boxes || 0}
@@ -37,7 +35,7 @@ export function SkladListPos({ pos, onClick }: SkladListPosProps) {
         <span
           className={cn(
             "flex items-center justify-end gap-1",
-            isQuantEmpty ? "text-muted-foreground" : "",
+            isQuantEmpty ? "text-destructive" : "",
           )}
         >
           {pos.quant || 0}

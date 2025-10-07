@@ -18,7 +18,12 @@ export function SkladPosesList({
   renderPos,
   additionalProps,
 }: SkladPosesListProps) {
-  if (!skladData.poses?.length) return null;
+  if (!skladData.poses?.length)
+    return (
+      <Container>
+        <p className="text-center font-semibold text-muted-foreground" >На складі {title} немає позицій з цим артикулом</p>
+      </Container>
+    );
 
   return (
     <Container className="grid gap-2">
