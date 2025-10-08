@@ -1,8 +1,8 @@
+import { UploadProgressBar } from "@/components/shared/progress/UploadProgressBar";
 import { Button } from "@/components/ui/button";
-import { UploadProgressBar } from '@/components/shared/progress/UploadProgressBar';
 import type { UploadingArt } from "@/modules/arts/api/types/arts";
-import { InputUploader } from "@/modules/arts/components/containers/arts-excel-uploader/input-uploader.tsx";
-import { PreviewTable } from "@/modules/arts/components/containers/arts-excel-uploader/preview-table.tsx";
+import { InputUploader } from "@/modules/arts/components/containers/arts-excel-container/components/input-uploader";
+import { PreviewTable } from "@/modules/arts/components/containers/arts-excel-container/components/preview-table";
 
 interface ViewProps {
   handleFileUpload: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -14,7 +14,7 @@ interface ViewProps {
   isUploading: boolean;
 }
 
-export function View({
+export function ArtsExcelUploaderView({
   handleFileUpload,
   handleFileReadFromDrop,
   handleSendToServer,

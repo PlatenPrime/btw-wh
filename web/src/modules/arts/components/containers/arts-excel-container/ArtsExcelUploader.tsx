@@ -1,6 +1,6 @@
 import { apiClient } from "@/lib/apiClient"; // путь подкорректируй если нужно
 import type { UploadingArt } from "@/modules/arts/api/types/arts";
-import { View } from "@/modules/arts/components/containers/arts-excel-uploader/ViewComponent.tsx";
+import { ArtsExcelUploaderView } from "@/modules/arts/components/containers/arts-excel-container/ArtsExcelUploaderView";
 import type { AxiosResponse } from "axios";
 import React, { useState } from "react";
 import { toast } from "sonner";
@@ -171,7 +171,7 @@ const ArtsExcelUploader = () => {
   };
 
   return (
-    <View
+    <ArtsExcelUploaderView
       handleFileUpload={handleFileUpload}
       handleFileReadFromDrop={handleFileReadFromDrop}
       handleSendToServer={handleSendToServer}

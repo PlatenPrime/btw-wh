@@ -1,11 +1,11 @@
 import { SidebarInsetLayout } from "@/components/layout/SidebarInsetLayout";
-import { LazyArtsExcelUploader } from "@/modules/arts/components/containers/arts-excel-uploader/LazyArtsExcelUploader";
+import { ArtsExcelUploaderLazy } from "@/modules/arts/components/containers/arts-excel-container/ArtsExcelUploaderLazy";
 
 export function ArtsUpdate() {
   return (
     <SidebarInsetLayout headerText="Оновлення артикулів">
       <main className="p-4">
-        <LazyArtsExcelUploader />
+        <ArtsExcelUploaderLazy />
       </main>
     </SidebarInsetLayout>
   );
