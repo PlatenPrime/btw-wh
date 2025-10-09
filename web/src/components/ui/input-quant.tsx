@@ -91,13 +91,15 @@ export const InputQuant = forwardRef<HTMLInputElement, InputQuantProps>(
           </Label>
         )}
         <Input
+          {...props}
           ref={ref}
           type="text"
+          inputMode="numeric"
+          pattern="[0-9-]*"
           placeholder={placeholder}
           value={displayValue}
           onChange={handleChange}
           className={cn("w-full", className)}
-          {...props}
         />
         {error && (
           <p className={cn("text-destructive text-sm", errorClassName)}>
