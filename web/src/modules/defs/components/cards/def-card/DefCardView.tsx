@@ -15,17 +15,16 @@ interface DefCardViewProps {
 }
 
 export function DefCardView({ artikul, defItem }: DefCardViewProps) {
-  // Цветовые тени и рамка в зависимости от статуса
-  const shadowClasses =
-    defItem.status === "critical"
-      ? "shadow-red-200 dark:shadow-red-900/50 hover:shadow-red-300 dark:hover:shadow-red-800/50"
-      : "shadow-yellow-200 dark:shadow-yellow-900/50 hover:shadow-yellow-300 dark:hover:shadow-yellow-800/50";
 
+const shadowClasses =
+  defItem.status === "critical"
+    ? "shadow-red-300/30 dark:shadow-red-600/40 hover:shadow-red-400/40 dark:hover:shadow-red-500/50"
+    : "shadow-amber-300/30 dark:shadow-amber-500/40 hover:shadow-amber-400/40 dark:hover:shadow-amber-400/50";
 
-  const backgroundClasses =
-    defItem.status === "critical"
-      ? "bg-red-100 dark:bg-red-500/20 hover:bg-red-200 dark:hover:bg-red-800"
-      : "bg-yellow-100 dark:bg-yellow-500/20 hover:bg-yellow-200 dark:hover:bg-yellow-800";
+const backgroundClasses =
+  defItem.status === "critical"
+    ? "bg-red-500/10 dark:bg-red-400/15 backdrop-blur-md border border-red-500/20"
+    : "bg-yellow-500/10 dark:bg-yellow-400/15 backdrop-blur-md border border-yellow-500/20";
 
   return (
     <Card
