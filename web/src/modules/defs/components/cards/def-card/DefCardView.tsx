@@ -4,9 +4,10 @@ import { ArtDialogImage } from "@/modules/arts/components/dialogs/art-dialog-ima
 import { ArtNameukr } from "@/modules/arts/components/elements/art-nameukr/ArtNameukr";
 import type { DeficitItem } from "@/modules/defs/api/types/dto";
 import { DefAskButton } from "@/modules/defs/components/elements/def-ask-button/DefAskButton";
+import { Link } from "react-router";
 import { DefCardAskBid } from "./components/DefCardAskBid";
-import { DefCardQuants } from "./components/DefCardQuants";
 import { DefCardIndicator } from "./components/DefCardIndicator";
+import { DefCardQuants } from "./components/DefCardQuants";
 
 interface DefCardViewProps {
   artikul: string;
@@ -20,24 +21,31 @@ export function DefCardView({ artikul, defItem }: DefCardViewProps) {
       ? "shadow-red-200 dark:shadow-red-900/50 hover:shadow-red-300 dark:hover:shadow-red-800/50"
       : "shadow-yellow-200 dark:shadow-yellow-900/50 hover:shadow-yellow-300 dark:hover:shadow-yellow-800/50";
 
-  const borderClasses =
+
+  const backgroundClasses =
     defItem.status === "critical"
-      ? "ring-red-300 dark:ring-red-700"
-      : "ring-yellow-300 dark:ring-yellow-700";
+      ? "bg-red-100 dark:bg-red-500/20 hover:bg-red-200 dark:hover:bg-red-800"
+      : "bg-yellow-100 dark:bg-yellow-500/20 hover:bg-yellow-200 dark:hover:bg-yellow-800";
 
   return (
     <Card
       className={cn(
-        "bg-background h-full flex-col justify-between p-2 shadow-none ring-1 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:shadow-2xl",
+        "bg-background h-full flex-col justify-between p-2 shadow-none  transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:shadow-2xl",
         "gap-2 text-sm",
         shadowClasses,
-        borderClasses,
+        backgroundClasses,
       )}
     >
       {/* Image and name */}
       <div className="flex items-center justify-between gap-2 text-sm">
         <ArtDialogImage artikul={artikul} />
-        <ArtNameukr nameukr={defItem.nameukr || artikul} />
+        <Link
+          to={`/arts/${artikul}`}
+          target="_blank"
+          className="hover:underline"
+        >
+          <ArtNameukr nameukr={defItem.nameukr || artikul} />
+        </Link>
         <div className="flex items-center gap-1">
           {/* Статус индикатор */}
           <DefCardIndicator defItem={defItem} />
@@ -45,8 +53,8 @@ export function DefCardView({ artikul, defItem }: DefCardViewProps) {
         </div>
       </div>
 
-      <DefCardAskBid ask={defItem.existingAsk} />
       <DefCardQuants defItem={defItem} />
+      <DefCardAskBid ask={defItem.existingAsk} />
     </Card>
   );
 }
