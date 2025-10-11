@@ -1,5 +1,5 @@
-import { FormErrorDisplay } from '@/components/shared/error-components/form-error-display';
-import { MoveTrigger } from '@/components/shared/triggers/move-trigger/MoveTrigger';
+import { FormErrorDisplay } from "@/components/shared/error-components/form-error-display";
+import { MoveTrigger } from "@/components/shared/triggers/move-trigger/MoveTrigger";
 import {
   Dialog,
   DialogContent,
@@ -10,6 +10,7 @@ import {
 import type { IPallet } from "@/modules/pallets/api/types";
 import { MovePalletPosesForm } from "@/modules/pallets/components/forms/move-pallet-poses-form/MovePalletPosesForm";
 import type { UseMutationResult } from "@tanstack/react-query";
+import type { ReactNode } from "react";
 
 interface MovePalletPosesDialogViewProps {
   open: boolean;
@@ -20,6 +21,7 @@ interface MovePalletPosesDialogViewProps {
   isSourceEmpty: boolean;
   moveMutation: UseMutationResult<unknown, unknown, string, unknown>;
   mutationError: string | null;
+  trigger?: ReactNode;
 }
 
 export function MovePalletPosesDialogView({
@@ -31,6 +33,7 @@ export function MovePalletPosesDialogView({
   isSourceEmpty,
   moveMutation,
   mutationError,
+  trigger,
 }: MovePalletPosesDialogViewProps) {
   return (
     <Dialog
@@ -42,9 +45,9 @@ export function MovePalletPosesDialogView({
         setOpen(next);
       }}
     >
-      <DialogTrigger asChild>
-        <MoveTrigger />
-      </DialogTrigger>
+      {trigger !== undefined && (
+        <DialogTrigger asChild>{trigger || <MoveTrigger />}</DialogTrigger>
+      )}
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>Перемістити позиції</DialogTitle>

@@ -33,9 +33,9 @@ export function ClearPalletDialogView({
 }: ClearPalletDialogViewProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild className="">
-        {trigger || <ClearTrigger />}
-      </DialogTrigger>
+      {trigger !== undefined && (
+        <DialogTrigger asChild>{trigger || <ClearTrigger />}</DialogTrigger>
+      )}
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Очистити палету "{pallet.title}"?</DialogTitle>

@@ -37,9 +37,9 @@ export default function DeleteRowDialogView({
 }: DeleteRowDialogViewProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild className="">
-        {trigger || <DeleteTrigger />}
-      </DialogTrigger>
+      {trigger !== undefined && (
+        <DialogTrigger asChild>{trigger || <DeleteTrigger />}</DialogTrigger>
+      )}
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Видалити ряд "{row.title}"?</DialogTitle>

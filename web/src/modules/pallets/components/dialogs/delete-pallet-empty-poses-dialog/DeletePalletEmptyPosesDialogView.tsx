@@ -33,9 +33,9 @@ export function DeletePalletEmptyPosesDialogView({
 }: DeletePalletEmptyPosesDialogViewProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild className="">
-        {trigger || <ClearZeroTrigger />}
-      </DialogTrigger>
+      {trigger !== undefined && (
+        <DialogTrigger asChild>{trigger || <ClearZeroTrigger />}</DialogTrigger>
+      )}
       <DialogContent>
         <DialogHeader>
           <DialogTitle>

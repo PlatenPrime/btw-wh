@@ -41,9 +41,9 @@ export function DeletePalletDialogView({
 }: DeletePalletDialogViewProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild className="">
-        {trigger || <DeleteTrigger />}
-      </DialogTrigger>
+      {trigger !== undefined && (
+        <DialogTrigger asChild>{trigger || <DeleteTrigger />}</DialogTrigger>
+      )}
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Видалити палету "{pallet.title}"?</DialogTitle>

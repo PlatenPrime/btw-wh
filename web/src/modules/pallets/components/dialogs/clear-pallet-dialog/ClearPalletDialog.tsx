@@ -1,20 +1,45 @@
 import { useDeletePalletPosesMutation } from "@/modules/pallets/api/hooks/mutations/useDeletePalletPosesMutation";
 import type { IPallet } from "@/modules/pallets/api/types";
 import { ClearPalletDialogView } from "@/modules/pallets/components/dialogs/clear-pallet-dialog/ClearPalletDialogView.tsx";
-import { useState } from "react";
+import type { Dispatch, SetStateAction } from "react";
+import { useMemo, useRef, useState } from "react";
 
 interface DeletePalletDialogProps {
   pallet: IPallet;
   trigger?: React.ReactNode;
   onSuccess: () => void;
+  // Поддержка контролируемого режима
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
 export function ClearPalletDialog({
   pallet,
   trigger,
   onSuccess,
+  open: controlledOpen,
+  onOpenChange,
 }: DeletePalletDialogProps) {
-  const [open, setOpen] = useState(false);
+  const [internalOpen, setInternalOpen] = useState(false);
+
+  // Используем контролируемое состояние если передано, иначе внутреннее
+  const open = controlledOpen ?? internalOpen;
+  const openRef = useRef(open);
+  openRef.current = open;
+
+  // Создаем обертку для onOpenChange, которая принимает SetStateAction
+  const setOpen: Dispatch<SetStateAction<boolean>> = useMemo(
+    () => (value) => {
+      const newValue =
+        typeof value === "function" ? value(openRef.current) : value;
+      if (onOpenChange) {
+        onOpenChange(newValue);
+      } else {
+        setInternalOpen(newValue);
+      }
+    },
+    [onOpenChange],
+  );
 
   const clearMutation = useDeletePalletPosesMutation({
     palletId: pallet._id,

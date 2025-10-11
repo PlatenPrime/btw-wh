@@ -5,10 +5,23 @@ import { useState } from "react";
 
 interface MovePalletPosesDialogProps {
   pallet: IPallet;
+  trigger?: React.ReactNode;
+  // Поддержка контролируемого режима
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
-export function MovePalletPosesDialog({ pallet }: MovePalletPosesDialogProps) {
-  const [open, setOpen] = useState(false);
+export function MovePalletPosesDialog({
+  pallet,
+  trigger,
+  open: controlledOpen,
+  onOpenChange,
+}: MovePalletPosesDialogProps) {
+  const [internalOpen, setInternalOpen] = useState(false);
+
+  // Используем контролируемое состояние если передано, иначе внутреннее
+  const open = controlledOpen ?? internalOpen;
+  const setOpen = onOpenChange ?? setInternalOpen;
 
   const moveMutation = useMovePalletPosesMutation({
     pallet,
@@ -49,6 +62,7 @@ export function MovePalletPosesDialog({ pallet }: MovePalletPosesDialogProps) {
       isSourceEmpty={isSourceEmpty}
       moveMutation={moveMutation}
       mutationError={mutationError}
+      trigger={trigger}
     />
   );
 }
