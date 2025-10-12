@@ -7,24 +7,37 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
-import { MenuIcon } from "lucide-react";
+import { MoreHorizontal, MoreVertical } from "lucide-react";
 import { useState } from "react";
-import type { HeaderActionIconColor } from "./types";
-import { useHeaderActions } from "./useHeaderActions";
+import type { CardActionIconColor, CardActionsMenuProps } from "./types";
 
-interface HeaderActionsMenuProps {
-  trigger?: React.ReactNode;
-}
-
-const iconColorClasses: Record<HeaderActionIconColor, string> = {
+const iconColorClasses: Record<CardActionIconColor, string> = {
   emerald: "text-emerald-500",
   rose: "text-rose-500",
   red: "text-red-500",
   default: "",
 };
 
-export function HeaderActionsMenu({ trigger }: HeaderActionsMenuProps) {
-  const { actions } = useHeaderActions();
+const sizeClasses = {
+  sm: {
+    button: "h-6 w-6",
+    icon: "h-3 w-3",
+    content: "w-40",
+  },
+  md: {
+    button: "h-8 w-8",
+    icon: "h-4 w-4",
+    content: "w-48",
+  },
+};
+
+export function CardActionsMenu({
+  actions,
+  trigger,
+  orientation = "vertical",
+  size = "sm",
+  align = "end",
+}: CardActionsMenuProps) {
   const [open, setOpen] = useState(false);
 
   // Если нет действий, не рендерим меню
@@ -54,19 +67,26 @@ export function HeaderActionsMenu({ trigger }: HeaderActionsMenuProps) {
     }, 100);
   };
 
+  const Icon = orientation === "horizontal" ? MoreHorizontal : MoreVertical;
+  const sizeConfig = sizeClasses[size];
+
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
         {trigger || (
-          <Button variant="ghost" size="icon" className="shrink-0">
-            <MenuIcon />
+          <Button
+            variant="ghost"
+            size="icon"
+            className={cn("hover:bg-muted shrink-0 p-0", sizeConfig.button)}
+          >
+            <Icon className={sizeConfig.icon} />
             <span className="sr-only">Відкрити меню дій</span>
           </Button>
         )}
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-48">
+      <DropdownMenuContent align={align} className={sizeConfig.content}>
         {defaultActions.map((action) => {
-          const Icon = action.icon;
+          const ActionIcon = action.icon;
           const iconColorClass =
             iconColorClasses[action.iconColor || "default"];
           return (
@@ -76,7 +96,7 @@ export function HeaderActionsMenu({ trigger }: HeaderActionsMenuProps) {
               variant="default"
               className="cursor-pointer"
             >
-              {Icon && <Icon className={cn(iconColorClass)} />}
+              {ActionIcon && <ActionIcon className={cn(iconColorClass)} />}
               {action.label}
             </DropdownMenuItem>
           );
@@ -85,7 +105,7 @@ export function HeaderActionsMenu({ trigger }: HeaderActionsMenuProps) {
         {hasMultipleGroups && <DropdownMenuSeparator />}
 
         {destructiveActions.map((action) => {
-          const Icon = action.icon;
+          const ActionIcon = action.icon;
           const iconColorClass =
             iconColorClasses[action.iconColor || "default"];
           return (
@@ -95,7 +115,7 @@ export function HeaderActionsMenu({ trigger }: HeaderActionsMenuProps) {
               variant="destructive"
               className="cursor-pointer"
             >
-              {Icon && <Icon className={cn(iconColorClass)} />}
+              {ActionIcon && <ActionIcon className={cn(iconColorClass)} />}
               {action.label}
             </DropdownMenuItem>
           );

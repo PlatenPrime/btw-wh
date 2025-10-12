@@ -1,5 +1,4 @@
 import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -11,7 +10,6 @@ import {
 } from "@/components/ui/dialog";
 import type { IPos } from "@/modules/poses/api/types";
 import type { UseMutationResult } from "@tanstack/react-query";
-import { Trash } from "lucide-react";
 import type { Dispatch, ReactNode, SetStateAction } from "react";
 
 interface DeletePosDialogViewProps {
@@ -31,16 +29,9 @@ export function DeletePosDialogView({
   open,
   setOpen,
 }: DeletePosDialogViewProps) {
-  const defaultTrigger = (
-    <Button variant="destructive" size="sm">
-      <Trash className="mr-2 h-4 w-4" />
-      Видалити
-    </Button>
-  );
-
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>{trigger || defaultTrigger}</DialogTrigger>
+      {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Видалити позицію "{pos.artikul}"?</DialogTitle>

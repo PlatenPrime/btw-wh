@@ -1,8 +1,12 @@
-import { Button } from "@/components/ui/button";
+import {
+  CardActionsMenu,
+  type CardAction,
+} from "@/components/shared/card-actions";
 import type { IPos } from "@/modules/poses/api/types";
 import { DeletePosDialog } from "@/modules/poses/components/dialogs/delete-pos-dialog/DeletePosDialog";
 import { UpdatePosDialog } from "@/modules/poses/components/dialogs/update-pos-dialog/UpdatePosDialog";
 import { Edit, Trash } from "lucide-react";
+import { useState } from "react";
 
 interface PosCardActionsProps {
   pos: IPos;
@@ -10,34 +14,48 @@ interface PosCardActionsProps {
 }
 
 export function PosCardActions({ pos, onSuccess }: PosCardActionsProps) {
+  const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+
+  const actions: CardAction[] = [
+    {
+      id: "edit",
+      label: "Редагувати",
+      icon: Edit,
+      variant: "default",
+      onClick: () => setIsUpdateDialogOpen(true),
+    },
+    {
+      id: "delete",
+      label: "Видалити",
+      icon: Trash,
+      variant: "destructive",
+      onClick: () => setIsDeleteDialogOpen(true),
+    },
+  ];
+
   return (
-    <div className="grid  gap-1">
+    <>
+      <CardActionsMenu
+        actions={actions}
+        orientation="vertical"
+        size="sm"
+        align="end"
+      />
+
       <UpdatePosDialog
         pos={pos}
-        trigger={
-          <Button
-            variant="ghost"
-            size="sm"
-            className="hover:bg-muted h-6 w-6 p-0"
-          >
-            <Edit className="h-3 w-3" />
-          </Button>
-        }
+        open={isUpdateDialogOpen}
+        onOpenChange={setIsUpdateDialogOpen}
         onSuccess={onSuccess}
       />
+
       <DeletePosDialog
         pos={pos}
-        trigger={
-          <Button
-            variant="ghost"
-            size="sm"
-            className="hover:bg-muted hover:text-destructive h-6 w-6 p-0"
-          >
-            <Trash className="h-3 w-3" />
-          </Button>
-        }
+        open={isDeleteDialogOpen}
+        onOpenChange={setIsDeleteDialogOpen}
         onSuccess={onSuccess}
       />
-    </div>
+    </>
   );
 }

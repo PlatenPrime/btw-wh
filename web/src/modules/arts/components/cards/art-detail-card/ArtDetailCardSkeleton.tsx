@@ -7,20 +7,20 @@ export function ArtDetailCardSkeleton() {
     <Card className="p-0">
       <CardContent className="flex items-start gap-2 p-1 text-sm">
         {/* Скелетон для изображения товара */}
-        <Skeleton className="h-20 w-20 rounded-md" />
+        <Skeleton className="h-10 w-10 rounded-md" />
 
-        <div className="grid gap-2">
+        <div className="grid gap-1">
           {/* Скелетон для названия товара */}
           <Skeleton className="h-4 w-64" />
 
           {/* Скелетон для зоны и лимита */}
-          <div className="flex items-center gap-2">
+          <div className="grid gap-1">
             <div className="flex items-center gap-1">
-              <Skeleton className="h-4 w-3 rounded" />
+              <Skeleton className="h-3 w-3 rounded" />
               <Skeleton className="h-4 w-12" />
             </div>
             <div className="flex items-center gap-1">
-              <Skeleton className="h-4 w-3 rounded" />
+              <Skeleton className="h-3 w-3 rounded" />
               <Skeleton className="h-4 w-12" />
             </div>
           </div>

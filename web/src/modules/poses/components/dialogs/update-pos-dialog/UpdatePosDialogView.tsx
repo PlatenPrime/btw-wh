@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -8,21 +7,16 @@ import {
 } from "@/components/ui/dialog";
 import type { IPos } from "@/modules/poses/api/types";
 import { UpdatePosForm } from "@/modules/poses/components/forms/update-pos-form/UpdatePosForm.tsx";
+import type { Dispatch, SetStateAction } from "react";
 
 interface UpdatePosDialogProps {
   open: boolean;
-  setOpen: (open: boolean) => void;
+  setOpen: Dispatch<SetStateAction<boolean>>;
   pos: IPos;
   trigger?: React.ReactNode;
   onSuccess: () => void;
   onCancel: () => void;
 }
-
-const defaultTrigger = (
-  <Button variant="outline" size="sm">
-    Редагувати
-  </Button>
-);
 
 export function UpdatePosDialogView({
   open,
@@ -34,7 +28,7 @@ export function UpdatePosDialogView({
 }: UpdatePosDialogProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>{trigger || defaultTrigger}</DialogTrigger>
+      {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="text-center">{pos.artikul}</DialogTitle>

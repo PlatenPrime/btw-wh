@@ -20,7 +20,7 @@ export function ArtDetailCard({ artData }: ArtDetailCardProps) {
 
         <div className="grid">
           <ArtNameukr nameukr={artData.nameukr} />
-          <div className="flex items-center gap-4">
+          <div className="grid ">
             <ArtZone artData={artData} />
             <ArtLimit limit={artData.limit} />
           </div>
