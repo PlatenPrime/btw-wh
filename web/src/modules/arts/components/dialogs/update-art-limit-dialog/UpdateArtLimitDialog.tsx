@@ -1,26 +1,29 @@
 import type { ArtDto } from "@/modules/arts/api/types/dto";
-import { useState } from "react";
 import { UpdateArtLimitDialogView } from "./UpdateArtLimitDialogView";
 
 interface UpdateArtLimitDialogProps {
   artData: ArtDto;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 }
 
-export function UpdateArtLimitDialog({ artData }: UpdateArtLimitDialogProps) {
-  const [open, setOpen] = useState(false);
-
+export function UpdateArtLimitDialog({
+  artData,
+  open,
+  onOpenChange,
+}: UpdateArtLimitDialogProps) {
   const handleSuccess = () => {
-    setOpen(false);
+    onOpenChange(false);
   };
 
   const handleCancel = () => {
-    setOpen(false);
+    onOpenChange(false);
   };
 
   return (
     <UpdateArtLimitDialogView
       open={open}
-      setOpen={setOpen}
+      setOpen={onOpenChange}
       artData={artData}
       onSuccess={handleSuccess}
       onCancel={handleCancel}

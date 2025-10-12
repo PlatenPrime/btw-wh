@@ -5,14 +5,26 @@ interface CreateAskDialogProps {
   onSuccess?: () => void;
   preFilledArtikul?: string; // Предзаполненный артикул для страницы артикула
   trigger?: React.ReactNode; // Кастомный триггер для открытия диалога
+  // Для внешнего управления состоянием (опционально)
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
 export function CreateAskDialog({
   onSuccess,
   preFilledArtikul,
   trigger,
+  open: externalOpen,
+  onOpenChange: externalOnOpenChange,
 }: CreateAskDialogProps) {
-  const [open, setOpen] = useState(false);
+  // Внутреннее состояние для обратной совместимости
+  const [internalOpen, setInternalOpen] = useState(false);
+
+  // Используем внешнее состояние если передано, иначе внутреннее
+  const isControlled =
+    externalOpen !== undefined && externalOnOpenChange !== undefined;
+  const open = isControlled ? externalOpen : internalOpen;
+  const setOpen = isControlled ? externalOnOpenChange : setInternalOpen;
 
   const handleSuccess = () => {
     setOpen(false);

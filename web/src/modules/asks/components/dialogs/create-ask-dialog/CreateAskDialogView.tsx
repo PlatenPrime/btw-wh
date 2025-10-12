@@ -11,7 +11,6 @@ import { CreateAskForm } from "@/modules/asks/components/forms/create-ask-form/C
 interface CreateAskDialogViewProps {
   open: boolean;
   setOpen: (open: boolean) => void;
-
   onSuccess: () => void;
   onCancel: () => void;
   preFilledArtikul?: string; // Предзаполненный артикул для страницы артикула
@@ -21,7 +20,6 @@ interface CreateAskDialogViewProps {
 export function CreateAskDialogView({
   open,
   setOpen,
-
   onSuccess,
   onCancel,
   preFilledArtikul,
@@ -29,7 +27,9 @@ export function CreateAskDialogView({
 }: CreateAskDialogViewProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>{trigger ?? <AskTrigger />}</DialogTrigger>
+      {trigger !== undefined && (
+        <DialogTrigger asChild>{trigger || <AskTrigger />}</DialogTrigger>
+      )}
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="text-center">
