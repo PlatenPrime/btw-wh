@@ -4,11 +4,13 @@ import { useState } from "react";
 interface CreateAskDialogProps {
   onSuccess?: () => void;
   preFilledArtikul?: string; // Предзаполненный артикул для страницы артикула
+  trigger?: React.ReactNode; // Кастомный триггер для открытия диалога
 }
 
 export function CreateAskDialog({
   onSuccess,
   preFilledArtikul,
+  trigger,
 }: CreateAskDialogProps) {
   const [open, setOpen] = useState(false);
 
@@ -28,6 +30,7 @@ export function CreateAskDialog({
       onSuccess={handleSuccess}
       onCancel={handleCancel}
       preFilledArtikul={preFilledArtikul}
+      trigger={trigger}
     />
   );
 }

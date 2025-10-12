@@ -4,7 +4,7 @@ import { CreatePalletDialog } from "@/modules/pallets/components/dialogs/create-
 import { PalletsList } from "@/modules/pallets/components/lists/pallets-list/PalletsList";
 import type { RowDto } from "@/modules/rows/api/types/dto";
 import { DeleteRowDialog } from "@/modules/rows/components/dialogs/delete-row-dialog/DeleteRowDialog";
-import { Trash2Icon } from "lucide-react";
+import { Grid3x3, Trash2Icon } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 
@@ -33,6 +33,9 @@ export function RowContainerView({ row }: RowContainerViewProps) {
     <div className="grid gap-2">
       {/* Header */}
       <Container className="flex items-start justify-between">
+        <p className="flex items-center gap-2">
+          <Grid3x3 className="h-4 w-4" /> {row.pallets.length}
+        </p>
         <CreatePalletDialog row={row} />
       </Container>
 
