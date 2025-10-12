@@ -1,5 +1,4 @@
 import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
-import { CheckTrigger } from "@/components/shared/triggers/check-trigger/CheckTrigger";
 import {
   Dialog,
   DialogContent,
@@ -7,7 +6,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 
 interface ExecuteAskDialogViewProps {
@@ -27,9 +25,6 @@ export function CompleteAskDialogView({
 }: ExecuteAskDialogViewProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <CheckTrigger />
-      </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Виконати запит "{artikul}"?</DialogTitle>

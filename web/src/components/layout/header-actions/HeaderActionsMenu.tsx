@@ -6,13 +6,22 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { MoreVerticalIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { MenuIcon} from "lucide-react";
 import { useState } from "react";
+import type { HeaderActionIconColor } from "./types";
 import { useHeaderActions } from "./useHeaderActions";
 
 interface HeaderActionsMenuProps {
   trigger?: React.ReactNode;
 }
+
+const iconColorClasses: Record<HeaderActionIconColor, string> = {
+  emerald: "text-emerald-500",
+  rose: "text-rose-500",
+  red: "text-red-500",
+  default: "",
+};
 
 export function HeaderActionsMenu({ trigger }: HeaderActionsMenuProps) {
   const { actions } = useHeaderActions();
@@ -50,7 +59,7 @@ export function HeaderActionsMenu({ trigger }: HeaderActionsMenuProps) {
       <DropdownMenuTrigger asChild>
         {trigger || (
           <Button variant="ghost" size="icon" className="shrink-0">
-            <MoreVerticalIcon />
+            <MenuIcon />
             <span className="sr-only">Відкрити меню дій</span>
           </Button>
         )}
@@ -58,13 +67,15 @@ export function HeaderActionsMenu({ trigger }: HeaderActionsMenuProps) {
       <DropdownMenuContent align="end" className="w-48">
         {defaultActions.map((action) => {
           const Icon = action.icon;
+          const iconColorClass =
+            iconColorClasses[action.iconColor || "default"];
           return (
             <DropdownMenuItem
               key={action.id}
               onClick={() => handleActionClick(action.onClick)}
               variant="default"
             >
-              {Icon && <Icon />}
+              {Icon && <Icon className={cn(iconColorClass)} />}
               {action.label}
             </DropdownMenuItem>
           );
@@ -74,13 +85,15 @@ export function HeaderActionsMenu({ trigger }: HeaderActionsMenuProps) {
 
         {destructiveActions.map((action) => {
           const Icon = action.icon;
+          const iconColorClass =
+            iconColorClasses[action.iconColor || "default"];
           return (
             <DropdownMenuItem
               key={action.id}
               onClick={() => handleActionClick(action.onClick)}
               variant="destructive"
             >
-              {Icon && <Icon />}
+              {Icon && <Icon className={cn(iconColorClass)} />}
               {action.label}
             </DropdownMenuItem>
           );

@@ -1,23 +1,24 @@
 import { DeleteAskDialogView } from "@/modules/asks/components/dialogs/delete-ask-dialog/DeleteAskDialogView.tsx";
-import { useState } from "react";
 
 interface DeleteAskDialogProps {
   handleDeleteAsk: () => void;
   isPending: boolean;
   artikul: string;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 }
 
 export function DeleteAskDialog({
   handleDeleteAsk,
   isPending,
   artikul,
+  open,
+  onOpenChange,
 }: DeleteAskDialogProps) {
-  const [open, setOpen] = useState(false);
-
   const handleDelete = async () => {
     try {
       await handleDeleteAsk();
-      setOpen(false);
+      onOpenChange(false);
     } catch (error) {
       console.error("Error deleting ask:", error);
     }
@@ -25,7 +26,7 @@ export function DeleteAskDialog({
   return (
     <DeleteAskDialogView
       open={open}
-      setOpen={setOpen}
+      setOpen={onOpenChange}
       handleDelete={handleDelete}
       isPending={isPending}
       artikul={artikul}

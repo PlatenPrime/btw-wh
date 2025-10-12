@@ -1,5 +1,4 @@
 import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
-import { CancelTrigger } from "@/components/shared/triggers/cancel-trigger/CancelTrigger";
 import {
   Dialog,
   DialogContent,
@@ -7,7 +6,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 
 interface RejectAskDialogViewProps {
@@ -27,15 +25,12 @@ export function RejectAskDialogView({
 }: RejectAskDialogViewProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <CancelTrigger />
-      </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Відмовити від запиту "{artikul}"?</DialogTitle>
+          <DialogTitle>Відмовити на запит "{artikul}"?</DialogTitle>
           <DialogDescription>
-            Ви впевнені, що хочете відмовити від запиту "{artikul}"? Ця дія
-            змінить статус запиту на "відмінено".
+            Ви впевнені, що хочете відмовити на запит "{artikul}"? Ця дія
+            змінить статус запиту на "відмовлено".
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
