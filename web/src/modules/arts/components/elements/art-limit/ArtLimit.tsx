@@ -7,10 +7,9 @@ interface ArtLimitProps {
 export function ArtLimit({ limit }: ArtLimitProps) {
   if (!limit) return null;
   return (
-    <div className="flex items-center gap-1 text-xs">
-      <ChevronsLeftRightEllipsis size={12} className="text-rose-500" />
-      <span className="">{limit}</span>
-
+    <div className="text-foreground flex items-center gap-2 text-xs">
+      <ChevronsLeftRightEllipsis className="h-4 w-4 text-rose-500" />
+      <span>{limit}</span>
     </div>
   );
 }

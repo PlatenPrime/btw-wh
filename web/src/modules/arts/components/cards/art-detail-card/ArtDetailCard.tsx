@@ -15,15 +15,13 @@ interface ArtDetailCardProps {
 export function ArtDetailCard({ artData }: ArtDetailCardProps) {
   return (
     <Card className="p-0">
-      <CardContent className="flex items-start gap-2 p-1 text-sm">
+      <CardContent className="flex items-start gap-2 p-2 text-sm">
         <ArtDialogImage artikul={artData.artikul} />
 
-        <div className="grid">
+        <div className="grid gap-2">
           <ArtNameukr nameukr={artData.nameukr} />
-          <div className="grid ">
-            <ArtZone artData={artData} />
-            <ArtLimit limit={artData.limit} />
-          </div>
+          <ArtZone artData={artData} />
+          <ArtLimit limit={artData.limit} />
           <BtradeArtDataFetcher
             artikul={artData.artikul}
             ContainerComponent={BtradeArtDataContainer}

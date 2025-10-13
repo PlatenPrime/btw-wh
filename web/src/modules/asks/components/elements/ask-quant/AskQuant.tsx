@@ -7,9 +7,9 @@ interface AskQuantProps {
 export function AskQuant({ quant }: AskQuantProps) {
   if (!quant) return null;
   return (
-    <div className="flex items-center gap-2">
-      <CircleIcon className="h-3 w-3" />
-      <span className="text-foreground text-xs">{quant}</span>
+    <div className="text-foreground flex items-center gap-2 text-xs">
+      <CircleIcon className="h-4 w-4" />
+      <span>{quant}</span>
     </div>
   );
 }

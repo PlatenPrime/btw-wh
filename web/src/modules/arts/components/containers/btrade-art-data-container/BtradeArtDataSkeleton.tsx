@@ -2,13 +2,13 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export function BtradeArtDataSkeleton() {
   return (
-    <div className="grid gap-1">
-      <div className="flex items-center gap-1">
-        <Skeleton className="h-3 w-3 rounded" />
+    <div className="grid gap-2">
+      <div className="flex items-center gap-2">
+        <Skeleton className="h-4 w-4" />
         <Skeleton className="h-4 w-12" />
       </div>
-      <div className="flex items-center gap-1">
-        <Skeleton className="h-3 w-3 rounded" />
+      <div className="flex items-center gap-2">
+        <Skeleton className="h-4 w-4" />
         <Skeleton className="h-4 w-12" />
       </div>
     </div>

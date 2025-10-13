@@ -9,15 +9,14 @@ export function BtradeArtDataContainerView({
   data,
 }: BtradeArtDataContainerViewProps) {
   return (
-    <div className="grid text-xs ">
-      <p className="text-foreground flex items-center gap-1 text-nowrap">
-        <Warehouse size={12} className="text-sky-500" />
-        <span className="">{data.quantity}</span>
-       
+    <div className="text-foreground grid gap-2 text-xs">
+      <p className="flex items-center gap-2 text-nowrap">
+        <Warehouse className="h-4 w-4 text-sky-500" />
+        <span>{data.quantity}</span>
       </p>
-      <p className="text-foreground flex items-center gap-1 text-nowrap">
-        <DollarSign size={12} className="text-emerald-500" />
-        <span className="">{data.price} грн</span>
+      <p className="flex items-center gap-2 text-nowrap">
+        <DollarSign className="h-4 w-4 text-emerald-500" />
+        <span>{data.price} грн</span>
       </p>
     </div>
   );
