@@ -6,7 +6,6 @@ import type { DeficitItem } from "@/modules/defs/api/types/dto";
 import { DefAskButton } from "@/modules/defs/components/elements/def-ask-button/DefAskButton";
 import { Link } from "react-router";
 import { DefCardAskBid } from "./components/DefCardAskBid";
-import { DefCardIndicator } from "./components/DefCardIndicator";
 import { DefCardQuants } from "./components/DefCardQuants";
 
 interface DefCardViewProps {
@@ -15,21 +14,20 @@ interface DefCardViewProps {
 }
 
 export function DefCardView({ artikul, defItem }: DefCardViewProps) {
+  const shadowClasses =
+    defItem.status === "critical"
+      ? "shadow-rose-300/30 dark:shadow-rose-600/40 hover:shadow-rose-400/40 dark:hover:shadow-rose-500/50"
+      : "shadow-amber-300/30 dark:shadow-amber-500/40 hover:shadow-amber-400/40 dark:hover:shadow-amber-400/50";
 
-const shadowClasses =
-  defItem.status === "critical"
-    ? "shadow-red-300/30 dark:shadow-red-600/40 hover:shadow-red-400/40 dark:hover:shadow-red-500/50"
-    : "shadow-amber-300/30 dark:shadow-amber-500/40 hover:shadow-amber-400/40 dark:hover:shadow-amber-400/50";
-
-const backgroundClasses =
-  defItem.status === "critical"
-    ? "bg-red-500/10 dark:bg-red-400/15 backdrop-blur-md border border-red-500/20"
-    : "bg-yellow-500/10 dark:bg-yellow-400/15 backdrop-blur-md border border-yellow-500/20";
+  const backgroundClasses =
+    defItem.status === "critical"
+      ? "bg-rose-500/10 dark:bg-rose-400/15 backdrop-blur-md border border-rose-500/20"
+      : "bg-yellow-500/10 dark:bg-yellow-400/15 backdrop-blur-md border border-yellow-500/20";
 
   return (
     <Card
       className={cn(
-        "bg-background h-full flex-col justify-between p-2 shadow-none  transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:shadow-2xl",
+        "bg-background h-full flex-col justify-between p-2 shadow-none transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:shadow-2xl",
         "gap-2 text-sm",
         shadowClasses,
         backgroundClasses,
@@ -41,13 +39,17 @@ const backgroundClasses =
         <Link
           to={`/arts/${artikul}`}
           target="_blank"
-          className="hover:underline"
+          className="grid w-full hover:underline"
         >
-          <ArtNameukr nameukr={defItem.nameukr || artikul} />
+          <span className="text-sm font-semibold">{artikul}</span>
+          <ArtNameukr
+            nameukr={defItem.nameukr.slice(10) || artikul}
+            className="text-xs font-normal hover:underline"
+          />
         </Link>
         <div className="flex items-center gap-1">
           {/* Статус индикатор */}
-          <DefCardIndicator defItem={defItem} />
+
           <DefAskButton artikul={artikul} existingAsk={defItem.existingAsk} />
         </div>
       </div>

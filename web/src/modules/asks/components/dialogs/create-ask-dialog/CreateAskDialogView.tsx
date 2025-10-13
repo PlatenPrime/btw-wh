@@ -27,9 +27,7 @@ export function CreateAskDialogView({
 }: CreateAskDialogViewProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      {trigger !== undefined && (
-        <DialogTrigger asChild>{trigger || <AskTrigger />}</DialogTrigger>
-      )}
+      <DialogTrigger asChild>{trigger ?? <AskTrigger />}</DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="text-center">

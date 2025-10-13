@@ -51,12 +51,12 @@ export function DefsStatsView({
         className={cn(
           "flex cursor-pointer flex-row justify-between gap-2 p-2 py-1 text-sm transition-all duration-200 hover:shadow-md",
           activeFilter === "limited" &&
-            "bg-yellow-50 ring-2 ring-yellow-300 dark:bg-yellow-950/20 dark:ring-yellow-700",
+            "bg-amber-50 ring-2 ring-amber-300 dark:bg-amber-950/20 dark:ring-amber-700",
         )}
         onClick={() => onFilterChange("limited")}
       >
         В ліміті:{" "}
-        <span className="font-bold text-yellow-600 dark:text-yellow-400">
+        <span className="font-bold text-amber-600 dark:text-amber-400">
           {stats.nearLimit}
         </span>
       </Card>
