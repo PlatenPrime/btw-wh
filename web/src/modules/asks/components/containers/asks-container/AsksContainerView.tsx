@@ -33,7 +33,7 @@ export function AsksContainerView({
         />
 
         <div className="flex w-full items-center justify-between gap-2 ">
-          <p className="text-foreground font-medium">Всього: {data.count}</p>
+          <p className="text-foreground font-medium">{data.completedCount + data.rejectedCount}/{data.count}</p>
           <CreateAskDialog
             trigger={<Button variant="outline">+ Створити запит</Button>}
           />

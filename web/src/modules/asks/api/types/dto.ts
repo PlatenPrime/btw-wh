@@ -26,6 +26,9 @@ export interface GetAsksByDateResponse {
   data: AskDto[];
   date: string;
   count: number;
+  newCount: number;
+  completedCount: number;
+  rejectedCount: number;
 }
 
 export interface GetAskByIdResponse {
