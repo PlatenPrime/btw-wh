@@ -7,6 +7,7 @@ import { useMemo, useRef, useState } from "react";
 interface DeletePosDialogProps {
   pos: IPos;
   trigger?: React.ReactNode;
+  showTrigger?: boolean; // Показывать ли триггер (по умолчанию true)
   onSuccess?: () => void;
   // Controlled component props
   open?: boolean;
@@ -16,6 +17,7 @@ interface DeletePosDialogProps {
 export function DeletePosDialog({
   pos,
   trigger,
+  showTrigger = true,
   onSuccess,
   open: controlledOpen,
   onOpenChange,
@@ -60,6 +62,7 @@ export function DeletePosDialog({
       handleDelete={handleDelete}
       deleteMutation={deletePosMutation}
       trigger={trigger}
+      showTrigger={showTrigger}
       open={open}
       setOpen={setOpen}
     />

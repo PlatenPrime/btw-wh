@@ -48,6 +48,7 @@ export function PosCardActions({ pos, onSuccess }: PosCardActionsProps) {
         open={isUpdateDialogOpen}
         onOpenChange={setIsUpdateDialogOpen}
         onSuccess={onSuccess}
+        showTrigger={false}
       />
 
       <DeletePosDialog
@@ -55,6 +56,7 @@ export function PosCardActions({ pos, onSuccess }: PosCardActionsProps) {
         open={isDeleteDialogOpen}
         onOpenChange={setIsDeleteDialogOpen}
         onSuccess={onSuccess}
+        showTrigger={false}
       />
     </>
   );

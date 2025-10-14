@@ -14,6 +14,7 @@ interface CreatePosDialogViewProps {
   setOpen: (open: boolean) => void;
   pallet: IPallet;
   trigger?: React.ReactNode;
+  showTrigger?: boolean; // Показывать ли триггер (по умолчанию true)
   onSuccess: (newPosId?: string) => void;
   onCancel: () => void;
 }
@@ -29,12 +30,15 @@ export function CreatePosDialogView({
   setOpen,
   pallet,
   trigger,
+  showTrigger = true,
   onSuccess,
   onCancel,
 }: CreatePosDialogViewProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>{trigger || defaultTrigger}</DialogTrigger>
+      {showTrigger && (
+        <DialogTrigger asChild>{trigger || defaultTrigger}</DialogTrigger>
+      )}
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="text-center">

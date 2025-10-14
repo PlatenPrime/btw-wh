@@ -25,6 +25,7 @@ interface CreatePalletDialogViewProps {
   onSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  showTrigger?: boolean; // Показывать ли триггер (по умолчанию true)
 }
 
 export function CreatePalletDialogView({
@@ -33,6 +34,7 @@ export function CreatePalletDialogView({
   onSubmit,
   open,
   onOpenChange,
+  showTrigger = true,
 }: CreatePalletDialogViewProps) {
   const {
     register,
@@ -45,12 +47,14 @@ export function CreatePalletDialogView({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogTrigger asChild>
-        <Button variant="outline" size="sm">
-          <Plus className="mr-2 h-4 w-4" />
-          Додати палету
-        </Button>
-      </DialogTrigger>
+      {showTrigger && (
+        <DialogTrigger asChild>
+          <Button variant="outline" size="sm">
+            <Plus className="mr-2 h-4 w-4" />
+            Додати палету
+          </Button>
+        </DialogTrigger>
+      )}
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Додати палету</DialogTitle>

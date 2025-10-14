@@ -14,6 +14,7 @@ interface UpdatePosDialogProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
   pos: IPos;
   trigger?: React.ReactNode;
+  showTrigger?: boolean; // Показывать ли триггер (по умолчанию true)
   onSuccess: () => void;
   onCancel: () => void;
 }
@@ -23,12 +24,15 @@ export function UpdatePosDialogView({
   setOpen,
   pos,
   trigger,
+  showTrigger = true,
   onSuccess,
   onCancel,
 }: UpdatePosDialogProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
+      {showTrigger && trigger && (
+        <DialogTrigger asChild>{trigger}</DialogTrigger>
+      )}
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="text-center">{pos.artikul}</DialogTitle>

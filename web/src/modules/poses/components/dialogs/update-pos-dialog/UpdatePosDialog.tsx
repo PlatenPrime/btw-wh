@@ -6,6 +6,7 @@ import { useMemo, useRef, useState } from "react";
 interface UpdatePosDialogProps {
   pos: IPos;
   trigger?: React.ReactNode;
+  showTrigger?: boolean; // Показывать ли триггер (по умолчанию true)
   onSuccess?: () => void;
   // Controlled component props
   open?: boolean;
@@ -15,6 +16,7 @@ interface UpdatePosDialogProps {
 export function UpdatePosDialog({
   pos,
   trigger,
+  showTrigger = true,
   onSuccess,
   open: controlledOpen,
   onOpenChange,
@@ -56,6 +58,7 @@ export function UpdatePosDialog({
       setOpen={setOpen}
       pos={pos}
       trigger={trigger}
+      showTrigger={showTrigger}
       onSuccess={handleSuccess}
       onCancel={handleCancel}
     />

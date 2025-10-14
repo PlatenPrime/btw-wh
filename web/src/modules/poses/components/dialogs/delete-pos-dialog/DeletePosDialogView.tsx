@@ -17,6 +17,7 @@ interface DeletePosDialogViewProps {
   handleDelete: () => void | Promise<void>;
   deleteMutation: UseMutationResult<unknown, unknown, string, unknown>;
   trigger?: ReactNode;
+  showTrigger?: boolean; // Показывать ли триггер (по умолчанию true)
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
 }
@@ -26,12 +27,15 @@ export function DeletePosDialogView({
   handleDelete,
   deleteMutation,
   trigger,
+  showTrigger = true,
   open,
   setOpen,
 }: DeletePosDialogViewProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
+      {showTrigger && trigger && (
+        <DialogTrigger asChild>{trigger}</DialogTrigger>
+      )}
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Видалити позицію "{pos.artikul}"?</DialogTitle>

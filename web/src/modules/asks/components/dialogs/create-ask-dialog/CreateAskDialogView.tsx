@@ -15,6 +15,7 @@ interface CreateAskDialogViewProps {
   onCancel: () => void;
   preFilledArtikul?: string; // Предзаполненный артикул для страницы артикула
   trigger?: React.ReactNode; // Кастомный триггер для открытия диалога
+  showTrigger?: boolean; // Показывать ли триггер (по умолчанию true)
 }
 
 export function CreateAskDialogView({
@@ -24,10 +25,13 @@ export function CreateAskDialogView({
   onCancel,
   preFilledArtikul,
   trigger,
+  showTrigger = true,
 }: CreateAskDialogViewProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>{trigger ?? <AskTrigger />}</DialogTrigger>
+      {showTrigger && (
+        <DialogTrigger asChild>{trigger ?? <AskTrigger />}</DialogTrigger>
+      )}
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="text-center">

@@ -39,6 +39,7 @@ export function ArtContainerView({
         preFilledArtikul={artData.artikul}
         open={createAskDialogOpen}
         onOpenChange={setCreateAskDialogOpen}
+        showTrigger={false}
       />
     </section>
   );

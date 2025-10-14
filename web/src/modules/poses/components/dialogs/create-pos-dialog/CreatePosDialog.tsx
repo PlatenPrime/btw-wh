@@ -5,12 +5,14 @@ import { useState } from "react";
 interface CreatePosDialogProps {
   pallet: IPallet;
   trigger?: React.ReactNode;
+  showTrigger?: boolean; // Показывать ли триггер (по умолчанию true)
   onSuccess?: (newPosId?: string) => void;
 }
 
 export function CreatePosDialog({
   pallet,
   trigger,
+  showTrigger = true,
   onSuccess,
 }: CreatePosDialogProps) {
   const [open, setOpen] = useState(false);
@@ -30,6 +32,7 @@ export function CreatePosDialog({
       setOpen={setOpen}
       pallet={pallet}
       trigger={trigger}
+      showTrigger={showTrigger}
       onSuccess={handleSuccess}
       onCancel={handleCancel}
     />

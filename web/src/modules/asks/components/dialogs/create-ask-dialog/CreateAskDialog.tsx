@@ -5,6 +5,7 @@ interface CreateAskDialogProps {
   onSuccess?: () => void;
   preFilledArtikul?: string; // Предзаполненный артикул для страницы артикула
   trigger?: React.ReactNode; // Кастомный триггер для открытия диалога
+  showTrigger?: boolean; // Показывать ли триггер (по умолчанию true)
   // Для внешнего управления состоянием (опционально)
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
@@ -14,6 +15,7 @@ export function CreateAskDialog({
   onSuccess,
   preFilledArtikul,
   trigger,
+  showTrigger = true,
   open: externalOpen,
   onOpenChange: externalOnOpenChange,
 }: CreateAskDialogProps) {
@@ -43,6 +45,7 @@ export function CreateAskDialog({
       onCancel={handleCancel}
       preFilledArtikul={preFilledArtikul}
       trigger={trigger}
+      showTrigger={showTrigger}
     />
   );
 }

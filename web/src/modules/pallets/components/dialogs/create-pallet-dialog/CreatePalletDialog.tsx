@@ -9,7 +9,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-export function CreatePalletDialog({ row }: { row: RowDto }) {
+interface CreatePalletDialogProps {
+  row: RowDto;
+  showTrigger?: boolean; // Показывать ли триггер (по умолчанию true)
+}
+
+export function CreatePalletDialog({
+  row,
+  showTrigger = true,
+}: CreatePalletDialogProps) {
   const form = useForm<PalletFormValues>({
     resolver: zodResolver(palletSchema),
     mode: "onSubmit",
@@ -87,6 +95,7 @@ export function CreatePalletDialog({ row }: { row: RowDto }) {
       isSubmitting={createPalletMutation.isPending}
       onSubmit={handleFormSubmit}
       onOpenChange={handleOpenChange}
+      showTrigger={showTrigger}
     />
   );
 }
