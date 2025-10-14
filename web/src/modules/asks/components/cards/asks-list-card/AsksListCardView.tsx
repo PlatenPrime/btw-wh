@@ -1,7 +1,7 @@
 import { CalendarDate } from "@/components/shared/date/CalendarDate";
 import { UserAvatarName } from "@/components/shared/user/UserAvatarName";
 import { Card } from "@/components/ui/card";
-import type { AskDto } from "@/modules/asks/api/types/dto";
+import type { AskDto, AskStatus } from "@/modules/asks/api/types/dto";
 import { AskImageStatus } from "@/modules/asks/components/elements/ask-image-status/AskImageStatus";
 import { Link } from "react-router";
 import { ArtNameukr } from "../../../../arts/components/elements/art-nameukr/ArtNameukr";
@@ -10,7 +10,7 @@ import { AskQuant } from "../../elements/ask-quant/AskQuant";
 
 interface AsksListCardViewProps {
   ask: AskDto;
-  statusText: string;
+  statusText: AskStatus;
 }
 
 export function AsksListCardView({

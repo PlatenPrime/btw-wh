@@ -1,14 +1,16 @@
 import  { cn } from "@/lib/utils";
 import { ArtDialogImage } from "@/modules/arts/components/dialogs/art-dialog-image/ArtDialogImage";
+import type { ArtDto } from "@/modules/arts/api/types/dto";
+import type { AskStatus } from "@/modules/asks/api/types/dto";
 
 export function AskImageStatus({
   statusText,
   artikul,
 }: {
-  statusText: string;
-  artikul: string;
+  statusText: AskStatus;
+  artikul: ArtDto["artikul"];
 }) {
-  const statusConfig = {
+  const statusConfig: Record<AskStatus, { style: string; text: string }> = {
     new: {
       style: "border border-yellow-500/80 bg-yellow-500/10 text-yellow-900 dark:text-yellow-200",
       text: "новий",
@@ -35,8 +37,8 @@ export function AskImageStatus({
   return (
     <div className="flex flex-shrink-0 flex-col items-center gap-2">
       <ArtDialogImage artikul={artikul} />
-      <div className={cn(statusConfig[statusText as keyof typeof statusConfig].style, "flex w-full justify-center items-center px-1  rounded-md")}>
-        <span className="text-xs font-semibold w-18 text-center ">{statusConfig[statusText as keyof typeof statusConfig].text}</span>
+      <div className={cn(statusConfig[statusText ].style, "flex w-full justify-center items-center px-1  rounded-md")}>
+        <span className="text-xs font-semibold w-18 text-center ">{statusConfig[statusText].text}</span>
       </div>
     </div>
   );

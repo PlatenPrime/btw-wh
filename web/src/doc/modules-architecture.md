@@ -191,8 +191,14 @@ types/
 import type { User } from "@/modules/auth/api/types";
 
 export type AskUserData = Pick<User, "_id" | "fullname" | "telegram" | "photo">;
-export type AskStatus = "new" | "completed" | "cancelled";
-export const validAskStatuses: AskStatus[] = ["new", "completed", "cancelled"];
+export type AskStatus = "new" | "completed" | "rejected" | "fail" | "solved";
+export const validAskStatuses: AskStatus[] = [
+  "new",
+  "completed",
+  "rejected",
+  "fail",
+  "solved",
+];
 
 export interface AskDto {
   _id: string;
