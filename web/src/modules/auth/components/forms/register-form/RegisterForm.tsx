@@ -3,18 +3,20 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import { RoleType } from "@/constants/roles";
+import { useAuth } from "@/modules/auth/api/hooks/useAuth";
+import type { RegisterData } from "@/modules/auth/api/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 
 // Zod schema for register form
 const registerSchema = z.object({
   username: z.string().min(3, "Логін повинен містити мінімум 3 символи"),
   password: z.string().min(6, "Пароль повинен містити мінімум 6 символів"),
   fullname: z.string().min(2, "Повне ім'я повинно містити мінімум 2 символи"),
-  role: z.string().optional(),
+  role: z.union([z.nativeEnum(RoleType), z.literal("")]).optional(),
   telegram: z.string().optional(),
   photo: z
     .string()
@@ -53,7 +55,13 @@ export const RegisterForm = () => {
 
   const onSubmit = async (data: RegisterFormValues) => {
     try {
-      await registerUser(data);
+      // Преобразуем пустую строку в undefined для role
+      const registerData: RegisterData = {
+        ...data,
+        role:
+          data.role === "" ? undefined : (data.role as RoleType | undefined),
+      };
+      await registerUser(registerData);
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError("root", { message: err.message });

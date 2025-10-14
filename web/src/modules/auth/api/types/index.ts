@@ -1,9 +1,11 @@
+import { RoleType } from "@/constants/roles";
+
 // User type based on API
 export interface User {
   _id: string;
   username: string;
   fullname: string;
-  role: string;
+  role: RoleType;
   telegram?: string;
   photo?: string;
   createdAt: string;
@@ -12,9 +14,12 @@ export interface User {
 
 // Role type based on API
 export interface Role {
-  value: string;
+  value: RoleType;
   name?: string;
 }
+
+// Export RoleType for convenience
+export type { RoleType };
 
 // AuthContext type
 export interface AuthContextType {
@@ -27,6 +32,9 @@ export interface AuthContextType {
   logout: () => void;
   updateUser: (data: UpdateUserData) => Promise<void>;
   fetchCurrentUser: () => Promise<void>;
+  hasRole: (requiredRole: RoleType) => boolean;
+  hasAnyRole: (allowedRoles: RoleType[]) => boolean;
+  isAuthenticated: boolean;
 }
 
 // AuthProvider props
@@ -39,7 +47,7 @@ export interface RegisterData {
   username: string;
   password: string;
   fullname: string;
-  role?: string;
+  role?: RoleType;
   telegram?: string;
   photo?: string;
 }

@@ -1,12 +1,15 @@
+import { hasAnyRole as checkAnyRole, hasRoleAccess } from "@/constants/roles";
 import * as api from "@/modules/auth/api/services/index.ts";
 import { createContext, useCallback, useEffect, useRef, useState } from "react";
 import type {
   AuthContextType,
   AuthProviderProps,
   RegisterData,
+  RoleType,
   UpdateUserData,
   User,
 } from "../../api/types";
+import { isTokenExpired } from "../../utils/token";
 
 export const AuthContext = createContext<AuthContextType | undefined>(
   undefined,
@@ -31,15 +34,34 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [error, setError] = useState<string | null>(null);
   const isLoggingOut = useRef(false);
 
-  // Load token from localStorage on mount
+  // Load token from localStorage on mount and validate
   useEffect(() => {
     const storedToken =
       typeof window !== "undefined" ? localStorage.getItem("auth_token") : null;
     const storedUser =
       typeof window !== "undefined" ? localStorage.getItem("auth_user") : null;
+
     if (storedToken && storedUser) {
-      setToken(storedToken);
-      setUser(JSON.parse(storedUser));
+      // Проверяем, не истек ли токен
+      if (isTokenExpired(storedToken)) {
+        // Токен истек - очищаем данные
+        localStorage.removeItem("auth_token");
+        localStorage.removeItem("auth_user");
+        setToken(null);
+        setUser(null);
+      } else {
+        // Токен валиден - загружаем данные
+        setToken(storedToken);
+        try {
+          setUser(JSON.parse(storedUser));
+        } catch (error) {
+          console.error("Ошибка парсинга данных пользователя:", error);
+          localStorage.removeItem("auth_token");
+          localStorage.removeItem("auth_user");
+          setToken(null);
+          setUser(null);
+        }
+      }
     }
     setIsLoading(false);
   }, []);
@@ -172,6 +194,36 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   }, [user, token, logout]);
 
+  /**
+   * Проверяет, имеет ли пользователь требуемую роль (с учетом иерархии)
+   *
+   * @param requiredRole - Минимальная требуемая роль
+   * @returns true если у пользователя достаточно прав
+   */
+  const hasRole = useCallback(
+    (requiredRole: RoleType): boolean => {
+      if (!user || !user.role) return false;
+      return hasRoleAccess(user.role, requiredRole);
+    },
+    [user],
+  );
+
+  /**
+   * Проверяет, имеет ли пользователь хотя бы одну из указанных ролей
+   *
+   * @param allowedRoles - Массив разрешенных ролей
+   * @returns true если пользователь имеет одну из ролей
+   */
+  const hasAnyRole = useCallback(
+    (allowedRoles: RoleType[]): boolean => {
+      if (!user || !user.role) return false;
+      return checkAnyRole(user.role, allowedRoles);
+    },
+    [user],
+  );
+
+  const isAuthenticated = !!(user && token && !isTokenExpired(token));
+
   return (
     <AuthContext.Provider
       value={{
@@ -184,6 +236,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         logout,
         updateUser,
         fetchCurrentUser,
+        hasRole,
+        hasAnyRole,
+        isAuthenticated,
       }}
     >
       {children}

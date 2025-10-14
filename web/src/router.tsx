@@ -91,6 +91,11 @@ const Unauthorized = lazy(() =>
     default: module.Unauthorized,
   })),
 );
+const Forbidden = lazy(() =>
+  import("./modules/auth/pages/forbidden").then((module) => ({
+    default: module.Forbidden,
+  })),
+);
 
 export const router = createHashRouter([
   {
@@ -104,6 +109,10 @@ export const router = createHashRouter([
   {
     path: "/unauthorized",
     Component: Unauthorized,
+  },
+  {
+    path: "/forbidden",
+    Component: Forbidden,
   },
   {
     path: "/",
