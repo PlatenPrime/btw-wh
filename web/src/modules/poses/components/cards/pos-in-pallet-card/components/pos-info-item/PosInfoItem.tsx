@@ -15,17 +15,12 @@ export const PosInfoItem = ({
   return (
     <div
       className={cn(
-        "bg-muted/30 hover:bg-muted/50 flex min-h-[2rem] items-center justify-center gap-1 rounded-lg px-2 py-1 text-center transition-colors",
+        "bg-muted/30 hover:bg-muted/50 flex items-center justify-center gap-1 rounded-lg px-2 py-1 text-center transition-colors",
         className,
       )}
     >
-      <Icon className="text-muted-foreground size-3 flex-shrink-0" />
-      <span
-        className={cn(
-          "text-foreground truncate text-xs font-medium",
-          className,
-        )}
-      >
+      <Icon className=" size-3 flex-shrink-0" />
+      <span className={cn(" truncate text-xs font-medium")}>
         {value}
       </span>
     </div>
