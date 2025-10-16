@@ -1,10 +1,8 @@
+import ArtikulImageLink from "@/components/shared/artikul-image-link/ArtikulImageLink";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { ArtDialogImage } from "@/modules/arts/components/dialogs/art-dialog-image/ArtDialogImage";
-import { ArtNameukr } from "@/modules/arts/components/elements/art-nameukr/ArtNameukr";
 import type { DeficitItem } from "@/modules/defs/api/types/dto";
 import { DefAskButton } from "@/modules/defs/components/elements/def-ask-button/DefAskButton";
-import { Link } from "react-router";
 import { DefCardAskBid } from "./components/DefCardAskBid";
 import { DefCardQuants } from "./components/DefCardQuants";
 
@@ -21,13 +19,13 @@ export function DefCardView({ artikul, defItem }: DefCardViewProps) {
 
   const backgroundClasses =
     defItem.status === "critical"
-      ? "bg-rose-500/10 dark:bg-rose-400/15 backdrop-blur-md border border-rose-500/20"
-      : "bg-yellow-500/10 dark:bg-yellow-400/15 backdrop-blur-md border border-yellow-500/20";
+      ? "bg-rose-500/10 dark:bg-rose-400/5 backdrop-blur-md border border-rose-500/20"
+      : "bg-yellow-500/10 dark:bg-yellow-400/5 backdrop-blur-md border border-yellow-500/20";
 
   return (
     <Card
       className={cn(
-        "bg-background h-full flex-col justify-between p-2 shadow-none transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:shadow-2xl",
+        "bg-background h-full flex-col justify-between p-2 shadow-none transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:shadow-md",
         "gap-2 text-sm",
         shadowClasses,
         backgroundClasses,
@@ -35,18 +33,7 @@ export function DefCardView({ artikul, defItem }: DefCardViewProps) {
     >
       {/* Image and name */}
       <div className="flex items-center justify-between gap-2 text-sm">
-        <ArtDialogImage artikul={artikul} />
-        <Link
-          to={`/arts/${artikul}`}
-          target="_blank"
-          className="grid w-full hover:underline"
-        >
-          <span className="text-sm font-semibold">{artikul}</span>
-          <ArtNameukr
-            nameukr={defItem.nameukr.slice(10) || artikul}
-            className="text-xs font-normal hover:underline"
-          />
-        </Link>
+        <ArtikulImageLink artikul={artikul} nameukr={defItem.nameukr} />
         <div className="flex items-center gap-1">
           {/* Статус индикатор */}
 

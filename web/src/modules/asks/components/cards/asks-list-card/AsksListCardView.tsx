@@ -1,10 +1,9 @@
+import ArtikulImageLink from "@/components/shared/artikul-image-link/ArtikulImageLink";
 import { CalendarDate } from "@/components/shared/date/CalendarDate";
 import { UserAvatarName } from "@/components/shared/user/UserAvatarName";
 import { Card } from "@/components/ui/card";
 import type { AskDto, AskStatus } from "@/modules/asks/api/types/dto";
-import { AskImageStatus } from "@/modules/asks/components/elements/ask-image-status/AskImageStatus";
-import { Link } from "react-router";
-import { ArtNameukr } from "../../../../arts/components/elements/art-nameukr/ArtNameukr";
+import { AskStatusBage } from "@/modules/asks/components/elements/ask-status-bage/AskStatusBage";
 import { AskCom } from "../../elements/ask-com/AskCom";
 import { AskQuant } from "../../elements/ask-quant/AskQuant";
 
@@ -19,16 +18,15 @@ export function AsksListCardView({
   statusText,
 }: AsksListCardViewProps) {
   return (
-    <Card className="flex flex-row items-start gap-4 p-2">
-      <AskImageStatus statusText={statusText} artikul={ask.artikul} />
-
-      <div className="grid gap-2">
-        <Link
-          to={`${ask._id}`}
-          className="text-foreground text-sm hover:underline"
-        >
-          <ArtNameukr nameukr={ask.nameukr || ask.artikul} />
-        </Link>
+    <Card className="grid gap-2 p-2">
+      <ArtikulImageLink
+          artikul={ask.artikul}
+          nameukr={ask.nameukr}
+          target="_self"
+          link={ask._id}
+        />
+      <div className="grid gap-2 pl-12">
+        
         <AskQuant quant={ask.quant || 0} />
         <AskCom com={ask.com || ""} />
         <UserAvatarName
@@ -38,7 +36,9 @@ export function AsksListCardView({
           size="xs"
         />
         <CalendarDate date={ask.createdAt} />
+        <AskStatusBage statusText={statusText} />
       </div>
+      
     </Card>
   );
 }
