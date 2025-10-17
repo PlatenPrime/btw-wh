@@ -1,5 +1,5 @@
-import { Image } from '@/components/shared/image/image';
-import { getSmallImageUrl } from "@/lib/art-image-url";
+import { Image } from "@/components/shared/image/image";
+import { getSmallImageUrl } from "@/constants/art-image-url";
 import { cn } from "@/lib/utils";
 import { useTheme } from "@/providers/theme-provider";
 

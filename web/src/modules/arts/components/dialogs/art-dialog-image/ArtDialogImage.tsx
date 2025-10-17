@@ -1,6 +1,6 @@
-import { Image } from '@/components/shared/image/image';
+import { Image } from "@/components/shared/image/image";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { getBigImageUrl, getSmallImageUrl } from "@/lib/art-image-url";
+import { getBigImageUrl, getSmallImageUrl } from "@/constants/art-image-url";
 
 interface ArtImageProps {
   artikul?: string;
@@ -27,7 +27,7 @@ export function ArtDialogImage({ artikul }: ArtImageProps) {
       </DialogTrigger>
 
       {/* Само модальное окно */}
-      <DialogContent className="min-h-40 rounded-xl border bg-white flex justify-center p-0 shadow-none">
+      <DialogContent className="flex min-h-40 justify-center rounded-xl border bg-white p-0 shadow-none">
         <Image
           src={getBigImageUrl(artikul)}
           alt={artikul}

@@ -25,7 +25,7 @@ export function RowContainerView({ row }: RowContainerViewProps) {
     id: "delete-row",
     label: "Видалити ряд",
     icon: Trash2Icon,
-    variant: "destructive",
+    variant: "super-destructive",
     onClick: () => setDeleteDialogOpen(true),
   });
 

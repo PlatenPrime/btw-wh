@@ -26,7 +26,7 @@ export function AskDetailsCard({ askData }: AskDetailsCardProps) {
             artikul={askData.artikul}
             nameukr={askData.nameukr}
             target="_self"
-            link={askData._id}
+            link="#"
           />
           <AskQuant quant={askData.quant} />
           <AskCom com={askData.com} />

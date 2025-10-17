@@ -1,8 +1,34 @@
 import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
 
-export type HeaderActionVariant = "default" | "destructive";
-export type HeaderActionIconColor = "emerald" | "rose" | "red" | "default";
+export type HeaderActionVariant =
+  | "default"
+  | "destructive"
+  | "super-destructive";
+export type HeaderActionIconColor =
+  | "slate"
+  | "gray"
+  | "zinc"
+  | "neutral"
+  | "stone"
+  | "red"
+  | "orange"
+  | "amber"
+  | "yellow"
+  | "lime"
+  | "green"
+  | "emerald"
+  | "teal"
+  | "cyan"
+  | "sky"
+  | "blue"
+  | "indigo"
+  | "violet"
+  | "purple"
+  | "fuchsia"
+  | "pink"
+  | "rose"
+  | "default";
 
 export interface HeaderAction {
   id: string;

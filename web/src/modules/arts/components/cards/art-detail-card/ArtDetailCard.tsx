@@ -15,7 +15,12 @@ export function ArtDetailCard({ artData }: ArtDetailCardProps) {
   return (
     <Card className="p-0">
       <CardContent className="grid gap-2 p-2 text-sm">
-        <ArtikulImageLink artikul={artData.artikul} nameukr={artData.nameukr} link="#" />
+        <ArtikulImageLink
+          artikul={artData.artikul}
+          nameukr={artData.nameukr}
+          target="_self"
+          link="#"
+        />
 
         <div className="grid gap-2">
           <ArtZone artData={artData} />
