@@ -1,3 +1,4 @@
+import { storage } from "@/utils/localStorage";
 import { createContext, useContext, useEffect, useState } from "react";
 
 type Theme = "dark" | "light" | "system";
@@ -27,7 +28,7 @@ export function ThemeProvider({
   ...props
 }: ThemeProviderProps) {
   const [theme, setTheme] = useState<Theme>(
-    () => (localStorage.getItem(storageKey) as Theme) || defaultTheme,
+    () => storage.get<Theme>(storageKey) || defaultTheme,
   );
 
   useEffect(() => {
@@ -51,7 +52,7 @@ export function ThemeProvider({
   const value = {
     theme,
     setTheme: (theme: Theme) => {
-      localStorage.setItem(storageKey, theme);
+      storage.set(storageKey, theme);
       setTheme(theme);
     },
   };

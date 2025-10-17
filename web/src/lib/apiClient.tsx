@@ -6,6 +6,7 @@ import {
   isRoleError,
   type ErrorCode,
 } from "@/modules/auth/types/errors";
+import { getItem, removeItem } from "@/utils/localStorage";
 import axios, { type AxiosError } from "axios";
 
 export const apiClient = axios.create({
@@ -18,7 +19,7 @@ export const apiClient = axios.create({
  */
 apiClient.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("auth_token");
+    const token = getItem("auth_token");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -55,8 +56,8 @@ apiClient.interceptors.response.use(
             errorCode === "INVALID_TOKEN_FORMAT" ||
             errorCode === "INVALID_TOKEN_PAYLOAD"
           ) {
-            localStorage.removeItem("auth_token");
-            localStorage.removeItem("auth_user");
+            removeItem("auth_token");
+            removeItem("auth_user");
 
             // Перенаправляємо на сторінку unauthorized
             if (window.location.hash !== "#/login") {

@@ -1,5 +1,6 @@
 import { hasAnyRole as checkAnyRole, hasRoleAccess } from "@/constants/roles";
 import * as api from "@/modules/auth/api/services/index.ts";
+import { getItem, removeItem, setItem } from "@/utils/localStorage";
 import { createContext, useCallback, useEffect, useRef, useState } from "react";
 import type {
   AuthContextType,
@@ -36,31 +37,21 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   // Load token from localStorage on mount and validate
   useEffect(() => {
-    const storedToken =
-      typeof window !== "undefined" ? localStorage.getItem("auth_token") : null;
-    const storedUser =
-      typeof window !== "undefined" ? localStorage.getItem("auth_user") : null;
+    const storedToken = getItem("auth_token");
+    const storedUser = getItem("auth_user");
 
     if (storedToken && storedUser) {
       // Проверяем, не истек ли токен
       if (isTokenExpired(storedToken)) {
         // Токен истек - очищаем данные
-        localStorage.removeItem("auth_token");
-        localStorage.removeItem("auth_user");
+        removeItem("auth_token");
+        removeItem("auth_user");
         setToken(null);
         setUser(null);
       } else {
         // Токен валиден - загружаем данные
         setToken(storedToken);
-        try {
-          setUser(JSON.parse(storedUser));
-        } catch (error) {
-          console.error("Ошибка парсинга данных пользователя:", error);
-          localStorage.removeItem("auth_token");
-          localStorage.removeItem("auth_user");
-          setToken(null);
-          setUser(null);
-        }
+        setUser(storedUser);
       }
     }
     setIsLoading(false);
@@ -70,11 +61,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   useEffect(() => {
     if (isLoggingOut.current) return;
     if (token && user) {
-      localStorage.setItem("auth_token", token);
-      localStorage.setItem("auth_user", JSON.stringify(user));
+      setItem("auth_token", token);
+      setItem("auth_user", user);
     } else {
-      localStorage.removeItem("auth_token");
-      localStorage.removeItem("auth_user");
+      removeItem("auth_token");
+      removeItem("auth_user");
     }
   }, [token, user]);
 
@@ -134,8 +125,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     setUser(null);
     setToken(null);
     setError(null);
-    localStorage.removeItem("auth_token");
-    localStorage.removeItem("auth_user");
+    removeItem("auth_token");
+    removeItem("auth_user");
     console.log("Logout: cleared auth localStorage");
     setTimeout(() => {
       isLoggingOut.current = false;
