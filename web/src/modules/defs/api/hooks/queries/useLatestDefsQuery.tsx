@@ -1,4 +1,4 @@
-import { getLatestDefs } from "@/modules/defs/api/services/queries/getLatestDefs";
+import { getLatestDefs } from "@/modules/defs/api/services";
 import { useQuery } from "@tanstack/react-query";
 
 export function useLatestDefsQuery() {

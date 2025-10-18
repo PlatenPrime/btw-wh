@@ -8,7 +8,7 @@ import { ArtZone } from "@/modules/arts/components/elements/art-zone/ArtZone";
 import { ArtZoneSkeleton } from "@/modules/arts/components/elements/art-zone/ArtZoneSkeleton";
 import { ArtFetcher } from "@/modules/arts/components/fetchers/art-fetcher/ArtFetcher";
 import { BtradeArtDataFetcher } from "@/modules/arts/components/fetchers/btrade-art-data-fetcher/BtradeArtDataFetcher";
-import type { AskDto } from "@/modules/asks/api/types/dto";
+import type { AskDto } from "@/modules/asks/api/types";
 import { AskCom } from "@/modules/asks/components/elements/ask-com/AskCom";
 import { AskQuant } from "@/modules/asks/components/elements/ask-quant/AskQuant";
 import { AskStatusBage } from "@/modules/asks/components/elements/ask-status-bage/AskStatusBage";

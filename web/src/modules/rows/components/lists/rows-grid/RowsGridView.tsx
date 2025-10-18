@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import type { RowDto } from "@/modules/rows/api/types/dto";
+import type { RowDto } from "@/modules/rows/api/types";
 import { RowsGridCard } from "@/modules/rows/components/cards/rows-grid-card/RowsGridCard";
 
 interface ViewProps {

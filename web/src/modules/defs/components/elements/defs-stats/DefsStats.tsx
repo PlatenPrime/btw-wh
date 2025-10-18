@@ -1,4 +1,4 @@
-import type { Def, DeficitItem } from "@/modules/defs/api/types/dto";
+import type { Def, DeficitItem } from "@/modules/defs/api/types";
 import {
   DefsStatsView,
   type DeficitFilter,

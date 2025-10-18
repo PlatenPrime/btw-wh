@@ -2,7 +2,7 @@ import { useRegisterHeaderActions } from "@/components/layout/header-actions";
 import { useCompleteAskMutation } from "@/modules/asks/api/hooks/mutations/useCompleteAskMutation";
 import { useDeleteAskMutation } from "@/modules/asks/api/hooks/mutations/useDeleteAskMutation";
 import { useRejectAskMutation } from "@/modules/asks/api/hooks/mutations/useRejectAskMutation";
-import type { AskDto } from "@/modules/asks/api/types/dto";
+import type { AskDto } from "@/modules/asks/api/types";
 import { AskContainerView } from "@/modules/asks/components/containers/ask-container/AskContainerView";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 import { Ban, SquareCheckBig, Trash } from "lucide-react";

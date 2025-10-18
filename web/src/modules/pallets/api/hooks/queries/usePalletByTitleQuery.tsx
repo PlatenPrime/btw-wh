@@ -1,6 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
+import { getPalletByTitle } from "@/modules/pallets/api/services";
 import type { PalletResponse } from "@/modules/pallets/api/types";
-import { getPalletByTitle } from "@/modules/pallets/api/services/queries/getPalletByTitle";
+import { useQuery } from "@tanstack/react-query";
 
 export function usePalletByTitleQuery(title?: string, enabled = true) {
   return useQuery<PalletResponse>({

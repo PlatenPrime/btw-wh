@@ -1,6 +1,6 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { movePalletPoses } from "@/modules/pallets/api/services/mutations/movePalletPoses";
+import { movePalletPoses } from "@/modules/pallets/api/services";
 import type { IPallet } from "@/modules/pallets/api/types";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface UseMovePalletPosesMutationArgs {
   pallet: IPallet;

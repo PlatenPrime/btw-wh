@@ -1,7 +1,7 @@
 import { Container } from "@/components/shared/containers/Container";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import type { RowDto } from "@/modules/rows/api/types/dto";
+import type { RowDto } from "@/modules/rows/api/types";
 import { CreateRowDialog } from "@/modules/rows/components/dialogs/create-row-dialog/CreateRowDialog";
 import { RowsGrid } from "@/modules/rows/components/lists/rows-grid/RowsGrid";
 import { Plus, Rows3 } from "lucide-react";

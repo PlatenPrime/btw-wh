@@ -1,5 +1,5 @@
-import { getCalculationStatus } from "@/modules/defs/api/services/queries/getCalculationStatus";
-import type { DefsCalculationStatusResponse } from "@/modules/defs/api/types/dto";
+import { getCalculationStatus } from "@/modules/defs/api/services";
+import type { DefsCalculationStatusResponse } from "@/modules/defs/api/types";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 

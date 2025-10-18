@@ -1,5 +1,5 @@
-import { getAskById } from "@/modules/asks/api/services/queries/getAskById";
-import type { GetAskByIdResponse } from "@/modules/asks/api/types/dto";
+import { getAskById } from "@/modules/asks/api/services";
+import type { GetAskByIdResponse } from "@/modules/asks/api/types";
 import { useQuery } from "@tanstack/react-query";
 
 export interface UseAskQueryParams {

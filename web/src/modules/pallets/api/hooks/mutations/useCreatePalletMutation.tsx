@@ -1,6 +1,6 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createPallet } from "@/modules/pallets/api/services/mutations/createPallet";
+import { createPallet } from "@/modules/pallets/api/services";
 import type { CreatePalletDto } from "@/modules/pallets/api/types";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export function useCreatePalletMutation(rowId: string, rowTitle?: string) {
   const queryClient = useQueryClient();

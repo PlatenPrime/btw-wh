@@ -1,4 +1,4 @@
-import { completeAskById } from "@/modules/asks/api/services/mutations/completeAskById";
+import { completeAskById } from "@/modules/asks/api/services";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export function useCompleteAskMutation(id: string) {

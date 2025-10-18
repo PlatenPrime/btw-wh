@@ -1,5 +1,5 @@
 import { useDeleteRowMutation } from "@/modules/rows/api/hooks/mutations/useDeleteRowMutation";
-import type { RowDto } from "@/modules/rows/api/types/dto";
+import type { RowDto } from "@/modules/rows/api/types";
 import DeleteRowDialogView from "@/modules/rows/components/dialogs/delete-row-dialog/DeleteRowDialogView.tsx";
 import type { Dispatch, SetStateAction } from "react";
 import { useMemo, useRef, useState } from "react";

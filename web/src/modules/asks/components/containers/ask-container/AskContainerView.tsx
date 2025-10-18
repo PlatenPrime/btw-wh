@@ -1,5 +1,5 @@
 import { Container } from "@/components/shared/containers/Container";
-import type { AskDto } from "@/modules/asks/api/types/dto";
+import type { AskDto } from "@/modules/asks/api/types";
 import { AskDetailsCard } from "@/modules/asks/components/cards/ask-details-card/AskDetailsCard";
 import { AskActions } from "@/modules/asks/components/containers/ask-container/components/ask-actions/AskActions.tsx";
 import { AskPosesByArtikulContainer } from "@/modules/asks/components/containers/ask-poses-by-artikul-container";

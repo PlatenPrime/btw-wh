@@ -1,4 +1,4 @@
-import type { ExistingAsk } from "@/modules/defs/api/types/dto";
+import type { ExistingAsk } from "@/modules/defs/api/types";
 import { formatDate } from "@/utils/formatDate";
 import {  FileQuestion, Clock } from "lucide-react";
 

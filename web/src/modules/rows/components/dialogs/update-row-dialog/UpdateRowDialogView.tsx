@@ -6,7 +6,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import type { RowDto } from "@/modules/rows/api/types/dto";
+import type { RowDto } from "@/modules/rows/api/types";
 import { UpdateRowForm } from "@/modules/rows/components/forms/update-row-form/UpdateRowForm";
 
 interface UpdateRowDialogProps {

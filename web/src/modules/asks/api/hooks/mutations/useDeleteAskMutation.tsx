@@ -1,4 +1,4 @@
-import { deleteAskById } from "@/modules/asks/api/services/mutations/deleteAskById";
+import { deleteAskById } from "@/modules/asks/api/services";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export function useDeleteAskMutation(id: string) {

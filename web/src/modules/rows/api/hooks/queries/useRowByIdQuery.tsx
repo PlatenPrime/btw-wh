@@ -1,5 +1,5 @@
-import { getRowById } from "@/modules/rows/api/services/queries/getRowById";
-import type { RowDto } from "@/modules/rows/api/types/dto";
+import { getRowById } from "@/modules/rows/api/services";
+import type { RowDto } from "@/modules/rows/api/types";
 import { useQuery } from "@tanstack/react-query";
 
 export function useRowByIdQuery(rowId?: string) {

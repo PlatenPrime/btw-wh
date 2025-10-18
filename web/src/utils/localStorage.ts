@@ -1,4 +1,4 @@
-import type { User } from "@/modules/auth/api/types";
+import type { User } from "@shared/modules/auth";
 
 /**
  * Схема типов для всех ключей localStorage

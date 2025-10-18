@@ -3,7 +3,7 @@ import { LoadingNoData } from '@/components/shared/loading-states/loading-nodata
 import { useAsksByDateQuery } from "@/modules/asks/api/hooks/queries/useAsksByDateQuery";
 import { format } from "date-fns";
 import { useState } from "react";
-import type { GetAsksByDateResponse } from "@/modules/asks/api/types/dto";
+import type { GetAsksByDateResponse } from "@/modules/asks/api/types";
 import type { ComponentType } from "react";
 
 interface AsksFetcherProps {

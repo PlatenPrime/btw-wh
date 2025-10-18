@@ -8,7 +8,7 @@ import {
 import { Menu } from "lucide-react";
 import { useNavigate } from "react-router";
 import { DeleteRowDialog } from "@/modules/rows/components/dialogs/delete-row-dialog/DeleteRowDialog";
-import type { RowDto } from "@/modules/rows/api/types/dto";
+import type { RowDto } from "@/modules/rows/api/types";
 
 interface RowActionsMenuProps {
   row: RowDto;

@@ -1,7 +1,7 @@
 import ArtikulImageLink from "@/components/shared/artikul-image-link/ArtikulImageLink";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import type { DeficitItem } from "@/modules/defs/api/types/dto";
+import type { DeficitItem } from "@/modules/defs/api/types";
 import { DefAskButton } from "@/modules/defs/components/elements/def-ask-button/DefAskButton";
 import { DefCardAskBid } from "./components/DefCardAskBid";
 import { DefCardQuants } from "./components/DefCardQuants";

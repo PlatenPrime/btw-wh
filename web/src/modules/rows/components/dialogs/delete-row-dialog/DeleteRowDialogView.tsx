@@ -9,7 +9,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import type { DeleteRowResponse, RowDto } from "@/modules/rows/api/types/dto";
+import type { DeleteRowResponse, RowDto } from "@/modules/rows/api/types";
 import type { UseMutationResult } from "@tanstack/react-query";
 import type { Dispatch, ReactNode, SetStateAction } from "react";
 

@@ -1,4 +1,4 @@
-import type { RowDto } from "@/modules/rows/api/types/dto";
+import type { RowDto } from "@/modules/rows/api/types";
 import { RowsGridCardView } from "@/modules/rows/components/cards/rows-grid-card/RowsGridCardView.tsx";
 
 interface GridCardProps {

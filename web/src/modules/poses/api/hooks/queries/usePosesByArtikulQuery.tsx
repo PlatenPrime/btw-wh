@@ -1,4 +1,4 @@
-import { getPosesByArtikul } from "@/modules/poses/api/services/queries/getPosesByArtikul";
+import { getPosesByArtikul } from "@/modules/poses/api/services";
 import { useQuery } from "@tanstack/react-query";
 
 export function usePosesByArtikulQuery(artikul: string) {

@@ -6,8 +6,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { getRoleLabel } from "@/constants/roles";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
+import { getRoleLabel } from "@shared/constants";
 import { useNavigate } from "react-router";
 
 export function Forbidden() {

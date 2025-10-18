@@ -1,6 +1,6 @@
 import { Loader } from "@/components/shared/loading-states/loader.tsx";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth.ts";
-import type { RoleType } from "@/modules/auth/api/types";
+import type { RoleType } from "@shared/modules/auth";
 import type { ReactNode } from "react";
 import { Navigate, useLocation } from "react-router";
 

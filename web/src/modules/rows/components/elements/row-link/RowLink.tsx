@@ -1,5 +1,5 @@
 import { CardTitle } from "@/components/ui/card";
-import type { RowDto } from "@/modules/rows/api/types/dto";
+import type { RowDto } from "@/modules/rows/api/types";
 import { Link } from "react-router";
 
 export function RowLink({ row }: { row: RowDto }) {

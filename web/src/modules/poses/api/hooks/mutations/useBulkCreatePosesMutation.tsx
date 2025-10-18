@@ -1,4 +1,4 @@
-import { bulkCreatePoses } from "@/modules/poses/api/services/mutations/bulkCreatePoses";
+import { bulkCreatePoses } from "@/modules/poses/api/services";
 import type { BulkCreatePosDto } from "@/modules/poses/api/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 

@@ -1,42 +1,39 @@
 import { toast } from "@/components/ui/use-toast";
-import { SERVER_URL } from "@/constants/server";
+import { clear, getItem, removeItem, setItem } from "@/utils/localStorage";
+import { createApiClient } from "@shared/lib/apiClient";
+import { SERVER_URL } from "@shared/lib/config";
+import { initStorage } from "@shared/lib/storage";
 import {
   getErrorMessage,
   isAuthError,
   isRoleError,
   type ErrorCode,
-} from "@/modules/auth/types/errors";
-import { getItem, removeItem } from "@/utils/localStorage";
-import axios, { type AxiosError } from "axios";
+} from "@shared/modules/auth";
+import type { AxiosError } from "axios";
 
-export const apiClient = axios.create({
-  baseURL: SERVER_URL,
-  timeout: 10000,
+// Инициализация storage для web
+initStorage({
+  getItem: <T = string,>(key: string) => getItem(key as never) as T | null,
+  setItem: <T = string,>(key: string, value: T) => {
+    setItem(key as never, value as never);
+  },
+  removeItem: (key: string) => removeItem(key as never),
+  clear: () => clear(),
 });
 
-/**
- * 🔐 Request Interceptor - автоматичне додавання Bearer токена
- */
-apiClient.interceptors.request.use(
-  (config) => {
-    const token = getItem("auth_token");
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => Promise.reject(error),
-);
-
-/**
- * ⚠️ Response Interceptor - обробка помилок авторизації та прав доступу
- */
-apiClient.interceptors.response.use(
-  (response) => response,
-  (error: AxiosError<{ message: string; code?: ErrorCode }>) => {
+// Создание API клиента с web-specific обработкой ошибок
+export const apiClient = createApiClient({
+  baseURL: SERVER_URL,
+  timeout: 10000,
+  getAuthToken: () => getItem("auth_token"),
+  onError: (error: AxiosError) => {
+    const errorData = error.response?.data as
+      | { message?: string; code?: ErrorCode }
+      | undefined;
     if (error.response) {
-      const { status, data } = error.response;
-      const errorCode = data?.code;
+      const { status } = error.response;
+      const data = errorData;
+      const errorCode = errorData?.code;
 
       // 401 Unauthorized - проблеми з авторизацією
       if (status === 401) {
@@ -126,7 +123,9 @@ apiClient.interceptors.response.use(
           "Не вдалося зв'язатися з сервером. Перевірте підключення до інтернету.",
       });
     }
-
-    return Promise.reject(error);
   },
-);
+});
+
+// Создание сервисов для Arts модуля
+import { createArtServices } from "@shared/modules/arts/api/services/createArtServices";
+export const artServices = createArtServices(apiClient);
