@@ -1,4 +1,4 @@
-import type { User } from "@shared/modules/auth";
+import type { User } from "@/modules/auth/api/types";
 
 export type AskUserData = Pick<User, "_id" | "fullname" | "telegram" | "photo">;
 export type AskStatus = "new" | "completed" | "rejected" | "fail" | "solved";

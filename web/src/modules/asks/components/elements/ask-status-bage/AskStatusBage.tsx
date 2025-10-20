@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import type { AskStatus } from "@/modules/asks/api/types";
+import type { AskStatus } from "@/modules/asks/api/types/dto";
 
 export function AskStatusBage({ statusText }: { statusText: AskStatus }) {
   const statusConfig: Record<AskStatus, { style: string; text: string }> = {

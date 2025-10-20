@@ -1,2 +1,8 @@
-// Реэкспорт типов из shared для обратной совместимости
-export type { UploadingArt } from "@shared/modules/arts";
+export interface UploadingArt {
+  artikul: string;
+  zone: string;
+  namerus: string;
+  nameukr: string;
+  limit?: number;
+  marker?: string;
+}

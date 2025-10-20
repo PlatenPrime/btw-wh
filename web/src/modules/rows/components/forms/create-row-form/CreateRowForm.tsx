@@ -1,5 +1,5 @@
 import { useCreateRowMutation } from "@/modules/rows/api/hooks/mutations/useCreateRowMutation";
-import type { CreateRowDto } from "@/modules/rows/api/types";
+import type { CreateRowDto } from "@/modules/rows/api/types/dto";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { rowSchema, type RowFormValues } from "@/modules/rows/components/forms/schema.ts";

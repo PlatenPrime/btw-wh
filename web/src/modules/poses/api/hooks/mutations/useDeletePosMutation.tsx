@@ -1,6 +1,6 @@
-import { deletePos } from "@/modules/poses/api/services";
-import type { IPos } from "@/modules/poses/api/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deletePos } from "@/modules/poses/api/services/mutations/deletePos";
+import type { IPos } from "@/modules/poses/api/types";
 
 export function useDeletePosMutation(pos: IPos) {
   const queryClient = useQueryClient();
@@ -13,4 +13,4 @@ export function useDeletePosMutation(pos: IPos) {
       });
     },
   });
-}
+} 

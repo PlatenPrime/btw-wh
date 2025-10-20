@@ -5,7 +5,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import type { RowDto } from "@/modules/rows/api/types";
+import type { RowDto } from "@/modules/rows/api/types/dto";
 import { DeleteRowDialog } from "@/modules/rows/components/dialogs/delete-row-dialog/DeleteRowDialog";
 import { MoreVertical } from "lucide-react";
 

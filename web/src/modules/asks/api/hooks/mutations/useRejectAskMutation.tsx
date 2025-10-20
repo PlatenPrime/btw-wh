@@ -1,4 +1,4 @@
-import { rejectAskById } from "@/modules/asks/api/services";
+import { rejectAskById } from "@/modules/asks/api/services/mutations/rejectAskById";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export function useRejectAskMutation(id: string) {

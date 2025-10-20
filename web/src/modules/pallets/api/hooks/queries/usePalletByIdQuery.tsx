@@ -1,6 +1,6 @@
-import { getPalletById } from "@/modules/pallets/api/services";
-import type { PalletResponse } from "@/modules/pallets/api/types";
 import { useQuery } from "@tanstack/react-query";
+import { getPalletById } from "@/modules/pallets/api/services/queries/getPalletById";
+import type { PalletResponse } from "@/modules/pallets/api/types";
 
 export function usePalletByIdQuery(id?: string, enabled = true) {
   return useQuery<PalletResponse>({

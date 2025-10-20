@@ -2,7 +2,7 @@ import { useRegisterHeaderAction } from "@/components/layout/header-actions";
 import { Container } from "@/components/shared/containers/Container";
 import { CreatePalletDialog } from "@/modules/pallets/components/dialogs/create-pallet-dialog/CreatePalletDialog";
 import { PalletsList } from "@/modules/pallets/components/lists/pallets-list/PalletsList";
-import type { RowDto } from "@/modules/rows/api/types";
+import type { RowDto } from "@/modules/rows/api/types/dto";
 import { DeleteRowDialog } from "@/modules/rows/components/dialogs/delete-row-dialog/DeleteRowDialog";
 import { Grid3x3, Trash2Icon } from "lucide-react";
 import { useState } from "react";

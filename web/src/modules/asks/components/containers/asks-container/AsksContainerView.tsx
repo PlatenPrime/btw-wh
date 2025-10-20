@@ -1,7 +1,7 @@
 import { Container } from "@/components/shared/containers/Container";
 import { DateNavigation } from "@/components/shared/date-navigation/DateNavigation";
 import { Button } from "@/components/ui/button";
-import type { GetAsksByDateResponse } from "@/modules/asks/api/types";
+import type { GetAsksByDateResponse } from "@/modules/asks/api/types/dto";
 import { CreateAskDialog } from "@/modules/asks/components/dialogs/create-ask-dialog/CreateAskDialog";
 import { AsksList } from "@/modules/asks/components/lists/asks-list/AsksList";
 

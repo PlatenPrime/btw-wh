@@ -1,6 +1,6 @@
 import { EditTrigger } from '@/components/shared/triggers/edit-trigger/EditTrigger';
 import { Card, CardHeader } from "@/components/ui/card";
-import type { RowDto } from "@/modules/rows/api/types";
+import type { RowDto } from "@/modules/rows/api/types/dto";
 import { UpdateRowDialog } from "@/modules/rows/components/dialogs/update-row-dialog/UpdateRowDialog";
 import { RowLink } from "@/modules/rows/components/elements/row-link/RowLink";
 import { RowCardMenu } from "@/modules/rows/components/menus/row-card-menu/RowCardMenu";

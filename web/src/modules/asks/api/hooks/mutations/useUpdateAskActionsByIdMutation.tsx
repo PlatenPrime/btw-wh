@@ -1,5 +1,7 @@
-import { updateAskActionsById } from "@/modules/asks/api/services";
-import type { UpdateAskActionsRequest } from "@shared/modules/asks";
+import {
+  updateAskActionsById,
+  type UpdateAskActionsRequest,
+} from "@/modules/asks/api/services/mutations/updateAskActionsById";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export function useUpdateAskActionsByIdMutation() {

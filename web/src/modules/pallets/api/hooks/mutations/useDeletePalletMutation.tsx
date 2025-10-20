@@ -1,5 +1,5 @@
-import { deletePallet } from "@/modules/pallets/api/services";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deletePallet } from "@/modules/pallets/api/services/mutations/deletePallet";
 
 export function useDeletePalletMutation(rowId: string) {
   const queryClient = useQueryClient();

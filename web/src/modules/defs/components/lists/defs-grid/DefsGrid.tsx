@@ -1,4 +1,4 @@
-import type { Def } from "@/modules/defs/api/types";
+import type { Def } from "@/modules/defs/api/types/dto";
 import type { DeficitFilter } from "@/modules/defs/components/elements/defs-stats/DefsStatsView";
 import { DefsGridView } from "@/modules/defs/components/lists/defs-grid/DefsGridView";
 

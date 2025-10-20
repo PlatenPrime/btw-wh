@@ -1,4 +1,4 @@
-import type { DeficitItem } from "@/modules/defs/api/types";
+import type { DeficitItem } from "@/modules/defs/api/types/dto";
 import { DefCardView } from "@/modules/defs/components/cards/def-card/DefCardView";
 
 interface DefCardProps {

@@ -1,6 +1,6 @@
-import { getRows } from "@/modules/rows/api/services";
-import type { RowDto } from "@/modules/rows/api/types";
+import type { RowDto } from "@/modules/rows/api/types/dto";
 import { useQuery } from "@tanstack/react-query";
+import { getRows } from "@/modules/rows/api/services/queries/getRows";
 
 export function useRowsQuery() {
   return useQuery<RowDto[]>({

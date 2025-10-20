@@ -1,5 +1,5 @@
 import { useDefsCalculationStatus } from "@/modules/defs/api/hooks/queries/useDefsCalculationStatus";
-import type { DefsCalculationStatus } from "@/modules/defs/api/types";
+import type { DefsCalculationStatus } from "@/modules/defs/api/types/dto";
 import type { ComponentType } from "react";
 
 interface CalculationStatusFetcherProps {

@@ -1,4 +1,4 @@
-import { calculateDefs } from "@/modules/defs/api/services";
+import { calculateDefs } from "@/modules/defs/api/services/mutations/calculateDefs";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 

@@ -1,6 +1,6 @@
 import { ErrorDisplay } from "@/components/shared/error-components/error-display";
 import { useLatestDefsQuery } from "@/modules/defs/api/hooks/queries/useLatestDefsQuery";
-import type { GetLatestDefsResponse } from "@/modules/defs/api/types";
+import type { GetLatestDefsResponse } from "@/modules/defs/api/types/dto";
 import type { ComponentType } from "react";
 
 interface LatestDefsFetcherProps {

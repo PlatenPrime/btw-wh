@@ -4,7 +4,7 @@ import {
   palletSchema,
   type PalletFormValues,
 } from "@/modules/pallets/components/forms/schema";
-import type { RowDto } from "@/modules/rows/api/types";
+import type { RowDto } from "@/modules/rows/api/types/dto";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";

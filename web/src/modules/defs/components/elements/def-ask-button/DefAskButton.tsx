@@ -1,5 +1,5 @@
 import { CreateAskDialog } from "@/modules/asks/components/dialogs/create-ask-dialog/CreateAskDialog";
-import type { ExistingAsk } from "@/modules/defs/api/types";
+import type { ExistingAsk } from "@/modules/defs/api/types/dto";
 
 interface DefAskButtonProps {
   artikul: string;

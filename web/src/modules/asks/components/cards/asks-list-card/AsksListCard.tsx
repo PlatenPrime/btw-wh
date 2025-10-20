@@ -1,4 +1,4 @@
-import type { AskDto } from "@/modules/asks/api/types";
+import type { AskDto } from "@/modules/asks/api/types/dto";
 import { AsksListCardView } from "@/modules/asks/components/cards/asks-list-card/AsksListCardView.tsx";
 
 interface AsksListCardProps {

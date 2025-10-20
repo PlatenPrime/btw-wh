@@ -2,7 +2,7 @@ import ArtikulImageLink from "@/components/shared/artikul-image-link/ArtikulImag
 import { CalendarDate } from "@/components/shared/date/CalendarDate";
 import { UserAvatarName } from "@/components/shared/user/UserAvatarName";
 import { Card } from "@/components/ui/card";
-import type { AskDto, AskStatus } from "@/modules/asks/api/types";
+import type { AskDto, AskStatus } from "@/modules/asks/api/types/dto";
 import { AskStatusBage } from "@/modules/asks/components/elements/ask-status-bage/AskStatusBage";
 import { AskCom } from "../../elements/ask-com/AskCom";
 import { AskQuant } from "../../elements/ask-quant/AskQuant";

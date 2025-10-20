@@ -1,7 +1,7 @@
 import { Container } from "@/components/shared/containers/Container";
 import { Progress } from "@/components/ui";
 import { Badge } from "@/components/ui/badge";
-import type { DefsCalculationStatus } from "@/modules/defs/api/types";
+import type { DefsCalculationStatus } from "@/modules/defs/api/types/dto";
 import { CheckCircle2, Clock, Loader2 } from "lucide-react";
 
 interface CalculationStatusViewProps {

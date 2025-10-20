@@ -1,4 +1,4 @@
-import type { GetAsksByDateResponse } from "@/modules/asks/api/types";
+import type { GetAsksByDateResponse } from "@/modules/asks/api/types/dto";
 import { AsksListEmpty } from "@/modules/asks/components/lists/asks-list/AsksListEmpty.tsx";
 import { AsksListView } from "@/modules/asks/components/lists/asks-list/AsksListView.tsx";
 

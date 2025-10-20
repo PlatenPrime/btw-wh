@@ -1,5 +1,5 @@
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
-import type { RoleType } from "@shared/modules/auth";
+import type { RoleType } from "@/modules/auth/api/types";
 
 /**
  * 🔐 Хук для проверки роли текущего пользователя

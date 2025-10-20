@@ -1,6 +1,6 @@
-import { updatePos } from "@/modules/poses/api/services";
-import type { IPos, UpdatePosDto } from "@/modules/poses/api/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { updatePos } from "@/modules/poses/api/services/mutations/updatePos";
+import type { IPos, UpdatePosDto } from "@/modules/poses/api/types";
 
 export function useUpdatePosMutation(pos: IPos) {
   const queryClient = useQueryClient();

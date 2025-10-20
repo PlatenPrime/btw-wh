@@ -1,4 +1,4 @@
-import { getPosesByPalletId } from "@/modules/poses/api/services";
+import { getPosesByPalletId } from "@/modules/poses/api/services/queries/getPosesByPalletId";
 import { useQuery } from "@tanstack/react-query";
 
 export function usePosesByPalletQuery(palletId: string) {

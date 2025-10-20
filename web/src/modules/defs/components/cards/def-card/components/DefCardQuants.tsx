@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import type { DeficitItem } from "@/modules/defs/api/types";
+import type { DeficitItem } from "@/modules/defs/api/types/dto";
 
 interface DefCardQuantsProps {
   defItem: DeficitItem;

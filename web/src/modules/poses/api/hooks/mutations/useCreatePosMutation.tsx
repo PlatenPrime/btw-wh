@@ -1,4 +1,4 @@
-import { createPos } from "@/modules/poses/api/services";
+import { createPos } from "@/modules/poses/api/services/mutations/createPos";
 import type { CreatePosDto } from "@/modules/poses/api/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 

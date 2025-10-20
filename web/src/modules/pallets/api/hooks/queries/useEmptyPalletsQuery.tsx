@@ -1,6 +1,6 @@
-import { getEmptyPallets } from "@/modules/pallets/api/services";
-import type { PalletListResponse } from "@/modules/pallets/api/types";
 import { useQuery } from "@tanstack/react-query";
+import type { PalletListResponse } from "@/modules/pallets/api/types";
+import { getEmptyPallets } from "@/modules/pallets/api/services/queries/getEmptyPallets";
 
 export function useEmptyPalletsQuery(enabled = true) {
   return useQuery<PalletListResponse>({

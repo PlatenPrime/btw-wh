@@ -1,5 +1,5 @@
-import { getAllPoses } from "@/modules/poses/api/services";
 import { useQuery } from "@tanstack/react-query";
+import { getAllPoses } from "@/modules/poses/api/services/queries/getAllPoses";
 
 export function useAllPosesQuery(
   params: Partial<{
@@ -15,4 +15,4 @@ export function useAllPosesQuery(
     queryKey: ["poses", params],
     queryFn: ({ signal }) => getAllPoses(params, signal),
   });
-}
+} 

@@ -1,20 +1,32 @@
+import { hasAnyRole as checkAnyRole, hasRoleAccess } from "@/constants/roles";
 import * as api from "@/modules/auth/api/services/index.ts";
 import { getItem, removeItem, setItem } from "@/utils/localStorage";
-import { hasAnyRole as checkAnyRole, hasRoleAccess } from "@shared/constants";
-import {
-  isTokenExpired,
-  type AuthContextType,
-  type AuthProviderProps,
-  type RegisterData,
-  type RoleType,
-  type UpdateUserData,
-  type User,
-} from "@shared/modules/auth";
 import { createContext, useCallback, useEffect, useRef, useState } from "react";
+import type {
+  AuthContextType,
+  AuthProviderProps,
+  RegisterData,
+  RoleType,
+  UpdateUserData,
+  User,
+} from "../../api/types";
+import { isTokenExpired } from "../../utils/token";
 
 export const AuthContext = createContext<AuthContextType | undefined>(
   undefined,
 );
+
+// Define the expected API response type
+type AuthApiResponse = {
+  user: User;
+  token: string;
+};
+
+function isAuthApiResponse(obj: unknown): obj is AuthApiResponse {
+  return (
+    typeof obj === "object" && obj !== null && "user" in obj && "token" in obj
+  );
+}
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
@@ -61,9 +73,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     setIsLoading(true);
     setError(null);
     try {
-      const data = await api.login({ username, password });
-      setUser(data.user);
-      setToken(data.token);
+      const data = await api.login(username, password);
+      if (isAuthApiResponse(data)) {
+        setUser(data.user);
+        setToken(data.token);
+      } else {
+        throw new Error("Невірна відповідь сервера при вході");
+      }
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message);
@@ -83,7 +99,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       setError(null);
       try {
         const res = await api.register(data);
-        if (res && data.password) {
+        if (
+          typeof res === "object" &&
+          res !== null &&
+          "user" in res &&
+          data.password
+        ) {
           await login(data.username, data.password);
         }
       } catch (err: unknown) {
@@ -118,8 +139,15 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       setIsLoading(true);
       setError(null);
       try {
-        const updatedUser = await api.updateUser(data);
-        setUser(updatedUser);
+        const res = await api.updateUser(user._id, data, token);
+        if (isAuthApiResponse(res)) {
+          setUser(res.user);
+          setToken(res.token || token);
+        } else {
+          throw new Error(
+            "Невірна відповідь сервера при оновленні користувача",
+          );
+        }
       } catch (err: unknown) {
         if (err instanceof Error) {
           setError(err.message);
@@ -138,8 +166,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     setIsLoading(true);
     setError(null);
     try {
-      const currentUser = await api.getMe();
-      setUser(currentUser);
+      const res = await api.getMe(user._id, token);
+      if (isAuthApiResponse(res)) {
+        setUser(res.user);
+        setToken(res.token || token);
+      } else {
+        throw new Error("Невірна відповідь сервера при отриманні користувача");
+      }
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message);

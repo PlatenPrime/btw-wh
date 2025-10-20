@@ -1,5 +1,7 @@
-import { createAsk } from "@/modules/asks/api/services";
-import type { CreateAskRequest } from "@shared/modules/asks";
+import {
+  createAsk,
+  type CreateAskRequest,
+} from "@/modules/asks/api/services/mutations/createAsk";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export function useCreateAskMutation() {
