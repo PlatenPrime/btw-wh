@@ -15,9 +15,9 @@ export function PosesByArtikulFetcher({
   ContainerComponent,
   SkeletonComponent,
 }: PosesByArtikulFetcherProps) {
-  const { data, isLoading, error } = usePosesByArtikulQuery(artikul);
+  const { data, isLoading, error, isFetching } = usePosesByArtikulQuery(artikul);
 
-  if (isLoading) return <SkeletonComponent />;
+  if (isLoading || isFetching) return <SkeletonComponent />;
 
   if (error)
     return (

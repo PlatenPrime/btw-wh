@@ -17,8 +17,8 @@ export function CompleteAskDialog({
 }: ExecuteAskDialogProps) {
   const handleExecute = async () => {
     try {
-      onOpenChange(false);
       await handleExecuteAsk();
+      onOpenChange(false);
     } catch (error) {
       console.error("Error executing ask:", error);
     }
