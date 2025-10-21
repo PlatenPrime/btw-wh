@@ -7,6 +7,7 @@ interface ArtikulImageLinkProps {
   artikul: ArtDto["artikul"];
   nameukr?: ArtDto["nameukr"];
   link?: string;
+  bage?: React.ReactNode;
   className?: string;
   target?: "_blank" | "_self" | "_parent" | "_top";
 }
@@ -14,6 +15,7 @@ interface ArtikulImageLinkProps {
 export default function ArtikulImageLink({
   artikul,
   nameukr,
+  bage,
   link,
   className,
   target,
@@ -23,11 +25,15 @@ export default function ArtikulImageLink({
       <ArtDialogImage artikul={artikul} />
       <Link
         to={link || `/arts/${artikul}`}
-        target={target ||"_blank"}
-        className="flex flex-col justify-between h-full w-full hover:underline"
+        target={target || "_blank"}
+        className="flex h-full w-full flex-col justify-between hover:underline"
       >
-        <span className="text-sm font-semibold">{artikul}</span>
-        <span className={cn("text-xs font-normal text-muted-foreground")}>
+        <div className="flex items-center gap-2" >
+          <span className="text-sm font-semibold">{artikul}</span>
+          {bage && bage}
+        </div>
+
+        <span className={cn("text-muted-foreground text-xs font-normal")}>
           {nameukr ? nameukr.slice(10) : artikul}
         </span>
       </Link>

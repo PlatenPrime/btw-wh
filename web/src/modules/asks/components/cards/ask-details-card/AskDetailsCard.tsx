@@ -25,6 +25,7 @@ export function AskDetailsCard({ askData }: AskDetailsCardProps) {
           <ArtikulImageLink
             artikul={askData.artikul}
             nameukr={askData.nameukr}
+            bage={<AskStatusBage statusText={askData.status} />}
             target="_self"
             link="#"
           />
@@ -47,7 +48,6 @@ export function AskDetailsCard({ askData }: AskDetailsCardProps) {
             ContainerComponent={ArtZone}
             SkeletonComponent={ArtZoneSkeleton}
           />
-          <AskStatusBage statusText={askData.status} />
         </div>
       </CardContent>
     </Card>

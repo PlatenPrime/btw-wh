@@ -20,13 +20,13 @@ export function AsksListCardView({
   return (
     <Card className="grid gap-2 p-2">
       <ArtikulImageLink
-          artikul={ask.artikul}
-          nameukr={ask.nameukr}
-          target="_self"
-          link={ask._id}
-        />
+        artikul={ask.artikul}
+        nameukr={ask.nameukr}
+        bage={<AskStatusBage statusText={statusText} />}
+        target="_self"
+        link={ask._id}
+      />
       <div className="grid gap-2 pl-12">
-        
         <AskQuant quant={ask.quant || 0} />
         <AskCom com={ask.com || ""} />
         <UserAvatarName
@@ -36,9 +36,7 @@ export function AsksListCardView({
           size="xs"
         />
         <CalendarDate date={ask.createdAt} />
-        <AskStatusBage statusText={statusText} />
       </div>
-      
     </Card>
   );
 }

@@ -131,7 +131,7 @@ export function CreateAskFormView({
             onCancel={onCancel}
             onSubmit={handleFormSubmit}
             cancelText="Скасувати"
-            submitText="Створити запит"
+            submitText="Створити"
             isSubmitting={isSubmitting}
             isDisabled={!artikul || artikul.length !== 9}
             className="w-full"

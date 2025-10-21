@@ -9,8 +9,8 @@ interface DefCardQuantsProps {
 export function DefCardQuants({ defItem }: DefCardQuantsProps) {
   return (
     <div className="space-y-1 px-2 pb-2">
-      <div className="flex justify-between text-xs">
-        <span className="text-foreground">На складі:</span>
+      <div className="flex justify-between text-xs border-b border-border ">
+        <span className="text-foreground">Запаси:</span>
         <span
           className={cn(
             "font-medium",
@@ -20,11 +20,11 @@ export function DefCardQuants({ defItem }: DefCardQuantsProps) {
           {defItem.quant}
         </span>
       </div>
-      <div className="flex justify-between text-xs">
+      <div className="flex justify-between text-xs border-b border-border">
         <span className="text-foreground">Сайт:</span>
         <span className="font-medium">{defItem.sharikQuant}</span>
       </div>
-      <div className="flex justify-between text-xs">
+      <div className="flex justify-between text-xs border-b border-border">
         <span className="text-foreground">Вітрина:</span>
         <span
           className={cn(

@@ -35,10 +35,10 @@ export function AskStatusBage({ statusText }: { statusText: AskStatus }) {
     <div
       className={cn(
         statusConfig[statusText].style,
-        "flex items-center justify-start rounded-md px-1 w-20",
+        "flex w-fit items-center justify-start rounded-md px-1",
       )}
     >
-      <span className="w-18 text-center text-xs font-semibold">
+      <span className="text-center text-xs font-semibold">
         {statusConfig[statusText].text}
       </span>
     </div>

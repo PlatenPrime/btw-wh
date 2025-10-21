@@ -8,7 +8,7 @@ interface DefAskButtonProps {
 
 export function DefAskButton({ artikul }: DefAskButtonProps) {
   return (
-    <div className="grid place-items-center">
+    <div className="grid place-items-center bg-accent/20 rounded-md ">
       <div className="relative">
         <CreateAskDialog preFilledArtikul={artikul} />
       </div>
