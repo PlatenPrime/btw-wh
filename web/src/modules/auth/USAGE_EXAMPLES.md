@@ -352,40 +352,6 @@ async function deleteUser(id: string) {
 
 ---
 
-## Toast уведомления
-
-Toast уведомления автоматически показываются для ошибок авторизации. Можно использовать и вручную:
-
-```tsx
-import { toast } from "@/components/ui/use-toast";
-
-function SomeComponent() {
-  const handleSuccess = () => {
-    toast({
-      title: "Успіх!",
-      description: "Операція виконана успішно",
-    });
-  };
-
-  const handleError = () => {
-    toast({
-      variant: "destructive",
-      title: "Помилка",
-      description: "Щось пішло не так",
-    });
-  };
-
-  return (
-    <div>
-      <button onClick={handleSuccess}>Success</button>
-      <button onClick={handleError}>Error</button>
-    </div>
-  );
-}
-```
-
----
-
 ## Полезные утилиты
 
 ### Работа с токенами

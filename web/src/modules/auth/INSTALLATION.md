@@ -67,11 +67,6 @@ npm install --save-dev @types/node
 web/src/
 ├── constants/
 │   └── roles.ts                  # Константы ролей и утилиты
-├── components/
-│   └── ui/
-│       ├── toast.tsx            # Компонент toast
-│       ├── toaster.tsx          # Провайдер toast
-│       └── use-toast.ts         # Хук для toast
 ├── lib/
 │   └── apiClient.tsx            # API клиент с interceptors
 └── modules/
@@ -108,28 +103,7 @@ web/src/
 
 ## Быстрый старт
 
-1. **Установите зависимости:**
-
-```bash
-npm install @radix-ui/react-toast lucide-react class-variance-authority
-```
-
-2. **Убедитесь что Toaster добавлен в App.tsx:**
-
-```tsx
-import { Toaster } from "@/components/ui/toaster";
-
-function App() {
-  return (
-    <div>
-      {/* ... ваш контент */}
-      <Toaster />
-    </div>
-  );
-}
-```
-
-3. **Проверьте что AuthProvider обернут вокруг приложения:**
+1. **Проверьте что AuthProvider обернут вокруг приложения:**
 
 ```tsx
 // в providers.tsx

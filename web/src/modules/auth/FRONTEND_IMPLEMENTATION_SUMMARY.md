@@ -163,21 +163,7 @@
 - Подготовлен ProtectedRoute для использования с `allowedRoles`
 - Все защищенные роуты используют ProtectedRoute
 
-### 10. ✅ Настройка Toast уведомлений
-
-**Файлы:**
-
-- `src/components/ui/toast.tsx` - компонент Toast
-- `src/components/ui/toaster.tsx` - провайдер Toaster
-- `src/components/ui/use-toast.ts` - хук useToast
-
-**Интеграция:**
-
-- Добавлен `<Toaster />` в App.tsx
-- Автоматические уведомления в API Client interceptor
-- Готов к использованию в любом компоненте
-
-### 11. ✅ Обновление типов
+### 10. ✅ Обновление типов
 
 **Файл:** `src/modules/auth/api/types/index.ts`
 
