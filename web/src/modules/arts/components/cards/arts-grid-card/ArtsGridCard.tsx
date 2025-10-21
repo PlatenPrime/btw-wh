@@ -6,5 +6,8 @@ interface GridCardProps {
 }
 
 export function ArtsGridCard({ art }: GridCardProps) {
-  return <ArtsGridCardView art={art} />;
+  const nameukr =
+    art.nameukr.length > 50 ? art.nameukr.slice(0,47) + "..." : art.nameukr;
+
+  return <ArtsGridCardView artikul={art.artikul} nameukr={nameukr} />;
 }

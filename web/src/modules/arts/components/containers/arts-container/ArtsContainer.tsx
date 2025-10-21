@@ -25,17 +25,14 @@ export function ArtsContainer({
     fetchNextPage,
   });
 
-  const isEmptyData = data.length === 0 || !data;
 
   return (
     <ArtsContainerView
       data={data}
       isFetchingNextPage={isFetchingNextPage}
-      hasNextPage={hasNextPage}
       search={search}
       onSearchChange={onSearchChange}
       bottomRef={bottomRef}
-      isEmptyData={isEmptyData}
     />
   );
 }

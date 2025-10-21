@@ -18,9 +18,7 @@ export function ArtsGridView({ arts }: ViewProps) {
   return (
     <ul
       className={cn(
-        "grid auto-rows-[1fr] gap-2",
-        "grid-cols-1",
-        "md:[grid-template-columns:repeat(auto-fill,minmax(220px,1fr))] md:gap-2",
+       "grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
       )}
     >
       {arts &&
