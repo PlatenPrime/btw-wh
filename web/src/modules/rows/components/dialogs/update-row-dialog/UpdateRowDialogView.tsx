@@ -28,9 +28,14 @@ export function UpdateRowDialogView({
   onSuccess,
   onCancel,
 }: UpdateRowDialogProps) {
+  // Если open управляется внешне (controlled mode), не показываем триггер
+  const isControlled = open !== undefined;
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>{trigger || defaultTrigger}</DialogTrigger>
+      {!isControlled && (
+        <DialogTrigger asChild>{trigger || defaultTrigger}</DialogTrigger>
+      )}
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle> Редагувати </DialogTitle>
