@@ -33,7 +33,7 @@ export function RowContainerView({ row }: RowContainerViewProps) {
     <div className="grid gap-2">
       {/* Header */}
       <Container className="flex items-start justify-between">
-        <p className="flex items-center gap-2">
+        <p className="flex items-center h-full gap-2">
           <Grid3x3 className="h-4 w-4" /> {row.pallets.length}
         </p>
         <CreatePalletDialog row={row} />
