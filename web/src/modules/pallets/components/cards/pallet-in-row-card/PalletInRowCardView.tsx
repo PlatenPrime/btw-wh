@@ -17,7 +17,7 @@ export function PalletInRowCardView({ pallet, rowId }: PalletInRowCardProps) {
           to={`/wh/pallets/${pallet.title}`}
           className={cn(
             "",
-            "flex w-full items-center justify-start gap-2 rounded-md transition-colors duration-300 ease-in-out hover:text-blue-800 hover:underline dark:hover:text-blue-200",
+            "flex w-full items-center justify-start gap-2 rounded-md transition-colors duration-300 ease-in-out  hover:underline ",
           )}
         >
           <span className="text-base font-semibold">{pallet.title}</span>

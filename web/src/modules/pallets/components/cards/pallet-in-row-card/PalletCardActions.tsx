@@ -39,7 +39,7 @@ export function PalletCardActions({ pallet, rowId }: PalletCardActionsProps) {
     <>
       <CardActionsMenu
         actions={actions}
-        orientation="horizontal"
+        orientation="vertical"
         size="sm"
         align="end"
       />
