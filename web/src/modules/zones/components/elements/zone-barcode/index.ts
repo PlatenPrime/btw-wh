@@ -1,0 +1,2 @@
+export { ZoneBarcode } from "./ZoneBarcode";
+

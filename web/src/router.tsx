@@ -1,5 +1,6 @@
 // router.tsx
 import { RouteErrorBoundary } from "@/components/shared/error-components/route-error-boundary";
+import { RoleType } from "@/constants/roles";
 import { ProtectedRoute } from "@/modules/auth/components/index.ts";
 import { lazy } from "react";
 import { createHashRouter, Outlet } from "react-router";
@@ -73,7 +74,14 @@ const WhUtils = lazy(() =>
   import("./pages/whUtils").then((module) => ({ default: module.WhUtils })),
 );
 const Zones = lazy(() =>
-  import("./pages/zones").then((module) => ({ default: module.Zones })),
+  import("./modules/zones/pages/zones").then((module) => ({
+    default: module.Zones,
+  })),
+);
+const Zone = lazy(() =>
+  import("./modules/zones/pages/zone").then((module) => ({
+    default: module.Zone,
+  })),
 );
 
 const PalletPage = lazy(() =>
@@ -190,7 +198,20 @@ export const router = createHashRouter([
           },
           {
             path: "zones",
-            element: <Zones />,
+            element: (
+              <ProtectedRoute allowedRoles={[RoleType.ADMIN]}>
+                <Zones />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "zones/:id",
+            element: (
+              <ProtectedRoute allowedRoles={[RoleType.ADMIN]}>
+                <Zone />
+              </ProtectedRoute>
+            ),
             errorElement: <RouteErrorBoundary />,
           },
           {
