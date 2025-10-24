@@ -7,20 +7,20 @@ interface SkladListPosProps {
 }
 
 export function SkladListPos({ pos, onClick }: SkladListPosProps) {
-  const isBoxesEmpty = pos.boxes === 0;
-  const isQuantEmpty = pos.quant === 0;
+  const isBoxesEmpty = pos.data!.boxes === 0;
+  const isQuantEmpty = pos.data!.quant === 0;
 
   return (
     <div
       className={cn(
-        "hover:bg-muted/25 block cursor-pointer rounded-md px-2 py-1 transition-colors"
+        "hover:bg-muted/25 block cursor-pointer rounded-md px-2 py-1 transition-colors",
       )}
       onClick={onClick}
     >
       <div className="grid grid-cols-3">
         <div className="min-w-0 flex-1">
           <h4 className="truncate font-medium">
-            {pos.palletData?.title || "Невідома палета"}
+            {pos.data?.palletData?.title || "Невідома палета"}
           </h4>
         </div>
 
@@ -30,7 +30,7 @@ export function SkladListPos({ pos, onClick }: SkladListPosProps) {
             isBoxesEmpty ? "text-destructive" : "",
           )}
         >
-          {pos.boxes || 0}
+          {pos.data?.boxes || 0}
         </span>
         <span
           className={cn(
@@ -38,7 +38,7 @@ export function SkladListPos({ pos, onClick }: SkladListPosProps) {
             isQuantEmpty ? "text-destructive" : "",
           )}
         >
-          {pos.quant || 0}
+          {pos.data?.quant || 0}
         </span>
       </div>
     </div>

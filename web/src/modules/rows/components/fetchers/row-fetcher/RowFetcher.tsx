@@ -1,5 +1,5 @@
-import { ErrorDisplay } from '@/components/shared/error-components/error-display';
-import { LoadingNoData } from '@/components/shared/loading-states/loading-nodata';
+import { EntityNotFound } from "@/components/shared/entity-not-found";
+import { ErrorDisplay } from "@/components/shared/error-components/error-display";
 import { useRowByTitleQuery } from "@/modules/rows/api/hooks/queries/useRowByTitleQuery";
 import type { RowDto } from "@/modules/rows/api/types/dto";
 import type { ComponentType } from "react";
@@ -15,7 +15,12 @@ export function RowFetcher({
   ContainerComponent,
   SkeletonComponent,
 }: RowFetcherProps) {
-  const { data: row, isLoading, error } = useRowByTitleQuery(rowTitle);
+  const {
+    data: rowResponse,
+    isLoading,
+    error,
+    refetch,
+  } = useRowByTitleQuery(rowTitle);
 
   if (isLoading) return <SkeletonComponent />;
 
@@ -28,7 +33,14 @@ export function RowFetcher({
       />
     );
 
-  if (!row) return <LoadingNoData description="Ряд не знайдено" />;
+  if (!rowResponse || !rowResponse.exists)
+    return (
+      <EntityNotFound
+        title="Ряд не знайдено"
+        description="Ряд з такою назвою не існує або був видалений"
+        onRetry={() => refetch()}
+      />
+    );
 
-  return <ContainerComponent row={row} />;
+  return <ContainerComponent row={rowResponse.data!} />;
 }

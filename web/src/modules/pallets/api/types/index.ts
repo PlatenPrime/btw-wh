@@ -1,6 +1,7 @@
 // Типы для Pallet
 
 import type { IPos } from "@/modules/poses/api/types/index";
+import type { EntityResponse } from "@/types/api";
 
 export interface PalletShortDto {
   _id: string;
@@ -48,7 +49,8 @@ export interface UpdatePalletDto {
 
 export type PalletListResponse = IPallet[];
 export type PalletShortListResponse = PalletShortDto[];
-export type PalletResponse = IPallet;
+
+export type PalletResponse = EntityResponse<IPallet>;
 
 export interface DeletePalletResponse {
   message: string;

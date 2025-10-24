@@ -1,5 +1,5 @@
-import { ErrorDisplay } from '@/components/shared/error-components/error-display';
-import { LoadingNoData } from '@/components/shared/loading-states/loading-nodata';
+import { EntityNotFound } from "@/components/shared/entity-not-found";
+import { ErrorDisplay } from "@/components/shared/error-components/error-display";
 import { usePosByIdQuery } from "@/modules/poses/api/hooks/queries/usePosByIdQuery";
 import type { IPos } from "@/modules/poses/api/types";
 import type { ComponentType } from "react";
@@ -15,7 +15,12 @@ export function PosFetcher({
   ContainerComponent,
   SkeletonComponent,
 }: PosFetcherProps) {
-  const { data: pos, isLoading, error } = usePosByIdQuery(posId);
+  const {
+    data: posResponse,
+    isLoading,
+    error,
+    refetch,
+  } = usePosByIdQuery(posId);
 
   if (isLoading) return <SkeletonComponent />;
 
@@ -28,7 +33,14 @@ export function PosFetcher({
       />
     );
 
-  if (!pos) return <LoadingNoData description="Позицію не знайдено" />;
+  if (!posResponse || !posResponse.exists)
+    return (
+      <EntityNotFound
+        title="Позицію не знайдено"
+        description="Позиція з таким ID не існує або була видалена"
+        onRetry={() => refetch()}
+      />
+    );
 
-  return <ContainerComponent pos={pos} />;
+  return <ContainerComponent pos={posResponse.data!} />;
 }

@@ -24,16 +24,16 @@ export function PalletContainerView({
     <div className="grid gap-2">
       <Container className="flex flex-wrap items-center justify-between gap-2">
         {" "}
-        <PalletInfo pallet={pallet} />
+        <PalletInfo pallet={pallet.data!} />
         <CreatePosDialog
-          pallet={pallet}
+          pallet={pallet.data!}
           onSuccess={handlePosCreated}
           trigger={<Button variant="outline">+ Додати позицію</Button>}
         />
       </Container>
 
       <PosesByPalletFetcher
-        palletId={pallet._id}
+        palletId={pallet.data!._id}
         ContainerComponent={PosesByPalletContainer}
         SkeletonComponent={PosesByPalletContainerSkeleton}
         newPosIds={newPosIds}

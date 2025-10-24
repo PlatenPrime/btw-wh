@@ -1,10 +1,10 @@
 // hooks/useArtQuery.ts
 import { getOneArtByArtikul } from "@/modules/arts/api/services/queries/getOneArtByArtikul";
-import type { ArtDto } from "@/modules/arts/api/types/dto";
+import type { ArtResponse } from "@/modules/arts/api/types/dto";
 import { useQuery } from "@tanstack/react-query";
 
 export function useOneArtQuery(artikul?: string) {
-  return useQuery<ArtDto>({
+  return useQuery<ArtResponse>({
     queryKey: ["art", { artikul }],
     queryFn: ({ signal }) => {
       if (!artikul) throw new Error("Artikul is missing in URL");

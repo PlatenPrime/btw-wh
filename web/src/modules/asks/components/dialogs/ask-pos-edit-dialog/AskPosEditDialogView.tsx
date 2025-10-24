@@ -33,7 +33,7 @@ export function AskPosEditDialogView({
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="text-center">
-            {pos.palletData?.title}
+            {pos.data?.palletData?.title}
           </DialogTitle>
         </DialogHeader>
         <AskPosEditForm

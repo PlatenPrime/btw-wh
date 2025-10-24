@@ -120,8 +120,8 @@ export function AskPosEditForm({
         data.removedBoxes === "" ? 0 : parseInt(data.removedBoxes, 10);
 
       // Вычисляем новые значения
-      const newQuant = pos.quant - removedQuantNum;
-      const newBoxes = pos.boxes - removedBoxesNum;
+      const newQuant = pos.data!.quant - removedQuantNum;
+      const newBoxes = pos.data!.boxes - removedBoxesNum;
 
       // Проверяем, что новые значения не отрицательные
       if (newQuant < 0) {
@@ -136,19 +136,19 @@ export function AskPosEditForm({
 
       // Оновлюємо позицію
       await updatePosMutation.mutateAsync({
-        id: pos._id,
+        id: pos.data!._id,
         data: {
           quant: newQuant,
           boxes: newBoxes,
-          sklad: pos.sklad,
+          sklad: pos.data!.sklad,
         },
       });
 
       // Додаємо дію в ask
       const actionText =
         removedQuantNum >= 0
-          ? `Знято товару: ${removedQuantNum} шт., коробок: ${removedBoxesNum} шт. з палети ${pos.palletData?.title || "невідома паллета"}`
-          : `Додано товару: ${Math.abs(removedQuantNum)} шт., коробок: ${Math.abs(removedBoxesNum)} шт. до палети ${pos.palletData?.title || "невідома паллета"}`;
+          ? `Знято товару: ${removedQuantNum} шт., коробок: ${removedBoxesNum} шт. з палети ${pos.data?.palletData?.title || "невідома паллета"}`
+          : `Додано товару: ${Math.abs(removedQuantNum)} шт., коробок: ${Math.abs(removedBoxesNum)} шт. до палети ${pos.data?.palletData?.title || "невідома паллета"}`;
 
       await updateAskActionsMutation.mutateAsync({
         id: askId,
@@ -170,9 +170,9 @@ export function AskPosEditForm({
 
   // Вычисляем остатки
   const remainingQuant =
-    pos.quant - (removedQuant === "" ? 0 : parseInt(removedQuant, 10));
+    pos.data!.quant - (removedQuant === "" ? 0 : parseInt(removedQuant, 10));
   const remainingBoxes =
-    pos.boxes - (removedBoxes === "" ? 0 : parseInt(removedBoxes, 10));
+    pos.data!.boxes - (removedBoxes === "" ? 0 : parseInt(removedBoxes, 10));
 
   return (
     <AskPosEditFormView

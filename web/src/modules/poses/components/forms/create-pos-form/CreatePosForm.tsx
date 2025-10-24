@@ -99,12 +99,12 @@ export function CreatePosForm({
           palletId: pallet._id,
           rowId: pallet.row,
           artikul: data.artikul,
-          nameukr: artData?.nameukr,
+          nameukr: artData?.data?.nameukr,
           quant: data.quant,
           boxes: data.boxes,
           sklad: data.sklad,
         });
-        onSuccess?.(newPos._id);
+        onSuccess?.(newPos.data!._id);
       }
     } catch (error) {
       console.error("Error creating/updating pos:", error);
@@ -129,7 +129,7 @@ export function CreatePosForm({
       onBoxesChange={handleBoxesChange}
       isSubmitting={isFormSubmitting}
       isArtLoading={isArtLoading}
-      artData={artData}
+      artData={artData?.data || undefined}
       existingPos={existingPos}
       onSubmit={onSubmit}
       onCancel={onCancel}

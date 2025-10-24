@@ -5,9 +5,9 @@ import { Link } from "react-router";
 
 export function PalletLink({ pos }: { pos: PosResponse }) {
   return (
-    <Card key={pos._id} className="p-0">
+    <Card key={pos.data!._id} className="p-0">
       <CardContent className="p-0">
-        <Link to={`/wh/pallets/${pos.palletData?.title || "unknown"}`}>
+        <Link to={`/wh/pallets/${pos.data?.palletData?.title || "unknown"}`}>
           <SkladListPos pos={pos} />
         </Link>
       </CardContent>

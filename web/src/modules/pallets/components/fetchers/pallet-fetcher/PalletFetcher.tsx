@@ -1,12 +1,15 @@
-import { ErrorDisplay } from '@/components/shared/error-components/error-display';
-import { LoadingNoData } from '@/components/shared/loading-states/loading-nodata';
+import { EntityNotFound } from "@/components/shared/entity-not-found";
+import { ErrorDisplay } from "@/components/shared/error-components/error-display";
 import { usePalletByTitleQuery } from "@/modules/pallets/api/hooks/queries/usePalletByTitleQuery";
-import type { IPallet } from "@/modules/pallets/api/types";
+import type { PalletResponse } from "@/modules/pallets/api/types";
 import type { ComponentType } from "react";
 
 interface PalletFetcherProps {
   palletTitle?: string;
-  ContainerComponent: ComponentType<{ pallet: IPallet; onPosCreated?: () => void }>;
+  ContainerComponent: ComponentType<{
+    pallet: PalletResponse;
+    onPosCreated?: () => void;
+  }>;
   SkeletonComponent: ComponentType;
 }
 
@@ -16,7 +19,7 @@ export function PalletFetcher({
   SkeletonComponent,
 }: PalletFetcherProps) {
   const {
-    data: pallet,
+    data: palletResponse,
     isLoading,
     error,
     refetch,
@@ -37,7 +40,19 @@ export function PalletFetcher({
       />
     );
 
-  if (!pallet) return <LoadingNoData description="Запитаний палет не існує" />;
+  if (!palletResponse || !palletResponse.exists)
+    return (
+      <EntityNotFound
+        title="Палета не знайдена"
+        description="Палета з таким назвою не існує або була видалена"
+        onRetry={() => refetch()}
+      />
+    );
 
-  return <ContainerComponent pallet={pallet} onPosCreated={handlePosCreated} />;
+  return (
+    <ContainerComponent
+      pallet={palletResponse}
+      onPosCreated={handlePosCreated}
+    />
+  );
 }

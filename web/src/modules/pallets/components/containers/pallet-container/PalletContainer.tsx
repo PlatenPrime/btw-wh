@@ -36,10 +36,8 @@ export function PalletContainer({
   };
 
   const handlePalletDeleted = () => {
-    navigate(`/wh/rows/${pallet.rowData.title}`);
+    navigate(`/wh/rows/${pallet.data!.rowData.title}`);
   };
-
-
 
   // Регистрируем действия в header меню
   useRegisterHeaderActions([
@@ -76,26 +74,30 @@ export function PalletContainer({
 
   return (
     <>
-      <PalletContainerView pallet={pallet} handlePosCreated={handlePosCreated} newPosIds={newPosIds} />
-      <ClearPalletDialog
+      <PalletContainerView
         pallet={pallet}
+        handlePosCreated={handlePosCreated}
+        newPosIds={newPosIds}
+      />
+      <ClearPalletDialog
+        pallet={pallet.data!}
         onSuccess={() => {}}
         open={clearDialogOpen}
         onOpenChange={setClearDialogOpen}
       />
       <DeletePalletEmptyPosesDialog
-        pallet={pallet}
+        pallet={pallet.data!}
         onSuccess={() => {}}
         open={deleteEmptyPosesDialogOpen}
         onOpenChange={setDeleteEmptyPosesDialogOpen}
       />
       <MovePalletPosesDialog
-        pallet={pallet}
+        pallet={pallet.data!}
         open={moveDialogOpen}
         onOpenChange={setMoveDialogOpen}
       />
       <DeletePalletDialog
-        pallet={pallet}
+        pallet={pallet.data!}
         onSuccess={handlePalletDeleted}
         open={deleteDialogOpen}
         onOpenChange={setDeleteDialogOpen}

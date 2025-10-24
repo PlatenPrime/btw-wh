@@ -21,7 +21,7 @@ export function AskPos({ pos, askId }: AskPosProps) {
   };
 
   return (
-    <Card key={pos._id} className="p-0">
+    <Card key={pos.data!._id} className="p-0">
       <CardContent className="p-0">
         <SkladListPos pos={pos} onClick={handleClick} />
         <AskPosEditDialog

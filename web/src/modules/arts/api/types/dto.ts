@@ -1,3 +1,5 @@
+import type { EntityResponse } from "@/types/api";
+
 export interface BtradeStockDto {
   value: number;
   date: string;
@@ -15,6 +17,8 @@ export interface ArtDto {
   __v: number;
   btradeStock: BtradeStockDto;
 }
+
+export type ArtResponse = EntityResponse<ArtDto>;
 
 export interface ArtsDto {
   data: ArtDto[];

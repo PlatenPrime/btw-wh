@@ -58,10 +58,9 @@ export interface UpsertZonesResponse {
   };
 }
 
-export interface ZoneResponse {
-  message: string;
-  data: ZoneDto;
-}
+import type { EntityResponse } from "@/types/api";
+
+export type ZoneResponse = EntityResponse<ZoneDto>;
 
 export interface DeleteZoneResponse {
   message: string;

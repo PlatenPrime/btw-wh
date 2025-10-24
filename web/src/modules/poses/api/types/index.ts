@@ -56,7 +56,9 @@ export interface PosListResponse {
   totalPages: number;
 }
 
-export type PosResponse = IPos;
+import type { EntityResponse } from "@/types/api";
+
+export type PosResponse = EntityResponse<IPos>;
 
 // Типы для получения позиций по артикулу
 export interface WarehouseData {

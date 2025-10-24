@@ -1,13 +1,12 @@
 import { apiClient } from "@/lib/apiClient";
-import type { RowDto } from "@/modules/rows/api/types/dto";
+import type { RowResponse } from "@/modules/rows/api/types/dto";
 
 export const getRowById = async (
   rowId: string,
   signal?: AbortSignal,
-): Promise<RowDto> => {
-  const res = await apiClient.get<RowDto>(`/rows/id/${rowId}`, {
+): Promise<RowResponse> => {
+  const res = await apiClient.get<RowResponse>(`/rows/id/${rowId}`, {
     signal,
   });
-  // pallets уже PalletShortDto[]
   return res.data;
 };

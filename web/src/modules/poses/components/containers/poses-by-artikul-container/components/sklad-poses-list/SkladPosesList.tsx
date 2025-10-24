@@ -1,12 +1,12 @@
 import { Container } from "@/components/shared/containers/Container";
-import type { IPos, WarehouseData } from "@/modules/poses/api/types";
+import type { PosResponse, WarehouseData } from "@/modules/poses/api/types";
 import { Circle, Package } from "lucide-react";
 
 interface SkladPosesListProps {
   skladData: WarehouseData;
   title: string;
   renderPos: (
-    pos: IPos,
+    pos: PosResponse,
     additionalProps?: Record<string, unknown>,
   ) => React.ReactNode;
   additionalProps?: Record<string, unknown>;
@@ -21,7 +21,9 @@ export function SkladPosesList({
   if (!skladData.poses?.length)
     return (
       <Container>
-        <p className="text-center font-semibold text-muted-foreground" >На складі {title} немає позицій з цим артикулом</p>
+        <p className="text-muted-foreground text-center font-semibold">
+          На складі {title} немає позицій з цим артикулом
+        </p>
       </Container>
     );
 
@@ -42,7 +44,12 @@ export function SkladPosesList({
       {skladData.poses?.length > 0 && (
         <div className="grid gap-2">
           {skladData.poses?.map((pos) => (
-            <div key={pos._id}>{renderPos(pos, additionalProps)}</div>
+            <div key={pos._id}>
+              {renderPos(
+                { exists: true, message: "", data: pos },
+                additionalProps,
+              )}
+            </div>
           ))}
         </div>
       )}

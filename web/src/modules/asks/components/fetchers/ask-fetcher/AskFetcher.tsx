@@ -1,5 +1,5 @@
-import { ErrorDisplay } from '@/components/shared/error-components/error-display';
-import { LoadingNoData } from '@/components/shared/loading-states/loading-nodata';
+import { EntityNotFound } from "@/components/shared/entity-not-found";
+import { ErrorDisplay } from "@/components/shared/error-components/error-display";
 import { useAskQuery } from "@/modules/asks/api/hooks/queries/useAskQuery";
 import type { AskDto } from "@/modules/asks/api/types/dto";
 import type { ComponentType } from "react";
@@ -15,7 +15,7 @@ export function AskFetcher({
   ContainerComponent,
   SkeletonComponent,
 }: AskFetcherProps) {
-  const { data: askData, isLoading, error } = useAskQuery({ id });
+  const { data: askResponse, isLoading, error, refetch } = useAskQuery({ id });
 
   if (isLoading) return <SkeletonComponent />;
 
@@ -28,8 +28,14 @@ export function AskFetcher({
       />
     );
 
-  if (!askData)
-    return <LoadingNoData description="Немає даних для відображення" />;
+  if (!askResponse || !askResponse.exists)
+    return (
+      <EntityNotFound
+        title="Запит не знайдено"
+        description="Запит з таким ID не існує або був видалений"
+        onRetry={() => refetch()}
+      />
+    );
 
-  return <ContainerComponent askData={askData.data} />;
+  return <ContainerComponent askData={askResponse.data!} />;
 }

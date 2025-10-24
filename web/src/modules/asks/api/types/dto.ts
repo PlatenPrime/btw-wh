@@ -37,7 +37,6 @@ export interface GetAsksByDateResponse {
   rejectedCount: number;
 }
 
-export interface GetAskByIdResponse {
-  message: string;
-  data: AskDto;
-}
+import type { EntityResponse } from "@/types/api";
+
+export type GetAskByIdResponse = EntityResponse<AskDto>;

@@ -86,7 +86,7 @@ export function CreateAskForm({
     try {
       await createAskMutation.mutateAsync({
         artikul: data.artikul,
-        nameukr: currentArtData?.nameukr,
+        nameukr: currentArtData?.data?.nameukr,
         quant: data.quant || "", // Ensure string type
         com: data.com,
         askerId: user._id,
@@ -113,7 +113,7 @@ export function CreateAskForm({
       onQuantChange={handleQuantChange}
       isSubmitting={isFormSubmitting}
       isArtLoading={isArtLoading}
-      artData={currentArtData}
+      artData={currentArtData?.data || undefined}
       onSubmit={onSubmit}
       onCancel={onCancel}
       isArtikulPreFilled={!!preFilledArtikul}

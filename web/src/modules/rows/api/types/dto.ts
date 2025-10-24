@@ -1,4 +1,5 @@
 import type { PalletShortDto } from "@/modules/pallets/api/types";
+import type { EntityResponse } from "@/types/api";
 
 export interface RowDto {
   _id: string;
@@ -7,6 +8,8 @@ export interface RowDto {
   createdAt: string;
   updatedAt: string;
 }
+
+export type RowResponse = EntityResponse<RowDto>;
 
 export interface CreateRowDto {
   title: string;

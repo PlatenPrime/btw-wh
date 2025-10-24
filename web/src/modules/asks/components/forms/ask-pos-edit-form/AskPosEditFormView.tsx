@@ -50,11 +50,11 @@ export function AskPosEditFormView({
               <div className="grid gap-2 text-sm">
                 <div>
                   <span className="text-muted-foreground">Товар:</span>{" "}
-                  {pos.quant} шт.
+                  {pos.data!.quant} шт.
                 </div>
                 <div>
                   <span className="text-muted-foreground">Коробки:</span>{" "}
-                  {pos.boxes} шт.
+                  {pos.data!.boxes} шт.
                 </div>
               </div>
             </div>

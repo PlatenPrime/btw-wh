@@ -1,10 +1,11 @@
+import { EntityNotFound } from "@/components/shared/entity-not-found";
 import { ErrorDisplay } from "@/components/shared/error-components";
-import { LoadingNoData } from "@/components/shared/loading-states";
 import { useZoneByIdQuery } from "@/modules/zones/api/hooks/queries/useZoneByIdQuery";
+import type { ZoneDto } from "@/modules/zones/api/types";
 
 interface ZoneFetcherProps {
   zoneId: string;
-  ContainerComponent: React.ComponentType<{ zone: any }>;
+  ContainerComponent: React.ComponentType<{ zone: ZoneDto }>;
   SkeletonComponent: React.ComponentType;
 }
 
@@ -13,7 +14,12 @@ export function ZoneFetcher({
   ContainerComponent,
   SkeletonComponent,
 }: ZoneFetcherProps) {
-  const { data, isLoading, error } = useZoneByIdQuery({ id: zoneId });
+  const {
+    data: zoneResponse,
+    isLoading,
+    error,
+    refetch,
+  } = useZoneByIdQuery({ id: zoneId });
 
   if (isLoading) {
     return <SkeletonComponent />;
@@ -29,9 +35,15 @@ export function ZoneFetcher({
     );
   }
 
-  if (!data?.data) {
-    return <LoadingNoData description="Зона не найдена" />;
+  if (!zoneResponse || !zoneResponse.exists) {
+    return (
+      <EntityNotFound
+        title="Зона не найдена"
+        description="Зона с таким ID не существует или была удалена"
+        onRetry={() => refetch()}
+      />
+    );
   }
 
-  return <ContainerComponent zone={data.data} />;
+  return <ContainerComponent zone={zoneResponse.data!} />;
 }
