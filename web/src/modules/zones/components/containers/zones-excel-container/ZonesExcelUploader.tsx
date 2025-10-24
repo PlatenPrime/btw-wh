@@ -1,7 +1,7 @@
 import { apiClient } from "@/lib/apiClient";
 import type {
-  ExcelUploadResult,
   UploadingZone,
+  UpsertZonesResult,
 } from "@/modules/zones/components/containers/zones-excel-container/types";
 import { ZonesExcelUploaderView } from "@/modules/zones/components/containers/zones-excel-container/ZonesExcelUploaderView";
 import type { AxiosResponse } from "axios";
@@ -116,8 +116,8 @@ const ZonesExcelUploader = () => {
     setUploadProgress(0);
 
     try {
-      const response: AxiosResponse<ExcelUploadResult> = await apiClient.post(
-        "/zones/bulk",
+      const response: AxiosResponse<UpsertZonesResult> = await apiClient.post(
+        "/zones/upsert",
         { zones: parsedData },
         {
           onUploadProgress: (progressEvent) => {
@@ -131,10 +131,10 @@ const ZonesExcelUploader = () => {
         },
       );
 
-      const { results } = response.data;
+      const { result } = response.data;
 
       toast("Успешно загружено ✅", {
-        description: `Создано: ${results.created}, Пропущено: ${results.skipped}`,
+        description: `Создано: ${result.upsertedCount}, Обновлено: ${result.modifiedCount}`,
       });
 
       setParsedData(null);

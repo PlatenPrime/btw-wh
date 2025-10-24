@@ -4,19 +4,12 @@ export interface UploadingZone {
   sector?: number;
 }
 
-export interface ExcelUploadResult {
+export interface UpsertZonesResult {
   message: string;
-  results: {
-    created: number;
-    skipped: number;
-    errors: Array<{
-      index: number;
-      error: string;
-      data: {
-        title: string;
-        bar: number;
-      };
-    }>;
+  result: {
+    acknowledged: boolean;
+    modifiedCount: number;
+    upsertedCount: number;
+    upsertedIds: Record<string, string>;
   };
 }
-
