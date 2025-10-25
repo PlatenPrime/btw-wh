@@ -28,10 +28,10 @@ export function Zone() {
 
   if (!id) {
     return (
-      <SidebarInsetLayout headerText="Зона не найдена">
+      <SidebarInsetLayout headerText="Зона не знайдена">
         <main className="p-4">
           <div className="text-muted-foreground text-center">
-            ID зоны не указан
+            ID зони не вказано
           </div>
         </main>
       </SidebarInsetLayout>

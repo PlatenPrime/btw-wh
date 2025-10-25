@@ -39,15 +39,11 @@ export const appSidebarData = {
           iconName: "StickyNote",
         },
         {
-          title: "Оновити базу",
+          title: "Оновити артикули",
           url: "/arts/update",
           iconName: "RefreshCcwDot",
         },
-        {
-          title: "Утиліти",
-          url: "/arts/utils",
-          iconName: "Settings",
-        },
+        
       ],
     },
     {
@@ -59,21 +55,13 @@ export const appSidebarData = {
           url: "/wh/rows",
           iconName: "Rows4",
         },
-        {
-          title: "Залишки",
-          url: "/wh/stocks",
-          iconName: "Warehouse",
-        },
+        
         {
           title: "Зони",
           url: "/wh/zones",
           iconName: "MapPin",
         },
-        {
-          title: "Утиліти",
-          url: "/wh/utils",
-          iconName: "Settings",
-        },
+       
       ],
     },
     {

@@ -49,7 +49,7 @@ export function ZoneContainer({ zone, onEdit, onDelete }: ZoneContainerProps) {
               <h4 className="text-muted-foreground text-sm font-medium">
                 Штрихкод
               </h4>
-              <ZoneBarcode zone={zone} variant="default" />
+              <ZoneBarcode zone={zone}  />
             </div>
             <div className="space-y-2">
               <h4 className="text-muted-foreground text-sm font-medium">

@@ -47,7 +47,7 @@ function ZonesContent() {
   useRegisterHeaderActions([
     {
       id: "create-zone",
-      label: "Создать зону",
+      label: "Створити зону",
       icon: Plus,
       iconColor: "emerald",
       variant: "default",
@@ -55,7 +55,7 @@ function ZonesContent() {
     },
     {
       id: "import-excel",
-      label: "Импорт Excel",
+      label: "Імпорт Excel",
       icon: FileSpreadsheet,
       iconColor: "default",
       variant: "default",
@@ -63,7 +63,7 @@ function ZonesContent() {
     },
     {
       id: "export-excel",
-      label: "Экспорт Excel",
+      label: "Експорт Excel",
       icon: Download,
       iconColor: "default",
       variant: "default",
@@ -82,12 +82,8 @@ function ZonesContent() {
   };
 
   return (
-    <main className="space-y-4">
-      <ZoneControls
-        onCreateClick={() => setCreateDialogOpen(true)}
-        onImportClick={() => setExcelDialogOpen(true)}
-        onExportClick={handleExport}
-      />
+    <main className="grid gap-2 p-2">
+      <ZoneControls />
 
       <ZonesFetcher
         params={{ page, limit, search, sortBy, sortOrder }}
@@ -130,7 +126,7 @@ function ZonesContent() {
           <div className="bg-background m-4 max-h-[90vh] max-w-4xl overflow-y-auto rounded-lg shadow-lg">
             <div className="p-6">
               <div className="mb-4 flex items-center justify-between">
-                <h2 className="text-lg font-semibold">Импорт зон из Excel</h2>
+                <h2 className="text-lg font-semibold">Імпорт зон з Excel</h2>
                 <button
                   onClick={() => setExcelDialogOpen(false)}
                   className="text-muted-foreground hover:text-foreground"
@@ -149,7 +145,7 @@ function ZonesContent() {
 
 export function Zones() {
   return (
-    <SidebarInsetLayout headerText="Зоны">
+    <SidebarInsetLayout headerText="Зони">
       <ZonesContent />
     </SidebarInsetLayout>
   );

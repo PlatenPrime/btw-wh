@@ -1,3 +1,4 @@
+import { Container } from "@/components/shared/containers/Container";
 import { SearchPanel } from "@/components/shared/search-components/search-panel/SearchPanel";
 import { SelectLimit } from "@/components/shared/select-limit";
 import { Button } from "@/components/ui/button";
@@ -8,22 +9,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { RoleType } from "@/constants/roles";
-import { RoleGuard } from "@/modules/auth/components/RoleGuard";
 import { useZonesParams } from "@/modules/zones/hooks/useZonesParams";
 import { ArrowDown, ArrowUp } from "lucide-react";
 
-interface ZoneControlsProps {
-  onCreateClick?: () => void;
-  onImportClick?: () => void;
-  onExportClick?: () => void;
-}
-
-export function ZoneControls({
-  onCreateClick,
-  onImportClick,
-  onExportClick,
-}: ZoneControlsProps) {
+export function ZoneControls() {
   const {
     search,
     setSearch,
@@ -40,35 +29,21 @@ export function ZoneControls({
   };
 
   return (
-    <div className="flex flex-col gap-4 border-b p-4">
-      {/* Поиск и действия */}
-      <div className="flex items-center justify-between gap-4">
+    <Container className="flex gap-2">
+      {/* Пошук і дії */}
+      <div className="flex items-center justify-between gap-2">
         <div className="max-w-md flex-1">
           <SearchPanel
             search={search}
             onSearchChange={(e) => setSearch(e.target.value)}
-            placeholder="Поиск по названию зоны..."
+            placeholder="Пошук за назвою..."
           />
-        </div>
-        <div className="flex items-center gap-2">
-          <RoleGuard allowedRoles={[RoleType.ADMIN]}>
-            <Button variant="outline" onClick={onImportClick}>
-              Импорт Excel
-            </Button>
-          </RoleGuard>
-          <Button variant="outline" onClick={onExportClick}>
-            Экспорт Excel
-          </Button>
-          <RoleGuard allowedRoles={[RoleType.ADMIN]}>
-            <Button onClick={onCreateClick}>Создать зону</Button>
-          </RoleGuard>
         </div>
       </div>
 
-      {/* Фильтры и сортировка */}
+      {/* Фільтри і сортування */}
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2">
-          <span className="text-muted-foreground text-sm">Сортировка:</span>
           <Select
             value={sortBy}
             onValueChange={(value) =>
@@ -79,10 +54,10 @@ export function ZoneControls({
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="title">Название</SelectItem>
-              <SelectItem value="bar">Штрихкод</SelectItem>
+              <SelectItem value="title">Назва</SelectItem>
+              <SelectItem value="bar">Штрих-код</SelectItem>
               <SelectItem value="sector">Сектор</SelectItem>
-              <SelectItem value="createdAt">Дата создания</SelectItem>
+              <SelectItem value="createdAt">Дата створення</SelectItem>
             </SelectContent>
           </Select>
           <Button
@@ -100,14 +75,14 @@ export function ZoneControls({
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="text-muted-foreground text-sm">На странице:</span>
+          <span className=" text-sm">На сторінці:</span>
           <SelectLimit
             limit={limit}
             setLimit={setLimit}
-            limitOptions={[10, 25, 50, 100]}
+            limitOptions={[10, 20, 50, 100]}
           />
         </div>
       </div>
-    </div>
+    </Container>
   );
 }

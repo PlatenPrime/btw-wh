@@ -1,3 +1,4 @@
+import { Container } from "@/components/shared/containers/Container";
 import type { ZoneDto } from "@/modules/zones/api/types";
 import { ZonesGridCard } from "@/modules/zones/components/cards/zones-grid-card";
 
@@ -9,7 +10,7 @@ interface ZonesGridProps {
 
 export function ZonesGrid({ zones, onEdit, onDelete }: ZonesGridProps) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+    <Container className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 p-2">
       {zones.map((zone) => (
         <ZonesGridCard
           key={zone._id}
@@ -18,7 +19,8 @@ export function ZonesGrid({ zones, onEdit, onDelete }: ZonesGridProps) {
           onDelete={onDelete}
         />
       ))}
-    </div>
+    </Container>
   );
 }
+
 

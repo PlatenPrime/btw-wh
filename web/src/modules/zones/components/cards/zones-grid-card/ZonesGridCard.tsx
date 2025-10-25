@@ -6,7 +6,7 @@ import type { ZoneDto } from "@/modules/zones/api/types";
 import { ZoneBarcode } from "@/modules/zones/components/elements/zone-barcode";
 import { ZoneLink } from "@/modules/zones/components/elements/zone-link";
 import { ZoneSector } from "@/modules/zones/components/elements/zone-sector";
-import { Edit, MoreHorizontal, Trash } from "lucide-react";
+import { Edit, Trash } from "lucide-react";
 
 interface ZonesGridCardProps {
   zone: ZoneDto;
@@ -18,22 +18,22 @@ export function ZonesGridCard({ zone, onEdit, onDelete }: ZonesGridCardProps) {
   const actions = [
     {
       id: "edit",
-      label: "Редактировать",
+      label: "Редагувати",
       icon: Edit,
       onClick: () => onEdit?.(zone),
     },
     {
       id: "delete",
-      label: "Удалить",
+      label: "Видалити",
       icon: Trash,
       variant: "destructive" as const,
       onClick: () => onDelete?.(zone),
     },
-  ].filter(() => true); // Фильтрация будет в RoleGuard
+  ].filter(() => true); // Фільтрація буде в RoleGuard
 
   return (
-    <Card className="transition-shadow hover:shadow-md">
-      <CardHeader className="pb-3">
+    <Card className="gap-2 p-2 transition-shadow hover:shadow-md">
+      <CardHeader className="p-0">
         <div className="flex items-center justify-between">
           <CardTitle className="text-lg">
             <ZoneLink zone={zone} className="hover:underline">
@@ -43,20 +43,21 @@ export function ZonesGridCard({ zone, onEdit, onDelete }: ZonesGridCardProps) {
           <RoleGuard allowedRoles={[RoleType.ADMIN]}>
             <CardActionsMenu
               actions={actions}
-              trigger={<MoreHorizontal className="h-4 w-4" />}
+              orientation="horizontal"
               size="sm"
+              align="end"
             />
           </RoleGuard>
         </div>
       </CardHeader>
-      <CardContent className="space-y-3">
+      <CardContent className="grid gap-2 p-0">
         <div className="flex items-center justify-between">
-          <span className="text-muted-foreground text-sm">Штрихкод:</span>
-          <ZoneBarcode zone={zone} />
+          <span className="text-muted-foreground text-sm">Штрих-код:</span>
+          <ZoneBarcode zone={zone} className="text-muted-foreground text-sm" />
         </div>
         <div className="flex items-center justify-between">
           <span className="text-muted-foreground text-sm">Сектор:</span>
-          <ZoneSector zone={zone} />
+          <ZoneSector zone={zone} className="text-muted-foreground text-sm" />
         </div>
       </CardContent>
     </Card>
