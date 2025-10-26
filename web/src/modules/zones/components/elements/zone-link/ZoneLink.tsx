@@ -9,13 +9,8 @@ interface ZoneLinkProps {
 
 export function ZoneLink({ zone, className, children }: ZoneLinkProps) {
   return (
-    <Link
-      to={`/wh/zones/${zone._id}`}
-      className={className}
-    >
+    <Link to={`/wh/zones/${zone.title}`} className={className}>
       {children || zone.title}
     </Link>
   );
 }
-
-

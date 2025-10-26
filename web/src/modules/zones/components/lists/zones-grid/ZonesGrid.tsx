@@ -10,7 +10,7 @@ interface ZonesGridProps {
 
 export function ZonesGrid({ zones, onEdit, onDelete }: ZonesGridProps) {
   return (
-    <Container className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 p-2">
+    <Container className="grid grid-cols-1 gap-2 p-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {zones.map((zone) => (
         <ZonesGridCard
           key={zone._id}
@@ -22,5 +22,3 @@ export function ZonesGrid({ zones, onEdit, onDelete }: ZonesGridProps) {
     </Container>
   );
 }
-
-

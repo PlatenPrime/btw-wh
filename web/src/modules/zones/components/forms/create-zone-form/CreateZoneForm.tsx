@@ -29,7 +29,11 @@ export function CreateZoneForm({ onSuccess, onCancel }: CreateZoneFormProps) {
       onSuccess?.();
       form.reset();
     } catch (error) {
-      // Ошибка уже обработана в mutation
+      console.error("Помилка створення зони:", error);
+      form.setError("root", {
+        message:
+          error instanceof Error ? error.message : "Помилка створення зони",
+      });
     }
   };
 

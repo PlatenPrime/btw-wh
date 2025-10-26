@@ -1,37 +1,25 @@
 import { SidebarInsetLayout } from "@/components/layout/SidebarInsetLayout";
-import type { ZoneDto } from "@/modules/zones/api/types";
+import { ArtsByZoneFetcher } from "@/modules/arts/components/fetchers/arts-by-zone-fetcher";
+import {
+  ArtsByZoneContainer,
+  ArtsByZoneContainerSkeleton,
+} from "@/modules/zones/components/containers/arts-by-zone-container";
 import {
   ZoneContainer,
   ZoneContainerSkeleton,
 } from "@/modules/zones/components/containers/zone-container";
-import { DeleteZoneDialog } from "@/modules/zones/components/dialogs/delete-zone-dialog";
-import { UpdateZoneDialog } from "@/modules/zones/components/dialogs/update-zone-dialog";
 import { ZoneFetcher } from "@/modules/zones/components/fetchers";
-import { useState } from "react";
 import { useParams } from "react-router";
 
 export function Zone() {
-  const { id } = useParams<{ id: string }>();
-  const [updateDialogOpen, setUpdateDialogOpen] = useState(false);
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [selectedZone, setSelectedZone] = useState<ZoneDto | null>(null);
+  const { title } = useParams<{ title: string }>();
 
-  const handleEdit = (zone: ZoneDto) => {
-    setSelectedZone(zone);
-    setUpdateDialogOpen(true);
-  };
-
-  const handleDelete = (zone: ZoneDto) => {
-    setSelectedZone(zone);
-    setDeleteDialogOpen(true);
-  };
-
-  if (!id) {
+  if (!title) {
     return (
       <SidebarInsetLayout headerText="Зона не знайдена">
         <main className="p-4">
           <div className="text-muted-foreground text-center">
-            ID зони не вказано
+            Назва зони не вказано
           </div>
         </main>
       </SidebarInsetLayout>
@@ -39,36 +27,21 @@ export function Zone() {
   }
 
   return (
-    <SidebarInsetLayout headerText={`Зона ${id}`}>
-      <main className="p-4">
-        <ZoneFetcher
-          zoneId={id}
-          ContainerComponent={({ zone }) => (
-            <ZoneContainer
-              zone={zone}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
-            />
-          )}
-          SkeletonComponent={ZoneContainerSkeleton}
-        />
-
-        {/* Диалоги */}
-        {selectedZone && (
-          <UpdateZoneDialog
-            zone={selectedZone}
-            open={updateDialogOpen}
-            onOpenChange={setUpdateDialogOpen}
+    <SidebarInsetLayout headerText={`Зона ${title}`}>
+      <main className="p-2">
+        <div className="flex flex-col gap-2">
+          <ZoneFetcher
+            zoneTitle={title}
+            ContainerComponent={({ zone }) => <ZoneContainer zone={zone} />}
+            SkeletonComponent={ZoneContainerSkeleton}
           />
-        )}
 
-        {selectedZone && (
-          <DeleteZoneDialog
-            zone={selectedZone}
-            open={deleteDialogOpen}
-            onOpenChange={setDeleteDialogOpen}
+          <ArtsByZoneFetcher
+            zone={title}
+            ContainerComponent={ArtsByZoneContainer}
+            SkeletonComponent={ArtsByZoneContainerSkeleton}
           />
-        )}
+        </div>
       </main>
     </SidebarInsetLayout>
   );

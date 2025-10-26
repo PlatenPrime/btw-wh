@@ -26,7 +26,7 @@ export function CreateZoneFormView({
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div className="space-y-2">
-        <Label htmlFor="title">Название зоны</Label>
+        <Label htmlFor="title">Назва зони</Label>
         <Input
           id="title"
           {...register("title")}
@@ -39,7 +39,7 @@ export function CreateZoneFormView({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="bar">Штрихкод</Label>
+        <Label htmlFor="bar">Штрих-код</Label>
         <Input
           id="bar"
           type="number"
@@ -70,7 +70,7 @@ export function CreateZoneFormView({
         onCancel={onCancel}
         onSubmit={handleSubmit(onSubmit)}
         isSubmitting={isLoading}
-        submitText="Создать"
+        submitText="Створити"
       />
     </form>
   );

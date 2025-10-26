@@ -19,12 +19,13 @@ export function CreateZoneDialog({ open: controlledOpen, onOpenChange }: CreateZ
     <Dialog open={controlledOpen} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Создать зону</DialogTitle>
+          <DialogTitle>Створити зону</DialogTitle>
         </DialogHeader>
         <CreateZoneForm onSuccess={handleSuccess} onCancel={handleCancel} />
       </DialogContent>
     </Dialog>
   );
 }
+
 
 

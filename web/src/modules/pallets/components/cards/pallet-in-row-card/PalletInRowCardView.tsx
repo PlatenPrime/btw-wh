@@ -17,30 +17,30 @@ export function PalletInRowCardView({ pallet, rowId }: PalletInRowCardProps) {
           to={`/wh/pallets/${pallet.title}`}
           className={cn(
             "",
-            "flex w-full items-center justify-start gap-2 rounded-md transition-colors duration-300 ease-in-out  hover:underline ",
+            "flex w-full items-center justify-start gap-2 rounded-md transition-colors duration-300 ease-in-out hover:underline",
           )}
         >
           <span className="text-base font-semibold">{pallet.title}</span>
           {pallet.isEmpty && (
-            <span className="text-muted-foreground border-muted-foreground rounded-md border px-1 text-xs">
+            <span className="text-muted-foreground border-muted-foreground bg-muted-foreground/10 rounded-md border px-1 text-xs font-semibold">
               порожня
             </span>
           )}
         </Link>
         <PalletCardActions pallet={pallet} rowId={rowId} />
       </CardHeader>
-      <CardContent className="flex items-start justify-between gap-2 p-0">
-        <span className="flex items-center gap-2 text-xs">
-          Сектор: <span className="">{pallet.sector ?? "-"}</span>
-        </span>
 
-        <span className={cn("flex items-center gap-2 text-xs")}>
-          {pallet.isDef ? (
-            <span className="">Аналіз</span>
-          ) : (
-            <span className="">Не аналіз</span>
-          )}
-        </span>
+      <CardContent className="grid gap-2 p-0">
+        <div className="border-border flex items-center justify-between gap-2 border-b">
+          <span className="flex items-center gap-2 text-xs">Сектор:</span>
+          <span className="text-xs">{pallet.sector ?? "Немає"}</span>
+        </div>
+
+        <div className="border-border flex items-center justify-between gap-2 border-b">
+          {" "}
+          <span className="flex items-center gap-2 text-xs">Аналіз:</span>
+          <span className="text-xs">{pallet.isDef ? "Так" : "Ні"}</span>
+        </div>
       </CardContent>
     </Card>
   );

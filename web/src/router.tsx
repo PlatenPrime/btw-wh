@@ -206,7 +206,7 @@ export const router = createHashRouter([
             errorElement: <RouteErrorBoundary />,
           },
           {
-            path: "zones/:id",
+            path: "zones/:title",
             element: (
               <ProtectedRoute allowedRoles={[RoleType.ADMIN]}>
                 <Zone />

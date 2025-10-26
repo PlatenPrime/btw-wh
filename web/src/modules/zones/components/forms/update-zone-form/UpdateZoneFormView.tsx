@@ -26,7 +26,7 @@ export function UpdateZoneFormView({
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div className="space-y-2">
-        <Label htmlFor="title">Название зоны</Label>
+        <Label htmlFor="title">Назва зони</Label>
         <Input
           id="title"
           {...register("title")}
@@ -70,7 +70,7 @@ export function UpdateZoneFormView({
         onCancel={onCancel}
         onSubmit={handleSubmit(onSubmit)}
         isSubmitting={isLoading}
-        submitText="Обновить"
+        submitText="Оновити"
       />
     </form>
   );

@@ -21,12 +21,13 @@ export function UpdateZoneDialog({ zone, open: controlledOpen, onOpenChange }: U
     <Dialog open={controlledOpen} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Редактировать зону</DialogTitle>
+          <DialogTitle>Редагувати зону</DialogTitle>
         </DialogHeader>
         <UpdateZoneForm zone={zone} onSuccess={handleSuccess} onCancel={handleCancel} />
       </DialogContent>
     </Dialog>
   );
 }
+
 
 

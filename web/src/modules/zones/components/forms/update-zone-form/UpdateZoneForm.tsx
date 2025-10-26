@@ -44,7 +44,11 @@ export function UpdateZoneForm({
       await mutation.mutateAsync({ id: zone._id, data });
       onSuccess?.();
     } catch (error) {
-      // Ошибка уже обработана в mutation
+      console.error("Помилка збереження зони:", error);
+      form.setError("root", {
+        message:
+          error instanceof Error ? error.message : "Помилка збереження зони",
+      });
     }
   };
 

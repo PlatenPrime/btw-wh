@@ -9,3 +9,4 @@ interface ZoneBarcodeProps {
 export function ZoneBarcode({ zone, className }: ZoneBarcodeProps) {
   return <span className={className}>{zone.bar}</span>;
 }
+

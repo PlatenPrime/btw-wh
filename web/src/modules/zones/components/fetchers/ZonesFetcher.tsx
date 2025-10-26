@@ -1,11 +1,14 @@
 import { ErrorDisplay } from "@/components/shared/error-components";
 import { LoadingNoData } from "@/components/shared/loading-states";
 import { useZonesQuery } from "@/modules/zones/api/hooks/queries/useZonesQuery";
-import type { GetZonesParams } from "@/modules/zones/api/types";
+import type {
+  GetZonesParams,
+  ZonesResponseDto,
+} from "@/modules/zones/api/types";
 
 interface ZonesFetcherProps {
   params: GetZonesParams;
-  ContainerComponent: React.ComponentType<{ data: any }>;
+  ContainerComponent: React.ComponentType<{ data: ZonesResponseDto }>;
   SkeletonComponent: React.ComponentType;
 }
 
@@ -24,14 +27,14 @@ export function ZonesFetcher({
     return (
       <ErrorDisplay
         error={error}
-        title="Ошибка загрузки зон"
-        description="Не удалось загрузить список зон"
+        title="Помилка завантаження списку зон"
+        description="Не вдалося завантажити список зон"
       />
     );
   }
 
   if (!data?.data || data.data.length === 0) {
-    return <LoadingNoData description="Зоны не найдены" />;
+    return <LoadingNoData description="Зони не знайдено" />;
   }
 
   return <ContainerComponent data={data} />;
