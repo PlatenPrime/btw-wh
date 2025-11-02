@@ -5,7 +5,7 @@ interface ProcessPositionDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   position: IPullPosition;
-  onProcess: (position: IPullPosition, actualQuant: number) => void;
+  onProcess: (position: IPullPosition, actualQuant: number, actualBoxes: number) => void;
   isProcessing: boolean;
 }
 
@@ -16,8 +16,8 @@ export function ProcessPositionDialog({
   onProcess,
   isProcessing,
 }: ProcessPositionDialogProps) {
-  const handleProcess = (actualQuant: number) => {
-    onProcess(position, actualQuant);
+  const handleProcess = (actualQuant: number, actualBoxes: number) => {
+    onProcess(position, actualQuant, actualBoxes);
   };
 
   return (

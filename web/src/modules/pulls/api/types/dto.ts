@@ -11,6 +11,8 @@ export interface IPullPosition {
   nameukr?: string;
   /** Current quantity available on the pallet */
   currentQuant: number;
+  /** Current number of boxes available on the position */
+  currentBoxes: number;
   /** Requested quantity to be pulled from this position (0 for asks without quant) */
   requestedQuant: number;
   /** ID of the ask that requests this position (MongoDB ObjectId as string) */
@@ -48,6 +50,8 @@ export interface IProcessPullPositionRequest {
   askId: string;
   /** Actual quantity to be pulled from the position (must be positive) */
   actualQuant: number;
+  /** Actual number of boxes to be pulled from the position (must be >= 0) */
+  actualBoxes: number;
   /** ID of the solver processing this position (MongoDB ObjectId string) */
   solverId: string;
 }

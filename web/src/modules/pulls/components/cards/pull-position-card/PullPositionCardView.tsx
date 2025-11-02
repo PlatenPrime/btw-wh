@@ -48,7 +48,7 @@ export function PullPositionCardView({
                 <div className="flex items-center gap-1">
                   <Package className="h-4 w-4 text-muted-foreground" />
                   <span>
-                    Доступно: <strong>{position.currentQuant}</strong>
+                    Доступно: <strong>{position.currentQuant} шт. / {position.currentBoxes} кор.</strong>
                   </span>
                 </div>
                 {position.requestedQuant > 0 && (

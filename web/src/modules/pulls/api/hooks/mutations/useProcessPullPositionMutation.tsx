@@ -45,6 +45,10 @@ export function useProcessPullPositionMutation() {
                       0,
                       pos.currentQuant - params.data.actualQuant,
                     ),
+                    currentBoxes: Math.max(
+                      0,
+                      pos.currentBoxes - params.data.actualBoxes,
+                    ),
                   }
                 : pos,
             ),
@@ -70,6 +74,10 @@ export function useProcessPullPositionMutation() {
                             currentQuant: Math.max(
                               0,
                               pos.currentQuant - params.data.actualQuant,
+                            ),
+                            currentBoxes: Math.max(
+                              0,
+                              pos.currentBoxes - params.data.actualBoxes,
                             ),
                           }
                         : pos,

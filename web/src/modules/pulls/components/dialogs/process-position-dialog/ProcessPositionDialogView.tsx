@@ -18,7 +18,7 @@ interface ProcessPositionDialogViewProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   position: IPullPosition;
-  onProcess: (actualQuant: number) => void;
+  onProcess: (actualQuant: number, actualBoxes: number) => void;
   isProcessing: boolean;
 }
 
@@ -32,6 +32,7 @@ export function ProcessPositionDialogView({
   const [actualQuant, setActualQuant] = useState(
     position.requestedQuant > 0 ? position.requestedQuant : 1,
   );
+  const [actualBoxes, setActualBoxes] = useState(0);
 
   const handleSubmit = () => {
     if (actualQuant <= 0) {
@@ -46,7 +47,19 @@ export function ProcessPositionDialogView({
       return;
     }
 
-    onProcess(actualQuant);
+    if (actualBoxes < 0) {
+      toast.error("Кількість коробок не може бути від'ємною");
+      return;
+    }
+
+    if (actualBoxes > position.currentBoxes) {
+      toast.error(
+        `Неможливо зняти більше коробок, ніж доступно (${position.currentBoxes})`,
+      );
+      return;
+    }
+
+    onProcess(actualQuant, actualBoxes);
   };
 
   return (
@@ -70,7 +83,7 @@ export function ProcessPositionDialogView({
                 </div>
               )}
               <div className="text-sm text-muted-foreground mt-2">
-                Доступно: <strong>{position.currentQuant}</strong>
+                Доступно: <strong>{position.currentQuant} шт. / {position.currentBoxes} кор.</strong>
                 {position.requestedQuant > 0 && (
                   <span className="ml-2">
                     Запитано: <strong>{position.requestedQuant}</strong>
@@ -83,15 +96,28 @@ export function ProcessPositionDialogView({
             </div>
           </div>
 
-          <div className="grid gap-2">
-            <Label htmlFor="actualQuant">Кількість для вилучення</Label>
-            <InputQuant
-              id="actualQuant"
-              value={actualQuant.toString()}
-              onValueChange={(value) => setActualQuant(Number(value) || 0)}
-              max={position.currentQuant}
-              min={1}
-            />
+          <div className="grid gap-4">
+            <div className="grid gap-2">
+              <Label htmlFor="actualQuant">Кількість для вилучення</Label>
+              <InputQuant
+                id="actualQuant"
+                value={actualQuant.toString()}
+                onValueChange={(value) => setActualQuant(Number(value) || 0)}
+                max={position.currentQuant}
+                min={1}
+              />
+            </div>
+
+            <div className="grid gap-2">
+              <Label htmlFor="actualBoxes">Кількість коробок</Label>
+              <InputQuant
+                id="actualBoxes"
+                value={actualBoxes.toString()}
+                onValueChange={(value) => setActualBoxes(Number(value) || 0)}
+                max={position.currentBoxes}
+                min={0}
+              />
+            </div>
           </div>
         </div>
 

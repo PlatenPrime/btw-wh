@@ -19,6 +19,7 @@ export function PullContainer({ pull }: PullContainerProps) {
   const handleProcessPosition = async (
     position: IPullPosition,
     actualQuant: number,
+    actualBoxes: number,
   ) => {
     if (!user) {
       toast.error("Користувач не авторизований");
@@ -32,6 +33,7 @@ export function PullContainer({ pull }: PullContainerProps) {
         data: {
           askId: position.askId,
           actualQuant,
+          actualBoxes,
           solverId: user._id,
         },
       });

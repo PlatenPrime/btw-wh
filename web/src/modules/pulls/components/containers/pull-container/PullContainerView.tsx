@@ -10,7 +10,7 @@ interface PullContainerViewProps {
   dialogOpen: boolean;
   setDialogOpen: (open: boolean) => void;
   onPositionClick: (position: IPullPosition) => void;
-  onProcessPosition: (position: IPullPosition, actualQuant: number) => void;
+  onProcessPosition: (position: IPullPosition, actualQuant: number, actualBoxes: number) => void;
   isProcessing: boolean;
 }
 
