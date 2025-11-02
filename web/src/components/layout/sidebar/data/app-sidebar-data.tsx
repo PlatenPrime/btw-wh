@@ -7,7 +7,8 @@ import {
   MapPin, 
   FileQuestion, 
   AlertTriangle, 
-  Route 
+  Route,
+  PackageSearch
 } from "lucide-react";
 
 const getIcon = (iconName: string) => {
@@ -21,6 +22,7 @@ const getIcon = (iconName: string) => {
     FileQuestion: FileQuestion,
     AlertTriangle: AlertTriangle,
     Route: Route,
+    PackageSearch: PackageSearch,
   };
   
   const IconComponent = icons[iconName as keyof typeof icons];
@@ -61,7 +63,11 @@ export const appSidebarData = {
           url: "/wh/zones",
           iconName: "MapPin",
         },
-       
+        {
+          title: "Pulls",
+          url: "/wh/pulls",
+          iconName: "PackageSearch",
+        },
       ],
     },
     {

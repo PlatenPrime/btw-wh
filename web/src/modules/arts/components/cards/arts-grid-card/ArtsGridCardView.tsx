@@ -1,4 +1,4 @@
-import ArtikulImageLink from "@/components/shared/artikul-image-link/ArtikulImageLink";
+import { ArtikulImageLink } from "@/components/shared/artikul-image-link/ArtikulImageLink";
 import { ImageBlurContainer } from "@/components/shared/image/image-blur-container";
 import { Card } from "@/components/ui/card";
 import type { ArtDto } from "@/modules/arts/api/types/dto";

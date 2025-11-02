@@ -1,4 +1,4 @@
-import ArtikulImageLink from "@/components/shared/artikul-image-link/ArtikulImageLink";
+import { ArtikulImageLink } from "@/components/shared/artikul-image-link/ArtikulImageLink";
 import { Card, CardContent } from "@/components/ui";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { BtradeArtDataContainer } from "@/modules/arts/components/containers/btrade-art-data-container/BtradeArtDataContainer";

@@ -12,7 +12,7 @@ interface ArtikulImageLinkProps {
   target?: "_blank" | "_self" | "_parent" | "_top";
 }
 
-export default function ArtikulImageLink({
+export  function ArtikulImageLink({
   artikul,
   nameukr,
   bage,

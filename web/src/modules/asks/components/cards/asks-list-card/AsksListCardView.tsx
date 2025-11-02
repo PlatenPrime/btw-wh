@@ -1,4 +1,4 @@
-import ArtikulImageLink from "@/components/shared/artikul-image-link/ArtikulImageLink";
+import { ArtikulImageLink } from "@/components/shared/artikul-image-link/ArtikulImageLink";
 import { CalendarDate } from "@/components/shared/date/CalendarDate";
 import { UserAvatarName } from "@/components/shared/user/UserAvatarName";
 import { Card } from "@/components/ui/card";

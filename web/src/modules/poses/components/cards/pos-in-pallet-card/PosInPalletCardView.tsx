@@ -5,7 +5,7 @@ import { Circle, Package, Warehouse } from "lucide-react";
 import { PosCardActions } from "@/modules/poses/components/cards/pos-in-pallet-card/components/pos-card-actions/PosCardActions";
 import { PosInfoItem } from "@/modules/poses/components/cards/pos-in-pallet-card/components/pos-info-item/PosInfoItem";
 
-import ArtikulImageLink from "@/components/shared/artikul-image-link/ArtikulImageLink";
+import { ArtikulImageLink } from "@/components/shared/artikul-image-link/ArtikulImageLink";
 import { cn } from "@/lib/utils";
 import type { IPos } from "@/modules/poses/api/types";
 

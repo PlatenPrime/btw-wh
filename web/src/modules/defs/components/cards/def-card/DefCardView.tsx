@@ -1,4 +1,4 @@
-import ArtikulImageLink from "@/components/shared/artikul-image-link/ArtikulImageLink";
+import { ArtikulImageLink } from "@/components/shared/artikul-image-link/ArtikulImageLink";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import type { DeficitItem } from "@/modules/defs/api/types/dto";
