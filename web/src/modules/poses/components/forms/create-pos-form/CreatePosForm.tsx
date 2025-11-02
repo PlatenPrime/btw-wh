@@ -82,6 +82,15 @@ export function CreatePosForm({
   };
 
   const onSubmit = async (data: CreatePosFormData) => {
+    // Защита от двойной отправки
+    if (
+      createPosMutation.isPending ||
+      updatePosMutation.isPending ||
+      isSubmitting
+    ) {
+      return;
+    }
+
     try {
       if (existingPos) {
         // Обновляем существующую позицию
@@ -104,7 +113,12 @@ export function CreatePosForm({
           boxes: data.boxes,
           sklad: data.sklad,
         });
-        onSuccess?.(newPos.data!._id);
+        if (newPos?.data?._id) {
+          onSuccess?.(newPos.data._id);
+        } else {
+          // Если данные не пришли, все равно закрываем диалог
+          onSuccess?.();
+        }
       }
     } catch (error) {
       console.error("Error creating/updating pos:", error);

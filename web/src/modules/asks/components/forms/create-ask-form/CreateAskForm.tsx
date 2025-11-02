@@ -87,7 +87,9 @@ export function CreateAskForm({
       await createAskMutation.mutateAsync({
         artikul: data.artikul,
         nameukr: currentArtData?.data?.nameukr,
-        quant: data.quant || "", // Ensure string type
+        ...(data.quant && data.quant.trim() !== ""
+          ? { quant: parseInt(data.quant, 10) }
+          : {}),
         com: data.com,
         askerId: user._id,
       });

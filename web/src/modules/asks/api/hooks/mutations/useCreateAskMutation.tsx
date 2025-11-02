@@ -3,6 +3,7 @@ import {
   type CreateAskRequest,
 } from "@/modules/asks/api/services/mutations/createAsk";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 export function useCreateAskMutation() {
   const queryClient = useQueryClient();
@@ -15,6 +16,13 @@ export function useCreateAskMutation() {
 
       // Инвалидируем кеш дефицитов, чтобы обновить информацию о существующих заявках
       queryClient.invalidateQueries({ queryKey: ["defs", "latest"] });
+
+      toast.success("Запит успішно створено");
+    },
+    onError: (error: Error) => {
+      toast.error("Помилка при створенні запиту", {
+        description: error.message,
+      });
     },
   });
 }
