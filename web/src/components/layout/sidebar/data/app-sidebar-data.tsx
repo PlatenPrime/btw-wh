@@ -63,11 +63,7 @@ export const appSidebarData = {
           url: "/wh/zones",
           iconName: "MapPin",
         },
-        {
-          title: "Pulls",
-          url: "/wh/pulls",
-          iconName: "PackageSearch",
-        },
+        
       ],
     },
     {
@@ -85,9 +81,9 @@ export const appSidebarData = {
           iconName: "AlertTriangle",
         },
         {
-          title: "Послідовність",
-          url: "/refiling/path",
-          iconName: "Route",
+          title: "Зняття",
+          url: "/refiling/pulls",
+          iconName: "PackageSearch",
         },
    
       ],

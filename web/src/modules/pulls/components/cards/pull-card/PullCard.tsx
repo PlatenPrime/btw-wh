@@ -21,9 +21,9 @@ export function PullCard({ pull }: PullCardProps) {
     };
     
     queryClient.setQueryData(["pulls", pull.palletId], cachedResponse);
-    navigate(`/wh/pulls/${pull.palletId}`);
+    navigate(`/refiling/pulls/${pull.palletId}`);
   };
 
-  return <PullCardView pull={pull} onClick={handleClick} />;
+  return <PullCardView pull={pull} onNavigate={handleClick} />;
 }
 

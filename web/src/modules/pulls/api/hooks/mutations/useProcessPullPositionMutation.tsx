@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { useNavigate } from "react-router";
 import {
   processPullPosition,
   type ProcessPullPositionParams,
@@ -11,6 +12,7 @@ import type {
 
 export function useProcessPullPositionMutation() {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   return useMutation({
     mutationFn: (params: ProcessPullPositionParams) =>
@@ -93,6 +95,20 @@ export function useProcessPullPositionMutation() {
       return { previousPulls, previousPull };
     },
     onSuccess: (data, params) => {
+      // Check if this was the last position before invalidating
+      const updatedPull = queryClient.getQueryData<GetPullByPalletIdResponse>([
+        "pulls",
+        params.palletId,
+      ]);
+
+      // If no positions left with currentQuant > 0, redirect to pulls page
+      if (
+        updatedPull?.data?.positions &&
+        updatedPull.data.positions.every((pos) => pos.currentQuant === 0)
+      ) {
+        navigate("/refiling/pulls");
+      }
+
       // Invalidate and refetch
       queryClient.invalidateQueries({ queryKey: ["pulls"] });
       queryClient.invalidateQueries({

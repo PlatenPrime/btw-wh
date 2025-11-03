@@ -48,9 +48,7 @@ const Defs = lazy(() =>
 const Main = lazy(() =>
   import("./pages/main").then((module) => ({ default: module.Main })),
 );
-const Path = lazy(() =>
-  import("./pages/path").then((module) => ({ default: module.Path })),
-);
+
 
 const Row = lazy(() =>
   import("./modules/rows/pages/row").then((module) => ({
@@ -234,24 +232,6 @@ export const router = createHashRouter([
             element: <PalletPage />,
             errorElement: <RouteErrorBoundary />,
           },
-          {
-            path: "pulls",
-            element: (
-              <ProtectedRoute allowedRoles={[RoleType.ADMIN, RoleType.PRIME]}>
-                <Pulls />
-              </ProtectedRoute>
-            ),
-            errorElement: <RouteErrorBoundary />,
-          },
-          {
-            path: "pulls/:palletId",
-            element: (
-              <ProtectedRoute allowedRoles={[RoleType.ADMIN, RoleType.PRIME]}>
-                <Pull />
-              </ProtectedRoute>
-            ),
-            errorElement: <RouteErrorBoundary />,
-          },
         ],
       },
       {
@@ -279,8 +259,21 @@ export const router = createHashRouter([
             errorElement: <RouteErrorBoundary />,
           },
           {
-            path: "path",
-            element: <Path />,
+            path: "pulls",
+            element: (
+              <ProtectedRoute allowedRoles={[RoleType.ADMIN, RoleType.PRIME]}>
+                <Pulls />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "pulls/:palletId",
+            element: (
+              <ProtectedRoute allowedRoles={[RoleType.ADMIN, RoleType.PRIME]}>
+                <Pull />
+              </ProtectedRoute>
+            ),
             errorElement: <RouteErrorBoundary />,
           },
         ],

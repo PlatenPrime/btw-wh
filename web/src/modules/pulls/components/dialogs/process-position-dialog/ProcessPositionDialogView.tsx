@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
 import {
   Dialog,
   DialogContent,
@@ -7,11 +7,11 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 import { InputQuant } from "@/components/ui/input-quant";
+import { Label } from "@/components/ui/label";
+import { ArtDialogImage } from "@/modules/arts/components/dialogs/art-dialog-image/ArtDialogImage";
 import type { IPullPosition } from "@/modules/pulls/api/types/dto";
-import { ArtikulImageLink } from "@/components/shared/artikul-image-link/ArtikulImageLink";
+import { useState } from "react";
 import { toast } from "sonner";
 
 interface ProcessPositionDialogViewProps {
@@ -74,24 +74,29 @@ export function ProcessPositionDialogView({
 
         <div className="grid gap-4 py-4">
           <div className="flex items-start gap-3">
-            <ArtikulImageLink artikul={position.artikul} />
-            <div className="flex-1">
-              <div className="font-medium">{position.artikul}</div>
+            <ArtDialogImage artikul={position.artikul} />
+            <div className="grid flex-1 gap-2">
               {position.nameukr && (
-                <div className="text-sm text-muted-foreground">
-                  {position.nameukr}
-                </div>
+                <div className="text-base font-medium">{position.nameukr}</div>
               )}
-              <div className="text-sm text-muted-foreground mt-2">
-                Доступно: <strong>{position.currentQuant} шт. / {position.currentBoxes} кор.</strong>
-                {position.requestedQuant > 0 && (
-                  <span className="ml-2">
-                    Запитано: <strong>{position.requestedQuant}</strong>
-                  </span>
-                )}
+              <div className="text-muted-foreground text-sm">
+                {position.artikul}
               </div>
-              <div className="text-sm text-muted-foreground mt-1">
-                Запит від: <strong>{position.askerData.fullname}</strong>
+              <div className="grid gap-1 border-t pt-2">
+                <div className="text-muted-foreground text-sm">
+                  Доступно:{" "}
+                  <strong>
+                    {position.currentQuant} шт. / {position.currentBoxes} кор.
+                  </strong>
+                </div>
+                {position.requestedQuant > 0 && (
+                  <div className="text-muted-foreground text-sm">
+                    Запитано: <strong>{position.requestedQuant}</strong>
+                  </div>
+                )}
+                <div className="text-muted-foreground text-sm">
+                  Запит від: <strong>{position.askerData.fullname}</strong>
+                </div>
               </div>
             </div>
           </div>
@@ -122,19 +127,16 @@ export function ProcessPositionDialogView({
         </div>
 
         <DialogFooter>
-          <Button
-            variant="outline"
-            onClick={() => onOpenChange(false)}
-            disabled={isProcessing}
-          >
-            Скасувати
-          </Button>
-          <Button onClick={handleSubmit} disabled={isProcessing}>
-            {isProcessing ? "Обробка..." : "Обробити"}
-          </Button>
+          <DialogActions
+            onCancel={() => onOpenChange(false)}
+            onSubmit={handleSubmit}
+            cancelText="Скасувати"
+            submitText="Обробити"
+            isSubmitting={isProcessing}
+            className="w-full"
+          />
         </DialogFooter>
       </DialogContent>
     </Dialog>
   );
 }
-
