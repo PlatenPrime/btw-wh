@@ -19,7 +19,7 @@ export function usePullByPalletIdQuery({
         signal,
       }),
     enabled: enabled && !!palletId,
-    staleTime: 5000, // 5 seconds
+    staleTime: 30000, // 30 seconds
   });
 }
 
