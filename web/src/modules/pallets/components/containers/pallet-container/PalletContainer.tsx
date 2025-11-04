@@ -1,6 +1,7 @@
 import { useRegisterHeaderActions } from "@/components/layout/header-actions";
 import type { PalletResponse } from "@/modules/pallets/api/types";
 import { PalletContainerView } from "@/modules/pallets/components/containers/pallet-container/PalletContainerView.tsx";
+import type { GetPosesByPalletIdParams } from "@/modules/poses/api/services/queries/getPosesByPalletId";
 import { EraserIcon, MoveIcon, Trash2Icon, TrashIcon } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router";
@@ -19,7 +20,10 @@ export function PalletContainer({
   onPosCreated,
 }: PalletContainerProps) {
   const navigate = useNavigate();
-  const [newPosIds, setNewPosIds] = useState<string[]>([]);
+  const [sortParams, setSortParams] = useState<GetPosesByPalletIdParams>({
+    sortBy: "createdAt",
+    sortOrder: "desc",
+  });
 
   // Состояния для диалогов
   const [clearDialogOpen, setClearDialogOpen] = useState(false);
@@ -28,10 +32,7 @@ export function PalletContainer({
   const [moveDialogOpen, setMoveDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
-  const handlePosCreated = (newPosId?: string) => {
-    if (newPosId) {
-      setNewPosIds((prev) => [...prev, newPosId]);
-    }
+  const handlePosCreated = () => {
     onPosCreated?.();
   };
 
@@ -77,7 +78,8 @@ export function PalletContainer({
       <PalletContainerView
         pallet={pallet}
         handlePosCreated={handlePosCreated}
-        newPosIds={newPosIds}
+        sortParams={sortParams}
+        onSortParamsChange={setSortParams}
       />
       <ClearPalletDialog
         pallet={pallet.data!}

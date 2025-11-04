@@ -15,7 +15,7 @@ interface CreatePosDialogViewProps {
   pallet: IPallet;
   trigger?: React.ReactNode;
   showTrigger?: boolean; // Показывать ли триггер (по умолчанию true)
-  onSuccess: (newPosId?: string) => void;
+  onSuccess: () => void;
   onCancel: () => void;
 }
 

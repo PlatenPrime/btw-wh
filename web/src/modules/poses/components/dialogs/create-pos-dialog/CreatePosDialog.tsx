@@ -6,7 +6,7 @@ interface CreatePosDialogProps {
   pallet: IPallet;
   trigger?: React.ReactNode;
   showTrigger?: boolean; // Показывать ли триггер (по умолчанию true)
-  onSuccess?: (newPosId?: string) => void;
+  onSuccess?: () => void;
 }
 
 export function CreatePosDialog({
@@ -17,9 +17,9 @@ export function CreatePosDialog({
 }: CreatePosDialogProps) {
   const [open, setOpen] = useState(false);
 
-  const handleSuccess = (newPosId?: string) => {
+  const handleSuccess = () => {
     setOpen(false);
-    onSuccess?.(newPosId);
+    onSuccess?.();
   };
 
   const handleCancel = () => {

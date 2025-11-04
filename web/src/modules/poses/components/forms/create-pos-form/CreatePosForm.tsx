@@ -14,7 +14,7 @@ import { useForm } from "react-hook-form";
 
 interface CreatePosFormProps {
   pallet: IPallet;
-  onSuccess?: (newPosId?: string) => void;
+  onSuccess?: () => void;
   onCancel?: () => void;
 }
 
@@ -101,10 +101,10 @@ export function CreatePosForm({
             boxes: existingPos.boxes + data.boxes,
           },
         });
-        onSuccess?.(existingPos._id);
+        onSuccess?.();
       } else {
         // Создаем новую позицию
-        const newPos = await createPosMutation.mutateAsync({
+        await createPosMutation.mutateAsync({
           palletId: pallet._id,
           rowId: pallet.row,
           artikul: data.artikul,
@@ -113,12 +113,7 @@ export function CreatePosForm({
           boxes: data.boxes,
           sklad: data.sklad,
         });
-        if (newPos?.data?._id) {
-          onSuccess?.(newPos.data._id);
-        } else {
-          // Если данные не пришли, все равно закрываем диалог
-          onSuccess?.();
-        }
+        onSuccess?.();
       }
     } catch (error) {
       console.error("Error creating/updating pos:", error);

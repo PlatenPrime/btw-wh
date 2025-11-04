@@ -3,31 +3,19 @@ import type { IPos } from "@/modules/poses/api/types";
 import { PosInPalletCard } from "@/modules/poses/components/cards/pos-in-pallet-card/PosInPalletCard";
 
 interface PosesByPalletContainerViewProps {
-  allPoses: IPos[];
-  newPosIds: string[];
+  poses: IPos[];
 }
 
 export function PosesByPalletContainerView({
-  allPoses,
-  newPosIds,
+  poses,
 }: PosesByPalletContainerViewProps) {
-  // Сортируем позиции по типу (новые/старые)
-
   return (
-    <Container className="grid gap-2  lg:grid-cols-2 2xl:grid-cols-4">
-      {allPoses.map((pos, index) => {
-        const isNew = newPosIds.includes(pos._id);
-        return (
-          <div
-            key={`${pos.artikul}-${index}`}
-            className={
-              isNew ? "animate-in fade-in slide-in-from-top-2 duration-500" : ""
-            }
-          >
-            <PosInPalletCard pos={pos} isNew={isNew} />
-          </div>
-        );
-      })}
+    <Container className="grid gap-2 lg:grid-cols-2 2xl:grid-cols-4">
+      {poses.map((pos, index) => (
+        <div key={`${pos.artikul}-${index}`}>
+          <PosInPalletCard pos={pos} />
+        </div>
+      ))}
     </Container>
   );
 }

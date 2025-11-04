@@ -3,9 +3,8 @@ import { PosInPalletCardView } from "@/modules/poses/components/cards/pos-in-pal
 
 interface PosInPalletCardProps {
   pos: IPos;
-  isNew?: boolean;
 }
 
-export function PosInPalletCard({ pos, isNew = false }: PosInPalletCardProps) {
-  return <PosInPalletCardView pos={pos} isNew={isNew} />;
+export function PosInPalletCard({ pos }: PosInPalletCardProps) {
+  return <PosInPalletCardView pos={pos} />;
 }

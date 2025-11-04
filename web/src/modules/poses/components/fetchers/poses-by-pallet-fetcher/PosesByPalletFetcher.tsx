@@ -1,23 +1,27 @@
 import { ErrorDisplay } from "@/components/shared/error-components/error-display";
 import { LoadingNoData } from "@/components/shared/loading-states/loading-nodata";
 import { usePosesByPalletQuery } from "@/modules/poses/api/hooks/queries/usePosesByPalletQuery";
+import type { GetPosesByPalletIdParams } from "@/modules/poses/api/services/queries/getPosesByPalletId";
 import type { IPos } from "@/modules/poses/api/types";
 import type { ComponentType } from "react";
 
 interface PosesByPalletFetcherProps {
   palletId: string;
-  ContainerComponent: ComponentType<{ poses: IPos[]; newPosIds?: string[] }>;
+  ContainerComponent: ComponentType<{ poses: IPos[] }>;
   SkeletonComponent: ComponentType;
-  newPosIds?: string[];
+  sortParams?: GetPosesByPalletIdParams;
 }
 
 export function PosesByPalletFetcher({
   palletId,
   ContainerComponent,
   SkeletonComponent,
-  newPosIds = [],
+  sortParams,
 }: PosesByPalletFetcherProps) {
-  const { data: poses, isLoading, error } = usePosesByPalletQuery(palletId);
+  const { data: poses, isLoading, error } = usePosesByPalletQuery(
+    palletId,
+    sortParams,
+  );
 
   if (isLoading) return <SkeletonComponent />;
 
@@ -33,5 +37,5 @@ export function PosesByPalletFetcher({
   if (!poses || poses.length === 0)
     return <LoadingNoData description="Позиції не знайдено" />;
 
-  return <ContainerComponent poses={poses} newPosIds={newPosIds} />;
+  return <ContainerComponent poses={poses} />;
 }

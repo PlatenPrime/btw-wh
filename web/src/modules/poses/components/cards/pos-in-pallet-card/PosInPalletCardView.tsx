@@ -11,20 +11,17 @@ import type { IPos } from "@/modules/poses/api/types";
 
 interface PosInPalletCardProps {
   pos: IPos;
-  isNew?: boolean;
   onSuccess?: () => void;
 }
 
 export function PosInPalletCardView({
   pos,
-  isNew = false,
   onSuccess,
 }: PosInPalletCardProps) {
   return (
     <Card
       className={cn(
-        " flex flex-col h-full  justify-between gap-2 overflow-hidden p-2 transition-all duration-200 hover:shadow-lg",
-        isNew && "ring-2 ring-green-500/50",
+        "flex flex-col h-full justify-between gap-2 overflow-hidden p-2 transition-all duration-200 hover:shadow-lg",
       )}
     >
       {/* Header with image, title and actions */}
