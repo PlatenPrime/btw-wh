@@ -8,16 +8,10 @@ import { DefsContainerSkeleton } from "@/modules/defs/components/containers/defs
 import { DefControls } from "@/modules/defs/components/controls/def-controls/DefControls";
 import { CalculationStatusFetcher } from "@/modules/defs/components/fetchers/calc-defs-status-fetcher/CalculationStatusFetcher";
 import { LatestDefsFetcher } from "@/modules/defs/components/fetchers/latest-defs-fetcher/LatestDefsFetcher";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export function Defs() {
-  const [isMounted, setIsMounted] = useState(false);
   const [, setIsCalculationRunning] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-    return () => setIsMounted(false);
-  }, []);
 
   const handleStatusChange = (isRunning: boolean) => {
     setIsCalculationRunning(isRunning);
@@ -28,14 +22,12 @@ export function Defs() {
       <main className="grid gap-2 p-2">
         <DefControls />
 
-        {isMounted && (
-          <CalculationStatusFetcher
-            enabled={true}
-            onStatusChange={handleStatusChange}
-            ContainerComponent={CalculationStatusContainer}
-            SkeletonComponent={CalculationStatusSkeleton}
-          />
-        )}
+        <CalculationStatusFetcher
+          enabled={true}
+          onStatusChange={handleStatusChange}
+          ContainerComponent={CalculationStatusContainer}
+          SkeletonComponent={CalculationStatusSkeleton}
+        />
 
         <LatestDefsFetcher
           ContainerComponent={DefsContainer}

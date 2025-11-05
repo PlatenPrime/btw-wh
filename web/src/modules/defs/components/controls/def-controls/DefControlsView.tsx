@@ -33,12 +33,7 @@ export function DefControlsView({
           </>
         )}
       </Button>
-      {isPending && (
-        <p className="text-muted-foreground text-sm">Запускаємо розрахунок</p>
-      )}
-      {isRecentlyStarted && !isPending && (
-        <p className="text-muted-foreground text-sm">Розрахунок виконується</p>
-      )}
+
     </Container>
   );
 }
