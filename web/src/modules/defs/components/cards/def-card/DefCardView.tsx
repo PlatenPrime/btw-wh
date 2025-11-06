@@ -4,8 +4,8 @@ import { cn } from "@/lib/utils";
 import type { DeficitItem } from "@/modules/defs/api/types/dto";
 import { DefAskButton } from "@/modules/defs/components/elements/def-ask-button/DefAskButton";
 import { DefCardAskBid } from "./components/DefCardAskBid";
-import { DefCardQuants } from "./components/DefCardQuants";
 import { DefCardIndicator } from "./components/DefCardIndicator";
+import { DefCardQuants } from "./components/DefCardQuants";
 
 interface DefCardViewProps {
   artikul: string;
@@ -18,29 +18,28 @@ export function DefCardView({ artikul, defItem }: DefCardViewProps) {
       ? "shadow-rose-300/30 dark:shadow-rose-600/40 hover:shadow-rose-400/40 dark:hover:shadow-rose-500/50"
       : "shadow-amber-300/30 dark:shadow-amber-500/40 hover:shadow-amber-400/40 dark:hover:shadow-amber-400/50";
 
-
-
   return (
     <Card
       className={cn(
-        "bg-background h-full flex-col justify-between p-2 shadow-none transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:shadow-md",
-        "gap-2 text-sm",
+        "bg-background h-full grid p-2 shadow-none transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:shadow-md",
+        "gap-0 text-sm",
         shadowClasses,
-    
       )}
     >
-      {/* Image and name */}
       <div className="flex items-center justify-between gap-2 text-sm">
-        <ArtikulImageLink artikul={artikul} nameukr={defItem.nameukr} bage={<DefCardIndicator defItem={defItem} />} />
-        <div className="flex items-center gap-1">
-          {/* Статус индикатор */}
-
-          <DefAskButton artikul={artikul} existingAsk={defItem.existingAsk} />
-        </div>
+        <ArtikulImageLink
+          artikul={artikul}
+          nameukr={defItem.nameukr}
+          bage={<DefCardIndicator defItem={defItem} />}
+        />
       </div>
 
       <DefCardQuants defItem={defItem} />
-      <DefCardAskBid ask={defItem.existingAsk} />
+      {defItem.existingAsk ? (
+        <DefCardAskBid ask={defItem.existingAsk} />
+      ) : (
+        <DefAskButton artikul={artikul} existingAsk={defItem.existingAsk} />
+      )}
     </Card>
   );
 }
