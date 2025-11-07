@@ -36,7 +36,7 @@ export function CreatePosForm({
   } = form;
   const artikul = watch("artikul");
 
-  const createPosMutation = useCreatePosMutation(pallet._id);
+  const createPosMutation = useCreatePosMutation(pallet);
   const updatePosMutation = useUpdatePosByIdMutation();
 
   // Поиск артикула при вводе 9 символов

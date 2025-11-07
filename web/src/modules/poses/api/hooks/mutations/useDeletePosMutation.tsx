@@ -11,6 +11,9 @@ export function useDeletePosMutation(pos: IPos) {
       queryClient.invalidateQueries({
         queryKey: ["pallet", { title: pos.palletData.title }],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["row", { rowTitle: pos.rowData.title }],
+      });
     },
   });
 } 

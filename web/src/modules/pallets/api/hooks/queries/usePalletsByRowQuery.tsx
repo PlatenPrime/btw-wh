@@ -4,7 +4,7 @@ import type { PalletShortListResponse } from "@/modules/pallets/api/types";
 
 export function usePalletsByRowQuery(rowId?: string, enabled = true) {
   return useQuery<PalletShortListResponse>({
-    queryKey: ["pallets", { rowId }],
+    queryKey: ["pallets", {by: "row", rowId }],
     queryFn: ({ signal }) => {
       if (!rowId) throw new Error("rowId is required");
       return getPalletsByRowId(rowId, signal);
