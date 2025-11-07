@@ -21,7 +21,7 @@ export function PosInPalletCardView({
   return (
     <Card
       className={cn(
-        "flex flex-col h-full justify-between gap-2 overflow-hidden p-2 transition-all duration-200 hover:shadow-lg",
+        "flex flex-col h-full justify-between gap-2 overflow-hidden p-2 transition-all duration-200 hover:shadow-lg animate-in fade-in-0 zoom-in-75",
       )}
     >
       {/* Header with image, title and actions */}

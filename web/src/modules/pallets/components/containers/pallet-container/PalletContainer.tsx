@@ -21,7 +21,7 @@ export function PalletContainer({
 }: PalletContainerProps) {
   const navigate = useNavigate();
   const [sortParams, setSortParams] = useState<GetPosesByPalletIdParams>({
-    sortBy: "createdAt",
+    sortBy: "updatedAt",
     sortOrder: "desc",
   });
 
