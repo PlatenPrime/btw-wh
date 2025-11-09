@@ -1,5 +1,5 @@
-import { Container } from "@/components/shared/containers/Container";
 import { DateNavigation } from "@/components/shared/date-navigation/DateNavigation";
+import { Wrapper } from "@/components/shared/wrappers/Wrapper";
 import { Button } from "@/components/ui/button";
 import type { GetAsksByDateResponse } from "@/modules/asks/api/types/dto";
 import { CreateAskDialog } from "@/modules/asks/components/dialogs/create-ask-dialog/CreateAskDialog";
@@ -24,7 +24,7 @@ export function AsksContainerView({
 }: AsksContainerViewProps) {
   return (
     <main className="grid gap-2">
-      <Container className="grid lg:grid-cols-2 gap-2">
+      <Wrapper className="grid gap-2 lg:grid-cols-2">
         <DateNavigation
           selectedDate={selectedDate}
           onPreviousDay={onPreviousDay}
@@ -32,17 +32,19 @@ export function AsksContainerView({
           onDateSelect={onDateSelect}
         />
 
-        <div className="flex w-full items-center justify-between gap-2 ">
-          <p className="text-foreground font-medium">{data.completedCount + data.rejectedCount}/{data.count}</p>
+        <div className="flex w-full items-center justify-between gap-2">
+          <p className="text-foreground font-medium">
+            {data.completedCount + data.rejectedCount}/{data.count}
+          </p>
           <CreateAskDialog
             trigger={<Button variant="outline">+ Створити запит</Button>}
           />
         </div>
-      </Container>
+      </Wrapper>
 
-      <Container className={isFetching ? "opacity-50" : ""}>
+      <Wrapper className={isFetching ? "opacity-50" : ""}>
         <AsksList data={data} selectedDate={selectedDate} />
-      </Container>
+      </Wrapper>
     </main>
   );
 }

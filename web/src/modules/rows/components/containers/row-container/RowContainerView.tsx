@@ -1,5 +1,5 @@
 import { useRegisterHeaderAction } from "@/components/layout/header-actions";
-import { Container } from "@/components/shared/containers/Container";
+import { Wrapper } from "@/components/shared/wrappers/Wrapper";
 import { CreatePalletDialog } from "@/modules/pallets/components/dialogs/create-pallet-dialog/CreatePalletDialog";
 import { PalletsList } from "@/modules/pallets/components/lists/pallets-list/PalletsList";
 import type { RowDto } from "@/modules/rows/api/types/dto";
@@ -32,12 +32,12 @@ export function RowContainerView({ row }: RowContainerViewProps) {
   return (
     <div className="grid gap-2">
       {/* Header */}
-      <Container className="flex items-start justify-between">
-        <p className="flex items-center h-full gap-2">
+      <Wrapper className="flex items-start justify-between">
+        <p className="flex h-full items-center gap-2">
           <Grid3x3 className="h-4 w-4" /> {row.pallets.length}
         </p>
         <CreatePalletDialog row={row} />
-      </Container>
+      </Wrapper>
 
       <PalletsList pallets={row.pallets} rowId={row._id} />
 

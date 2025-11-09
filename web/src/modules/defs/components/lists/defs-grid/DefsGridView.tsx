@@ -1,4 +1,4 @@
-import { Container } from "@/components/shared/containers/Container";
+import { Wrapper } from "@/components/shared/wrappers/Wrapper";
 import type { Def, DeficitItem } from "@/modules/defs/api/types/dto";
 import { DefCard } from "@/modules/defs/components/cards/def-card/DefCard";
 import type { DeficitFilter } from "@/modules/defs/components/elements/defs-stats/DefsStatsView";
@@ -36,10 +36,10 @@ export function DefsGridView({ defsData, filter }: DefsGridViewProps) {
   }
 
   return (
-    <Container className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <Wrapper className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {filteredDeficits.map(([artikul, defItem]) => (
         <DefCard key={artikul} artikul={artikul} defItem={defItem} />
       ))}
-    </Container>
+    </Wrapper>
   );
 }

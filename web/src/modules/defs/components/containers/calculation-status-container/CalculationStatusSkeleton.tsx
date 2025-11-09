@@ -1,9 +1,9 @@
-import { Container } from "@/components/shared/containers/Container";
+import { Wrapper } from "@/components/shared/wrappers/Wrapper";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export function CalculationStatusSkeleton() {
   return (
-    <Container className="space-y-4 p-4">
+    <Wrapper className="space-y-4 p-4">
       <div className="flex items-center gap-2">
         <Skeleton className="h-5 w-5 rounded-full" />
         <Skeleton className="h-6 w-48" />
@@ -39,6 +39,6 @@ export function CalculationStatusSkeleton() {
           </div>
         </div>
       </div>
-    </Container>
+    </Wrapper>
   );
 }

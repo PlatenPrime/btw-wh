@@ -1,4 +1,4 @@
-import { Container } from "@/components/shared/containers/Container";
+import { Wrapper } from "@/components/shared/wrappers/Wrapper";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { ArtDetailCard } from "@/modules/arts/components/cards/art-detail-card/ArtDetailCard";
 import { PosesByArtikulContainer } from "@/modules/arts/components/containers/poses-by-artikul-container";
@@ -24,9 +24,9 @@ export function ArtContainerView({
 }: ArtContainerViewProps) {
   return (
     <section className="grid gap-2">
-      <Container>
+      <Wrapper>
         <ArtDetailCard artData={artData} />
-      </Container>
+      </Wrapper>
       <PosesByArtikulContainer artikul={artData.artikul} />
 
       {/* Диалоги вне dropdown для избежания конфликта фокуса */}

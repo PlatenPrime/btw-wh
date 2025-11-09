@@ -1,4 +1,4 @@
-import { Container } from "@/components/shared/containers/Container";
+import { Wrapper } from "@/components/shared/wrappers/Wrapper";
 import { Button } from "@/components/ui/button";
 import type { PalletResponse } from "@/modules/pallets/api/types";
 import { PalletInfo } from "@/modules/pallets/components/elements/pallet-info/PalletInfo";
@@ -26,8 +26,8 @@ export function PalletContainerView({
 }: PalletContainerViewProps) {
   return (
     <div className="grid gap-2">
-      <Container className="grid gap-2">
-        <div className="grid md:grid-cols-3 gap-2 place-content-center ">
+      <Wrapper className="grid gap-2">
+        <div className="grid place-content-center gap-2 md:grid-cols-3">
           <PalletSortControls
             sortParams={sortParams}
             onSortParamsChange={onSortParamsChange}
@@ -37,10 +37,17 @@ export function PalletContainerView({
           <CreatePosDialog
             pallet={pallet.data!}
             onSuccess={handlePosCreated}
-            trigger={<Button variant="outline" className="w-fit md:justify-self-end justify-self-center ">+ Додати позицію</Button>}
+            trigger={
+              <Button
+                variant="outline"
+                className="w-fit justify-self-center md:justify-self-end"
+              >
+                + Додати позицію
+              </Button>
+            }
           />
         </div>
-      </Container>
+      </Wrapper>
 
       <PosesByPalletFetcher
         palletId={pallet.data!._id}

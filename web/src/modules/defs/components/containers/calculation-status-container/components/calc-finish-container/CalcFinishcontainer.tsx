@@ -1,4 +1,4 @@
-import { Container } from "@/components/shared/containers/Container";
+import { Wrapper } from "@/components/shared/wrappers/Wrapper";
 import type { DefsCalculationStatus } from "@/modules/defs/api/types/dto";
 import { formatDate } from "@/utils/formatDate";
 import { CheckCircle2, Clock } from "lucide-react";
@@ -9,7 +9,7 @@ interface CalcFinishContainerProps {
 
 export function CalcFinishContainer({ status }: CalcFinishContainerProps) {
   return (
-    <Container className="p-4">
+    <Wrapper className="p-4">
       <div className="flex items-center gap-2">
         <CheckCircle2 className="h-5 w-5 text-green-600" />
         <h3 className="text-lg font-semibold">
@@ -23,6 +23,6 @@ export function CalcFinishContainer({ status }: CalcFinishContainerProps) {
           <span>Останнє оновлення: {formatDate(status.lastUpdate)}</span>
         </div>
       )}
-    </Container>
+    </Wrapper>
   );
 }

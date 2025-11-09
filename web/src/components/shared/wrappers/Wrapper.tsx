@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 
-export function Container({
+export function Wrapper({
   children,
   className,
 }: {
@@ -8,6 +8,8 @@ export function Container({
   className?: string;
 }) {
   return (
-    <div className={cn("bg-accent/20 rounded-xl p-2", className)}>{children}</div>
+    <div className={cn("bg-accent/20 rounded-xl p-2", className)}>
+      {children}
+    </div>
   );
 }

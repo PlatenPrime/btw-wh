@@ -1,6 +1,6 @@
-import { Container } from "@/components/shared/containers/Container";
 import { SearchPanel } from "@/components/shared/search-components/search-panel/SearchPanel";
 import { SelectLimit } from "@/components/shared/select-limit";
+import { Wrapper } from "@/components/shared/wrappers/Wrapper";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -29,7 +29,7 @@ export function ZoneControls() {
   };
 
   return (
-    <Container className="flex gap-2">
+    <Wrapper className="flex gap-2">
       {/* Пошук і дії */}
       <div className="flex items-center justify-between gap-2">
         <div className="max-w-md flex-1">
@@ -75,7 +75,7 @@ export function ZoneControls() {
         </div>
 
         <div className="flex items-center gap-2">
-          <span className=" text-sm">На сторінці:</span>
+          <span className="text-sm">На сторінці:</span>
           <SelectLimit
             limit={limit}
             setLimit={setLimit}
@@ -83,6 +83,6 @@ export function ZoneControls() {
           />
         </div>
       </div>
-    </Container>
+    </Wrapper>
   );
 }

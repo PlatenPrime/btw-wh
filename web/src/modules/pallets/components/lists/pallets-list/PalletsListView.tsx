@@ -1,4 +1,4 @@
-import { Container } from "@/components/shared/containers/Container";
+import { Wrapper } from "@/components/shared/wrappers/Wrapper";
 import type { PalletShortDto } from "@/modules/pallets/api/types";
 import { PalletInRowCard } from "@/modules/pallets/components/cards/pallet-in-row-card/PalletInRowCard.tsx";
 
@@ -9,10 +9,10 @@ interface PalletsListViewProps {
 
 export function PalletsListView({ pallets, rowId }: PalletsListViewProps) {
   return (
-    <Container className="grid gap-2 lg:grid-cols-2 2xl:grid-cols-4">
+    <Wrapper className="grid gap-2 lg:grid-cols-2 2xl:grid-cols-4">
       {pallets.map((pallet) => (
         <PalletInRowCard key={pallet._id} pallet={pallet} rowId={rowId} />
       ))}
-    </Container>
+    </Wrapper>
   );
 }

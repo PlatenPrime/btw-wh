@@ -1,5 +1,5 @@
-import { Container } from "@/components/shared/containers/Container";
 import { SearchPanel } from "@/components/shared/search-components/search-panel/SearchPanel";
+import { Wrapper } from "@/components/shared/wrappers/Wrapper";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { ArtsGrid } from "@/modules/arts/components/lists/arts-grid/ArtsGrid.tsx";
 
@@ -27,9 +27,9 @@ export function ArtsContainerView({
           placeholder="Пошук артикулів..."
         />
       </div>
-      <Container>
+      <Wrapper>
         <ArtsGrid arts={data} />
-      </Container>
+      </Wrapper>
 
       <div ref={bottomRef} className="h-8" />
 

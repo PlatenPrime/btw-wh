@@ -1,4 +1,4 @@
-import { Container } from "@/components/shared/containers/Container";
+import { Wrapper } from "@/components/shared/wrappers/Wrapper";
 import { TotalItem } from "@/modules/arts/components/containers/poses-by-artikul-container/components/total-items/TotalItem.tsx";
 import type { GetPosesByArtikulResponse } from "@/modules/poses/api/types";
 import { Circle, NotepadText, Package } from "lucide-react";
@@ -9,7 +9,7 @@ interface TotalItemsProps {
 
 export function TotalItems({ data }: TotalItemsProps) {
   return (
-    <Container className="flex items-center justify-center gap-4">
+    <Wrapper className="flex items-center justify-center gap-4">
       <TotalItem
         quant={data.total}
         icon={<NotepadText className="text-muted-foreground m-0 size-[1cap]" />}
@@ -22,6 +22,6 @@ export function TotalItems({ data }: TotalItemsProps) {
         quant={data.totalQuant}
         icon={<Circle className="text-muted-foreground size-[1cap]" />}
       />
-    </Container>
+    </Wrapper>
   );
 }

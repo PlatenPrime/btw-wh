@@ -1,4 +1,4 @@
-import { Container } from "@/components/shared/containers/Container";
+import { Wrapper } from "@/components/shared/wrappers/Wrapper";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export function PosesByArtikulContainerSkeleton() {
@@ -7,7 +7,7 @@ export function PosesByArtikulContainerSkeleton() {
       {/* Позиции по складам */}
       <div className="grid items-start gap-4 lg:grid-cols-2">
         {/* Погреби */}
-        <Container className="grid gap-2">
+        <Wrapper className="grid gap-2">
           <div className="grid grid-cols-3">
             <Skeleton className="h-5 w-16 pl-4" />
             <div className="flex items-center justify-center">
@@ -24,10 +24,10 @@ export function PosesByArtikulContainerSkeleton() {
               </div>
             ))}
           </div>
-        </Container>
+        </Wrapper>
 
         {/* Мережі */}
-        <Container className="grid gap-2">
+        <Wrapper className="grid gap-2">
           <div className="grid grid-cols-3">
             <Skeleton className="h-5 w-16 pl-4" />
             <div className="flex items-center justify-center">
@@ -44,7 +44,7 @@ export function PosesByArtikulContainerSkeleton() {
               </div>
             ))}
           </div>
-        </Container>
+        </Wrapper>
       </div>
     </div>
   );

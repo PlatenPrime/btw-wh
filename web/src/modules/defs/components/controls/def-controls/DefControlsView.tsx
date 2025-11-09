@@ -1,4 +1,4 @@
-import { Container } from "@/components/shared/containers/Container";
+import { Wrapper } from "@/components/shared/wrappers/Wrapper";
 import { Button } from "@/components/ui/button";
 import { Calculator, CheckCircle2 } from "lucide-react";
 
@@ -14,7 +14,7 @@ export function DefControlsView({
   isRecentlyStarted,
 }: DefControlsViewProps) {
   return (
-    <Container className="flex items-center justify-center gap-2">
+    <Wrapper className="flex items-center justify-center gap-2">
       <Button
         onClick={handleCalculate}
         disabled={isPending || isRecentlyStarted}
@@ -33,7 +33,6 @@ export function DefControlsView({
           </>
         )}
       </Button>
-
-    </Container>
+    </Wrapper>
   );
 }

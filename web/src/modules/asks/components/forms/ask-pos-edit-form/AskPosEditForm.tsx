@@ -11,6 +11,9 @@ import { useUpdatePosByIdMutation } from "@/modules/poses/api/hooks/mutations/us
 import type { PosResponse } from "@/modules/poses/api/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { getAskActionTextUtil } from "./utils/getAskActionTextUtil";
+import { handleRemovedBoxesChangeUtil } from "./utils/handleRemovedBoxesChangeUtil";
+import { handleRemovedQuantChangeUtil } from "./utils/handleRemovedQuantChangeUtil";
 
 interface AskPosEditFormProps {
   pos: PosResponse;
@@ -45,69 +48,12 @@ export function AskPosEditForm({
   const pullAskMutation = usePullAskMutation({ askId });
   const updateAskActionsMutation = useUpdateAskActionsByIdMutation();
 
-  // Обработчики для числовых полей с поддержкой отрицательных чисел
   const handleRemovedQuantChange = (value: string) => {
-    // Разрешаем только цифры и знак минус в начале
-    const cleanValue = value.replace(/[^0-9-]/g, "");
-
-    // Проверяем, что минус только в начале
-    const hasMinus = cleanValue.includes("-");
-    const numericPart = cleanValue.replace(/-/g, "");
-
-    if (hasMinus && !cleanValue.startsWith("-")) {
-      // Если минус не в начале, убираем его
-      setValue("removedQuant", numericPart, { shouldValidate: true });
-      return;
-    }
-
-    if (cleanValue === "" || cleanValue === "-") {
-      setValue("removedQuant", "", { shouldValidate: true });
-      return;
-    }
-
-    if (numericPart === "0") {
-      setValue("removedQuant", hasMinus ? "-0" : "0", { shouldValidate: true });
-      return;
-    }
-
-    // Убираем ведущие нули, но сохраняем знак
-    const finalValue = hasMinus
-      ? `-${numericPart.replace(/^0+/, "") || "0"}`
-      : numericPart.replace(/^0+/, "") || "0";
-
-    setValue("removedQuant", finalValue, { shouldValidate: true });
+    handleRemovedQuantChangeUtil({ name: "removedQuant", value, setValue });
   };
 
   const handleRemovedBoxesChange = (value: string) => {
-    // Разрешаем только цифры и знак минус в начале
-    const cleanValue = value.replace(/[^0-9-]/g, "");
-
-    // Проверяем, что минус только в начале
-    const hasMinus = cleanValue.includes("-");
-    const numericPart = cleanValue.replace(/-/g, "");
-
-    if (hasMinus && !cleanValue.startsWith("-")) {
-      // Если минус не в начале, убираем его
-      setValue("removedBoxes", numericPart, { shouldValidate: true });
-      return;
-    }
-
-    if (cleanValue === "" || cleanValue === "-") {
-      setValue("removedBoxes", "", { shouldValidate: true });
-      return;
-    }
-
-    if (numericPart === "0") {
-      setValue("removedBoxes", hasMinus ? "-0" : "0", { shouldValidate: true });
-      return;
-    }
-
-    // Убираем ведущие нули, но сохраняем знак
-    const finalValue = hasMinus
-      ? `-${numericPart.replace(/^0+/, "") || "0"}`
-      : numericPart.replace(/^0+/, "") || "0";
-
-    setValue("removedBoxes", finalValue, { shouldValidate: true });
+    handleRemovedBoxesChangeUtil({ name: "removedBoxes", value, setValue });
   };
 
   const onSubmit = async (data: AskPosEditFormData) => {
@@ -136,10 +82,11 @@ export function AskPosEditForm({
 
       onSuccess?.();
 
-      const actionText =
-        removedQuantNum >= 0
-          ? `Знято товару: ${removedQuantNum} шт., коробок: ${removedBoxesNum} шт. з палети ${pos.data?.palletData?.title || "невідома паллета"}`
-          : `Додано товару: ${Math.abs(removedQuantNum)} шт., коробок: ${Math.abs(removedBoxesNum)} шт. до палети ${pos.data?.palletData?.title || "невідома паллета"}`;
+      const actionText = getAskActionTextUtil({
+        removedQuant: removedQuantNum,
+        removedBoxes: removedBoxesNum,
+        pos,
+      });
 
       // Фіксуємо подію підтягування до оновлення складу
       const palletData = pos.data?.palletData;
@@ -151,6 +98,16 @@ export function AskPosEditForm({
         if (!palletData?._id || !palletData?.title) {
           throw new Error("Не знайдено валідну палету для підтягування");
         }
+
+        // Оновлюємо позицію
+        await updatePosMutation.mutateAsync({
+          id: pos.data!._id,
+          data: {
+            quant: newQuant,
+            boxes: newBoxes,
+            sklad: pos.data!.sklad,
+          },
+        });
 
         await pullAskMutation.mutateAsync({
           solverId: user._id,
@@ -165,28 +122,8 @@ export function AskPosEditForm({
           },
         });
       }
-
-      // Оновлюємо позицію
-      await updatePosMutation.mutateAsync({
-        id: pos.data!._id,
-        data: {
-          quant: newQuant,
-          boxes: newBoxes,
-          sklad: pos.data!.sklad,
-        },
-      });
-
-      // Додаємо дію в ask для зворотної сумісності
-      await updateAskActionsMutation.mutateAsync({
-        id: askId,
-        data: {
-          action: actionText,
-          userId: user._id,
-        },
-      });
     } catch (error) {
       console.error("Error updating pos:", error);
-      // Ошибка будет обработана в компоненте через formState
     }
   };
 
