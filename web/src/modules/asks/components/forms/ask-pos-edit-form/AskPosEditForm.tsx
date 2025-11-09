@@ -1,3 +1,4 @@
+import { usePullAskMutation } from "@/modules/asks/api/hooks/mutations/usePullAskMutation";
 import { useUpdateAskActionsByIdMutation } from "@/modules/asks/api/hooks/mutations/useUpdateAskActionsByIdMutation";
 import { AskPosEditFormView } from "@/modules/asks/components/forms/ask-pos-edit-form/AskPosEditFormView.tsx";
 import {
@@ -41,6 +42,7 @@ export function AskPosEditForm({
 
   const { user } = useAuth();
   const updatePosMutation = useUpdatePosByIdMutation();
+  const pullAskMutation = usePullAskMutation({ askId });
   const updateAskActionsMutation = useUpdateAskActionsByIdMutation();
 
   // Обработчики для числовых полей с поддержкой отрицательных чисел
@@ -134,6 +136,36 @@ export function AskPosEditForm({
 
       onSuccess?.();
 
+      const actionText =
+        removedQuantNum >= 0
+          ? `Знято товару: ${removedQuantNum} шт., коробок: ${removedBoxesNum} шт. з палети ${pos.data?.palletData?.title || "невідома паллета"}`
+          : `Додано товару: ${Math.abs(removedQuantNum)} шт., коробок: ${Math.abs(removedBoxesNum)} шт. до палети ${pos.data?.palletData?.title || "невідома паллета"}`;
+
+      // Фіксуємо подію підтягування до оновлення складу
+      const palletData = pos.data?.palletData;
+      const pullQuant = Math.max(removedQuantNum, 0);
+      const pullBoxes = Math.max(removedBoxesNum, 0);
+      const shouldCreatePull = pullQuant > 0 || pullBoxes > 0;
+
+      if (shouldCreatePull) {
+        if (!palletData?._id || !palletData?.title) {
+          throw new Error("Не знайдено валідну палету для підтягування");
+        }
+
+        await pullAskMutation.mutateAsync({
+          solverId: user._id,
+          action: actionText,
+          pullAskData: {
+            palletData: {
+              _id: palletData._id,
+              title: palletData.title,
+            },
+            quant: pullQuant,
+            boxes: pullBoxes,
+          },
+        });
+      }
+
       // Оновлюємо позицію
       await updatePosMutation.mutateAsync({
         id: pos.data!._id,
@@ -144,12 +176,7 @@ export function AskPosEditForm({
         },
       });
 
-      // Додаємо дію в ask
-      const actionText =
-        removedQuantNum >= 0
-          ? `Знято товару: ${removedQuantNum} шт., коробок: ${removedBoxesNum} шт. з палети ${pos.data?.palletData?.title || "невідома паллета"}`
-          : `Додано товару: ${Math.abs(removedQuantNum)} шт., коробок: ${Math.abs(removedBoxesNum)} шт. до палети ${pos.data?.palletData?.title || "невідома паллета"}`;
-
+      // Додаємо дію в ask для зворотної сумісності
       await updateAskActionsMutation.mutateAsync({
         id: askId,
         data: {
@@ -166,6 +193,7 @@ export function AskPosEditForm({
   const isFormSubmitting =
     isSubmitting ||
     updatePosMutation.isPending ||
+    pullAskMutation.isPending ||
     updateAskActionsMutation.isPending;
 
   // Вычисляем остатки

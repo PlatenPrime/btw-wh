@@ -20,18 +20,23 @@ const newAsk = await createAsk({
 });
 ```
 
-### `updateAskById(id: string, data: UpdateAskRequest)`
+### `pullAskById(id: string, data: PullAskRequest)`
 
-Обновляет существующий ask по ID.
+Фіксує підтягування по запиту та повертає оновлену сутність.
 
 ```typescript
-import { updateAskById } from "@/modules/asks/api";
+import { pullAskById } from "@/modules/asks/api/services/mutations/pullAskById";
 
-const updatedAsk = await updateAskById("ask_id", {
-  status: "completed",
-  solverData: {
-    _id: "solver_id",
-    fullname: "Ім'я виконавця",
+const ask = await pullAskById("ask_id", {
+  solverId: "solver_id",
+  action: "Підтягнув 10 шт. зі складу A",
+  pullAskData: {
+    palletData: {
+      _id: "pallet_id",
+      title: "Палета А-1",
+    },
+    quant: 10,
+    boxes: 0,
   },
 });
 ```
@@ -92,18 +97,18 @@ function CreateAskForm() {
 }
 ```
 
-### `useUpdateAsk()`
+### `usePullAskMutation()`
 
-Хук для обновления ask.
+Хук для фіксації підтягувань із автоматичним оновленням кеша.
 
 ```typescript
-import { useUpdateAsk } from "@/modules/asks/api";
+import { usePullAskMutation } from "@/modules/asks/api/hooks/mutations/usePullAskMutation";
 
-function UpdateAskForm({ askId }: { askId: string }) {
-  const updateAskMutation = useUpdateAsk();
+function PullAskForm({ askId }: { askId: string }) {
+  const pullAskMutation = usePullAskMutation({ askId });
 
-  const handleSubmit = (data: UpdateAskRequest) => {
-    updateAskMutation.mutate({ id: askId, data });
+  const handleSubmit = (payload: PullAskRequest) => {
+    pullAskMutation.mutate(payload);
   };
 
   return (
@@ -196,18 +201,23 @@ function AsksList({ date }: { date: string }) {
 
 ```typescript
 interface AskDto {
+  _id: string;
   artikul: string;
   nameukr?: string;
   quant?: number;
   com?: string;
   asker: string;
   askerData: AskUserData;
-  solver: string;
+  solver?: string;
   solverData?: AskUserData;
   status: AskStatus;
-  actions: string[];
-  createdAt: Date;
-  updatedAt: Date;
+  pullQuant?: number;
+  pullBox?: number;
+  pullBoxes?: number;
+  events: AskEvent[];
+  actions?: string[];
+  createdAt: string;
+  updatedAt: string;
 }
 ```
 
@@ -216,7 +226,7 @@ interface AskDto {
 Возможные статусы ask.
 
 ```typescript
-type AskStatus = "new" | "in_progress" | "completed" | "cancelled";
+type AskStatus = "new" | "completed" | "rejected" | "fail" | "solved";
 ```
 
 ### `AskUserData`
@@ -225,6 +235,30 @@ type AskStatus = "new" | "in_progress" | "completed" | "cancelled";
 
 ```typescript
 type AskUserData = Pick<User, "_id" | "fullname" | "telegram" | "photo">;
+```
+
+### `AskEvent`
+
+Опис подій ask.
+
+```typescript
+type AskEventName = "create" | "pull" | "complete" | "reject";
+
+interface AskEventPullDetails {
+  palletData: {
+    _id: string;
+    title: string;
+  };
+  quant: number;
+  boxes: number;
+}
+
+interface AskEvent {
+  eventName: AskEventName;
+  date: string;
+  userData: AskUserData;
+  pullDetails?: AskEventPullDetails;
+}
 ```
 
 ## Особенности

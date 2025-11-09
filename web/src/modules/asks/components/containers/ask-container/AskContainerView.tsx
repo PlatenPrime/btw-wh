@@ -1,7 +1,7 @@
 import { Container } from "@/components/shared/containers/Container";
 import type { AskDto } from "@/modules/asks/api/types/dto";
 import { AskDetailsCard } from "@/modules/asks/components/cards/ask-details-card/AskDetailsCard";
-import { AskActions } from "@/modules/asks/components/containers/ask-container/components/ask-actions/AskActions.tsx";
+import { AskEvents } from "@/modules/asks/components/containers/ask-container/components/ask-events/AskEvents.tsx";
 import { AskPosesByArtikulContainer } from "@/modules/asks/components/containers/ask-poses-by-artikul-container";
 import { CompleteAskDialog } from "@/modules/asks/components/dialogs/complete-ask-dialog/CompleteAskDialog";
 import { DeleteAskDialog } from "@/modules/asks/components/dialogs/delete-ask-dialog/DeleteAskDialog";
@@ -45,7 +45,12 @@ export function AskContainerView({
     <section className="grid gap-2">
       <Container className="grid gap-2 lg:grid-cols-2">
         <AskDetailsCard askData={askData} />
-        <AskActions actions={askData.actions} />
+        <AskEvents
+          events={askData.events ?? []}
+          pullQuant={askData.pullQuant}
+          pullBox={askData.pullBox}
+          pullBoxes={askData.pullBoxes}
+        />
       </Container>
 
       {/* Позиции по артикулу */}
