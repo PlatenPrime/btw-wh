@@ -1,89 +1,111 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArtDialogImage } from "@/modules/arts/components/dialogs/art-dialog-image/ArtDialogImage";
-import type { IPullPosition } from "@/modules/pulls/api/types/dto";
-import { CheckCircle2, Package, User } from "lucide-react";
+import type { PullPosition } from "@/modules/pulls/api/types";
+import { CheckCircle2, Package, User, ClipboardList, Boxes } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface PullPositionCardViewProps {
-  position: IPullPosition;
+  position: PullPosition;
   onClick: () => void;
   isCompleted?: boolean;
 }
+
+const getProgressLabel = (position: PullPosition) => {
+  const { totalRequestedQuant, alreadyPulledQuant } = position;
+
+  if (totalRequestedQuant == null) {
+    return `Знято: ${alreadyPulledQuant} шт.`;
+  }
+
+  return `Прогрес: ${alreadyPulledQuant} / ${totalRequestedQuant} шт.`;
+};
+
+const getBoxesLabel = (position: PullPosition) => {
+  if (position.alreadyPulledBoxes === 0) {
+    return null;
+  }
+
+  return `Коробок: ${position.alreadyPulledBoxes}`;
+};
 
 export function PullPositionCardView({
   position,
   onClick,
   isCompleted = false,
 }: PullPositionCardViewProps) {
-  const handleClick = () => {
-    if (!isCompleted) {
-      onClick();
-    }
-  };
-
   return (
     <Card
-      className={`transition-colors ${
+      className={cn(
+        "transition-colors",
         isCompleted
-          ? "bg-muted opacity-50"
-          : "hover:bg-accent hover:border-primary"
-      }`}
+          ? "bg-muted opacity-70"
+          : "hover:border-primary hover:bg-accent/40",
+      )}
     >
-      <CardContent className="pt-6">
-        <div className="flex flex-col gap-3 sm:gap-4">
-          {/* Header: Image + Article + Badge */}
-          <div className="flex items-start gap-3">
-            <ArtDialogImage artikul={position.artikul} />
-            <div className="flex flex-1 flex-wrap items-center gap-2">
+      <CardContent className="grid gap-3 p-4 sm:p-5">
+        <div className="flex items-start gap-3">
+          <ArtDialogImage artikul={position.artikul} />
+          <div className="flex flex-1 flex-col gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <button
-                onClick={handleClick}
+                type="button"
+                onClick={onClick}
                 disabled={isCompleted}
-                className={`text-sm font-semibold transition-all ${
-                  !isCompleted
-                    ? "text-foreground hover:text-primary cursor-pointer hover:underline"
-                    : "text-muted-foreground cursor-not-allowed"
-                }`}
+                className={cn(
+                  "text-sm font-semibold transition-colors",
+                  isCompleted
+                    ? "cursor-not-allowed text-muted-foreground"
+                    : "cursor-pointer text-foreground hover:text-primary",
+                )}
               >
                 {position.artikul}
               </button>
+              {position.plannedQuant != null ? (
+                <Badge variant="outline" className="flex items-center gap-1">
+                  <ClipboardList className="h-3 w-3" />
+                  План: {position.plannedQuant}
+                </Badge>
+              ) : (
+                <Badge variant="secondary">Ручний відбір</Badge>
+              )}
               {isCompleted && (
-                <Badge variant="outline" className="gap-1">
+                <Badge variant="outline" className="flex items-center gap-1">
                   <CheckCircle2 className="h-3 w-3" />
-                  Оброблено
+                  Завершено
                 </Badge>
               )}
             </div>
-          </div>
-
-          {/* Description */}
-          {position.nameukr && (
-            <p className="text-muted-foreground text-xs">{position.nameukr}</p>
-          )}
-
-          {/* Info Grid */}
-          <div className="grid gap-2 text-sm sm:grid-cols-[1fr_auto_auto]">
-            <div className="flex items-center gap-2">
-              <Package className="text-muted-foreground h-4 w-4 shrink-0" />
-              <span className="break-words">
-                Доступно:{" "}
-                <strong>
-                  {position.currentQuant} шт. / {position.currentBoxes} кор.
-                </strong>
-              </span>
-            </div>
-            {position.requestedQuant > 0 && (
-              <span className="break-words">
-                Запитано: <strong>{position.requestedQuant}</strong>
-              </span>
+            {position.nameukr && (
+              <p className="text-muted-foreground text-sm">{position.nameukr}</p>
             )}
-            <div className="flex items-center gap-2">
-              <User className="text-muted-foreground h-4 w-4 shrink-0" />
-              <span className="text-muted-foreground break-words">
-                {position.askerData.fullname}
-              </span>
-            </div>
           </div>
         </div>
+
+        <div className="grid gap-3 text-sm sm:grid-cols-3">
+          <div className="flex items-center gap-2">
+            <Package className="h-4 w-4 text-muted-foreground" />
+            <span>
+              Доступно:{" "}
+              <strong>
+                {position.currentQuant} шт. / {position.currentBoxes} кор.
+              </strong>
+            </span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Boxes className="h-4 w-4 text-muted-foreground" />
+            <span>{getProgressLabel(position)}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <User className="h-4 w-4 text-muted-foreground" />
+            <span className="truncate">{position.askerData.fullname}</span>
+          </div>
+        </div>
+        {getBoxesLabel(position) && (
+          <div className="text-muted-foreground text-xs">
+            {getBoxesLabel(position)}
+          </div>
+        )}
       </CardContent>
     </Card>
   );

@@ -1,11 +1,13 @@
-import type { IPullPosition } from "@/modules/pulls/api/types/dto";
+import type { PullPosition } from "@/modules/pulls/api/types";
 import { ProcessPositionDialogView } from "./ProcessPositionDialogView";
 
 interface ProcessPositionDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  position: IPullPosition;
-  onProcess: (position: IPullPosition, actualQuant: number, actualBoxes: number) => void;
+  position: PullPosition | null;
+  pullTitle: string;
+  dialogTitle: string | null;
+  onProcess: (actualQuant: number, actualBoxes: number) => void;
   isProcessing: boolean;
 }
 
@@ -13,11 +15,13 @@ export function ProcessPositionDialog({
   open,
   onOpenChange,
   position,
+  pullTitle,
+  dialogTitle,
   onProcess,
   isProcessing,
 }: ProcessPositionDialogProps) {
   const handleProcess = (actualQuant: number, actualBoxes: number) => {
-    onProcess(position, actualQuant, actualBoxes);
+    onProcess(actualQuant, actualBoxes);
   };
 
   return (
@@ -25,6 +29,8 @@ export function ProcessPositionDialog({
       open={open}
       onOpenChange={onOpenChange}
       position={position}
+      pullTitle={pullTitle}
+      dialogTitle={dialogTitle}
       onProcess={handleProcess}
       isProcessing={isProcessing}
     />

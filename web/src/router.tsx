@@ -92,11 +92,6 @@ const Pulls = lazy(() =>
     default: module.Pulls,
   })),
 );
-const Pull = lazy(() =>
-  import("./modules/pulls/pages/pull").then((module) => ({
-    default: module.Pull,
-  })),
-);
 const NotFound = lazy(() =>
   import("./pages/not-found").then((module) => ({
     default: module.NotFound,
@@ -263,15 +258,6 @@ export const router = createHashRouter([
             element: (
               <ProtectedRoute allowedRoles={[RoleType.ADMIN, RoleType.PRIME]}>
                 <Pulls />
-              </ProtectedRoute>
-            ),
-            errorElement: <RouteErrorBoundary />,
-          },
-          {
-            path: "pulls/:palletId",
-            element: (
-              <ProtectedRoute allowedRoles={[RoleType.ADMIN, RoleType.PRIME]}>
-                <Pull />
               </ProtectedRoute>
             ),
             errorElement: <RouteErrorBoundary />,

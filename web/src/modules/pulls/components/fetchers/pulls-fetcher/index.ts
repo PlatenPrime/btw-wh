@@ -1,2 +1,0 @@
-export { PullsFetcher } from "./PullsFetcher";
-

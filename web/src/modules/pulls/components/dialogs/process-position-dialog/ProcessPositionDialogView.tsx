@@ -10,14 +10,16 @@ import {
 import { InputQuant } from "@/components/ui/input-quant";
 import { Label } from "@/components/ui/label";
 import { ArtDialogImage } from "@/modules/arts/components/dialogs/art-dialog-image/ArtDialogImage";
-import type { IPullPosition } from "@/modules/pulls/api/types/dto";
-import { useState } from "react";
+import type { PullPosition } from "@/modules/pulls/api/types";
+import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 
 interface ProcessPositionDialogViewProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  position: IPullPosition;
+  position: PullPosition | null;
+  pullTitle: string;
+  dialogTitle: string | null;
   onProcess: (actualQuant: number, actualBoxes: number) => void;
   isProcessing: boolean;
 }
@@ -26,15 +28,57 @@ export function ProcessPositionDialogView({
   open,
   onOpenChange,
   position,
+  pullTitle,
+  dialogTitle,
   onProcess,
   isProcessing,
 }: ProcessPositionDialogViewProps) {
-  const [actualQuant, setActualQuant] = useState(
-    position.requestedQuant > 0 ? position.requestedQuant : 1,
-  );
+  const [actualQuant, setActualQuant] = useState(1);
   const [actualBoxes, setActualBoxes] = useState(0);
 
+  useEffect(() => {
+    if (!position) {
+      setActualQuant(1);
+      setActualBoxes(0);
+      return;
+    }
+
+    const defaultQuant = (() => {
+      if (position.plannedQuant && position.plannedQuant > 0) {
+        return position.plannedQuant;
+      }
+
+      if (
+        position.totalRequestedQuant &&
+        position.totalRequestedQuant > position.alreadyPulledQuant
+      ) {
+        return position.totalRequestedQuant - position.alreadyPulledQuant;
+      }
+
+      return 1;
+    })();
+
+    setActualQuant(Math.max(1, defaultQuant));
+    setActualBoxes(0);
+  }, [position]);
+
+  const description = useMemo(() => {
+    if (!position) {
+      return "";
+    }
+
+    if (position.plannedQuant == null) {
+      return "Заявка без жорсткої кількості. Вкажи, скільки фактично знято.";
+    }
+
+    return "Перевір фактичну кількість перед фіксацією.";
+  }, [position]);
+
   const handleSubmit = () => {
+    if (!position) {
+      return;
+    }
+
     if (actualQuant <= 0) {
       toast.error("Кількість повинна бути більше 0");
       return;
@@ -66,72 +110,84 @@ export function ProcessPositionDialogView({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Обробити позицію</DialogTitle>
-          <DialogDescription>
-            Вкажіть кількість товару для вилучення
-          </DialogDescription>
+          <DialogTitle>{dialogTitle ?? "Обробити позицію"}</DialogTitle>
+          <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
 
-        <div className="grid gap-4 py-4">
-          <div className="flex items-start gap-3">
-            <ArtDialogImage artikul={position.artikul} />
-            <div className="grid flex-1 gap-2">
-              {position.nameukr && (
-                <div className="text-base font-medium">{position.nameukr}</div>
-              )}
-              <div className="text-muted-foreground text-sm">
-                {position.artikul}
-              </div>
-              <div className="grid gap-1 border-t pt-2">
-                <div className="text-muted-foreground text-sm">
-                  Доступно:{" "}
-                  <strong>
-                    {position.currentQuant} шт. / {position.currentBoxes} кор.
-                  </strong>
-                </div>
-                {position.requestedQuant > 0 && (
-                  <div className="text-muted-foreground text-sm">
-                    Запитано: <strong>{position.requestedQuant}</strong>
+        {position && (
+          <div className="grid gap-4 py-4">
+            <div className="flex items-start gap-3">
+              <ArtDialogImage artikul={position.artikul} />
+              <div className="grid flex-1 gap-2">
+                <div className="text-base font-medium">{pullTitle}</div>
+                {position.nameukr && (
+                  <div className="text-sm text-muted-foreground">
+                    {position.nameukr}
                   </div>
                 )}
                 <div className="text-muted-foreground text-sm">
-                  Запит від: <strong>{position.askerData.fullname}</strong>
+                  {position.artikul}
+                </div>
+                <div className="grid gap-2 border-t pt-2 text-sm">
+                  <div>
+                    Доступно:{" "}
+                    <strong>
+                      {position.currentQuant} шт. / {position.currentBoxes} кор.
+                    </strong>
+                  </div>
+                  {position.totalRequestedQuant != null && (
+                    <div>
+                      Запитано:{" "}
+                      <strong>{position.totalRequestedQuant} шт.</strong>
+                    </div>
+                  )}
+                  <div>
+                    Знято:{" "}
+                    <strong>
+                      {position.alreadyPulledQuant} шт. /{" "}
+                      {position.alreadyPulledBoxes} кор.
+                    </strong>
+                  </div>
+                  <div>
+                    Запит від:{" "}
+                    <strong>{position.askerData.fullname}</strong>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div className="grid gap-4">
-            <div className="grid gap-2">
-              <Label htmlFor="actualQuant">Кількість для вилучення</Label>
-              <InputQuant
-                id="actualQuant"
-                value={actualQuant.toString()}
-                onValueChange={(value) => setActualQuant(Number(value) || 0)}
-                max={position.currentQuant}
-                min={1}
-              />
-            </div>
+            <div className="grid gap-4">
+              <div className="grid gap-2">
+                <Label htmlFor="actualQuant">Кількість для вилучення</Label>
+                <InputQuant
+                  id="actualQuant"
+                  value={actualQuant.toString()}
+                  onValueChange={(value) => setActualQuant(Number(value) || 0)}
+                  max={position.currentQuant}
+                  min={1}
+                />
+              </div>
 
-            <div className="grid gap-2">
-              <Label htmlFor="actualBoxes">Кількість коробок</Label>
-              <InputQuant
-                id="actualBoxes"
-                value={actualBoxes.toString()}
-                onValueChange={(value) => setActualBoxes(Number(value) || 0)}
-                max={position.currentBoxes}
-                min={0}
-              />
+              <div className="grid gap-2">
+                <Label htmlFor="actualBoxes">Кількість коробок</Label>
+                <InputQuant
+                  id="actualBoxes"
+                  value={actualBoxes.toString()}
+                  onValueChange={(value) => setActualBoxes(Number(value) || 0)}
+                  max={position.currentBoxes}
+                  min={0}
+                />
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         <DialogFooter>
           <DialogActions
             onCancel={() => onOpenChange(false)}
             onSubmit={handleSubmit}
             cancelText="Скасувати"
-            submitText="Обробити"
+            submitText="Зафіксувати"
             isSubmitting={isProcessing}
             className="w-full"
           />

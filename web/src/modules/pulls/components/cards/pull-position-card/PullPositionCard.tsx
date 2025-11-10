@@ -1,8 +1,8 @@
-import type { IPullPosition } from "@/modules/pulls/api/types/dto";
+import type { PullPosition } from "@/modules/pulls/api/types";
 import { PullPositionCardView } from "./PullPositionCardView";
 
 interface PullPositionCardProps {
-  position: IPullPosition;
+  position: PullPosition;
   onClick: () => void;
   isCompleted?: boolean;
 }

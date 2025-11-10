@@ -1,9 +1,9 @@
-import type { IPullPosition } from "@/modules/pulls/api/types/dto";
+import type { PullPosition } from "@/modules/pulls/api/types";
 import { PullPositionsListView } from "./PullPositionsListView";
 
 interface PullPositionsListProps {
-  positions: IPullPosition[];
-  onPositionClick: (position: IPullPosition) => void;
+  positions: PullPosition[];
+  onPositionClick: (position: PullPosition) => void;
 }
 
 export function PullPositionsList({

@@ -1,16 +1,22 @@
-import type { IPull } from "@/modules/pulls/api/types/dto";
+import type { Pull, PullPosition } from "@/modules/pulls/api/types";
 import { PullsListView } from "./PullsListView";
 import { PullsListEmpty } from "./PullsListEmpty";
 
 interface PullsListProps {
-  pulls: IPull[];
+  pulls: Pull[];
+  onPositionClick: (pull: Pull, position: PullPosition) => void;
+  isEmpty: boolean;
 }
 
-export function PullsList({ pulls }: PullsListProps) {
-  if (pulls.length === 0) {
+export function PullsList({
+  pulls,
+  onPositionClick,
+  isEmpty,
+}: PullsListProps) {
+  if (isEmpty) {
     return <PullsListEmpty />;
   }
 
-  return <PullsListView pulls={pulls} />;
+  return <PullsListView pulls={pulls} onPositionClick={onPositionClick} />;
 }
 

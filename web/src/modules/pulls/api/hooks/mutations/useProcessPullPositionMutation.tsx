@@ -1,150 +1,73 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { useNavigate } from "react-router";
+
 import {
-  processPullPosition,
-  type ProcessPullPositionParams,
-} from "@/modules/pulls/api/services/mutations/processPullPosition";
+  pullAskById,
+  type PullAskRequest,
+} from "@/modules/asks/api/services/mutations/pullAskById";
+import type { AskDto } from "@/modules/asks/api/types/dto";
 import type {
-  GetPullsResponse,
-  GetPullByPalletIdResponse,
-} from "@/modules/pulls/api/types/dto";
+  Pull,
+  PullPosition,
+  PullsResponsePayload,
+} from "@/modules/pulls/api/types";
+import { updatePullsWithAsk } from "@/modules/pulls/utils/updatePullsWithAsk";
+
+interface ProcessPullPositionInput {
+  pull: Pull;
+  position: PullPosition;
+  actualQuant: number;
+  actualBoxes: number;
+  solverId: string;
+}
+
+interface MutationSuccessPayload {
+  ask: AskDto;
+  payload: ProcessPullPositionInput;
+}
 
 export function useProcessPullPositionMutation() {
   const queryClient = useQueryClient();
-  const navigate = useNavigate();
 
-  return useMutation({
-    mutationFn: (params: ProcessPullPositionParams) =>
-      processPullPosition(params),
-    onMutate: async (params) => {
-      // Cancel outgoing refetches
-      await queryClient.cancelQueries({ queryKey: ["pulls"] });
-      await queryClient.cancelQueries({
-        queryKey: ["pulls", params.palletId],
-      });
-
-      // Snapshot previous values for rollback
-      const previousPulls = queryClient.getQueryData<GetPullsResponse>([
-        "pulls",
-      ]);
-      const previousPull = queryClient.getQueryData<GetPullByPalletIdResponse>([
-        "pulls",
-        params.palletId,
-      ]);
-
-      // Optimistically update
-      if (previousPull && previousPull.data) {
-        const updatedPull: GetPullByPalletIdResponse = {
-          ...previousPull,
-          data: {
-            ...previousPull.data,
-            positions: previousPull.data.positions.map((pos) =>
-              pos.posId === params.posId
-                ? {
-                    ...pos,
-                    currentQuant: Math.max(
-                      0,
-                      pos.currentQuant - params.data.actualQuant,
-                    ),
-                    currentBoxes: Math.max(
-                      0,
-                      pos.currentBoxes - params.data.actualBoxes,
-                    ),
-                  }
-                : pos,
-            ),
+  return useMutation<MutationSuccessPayload, unknown, ProcessPullPositionInput>({
+    mutationFn: async (payload) => {
+      const request: PullAskRequest = {
+        solverId: payload.solverId,
+        action: "pull",
+        pullAskData: {
+          palletData: {
+            _id: payload.pull.palletId,
+            title: payload.pull.palletTitle,
           },
-        };
-        queryClient.setQueryData(["pulls", params.palletId], updatedPull);
-      }
+          quant: payload.actualQuant,
+          boxes: payload.actualBoxes,
+        },
+      };
 
-      // Update pulls list if exists
-      if (previousPulls && previousPulls.data) {
-        const updatedPulls: GetPullsResponse = {
-          ...previousPulls,
-          data: {
-            ...previousPulls.data,
-            pulls: previousPulls.data.pulls.map((pull) =>
-              pull.palletId === params.palletId
-                ? {
-                    ...pull,
-                    positions: pull.positions.map((pos) =>
-                      pos.posId === params.posId
-                        ? {
-                            ...pos,
-                            currentQuant: Math.max(
-                              0,
-                              pos.currentQuant - params.data.actualQuant,
-                            ),
-                            currentBoxes: Math.max(
-                              0,
-                              pos.currentBoxes - params.data.actualBoxes,
-                            ),
-                          }
-                        : pos,
-                    ),
-                  }
-                : pull,
-            ),
-          },
-        };
-        queryClient.setQueryData(["pulls"], updatedPulls);
-      }
+      const ask = await pullAskById(payload.position.askId, request);
 
-      return { previousPulls, previousPull };
+      return { ask, payload };
     },
-    onSuccess: (data, params) => {
-      // Check if this was the last position before invalidating
-      const updatedPull = queryClient.getQueryData<GetPullByPalletIdResponse>([
-        "pulls",
-        params.palletId,
-      ]);
+    onSuccess: ({ ask, payload }) => {
+      queryClient.setQueryData<PullsResponsePayload | undefined>(
+        ["pulls"],
+        (state) => updatePullsWithAsk({ state, ask }),
+      );
 
-      // If no positions left with currentQuant > 0, redirect to pulls page
-      if (
-        updatedPull?.data?.positions &&
-        updatedPull.data.positions.every((pos) => pos.currentQuant === 0)
-      ) {
-        navigate("/refiling/pulls");
-      }
+      queryClient.invalidateQueries({ queryKey: ["asks", ask._id] });
+      queryClient.invalidateQueries({ queryKey: ["asks"] });
 
-      // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ["pulls"] });
-      queryClient.invalidateQueries({
-        queryKey: ["pulls", params.palletId],
+      toast.success("Прогрес заявки оновлено", {
+        description: `Знято ${payload.actualQuant} шт. / ${payload.actualBoxes} кор. з ${payload.pull.palletTitle}`,
       });
-
-      // If ask completed, invalidate asks cache
-      if (data.data?.askFullyProcessed) {
-        queryClient.invalidateQueries({ queryKey: ["asks"] });
-        toast.success(
-          `Запит виконано! Оброблено ${data.data.askProgress} одиниць`,
-        );
-      } else {
-        toast.success(
-          `Позицію оброблено. Залишилось: ${data.data?.remainingQuant || 0}`,
-        );
-      }
     },
-    onError: (error, params, context) => {
-      // Rollback on error
-      if (context?.previousPull) {
-        queryClient.setQueryData(
-          ["pulls", params.palletId],
-          context.previousPull,
-        );
-      }
-      if (context?.previousPulls) {
-        queryClient.setQueryData(["pulls"], context.previousPulls);
-      }
+    onError: (error) => {
+      const message =
+        error instanceof Error ? error.message : "Не вдалося оновити заявку";
 
-      const errorMessage =
-        error instanceof Error ? error.message : "Помилка обробки позиції";
       toast.error("Помилка обробки позиції", {
-        description: errorMessage,
+        description: message,
       });
     },
   });
 }
-
