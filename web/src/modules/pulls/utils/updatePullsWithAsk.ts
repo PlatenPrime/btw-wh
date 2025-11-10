@@ -5,34 +5,53 @@ import type {
   PullsResponsePayload,
 } from "@/modules/pulls/api/types";
 
+interface OverridePulledProgress {
+  deltaQuant?: number;
+  deltaBoxes?: number;
+}
+
 interface UpdatePullsWithAskParams {
   state: PullsResponsePayload | undefined;
   ask: AskDto;
+  overridePulled?: OverridePulledProgress;
 }
 
-const getAskPulledBoxes = (ask: AskDto): number =>
-  ask.pullBoxes ?? ask.pullBox ?? 0;
+const getAskPulledBoxes = (
+  ask: AskDto,
+): { value: number; defined: boolean } => {
+  if ("pullBoxes" in ask && typeof ask.pullBoxes === "number") {
+    return { value: ask.pullBoxes, defined: true };
+  }
+
+  if ("pullBox" in ask && typeof ask.pullBox === "number") {
+    return { value: ask.pullBox, defined: true };
+  }
+
+  return { value: 0, defined: false };
+};
 
 const shouldKeepPosition = ({
-  ask,
   position,
+  askStatus,
+  nextPulledQuant,
+  nextPulledBoxes,
 }: {
-  ask: AskDto;
   position: PullPosition;
+  askStatus: AskDto["status"];
+  nextPulledQuant: number;
+  nextPulledBoxes: number;
 }): boolean => {
-  if (ask.status !== "new") {
+  if (askStatus !== "new") {
     return false;
   }
 
   const requestedQuant = position.totalRequestedQuant;
-  const pulledQuant = ask.pullQuant ?? 0;
-  const pulledBoxes = getAskPulledBoxes(ask);
 
   if (requestedQuant == null) {
-    return pulledQuant === 0 && pulledBoxes === 0;
+    return nextPulledQuant === 0 && nextPulledBoxes === 0;
   }
 
-  return pulledQuant < requestedQuant;
+  return nextPulledQuant < requestedQuant;
 };
 
 const dedupeAskIds = (pulls: Pull[]): number => {
@@ -50,6 +69,7 @@ const dedupeAskIds = (pulls: Pull[]): number => {
 export const updatePullsWithAsk = ({
   state,
   ask,
+  overridePulled,
 }: UpdatePullsWithAskParams): PullsResponsePayload | undefined => {
   if (!state) {
     return state;
@@ -67,13 +87,29 @@ export const updatePullsWithAsk = ({
           return positionsAcc;
         }
 
+        const { value: askPulledBoxes, defined: hasAskPulledBoxes } =
+          getAskPulledBoxes(ask);
+
+        const hasAskPulledQuant = typeof ask.pullQuant === "number";
+        const nextAlreadyPulledQuant = hasAskPulledQuant
+          ? ask.pullQuant ?? 0
+          : position.alreadyPulledQuant + (overridePulled?.deltaQuant ?? 0);
+        const nextAlreadyPulledBoxes = hasAskPulledBoxes
+          ? askPulledBoxes
+          : position.alreadyPulledBoxes + (overridePulled?.deltaBoxes ?? 0);
+
         const nextPosition: PullPosition = {
           ...position,
-          alreadyPulledQuant: ask.pullQuant ?? 0,
-          alreadyPulledBoxes: getAskPulledBoxes(ask),
+          alreadyPulledQuant: nextAlreadyPulledQuant,
+          alreadyPulledBoxes: nextAlreadyPulledBoxes,
         };
 
-        const keepPosition = shouldKeepPosition({ ask, position });
+        const keepPosition = shouldKeepPosition({
+          position,
+          askStatus: ask.status,
+          nextPulledQuant: nextAlreadyPulledQuant,
+          nextPulledBoxes: nextAlreadyPulledBoxes,
+        });
 
         pullChanged = true;
         hasChanges = true;

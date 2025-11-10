@@ -125,4 +125,75 @@ describe("updatePullsWithAsk", () => {
     expect(result?.pulls).toHaveLength(0);
     expect(result?.totalAsks).toBe(0);
   });
+
+  it("uses override progress when ask payload lacks pull totals", () => {
+    const state = createState({
+      pulls: [
+        createPull({
+          positions: [
+            createPosition({
+              alreadyPulledQuant: 2,
+              alreadyPulledBoxes: 1,
+              totalRequestedQuant: 10,
+            }),
+          ],
+        }),
+      ],
+    });
+
+    const ask: AskDto = {
+      ...baseAsk,
+      pullQuant: undefined,
+      pullBox: undefined,
+      pullBoxes: undefined,
+    };
+
+    const result = updatePullsWithAsk({
+      state,
+      ask,
+      overridePulled: {
+        deltaQuant: 3,
+        deltaBoxes: 0,
+      },
+    });
+
+    expect(result?.pulls[0].positions[0].alreadyPulledQuant).toBe(5);
+    expect(result?.pulls[0].positions[0].alreadyPulledBoxes).toBe(1);
+    expect(result?.pulls[0].positions).toHaveLength(1);
+  });
+
+  it("removes position when override progress reaches requested quant", () => {
+    const state = createState({
+      pulls: [
+        createPull({
+          positions: [
+            createPosition({
+              alreadyPulledQuant: 4,
+              totalRequestedQuant: 5,
+            }),
+          ],
+        }),
+      ],
+    });
+
+    const ask: AskDto = {
+      ...baseAsk,
+      pullQuant: undefined,
+      pullBox: undefined,
+      pullBoxes: undefined,
+    };
+
+    const result = updatePullsWithAsk({
+      state,
+      ask,
+      overridePulled: {
+        deltaQuant: 1,
+        deltaBoxes: 0,
+      },
+    });
+
+    expect(result?.pulls).toHaveLength(0);
+    expect(result?.totalPulls).toBe(0);
+    expect(result?.totalAsks).toBe(0);
+  });
 });

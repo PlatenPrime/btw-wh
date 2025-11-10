@@ -187,7 +187,7 @@ export function ProcessPositionDialogView({
             onCancel={() => onOpenChange(false)}
             onSubmit={handleSubmit}
             cancelText="Скасувати"
-            submitText="Зафіксувати"
+            submitText="Зняти"
             isSubmitting={isProcessing}
             className="w-full"
           />
