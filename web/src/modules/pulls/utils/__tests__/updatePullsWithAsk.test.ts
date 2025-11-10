@@ -135,6 +135,8 @@ describe("updatePullsWithAsk", () => {
               alreadyPulledQuant: 2,
               alreadyPulledBoxes: 1,
               totalRequestedQuant: 10,
+              currentQuant: 20,
+              currentBoxes: 5,
             }),
           ],
         }),
@@ -154,11 +156,15 @@ describe("updatePullsWithAsk", () => {
       overridePulled: {
         deltaQuant: 3,
         deltaBoxes: 0,
+        nextCurrentQuant: 17,
+        nextCurrentBoxes: 5,
       },
     });
 
     expect(result?.pulls[0].positions[0].alreadyPulledQuant).toBe(5);
     expect(result?.pulls[0].positions[0].alreadyPulledBoxes).toBe(1);
+    expect(result?.pulls[0].positions[0].currentQuant).toBe(17);
+    expect(result?.pulls[0].positions[0].currentBoxes).toBe(5);
     expect(result?.pulls[0].positions).toHaveLength(1);
   });
 
@@ -189,6 +195,8 @@ describe("updatePullsWithAsk", () => {
       overridePulled: {
         deltaQuant: 1,
         deltaBoxes: 0,
+        nextCurrentQuant: 3,
+        nextCurrentBoxes: 2,
       },
     });
 

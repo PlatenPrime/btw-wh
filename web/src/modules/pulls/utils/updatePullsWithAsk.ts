@@ -8,6 +8,8 @@ import type {
 interface OverridePulledProgress {
   deltaQuant?: number;
   deltaBoxes?: number;
+  nextCurrentQuant?: number;
+  nextCurrentBoxes?: number;
 }
 
 interface UpdatePullsWithAskParams {
@@ -98,10 +100,17 @@ export const updatePullsWithAsk = ({
           ? askPulledBoxes
           : position.alreadyPulledBoxes + (overridePulled?.deltaBoxes ?? 0);
 
+        const nextCurrentQuant =
+          overridePulled?.nextCurrentQuant ?? position.currentQuant;
+        const nextCurrentBoxes =
+          overridePulled?.nextCurrentBoxes ?? position.currentBoxes;
+
         const nextPosition: PullPosition = {
           ...position,
           alreadyPulledQuant: nextAlreadyPulledQuant,
           alreadyPulledBoxes: nextAlreadyPulledBoxes,
+          currentQuant: nextCurrentQuant,
+          currentBoxes: nextCurrentBoxes,
         };
 
         const keepPosition = shouldKeepPosition({

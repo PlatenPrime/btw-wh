@@ -1,18 +1,14 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
+import { completeAskById } from "@/modules/asks/api/services/mutations/completeAskById";
 import {
   pullAskById,
   type PullAskRequest,
 } from "@/modules/asks/api/services/mutations/pullAskById";
 import type { AskDto } from "@/modules/asks/api/types/dto";
-import type {
-  Pull,
-  PullPosition,
-  PullsResponse,
-  PullsResponsePayload,
-} from "@/modules/pulls/api/types";
-import { updatePullsWithAsk } from "@/modules/pulls/utils/updatePullsWithAsk";
+import { updatePos } from "@/modules/poses/api/services/mutations/updatePos";
+import type { Pull, PullPosition } from "@/modules/pulls/api/types";
 
 interface ProcessPullPositionInput {
   pull: Pull;
@@ -22,103 +18,93 @@ interface ProcessPullPositionInput {
   solverId: string;
 }
 
-interface MutationSuccessPayload {
-  ask: AskDto;
-  payload: ProcessPullPositionInput;
-}
-
 export function useProcessPullPositionMutation() {
   const queryClient = useQueryClient();
 
-  return useMutation<MutationSuccessPayload, unknown, ProcessPullPositionInput>(
-    {
-      mutationFn: async (payload) => {
-        const request: PullAskRequest = {
-          solverId: payload.solverId,
-          action: "pull",
-          pullAskData: {
-            palletData: {
-              _id: payload.pull.palletId,
-              title: payload.pull.palletTitle,
-            },
-            quant: payload.actualQuant,
-            boxes: payload.actualBoxes,
-          },
-        };
+  return useMutation<
+    { ask: AskDto; payload: ProcessPullPositionInput },
+    unknown,
+    ProcessPullPositionInput
+  >({
+    mutationFn: async (payload) => {
+      const { position, actualQuant, actualBoxes } = payload;
 
+      const nextQuant = Math.max(position.currentQuant - actualQuant, 0);
+      const nextBoxes = Math.max(position.currentBoxes - actualBoxes, 0);
+
+      const rollbackQuant = position.currentQuant;
+      const rollbackBoxes = position.currentBoxes;
+
+      await updatePos(position.posId, {
+        quant: nextQuant,
+        boxes: nextBoxes,
+      });
+
+      const request: PullAskRequest = {
+        solverId: payload.solverId,
+        action: "pull",
+        pullAskData: {
+          palletData: {
+            _id: payload.pull.palletId,
+            title: payload.pull.palletTitle,
+          },
+          quant: payload.actualQuant,
+          boxes: payload.actualBoxes,
+        },
+      };
+
+      try {
         const ask = await pullAskById(payload.position.askId, request);
 
         return { ask, payload };
-      },
-      onSuccess: ({ ask, payload }) => {
-        queryClient.setQueryData<
-          PullsResponsePayload | PullsResponse | undefined
-        >(["pulls"], (state) => {
-          if (!state) {
-            return state;
-          }
-
-          const isPayload = (value: unknown): value is PullsResponsePayload =>
-            Boolean(value) &&
-            typeof value === "object" &&
-            "pulls" in (value as Record<string, unknown>) &&
-            Array.isArray((value as PullsResponsePayload).pulls);
-
-          const isEnvelope = (value: unknown): value is PullsResponse =>
-            Boolean(value) &&
-            typeof value === "object" &&
-            "data" in (value as Record<string, unknown>) &&
-            isPayload((value as PullsResponse).data);
-
-          if (isEnvelope(state)) {
-            const nextPayload = updatePullsWithAsk({
-              state: state.data,
-              ask,
-              overridePulled: {
-                deltaQuant: payload.actualQuant,
-                deltaBoxes: payload.actualBoxes,
-              },
-            });
-
-            if (!nextPayload) {
-              return state;
-            }
-
-            return {
-              ...state,
-              data: nextPayload,
-            };
-          }
-
-          if (!isPayload(state)) {
-            return state;
-          }
-
-          return updatePullsWithAsk({
-            state,
-            ask,
-            overridePulled: {
-              deltaQuant: payload.actualQuant,
-              deltaBoxes: payload.actualBoxes,
-            },
-          });
+      } catch (error) {
+        await updatePos(position.posId, {
+          quant: rollbackQuant,
+          boxes: rollbackBoxes,
+        }).catch(() => {
+          // оставляем лог только в консоли, чтобы не прерывать исходную ошибку
+          console.error("Не вдалося відкрутити позицію після помилки pullAsk");
         });
 
-        queryClient.invalidateQueries({ queryKey: ["asks", ask._id] });
-        queryClient.invalidateQueries({ queryKey: ["asks"] });
-
-        toast.success("Прогрес заявки оновлено", {
-          description: `Знято ${payload.actualQuant} шт. / ${payload.actualBoxes} кор. з ${payload.pull.palletTitle}`,
-        });
-      },
-      onError: (error) => {
-        const message =
-          error instanceof Error ? error.message : "Не вдалося оновити заявку";
-
-        toast.error("Помилка обробки позиції", {
-          description: message,
-        });
-      },
+        throw error;
+      }
     },
-  );
+    onSuccess: async ({ ask, payload }) => {
+      const requestedQuant = payload.position.totalRequestedQuant;
+      const pulledQuant = ask.pullQuant ?? 0;
+      const shouldComplete =
+        ask.status === "new" &&
+        requestedQuant != null &&
+        pulledQuant >= requestedQuant;
+
+      if (shouldComplete) {
+        try {
+          await completeAskById(ask._id, payload.solverId);
+        } catch (error) {
+          const description =
+            error instanceof Error ? error.message : undefined;
+
+          toast.warning("Заявку не вдалося завершити автоматично", {
+            description,
+          });
+        }
+      }
+
+      queryClient.invalidateQueries({ queryKey: ["asks", ask._id] });
+      queryClient.invalidateQueries({ queryKey: ["asks"] });
+      queryClient.invalidateQueries({ queryKey: ["pulls"] });
+
+      toast.success("Прогрес заявки оновлено", {
+        description: `Знято ${payload.actualQuant} шт. / ${payload.actualBoxes} кор. з ${payload.pull.palletTitle}`,
+      });
+    },
+    onError: (error) => {
+      const message =
+        error instanceof Error ? error.message : "Не вдалося оновити заявку";
+
+      toast.error("Помилка обробки позиції", {
+        description: message,
+      });
+    },
+  });
 }
