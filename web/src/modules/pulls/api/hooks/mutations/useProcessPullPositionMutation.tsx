@@ -8,6 +8,7 @@ import {
 } from "@/modules/asks/api/services/mutations/pullAskById";
 import type { AskDto } from "@/modules/asks/api/types/dto";
 import { updatePos } from "@/modules/poses/api/services/mutations/updatePos";
+import { hasAskRemainingPositions } from "@/modules/pulls/utils/hasAskRemainingPositions";
 import type { Pull, PullPosition } from "@/modules/pulls/api/types";
 
 interface ProcessPullPositionInput {
@@ -72,10 +73,28 @@ export function useProcessPullPositionMutation() {
     onSuccess: async ({ ask, payload }) => {
       const requestedQuant = payload.position.totalRequestedQuant;
       const pulledQuant = ask.pullQuant ?? 0;
+      const nextCurrentQuant = Math.max(
+        payload.position.currentQuant - payload.actualQuant,
+        0,
+      );
+      const nextCurrentBoxes = Math.max(
+        payload.position.currentBoxes - payload.actualBoxes,
+        0,
+      );
+      const askHasOpenPositions = hasAskRemainingPositions({
+        queryClient,
+        ask,
+        overridePulled: {
+          deltaQuant: payload.actualQuant,
+          deltaBoxes: payload.actualBoxes,
+          nextCurrentQuant,
+          nextCurrentBoxes,
+        },
+      });
       const shouldComplete =
         ask.status === "new" &&
-        requestedQuant != null &&
-        pulledQuant >= requestedQuant;
+        ((requestedQuant != null && pulledQuant >= requestedQuant) ||
+          !askHasOpenPositions);
 
       if (shouldComplete) {
         try {

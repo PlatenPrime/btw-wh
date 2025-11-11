@@ -5,7 +5,7 @@ import type {
   PullsResponsePayload,
 } from "@/modules/pulls/api/types";
 
-interface OverridePulledProgress {
+export interface OverridePulledProgress {
   deltaQuant?: number;
   deltaBoxes?: number;
   nextCurrentQuant?: number;
@@ -37,11 +37,15 @@ const shouldKeepPosition = ({
   askStatus,
   nextPulledQuant,
   nextPulledBoxes,
+  nextCurrentQuant,
+  nextCurrentBoxes,
 }: {
   position: PullPosition;
   askStatus: AskDto["status"];
   nextPulledQuant: number;
   nextPulledBoxes: number;
+  nextCurrentQuant: number;
+  nextCurrentBoxes: number;
 }): boolean => {
   if (askStatus !== "new") {
     return false;
@@ -53,7 +57,13 @@ const shouldKeepPosition = ({
     return nextPulledQuant === 0 && nextPulledBoxes === 0;
   }
 
-  return nextPulledQuant < requestedQuant;
+  if (nextPulledQuant >= requestedQuant) {
+    return false;
+  }
+
+  const hasRemainingStock = nextCurrentQuant > 0 || nextCurrentBoxes > 0;
+
+  return hasRemainingStock;
 };
 
 const dedupeAskIds = (pulls: Pull[]): number => {
@@ -74,6 +84,10 @@ export const updatePullsWithAsk = ({
   overridePulled,
 }: UpdatePullsWithAskParams): PullsResponsePayload | undefined => {
   if (!state) {
+    return state;
+  }
+
+  if (!state.pulls || state.pulls.length === 0) {
     return state;
   }
 
@@ -118,6 +132,8 @@ export const updatePullsWithAsk = ({
           askStatus: ask.status,
           nextPulledQuant: nextAlreadyPulledQuant,
           nextPulledBoxes: nextAlreadyPulledBoxes,
+          nextCurrentQuant,
+          nextCurrentBoxes,
         });
 
         pullChanged = true;

@@ -59,6 +59,19 @@ const baseAsk: AskDto = {
 };
 
 describe("updatePullsWithAsk", () => {
+  it("returns original state when pulls cache is empty", () => {
+    const state = createState({ pulls: [], totalPulls: 0, totalAsks: 0 });
+    const ask: AskDto = {
+      ...baseAsk,
+      pullQuant: 2,
+      pullBoxes: 0,
+    };
+
+    const result = updatePullsWithAsk({ state, ask });
+
+    expect(result).toBe(state);
+  });
+
   it("updates progress for matching position and keeps it when request still active", () => {
     const state = createState();
     const ask: AskDto = {
