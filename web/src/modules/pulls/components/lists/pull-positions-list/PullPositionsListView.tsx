@@ -23,7 +23,7 @@ export function PullPositionsListView({
   onPositionClick,
 }: PullPositionsListViewProps) {
   return (
-    <div className="grid gap-3">
+    <div className="grid gap-2">
       {positions.map((position) => (
         <PullPositionCard
           key={position.posId}

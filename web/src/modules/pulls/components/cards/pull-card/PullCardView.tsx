@@ -1,8 +1,7 @@
-import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { Pull, PullPosition } from "@/modules/pulls/api/types";
 import { PullPositionsList } from "@/modules/pulls/components/lists/pull-positions-list/PullPositionsList";
-import { MapPin, Package, Rows4 } from "lucide-react";
+import { Columns4Icon } from "lucide-react";
 
 interface PullCardViewProps {
   pull: Pull;
@@ -11,31 +10,18 @@ interface PullCardViewProps {
 
 export function PullCardView({ pull, onPositionClick }: PullCardViewProps) {
   return (
-    <Card className="border shadow-sm">
-      <CardHeader className="gap-3">
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <CardTitle className="flex items-center gap-2 text-lg">
-            <Package className="h-4 w-4 text-primary" />
-            {pull.palletTitle}
-          </CardTitle>
-          <div className="flex flex-wrap items-center gap-2">
-            <Badge variant="outline" className="flex items-center gap-1">
-              <MapPin className="h-3 w-3" />
-              Сектор {pull.sector ?? "—"}
-            </Badge>
-            <Badge variant="outline" className="flex items-center gap-1">
-              <Rows4 className="h-3 w-3" />
-              Ряд {pull.rowTitle}
-            </Badge>
-          </div>
-        </div>
-        <div className="text-muted-foreground grid gap-1 text-sm sm:grid-cols-2">
-          <span>Позицій: {pull.positions.length}</span>
-          <span>Запитів: {pull.totalAsks}</span>
-        </div>
+    <Card className="gap-2 border p-2 shadow-sm ">
+      <CardHeader className="gap-2 p-0">
+        <CardTitle className="flex items-center justify-center gap-2 text-lg">
+          <Columns4Icon className="text-primary h-4 w-4" />
+          {pull.palletTitle}
+        </CardTitle>
       </CardHeader>
-      <CardContent className="grid gap-3">
-        <PullPositionsList positions={pull.positions} onPositionClick={onPositionClick} />
+      <CardContent className="grid gap-2 p-0">
+        <PullPositionsList
+          positions={pull.positions}
+          onPositionClick={onPositionClick}
+        />
       </CardContent>
     </Card>
   );

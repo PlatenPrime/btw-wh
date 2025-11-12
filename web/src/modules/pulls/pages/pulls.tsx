@@ -20,7 +20,7 @@ export function Pulls() {
   }, [refetch]);
 
   return (
-    <SidebarInsetLayout headerText="Pulls">
+    <SidebarInsetLayout headerText="Зняття">
       <main className="p-3 md:p-4">
         {isPending && <PullsContainerSkeleton />}
 
