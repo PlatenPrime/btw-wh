@@ -32,3 +32,5 @@ export interface BtradeArtInfoDto {
   price: number;
   quantity: number;
 }
+
+export type BtradeArtInfoResponse = EntityResponse<BtradeArtInfoDto>;

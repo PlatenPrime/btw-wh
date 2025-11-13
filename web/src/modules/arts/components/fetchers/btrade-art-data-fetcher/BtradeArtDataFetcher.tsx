@@ -1,12 +1,20 @@
-import { ErrorDisplay } from '@/components/shared/error-components';
-import { LoadingNoData } from '@/components/shared/loading-states/loading-nodata';
+import { ErrorDisplay } from "@/components/shared/error-components";
+import { LoadingNoData } from "@/components/shared/loading-states/loading-nodata";
 import { useBtradeArtDataQuery } from "@/modules/arts/api/hooks/queries/useBtradeArtDataQuery";
 import type { BtradeArtInfoDto } from "@/modules/arts/api/types/dto";
 import type { ComponentType } from "react";
 
+export interface BtradeArtDataContainerProps {
+  artikul: string;
+  exists: boolean;
+  message: string;
+  data: BtradeArtInfoDto | null;
+  onRetry: () => void;
+}
+
 interface BtradeArtDataFetcherProps {
   artikul: string | undefined;
-  ContainerComponent: ComponentType<{ data: BtradeArtInfoDto }>;
+  ContainerComponent: ComponentType<BtradeArtDataContainerProps>;
   SkeletonComponent: ComponentType;
 }
 
@@ -15,11 +23,16 @@ export function BtradeArtDataFetcher({
   ContainerComponent,
   SkeletonComponent,
 }: BtradeArtDataFetcherProps) {
+  if (!artikul) {
+    return <LoadingNoData description="Артикул не передан для завантаження даних" />;
+  }
+
   const {
-    data: btradeArtData,
+    data: btradeArtResponse,
     isLoading,
     error,
-  } = useBtradeArtDataQuery(artikul ?? "");
+    refetch,
+  } = useBtradeArtDataQuery(artikul);
 
   if (isLoading) return <SkeletonComponent />;
 
@@ -32,8 +45,19 @@ export function BtradeArtDataFetcher({
       />
     );
 
-  if (!btradeArtData)
+  if (!btradeArtResponse) {
     return <LoadingNoData description="Немає даних для відображення" />;
+  }
 
-  return <ContainerComponent data={btradeArtData} />;
+  const containerProps: BtradeArtDataContainerProps = {
+    artikul,
+    exists: btradeArtResponse.exists,
+    message: btradeArtResponse.message,
+    data: btradeArtResponse.data,
+    onRetry: () => {
+      void refetch();
+    },
+  };
+
+  return <ContainerComponent {...containerProps} />;
 }
