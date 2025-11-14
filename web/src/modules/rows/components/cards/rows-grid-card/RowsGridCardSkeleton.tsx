@@ -3,13 +3,12 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export function RowsGridCardSkeleton() {
   return (
-    <Card className="bg-background shadow-muted-foreground group h-full w-full p-0 shadow-none ring-1 ring-gray-200 dark:ring-gray-700">
-      <CardHeader className="flex h-full items-center justify-between p-0 pr-2">
-        <Skeleton className="h-full w-full" />
-        <div className="flex items-center gap-2">
-          <Skeleton className="size-6 rounded-full" />
-          <Skeleton className="size-6 rounded-full" />
+    <Card className="shadow-muted-foreground group/row bg-card h-full w-full p-0 shadow-xs transition-all duration-500 ease-out hover:shadow-xl hover:shadow-orange-500">
+      <CardHeader className="flex items-center justify-between px-2">
+        <div className="flex-1 rounded-lg p-2">
+          <Skeleton className="mx-auto h-6 w-24" />
         </div>
+        <Skeleton className="h-6 w-6 shrink-0" />
       </CardHeader>
     </Card>
   );

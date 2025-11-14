@@ -1,7 +1,7 @@
 import { Card, CardHeader } from "@/components/ui/card";
 import type { RowDto } from "@/modules/rows/api/types/dto";
 import { RowLink } from "@/modules/rows/components/elements/row-link/RowLink";
-import { RowCardActions } from "./RowCardActions";
+import { RowCardActions } from "./row-card-arctions/RowCardActions";
 
 interface RowsGridCardViewProps {
   row: RowDto;

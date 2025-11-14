@@ -32,10 +32,10 @@ export function ZonesGridCard({ zone, onEdit, onDelete }: ZonesGridCardProps) {
   ].filter(() => true); // Фільтрація буде в RoleGuard
 
   return (
-    <Card className="gap-2 p-2 transition-shadow hover:shadow-md">
+    <Card className="gap-0 p-2 transition-shadow hover:shadow-md">
       <CardHeader className="p-0">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-lg">
+          <CardTitle className="">
             <ZoneLink zone={zone} className="hover:underline">
               {zone.title}
             </ZoneLink>
@@ -52,12 +52,12 @@ export function ZonesGridCard({ zone, onEdit, onDelete }: ZonesGridCardProps) {
       </CardHeader>
       <CardContent className="grid gap-2 p-0">
         <div className="flex items-center justify-between">
-          <span className="text-muted-foreground text-sm">Штрих-код:</span>
-          <ZoneBarcode zone={zone} className="text-muted-foreground text-sm" />
+          <span className="text-muted-foreground text-xs">Штрих-код:</span>
+          <ZoneBarcode zone={zone} className="text-muted-foreground text-xs" />
         </div>
         <div className="flex items-center justify-between">
-          <span className="text-muted-foreground text-sm">Сектор:</span>
-          <ZoneSector zone={zone} className="text-muted-foreground text-sm" />
+          <span className="text-muted-foreground text-xs">Сектор:</span>
+          <ZoneSector zone={zone} className="text-muted-foreground text-xs" />
         </div>
       </CardContent>
     </Card>

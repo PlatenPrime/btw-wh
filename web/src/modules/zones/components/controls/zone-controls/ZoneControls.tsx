@@ -29,7 +29,7 @@ export function ZoneControls() {
   };
 
   return (
-    <Wrapper className="flex gap-2">
+    <Wrapper className="grid grid-cols-1 gap-2 lg:grid-cols-2">
       {/* Пошук і дії */}
       <div className="flex items-center justify-between gap-2">
         <div className="max-w-md flex-1">
@@ -42,7 +42,13 @@ export function ZoneControls() {
       </div>
 
       {/* Фільтри і сортування */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-2 lg:justify-end flex-wrap">
+        <SelectLimit
+          limit={limit}
+          setLimit={setLimit}
+          limitOptions={[10, 20, 50, 100]}
+        />
+
         <div className="flex items-center gap-2">
           <Select
             value={sortBy}
@@ -72,15 +78,6 @@ export function ZoneControls() {
               <ArrowDown className="h-4 w-4" />
             )}
           </Button>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <span className="text-sm">На сторінці:</span>
-          <SelectLimit
-            limit={limit}
-            setLimit={setLimit}
-            limitOptions={[10, 20, 50, 100]}
-          />
         </div>
       </div>
     </Wrapper>
