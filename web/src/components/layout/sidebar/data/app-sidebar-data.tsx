@@ -1,14 +1,14 @@
-import { 
-  StickyNote, 
-  RefreshCcwDot, 
-  Settings, 
-  Warehouse, 
-  Rows4, 
-  MapPin, 
-  FileQuestion, 
-  AlertTriangle, 
+import {
+  AlertTriangle,
+  FileQuestion,
+  MapPin,
+  PackageSearch,
+  RefreshCcwDot,
   Route,
-  PackageSearch
+  Rows4,
+  Settings,
+  StickyNote,
+  Warehouse,
 } from "lucide-react";
 
 const getIcon = (iconName: string) => {
@@ -24,7 +24,7 @@ const getIcon = (iconName: string) => {
     Route: Route,
     PackageSearch: PackageSearch,
   };
-  
+
   const IconComponent = icons[iconName as keyof typeof icons];
   return IconComponent ? <IconComponent className="h-4 w-4" /> : null;
 };
@@ -45,7 +45,6 @@ export const appSidebarData = {
           url: "/arts/update",
           iconName: "RefreshCcwDot",
         },
-        
       ],
     },
     {
@@ -57,13 +56,17 @@ export const appSidebarData = {
           url: "/wh/rows",
           iconName: "Rows4",
         },
-        
+
         {
           title: "Зони",
           url: "/wh/zones",
           iconName: "MapPin",
         },
-        
+        {
+          title: "Імпорт/Експорт зон",
+          url: "/wh/zones-import-export",
+          iconName: "MapPin",
+        },
       ],
     },
     {
@@ -80,12 +83,11 @@ export const appSidebarData = {
           url: "/refiling/defs",
           iconName: "AlertTriangle",
         },
-        {
-          title: "Зняття",
-          url: "/refiling/pulls",
-          iconName: "PackageSearch",
-        },
-   
+        // {
+        //   title: "Зняття",
+        //   url: "/refiling/pulls",
+        //   iconName: "PackageSearch",
+        // },
       ],
     },
   ],

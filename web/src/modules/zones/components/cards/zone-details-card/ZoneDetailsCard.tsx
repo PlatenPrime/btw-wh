@@ -15,11 +15,11 @@ export function ZoneDetailsCard({ zone }: ZoneDetailsCardProps) {
         <div className="grid  ">
           <div className="flex items-center gap-2">
             <div className=" text-sm">Штрих-код: </div>
-            <ZoneBarcode zone={zone} />
+            <ZoneBarcode zone={zone} className="text-sm" />
           </div>
           <div className="flex items-center gap-2">
             <div className=" text-sm">Сектор:</div>
-            <ZoneSector zone={zone} />
+            <ZoneSector zone={zone} className="text-sm" />
           </div>
         </div>
       </CardContent>

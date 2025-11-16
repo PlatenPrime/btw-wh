@@ -49,7 +49,6 @@ const Main = lazy(() =>
   import("./pages/main").then((module) => ({ default: module.Main })),
 );
 
-
 const Row = lazy(() =>
   import("./modules/rows/pages/row").then((module) => ({
     default: module.Row,
@@ -74,6 +73,11 @@ const WhUtils = lazy(() =>
 const Zones = lazy(() =>
   import("./modules/zones/pages/zones").then((module) => ({
     default: module.Zones,
+  })),
+);
+const ZonesImportExport = lazy(() =>
+  import("./modules/zones/pages/zones-import-export").then((module) => ({
+    default: module.ZonesImportExport,
   })),
 );
 const Zone = lazy(() =>
@@ -204,6 +208,15 @@ export const router = createHashRouter([
             element: (
               <ProtectedRoute allowedRoles={[RoleType.ADMIN]}>
                 <Zones />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "zones-import-export",
+            element: (
+              <ProtectedRoute allowedRoles={[RoleType.ADMIN]}>
+                <ZonesImportExport />
               </ProtectedRoute>
             ),
             errorElement: <RouteErrorBoundary />,

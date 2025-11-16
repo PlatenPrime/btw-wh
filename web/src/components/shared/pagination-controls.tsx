@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { NotepadText } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 
 type Props = {
@@ -32,8 +31,7 @@ export function PaginationControls({
       {totalPages <= 1 ? (
         <span className="text-muted-foreground text-sm">0</span>
       ) : (
-        <span className="text-muted-foreground flex items-center text-nowrap text-sm">
-          <NotepadText />
+        <span className="text-muted-foreground flex items-center text-sm text-nowrap">
           {currentPage} / {totalPages}
         </span>
       )}

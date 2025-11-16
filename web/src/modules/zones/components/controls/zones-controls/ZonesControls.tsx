@@ -2,17 +2,11 @@ import { SearchPanel } from "@/components/shared/search-components/search-panel/
 import { SelectLimit } from "@/components/shared/select-limit";
 import { Wrapper } from "@/components/shared/wrappers/Wrapper";
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { useZonesParams } from "@/modules/zones/hooks/useZonesParams";
 import { ArrowDown, ArrowUp } from "lucide-react";
+import { SortZonesSelect } from "./components/sort-zones-select/SortZonesSelect";
 
-export function ZoneControls() {
+export function ZonesControls() {
   const {
     search,
     setSearch,
@@ -42,7 +36,7 @@ export function ZoneControls() {
       </div>
 
       {/* Фільтри і сортування */}
-      <div className="flex items-center gap-2 lg:justify-end flex-wrap">
+      <div className="flex flex-wrap items-center gap-2 lg:justify-end">
         <SelectLimit
           limit={limit}
           setLimit={setLimit}
@@ -50,22 +44,8 @@ export function ZoneControls() {
         />
 
         <div className="flex items-center gap-2">
-          <Select
-            value={sortBy}
-            onValueChange={(value) =>
-              setSortBy(value as "title" | "bar" | "sector" | "createdAt")
-            }
-          >
-            <SelectTrigger className="w-40">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="title">Назва</SelectItem>
-              <SelectItem value="bar">Штрих-код</SelectItem>
-              <SelectItem value="sector">Сектор</SelectItem>
-              <SelectItem value="createdAt">Дата створення</SelectItem>
-            </SelectContent>
-          </Select>
+          <SortZonesSelect sortBy={sortBy} setSortBy={setSortBy} />
+
           <Button
             variant="outline"
             size="sm"
