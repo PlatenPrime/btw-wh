@@ -34,3 +34,22 @@ export interface BtradeArtInfoDto {
 }
 
 export type BtradeArtInfoResponse = EntityResponse<BtradeArtInfoDto>;
+
+export interface UpdateBtradeStockResponse {
+  message: string;
+  data: ArtDto;
+}
+
+export interface UpdateAllBtradeStocksResponse {
+  message: string;
+}
+
+export interface ExportArtsResponse {
+  blob: Blob;
+  filename: string;
+}
+
+export interface ExportArtsWithStocksResponse {
+  blob: Blob;
+  filename: string;
+}
