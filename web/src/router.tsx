@@ -86,6 +86,17 @@ const Zone = lazy(() =>
   })),
 );
 
+const BlocksPage = lazy(() =>
+  import("./modules/blocks/pages/blocks").then((module) => ({
+    default: module.BlocksPage,
+  })),
+);
+const BlockPage = lazy(() =>
+  import("./modules/blocks/pages/block").then((module) => ({
+    default: module.BlockPage,
+  })),
+);
+
 const PalletPage = lazy(() =>
   import("./modules/pallets/pages/pallet").then((module) => ({
     default: module.Pallet,
@@ -208,6 +219,24 @@ export const router = createHashRouter([
             element: (
               <ProtectedRoute allowedRoles={[RoleType.ADMIN]}>
                 <Zones />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "blocks",
+            element: (
+              <ProtectedRoute allowedRoles={[RoleType.ADMIN]}>
+                <BlocksPage />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "blocks/:id",
+            element: (
+              <ProtectedRoute allowedRoles={[RoleType.ADMIN]}>
+                <BlockPage />
               </ProtectedRoute>
             ),
             errorElement: <RouteErrorBoundary />,

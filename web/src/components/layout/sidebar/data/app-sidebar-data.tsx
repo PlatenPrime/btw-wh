@@ -63,6 +63,11 @@ export const appSidebarData = {
           iconName: "MapPin",
         },
         {
+          title: "Блоки",
+          url: "/wh/blocks",
+          iconName: "Route",
+        },
+        {
           title: "Імпорт/Експорт зон",
           url: "/wh/zones-import-export",
           iconName: "MapPin",
