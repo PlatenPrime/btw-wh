@@ -1,12 +1,7 @@
 import { z } from "zod";
 
 export const createBlockSchema = z.object({
-  title: z
-    .string({
-      required_error: "Назва обовʼязкова",
-    })
-    .min(1, "Назва обовʼязкова")
-    .max(64, "До 64 символів"),
+  title: z.string().min(1, "Назва блоку є обов'язковою"),
 });
 
 export type CreateBlockFormValues = z.infer<typeof createBlockSchema>;

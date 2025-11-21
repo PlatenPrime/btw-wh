@@ -1,2 +1,2 @@
-export * from "./CreateBlockDialog";
+export { CreateBlockDialog } from "./CreateBlockDialog";
 

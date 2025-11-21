@@ -1,108 +1,96 @@
 import { SidebarInsetLayout } from "@/components/layout/SidebarInsetLayout";
-import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
-import { useCallback, useRef, useState } from "react";
-import { BlocksFetcher } from "@/modules/blocks/components/fetchers";
+import { useState, useRef } from "react";
+import { BlocksFetcher } from "@/modules/blocks/components/fetchers/blocks-fetcher";
 import {
-  BlocksBoardContainer,
-  BlocksBoardSkeleton,
-} from "@/modules/blocks/components/containers/blocks-board";
+  BlocksContainer,
+  BlocksContainerSkeleton,
+} from "@/modules/blocks/components/containers/blocks-container";
 import { CreateBlockDialog } from "@/modules/blocks/components/dialogs/create-block-dialog";
+import { DeleteBlockDialog } from "@/modules/blocks/components/dialogs/delete-block-dialog";
+import { BlocksControlPanel } from "@/modules/blocks/components/controls/blocks-control-panel";
+import { useBlocksQuery } from "@/modules/blocks/api/hooks/queries/useBlocksQuery";
 import type { BlockDto } from "@/modules/blocks/api/types";
 
 export function BlocksPage() {
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [selectedBlock, setSelectedBlock] = useState<BlockDto | null>(null);
   const [isEditMode, setIsEditMode] = useState(false);
-  const [hasPendingChanges, setHasPendingChanges] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const saveHandlerRef = useRef<(() => Promise<void>) | null>(null);
+  const cancelHandlerRef = useRef<(() => void) | null>(null);
+  const { data: blocksData } = useBlocksQuery();
 
-  const submitHandlerRef = useRef<(() => void) | null>(null);
-
-  const handleRegisterSubmitHandler = useCallback((handler: () => void) => {
-    submitHandlerRef.current = handler;
-  }, []);
-
-  const handleStartEdit = () => {
-    setHasPendingChanges(false);
-    setIsEditMode(true);
+  const handleDelete = (block: BlockDto) => {
+    setSelectedBlock(block);
+    setDeleteDialogOpen(true);
   };
 
-  const handleCancelEdit = () => {
-    setIsEditMode(false);
-    setHasPendingChanges(false);
+  const handleSave = async () => {
+    if (saveHandlerRef.current) {
+      setIsSaving(true);
+      try {
+        await saveHandlerRef.current();
+      } finally {
+        setIsSaving(false);
+      }
+    }
   };
 
-  const handleConfirmEdit = () => {
-    submitHandlerRef.current?.();
+  const handleCancel = () => {
+    if (cancelHandlerRef.current) {
+      cancelHandlerRef.current();
+    }
   };
 
-  const handleSubmitSuccess = () => {
-    setIsEditMode(false);
-    setHasPendingChanges(false);
+  const handleSaveReady = (
+    onSave: () => Promise<void>,
+    onCancel: () => void
+  ) => {
+    saveHandlerRef.current = onSave;
+    cancelHandlerRef.current = onCancel;
   };
-
-  const renderBoard = useCallback(
-    ({ blocks }: { blocks: BlockDto[] }) => (
-      <BlocksBoardContainer
-        blocks={blocks}
-        isEditMode={isEditMode}
-        onRegisterSubmitHandler={handleRegisterSubmitHandler}
-        onChangesStateChange={setHasPendingChanges}
-        onSubmitSuccess={handleSubmitSuccess}
-      />
-    ),
-    [handleRegisterSubmitHandler, handleSubmitSuccess, isEditMode],
-  );
 
   return (
-    <SidebarInsetLayout headerText="Блоки складу">
-      <div className="flex flex-col gap-4 p-4">
-        <div className="flex flex-wrap gap-2">
-          {!isEditMode ? (
-            <>
-              <Button onClick={() => setCreateDialogOpen(true)}>
-                <Plus className="mr-2 h-4 w-4" />
-                Новий блок
-              </Button>
-              <Button variant="secondary" onClick={handleStartEdit}>
-                Редагувати порядок
-              </Button>
-            </>
-          ) : (
-            <>
-              <Button
-                variant="destructive"
-                onClick={handleConfirmEdit}
-                disabled={!hasPendingChanges}
-              >
-                Підтвердити порядок
-              </Button>
-              <Button variant="outline" onClick={handleCancelEdit}>
-                Скасувати редагування
-              </Button>
-            </>
-          )}
-        </div>
-
-        {isEditMode && (
-          <div className="flex flex-wrap items-center gap-3 rounded-lg border border-amber-400/50 bg-amber-50/70 px-3 py-2 text-sm text-amber-900 dark:bg-amber-500/10 dark:text-amber-100">
-            <span className="font-semibold">Увага</span>
-            <span>
-              Зміни набувають чинності після підтвердження. Кнопка нижче зберігає
-              порядок.
-            </span>
-          </div>
+    <SidebarInsetLayout headerText="Блоки">
+      <div className="grid gap-2 p-2">
+        {blocksData && (
+          <BlocksControlPanel
+            isEditMode={isEditMode}
+            onCreate={() => setCreateDialogOpen(true)}
+            onEdit={() => setIsEditMode(true)}
+            onCancel={handleCancel}
+            onSave={handleSave}
+            isSaving={isSaving}
+          />
         )}
 
         <BlocksFetcher
-          ContainerComponent={renderBoard}
-          SkeletonComponent={BlocksBoardSkeleton}
+          ContainerComponent={({ data }) => (
+            <BlocksContainer
+              data={data}
+              isEditMode={isEditMode}
+              onEditModeChange={setIsEditMode}
+              onSaveReady={handleSaveReady}
+              onDelete={handleDelete}
+            />
+          )}
+          SkeletonComponent={BlocksContainerSkeleton}
         />
-      </div>
 
-      <CreateBlockDialog
-        open={createDialogOpen}
-        onOpenChange={setCreateDialogOpen}
-      />
+        <CreateBlockDialog
+          open={createDialogOpen}
+          onOpenChange={setCreateDialogOpen}
+        />
+
+        {selectedBlock && (
+          <DeleteBlockDialog
+            block={selectedBlock}
+            open={deleteDialogOpen}
+            onOpenChange={setDeleteDialogOpen}
+          />
+        )}
+      </div>
     </SidebarInsetLayout>
   );
 }

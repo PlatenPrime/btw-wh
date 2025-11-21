@@ -1,0 +1,2 @@
+export { BlocksFetcher } from "./BlocksFetcher";
+

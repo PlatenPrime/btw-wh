@@ -1,12 +1,12 @@
 import { useCreateBlockMutation } from "@/modules/blocks/api/hooks/mutations/useCreateBlockMutation";
-import type { CreateBlockFormValues } from "@/modules/blocks/components/forms/create-block-form/schema";
 import {
   createBlockDefaultValues,
   createBlockSchema,
+  type CreateBlockFormValues,
 } from "@/modules/blocks/components/forms/create-block-form/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { CreateBlockFormView } from "@/modules/blocks/components/forms/create-block-form/CreateBlockFormView";
+import { CreateBlockFormView } from "./CreateBlockFormView";
 
 interface CreateBlockFormProps {
   onSuccess?: () => void;
@@ -16,23 +16,23 @@ interface CreateBlockFormProps {
 export function CreateBlockForm({ onSuccess, onCancel }: CreateBlockFormProps) {
   const form = useForm<CreateBlockFormValues>({
     resolver: zodResolver(createBlockSchema),
-    defaultValues: createBlockDefaultValues,
     mode: "onSubmit",
+    reValidateMode: "onChange",
+    defaultValues: createBlockDefaultValues,
   });
 
-  const createBlockMutation = useCreateBlockMutation();
+  const mutation = useCreateBlockMutation();
 
-  const handleSubmit = async (data: CreateBlockFormValues) => {
+  const onSubmit = async (data: CreateBlockFormValues) => {
     try {
-      await createBlockMutation.mutateAsync(data);
+      await mutation.mutateAsync(data);
       onSuccess?.();
-      form.reset(createBlockDefaultValues);
+      form.reset();
     } catch (error) {
+      console.error("Помилка створення блоку:", error);
       form.setError("root", {
         message:
-          error instanceof Error
-            ? error.message
-            : "Не вдалося створити блок. Спробуйте ще раз.",
+          error instanceof Error ? error.message : "Помилка створення блоку",
       });
     }
   };
@@ -40,9 +40,9 @@ export function CreateBlockForm({ onSuccess, onCancel }: CreateBlockFormProps) {
   return (
     <CreateBlockFormView
       form={form}
-      onSubmit={handleSubmit}
+      onSubmit={onSubmit}
       onCancel={onCancel}
-      isLoading={createBlockMutation.isPending}
+      isLoading={mutation.isPending}
     />
   );
 }

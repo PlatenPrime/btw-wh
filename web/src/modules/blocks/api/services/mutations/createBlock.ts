@@ -1,24 +1,17 @@
 import { apiClient } from "@/lib/apiClient";
-import type {
-  BlockDto,
-  CreateBlockPayload,
-} from "@/modules/blocks/api/types";
+import type { BlockResponse, CreateBlockDto } from "@/modules/blocks/api/types";
 
-const BLOCKS_API_PATH = "/blocks";
+export const createBlock = async ({
+  data,
+  signal,
+}: {
+  data: CreateBlockDto;
+  signal?: AbortSignal;
+}): Promise<BlockResponse> => {
+  const res = await apiClient.post<BlockResponse>("/blocks", data, {
+    signal,
+  });
 
-interface CreateBlockResponse {
-  message: string;
-  data: BlockDto;
-}
-
-export async function createBlock(
-  payload: CreateBlockPayload,
-): Promise<BlockDto> {
-  const response = await apiClient.post<CreateBlockResponse>(
-    BLOCKS_API_PATH,
-    payload,
-  );
-
-  return response.data.data;
-}
+  return res.data;
+};
 

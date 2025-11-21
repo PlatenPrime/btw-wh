@@ -24,15 +24,14 @@ export function CreateBlockFormView({
   } = form;
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-      <div className="flex flex-col gap-2">
-        <Label htmlFor="block-title">Назва блоку</Label>
+    <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4">
+      <div className="grid gap-2">
+        <Label htmlFor="title">Назва блоку</Label>
         <Input
-          id="block-title"
+          id="title"
           {...register("title")}
           placeholder="Block A"
           disabled={isLoading}
-          autoFocus
         />
         {errors.title && (
           <p className="text-destructive text-sm">{errors.title.message}</p>

@@ -1,17 +1,17 @@
 import { apiClient } from "@/lib/apiClient";
+import type { DeleteBlockResponse } from "@/modules/blocks/api/types";
 
-const BLOCKS_API_PATH = "/blocks";
+export const deleteBlock = async ({
+  id,
+  signal,
+}: {
+  id: string;
+  signal?: AbortSignal;
+}): Promise<DeleteBlockResponse> => {
+  const res = await apiClient.delete<DeleteBlockResponse>(`/blocks/${id}`, {
+    signal,
+  });
 
-interface DeleteBlockResponse {
-  message: string;
-  data: {
-    _id: string;
-    title: string;
-    order: number;
-  };
-}
-
-export async function deleteBlock(id: string): Promise<void> {
-  await apiClient.delete<DeleteBlockResponse>(`${BLOCKS_API_PATH}/${id}`);
-}
+  return res.data;
+};
 

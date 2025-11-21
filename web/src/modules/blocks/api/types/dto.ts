@@ -1,46 +1,52 @@
-export interface ZoneInBlockDto {
-  _id: string;
-  title: string;
-  bar: number;
-  sector: number;
-  order?: number;
-  block?: {
-    id: string;
-    title: string;
-  };
-  createdAt: string;
-  updatedAt: string;
-}
-
 export interface BlockDto {
   _id: string;
   title: string;
   order: number;
   createdAt: string;
   updatedAt: string;
-  zones?: ZoneInBlockDto[];
 }
 
-export interface CreateBlockPayload {
+export interface CreateBlockDto {
   title: string;
 }
 
-export interface BlockZoneOrderPayload {
-  zoneId: string;
-  order: number;
-}
-
-export interface UpdateBlockPayload {
+export interface UpdateBlockDto {
   title?: string;
   order?: number;
-  zones?: BlockZoneOrderPayload[];
+  zones?: Array<{
+    zoneId: string;
+    order: number;
+  }>;
 }
 
-export interface ReorderBlocksPayload {
-  blocks: Array<{
-    blockId: string;
-    order: number;
-    zones?: BlockZoneOrderPayload[];
-  }>;
+export interface BlocksResponseDto {
+  message: string;
+  data: BlockDto[];
+}
+
+// API блоков возвращает { message, data } без поля exists
+export interface BlockResponse {
+  message: string;
+  data: BlockDto | null;
+}
+
+export interface DeleteBlockResponse {
+  message: string;
+  data: BlockDto;
+}
+
+// Расширенный тип зоны с блоком (из документации)
+export interface ZoneWithBlockDto {
+  _id: string;
+  title: string;
+  bar: number;
+  sector: number;
+  block?: {
+    id: string;
+    title: string;
+  };
+  order?: number;
+  createdAt: string;
+  updatedAt: string;
 }
 
