@@ -29,6 +29,7 @@ export function AddZonesToBlockDialog({
         </DialogHeader>
         <AddZonesForm
           blockId={block._id}
+          enabled={controlledOpen}
           onSuccess={handleSuccess}
           onCancel={handleCancel}
         />

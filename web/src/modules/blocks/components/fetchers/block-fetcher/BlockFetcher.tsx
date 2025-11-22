@@ -35,7 +35,7 @@ export function BlockFetcher({
     );
   }
 
-  if (!blockResponse || !blockResponse.data) {
+  if (!blockResponse || !blockResponse.exists) {
     return (
       <EntityNotFound
         title="Блок не знайдено"
@@ -45,6 +45,6 @@ export function BlockFetcher({
     );
   }
 
-  return <ContainerComponent block={blockResponse.data} />;
+  return <ContainerComponent block={blockResponse.data!} />;
 }
 

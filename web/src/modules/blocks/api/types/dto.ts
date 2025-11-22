@@ -19,13 +19,22 @@ export interface UpdateBlockDto {
   }>;
 }
 
+/**
+ * Ответ API для получения всех блоков
+ * Всегда возвращает HTTP 200, проверяйте флаг exists для определения наличия данных
+ */
 export interface BlocksResponseDto {
+  exists: boolean;
   message: string;
   data: BlockDto[];
 }
 
-// API блоков возвращает { message, data } без поля exists
+/**
+ * Ответ API для получения одного блока
+ * Всегда возвращает HTTP 200, проверяйте флаг exists для определения наличия блока
+ */
 export interface BlockResponse {
+  exists: boolean;
   message: string;
   data: BlockDto | null;
 }
@@ -48,5 +57,27 @@ export interface ZoneWithBlockDto {
   order?: number;
   createdAt: string;
   updatedAt: string;
+}
+
+/**
+ * Ответ API для пересчета секторов зон
+ */
+export interface RecalculateZonesSectorsResponse {
+  message: string;
+  data: {
+    updatedZones: number;
+    blocksProcessed: number;
+  };
+}
+
+/**
+ * Ответ API для сброса секторов зон (утилитарный эндпоинт)
+ */
+export interface ResetZonesSectorsResponse {
+  message: string;
+  data: {
+    matchedCount: number;
+    modifiedCount: number;
+  };
 }
 

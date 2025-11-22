@@ -6,5 +6,7 @@ export type {
   BlockResponse,
   DeleteBlockResponse,
   ZoneWithBlockDto,
+  RecalculateZonesSectorsResponse,
+  ResetZonesSectorsResponse,
 } from "./dto";
 

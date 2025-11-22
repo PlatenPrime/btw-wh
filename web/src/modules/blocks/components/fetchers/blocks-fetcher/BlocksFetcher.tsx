@@ -28,7 +28,7 @@ export function BlocksFetcher({
     );
   }
 
-  if (!data || !data.data || data.data.length === 0) {
+  if (!data || !data.exists) {
     return <LoadingNoData description="Блоки не знайдено" />;
   }
 

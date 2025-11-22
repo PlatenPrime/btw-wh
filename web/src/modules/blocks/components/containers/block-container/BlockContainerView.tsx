@@ -22,14 +22,18 @@ interface BlockContainerViewProps {
   block: BlockDto;
   zones: ZoneWithBlockDto[];
   isEditMode: boolean;
+  isFetching?: boolean;
   onDragEnd: (newZones: ZoneWithBlockDto[]) => void;
+  onRemove?: (zone: ZoneWithBlockDto) => void;
 }
 
 export function BlockContainerView({
   block,
   zones,
   isEditMode,
+  isFetching = false,
   onDragEnd,
+  onRemove,
 }: BlockContainerViewProps) {
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -80,15 +84,22 @@ export function BlockContainerView({
             items={zones.map((z) => z._id)}
             strategy={verticalListSortingStrategy}
           >
-            <div className="grid grid-cols-1 gap-2 p-2">
+            <div className={`grid grid-cols-1 gap-2 p-2 ${isFetching ? "opacity-50" : ""}`}>
               {zones.map((zone) => (
-                <SortableZoneItem key={zone._id} zone={zone} />
+                <SortableZoneItem
+                  key={zone._id}
+                  zone={zone}
+                  isEditMode={isEditMode}
+                  onRemove={onRemove ? () => onRemove(zone) : undefined}
+                />
               ))}
             </div>
           </SortableContext>
         </DndContext>
       ) : (
-        <BlockZonesList zones={zones} />
+        <div className={isFetching ? "opacity-50" : ""}>
+          <BlockZonesList zones={zones} isEditMode={isEditMode} onRemove={onRemove} />
+        </div>
       )}
     </div>
   );

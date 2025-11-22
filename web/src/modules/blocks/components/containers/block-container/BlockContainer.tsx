@@ -1,9 +1,11 @@
 import { useState, useEffect, useCallback } from "react";
 import type { BlockDto, ZoneWithBlockDto } from "@/modules/blocks/api/types";
 import { useUpdateBlockMutation } from "@/modules/blocks/api/hooks/mutations/useUpdateBlockMutation";
-import { useZonesInfiniteQuery } from "@/modules/blocks/api/hooks/queries/useZonesInfiniteQuery";
+import { useZonesByBlockIdQuery } from "@/modules/zones/api/hooks/queries/useZonesByBlockIdQuery";
 import { BlockContainerView } from "./BlockContainerView";
 import { BlockContainerSkeleton } from "./BlockContainerSkeleton";
+import { RemoveZoneFromBlockDialog } from "@/modules/blocks/components/dialogs/remove-zone-from-block-dialog";
+import { toast } from "sonner";
 
 interface BlockContainerProps {
   block: BlockDto;
@@ -20,40 +22,25 @@ export function BlockContainer({
 }: BlockContainerProps) {
   const [zones, setZones] = useState<ZoneWithBlockDto[]>([]);
   const [originalZones, setOriginalZones] = useState<ZoneWithBlockDto[]>([]);
+  const [removeDialogOpen, setRemoveDialogOpen] = useState(false);
+  const [selectedZoneForRemove, setSelectedZoneForRemove] = useState<ZoneWithBlockDto | null>(null);
   const updateBlockMutation = useUpdateBlockMutation();
 
-  // Получаем все зоны с infinite scroll и фильтруем по блоку
+  // Получаем зоны конкретного блока через API
   const {
     data: zonesData,
     isLoading,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = useZonesInfiniteQuery({
-    limit: 100, // Максимальный лимит API
-    search: "",
+    isFetching,
+  } = useZonesByBlockIdQuery({
+    blockId: block._id,
     enabled: true,
   });
 
-  // Загружаем все страницы, если есть еще данные
   useEffect(() => {
-    if (hasNextPage && !isFetchingNextPage) {
-      fetchNextPage();
-    }
-  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
-
-  useEffect(() => {
-    if (zonesData?.pages) {
-      // Собираем все зоны из всех страниц
-      const allZones = zonesData.pages.flatMap((page) => page.data);
-      
-      // Фильтруем зоны, которые принадлежат этому блоку
-      // Приводим к типу ZoneWithBlockDto, так как API может возвращать зоны с полями block и order
-      const blockZones = allZones
-        .filter((zone) => {
-          const zoneWithBlock = zone as unknown as ZoneWithBlockDto;
-          return zoneWithBlock.block?.id === block._id;
-        })
+    if (zonesData?.data) {
+      // API возвращает зоны с полями block и order
+      // Приводим к типу ZoneWithBlockDto и сортируем по order
+      const blockZones = zonesData.data
         .map((zone) => {
           const zoneWithBlock = zone as unknown as ZoneWithBlockDto;
           return {
@@ -66,8 +53,12 @@ export function BlockContainer({
 
       setZones(blockZones);
       setOriginalZones([...blockZones]);
+    } else if (zonesData && zonesData.data.length === 0) {
+      // Если зон нет, устанавливаем пустой массив
+      setZones([]);
+      setOriginalZones([]);
     }
-  }, [zonesData, block._id]);
+  }, [zonesData]);
 
   useEffect(() => {
     if (isEditMode) {
@@ -83,17 +74,46 @@ export function BlockContainer({
   const handleSave = useCallback(async () => {
     try {
       // Обновляем блок с новым порядком зон
-      await updateBlockMutation.mutateAsync({
-        id: block._id,
-        data: {
-          zones: zones.map((zone, index) => ({
-            zoneId: zone._id,
-            order: index,
-          })),
-        },
-      });
+      // Order должен быть 1-based (начинается с 1, а не с 0)
+      const zonesToUpdate = zones.map((zone, index) => ({
+        zoneId: zone._id,
+        order: index + 1,
+      }));
 
-      onEditModeChange(false);
+      // Optimistic update: обновляем локальное состояние зон с новым порядком
+      const optimisticZones = zones.map((zone, index) => ({
+        ...zone,
+        order: index + 1,
+      }));
+
+      // Сохраняем предыдущее состояние для отката
+      const previousZones = [...zones];
+
+      // Применяем optimistic update локально
+      setZones(optimisticZones);
+
+      try {
+        await updateBlockMutation.mutateAsync({
+          id: block._id,
+          data: {
+            zones: zonesToUpdate,
+          },
+        });
+
+        onEditModeChange(false);
+        
+        // Информируем пользователя о необходимости пересчета секторов
+        if (zonesToUpdate.length > 0) {
+          toast.info(
+            "Порядок зон збережено. Сектора зон не перераховані автоматично. Використайте кнопку 'Перерахувати сектора' для оновлення.",
+            { duration: 5000 }
+          );
+        }
+      } catch (error) {
+        // Откатываем optimistic update при ошибке
+        setZones(previousZones);
+        throw error;
+      }
     } catch (error) {
       console.error("Помилка збереження порядку зон:", error);
       throw error;
@@ -111,17 +131,44 @@ export function BlockContainer({
     setZones(newZones);
   };
 
+  const handleRemove = (zone: ZoneWithBlockDto) => {
+    setSelectedZoneForRemove(zone);
+    setRemoveDialogOpen(true);
+  };
+
+  const handleRemoveSuccess = () => {
+    // После успешного удаления обновляем локальное состояние
+    if (selectedZoneForRemove) {
+      setZones((prev) => prev.filter((z) => z._id !== selectedZoneForRemove._id));
+      setOriginalZones((prev) => prev.filter((z) => z._id !== selectedZoneForRemove._id));
+    }
+    setSelectedZoneForRemove(null);
+  };
+
   if (isLoading) {
     return <BlockContainerSkeleton />;
   }
 
   return (
-    <BlockContainerView
-      block={block}
-      zones={zones}
-      isEditMode={isEditMode}
-      onDragEnd={handleDragEnd}
-    />
+    <>
+      <BlockContainerView
+        block={block}
+        zones={zones}
+        isEditMode={isEditMode}
+        isFetching={isFetching}
+        onDragEnd={handleDragEnd}
+        onRemove={isEditMode ? handleRemove : undefined}
+      />
+      {selectedZoneForRemove && (
+        <RemoveZoneFromBlockDialog
+          zone={selectedZoneForRemove}
+          block={block}
+          open={removeDialogOpen}
+          onOpenChange={setRemoveDialogOpen}
+          onSuccess={handleRemoveSuccess}
+        />
+      )}
+    </>
   );
 }
 

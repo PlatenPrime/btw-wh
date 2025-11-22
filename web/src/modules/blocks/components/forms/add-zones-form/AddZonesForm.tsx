@@ -1,17 +1,20 @@
 import { useState } from "react";
 import { useUpdateBlockMutation } from "@/modules/blocks/api/hooks/mutations/useUpdateBlockMutation";
 import { useZonesInfiniteQuery } from "@/modules/blocks/api/hooks/queries/useZonesInfiniteQuery";
+import { useZonesByBlockIdQuery } from "@/modules/zones/api/hooks/queries/useZonesByBlockIdQuery";
 import type { ZoneWithBlockDto } from "@/modules/blocks/api/types";
 import { AddZonesFormView } from "./AddZonesFormView";
 
 interface AddZonesFormProps {
   blockId: string;
+  enabled?: boolean;
   onSuccess?: () => void;
   onCancel?: () => void;
 }
 
 export function AddZonesForm({
   blockId,
+  enabled = true,
   onSuccess,
   onCancel,
 }: AddZonesFormProps) {
@@ -19,21 +22,15 @@ export function AddZonesForm({
   const [selectedZoneIds, setSelectedZoneIds] = useState<Set<string>>(new Set());
   const updateBlockMutation = useUpdateBlockMutation();
 
-  // Получаем текущие зоны блока через useZonesQuery
-  const { data: zonesDataForBlock } = useZonesInfiniteQuery({
-    limit: 100, // Максимальный лимит API
-    search: "",
-    enabled: true,
+  // Получаем текущие зоны блока через API (только когда диалог открыт)
+  const { data: zonesDataForBlock } = useZonesByBlockIdQuery({
+    blockId,
+    enabled: enabled,
   });
 
-  const allZonesForBlock =
-    zonesDataForBlock?.pages.flatMap((page) => page.data) ?? [];
-  const currentZones = allZonesForBlock.filter((zone) => {
-    const zoneWithBlock = zone as unknown as ZoneWithBlockDto;
-    return zoneWithBlock.block?.id === blockId;
-  });
+  const currentZones = (zonesDataForBlock?.data ?? []) as ZoneWithBlockDto[];
 
-  // Получаем все зоны с infinite scroll
+  // Получаем все зоны с infinite scroll для поиска (только когда диалог открыт)
   const {
     data: zonesData,
     isFetchingNextPage,
@@ -42,17 +39,18 @@ export function AddZonesForm({
   } = useZonesInfiniteQuery({
     limit: 20,
     search,
-    enabled: true,
+    enabled: enabled,
   });
 
   // Собираем все зоны из всех страниц
   const allZones =
     zonesData?.pages.flatMap((page) => page.data) ?? [];
 
-  // Фильтруем зоны, которые уже в блоке
+  // Фильтруем только свободные зоны (без блока) и исключаем зоны, которые уже в этом блоке
   const availableZones = allZones.filter((zone) => {
     const zoneWithBlock = zone as unknown as ZoneWithBlockDto;
-    return !zoneWithBlock.block || zoneWithBlock.block.id !== blockId;
+    // Показываем только зоны без блока (!zone.block)
+    return !zoneWithBlock.block;
   });
 
   const handleToggleZone = (zoneId: string) => {
@@ -74,14 +72,15 @@ export function AddZonesForm({
 
     try {
       // Добавляем выбранные зоны к текущим
+      // Order должен быть 1-based (начинается с 1, а не с 0)
       const newZones = [
         ...currentZones.map((zone, index) => ({
           zoneId: (zone as ZoneWithBlockDto)._id,
-          order: index,
+          order: index + 1,
         })),
         ...Array.from(selectedZoneIds).map((zoneId, index) => ({
           zoneId,
-          order: currentZones.length + index,
+          order: currentZones.length + index + 1,
         })),
       ];
 
