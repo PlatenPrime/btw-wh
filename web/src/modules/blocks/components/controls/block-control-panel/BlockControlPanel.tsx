@@ -51,13 +51,13 @@ export function BlockControlPanel({
   }
 
   return (
-    <div className="flex gap-2">
+    <div className="grid md:flex gap-2 ">
       <Button onClick={onAddZones}>
-        <Plus className="mr-2 size-4" />
+        <Plus className=" size-4" />
         Додати зони
       </Button>
       <Button onClick={onEdit} variant="outline">
-        <Edit className="mr-2 size-4" />
+        <Edit className=" size-4" />
         Редагувати
       </Button>
       <Button
@@ -66,7 +66,7 @@ export function BlockControlPanel({
         disabled={recalculateMutation.isPending}
       >
         <RefreshCw
-          className={`mr-2 size-4 ${recalculateMutation.isPending ? "animate-spin" : ""}`}
+          className={` size-4 ${recalculateMutation.isPending ? "animate-spin" : ""}`}
         />
         {recalculateMutation.isPending ? "Перерахунок..." : "Перерахувати сектора"}
       </Button>

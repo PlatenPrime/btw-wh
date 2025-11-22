@@ -62,7 +62,7 @@ export function BlockContainerView({
         </CardHeader>
         <CardContent>
           <div className="grid gap-2">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-start">
               <span className="text-muted-foreground text-sm">Порядок:</span>
               <span className="text-sm">{block.order}</span>
             </div>

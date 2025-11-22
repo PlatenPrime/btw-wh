@@ -45,8 +45,8 @@ export function BlockCard({ block, onDelete }: BlockCardProps) {
         </div>
       </CardHeader>
       <CardContent className="grid gap-2 p-0">
-        <div className="flex items-center justify-between">
-          <span className="text-muted-foreground text-xs">Порядок:</span>
+        <div className="flex items-center justify-start">
+          <span className="text-muted-foreground text-xs">#</span>
           <span className="text-muted-foreground text-xs">{block.order}</span>
         </div>
       </CardContent>

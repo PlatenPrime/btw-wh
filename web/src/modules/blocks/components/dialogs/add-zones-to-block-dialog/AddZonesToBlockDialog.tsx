@@ -23,7 +23,7 @@ export function AddZonesToBlockDialog({
 
   return (
     <Dialog open={controlledOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[600px] max-h-[80vh] flex flex-col">
+      <DialogContent className="flex flex-col">
         <DialogHeader>
           <DialogTitle>Додати зони до блоку {block.title}</DialogTitle>
         </DialogHeader>
