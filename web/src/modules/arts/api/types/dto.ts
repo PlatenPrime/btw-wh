@@ -53,3 +53,13 @@ export interface ExportArtsWithStocksResponse {
   blob: Blob;
   filename: string;
 }
+
+export interface DeleteArtsWithoutLatestMarkerResult {
+  deletedCount: number;
+  latestMarker: string | null;
+}
+
+export interface DeleteArtsWithoutLatestMarkerResponse {
+  message: string;
+  result: DeleteArtsWithoutLatestMarkerResult;
+}
