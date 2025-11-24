@@ -1,18 +1,18 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { AddZonesForm } from "@/modules/blocks/components/forms/add-zones-form";
-import type { BlockDto } from "@/modules/blocks/api/types";
+import { AddZonesToSegmentForm } from "@/modules/blocks/components/forms/add-zones-to-segment-form";
+import type { SegmentDto } from "@/modules/blocks/api/types";
 
-interface AddZonesToBlockDialogProps {
+interface AddZonesToSegmentDialogProps {
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
-  block: BlockDto;
+  segment: SegmentDto;
 }
 
-export function AddZonesToBlockDialog({
+export function AddZonesToSegmentDialog({
   open: controlledOpen,
   onOpenChange,
-  block,
-}: AddZonesToBlockDialogProps) {
+  segment,
+}: AddZonesToSegmentDialogProps) {
   const handleSuccess = () => {
     onOpenChange?.(false);
   };
@@ -23,12 +23,12 @@ export function AddZonesToBlockDialog({
 
   return (
     <Dialog open={controlledOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="flex flex-col">
+      <DialogContent className="flex flex-col sm:max-w-[600px]">
         <DialogHeader>
-          <DialogTitle>Додати зони до блоку {block.title}</DialogTitle>
+          <DialogTitle>Додати зони до сегмента #{segment.order}</DialogTitle>
         </DialogHeader>
-        <AddZonesForm
-          blockId={block._id}
+        <AddZonesToSegmentForm
+          segment={segment}
           enabled={controlledOpen}
           onSuccess={handleSuccess}
           onCancel={handleCancel}

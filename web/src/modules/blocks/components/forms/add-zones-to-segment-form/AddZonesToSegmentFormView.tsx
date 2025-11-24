@@ -7,7 +7,7 @@ import { useContainerInfiniteScroll } from "@/hooks/useContainerInfiniteScroll";
 import type { ZoneDto } from "@/modules/zones/api/types";
 import { Skeleton } from "@/components/ui/skeleton";
 
-interface AddZonesFormViewProps {
+interface AddZonesToSegmentFormViewProps {
   search: string;
   onSearchChange: (search: string) => void;
   zones: ZoneDto[];
@@ -21,7 +21,7 @@ interface AddZonesFormViewProps {
   fetchNextPage?: () => void;
 }
 
-export function AddZonesFormView({
+export function AddZonesToSegmentFormView({
   search,
   onSearchChange,
   zones,
@@ -33,7 +33,7 @@ export function AddZonesFormView({
   isFetchingNextPage = false,
   hasNextPage = false,
   fetchNextPage,
-}: AddZonesFormViewProps) {
+}: AddZonesToSegmentFormViewProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const bottomRef = useContainerInfiniteScroll({
     hasNextPage,
@@ -71,10 +71,7 @@ export function AddZonesFormView({
                 onCheckedChange={() => onToggleZone(zone._id)}
                 disabled={isLoading}
               />
-              <Label
-                htmlFor={zone._id}
-                className="flex-1 cursor-pointer"
-              >
+              <Label htmlFor={zone._id} className="flex-1 cursor-pointer">
                 {zone.title} (штрих-код: {zone.bar})
               </Label>
             </div>
@@ -90,13 +87,13 @@ export function AddZonesFormView({
         <div ref={bottomRef} className="h-4" />
       </div>
 
-          <DialogActions
-            onCancel={onCancel}
-            onSubmit={onSubmit}
-            isSubmitting={isLoading}
-            isDisabled={selectedZoneIds.size === 0}
-            submitText={`Додати (${selectedZoneIds.size})`}
-          />
+      <DialogActions
+        onCancel={onCancel}
+        onSubmit={onSubmit}
+        isSubmitting={isLoading}
+        isDisabled={selectedZoneIds.size === 0}
+        submitText={`Додати (${selectedZoneIds.size})`}
+      />
     </div>
   );
 }

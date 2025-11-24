@@ -8,5 +8,13 @@ export type {
   ZoneWithBlockDto,
   RecalculateZonesSectorsResponse,
   ResetZonesSectorsResponse,
+  SegmentDto,
+  CreateSegmentDto,
+  UpdateSegmentDto,
+  SegmentsResponseDto,
+  SegmentResponse,
+  DeleteSegmentResponse,
+  ZoneWithSegmentDto,
+  ZonesBySegmentResponse,
 } from "./dto";
 

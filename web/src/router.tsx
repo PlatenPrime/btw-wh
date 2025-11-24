@@ -96,6 +96,11 @@ const BlockPage = lazy(() =>
     default: module.BlockPage,
   })),
 );
+const SegPage = lazy(() =>
+  import("./modules/blocks/pages/seg").then((module) => ({
+    default: module.SegPage,
+  })),
+);
 
 const PalletPage = lazy(() =>
   import("./modules/pallets/pages/pallet").then((module) => ({
@@ -237,6 +242,15 @@ export const router = createHashRouter([
             element: (
               <ProtectedRoute allowedRoles={[RoleType.ADMIN]}>
                 <BlockPage />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "blocks/:blockId/segs/:segId",
+            element: (
+              <ProtectedRoute allowedRoles={[RoleType.ADMIN]}>
+                <SegPage />
               </ProtectedRoute>
             ),
             errorElement: <RouteErrorBoundary />,

@@ -1,0 +1,2 @@
+export { SegmentsFetcher } from "./SegmentsFetcher";
+

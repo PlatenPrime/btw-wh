@@ -2,6 +2,7 @@ export interface BlockDto {
   _id: string;
   title: string;
   order: number;
+  segs: string[]; // Array of Segment ObjectIds
   createdAt: string;
   updatedAt: string;
 }
@@ -13,10 +14,7 @@ export interface CreateBlockDto {
 export interface UpdateBlockDto {
   title?: string;
   order?: number;
-  zones?: Array<{
-    zoneId: string;
-    order: number;
-  }>;
+  segs?: string[]; // Array of Segment ObjectIds
 }
 
 /**
@@ -79,5 +77,81 @@ export interface ResetZonesSectorsResponse {
     matchedCount: number;
     modifiedCount: number;
   };
+}
+
+// Segment types
+export interface SegmentDto {
+  _id: string;
+  block: string; // Block ObjectId
+  blockData: {
+    _id: string;
+    title: string;
+  };
+  sector: number;
+  order: number;
+  zones: string[]; // Array of Zone ObjectIds
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateSegmentDto {
+  blockData: {
+    _id: string;
+    title: string;
+  };
+  order: number;
+  zones: string[]; // Minimum 1 zone required
+}
+
+export interface UpdateSegmentDto {
+  order?: number;
+  zones?: string[]; // Minimum 1 zone required if provided
+}
+
+/**
+ * Ответ API для получения всех сегментов
+ * Всегда возвращает HTTP 200, проверяйте флаг exists для определения наличия данных
+ */
+export interface SegmentsResponseDto {
+  exists: boolean;
+  message: string;
+  data: SegmentDto[];
+}
+
+/**
+ * Ответ API для получения одного сегмента
+ * Всегда возвращает HTTP 200, проверяйте флаг exists для определения наличия сегмента
+ */
+export interface SegmentResponse {
+  exists: boolean;
+  message: string;
+  data: SegmentDto | null;
+}
+
+export interface DeleteSegmentResponse {
+  message: string;
+  data: SegmentDto;
+}
+
+// Расширенный тип зоны с сегментом
+export interface ZoneWithSegmentDto {
+  _id: string;
+  title: string;
+  bar: number;
+  sector: number;
+  seg?: {
+    id: string;
+  };
+  createdAt: string;
+  updatedAt: string;
+}
+
+/**
+ * Ответ API для получения зон сегмента
+ */
+export interface ZonesBySegmentResponse {
+  exists: boolean;
+  message: string;
+  data: ZoneWithSegmentDto[];
 }
 

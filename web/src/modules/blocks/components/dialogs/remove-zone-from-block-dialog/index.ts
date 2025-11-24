@@ -1,2 +1,0 @@
-export { RemoveZoneFromBlockDialog } from "./RemoveZoneFromBlockDialog";
-

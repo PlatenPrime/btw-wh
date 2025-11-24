@@ -1,18 +1,22 @@
 import { SidebarInsetLayout } from "@/components/layout/SidebarInsetLayout";
 import { useState, useRef } from "react";
 import { useParams } from "react-router";
-import { BlockFetcher } from "@/modules/blocks/components/fetchers/block-fetcher";
+import { SegmentsFetcher } from "@/modules/blocks/components/fetchers/segments-fetcher";
 import {
-  BlockContainer,
-  BlockContainerSkeleton,
-} from "@/modules/blocks/components/containers/block-container";
-import { AddZonesToBlockDialog } from "@/modules/blocks/components/dialogs/add-zones-to-block-dialog";
-import { BlockControlPanel } from "@/modules/blocks/components/controls/block-control-panel";
+  SegmentsContainer,
+  SegmentsContainerSkeleton,
+} from "@/modules/blocks/components/containers/segments-container";
+import { CreateSegmentDialog } from "@/modules/blocks/components/dialogs/create-segment-dialog";
+import { DeleteSegmentDialog } from "@/modules/blocks/components/dialogs/delete-segment-dialog";
+import { SegmentControlPanel } from "@/modules/blocks/components/controls/segment-control-panel";
 import { useBlockQuery } from "@/modules/blocks/api/hooks/queries/useBlockQuery";
+import type { SegmentDto } from "@/modules/blocks/api/types";
 
 export function BlockPage() {
   const { id } = useParams<{ id: string }>();
-  const [addZonesDialogOpen, setAddZonesDialogOpen] = useState(false);
+  const [createSegmentDialogOpen, setCreateSegmentDialogOpen] = useState(false);
+  const [deleteSegmentDialogOpen, setDeleteSegmentDialogOpen] = useState(false);
+  const [selectedSegment, setSelectedSegment] = useState<SegmentDto | null>(null);
   const [isEditMode, setIsEditMode] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const saveHandlerRef = useRef<(() => Promise<void>) | null>(null);
@@ -44,6 +48,11 @@ export function BlockPage() {
     cancelHandlerRef.current = onCancel;
   };
 
+  const handleDelete = (segment: SegmentDto) => {
+    setSelectedSegment(segment);
+    setDeleteSegmentDialogOpen(true);
+  };
+
   if (!id) {
     return (
       <SidebarInsetLayout headerText="Блок не знайдено">
@@ -63,9 +72,9 @@ export function BlockPage() {
       <main className="p-2">
         <div className="grid gap-2">
           {blockData?.data && (
-            <BlockControlPanel
+            <SegmentControlPanel
               isEditMode={isEditMode}
-              onAddZones={() => setAddZonesDialogOpen(true)}
+              onCreate={() => setCreateSegmentDialogOpen(true)}
               onEdit={() => setIsEditMode(true)}
               onCancel={handleCancel}
               onSave={handleSave}
@@ -73,24 +82,35 @@ export function BlockPage() {
             />
           )}
 
-          <BlockFetcher
+          <SegmentsFetcher
             blockId={id}
-            ContainerComponent={({ block }) => (
-              <BlockContainer
-                block={block}
+            ContainerComponent={({ data }) => (
+              <SegmentsContainer
+                data={data}
+                blockId={id}
                 isEditMode={isEditMode}
                 onEditModeChange={setIsEditMode}
                 onSaveReady={handleSaveReady}
+                onDelete={handleDelete}
               />
             )}
-            SkeletonComponent={BlockContainerSkeleton}
+            SkeletonComponent={SegmentsContainerSkeleton}
           />
 
           {blockData?.data && (
-            <AddZonesToBlockDialog
-              open={addZonesDialogOpen}
-              onOpenChange={setAddZonesDialogOpen}
+            <CreateSegmentDialog
+              open={createSegmentDialogOpen}
+              onOpenChange={setCreateSegmentDialogOpen}
               block={blockData.data}
+            />
+          )}
+
+          {selectedSegment && (
+            <DeleteSegmentDialog
+              segment={selectedSegment}
+              open={deleteSegmentDialogOpen}
+              onOpenChange={setDeleteSegmentDialogOpen}
+              onSuccess={() => setSelectedSegment(null)}
             />
           )}
         </div>
