@@ -1,12 +1,35 @@
-import { useState, useEffect, useCallback } from "react";
-import { useQueryClient } from "@tanstack/react-query";
-import { toast } from "sonner";
+import { useBulkStructureMutation } from "@/modules/blocks/api/hooks/mutations/useBulkStructureMutation";
+import type {
+  BlockDto,
+  BlocksResponseDto,
+  BulkUpsertBlockPayload,
+} from "@/modules/blocks/api/types";
 import { BlocksContainerView } from "@/modules/blocks/components/containers/blocks-container/BlocksContainerView";
 import { BlocksControlPanel } from "@/modules/blocks/components/controls/blocks-control-panel/BlocksControlPanel";
 import { CreateBlockDialog } from "@/modules/blocks/components/dialogs/create-block-dialog/CreateBlockDialog";
 import { DeleteBlockDialog } from "@/modules/blocks/components/dialogs/delete-block-dialog/DeleteBlockDialog";
-import { useUpdateBlockMutation } from "@/modules/blocks/api/hooks/mutations/useUpdateBlockMutation";
-import type { BlockDto, BlocksResponseDto } from "@/modules/blocks/api/types";
+import type { QueryClient } from "@tanstack/react-query";
+import { useCallback, useEffect, useState } from "react";
+import { toast } from "sonner";
+
+const buildBlockPayload = (
+  blocks: BlockDto[],
+  originalBlocks: BlockDto[],
+): BulkUpsertBlockPayload[] => {
+  return blocks.reduce<BulkUpsertBlockPayload[]>((acc, block, index) => {
+    const original = originalBlocks.find((item) => item._id === block._id);
+    const nextOrder = index + 1;
+    if (!original || original.order !== nextOrder) {
+      acc.push({
+        _id: block._id,
+        title: block.title,
+        order: nextOrder,
+      });
+    }
+
+    return acc;
+  }, []);
+};
 
 interface BlocksContainerProps {
   data: BlockDto[];
@@ -18,9 +41,10 @@ export function BlocksContainer({ data }: BlocksContainerProps) {
   const [isEditMode, setIsEditMode] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
-  const [deleteDialogBlock, setDeleteDialogBlock] = useState<BlockDto | null>(null);
-  const updateBlockMutation = useUpdateBlockMutation();
-  const queryClient = useQueryClient();
+  const [deleteDialogBlock, setDeleteDialogBlock] = useState<BlockDto | null>(
+    null,
+  );
+  const bulkMutation = useBulkStructureMutation();
 
   useEffect(() => {
     setBlocks(data);
@@ -40,63 +64,56 @@ export function BlocksContainer({ data }: BlocksContainerProps) {
   const handleSave = useCallback(async () => {
     setIsSaving(true);
     try {
-      const updates = blocks
-        .map((block, index) => {
-          const originalIndex = originalBlocks.findIndex((b) => b._id === block._id);
-          if (originalIndex !== index) {
-            return { id: block._id, order: index + 1 };
-          }
-          return null;
-        })
-        .filter(Boolean) as Array<{ id: string; order: number }>;
+      const payload = buildBlockPayload(blocks, originalBlocks);
 
-      if (updates.length === 0) {
+      if (payload.length === 0) {
         setIsEditMode(false);
         return;
       }
 
-      const previousData = queryClient.getQueryData<BlocksResponseDto>(["blocks"]);
-      if (previousData) {
+      const optimisticUpdater = (client: QueryClient) => {
+        const previousData = client.getQueryData<BlocksResponseDto>(["blocks"]);
+        if (!previousData) {
+          return undefined;
+        }
         const optimisticBlocks = blocks.map((block, index) => ({
           ...block,
           order: index + 1,
         }));
-        queryClient.setQueryData<BlocksResponseDto>(["blocks"], {
+        client.setQueryData<BlocksResponseDto>(["blocks"], {
           ...previousData,
           data: optimisticBlocks,
         });
-      }
 
-      try {
-        await Promise.all(
-          updates.map((update) =>
-            updateBlockMutation.mutateAsync({
-              id: update.id,
-              data: { order: update.order },
-            })
-          )
-        );
+        return () => {
+          client.setQueryData<BlocksResponseDto>(["blocks"], previousData);
+        };
+      };
 
-        setIsEditMode(false);
+      await bulkMutation.mutateAsync({
+        scope: "blocks",
+        blocksPayload: payload,
+        optimisticUpdater,
+        extraInvalidations: payload.reduce<unknown[][]>((acc, item) => {
+          if (item._id) {
+            acc.push(["blocks", item._id]);
+          }
+          return acc;
+        }, []),
+      });
 
-        if (updates.length > 0) {
-          toast.info(
-            "Порядок блоків збережено. Сектора зон не перераховані автоматично. Використайте кнопку 'Перерахувати сектора' для оновлення.",
-            { duration: 5000 }
-          );
-        }
-      } catch (error) {
-        if (previousData) {
-          queryClient.setQueryData<BlocksResponseDto>(["blocks"], previousData);
-        }
-        throw error;
-      }
+      setIsEditMode(false);
+
+      toast.info(
+        "Порядок блоків збережено. Сектора зон не перераховані автоматично. Використайте кнопку 'Перерахувати сектора' для оновлення.",
+        { duration: 5000 },
+      );
     } catch (error) {
       console.error("Помилка збереження порядку блоків:", error);
     } finally {
       setIsSaving(false);
     }
-  }, [blocks, originalBlocks, queryClient, updateBlockMutation]);
+  }, [blocks, bulkMutation, originalBlocks]);
 
   const handleDragEnd = (newBlocks: BlockDto[]) => {
     setBlocks(newBlocks);
@@ -124,7 +141,10 @@ export function BlocksContainer({ data }: BlocksContainerProps) {
         onDelete={handleDeleteRequest}
       />
 
-      <CreateBlockDialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen} />
+      <CreateBlockDialog
+        open={isCreateDialogOpen}
+        onOpenChange={setIsCreateDialogOpen}
+      />
 
       {deleteDialogBlock && (
         <DeleteBlockDialog
@@ -140,4 +160,3 @@ export function BlocksContainer({ data }: BlocksContainerProps) {
     </div>
   );
 }
-

@@ -1,8 +1,12 @@
 import { useState, useEffect, useCallback } from "react";
-import type { SegmentDto, SegmentsResponseDto } from "@/modules/blocks/api/types";
-import { useUpdateSegmentMutation } from "@/modules/blocks/api/hooks/mutations/useUpdateSegmentMutation";
+import type {
+  BulkUpsertSegmentPayload,
+  SegmentDto,
+  SegmentsResponseDto,
+} from "@/modules/blocks/api/types";
+import { useBulkStructureMutation } from "@/modules/blocks/api/hooks/mutations/useBulkStructureMutation";
 import { SegmentsContainerView } from "./SegmentsContainerView";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQueryClient, type QueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 interface SegmentsContainerProps {
@@ -24,7 +28,7 @@ export function SegmentsContainer({
 }: SegmentsContainerProps) {
   const [segments, setSegments] = useState<SegmentDto[]>(data);
   const [originalSegments, setOriginalSegments] = useState<SegmentDto[]>(data);
-  const updateSegmentMutation = useUpdateSegmentMutation();
+  const bulkMutation = useBulkStructureMutation();
   const queryClient = useQueryClient();
 
   useEffect(() => {
@@ -45,67 +49,73 @@ export function SegmentsContainer({
 
   const handleSave = useCallback(async () => {
     try {
-      // Обновляем порядок всех сегментов, которые изменились
-      // Order должен быть 1-based (начинается с 1, а не с 0)
-      const updates = segments.map((segment, index) => {
-        const originalIndex = originalSegments.findIndex((s) => s._id === segment._id);
-        if (originalIndex !== index) {
-          return { id: segment._id, order: index + 1 };
+      const payload = segments.reduce<BulkUpsertSegmentPayload[]>((acc, segment, index) => {
+        const original = originalSegments.find((item) => item._id === segment._id);
+        const nextOrder = index + 1;
+        if (!original || original.order !== nextOrder) {
+          acc.push({
+            _id: segment._id,
+            blockId,
+            order: nextOrder,
+            zones: segment.zones,
+          });
         }
-        return null;
-      }).filter(Boolean) as Array<{ id: string; order: number }>;
+        return acc;
+      }, []);
 
-      if (updates.length === 0) {
+      if (payload.length === 0) {
         // Нет изменений, просто выходим из режима редактирования
         onEditModeChange(false);
         return;
       }
 
-      // Optimistic update: обновляем кеш до получения ответа от сервера
-      const previousData = queryClient.getQueryData<SegmentsResponseDto>(["segs", "block", blockId]);
-      if (previousData) {
+      const optimisticUpdater = (client: QueryClient) => {
+        const queryKey = ["segs", "block", blockId] as const;
+        const previousData = client.getQueryData<SegmentsResponseDto>(queryKey);
+        if (!previousData) {
+          return undefined;
+        }
         const optimisticSegments = segments.map((segment, index) => ({
           ...segment,
           order: index + 1,
         }));
-        queryClient.setQueryData<SegmentsResponseDto>(["segs", "block", blockId], {
+        client.setQueryData<SegmentsResponseDto>(queryKey, {
           ...previousData,
           data: optimisticSegments,
         });
-      }
 
-      try {
-        // Выполняем обновления параллельно
-        await Promise.all(
-          updates.map((update) =>
-            updateSegmentMutation.mutateAsync({
-              id: update.id,
-              data: { order: update.order },
-            })
-          )
-        );
+        return () => {
+          client.setQueryData<SegmentsResponseDto>(queryKey, previousData);
+        };
+      };
 
-        onEditModeChange(false);
-        
-        // Информируем пользователя о необходимости пересчета секторов
-        if (updates.length > 0) {
-          toast.info(
-            "Порядок сегментів збережено. Сектора зон не перераховані автоматично. Використайте кнопку 'Перерахувати сектора' для оновлення.",
-            { duration: 5000 }
-          );
-        }
-      } catch (error) {
-        // Откатываем optimistic update при ошибке
-        if (previousData) {
-          queryClient.setQueryData<SegmentsResponseDto>(["segs", "block", blockId], previousData);
-        }
-        throw error;
-      }
+      await bulkMutation.mutateAsync({
+        scope: "segs",
+        segsPayload: payload,
+        optimisticUpdater,
+        extraInvalidations: [
+          ["segs", "block", blockId],
+          ...payload.reduce<unknown[][]>((acc, item) => {
+            if (item._id) {
+              acc.push(["segs", item._id], ["zones", "seg", item._id]);
+            }
+            return acc;
+          }, []),
+        ],
+      });
+
+      onEditModeChange(false);
+      
+      // Информируем пользователя о необходимости пересчета секторов
+      toast.info(
+        "Порядок сегментів збережено. Сектора зон не перераховані автоматично. Використайте кнопку 'Перерахувати сектора' для оновлення.",
+        { duration: 5000 }
+      );
     } catch (error) {
       console.error("Помилка збереження порядку сегментів:", error);
       throw error;
     }
-  }, [segments, originalSegments, updateSegmentMutation, onEditModeChange, queryClient, blockId]);
+  }, [segments, originalSegments, bulkMutation, onEditModeChange, queryClient, blockId]);
 
   // Передаем функции сохранения и отмены в родительский компонент
   useEffect(() => {

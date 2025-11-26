@@ -17,6 +17,23 @@ export interface UpdateBlockDto {
   segs?: string[]; // Array of Segment ObjectIds
 }
 
+export interface BulkUpsertBlockPayload {
+  _id?: string;
+  title: string;
+  order: number;
+  segs?: string[];
+}
+
+export interface BulkBlocksUpsertResponse {
+  bulkResult: {
+    insertedCount: number;
+    matchedCount: number;
+    modifiedCount: number;
+    upsertedCount: number;
+  };
+  updatedBlocks: BlockDto[];
+}
+
 /**
  * Ответ API для получения всех блоков
  * Всегда возвращает HTTP 200, проверяйте флаг exists для определения наличия данных
@@ -106,6 +123,17 @@ export interface CreateSegmentDto {
 export interface UpdateSegmentDto {
   order?: number;
   zones?: string[]; // Minimum 1 zone required if provided
+}
+
+export interface BulkUpsertSegmentPayload {
+  _id?: string;
+  blockId: string;
+  order: number;
+  zones: string[];
+}
+
+export interface BulkSegmentsUpsertResponse {
+  processedSegs: SegmentDto[];
 }
 
 /**
