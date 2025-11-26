@@ -2,9 +2,9 @@ import { CardActionsMenu } from "@/components/shared/card-actions/CardActionsMen
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RoleType } from "@/constants/roles";
 import { RoleGuard } from "@/modules/auth/components/RoleGuard";
-import { Link } from "react-router";
 import type { BlockDto } from "@/modules/blocks/api/types";
 import { Trash } from "lucide-react";
+import { Link } from "react-router";
 
 interface BlockCardProps {
   block: BlockDto;
@@ -24,13 +24,16 @@ export function BlockCard({ block, onDelete }: BlockCardProps) {
 
   return (
     <Card className="gap-0 p-2 transition-shadow hover:shadow-md">
-      <CardHeader className="p-0">
+      <CardHeader className="p-0 ">
         <div className="flex items-center justify-between">
-          <CardTitle>
-            <Link
-              to={`/wh/blocks/${block._id}`}
-              className="hover:underline"
-            >
+          <CardTitle className="flex flex-row items-center justify-start gap-2">
+            <div className="flex items-center justify-center bg-accent/50 p-2 rounded-full w-8 h-8 ">
+              <span className="text-foreground text-xs ">
+                {block.order}
+              </span>
+            </div>
+
+            <Link to={`/wh/blocks/${block._id}`} className="hover:underline">
               {block.title}
             </Link>
           </CardTitle>
@@ -44,13 +47,7 @@ export function BlockCard({ block, onDelete }: BlockCardProps) {
           </RoleGuard>
         </div>
       </CardHeader>
-      <CardContent className="grid gap-2 p-0">
-        <div className="flex items-center justify-start">
-          <span className="text-muted-foreground text-xs">#</span>
-          <span className="text-muted-foreground text-xs">{block.order}</span>
-        </div>
-      </CardContent>
+      <CardContent className="grid gap-2 p-0"></CardContent>
     </Card>
   );
 }
-
