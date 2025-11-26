@@ -1,27 +1,24 @@
 import { useState, useEffect, useCallback } from "react";
-import type { BlockDto, BlocksResponseDto } from "@/modules/blocks/api/types";
-import { useUpdateBlockMutation } from "@/modules/blocks/api/hooks/mutations/useUpdateBlockMutation";
-import { BlocksContainerView } from "./BlocksContainerView";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { BlocksContainerView } from "@/modules/blocks/components/containers/blocks-container/BlocksContainerView";
+import { BlocksControlPanel } from "@/modules/blocks/components/controls/blocks-control-panel/BlocksControlPanel";
+import { CreateBlockDialog } from "@/modules/blocks/components/dialogs/create-block-dialog/CreateBlockDialog";
+import { DeleteBlockDialog } from "@/modules/blocks/components/dialogs/delete-block-dialog/DeleteBlockDialog";
+import { useUpdateBlockMutation } from "@/modules/blocks/api/hooks/mutations/useUpdateBlockMutation";
+import type { BlockDto, BlocksResponseDto } from "@/modules/blocks/api/types";
 
 interface BlocksContainerProps {
   data: BlockDto[];
-  isEditMode: boolean;
-  onEditModeChange: (isEditMode: boolean) => void;
-  onSaveReady?: (onSave: () => Promise<void>, onCancel: () => void) => void;
-  onDelete?: (block: BlockDto) => void;
 }
 
-export function BlocksContainer({
-  data,
-  isEditMode,
-  onEditModeChange,
-  onSaveReady,
-  onDelete,
-}: BlocksContainerProps) {
+export function BlocksContainer({ data }: BlocksContainerProps) {
   const [blocks, setBlocks] = useState<BlockDto[]>(data);
   const [originalBlocks, setOriginalBlocks] = useState<BlockDto[]>(data);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const [deleteDialogBlock, setDeleteDialogBlock] = useState<BlockDto | null>(null);
   const updateBlockMutation = useUpdateBlockMutation();
   const queryClient = useQueryClient();
 
@@ -30,36 +27,34 @@ export function BlocksContainer({
     setOriginalBlocks(data);
   }, [data]);
 
-  useEffect(() => {
-    if (isEditMode) {
-      setOriginalBlocks([...blocks]);
-    }
-  }, [isEditMode]);
+  const handleEnterEditMode = () => {
+    setOriginalBlocks([...blocks]);
+    setIsEditMode(true);
+  };
 
   const handleCancel = useCallback(() => {
     setBlocks([...originalBlocks]);
-    onEditModeChange(false);
-  }, [originalBlocks, onEditModeChange]);
+    setIsEditMode(false);
+  }, [originalBlocks]);
 
   const handleSave = useCallback(async () => {
+    setIsSaving(true);
     try {
-      // Обновляем порядок всех блоков, которые изменились
-      // Order должен быть 1-based (начинается с 1, а не с 0)
-      const updates = blocks.map((block, index) => {
-        const originalIndex = originalBlocks.findIndex((b) => b._id === block._id);
-        if (originalIndex !== index) {
-          return { id: block._id, order: index + 1 };
-        }
-        return null;
-      }).filter(Boolean) as Array<{ id: string; order: number }>;
+      const updates = blocks
+        .map((block, index) => {
+          const originalIndex = originalBlocks.findIndex((b) => b._id === block._id);
+          if (originalIndex !== index) {
+            return { id: block._id, order: index + 1 };
+          }
+          return null;
+        })
+        .filter(Boolean) as Array<{ id: string; order: number }>;
 
       if (updates.length === 0) {
-        // Нет изменений, просто выходим из режима редактирования
-        onEditModeChange(false);
+        setIsEditMode(false);
         return;
       }
 
-      // Optimistic update: обновляем кеш до получения ответа от сервера
       const previousData = queryClient.getQueryData<BlocksResponseDto>(["blocks"]);
       if (previousData) {
         const optimisticBlocks = blocks.map((block, index) => ({
@@ -73,7 +68,6 @@ export function BlocksContainer({
       }
 
       try {
-        // Выполняем обновления параллельно
         await Promise.all(
           updates.map((update) =>
             updateBlockMutation.mutateAsync({
@@ -83,9 +77,8 @@ export function BlocksContainer({
           )
         );
 
-        onEditModeChange(false);
-        
-        // Информируем пользователя о необходимости пересчета секторов
+        setIsEditMode(false);
+
         if (updates.length > 0) {
           toast.info(
             "Порядок блоків збережено. Сектора зон не перераховані автоматично. Використайте кнопку 'Перерахувати сектора' для оновлення.",
@@ -93,7 +86,6 @@ export function BlocksContainer({
           );
         }
       } catch (error) {
-        // Откатываем optimistic update при ошибке
         if (previousData) {
           queryClient.setQueryData<BlocksResponseDto>(["blocks"], previousData);
         }
@@ -101,28 +93,51 @@ export function BlocksContainer({
       }
     } catch (error) {
       console.error("Помилка збереження порядку блоків:", error);
-      throw error;
+    } finally {
+      setIsSaving(false);
     }
-  }, [blocks, originalBlocks, updateBlockMutation, onEditModeChange, queryClient]);
-
-  // Передаем функции сохранения и отмены в родительский компонент
-  useEffect(() => {
-    if (onSaveReady) {
-      onSaveReady(handleSave, handleCancel);
-    }
-  }, [handleSave, handleCancel, onSaveReady]);
+  }, [blocks, originalBlocks, queryClient, updateBlockMutation]);
 
   const handleDragEnd = (newBlocks: BlockDto[]) => {
     setBlocks(newBlocks);
   };
 
+  const handleDeleteRequest = (block: BlockDto) => {
+    setDeleteDialogBlock(block);
+  };
+
   return (
-    <BlocksContainerView
-      blocks={blocks}
-      isEditMode={isEditMode}
-      onDragEnd={handleDragEnd}
-      onDelete={onDelete}
-    />
+    <div className="grid gap-2 p-2">
+      <BlocksControlPanel
+        isEditMode={isEditMode}
+        onCreate={() => setIsCreateDialogOpen(true)}
+        onEdit={handleEnterEditMode}
+        onCancel={handleCancel}
+        onSave={handleSave}
+        isSaving={isSaving}
+      />
+
+      <BlocksContainerView
+        blocks={blocks}
+        isEditMode={isEditMode}
+        onDragEnd={handleDragEnd}
+        onDelete={handleDeleteRequest}
+      />
+
+      <CreateBlockDialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen} />
+
+      {deleteDialogBlock && (
+        <DeleteBlockDialog
+          block={deleteDialogBlock}
+          open={Boolean(deleteDialogBlock)}
+          onOpenChange={(open) => {
+            if (!open) {
+              setDeleteDialogBlock(null);
+            }
+          }}
+        />
+      )}
+    </div>
   );
 }
 
