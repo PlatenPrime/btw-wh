@@ -1,5 +1,4 @@
 import { ErrorDisplay } from "@/components/shared/error-components";
-import { LoadingNoData } from "@/components/shared/loading-states";
 import { useBlocksQuery } from "@/modules/blocks/api/hooks/queries/useBlocksQuery";
 import type { BlockDto } from "@/modules/blocks/api/types";
 
@@ -29,9 +28,8 @@ export function BlocksFetcher({
   }
 
   if (!data || !data.exists) {
-    return <LoadingNoData description="Блоки не знайдено" />;
+    return <ContainerComponent data={[]} />;
   }
 
   return <ContainerComponent data={data.data} />;
 }
-

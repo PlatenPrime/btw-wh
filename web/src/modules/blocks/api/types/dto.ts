@@ -106,7 +106,10 @@ export interface SegmentDto {
   };
   sector: number;
   order: number;
-  zones: string[]; // Array of Zone ObjectIds
+  zones: Array<{
+    _id: string;    // Zone ObjectId
+    title: string;   // Zone title (cached)
+  }>;
   createdAt: string;
   updatedAt: string;
 }

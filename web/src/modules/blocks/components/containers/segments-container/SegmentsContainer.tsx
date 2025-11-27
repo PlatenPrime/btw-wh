@@ -57,7 +57,7 @@ export function SegmentsContainer({
             _id: segment._id,
             blockId,
             order: nextOrder,
-            zones: segment.zones,
+            zones: segment.zones.map((z) => z._id),
           });
         }
         return acc;

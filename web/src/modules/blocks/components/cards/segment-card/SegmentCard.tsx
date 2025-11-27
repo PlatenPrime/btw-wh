@@ -2,7 +2,6 @@ import { CardActionsMenu } from "@/components/shared/card-actions/CardActionsMen
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { RoleType } from "@/constants/roles";
 import { RoleGuard } from "@/modules/auth/components/RoleGuard";
-import { useZonesBySegmentQuery } from "@/modules/blocks/api/hooks/queries/useZonesBySegmentQuery";
 import type { SegmentDto } from "@/modules/blocks/api/types";
 import { Trash } from "lucide-react";
 import { Link } from "react-router";
@@ -14,13 +13,7 @@ interface SegmentCardProps {
 }
 
 export function SegmentCard({ segment, blockId, onDelete }: SegmentCardProps) {
-  const { data: zonesData } = useZonesBySegmentQuery({
-    segId: segment._id,
-    enabled: true,
-  });
-
-  const zones = zonesData?.data ?? [];
-  const zoneTitles = zones.map((zone) => zone.title).join(", ");
+  const zoneTitles = segment.zones.map((zone) => zone.title).join(", ");
 
   const actions = [
     {
@@ -44,7 +37,7 @@ export function SegmentCard({ segment, blockId, onDelete }: SegmentCardProps) {
               <div className="bg-accent/50 flex h-8 w-8 items-center justify-center rounded-full p-2">
                 <span className="text-foreground text-xs">{segment.order}</span>
               </div>
-              {zones.length > 0 && (
+              {segment.zones.length > 0 && (
                 <div className="grid gap-1">
                   <span className="">{zoneTitles}</span>
                 </div>

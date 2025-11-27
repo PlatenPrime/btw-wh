@@ -28,10 +28,10 @@ export function RemoveZoneFromSegmentControl({
   const updateSegmentMutation = useUpdateSegmentMutation();
 
   const isRemoving = updateSegmentMutation.isPending;
-  const isZoneLinked = segment.zones.includes(zone._id);
+  const isZoneLinked = segment.zones.some((z) => z._id === zone._id);
 
   const nextZoneIds = useMemo(() => {
-    return segment.zones.filter((zoneId) => zoneId !== zone._id);
+    return segment.zones.filter((z) => z._id !== zone._id).map((z) => z._id);
   }, [segment.zones, zone._id]);
 
   const handleRemoveZone = async () => {
