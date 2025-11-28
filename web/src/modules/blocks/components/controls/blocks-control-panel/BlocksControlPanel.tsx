@@ -4,6 +4,7 @@ import { Edit, Plus, RefreshCw, Save, X } from "lucide-react";
 
 interface BlocksControlPanelProps {
   isEditMode: boolean;
+  hasBlocks: boolean;
   onCreate: () => void;
   onEdit: () => void;
   onCancel: () => void;
@@ -13,6 +14,7 @@ interface BlocksControlPanelProps {
 
 export function BlocksControlPanel({
   isEditMode,
+  hasBlocks,
   onCreate,
   onEdit,
   onCancel,
@@ -52,14 +54,25 @@ export function BlocksControlPanel({
     );
   }
 
+  if (!hasBlocks) {
+    return (
+      <div className="flex gap-2">
+        <Button onClick={onCreate}>
+          <Plus className="mr-2 size-4" />
+          Створити блок
+        </Button>
+      </div>
+    );
+  }
+
   return (
     <div className="grid gap-2 md:flex">
       <Button onClick={onCreate}>
-        <Plus className=" size-4" />
+        <Plus className="mr-2 size-4" />
         Створити блок
       </Button>
       <Button onClick={onEdit} variant="outline">
-        <Edit className=" size-4" />
+        <Edit className="mr-2 size-4" />
         Редагувати
       </Button>
       <Button
@@ -68,7 +81,7 @@ export function BlocksControlPanel({
         disabled={recalculateMutation.isPending}
       >
         <RefreshCw
-          className={` size-4 ${recalculateMutation.isPending ? "animate-spin" : ""}`}
+          className={`mr-2 size-4 ${recalculateMutation.isPending ? "animate-spin" : ""}`}
         />
         {recalculateMutation.isPending
           ? "Перерахунок..."

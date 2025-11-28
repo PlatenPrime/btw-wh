@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useCreateSegmentMutation } from "@/modules/blocks/api/hooks/mutations/useCreateSegmentMutation";
 import { useZonesInfiniteQuery } from "@/modules/blocks/api/hooks/queries/useZonesInfiniteQuery";
+import { useSegmentsByBlockQuery } from "@/modules/blocks/api/hooks/queries/useSegmentsByBlockQuery";
 import type { BlockDto } from "@/modules/blocks/api/types";
 import { CreateSegmentFormView } from "./CreateSegmentFormView";
 
@@ -19,8 +20,23 @@ export function CreateSegmentForm({
 }: CreateSegmentFormProps) {
   const [search, setSearch] = useState("");
   const [selectedZoneIds, setSelectedZoneIds] = useState<Set<string>>(new Set());
-  const [order, setOrder] = useState(1);
   const createSegmentMutation = useCreateSegmentMutation();
+
+  // Получаем существующие сегменты блока для вычисления order
+  const { data: segmentsData } = useSegmentsByBlockQuery({
+    blockId: block._id,
+    enabled: enabled,
+  });
+
+  // Вычисляем order автоматически: максимальный order + 1, или 1 если сегментов нет
+  const order = useMemo(() => {
+    const segments = segmentsData?.data ?? [];
+    if (segments.length === 0) {
+      return 1;
+    }
+    const maxOrder = Math.max(...segments.map((seg) => seg.order));
+    return maxOrder + 1;
+  }, [segmentsData]);
 
   // Получаем все зоны с infinite scroll для поиска
   const {
@@ -83,8 +99,6 @@ export function CreateSegmentForm({
       zones={availableZones}
       selectedZoneIds={selectedZoneIds}
       onToggleZone={handleToggleZone}
-      order={order}
-      onOrderChange={setOrder}
       onSubmit={handleSubmit}
       onCancel={onCancel}
       isLoading={createSegmentMutation.isPending}

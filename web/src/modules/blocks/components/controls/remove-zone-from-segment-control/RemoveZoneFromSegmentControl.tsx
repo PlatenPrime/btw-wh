@@ -57,7 +57,7 @@ export function RemoveZoneFromSegmentControl({
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
         <Button variant="destructive" size="sm" disabled={!isZoneLinked}>
-          <Trash2 className="mr-2 size-4" />
+          <Trash2 className=" size-4" />
           Відв'язати
         </Button>
       </DialogTrigger>

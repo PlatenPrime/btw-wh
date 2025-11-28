@@ -1,0 +1,2 @@
+export { ZoneBySegmentCard } from "./ZoneBySegmentCard";
+

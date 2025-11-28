@@ -13,8 +13,6 @@ interface CreateSegmentFormViewProps {
   zones: ZoneDto[];
   selectedZoneIds: Set<string>;
   onToggleZone: (zoneId: string) => void;
-  order: number;
-  onOrderChange: (order: number) => void;
   onSubmit: () => void;
   onCancel?: () => void;
   isLoading?: boolean;
@@ -29,8 +27,6 @@ export function CreateSegmentFormView({
   zones,
   selectedZoneIds,
   onToggleZone,
-  order,
-  onOrderChange,
   onSubmit,
   onCancel,
   isLoading = false,
@@ -48,19 +44,6 @@ export function CreateSegmentFormView({
 
   return (
     <div className="grid gap-4 flex-1 min-h-0">
-      <div className="grid gap-2">
-        <Label htmlFor="order">Порядок сегмента</Label>
-        <Input
-          id="order"
-          type="number"
-          min="1"
-          value={order}
-          onChange={(e) => onOrderChange(Number.parseInt(e.target.value) || 1)}
-          placeholder="1"
-          disabled={isLoading}
-        />
-      </div>
-
       <div className="grid gap-2">
         <Label htmlFor="search">Пошук зон</Label>
         <Input

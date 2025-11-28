@@ -1,0 +1,2 @@
+export { SegmentInfoCard } from "./SegmentInfoCard";
+
