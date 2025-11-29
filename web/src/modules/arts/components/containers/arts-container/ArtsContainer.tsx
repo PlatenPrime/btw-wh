@@ -1,13 +1,13 @@
 import type { HeaderAction } from "@/components/layout/header-actions";
 import { useRegisterHeaderActions } from "@/components/layout/header-actions";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
-import { useRole } from "@/modules/auth/hooks/useRole";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { ArtsContainerView } from "@/modules/arts/components/containers/arts-container/ArtsContainerView.tsx";
 import { DeleteArtsWithoutLatestMarkerDialog } from "@/modules/arts/components/dialogs/delete-arts-without-latest-marker-dialog/DeleteArtsWithoutLatestMarkerDialog";
-import { handleExportArts } from "@/modules/arts/utils/handle-export-arts/handleExportArts";
 import { handleExportArtsWithStocks } from "@/modules/arts/utils/handle-export-arts-with-stocks/handleExportArtsWithStocks";
-import { Download, FileSpreadsheet, Trash2 } from "lucide-react";
+import { handleExportArts } from "@/modules/arts/utils/handle-export-arts/handleExportArts";
+import { useRole } from "@/modules/auth/hooks/useRole";
+import { FileSpreadsheet, Trash2 } from "lucide-react";
 import { useState } from "react";
 
 interface ArtsContainerProps {
@@ -40,14 +40,15 @@ export function ArtsContainer({
   const headerActions: HeaderAction[] = [
     {
       id: "export-arts",
-      label: "Експортувати в Excel",
-      icon: Download,
+      label: "Експорт артикулів",
+      icon: FileSpreadsheet,
+      iconColor: "emerald",
       variant: "default",
       onClick: () => handleExportArts(),
     },
     {
       id: "export-arts-with-stocks",
-      label: "Експортувати з запасами",
+      label: "Експорт з запасами",
       icon: FileSpreadsheet,
       iconColor: "emerald",
       variant: "default",
@@ -59,7 +60,7 @@ export function ArtsContainer({
   if (isPrime()) {
     headerActions.push({
       id: "delete-arts-without-latest-marker",
-      label: "Видалити неактуальні артикули",
+      label: "Актуалізувати артикули",
       icon: Trash2,
       iconColor: "red",
       variant: "destructive",

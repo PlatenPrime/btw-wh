@@ -1,16 +1,14 @@
 import { apiClient } from "@/lib/apiClient";
 import type { ExportZonesResponse } from "@/modules/zones/api/types";
+import { parseContentDisposition } from "@/utils/parseContentDisposition";
 
 export const exportZones = async (): Promise<ExportZonesResponse> => {
   const res = await apiClient.get("/zones/export", {
     responseType: "blob",
   });
 
-  // Extract filename from Content-Disposition header
   const contentDisposition = res.headers["content-disposition"];
-  const filename = contentDisposition
-    ? contentDisposition.split("filename=")[1]?.replace(/"/g, "") || "zones_export.xlsx"
-    : "zones_export.xlsx";
+  const filename = parseContentDisposition(contentDisposition, "zones_export.xlsx");
 
   return {
     blob: res.data,

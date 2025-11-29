@@ -12,10 +12,10 @@ export function handleExportArtsWithStocks() {
       a.click();
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
-      toast.success("Файл успешно скачан");
+      toast.success("Файл успішно збережено");
     })
     .catch((error) => {
-      toast.error("Ошибка экспорта", {
+      toast.error("Помилка експорту", {
         description: error.message,
       });
     });

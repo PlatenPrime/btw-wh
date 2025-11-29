@@ -1,5 +1,6 @@
 import type { SkladCode } from "@/constants/sklad";
 import { apiClient } from "@/lib/apiClient";
+import { parseContentDisposition } from "@/utils/parseContentDisposition";
 
 interface ExportPosesStocksParams {
   sklad?: SkladCode;
@@ -25,11 +26,8 @@ export const exportPosesStocks = async ({
   );
 
   const contentDisposition = response.headers["content-disposition"];
-  const filename =
-    contentDisposition
-      ?.split("filename=")[1]
-      ?.replace(/"/g, "")
-      ?.trim() || `poses_stocks_${sklad ?? "all"}.xlsx`;
+  const fallbackFilename = `poses_stocks_${sklad ?? "all"}.xlsx`;
+  const filename = parseContentDisposition(contentDisposition, fallbackFilename);
 
   return {
     blob: response.data,
