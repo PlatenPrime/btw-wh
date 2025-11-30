@@ -67,11 +67,6 @@ export const appSidebarData = {
           url: "/wh/blocks",
           iconName: "Route",
         },
-        {
-          title: "Імпорт/Експорт зон",
-          url: "/wh/zones-import-export",
-          iconName: "MapPin",
-        },
       ],
     },
     {
