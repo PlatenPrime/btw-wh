@@ -1,57 +1,34 @@
 import { SidebarInsetLayout } from "@/components/layout/SidebarInsetLayout";
-import { useState, useRef } from "react";
-import { useParams } from "react-router";
-import { SegmentsFetcher } from "@/modules/blocks/components/fetchers/segments-fetcher";
+import { useBlockQuery } from "@/modules/blocks/api/hooks/queries/useBlockQuery";
 import {
   SegmentsContainer,
   SegmentsContainerSkeleton,
 } from "@/modules/blocks/components/containers/segments-container";
+import { SegmentControlPanel } from "@/modules/blocks/components/controls/segment-control-panel";
 import { CreateSegmentDialog } from "@/modules/blocks/components/dialogs/create-segment-dialog";
 import { DeleteSegmentDialog } from "@/modules/blocks/components/dialogs/delete-segment-dialog";
-import { SegmentControlPanel } from "@/modules/blocks/components/controls/segment-control-panel";
-import { useBlockQuery } from "@/modules/blocks/api/hooks/queries/useBlockQuery";
-import type { SegmentDto } from "@/modules/blocks/api/types";
+import { SegmentsFetcher } from "@/modules/blocks/components/fetchers/segments-fetcher";
+import { useBlockPage } from "@/modules/blocks/hooks/useBlockPage";
+import { useParams } from "react-router";
 
 export function BlockPage() {
   const { id } = useParams<{ id: string }>();
-  const [createSegmentDialogOpen, setCreateSegmentDialogOpen] = useState(false);
-  const [deleteSegmentDialogOpen, setDeleteSegmentDialogOpen] = useState(false);
-  const [selectedSegment, setSelectedSegment] = useState<SegmentDto | null>(null);
-  const [isEditMode, setIsEditMode] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
-  const saveHandlerRef = useRef<(() => Promise<void>) | null>(null);
-  const cancelHandlerRef = useRef<(() => void) | null>(null);
   const { data: blockData } = useBlockQuery({ id: id ?? "", enabled: !!id });
-
-  const handleSave = async () => {
-    if (saveHandlerRef.current) {
-      setIsSaving(true);
-      try {
-        await saveHandlerRef.current();
-      } finally {
-        setIsSaving(false);
-      }
-    }
-  };
-
-  const handleCancel = () => {
-    if (cancelHandlerRef.current) {
-      cancelHandlerRef.current();
-    }
-  };
-
-  const handleSaveReady = (
-    onSave: () => Promise<void>,
-    onCancel: () => void
-  ) => {
-    saveHandlerRef.current = onSave;
-    cancelHandlerRef.current = onCancel;
-  };
-
-  const handleDelete = (segment: SegmentDto) => {
-    setSelectedSegment(segment);
-    setDeleteSegmentDialogOpen(true);
-  };
+  const {
+    isEditMode,
+    isSaving,
+    createSegmentDialogOpen,
+    deleteSegmentDialogOpen,
+    selectedSegment,
+    setIsEditMode,
+    setCreateSegmentDialogOpen,
+    setDeleteSegmentDialogOpen,
+    setSelectedSegment,
+    handleSave,
+    handleCancel,
+    handleSaveReady,
+    handleDelete,
+  } = useBlockPage();
 
   if (!id) {
     return (
@@ -118,4 +95,3 @@ export function BlockPage() {
     </SidebarInsetLayout>
   );
 }
-

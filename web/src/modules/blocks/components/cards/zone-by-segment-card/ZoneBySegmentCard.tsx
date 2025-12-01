@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { Dialog } from "@/components/ui/dialog";
 import { Wrapper } from "@/components/shared/wrappers/Wrapper";
 import {
   Card,
@@ -10,7 +12,10 @@ import type {
   SegmentDto,
   ZoneWithSegmentDto,
 } from "@/modules/blocks/api/types";
-import { RemoveZoneFromSegmentControl } from "@/modules/blocks/components/controls/remove-zone-from-segment-control";
+import {
+  RemoveZoneFromSegmentDialog,
+  RemoveZoneFromSegmentDialogTrigger,
+} from "@/modules/blocks/components/dialogs/remove-zone-from-segment-dialog";
 import {
   ArtsByZoneContainer,
   ArtsByZoneContainerSkeleton,
@@ -23,6 +28,8 @@ interface ZoneBySegmentCardProps {
 }
 
 export function ZoneBySegmentCard({ segment, zone }: ZoneBySegmentCardProps) {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
   return (
     <Wrapper>
       <div className="grid gap-2">
@@ -35,7 +42,14 @@ export function ZoneBySegmentCard({ segment, zone }: ZoneBySegmentCardProps) {
               </span>
             </CardDescription>
 
-            <RemoveZoneFromSegmentControl segment={segment} zone={zone} />
+            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+              <RemoveZoneFromSegmentDialogTrigger segment={segment} zone={zone} />
+              <RemoveZoneFromSegmentDialog
+                segment={segment}
+                zone={zone}
+                onClose={() => setIsDialogOpen(false)}
+              />
+            </Dialog>
           </CardHeader>
         </Card>
         {zone.title && (

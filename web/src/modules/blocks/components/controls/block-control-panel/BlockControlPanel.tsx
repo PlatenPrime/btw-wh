@@ -44,7 +44,7 @@ export function BlockControlPanel({
           <RefreshCw
             className={`mr-2 size-4 ${recalculateMutation.isPending ? "animate-spin" : ""}`}
           />
-          {recalculateMutation.isPending ? "Перерахунок..." : "Перерахувати сектора"}
+          {recalculateMutation.isPending ? "Перерахунок..." : "Перерахувати сектори"}
         </Button>
       </div>
     );
@@ -68,7 +68,7 @@ export function BlockControlPanel({
         <RefreshCw
           className={` size-4 ${recalculateMutation.isPending ? "animate-spin" : ""}`}
         />
-        {recalculateMutation.isPending ? "Перерахунок..." : "Перерахувати сектора"}
+        {recalculateMutation.isPending ? "Перерахунок..." : "Перерахувати сектори"}
       </Button>
     </div>
   );
