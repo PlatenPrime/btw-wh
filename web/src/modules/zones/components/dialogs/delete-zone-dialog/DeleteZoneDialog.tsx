@@ -1,12 +1,7 @@
-import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { useDeleteZoneMutation } from "@/modules/zones/api/hooks/mutations/useDeleteZoneMutation";
+import { Dialog } from "@/components/ui/dialog";
 import type { ZoneDto } from "@/modules/zones/api/types";
+import { DeleteZoneDialogView } from "./DeleteZoneDialogView";
+import { useDeleteZoneDialog } from "./useDeleteZoneDialog";
 
 interface DeleteZoneDialogProps {
   zone: ZoneDto;
@@ -21,16 +16,14 @@ export function DeleteZoneDialog({
   onOpenChange,
   onSuccess,
 }: DeleteZoneDialogProps) {
-  const mutation = useDeleteZoneMutation();
+  const { isDeleting, handleDelete } = useDeleteZoneDialog({
+    zone,
+    onSuccess,
+  });
 
-  const handleDelete = async () => {
-    try {
-      await mutation.mutateAsync(zone._id);
-      onOpenChange?.(false);
-      onSuccess?.();
-    } catch (error) {
-      console.error("Помилка видалення зони:", error);
-    }
+  const handleDeleteAndClose = async () => {
+    await handleDelete();
+    onOpenChange?.(false);
   };
 
   const handleCancel = () => {
@@ -39,25 +32,12 @@ export function DeleteZoneDialog({
 
   return (
     <Dialog open={controlledOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Видалити зону</DialogTitle>
-        </DialogHeader>
-        <div className="space-y-4">
-          <p className="text-muted-foreground text-sm">
-            Ви впевнені, що хочете видалити зону <strong>{zone.title}</strong>?
-            Це дію неможливо скасувати.
-          </p>
-          <DialogActions
-            onCancel={handleCancel}
-            onSubmit={handleDelete}
-            isSubmitting={mutation.isPending}
-            submitText="Видалити"
-            variant="destructive"
-            className="justify-end"
-          />
-        </div>
-      </DialogContent>
+      <DeleteZoneDialogView
+        zone={zone}
+        isDeleting={isDeleting}
+        onDelete={handleDeleteAndClose}
+        onCancel={handleCancel}
+      />
     </Dialog>
   );
 }

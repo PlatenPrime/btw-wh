@@ -1,12 +1,13 @@
-import { CreateAskDialogView } from "@/modules/asks/components/dialogs/create-ask-dialog/CreateAskDialogView.tsx";
-import { useState } from "react";
+import { Dialog } from "@/components/ui/dialog";
+import { CreateAskDialogTrigger } from "./CreateAskDialogTrigger";
+import { CreateAskDialogView } from "./CreateAskDialogView";
+import { useCreateAskDialog } from "./useCreateAskDialog";
 
 interface CreateAskDialogProps {
   onSuccess?: () => void;
-  preFilledArtikul?: string; // Предзаполненный артикул для страницы артикула
-  trigger?: React.ReactNode; // Кастомный триггер для открытия диалога
-  showTrigger?: boolean; // Показывать ли триггер (по умолчанию true)
-  // Для внешнего управления состоянием (опционально)
+  preFilledArtikul?: string;
+  trigger?: React.ReactNode;
+  showTrigger?: boolean;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
 }
@@ -16,36 +17,22 @@ export function CreateAskDialog({
   preFilledArtikul,
   trigger,
   showTrigger = true,
-  open: externalOpen,
-  onOpenChange: externalOnOpenChange,
+  open: controlledOpen,
+  onOpenChange,
 }: CreateAskDialogProps) {
-  // Внутреннее состояние для обратной совместимости
-  const [internalOpen, setInternalOpen] = useState(false);
-
-  // Используем внешнее состояние если передано, иначе внутреннее
-  const isControlled =
-    externalOpen !== undefined && externalOnOpenChange !== undefined;
-  const open = isControlled ? externalOpen : internalOpen;
-  const setOpen = isControlled ? externalOnOpenChange : setInternalOpen;
-
-  const handleSuccess = () => {
-    setOpen(false);
-    onSuccess?.();
-  };
-
-  const handleCancel = () => {
-    setOpen(false);
-  };
+  const { handleSuccess, handleCancel } = useCreateAskDialog({
+    onOpenChange,
+    onSuccess,
+  });
 
   return (
-    <CreateAskDialogView
-      open={open}
-      setOpen={setOpen}
-      onSuccess={handleSuccess}
-      onCancel={handleCancel}
-      preFilledArtikul={preFilledArtikul}
-      trigger={trigger}
-      showTrigger={showTrigger}
-    />
+    <Dialog open={controlledOpen} onOpenChange={onOpenChange}>
+      {showTrigger && <CreateAskDialogTrigger trigger={trigger} />}
+      <CreateAskDialogView
+        onSuccess={handleSuccess}
+        onCancel={handleCancel}
+        preFilledArtikul={preFilledArtikul}
+      />
+    </Dialog>
   );
 }

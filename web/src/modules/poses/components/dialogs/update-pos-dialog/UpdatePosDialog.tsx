@@ -1,14 +1,14 @@
+import { Dialog } from "@/components/ui/dialog";
 import type { IPos } from "@/modules/poses/api/types";
-import { UpdatePosDialogView } from "@/modules/poses/components/dialogs/update-pos-dialog/UpdatePosDialogView.tsx";
-import type { Dispatch, SetStateAction } from "react";
-import { useMemo, useRef, useState } from "react";
+import { UpdatePosDialogTrigger } from "./UpdatePosDialogTrigger";
+import { UpdatePosDialogView } from "./UpdatePosDialogView";
+import { useUpdatePosDialog } from "./useUpdatePosDialog";
 
 interface UpdatePosDialogProps {
   pos: IPos;
   trigger?: React.ReactNode;
-  showTrigger?: boolean; // Показывать ли триггер (по умолчанию true)
+  showTrigger?: boolean;
   onSuccess?: () => void;
-  // Controlled component props
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
 }
@@ -21,46 +21,20 @@ export function UpdatePosDialog({
   open: controlledOpen,
   onOpenChange,
 }: UpdatePosDialogProps) {
-  // Внутреннее состояние для неконтролируемого режима
-  const [internalOpen, setInternalOpen] = useState(false);
-
-  // Используем контролируемое состояние если передано, иначе внутреннее
-  const open = controlledOpen ?? internalOpen;
-  const openRef = useRef(open);
-  openRef.current = open;
-
-  // Создаем обертку для onOpenChange, которая принимает SetStateAction
-  const setOpen: Dispatch<SetStateAction<boolean>> = useMemo(
-    () => (value) => {
-      const newValue =
-        typeof value === "function" ? value(openRef.current) : value;
-      if (onOpenChange) {
-        onOpenChange(newValue);
-      } else {
-        setInternalOpen(newValue);
-      }
-    },
-    [onOpenChange],
-  );
-
-  const handleSuccess = () => {
-    setOpen(false);
-    onSuccess?.();
-  };
-
-  const handleCancel = () => {
-    setOpen(false);
-  };
+  const { handleSuccess, handleCancel } = useUpdatePosDialog({
+    onOpenChange,
+    onSuccess,
+  });
 
   return (
-    <UpdatePosDialogView
-      open={open}
-      setOpen={setOpen}
-      pos={pos}
-      trigger={trigger}
-      showTrigger={showTrigger}
-      onSuccess={handleSuccess}
-      onCancel={handleCancel}
-    />
+    <Dialog open={controlledOpen} onOpenChange={onOpenChange}>
+      {showTrigger && <UpdatePosDialogTrigger trigger={trigger} />}
+      <UpdatePosDialogView
+        pos={pos}
+        onSuccess={handleSuccess}
+        onCancel={handleCancel}
+        isDialogOpen={controlledOpen ?? false}
+      />
+    </Dialog>
   );
 }

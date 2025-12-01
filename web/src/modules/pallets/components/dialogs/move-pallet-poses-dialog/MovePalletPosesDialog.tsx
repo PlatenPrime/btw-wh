@@ -1,12 +1,13 @@
-import { useMovePalletPosesMutation } from "@/modules/pallets/api/hooks/mutations/useMovePalletPosesMutation";
+import { Dialog } from "@/components/ui/dialog";
 import type { IPallet } from "@/modules/pallets/api/types";
-import { MovePalletPosesDialogView } from "@/modules/pallets/components/dialogs/move-pallet-poses-dialog/MovePalletPosesDialogView.tsx";
-import { useState } from "react";
+import { MovePalletPosesDialogTrigger } from "./MovePalletPosesDialogTrigger";
+import { MovePalletPosesDialogView } from "./MovePalletPosesDialogView";
+import { useMovePalletPosesDialog } from "./useMovePalletPosesDialog";
 
 interface MovePalletPosesDialogProps {
   pallet: IPallet;
   trigger?: React.ReactNode;
-  // Поддержка контролируемого режима
+  onSuccess?: () => void;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
 }
@@ -14,55 +15,39 @@ interface MovePalletPosesDialogProps {
 export function MovePalletPosesDialog({
   pallet,
   trigger,
+  onSuccess,
   open: controlledOpen,
   onOpenChange,
 }: MovePalletPosesDialogProps) {
-  const [internalOpen, setInternalOpen] = useState(false);
-
-  // Используем контролируемое состояние если передано, иначе внутреннее
-  const open = controlledOpen ?? internalOpen;
-  const setOpen = onOpenChange ?? setInternalOpen;
-
-  const moveMutation = useMovePalletPosesMutation({
+  const {
+    isMoving,
+    isSourceEmpty,
+    mutationError,
+    handleSubmit,
+    handleOpenChange,
+  } = useMovePalletPosesDialog({
     pallet,
+    onOpenChange,
+    onSuccess,
   });
 
-  const handleSuccess = () => {
-    setOpen(false);
-  };
-
   const handleCancel = () => {
-    setOpen(false);
+    handleOpenChange(false);
   };
-
-  const handleSubmit = async (targetPalletId: string) => {
-    // clear previous error before new attempt
-    moveMutation.reset();
-    await moveMutation.mutateAsync(targetPalletId);
-    handleSuccess();
-    setOpen(false);
-  };
-
-  const isSourceEmpty =
-    !Array.isArray(pallet.poses) || pallet.poses.length === 0;
-
-  const mutationError = moveMutation.error
-    ? moveMutation.error instanceof Error
-      ? moveMutation.error.message
-      : "Помилка переміщення позицій"
-    : null;
 
   return (
-    <MovePalletPosesDialogView
-      open={open}
-      setOpen={setOpen}
-      onCancel={handleCancel}
-      pallet={pallet}
-      handleSubmit={handleSubmit}
-      isSourceEmpty={isSourceEmpty}
-      moveMutation={moveMutation}
-      mutationError={mutationError}
-      trigger={trigger}
-    />
+    <Dialog open={controlledOpen} onOpenChange={handleOpenChange}>
+      {trigger !== undefined && (
+        <MovePalletPosesDialogTrigger trigger={trigger} />
+      )}
+      <MovePalletPosesDialogView
+        pallet={pallet}
+        isSourceEmpty={isSourceEmpty}
+        mutationError={mutationError}
+        isMoving={isMoving}
+        onSubmit={handleSubmit}
+        onCancel={handleCancel}
+      />
+    </Dialog>
   );
 }

@@ -1,14 +1,13 @@
-import { useDeletePalletPosesMutation } from "@/modules/pallets/api/hooks/mutations/useDeletePalletPosesMutation";
+import { Dialog } from "@/components/ui/dialog";
 import type { IPallet } from "@/modules/pallets/api/types";
-import { ClearPalletDialogView } from "@/modules/pallets/components/dialogs/clear-pallet-dialog/ClearPalletDialogView.tsx";
-import type { Dispatch, SetStateAction } from "react";
-import { useMemo, useRef, useState } from "react";
+import { ClearPalletDialogTrigger } from "./ClearPalletDialogTrigger";
+import { ClearPalletDialogView } from "./ClearPalletDialogView";
+import { useClearPalletDialog } from "./useClearPalletDialog";
 
-interface DeletePalletDialogProps {
+interface ClearPalletDialogProps {
   pallet: IPallet;
   trigger?: React.ReactNode;
-  onSuccess: () => void;
-  // Поддержка контролируемого режима
+  onSuccess?: () => void;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
 }
@@ -19,51 +18,30 @@ export function ClearPalletDialog({
   onSuccess,
   open: controlledOpen,
   onOpenChange,
-}: DeletePalletDialogProps) {
-  const [internalOpen, setInternalOpen] = useState(false);
-
-  // Используем контролируемое состояние если передано, иначе внутреннее
-  const open = controlledOpen ?? internalOpen;
-  const openRef = useRef(open);
-  openRef.current = open;
-
-  // Создаем обертку для onOpenChange, которая принимает SetStateAction
-  const setOpen: Dispatch<SetStateAction<boolean>> = useMemo(
-    () => (value) => {
-      const newValue =
-        typeof value === "function" ? value(openRef.current) : value;
-      if (onOpenChange) {
-        onOpenChange(newValue);
-      } else {
-        setInternalOpen(newValue);
-      }
-    },
-    [onOpenChange],
-  );
-
-  const clearMutation = useDeletePalletPosesMutation({
-    palletId: pallet._id,
-    palletTitle: pallet.title,
+}: ClearPalletDialogProps) {
+  const { isClearing, handleClear } = useClearPalletDialog({
+    pallet,
+    onSuccess,
   });
 
-  const handleClear = async () => {
-    try {
-      await clearMutation.mutateAsync();
-      setOpen(false);
-      onSuccess();
-    } catch (error) {
-      console.error("Error deleting pallet:", error);
-    }
+  const handleClearAndClose = async () => {
+    await handleClear();
+    onOpenChange?.(false);
+  };
+
+  const handleCancel = () => {
+    onOpenChange?.(false);
   };
 
   return (
-    <ClearPalletDialogView
-      pallet={pallet}
-      handleClear={handleClear}
-      clearMutation={clearMutation}
-      trigger={trigger}
-      open={open}
-      setOpen={setOpen}
-    />
+    <Dialog open={controlledOpen} onOpenChange={onOpenChange}>
+      {trigger !== undefined && <ClearPalletDialogTrigger trigger={trigger} />}
+      <ClearPalletDialogView
+        pallet={pallet}
+        isClearing={isClearing}
+        onClear={handleClearAndClose}
+        onCancel={handleCancel}
+      />
+    </Dialog>
   );
 }

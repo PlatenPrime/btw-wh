@@ -1,15 +1,14 @@
-import { useDeletePosMutation } from "@/modules/poses/api/hooks/mutations/useDeletePosMutation";
+import { Dialog } from "@/components/ui/dialog";
 import type { IPos } from "@/modules/poses/api/types";
-import { DeletePosDialogView } from "@/modules/poses/components/dialogs/delete-pos-dialog/DeletePosDialogView.tsx";
-import type { Dispatch, SetStateAction } from "react";
-import { useMemo, useRef, useState } from "react";
+import { DeletePosDialogTrigger } from "./DeletePosDialogTrigger";
+import { DeletePosDialogView } from "./DeletePosDialogView";
+import { useDeletePosDialog } from "./useDeletePosDialog";
 
 interface DeletePosDialogProps {
   pos: IPos;
   trigger?: React.ReactNode;
-  showTrigger?: boolean; // Показывать ли триггер (по умолчанию true)
+  showTrigger?: boolean;
   onSuccess?: () => void;
-  // Controlled component props
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
 }
@@ -22,49 +21,29 @@ export function DeletePosDialog({
   open: controlledOpen,
   onOpenChange,
 }: DeletePosDialogProps) {
-  // Внутреннее состояние для неконтролируемого режима
-  const [internalOpen, setInternalOpen] = useState(false);
+  const { isDeleting, handleDelete } = useDeletePosDialog({
+    pos,
+    onSuccess,
+  });
 
-  // Используем контролируемое состояние если передано, иначе внутреннее
-  const open = controlledOpen ?? internalOpen;
-  const openRef = useRef(open);
-  openRef.current = open;
+  const handleDeleteAndClose = async () => {
+    await handleDelete();
+    onOpenChange?.(false);
+  };
 
-  // Создаем обертку для onOpenChange, которая принимает SetStateAction
-  const setOpen: Dispatch<SetStateAction<boolean>> = useMemo(
-    () => (value) => {
-      const newValue =
-        typeof value === "function" ? value(openRef.current) : value;
-      if (onOpenChange) {
-        onOpenChange(newValue);
-      } else {
-        setInternalOpen(newValue);
-      }
-    },
-    [onOpenChange],
-  );
-
-  const deletePosMutation = useDeletePosMutation(pos);
-
-  const handleDelete = async () => {
-    try {
-      await deletePosMutation.mutateAsync(pos._id);
-      setOpen(false);
-      onSuccess?.();
-    } catch (error) {
-      console.error("Error deleting pos:", error);
-    }
+  const handleCancel = () => {
+    onOpenChange?.(false);
   };
 
   return (
-    <DeletePosDialogView
-      pos={pos}
-      handleDelete={handleDelete}
-      deleteMutation={deletePosMutation}
-      trigger={trigger}
-      showTrigger={showTrigger}
-      open={open}
-      setOpen={setOpen}
-    />
+    <Dialog open={controlledOpen} onOpenChange={onOpenChange}>
+      {showTrigger && <DeletePosDialogTrigger trigger={trigger} />}
+      <DeletePosDialogView
+        pos={pos}
+        isDeleting={isDeleting}
+        onDelete={handleDeleteAndClose}
+        onCancel={handleCancel}
+      />
+    </Dialog>
   );
 }

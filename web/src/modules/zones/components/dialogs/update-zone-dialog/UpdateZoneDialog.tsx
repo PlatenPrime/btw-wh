@@ -1,6 +1,7 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog } from "@/components/ui/dialog";
 import type { ZoneDto } from "@/modules/zones/api/types";
-import { UpdateZoneForm } from "@/modules/zones/components/forms/update-zone-form";
+import { UpdateZoneDialogView } from "./UpdateZoneDialogView";
+import { useUpdateZoneDialog } from "./useUpdateZoneDialog";
 
 interface UpdateZoneDialogProps {
   zone: ZoneDto;
@@ -8,23 +9,22 @@ interface UpdateZoneDialogProps {
   onOpenChange?: (open: boolean) => void;
 }
 
-export function UpdateZoneDialog({ zone, open: controlledOpen, onOpenChange }: UpdateZoneDialogProps) {
-  const handleSuccess = () => {
-    onOpenChange?.(false);
-  };
-
-  const handleCancel = () => {
-    onOpenChange?.(false);
-  };
+export function UpdateZoneDialog({
+  zone,
+  open: controlledOpen,
+  onOpenChange,
+}: UpdateZoneDialogProps) {
+  const { handleSuccess, handleCancel } = useUpdateZoneDialog({
+    onOpenChange,
+  });
 
   return (
     <Dialog open={controlledOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Редагувати зону</DialogTitle>
-        </DialogHeader>
-        <UpdateZoneForm zone={zone} onSuccess={handleSuccess} onCancel={handleCancel} />
-      </DialogContent>
+      <UpdateZoneDialogView
+        zone={zone}
+        onSuccess={handleSuccess}
+        onCancel={handleCancel}
+      />
     </Dialog>
   );
 }

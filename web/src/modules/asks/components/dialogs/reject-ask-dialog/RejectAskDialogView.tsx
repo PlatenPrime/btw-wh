@@ -1,6 +1,5 @@
 import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
 import {
-  Dialog,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -9,42 +8,38 @@ import {
 } from "@/components/ui/dialog";
 
 interface RejectAskDialogViewProps {
-  open: boolean;
-  setOpen: (open: boolean) => void;
-  handleReject: () => void;
-  isPending: boolean;
   artikul: string;
+  isRejecting: boolean;
+  onReject: () => Promise<void>;
+  onCancel: () => void;
 }
 
 export function RejectAskDialogView({
-  open,
-  setOpen,
-  handleReject,
-  isPending,
   artikul,
+  isRejecting,
+  onReject,
+  onCancel,
 }: RejectAskDialogViewProps) {
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Відмовити на запит "{artikul}"?</DialogTitle>
-          <DialogDescription>
-            Ви впевнені, що хочете відмовити на запит "{artikul}"? Ця дія
-            змінить статус запиту на "відмовлено".
-          </DialogDescription>
-        </DialogHeader>
-        <DialogFooter>
-          <DialogActions
-            onCancel={() => setOpen(false)}
-            onSubmit={handleReject}
-            cancelText="Скасувати"
-            submitText="Відмовити"
-            isSubmitting={isPending}
-            variant="destructive"
-            className="w-full"
-          />
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+    <DialogContent>
+      <DialogHeader>
+        <DialogTitle>Відмовити на запит "{artikul}"?</DialogTitle>
+        <DialogDescription>
+          Ви впевнені, що хочете відмовити на запит "{artikul}"? Ця дія змінить
+          статус запиту на "відмовлено".
+        </DialogDescription>
+      </DialogHeader>
+      <DialogFooter>
+        <DialogActions
+          onCancel={onCancel}
+          onSubmit={onReject}
+          cancelText="Скасувати"
+          submitText="Відмовити"
+          isSubmitting={isRejecting}
+          variant="destructive"
+          className="w-full"
+        />
+      </DialogFooter>
+    </DialogContent>
   );
 }

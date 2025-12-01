@@ -1,36 +1,44 @@
-import { CompleteAskDialogView } from "@/modules/asks/components/dialogs/complete-ask-dialog/CompleteAskDialogView";
+import { Dialog } from "@/components/ui/dialog";
+import { CompleteAskDialogView } from "./CompleteAskDialogView";
+import { useCompleteAskDialog } from "./useCompleteAskDialog";
 
-interface ExecuteAskDialogProps {
-  handleExecuteAsk: () => void;
-  isPending: boolean;
+interface CompleteAskDialogProps {
+  askId: string;
   artikul: string;
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  onSuccess?: () => void;
 }
 
 export function CompleteAskDialog({
-  handleExecuteAsk,
-  isPending,
+  askId,
   artikul,
-  open,
+  open: controlledOpen,
   onOpenChange,
-}: ExecuteAskDialogProps) {
-  const handleExecute = async () => {
-    try {
-      await handleExecuteAsk();
-      onOpenChange(false);
-    } catch (error) {
-      console.error("Error executing ask:", error);
-    }
+  onSuccess,
+}: CompleteAskDialogProps) {
+  const { isCompleting, handleComplete } = useCompleteAskDialog({
+    askId,
+    onSuccess,
+  });
+
+  const handleCompleteAndClose = async () => {
+    await handleComplete();
+    onOpenChange?.(false);
+  };
+
+  const handleCancel = () => {
+    onOpenChange?.(false);
   };
 
   return (
-    <CompleteAskDialogView
-      open={open}
-      setOpen={onOpenChange}
-      handleExecute={handleExecute}
-      isPending={isPending}
-      artikul={artikul}
-    />
+    <Dialog open={controlledOpen} onOpenChange={onOpenChange}>
+      <CompleteAskDialogView
+        artikul={artikul}
+        isCompleting={isCompleting}
+        onComplete={handleCompleteAndClose}
+        onCancel={handleCancel}
+      />
+    </Dialog>
   );
 }

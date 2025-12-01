@@ -12,34 +12,28 @@ interface AskContainerViewProps {
   // Complete dialog props
   completeDialogOpen: boolean;
   setCompleteDialogOpen: (open: boolean) => void;
-  handleCompleteAsk: () => Promise<void>;
-  completeAskPending: boolean;
+  handleCompleteAskSuccess: () => void;
   // Reject dialog props
   rejectDialogOpen: boolean;
   setRejectDialogOpen: (open: boolean) => void;
-  handleRejectAsk: () => Promise<void>;
-  rejectAskPending: boolean;
+  handleRejectAskSuccess: () => void;
   // Delete dialog props
   deleteDialogOpen: boolean;
   setDeleteDialogOpen: (open: boolean) => void;
-  handleDeleteAsk: () => Promise<void>;
-  deleteAskPending: boolean;
+  handleDeleteAskSuccess: () => void;
 }
 
 export function AskContainerView({
   askData,
   completeDialogOpen,
   setCompleteDialogOpen,
-  handleCompleteAsk,
-  completeAskPending,
+  handleCompleteAskSuccess,
   rejectDialogOpen,
   setRejectDialogOpen,
-  handleRejectAsk,
-  rejectAskPending,
+  handleRejectAskSuccess,
   deleteDialogOpen,
   setDeleteDialogOpen,
-  handleDeleteAsk,
-  deleteAskPending,
+  handleDeleteAskSuccess,
 }: AskContainerViewProps) {
   return (
     <section className="grid gap-2">
@@ -63,25 +57,25 @@ export function AskContainerView({
 
       {/* Диалоги вне dropdown для избежания конфликта фокуса */}
       <CompleteAskDialog
-        handleExecuteAsk={handleCompleteAsk}
-        isPending={completeAskPending}
+        askId={askData._id}
         artikul={askData.artikul}
         open={completeDialogOpen}
         onOpenChange={setCompleteDialogOpen}
+        onSuccess={handleCompleteAskSuccess}
       />
       <RejectAskDialog
-        handleRejectAsk={handleRejectAsk}
-        isPending={rejectAskPending}
+        askId={askData._id}
         artikul={askData.artikul}
         open={rejectDialogOpen}
         onOpenChange={setRejectDialogOpen}
+        onSuccess={handleRejectAskSuccess}
       />
       <DeleteAskDialog
-        handleDeleteAsk={handleDeleteAsk}
-        isPending={deleteAskPending}
+        askId={askData._id}
         artikul={askData.artikul}
         open={deleteDialogOpen}
         onOpenChange={setDeleteDialogOpen}
+        onSuccess={handleDeleteAskSuccess}
       />
     </section>
   );

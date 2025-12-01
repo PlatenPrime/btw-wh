@@ -1,14 +1,13 @@
-import { useDeleteRowMutation } from "@/modules/rows/api/hooks/mutations/useDeleteRowMutation";
+import { Dialog } from "@/components/ui/dialog";
 import type { RowDto } from "@/modules/rows/api/types/dto";
-import DeleteRowDialogView from "@/modules/rows/components/dialogs/delete-row-dialog/DeleteRowDialogView.tsx";
-import type { Dispatch, SetStateAction } from "react";
-import { useMemo, useRef, useState } from "react";
+import { DeleteRowDialogTrigger } from "./DeleteRowDialogTrigger";
+import { DeleteRowDialogView } from "./DeleteRowDialogView";
+import { useDeleteRowDialog } from "./useDeleteRowDialog";
 
 interface DeleteRowDialogProps {
   row: RowDto;
   trigger?: React.ReactNode;
-  onSuccess: () => void;
-  // Поддержка контролируемого режима
+  onSuccess?: () => void;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
 }
@@ -20,46 +19,29 @@ export function DeleteRowDialog({
   open: controlledOpen,
   onOpenChange,
 }: DeleteRowDialogProps) {
-  const [internalOpen, setInternalOpen] = useState(false);
-  const deleteMutation = useDeleteRowMutation();
+  const { isDeleting, handleDelete } = useDeleteRowDialog({
+    row,
+    onSuccess,
+  });
 
-  // Используем контролируемое состояние если передано, иначе внутреннее
-  const open = controlledOpen ?? internalOpen;
-  const openRef = useRef(open);
-  openRef.current = open;
+  const handleDeleteAndClose = async () => {
+    await handleDelete();
+    onOpenChange?.(false);
+  };
 
-  // Создаем обертку для onOpenChange, которая принимает SetStateAction
-  const setOpen: Dispatch<SetStateAction<boolean>> = useMemo(
-    () => (value) => {
-      const newValue =
-        typeof value === "function" ? value(openRef.current) : value;
-      if (onOpenChange) {
-        onOpenChange(newValue);
-      } else {
-        setInternalOpen(newValue);
-      }
-    },
-    [onOpenChange],
-  );
-
-  const handleDelete = async () => {
-    try {
-      await deleteMutation.mutateAsync(row._id);
-      setOpen(false);
-      onSuccess();
-    } catch (error) {
-      console.error("Error deleting row:", error);
-    }
+  const handleCancel = () => {
+    onOpenChange?.(false);
   };
 
   return (
-    <DeleteRowDialogView
-      row={row}
-      handleDelete={handleDelete}
-      deleteMutation={deleteMutation}
-      trigger={trigger}
-      open={open}
-      setOpen={setOpen}
-    />
+    <Dialog open={controlledOpen} onOpenChange={onOpenChange}>
+      {trigger !== undefined && <DeleteRowDialogTrigger trigger={trigger} />}
+      <DeleteRowDialogView
+        row={row}
+        isDeleting={isDeleting}
+        onDelete={handleDeleteAndClose}
+        onCancel={handleCancel}
+      />
+    </Dialog>
   );
 }

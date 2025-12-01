@@ -1,36 +1,44 @@
-import { RejectAskDialogView } from "@/modules/asks/components/dialogs/reject-ask-dialog/RejectAskDialogView.tsx";
+import { Dialog } from "@/components/ui/dialog";
+import { RejectAskDialogView } from "./RejectAskDialogView";
+import { useRejectAskDialog } from "./useRejectAskDialog";
 
 interface RejectAskDialogProps {
-  handleRejectAsk: () => void;
-  isPending: boolean;
+  askId: string;
   artikul: string;
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  onSuccess?: () => void;
 }
 
 export function RejectAskDialog({
-  handleRejectAsk,
-  isPending,
+  askId,
   artikul,
-  open,
+  open: controlledOpen,
   onOpenChange,
+  onSuccess,
 }: RejectAskDialogProps) {
-  const handleReject = async () => {
-    try {
-      await handleRejectAsk();
-      onOpenChange(false);
-    } catch (error) {
-      console.error("Error rejecting ask:", error);
-    }
+  const { isRejecting, handleReject } = useRejectAskDialog({
+    askId,
+    onSuccess,
+  });
+
+  const handleRejectAndClose = async () => {
+    await handleReject();
+    onOpenChange?.(false);
+  };
+
+  const handleCancel = () => {
+    onOpenChange?.(false);
   };
 
   return (
-    <RejectAskDialogView
-      open={open}
-      setOpen={onOpenChange}
-      handleReject={handleReject}
-      isPending={isPending}
-      artikul={artikul}
-    />
+    <Dialog open={controlledOpen} onOpenChange={onOpenChange}>
+      <RejectAskDialogView
+        artikul={artikul}
+        isRejecting={isRejecting}
+        onReject={handleRejectAndClose}
+        onCancel={handleCancel}
+      />
+    </Dialog>
   );
 }

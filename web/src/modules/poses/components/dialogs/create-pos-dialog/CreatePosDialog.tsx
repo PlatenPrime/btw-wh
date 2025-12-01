@@ -1,12 +1,16 @@
+import { Dialog } from "@/components/ui/dialog";
 import type { IPallet } from "@/modules/pallets/api/types";
-import { CreatePosDialogView } from "@/modules/poses/components/dialogs/create-pos-dialog/CreatePosDialogView.tsx";
-import { useState } from "react";
+import { CreatePosDialogTrigger } from "./CreatePosDialogTrigger";
+import { CreatePosDialogView } from "./CreatePosDialogView";
+import { useCreatePosDialog } from "./useCreatePosDialog";
 
 interface CreatePosDialogProps {
   pallet: IPallet;
   trigger?: React.ReactNode;
-  showTrigger?: boolean; // Показывать ли триггер (по умолчанию true)
+  showTrigger?: boolean;
   onSuccess?: () => void;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
 export function CreatePosDialog({
@@ -14,27 +18,22 @@ export function CreatePosDialog({
   trigger,
   showTrigger = true,
   onSuccess,
+  open: controlledOpen,
+  onOpenChange,
 }: CreatePosDialogProps) {
-  const [open, setOpen] = useState(false);
-
-  const handleSuccess = () => {
-    setOpen(false);
-    onSuccess?.();
-  };
-
-  const handleCancel = () => {
-    setOpen(false);
-  };
+  const { handleSuccess, handleCancel } = useCreatePosDialog({
+    onOpenChange,
+    onSuccess,
+  });
 
   return (
-    <CreatePosDialogView
-      open={open}
-      setOpen={setOpen}
-      pallet={pallet}
-      trigger={trigger}
-      showTrigger={showTrigger}
-      onSuccess={handleSuccess}
-      onCancel={handleCancel}
-    />
+    <Dialog open={controlledOpen} onOpenChange={onOpenChange}>
+      {showTrigger && <CreatePosDialogTrigger trigger={trigger} />}
+      <CreatePosDialogView
+        pallet={pallet}
+        onSuccess={handleSuccess}
+        onCancel={handleCancel}
+      />
+    </Dialog>
   );
 }

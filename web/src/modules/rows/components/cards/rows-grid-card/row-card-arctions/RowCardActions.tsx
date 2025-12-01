@@ -4,7 +4,7 @@ import {
 } from "@/components/shared/card-actions";
 import type { RowDto } from "@/modules/rows/api/types/dto";
 import { DeleteRowDialog } from "@/modules/rows/components/dialogs/delete-row-dialog/DeleteRowDialog";
-import { UpdateRowDialogView } from "@/modules/rows/components/dialogs/update-row-dialog/UpdateRowDialogView";
+import { UpdateRowDialog } from "@/modules/rows/components/dialogs/update-row-dialog/UpdateRowDialog";
 import { Edit, Trash } from "lucide-react";
 import { useState } from "react";
 
@@ -17,10 +17,6 @@ export function RowCardActions({ row }: RowCardActionsProps) {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
   const handleEditSuccess = () => {
-    setIsEditOpen(false);
-  };
-
-  const handleEditCancel = () => {
     setIsEditOpen(false);
   };
 
@@ -55,12 +51,11 @@ export function RowCardActions({ row }: RowCardActionsProps) {
       />
 
       {/* Controlled dialogs */}
-      <UpdateRowDialogView
+      <UpdateRowDialog
         open={isEditOpen}
-        setOpen={setIsEditOpen}
+        onOpenChange={setIsEditOpen}
         row={row}
         onSuccess={handleEditSuccess}
-        onCancel={handleEditCancel}
       />
 
       <DeleteRowDialog

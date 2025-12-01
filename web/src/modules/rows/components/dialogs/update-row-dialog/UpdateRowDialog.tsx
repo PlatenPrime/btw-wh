@@ -1,31 +1,37 @@
+import { Dialog } from "@/components/ui/dialog";
 import type { RowDto } from "@/modules/rows/api/types/dto";
-import { useState } from "react";
-import { UpdateRowDialogView } from "@/modules/rows/components/dialogs/update-row-dialog/UpdateRowDialogView.tsx";
+import { UpdateRowDialogTrigger } from "./UpdateRowDialogTrigger";
+import { UpdateRowDialogView } from "./UpdateRowDialogView";
+import { useUpdateRowDialog } from "./useUpdateRowDialog";
 
 interface UpdateRowDialogProps {
   row: RowDto;
   trigger?: React.ReactNode;
+  onSuccess?: () => void;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
-export function UpdateRowDialog({ row, trigger }: UpdateRowDialogProps) {
-  const [open, setOpen] = useState(false);
-
-  const handleSuccess = () => {
-    setOpen(false);
-  };
-
-  const handleCancel = () => {
-    setOpen(false);
-  };
+export function UpdateRowDialog({
+  row,
+  trigger,
+  onSuccess,
+  open: controlledOpen,
+  onOpenChange,
+}: UpdateRowDialogProps) {
+  const { handleSuccess, handleCancel } = useUpdateRowDialog({
+    onOpenChange,
+    onSuccess,
+  });
 
   return (
-    <UpdateRowDialogView
-      open={open}
-      setOpen={setOpen}
-      row={row}
-      trigger={trigger}
-      onSuccess={handleSuccess}
-      onCancel={handleCancel}
-    />
+    <Dialog open={controlledOpen} onOpenChange={onOpenChange}>
+      {trigger && <UpdateRowDialogTrigger trigger={trigger} />}
+      <UpdateRowDialogView
+        row={row}
+        onSuccess={handleSuccess}
+        onCancel={handleCancel}
+      />
+    </Dialog>
   );
 }

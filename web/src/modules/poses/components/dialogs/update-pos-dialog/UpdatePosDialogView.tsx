@@ -1,49 +1,35 @@
 import {
-  Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import type { IPos } from "@/modules/poses/api/types";
 import { UpdatePosForm } from "@/modules/poses/components/forms/update-pos-form/UpdatePosForm.tsx";
-import type { Dispatch, SetStateAction } from "react";
 
-interface UpdatePosDialogProps {
-  open: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
+interface UpdatePosDialogViewProps {
   pos: IPos;
-  trigger?: React.ReactNode;
-  showTrigger?: boolean; // Показывать ли триггер (по умолчанию true)
   onSuccess: () => void;
   onCancel: () => void;
+  isDialogOpen: boolean;
 }
 
 export function UpdatePosDialogView({
-  open,
-  setOpen,
   pos,
-  trigger,
-  showTrigger = true,
   onSuccess,
   onCancel,
-}: UpdatePosDialogProps) {
+  isDialogOpen,
+}: UpdatePosDialogViewProps) {
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      {showTrigger && trigger && (
-        <DialogTrigger asChild>{trigger}</DialogTrigger>
-      )}
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle className="text-center">{pos.artikul}</DialogTitle>
-        </DialogHeader>
-        <UpdatePosForm
-          pos={pos}
-          onSuccess={onSuccess}
-          onCancel={onCancel}
-          isDialogOpen={open}
-        />
-      </DialogContent>
-    </Dialog>
+    <DialogContent className="sm:max-w-md">
+      <DialogHeader>
+        <DialogTitle className="text-center">{pos.artikul}</DialogTitle>
+      </DialogHeader>
+      <UpdatePosForm
+        pos={pos}
+        onSuccess={onSuccess}
+        onCancel={onCancel}
+        isDialogOpen={isDialogOpen}
+      />
+    </DialogContent>
   );
 }

@@ -1,35 +1,44 @@
-import { DeleteAskDialogView } from "@/modules/asks/components/dialogs/delete-ask-dialog/DeleteAskDialogView.tsx";
+import { Dialog } from "@/components/ui/dialog";
+import { DeleteAskDialogView } from "./DeleteAskDialogView";
+import { useDeleteAskDialog } from "./useDeleteAskDialog";
 
 interface DeleteAskDialogProps {
-  handleDeleteAsk: () => void;
-  isPending: boolean;
+  askId: string;
   artikul: string;
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  onSuccess?: () => void;
 }
 
 export function DeleteAskDialog({
-  handleDeleteAsk,
-  isPending,
+  askId,
   artikul,
-  open,
+  open: controlledOpen,
   onOpenChange,
+  onSuccess,
 }: DeleteAskDialogProps) {
-  const handleDelete = async () => {
-    try {
-      await handleDeleteAsk();
-      onOpenChange(false);
-    } catch (error) {
-      console.error("Error deleting ask:", error);
-    }
+  const { isDeleting, handleDelete } = useDeleteAskDialog({
+    askId,
+    onSuccess,
+  });
+
+  const handleDeleteAndClose = async () => {
+    await handleDelete();
+    onOpenChange?.(false);
   };
+
+  const handleCancel = () => {
+    onOpenChange?.(false);
+  };
+
   return (
-    <DeleteAskDialogView
-      open={open}
-      setOpen={onOpenChange}
-      handleDelete={handleDelete}
-      isPending={isPending}
-      artikul={artikul}
-    />
+    <Dialog open={controlledOpen} onOpenChange={onOpenChange}>
+      <DeleteAskDialogView
+        artikul={artikul}
+        isDeleting={isDeleting}
+        onDelete={handleDeleteAndClose}
+        onCancel={handleCancel}
+      />
+    </Dialog>
   );
 }

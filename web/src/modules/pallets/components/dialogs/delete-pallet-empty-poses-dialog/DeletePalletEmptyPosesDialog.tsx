@@ -1,14 +1,13 @@
-import { useDeletePalletEmptyPosesMutation } from "@/modules/pallets/api/hooks/mutations/useDeletePalletEmptyPosesMutation";
+import { Dialog } from "@/components/ui/dialog";
 import type { IPallet } from "@/modules/pallets/api/types";
-import { DeletePalletEmptyPosesDialogView } from "@/modules/pallets/components/dialogs/delete-pallet-empty-poses-dialog/DeletePalletEmptyPosesDialogView";
-import type { Dispatch, SetStateAction } from "react";
-import { useMemo, useRef, useState } from "react";
+import { DeletePalletEmptyPosesDialogTrigger } from "./DeletePalletEmptyPosesDialogTrigger";
+import { DeletePalletEmptyPosesDialogView } from "./DeletePalletEmptyPosesDialogView";
+import { useDeletePalletEmptyPosesDialog } from "./useDeletePalletEmptyPosesDialog";
 
 interface DeletePalletEmptyPosesDialogProps {
   pallet: IPallet;
   trigger?: React.ReactNode;
-  onSuccess: () => void;
-  // Поддержка контролируемого режима
+  onSuccess?: () => void;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
 }
@@ -20,50 +19,31 @@ export function DeletePalletEmptyPosesDialog({
   open: controlledOpen,
   onOpenChange,
 }: DeletePalletEmptyPosesDialogProps) {
-  const [internalOpen, setInternalOpen] = useState(false);
-
-  // Используем контролируемое состояние если передано, иначе внутреннее
-  const open = controlledOpen ?? internalOpen;
-  const openRef = useRef(open);
-  openRef.current = open;
-
-  // Создаем обертку для onOpenChange, которая принимает SetStateAction
-  const setOpen: Dispatch<SetStateAction<boolean>> = useMemo(
-    () => (value) => {
-      const newValue =
-        typeof value === "function" ? value(openRef.current) : value;
-      if (onOpenChange) {
-        onOpenChange(newValue);
-      } else {
-        setInternalOpen(newValue);
-      }
-    },
-    [onOpenChange],
-  );
-
-  const deleteMutation = useDeletePalletEmptyPosesMutation({
-    palletId: pallet._id,
-    palletTitle: pallet.title,
+  const { isDeleting, handleDelete } = useDeletePalletEmptyPosesDialog({
+    pallet,
+    onSuccess,
   });
 
-  const handleDelete = async () => {
-    try {
-      await deleteMutation.mutateAsync();
-      setOpen(false);
-      onSuccess();
-    } catch (error) {
-      console.error("Error deleting pallet empty poses:", error);
-    }
+  const handleDeleteAndClose = async () => {
+    await handleDelete();
+    onOpenChange?.(false);
+  };
+
+  const handleCancel = () => {
+    onOpenChange?.(false);
   };
 
   return (
-    <DeletePalletEmptyPosesDialogView
-      pallet={pallet}
-      handleDelete={handleDelete}
-      deleteMutation={deleteMutation}
-      trigger={trigger}
-      open={open}
-      setOpen={setOpen}
-    />
+    <Dialog open={controlledOpen} onOpenChange={onOpenChange}>
+      {trigger !== undefined && (
+        <DeletePalletEmptyPosesDialogTrigger trigger={trigger} />
+      )}
+      <DeletePalletEmptyPosesDialogView
+        pallet={pallet}
+        isDeleting={isDeleting}
+        onDelete={handleDeleteAndClose}
+        onCancel={handleCancel}
+      />
+    </Dialog>
   );
 }

@@ -1,28 +1,23 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { CreateZoneForm } from "@/modules/zones/components/forms/create-zone-form";
+import { Dialog } from "@/components/ui/dialog";
+import { CreateZoneDialogView } from "./CreateZoneDialogView";
+import { useCreateZoneDialog } from "./useCreateZoneDialog";
 
 interface CreateZoneDialogProps {
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
 }
 
-export function CreateZoneDialog({ open: controlledOpen, onOpenChange }: CreateZoneDialogProps) {
-  const handleSuccess = () => {
-    onOpenChange?.(false);
-  };
-
-  const handleCancel = () => {
-    onOpenChange?.(false);
-  };
+export function CreateZoneDialog({
+  open: controlledOpen,
+  onOpenChange,
+}: CreateZoneDialogProps) {
+  const { handleSuccess, handleCancel } = useCreateZoneDialog({
+    onOpenChange,
+  });
 
   return (
     <Dialog open={controlledOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Створити зону</DialogTitle>
-        </DialogHeader>
-        <CreateZoneForm onSuccess={handleSuccess} onCancel={handleCancel} />
-      </DialogContent>
+      <CreateZoneDialogView onSuccess={handleSuccess} onCancel={handleCancel} />
     </Dialog>
   );
 }
