@@ -1,6 +1,7 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { CreateSegmentForm } from "@/modules/blocks/components/forms/create-segment-form";
+import { Dialog } from "@/components/ui/dialog";
 import type { BlockDto } from "@/modules/blocks/api/types";
+import { CreateSegmentDialogView } from "./CreateSegmentDialogView";
+import { useCreateSegmentDialog } from "./useCreateSegmentDialog";
 
 interface CreateSegmentDialogProps {
   open?: boolean;
@@ -13,27 +14,18 @@ export function CreateSegmentDialog({
   onOpenChange,
   block,
 }: CreateSegmentDialogProps) {
-  const handleSuccess = () => {
-    onOpenChange?.(false);
-  };
-
-  const handleCancel = () => {
-    onOpenChange?.(false);
-  };
+  const { handleSuccess, handleCancel } = useCreateSegmentDialog({
+    onOpenChange,
+  });
 
   return (
     <Dialog open={controlledOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="flex flex-col sm:max-w-[600px]">
-        <DialogHeader>
-          <DialogTitle>Створити сегмент для блоку {block.title}</DialogTitle>
-        </DialogHeader>
-        <CreateSegmentForm
-          block={block}
-          enabled={controlledOpen}
-          onSuccess={handleSuccess}
-          onCancel={handleCancel}
-        />
-      </DialogContent>
+      <CreateSegmentDialogView
+        block={block}
+        enabled={controlledOpen ?? false}
+        onSuccess={handleSuccess}
+        onCancel={handleCancel}
+      />
     </Dialog>
   );
 }

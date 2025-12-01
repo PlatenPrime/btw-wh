@@ -1,5 +1,6 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { CreateBlockForm } from "@/modules/blocks/components/forms/create-block-form";
+import { Dialog } from "@/components/ui/dialog";
+import { CreateBlockDialogView } from "./CreateBlockDialogView";
+import { useCreateBlockDialog } from "./useCreateBlockDialog";
 
 interface CreateBlockDialogProps {
   open?: boolean;
@@ -10,22 +11,13 @@ export function CreateBlockDialog({
   open: controlledOpen,
   onOpenChange,
 }: CreateBlockDialogProps) {
-  const handleSuccess = () => {
-    onOpenChange?.(false);
-  };
-
-  const handleCancel = () => {
-    onOpenChange?.(false);
-  };
+  const { handleSuccess, handleCancel } = useCreateBlockDialog({
+    onOpenChange,
+  });
 
   return (
     <Dialog open={controlledOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Створити блок</DialogTitle>
-        </DialogHeader>
-        <CreateBlockForm onSuccess={handleSuccess} onCancel={handleCancel} />
-      </DialogContent>
+      <CreateBlockDialogView onSuccess={handleSuccess} onCancel={handleCancel} />
     </Dialog>
   );
 }
