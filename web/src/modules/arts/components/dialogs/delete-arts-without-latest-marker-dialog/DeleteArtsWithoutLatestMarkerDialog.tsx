@@ -1,4 +1,5 @@
 import { Dialog } from "@/components/ui/dialog";
+import { useState } from "react";
 import { DeleteArtsWithoutLatestMarkerDialogView } from "./DeleteArtsWithoutLatestMarkerDialogView";
 import { useDeleteArtsWithoutLatestMarkerDialog } from "./useDeleteArtsWithoutLatestMarkerDialog";
 
@@ -13,6 +14,13 @@ export function DeleteArtsWithoutLatestMarkerDialog({
   onOpenChange,
   onSuccess,
 }: DeleteArtsWithoutLatestMarkerDialogProps) {
+  const [internalOpen, setInternalOpen] = useState(false);
+
+  const isControlled = controlledOpen !== undefined;
+  const open = isControlled ? controlledOpen : internalOpen;
+  const handleOpenChange: (open: boolean) => void =
+    isControlled && onOpenChange ? onOpenChange : setInternalOpen;
+
   const { isDeleting, handleDelete } =
     useDeleteArtsWithoutLatestMarkerDialog({
       onSuccess,
@@ -20,15 +28,15 @@ export function DeleteArtsWithoutLatestMarkerDialog({
 
   const handleDeleteAndClose = async () => {
     await handleDelete();
-    onOpenChange?.(false);
+    handleOpenChange(false);
   };
 
   const handleCancel = () => {
-    onOpenChange?.(false);
+    handleOpenChange(false);
   };
 
   return (
-    <Dialog open={controlledOpen} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DeleteArtsWithoutLatestMarkerDialogView
         isDeleting={isDeleting}
         onDelete={handleDeleteAndClose}

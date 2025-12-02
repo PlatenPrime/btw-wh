@@ -18,17 +18,17 @@ export const ASK_EVENT_META: Record<
 > = {
   create: {
     icon: PlusCircle,
-    iconClass: "text-yellow-500 dark:text-yellow-300",
+    iconClass: "text-emerald-500 dark:text-emerald-300",
     accentClass:
-      "border-yellow-200 bg-yellow-50 dark:border-yellow-500/60 dark:bg-yellow-900/40",
+      "border-emerald-200 bg-emerald-50 dark:border-emerald-500/60 dark:bg-emerald-900/40",
     buildDescription: (event) =>
       `Запит створив ${event.userData?.fullname ?? "користувач"}.`,
   },
   pull: {
     icon: Download,
-    iconClass: "text-sky-500 dark:text-sky-300",
+    iconClass: "text-yellow-500 dark:text-yellow-300",
     accentClass:
-      "border-sky-200 bg-sky-50 dark:border-sky-500/60 dark:bg-sky-900/40",
+      "border-yellow-200 bg-yellow-50 dark:border-yellow-500/60 dark:bg-yellow-900/40",
     buildDescription: (event) => {
       const { pullDetails, userData } = event;
       if (!pullDetails) {
@@ -51,9 +51,9 @@ export const ASK_EVENT_META: Record<
   },
   complete: {
     icon: CheckCircle2,
-    iconClass: "text-emerald-500 dark:text-emerald-300",
+    iconClass: "text-gray-500 dark:text-gray-300",
     accentClass:
-      "border-emerald-200 bg-emerald-50 dark:border-emerald-500/60 dark:bg-emerald-900/40",
+      "border-gray-200 bg-gray-50 dark:border-gray-500/60 dark:bg-gray-900/40",
     buildDescription: (event) =>
       `${event.userData?.fullname ?? "користувач"} виконав запит.`,
   },

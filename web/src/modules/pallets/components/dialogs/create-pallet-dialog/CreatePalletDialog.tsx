@@ -1,5 +1,6 @@
 import { Dialog } from "@/components/ui/dialog";
 import type { RowDto } from "@/modules/rows/api/types/dto";
+import { useState } from "react";
 import { CreatePalletDialogTrigger } from "./CreatePalletDialogTrigger";
 import { CreatePalletDialogView } from "./CreatePalletDialogView";
 import { useCreatePalletDialog } from "./useCreatePalletDialog";
@@ -19,19 +20,25 @@ export function CreatePalletDialog({
   open: controlledOpen,
   onOpenChange,
 }: CreatePalletDialogProps) {
-  const { form, isSubmitting, onSubmit, handleOpenChange } =
+  const [internalOpen, setInternalOpen] = useState(false);
+
+  const isControlled = controlledOpen !== undefined;
+  const open = isControlled ? controlledOpen : internalOpen;
+  const handleOpenChange = isControlled ? onOpenChange : setInternalOpen;
+
+  const { form, isSubmitting, onSubmit, handleOpenChange: handleDialogOpenChange } =
     useCreatePalletDialog({
       row,
-      onOpenChange,
+      onOpenChange: handleOpenChange,
       onSuccess,
     });
 
   const handleCancel = () => {
-    handleOpenChange(false);
+    handleDialogOpenChange(false);
   };
 
   return (
-    <Dialog open={controlledOpen} onOpenChange={handleOpenChange}>
+    <Dialog open={open} onOpenChange={handleDialogOpenChange}>
       {showTrigger && <CreatePalletDialogTrigger />}
       <CreatePalletDialogView
         form={form}

@@ -1,5 +1,6 @@
 import { Dialog } from "@/components/ui/dialog";
 import type { SegmentDto } from "@/modules/blocks/api/types";
+import { useState } from "react";
 import { DeleteSegmentDialogView } from "./DeleteSegmentDialogView";
 import { useDeleteSegmentDialog } from "./useDeleteSegmentDialog";
 
@@ -16,6 +17,13 @@ export function DeleteSegmentDialog({
   onOpenChange,
   onSuccess,
 }: DeleteSegmentDialogProps) {
+  const [internalOpen, setInternalOpen] = useState(false);
+
+  const isControlled = controlledOpen !== undefined;
+  const open = isControlled ? controlledOpen : internalOpen;
+  const handleOpenChange: (open: boolean) => void =
+    isControlled && onOpenChange ? onOpenChange : setInternalOpen;
+
   const { isDeleting, handleDelete } = useDeleteSegmentDialog({
     segment,
     onSuccess,
@@ -23,15 +31,15 @@ export function DeleteSegmentDialog({
 
   const handleDeleteAndClose = async () => {
     await handleDelete();
-    onOpenChange?.(false);
+    handleOpenChange(false);
   };
 
   const handleCancel = () => {
-    onOpenChange?.(false);
+    handleOpenChange(false);
   };
 
   return (
-    <Dialog open={controlledOpen} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DeleteSegmentDialogView
         segment={segment}
         isDeleting={isDeleting}

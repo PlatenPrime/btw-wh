@@ -1,4 +1,5 @@
 import { Dialog } from "@/components/ui/dialog";
+import { useState } from "react";
 import { CreateAskDialogTrigger } from "./CreateAskDialogTrigger";
 import { CreateAskDialogView } from "./CreateAskDialogView";
 import { useCreateAskDialog } from "./useCreateAskDialog";
@@ -20,13 +21,19 @@ export function CreateAskDialog({
   open: controlledOpen,
   onOpenChange,
 }: CreateAskDialogProps) {
+  const [internalOpen, setInternalOpen] = useState(false);
+
+  const isControlled = controlledOpen !== undefined;
+  const open = isControlled ? controlledOpen : internalOpen;
+  const handleOpenChange = isControlled ? onOpenChange : setInternalOpen;
+
   const { handleSuccess, handleCancel } = useCreateAskDialog({
-    onOpenChange,
+    onOpenChange: handleOpenChange,
     onSuccess,
   });
 
   return (
-    <Dialog open={controlledOpen} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       {showTrigger && <CreateAskDialogTrigger trigger={trigger} />}
       <CreateAskDialogView
         onSuccess={handleSuccess}

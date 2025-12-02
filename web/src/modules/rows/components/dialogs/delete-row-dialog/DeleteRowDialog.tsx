@@ -1,5 +1,6 @@
 import { Dialog } from "@/components/ui/dialog";
 import type { RowDto } from "@/modules/rows/api/types/dto";
+import { useState } from "react";
 import { DeleteRowDialogTrigger } from "./DeleteRowDialogTrigger";
 import { DeleteRowDialogView } from "./DeleteRowDialogView";
 import { useDeleteRowDialog } from "./useDeleteRowDialog";
@@ -19,6 +20,13 @@ export function DeleteRowDialog({
   open: controlledOpen,
   onOpenChange,
 }: DeleteRowDialogProps) {
+  const [internalOpen, setInternalOpen] = useState(false);
+
+  const isControlled = controlledOpen !== undefined;
+  const open = isControlled ? controlledOpen : internalOpen;
+  const handleOpenChange: (open: boolean) => void =
+    isControlled && onOpenChange ? onOpenChange : setInternalOpen;
+
   const { isDeleting, handleDelete } = useDeleteRowDialog({
     row,
     onSuccess,
@@ -26,15 +34,15 @@ export function DeleteRowDialog({
 
   const handleDeleteAndClose = async () => {
     await handleDelete();
-    onOpenChange?.(false);
+    handleOpenChange(false);
   };
 
   const handleCancel = () => {
-    onOpenChange?.(false);
+    handleOpenChange(false);
   };
 
   return (
-    <Dialog open={controlledOpen} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       {trigger !== undefined && <DeleteRowDialogTrigger trigger={trigger} />}
       <DeleteRowDialogView
         row={row}

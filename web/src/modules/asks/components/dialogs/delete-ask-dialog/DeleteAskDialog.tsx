@@ -1,4 +1,5 @@
 import { Dialog } from "@/components/ui/dialog";
+import { useState } from "react";
 import { DeleteAskDialogView } from "./DeleteAskDialogView";
 import { useDeleteAskDialog } from "./useDeleteAskDialog";
 
@@ -17,6 +18,13 @@ export function DeleteAskDialog({
   onOpenChange,
   onSuccess,
 }: DeleteAskDialogProps) {
+  const [internalOpen, setInternalOpen] = useState(false);
+
+  const isControlled = controlledOpen !== undefined;
+  const open = isControlled ? controlledOpen : internalOpen;
+  const handleOpenChange: (open: boolean) => void =
+    isControlled && onOpenChange ? onOpenChange : setInternalOpen;
+
   const { isDeleting, handleDelete } = useDeleteAskDialog({
     askId,
     onSuccess,
@@ -24,15 +32,15 @@ export function DeleteAskDialog({
 
   const handleDeleteAndClose = async () => {
     await handleDelete();
-    onOpenChange?.(false);
+    handleOpenChange(false);
   };
 
   const handleCancel = () => {
-    onOpenChange?.(false);
+    handleOpenChange(false);
   };
 
   return (
-    <Dialog open={controlledOpen} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DeleteAskDialogView
         artikul={artikul}
         isDeleting={isDeleting}

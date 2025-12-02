@@ -1,5 +1,6 @@
 import { Dialog } from "@/components/ui/dialog";
 import type { IPallet } from "@/modules/pallets/api/types";
+import { useState } from "react";
 import { MovePalletPosesDialogTrigger } from "./MovePalletPosesDialogTrigger";
 import { MovePalletPosesDialogView } from "./MovePalletPosesDialogView";
 import { useMovePalletPosesDialog } from "./useMovePalletPosesDialog";
@@ -19,24 +20,30 @@ export function MovePalletPosesDialog({
   open: controlledOpen,
   onOpenChange,
 }: MovePalletPosesDialogProps) {
+  const [internalOpen, setInternalOpen] = useState(false);
+
+  const isControlled = controlledOpen !== undefined;
+  const open = isControlled ? controlledOpen : internalOpen;
+  const handleOpenChange = isControlled ? onOpenChange : setInternalOpen;
+
   const {
     isMoving,
     isSourceEmpty,
     mutationError,
     handleSubmit,
-    handleOpenChange,
+    handleOpenChange: handleDialogOpenChange,
   } = useMovePalletPosesDialog({
     pallet,
-    onOpenChange,
+    onOpenChange: handleOpenChange,
     onSuccess,
   });
 
   const handleCancel = () => {
-    handleOpenChange(false);
+    handleDialogOpenChange(false);
   };
 
   return (
-    <Dialog open={controlledOpen} onOpenChange={handleOpenChange}>
+    <Dialog open={open} onOpenChange={handleDialogOpenChange}>
       {trigger !== undefined && (
         <MovePalletPosesDialogTrigger trigger={trigger} />
       )}

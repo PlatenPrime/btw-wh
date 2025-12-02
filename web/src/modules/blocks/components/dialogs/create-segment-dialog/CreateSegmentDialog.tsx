@@ -1,5 +1,6 @@
 import { Dialog } from "@/components/ui/dialog";
 import type { BlockDto } from "@/modules/blocks/api/types";
+import { useState } from "react";
 import { CreateSegmentDialogView } from "./CreateSegmentDialogView";
 import { useCreateSegmentDialog } from "./useCreateSegmentDialog";
 
@@ -14,15 +15,21 @@ export function CreateSegmentDialog({
   onOpenChange,
   block,
 }: CreateSegmentDialogProps) {
+  const [internalOpen, setInternalOpen] = useState(false);
+
+  const isControlled = controlledOpen !== undefined;
+  const open = isControlled ? controlledOpen : internalOpen;
+  const handleOpenChange = isControlled ? onOpenChange : setInternalOpen;
+
   const { handleSuccess, handleCancel } = useCreateSegmentDialog({
-    onOpenChange,
+    onOpenChange: handleOpenChange,
   });
 
   return (
-    <Dialog open={controlledOpen} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <CreateSegmentDialogView
         block={block}
-        enabled={controlledOpen ?? false}
+        enabled={open}
         onSuccess={handleSuccess}
         onCancel={handleCancel}
       />

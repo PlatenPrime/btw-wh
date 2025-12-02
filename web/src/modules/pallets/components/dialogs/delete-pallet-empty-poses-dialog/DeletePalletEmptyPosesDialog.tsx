@@ -1,5 +1,6 @@
 import { Dialog } from "@/components/ui/dialog";
 import type { IPallet } from "@/modules/pallets/api/types";
+import { useState } from "react";
 import { DeletePalletEmptyPosesDialogTrigger } from "./DeletePalletEmptyPosesDialogTrigger";
 import { DeletePalletEmptyPosesDialogView } from "./DeletePalletEmptyPosesDialogView";
 import { useDeletePalletEmptyPosesDialog } from "./useDeletePalletEmptyPosesDialog";
@@ -19,6 +20,13 @@ export function DeletePalletEmptyPosesDialog({
   open: controlledOpen,
   onOpenChange,
 }: DeletePalletEmptyPosesDialogProps) {
+  const [internalOpen, setInternalOpen] = useState(false);
+
+  const isControlled = controlledOpen !== undefined;
+  const open = isControlled ? controlledOpen : internalOpen;
+  const handleOpenChange: (open: boolean) => void =
+    isControlled && onOpenChange ? onOpenChange : setInternalOpen;
+
   const { isDeleting, handleDelete } = useDeletePalletEmptyPosesDialog({
     pallet,
     onSuccess,
@@ -26,15 +34,15 @@ export function DeletePalletEmptyPosesDialog({
 
   const handleDeleteAndClose = async () => {
     await handleDelete();
-    onOpenChange?.(false);
+    handleOpenChange(false);
   };
 
   const handleCancel = () => {
-    onOpenChange?.(false);
+    handleOpenChange(false);
   };
 
   return (
-    <Dialog open={controlledOpen} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       {trigger !== undefined && (
         <DeletePalletEmptyPosesDialogTrigger trigger={trigger} />
       )}

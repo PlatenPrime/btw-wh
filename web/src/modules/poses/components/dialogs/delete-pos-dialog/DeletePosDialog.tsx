@@ -1,5 +1,6 @@
 import { Dialog } from "@/components/ui/dialog";
 import type { IPos } from "@/modules/poses/api/types";
+import { useState } from "react";
 import { DeletePosDialogTrigger } from "./DeletePosDialogTrigger";
 import { DeletePosDialogView } from "./DeletePosDialogView";
 import { useDeletePosDialog } from "./useDeletePosDialog";
@@ -21,6 +22,13 @@ export function DeletePosDialog({
   open: controlledOpen,
   onOpenChange,
 }: DeletePosDialogProps) {
+  const [internalOpen, setInternalOpen] = useState(false);
+
+  const isControlled = controlledOpen !== undefined;
+  const open = isControlled ? controlledOpen : internalOpen;
+  const handleOpenChange: (open: boolean) => void =
+    isControlled && onOpenChange ? onOpenChange : setInternalOpen;
+
   const { isDeleting, handleDelete } = useDeletePosDialog({
     pos,
     onSuccess,
@@ -28,15 +36,15 @@ export function DeletePosDialog({
 
   const handleDeleteAndClose = async () => {
     await handleDelete();
-    onOpenChange?.(false);
+    handleOpenChange(false);
   };
 
   const handleCancel = () => {
-    onOpenChange?.(false);
+    handleOpenChange(false);
   };
 
   return (
-    <Dialog open={controlledOpen} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       {showTrigger && <DeletePosDialogTrigger trigger={trigger} />}
       <DeletePosDialogView
         pos={pos}

@@ -1,5 +1,6 @@
 import { Dialog } from "@/components/ui/dialog";
 import type { ZoneDto } from "@/modules/zones/api/types";
+import { useState } from "react";
 import { DeleteZoneDialogView } from "./DeleteZoneDialogView";
 import { useDeleteZoneDialog } from "./useDeleteZoneDialog";
 
@@ -16,6 +17,13 @@ export function DeleteZoneDialog({
   onOpenChange,
   onSuccess,
 }: DeleteZoneDialogProps) {
+  const [internalOpen, setInternalOpen] = useState(false);
+
+  const isControlled = controlledOpen !== undefined;
+  const open = isControlled ? controlledOpen : internalOpen;
+  const handleOpenChange: (open: boolean) => void =
+    isControlled && onOpenChange ? onOpenChange : setInternalOpen;
+
   const { isDeleting, handleDelete } = useDeleteZoneDialog({
     zone,
     onSuccess,
@@ -23,15 +31,15 @@ export function DeleteZoneDialog({
 
   const handleDeleteAndClose = async () => {
     await handleDelete();
-    onOpenChange?.(false);
+    handleOpenChange(false);
   };
 
   const handleCancel = () => {
-    onOpenChange?.(false);
+    handleOpenChange(false);
   };
 
   return (
-    <Dialog open={controlledOpen} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DeleteZoneDialogView
         zone={zone}
         isDeleting={isDeleting}

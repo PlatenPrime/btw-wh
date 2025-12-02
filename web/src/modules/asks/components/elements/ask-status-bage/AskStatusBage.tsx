@@ -5,18 +5,22 @@ export function AskStatusBage({ statusText }: { statusText: AskStatus }) {
   const statusConfig: Record<AskStatus, { style: string; text: string }> = {
     new: {
       style:
-        "border border-yellow-500/80 bg-yellow-500/10 text-yellow-900 dark:text-yellow-200",
+        "border border-emerald-500/50 bg-emerald-500/10 text-emerald-900 dark:text-emerald-200",
       text: "новий",
     },
-
+    processing: {
+      style:
+        "border border-yellow-500/80 bg-yellow-500/10 text-yellow-900 dark:text-yellow-200",
+      text: "в процесі",
+    },
     completed: {
       style:
-        "border border-emerald-500/50 bg-emerald-500/10 text-emerald-900 dark:text-emerald-200",
+        "border border-gray-500/50 bg-gray-500/10 text-gray-900 dark:text-gray-200",
       text: "завершено",
     },
     solved: {
       style:
-        "border border-emerald-500/50 bg-emerald-500/10 text-emerald-900 dark:text-emerald-200",
+        "border border-gray-500/50 bg-gray-500/10 text-gray-900 dark:text-gray-200",
       text: "завершено",
     },
     rejected: {

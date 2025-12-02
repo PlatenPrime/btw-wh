@@ -1,5 +1,6 @@
 import { Dialog } from "@/components/ui/dialog";
 import type { IPallet } from "@/modules/pallets/api/types";
+import { useState } from "react";
 import { ClearPalletDialogTrigger } from "./ClearPalletDialogTrigger";
 import { ClearPalletDialogView } from "./ClearPalletDialogView";
 import { useClearPalletDialog } from "./useClearPalletDialog";
@@ -19,6 +20,13 @@ export function ClearPalletDialog({
   open: controlledOpen,
   onOpenChange,
 }: ClearPalletDialogProps) {
+  const [internalOpen, setInternalOpen] = useState(false);
+
+  const isControlled = controlledOpen !== undefined;
+  const open = isControlled ? controlledOpen : internalOpen;
+  const handleOpenChange: (open: boolean) => void =
+    isControlled && onOpenChange ? onOpenChange : setInternalOpen;
+
   const { isClearing, handleClear } = useClearPalletDialog({
     pallet,
     onSuccess,
@@ -26,15 +34,15 @@ export function ClearPalletDialog({
 
   const handleClearAndClose = async () => {
     await handleClear();
-    onOpenChange?.(false);
+    handleOpenChange(false);
   };
 
   const handleCancel = () => {
-    onOpenChange?.(false);
+    handleOpenChange(false);
   };
 
   return (
-    <Dialog open={controlledOpen} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       {trigger !== undefined && <ClearPalletDialogTrigger trigger={trigger} />}
       <ClearPalletDialogView
         pallet={pallet}

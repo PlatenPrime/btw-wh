@@ -1,9 +1,10 @@
 import type { User } from "@/modules/auth/api/types";
 
 export type AskUserData = Pick<User, "_id" | "fullname" | "telegram" | "photo">;
-export type AskStatus = "new" | "completed" | "rejected" | "fail" | "solved";
+export type AskStatus = "new" | "processing" | "completed" | "rejected" | "fail" | "solved";
 export const validAskStatuses: AskStatus[] = [
   "new",
+  "processing",
   "completed",
   "rejected",
   "fail",
@@ -56,6 +57,7 @@ export interface GetAsksByDateResponse {
   date: string;
   count: number;
   newCount: number;
+  processingCount: number;
   completedCount: number;
   rejectedCount: number;
 }

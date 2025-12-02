@@ -1,5 +1,6 @@
 import { Dialog } from "@/components/ui/dialog";
 import type { IPos } from "@/modules/poses/api/types";
+import { useState } from "react";
 import { UpdatePosDialogTrigger } from "./UpdatePosDialogTrigger";
 import { UpdatePosDialogView } from "./UpdatePosDialogView";
 import { useUpdatePosDialog } from "./useUpdatePosDialog";
@@ -21,19 +22,25 @@ export function UpdatePosDialog({
   open: controlledOpen,
   onOpenChange,
 }: UpdatePosDialogProps) {
+  const [internalOpen, setInternalOpen] = useState(false);
+
+  const isControlled = controlledOpen !== undefined;
+  const open = isControlled ? controlledOpen : internalOpen;
+  const handleOpenChange = isControlled ? onOpenChange : setInternalOpen;
+
   const { handleSuccess, handleCancel } = useUpdatePosDialog({
-    onOpenChange,
+    onOpenChange: handleOpenChange,
     onSuccess,
   });
 
   return (
-    <Dialog open={controlledOpen} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       {showTrigger && <UpdatePosDialogTrigger trigger={trigger} />}
       <UpdatePosDialogView
         pos={pos}
         onSuccess={handleSuccess}
         onCancel={handleCancel}
-        isDialogOpen={controlledOpen ?? false}
+        isDialogOpen={open}
       />
     </Dialog>
   );

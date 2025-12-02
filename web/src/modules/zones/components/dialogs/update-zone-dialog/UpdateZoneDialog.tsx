@@ -1,5 +1,6 @@
 import { Dialog } from "@/components/ui/dialog";
 import type { ZoneDto } from "@/modules/zones/api/types";
+import { useState } from "react";
 import { UpdateZoneDialogView } from "./UpdateZoneDialogView";
 import { useUpdateZoneDialog } from "./useUpdateZoneDialog";
 
@@ -14,12 +15,18 @@ export function UpdateZoneDialog({
   open: controlledOpen,
   onOpenChange,
 }: UpdateZoneDialogProps) {
+  const [internalOpen, setInternalOpen] = useState(false);
+
+  const isControlled = controlledOpen !== undefined;
+  const open = isControlled ? controlledOpen : internalOpen;
+  const handleOpenChange = isControlled ? onOpenChange : setInternalOpen;
+
   const { handleSuccess, handleCancel } = useUpdateZoneDialog({
-    onOpenChange,
+    onOpenChange: handleOpenChange,
   });
 
   return (
-    <Dialog open={controlledOpen} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <UpdateZoneDialogView
         zone={zone}
         onSuccess={handleSuccess}

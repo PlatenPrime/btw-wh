@@ -1,4 +1,5 @@
 import { Dialog } from "@/components/ui/dialog";
+import { useState } from "react";
 import { CompleteAskDialogView } from "./CompleteAskDialogView";
 import { useCompleteAskDialog } from "./useCompleteAskDialog";
 
@@ -17,6 +18,13 @@ export function CompleteAskDialog({
   onOpenChange,
   onSuccess,
 }: CompleteAskDialogProps) {
+  const [internalOpen, setInternalOpen] = useState(false);
+
+  const isControlled = controlledOpen !== undefined;
+  const open = isControlled ? controlledOpen : internalOpen;
+  const handleOpenChange: (open: boolean) => void =
+    isControlled && onOpenChange ? onOpenChange : setInternalOpen;
+
   const { isCompleting, handleComplete } = useCompleteAskDialog({
     askId,
     onSuccess,
@@ -24,15 +32,15 @@ export function CompleteAskDialog({
 
   const handleCompleteAndClose = async () => {
     await handleComplete();
-    onOpenChange?.(false);
+    handleOpenChange(false);
   };
 
   const handleCancel = () => {
-    onOpenChange?.(false);
+    handleOpenChange(false);
   };
 
   return (
-    <Dialog open={controlledOpen} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <CompleteAskDialogView
         artikul={artikul}
         isCompleting={isCompleting}

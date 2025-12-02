@@ -1,4 +1,5 @@
 import { Dialog } from "@/components/ui/dialog";
+import { useState } from "react";
 import { CreateBlockDialogView } from "./CreateBlockDialogView";
 import { useCreateBlockDialog } from "./useCreateBlockDialog";
 
@@ -11,14 +12,22 @@ export function CreateBlockDialog({
   open: controlledOpen,
   onOpenChange,
 }: CreateBlockDialogProps) {
+  const [internalOpen, setInternalOpen] = useState(false);
+
+  const isControlled = controlledOpen !== undefined;
+  const open = isControlled ? controlledOpen : internalOpen;
+  const handleOpenChange = isControlled ? onOpenChange : setInternalOpen;
+
   const { handleSuccess, handleCancel } = useCreateBlockDialog({
-    onOpenChange,
+    onOpenChange: handleOpenChange,
   });
 
   return (
-    <Dialog open={controlledOpen} onOpenChange={onOpenChange}>
-      <CreateBlockDialogView onSuccess={handleSuccess} onCancel={handleCancel} />
+    <Dialog open={open} onOpenChange={handleOpenChange}>
+      <CreateBlockDialogView
+        onSuccess={handleSuccess}
+        onCancel={handleCancel}
+      />
     </Dialog>
   );
 }
-

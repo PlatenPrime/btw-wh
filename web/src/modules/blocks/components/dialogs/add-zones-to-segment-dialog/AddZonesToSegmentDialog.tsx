@@ -1,5 +1,6 @@
 import { Dialog } from "@/components/ui/dialog";
 import type { SegmentDto } from "@/modules/blocks/api/types";
+import { useState } from "react";
 import { AddZonesToSegmentDialogView } from "./AddZonesToSegmentDialogView";
 import { useAddZonesToSegmentDialog } from "./useAddZonesToSegmentDialog";
 
@@ -14,15 +15,21 @@ export function AddZonesToSegmentDialog({
   onOpenChange,
   segment,
 }: AddZonesToSegmentDialogProps) {
+  const [internalOpen, setInternalOpen] = useState(false);
+
+  const isControlled = controlledOpen !== undefined;
+  const open = isControlled ? controlledOpen : internalOpen;
+  const handleOpenChange = isControlled ? onOpenChange : setInternalOpen;
+
   const { handleSuccess, handleCancel } = useAddZonesToSegmentDialog({
-    onOpenChange,
+    onOpenChange: handleOpenChange,
   });
 
   return (
-    <Dialog open={controlledOpen} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <AddZonesToSegmentDialogView
         segment={segment}
-        enabled={controlledOpen ?? false}
+        enabled={open}
         onSuccess={handleSuccess}
         onCancel={handleCancel}
       />
