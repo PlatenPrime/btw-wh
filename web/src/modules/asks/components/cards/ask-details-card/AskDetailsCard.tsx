@@ -11,6 +11,7 @@ import { BtradeArtDataFetcher } from "@/modules/arts/components/fetchers/btrade-
 import type { AskDto } from "@/modules/asks/api/types/dto";
 import { AskCom } from "@/modules/asks/components/elements/ask-com/AskCom";
 import { AskQuant } from "@/modules/asks/components/elements/ask-quant/AskQuant";
+import { AskSklad } from "@/modules/asks/components/elements/ask-sklad/AskSklad";
 import { AskStatusBage } from "@/modules/asks/components/elements/ask-status-bage/AskStatusBage";
 
 interface AskDetailsCardProps {
@@ -31,6 +32,7 @@ export function AskDetailsCard({ askData }: AskDetailsCardProps) {
           />
           <AskQuant quant={askData.quant} />
           <AskCom com={askData.com} />
+          <AskSklad sklad={askData.sklad} />
           <UserAvatarName
             photoUrl={askData.askerData?.photo}
             fullname={askData.askerData?.fullname}

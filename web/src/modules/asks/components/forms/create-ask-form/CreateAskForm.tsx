@@ -91,6 +91,7 @@ export function CreateAskForm({
           ? { quant: parseInt(data.quant, 10) }
           : {}),
         com: data.com,
+        sklad: data.sklad || "pogrebi",
         askerId: user._id,
       });
       onSuccess?.();

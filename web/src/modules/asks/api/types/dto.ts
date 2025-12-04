@@ -36,6 +36,7 @@ export interface AskDto {
   nameukr?: string;
   quant?: number;
   com?: string;
+  sklad?: "pogrebi" | "merezhi";
   asker: string;
   askerData: AskUserData;
   solver?: string;

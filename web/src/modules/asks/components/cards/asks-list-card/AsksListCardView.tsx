@@ -6,6 +6,7 @@ import type { AskDto, AskStatus } from "@/modules/asks/api/types/dto";
 import { AskStatusBage } from "@/modules/asks/components/elements/ask-status-bage/AskStatusBage";
 import { AskCom } from "../../elements/ask-com/AskCom";
 import { AskQuant } from "../../elements/ask-quant/AskQuant";
+import { AskSklad } from "../../elements/ask-sklad/AskSklad";
 
 interface AsksListCardViewProps {
   ask: AskDto;
@@ -29,6 +30,7 @@ export function AsksListCardView({
       <div className="grid gap-2 pl-12">
         <AskQuant quant={ask.quant || 0} />
         <AskCom com={ask.com || ""} />
+        <AskSklad sklad={ask.sklad} />
         <UserAvatarName
           photoUrl={ask.askerData?.photo}
           fullname={ask.askerData?.fullname}

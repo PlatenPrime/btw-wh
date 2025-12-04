@@ -3,7 +3,15 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { InputQuant } from "@/components/ui/input-quant";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { sklads, type ISklads } from "@/constants/sklad";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { ArtImage } from "@/modules/arts/components/elements/art-image/ArtImage";
 import { useFormContext } from "react-hook-form";
@@ -38,6 +46,7 @@ export function CreateAskFormView({
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = form;
   const watchedValues = watch();
@@ -123,6 +132,39 @@ export function CreateAskFormView({
             />
             {errors.com && (
               <p className="text-destructive text-xs">{errors.com.message}</p>
+            )}
+          </div>
+
+          {/* Поле склада */}
+          <div className="space-y-2">
+            <Label htmlFor="sklad">Склад</Label>
+            <Select
+              value={watchedValues.sklad || "pogrebi"}
+              onValueChange={(value) =>
+                setValue("sklad", value as "pogrebi" | "merezhi", {
+                  shouldValidate: true,
+                })
+              }
+            >
+              <SelectTrigger
+                className={`w-full ${errors.sklad ? "border-destructive" : ""}`}
+                id="sklad"
+              >
+                <SelectValue
+                  placeholder={
+                    sklads[
+                      (watchedValues.sklad || "pogrebi") as keyof ISklads
+                    ] || sklads.pogrebi
+                  }
+                />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="pogrebi">{sklads.pogrebi}</SelectItem>
+                <SelectItem value="merezhi">{sklads.merezhi}</SelectItem>
+              </SelectContent>
+            </Select>
+            {errors.sklad && (
+              <p className="text-destructive text-xs">{errors.sklad.message}</p>
             )}
           </div>
 
