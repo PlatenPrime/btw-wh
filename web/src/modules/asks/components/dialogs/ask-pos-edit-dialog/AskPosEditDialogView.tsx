@@ -16,6 +16,7 @@ interface AskPosEditDialogViewProps {
   trigger?: React.ReactNode;
   onSuccess: () => void;
   onCancel: () => void;
+  initialRemovedQuant?: number;
 }
 
 export function AskPosEditDialogView({
@@ -26,6 +27,7 @@ export function AskPosEditDialogView({
   trigger,
   onSuccess,
   onCancel,
+  initialRemovedQuant,
 }: AskPosEditDialogViewProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -41,6 +43,7 @@ export function AskPosEditDialogView({
           askId={askId}
           onSuccess={onSuccess}
           onCancel={onCancel}
+          initialRemovedQuant={initialRemovedQuant}
         />
       </DialogContent>
     </Dialog>

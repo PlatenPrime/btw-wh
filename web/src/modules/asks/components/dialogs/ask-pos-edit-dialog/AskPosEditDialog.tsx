@@ -9,6 +9,7 @@ interface AskPosEditDialogProps {
   open?: boolean;
   setOpen?: (open: boolean) => void;
   onSuccess?: () => void;
+  initialRemovedQuant?: number;
 }
 
 export function AskPosEditDialog({
@@ -18,6 +19,7 @@ export function AskPosEditDialog({
   open: externalOpen,
   setOpen: externalSetOpen,
   onSuccess,
+  initialRemovedQuant,
 }: AskPosEditDialogProps) {
   const [internalOpen, setInternalOpen] = useState(false);
   const open = externalOpen !== undefined ? externalOpen : internalOpen;
@@ -41,6 +43,7 @@ export function AskPosEditDialog({
       trigger={trigger}
       onSuccess={handleSuccess}
       onCancel={handleCancel}
+      initialRemovedQuant={initialRemovedQuant}
     />
   );
 }

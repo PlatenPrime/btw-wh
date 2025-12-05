@@ -18,7 +18,9 @@ export const askPosEditFormSchema = z.object({
 
 export type AskPosEditFormData = z.infer<typeof askPosEditFormSchema>;
 
-export const createAskPosEditFormDefaultValues = (): AskPosEditFormData => ({
-  removedQuant: "",
+export const createAskPosEditFormDefaultValues = (
+  initialRemovedQuant?: number,
+): AskPosEditFormData => ({
+  removedQuant: initialRemovedQuant !== undefined ? String(initialRemovedQuant) : "",
   removedBoxes: "",
 });

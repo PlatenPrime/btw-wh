@@ -7,9 +7,10 @@ import { useState } from "react";
 interface AskPosProps {
   pos: PosResponse;
   askId: string;
+  initialRemovedQuant?: number;
 }
 
-export function AskPos({ pos, askId }: AskPosProps) {
+export function AskPos({ pos, askId, initialRemovedQuant }: AskPosProps) {
   const [open, setOpen] = useState(false);
 
   const handleClick = () => {
@@ -30,6 +31,7 @@ export function AskPos({ pos, askId }: AskPosProps) {
           open={open}
           setOpen={setOpen}
           onSuccess={handleSuccess}
+          initialRemovedQuant={initialRemovedQuant}
         />
       </CardContent>
     </Card>

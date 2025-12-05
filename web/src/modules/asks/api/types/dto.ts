@@ -64,5 +64,23 @@ export interface GetAsksByDateResponse {
 }
 
 import type { EntityResponse } from "@/types/api";
+import type { IPos } from "@/modules/poses/api/types";
 
 export type GetAskByIdResponse = EntityResponse<AskDto>;
+
+// Типы для получения позиций для снятия
+export interface IPositionForPull extends IPos {
+  /** Количество для снятия с этой позиции (null если quant не указан в ask) */
+  plannedQuant: number | null;
+}
+
+export interface GetAskPullResponse {
+  /** Флаг необходимости снятия товара */
+  isPullRequired: boolean;
+  /** Список позиций для снятия, отсортированных по сектору паллеты (по возрастанию) */
+  positions: IPositionForPull[];
+  /** Оставшееся количество для снятия (null если quant не указан в ask) */
+  remainingQuantity: number | null;
+}
+
+export type GetAskPullByIdResponse = EntityResponse<GetAskPullResponse>;

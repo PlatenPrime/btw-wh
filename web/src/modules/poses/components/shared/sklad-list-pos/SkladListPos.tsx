@@ -19,7 +19,7 @@ export function SkladListPos({ pos, onClick }: SkladListPosProps) {
     >
       <div className="grid grid-cols-3">
         <div className="min-w-0 flex-1">
-          <h4 className="truncate font-medium">
+          <h4 className="truncate font-bold">
             {pos.data?.palletData?.title || "Невідома палета"}
           </h4>
         </div>

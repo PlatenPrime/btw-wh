@@ -20,6 +20,7 @@ interface AskPosEditFormProps {
   askId: string;
   onSuccess?: () => void;
   onCancel?: () => void;
+  initialRemovedQuant?: number;
 }
 
 export function AskPosEditForm({
@@ -27,10 +28,11 @@ export function AskPosEditForm({
   askId,
   onSuccess,
   onCancel,
+  initialRemovedQuant,
 }: AskPosEditFormProps) {
   const form = useForm<AskPosEditFormData>({
     resolver: zodResolver(askPosEditFormSchema),
-    defaultValues: createAskPosEditFormDefaultValues(),
+    defaultValues: createAskPosEditFormDefaultValues(initialRemovedQuant),
     mode: "onChange",
   });
 

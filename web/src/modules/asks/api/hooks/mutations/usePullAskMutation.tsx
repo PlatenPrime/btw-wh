@@ -48,6 +48,7 @@ export function usePullAskMutation({ askId }: UsePullAskMutationParams) {
 
       // Инвалидируем для других запросов как fallback
       queryClient.invalidateQueries({ queryKey: ["asks", askId] });
+      queryClient.invalidateQueries({ queryKey: ["asks", askId, "pull"] });
       queryClient.invalidateQueries({ queryKey: ["asks"] });
     },
   });
