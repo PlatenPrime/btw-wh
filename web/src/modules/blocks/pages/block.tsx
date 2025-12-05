@@ -1,5 +1,6 @@
 import { SidebarInsetLayout } from "@/components/layout/SidebarInsetLayout";
 import { useBlockQuery } from "@/modules/blocks/api/hooks/queries/useBlockQuery";
+import { BlockHeaderActions } from "@/modules/blocks/components/actions/BlockHeaderActions";
 import {
   SegmentsContainer,
   SegmentsContainerSkeleton,
@@ -46,6 +47,12 @@ export function BlockPage() {
     <SidebarInsetLayout
       headerText={blockData?.data ? `Блок ${blockData.data.title}` : "Блок"}
     >
+      {blockData?.data && (
+        <BlockHeaderActions
+          blockId={blockData.data._id}
+          blockTitle={blockData.data.title}
+        />
+      )}
       <main className="p-2">
         <div className="grid gap-2">
           {blockData?.data && (

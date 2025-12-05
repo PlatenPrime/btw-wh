@@ -1,0 +1,15 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { renameBlock } from "../../services/mutations/renameBlock";
+import { type BlockResponse } from "../../types";
+
+export const useRenameBlockMutation = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation<BlockResponse, Error, { id: string; title: string }>({
+        mutationFn: renameBlock,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["blocks"] });
+            queryClient.invalidateQueries({ queryKey: ["segs"] });
+        },
+    });
+};
