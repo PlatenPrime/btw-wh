@@ -34,10 +34,10 @@ export function SegmentsFetcher({
     );
   }
 
-  if (!data || !data.exists || !data.data || data.data.length === 0) {
+  if (!data || !data.exists) {
     return <LoadingNoData description="Сегменти не знайдено" />;
   }
 
-  return <ContainerComponent data={data.data} />;
+  return <ContainerComponent data={data.data || []} />;
 }
 

@@ -31,7 +31,7 @@ export function DialogActions({
           type="button"
           variant="outline"
           onClick={onCancel}
-          disabled={isDisabledState}
+          disabled={isSubmitting}
           className="flex-1"
         >
           {cancelText}

@@ -40,8 +40,11 @@ export function useBlockPage(): UseBlockPageReturn {
   const handleCancel = useCallback(() => {
     if (cancelHandlerRef.current) {
       cancelHandlerRef.current();
+    } else {
+      // Fallback: если обработчик не установлен, просто выходим из режима редактирования
+      setIsEditMode(false);
     }
-  }, []);
+  }, [setIsEditMode]);
 
   const handleSaveReady = useCallback(
     (onSave: () => Promise<void>, onCancel: () => void) => {
