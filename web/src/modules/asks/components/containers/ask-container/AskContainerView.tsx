@@ -2,8 +2,8 @@ import { Wrapper } from "@/components/shared/wrappers/Wrapper";
 import type { AskDto } from "@/modules/asks/api/types/dto";
 import { AskDetailsCard } from "@/modules/asks/components/cards/ask-details-card/AskDetailsCard";
 import { AskEvents } from "@/modules/asks/components/containers/ask-container/components/ask-events/AskEvents.tsx";
-import { AskPullPositionsContainer } from "@/modules/asks/components/containers/ask-pull-positions-container";
 import { AskPosesByArtikulContainer } from "@/modules/asks/components/containers/ask-poses-by-artikul-container";
+import { AskPullPositionsContainer } from "@/modules/asks/components/containers/ask-pull-positions-container";
 import { CompleteAskDialog } from "@/modules/asks/components/dialogs/complete-ask-dialog/CompleteAskDialog";
 import { DeleteAskDialog } from "@/modules/asks/components/dialogs/delete-ask-dialog/DeleteAskDialog";
 import { RejectAskDialog } from "@/modules/asks/components/dialogs/reject-ask-dialog/RejectAskDialog";
@@ -50,7 +50,7 @@ export function AskContainerView({
 
       {/* Позиции для снятия */}
       {askData.artikul && (
-        <AskPullPositionsContainer askId={askData._id} askStatus={askData.status} />
+        <AskPullPositionsContainer askId={askData._id} />
       )}
 
       {/* Позиции по артикулу */}

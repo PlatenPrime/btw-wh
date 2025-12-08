@@ -63,8 +63,8 @@ export interface GetAsksByDateResponse {
   rejectedCount: number;
 }
 
-import type { EntityResponse } from "@/types/api";
 import type { IPos } from "@/modules/poses/api/types";
+import type { EntityResponse } from "@/types/api";
 
 export type GetAskByIdResponse = EntityResponse<AskDto>;
 
@@ -79,8 +79,10 @@ export interface GetAskPullResponse {
   isPullRequired: boolean;
   /** Список позиций для снятия, отсортированных по сектору паллеты (по возрастанию) */
   positions: IPositionForPull[];
-  /** Оставшееся количество для снятия (null если quant не указан в ask) */
+  /** Оставшееся количество для снятия (null если quant не указан в ask). Может быть отрицательным (перебор) */
   remainingQuantity: number | null;
+  /** Статус снятия */
+  status: "excess" | "completed" | "need_pull";
 }
 
 export type GetAskPullByIdResponse = EntityResponse<GetAskPullResponse>;
