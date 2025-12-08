@@ -1,7 +1,13 @@
 import type { User } from "@/modules/auth/api/types";
 
 export type AskUserData = Pick<User, "_id" | "fullname" | "telegram" | "photo">;
-export type AskStatus = "new" | "processing" | "completed" | "rejected" | "fail" | "solved";
+export type AskStatus =
+  | "new"
+  | "processing"
+  | "completed"
+  | "rejected"
+  | "fail"
+  | "solved";
 export const validAskStatuses: AskStatus[] = [
   "new",
   "processing",
@@ -69,7 +75,16 @@ import type { EntityResponse } from "@/types/api";
 export type GetAskByIdResponse = EntityResponse<AskDto>;
 
 // Типы для получения позиций для снятия
-export interface IPositionForPull extends IPos {
+export interface PalletDataForPull {
+  _id: string;
+  title: string;
+  sector?: string; // Сектор паллеты (для сортировки)
+  isDef: boolean;
+}
+
+export interface IPositionForPull extends Omit<IPos, "palletData"> {
+  /** Данные паллеты с дополнительным полем isDef */
+  palletData: PalletDataForPull;
   /** Количество для снятия с этой позиции (null если quant не указан в ask) */
   plannedQuant: number | null;
 }
@@ -79,10 +94,12 @@ export interface GetAskPullResponse {
   isPullRequired: boolean;
   /** Список позиций для снятия, отсортированных по сектору паллеты (по возрастанию) */
   positions: IPositionForPull[];
-  /** Оставшееся количество для снятия (null если quant не указан в ask). Может быть отрицательным (перебор) */
+  /** Оставшееся количество для снятия (null если quant не указан в ask) */
   remainingQuantity: number | null;
   /** Статус снятия */
-  status: "excess" | "completed" | "need_pull";
+  status: "process" | "satisfied" | "no_poses" | "finished";
+  /** Сообщение для пользователя */
+  message: string;
 }
 
 export type GetAskPullByIdResponse = EntityResponse<GetAskPullResponse>;

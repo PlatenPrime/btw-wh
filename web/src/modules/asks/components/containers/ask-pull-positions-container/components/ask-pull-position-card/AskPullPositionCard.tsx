@@ -12,11 +12,19 @@ export function AskPullPositionCard({
   askId,
 }: AskPullPositionCardProps) {
   // Преобразуем IPositionForPull в IPos для совместимости
+  // palletData из IPositionForPull содержит дополнительное поле isDef,
+  // которое структурно совместимо с PosPalletData
   const posData = {
     _id: position._id,
     pallet: position.pallet,
     row: position.row,
-    palletData: position.palletData,
+    palletData: {
+      _id: position.palletData._id,
+      title: position.palletData.title,
+      sector: position.palletData.sector,
+      // isDef не передается в IPos, так как оно не входит в PosPalletData
+      // но поле доступно в position.palletData если нужно
+    },
     rowData: position.rowData,
     palletTitle: position.palletTitle,
     rowTitle: position.rowTitle,

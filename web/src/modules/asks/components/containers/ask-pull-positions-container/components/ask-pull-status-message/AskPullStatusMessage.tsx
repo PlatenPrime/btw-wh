@@ -24,10 +24,8 @@ export function AskPullStatusMessage({
                 >
                   {statusMessage.variant === "success" ? <CheckCircle2 className="h-5 w-5 shrink-0 text-green-600 " /> : statusMessage.variant === "warning" ? <PackageX className="h-5 w-5 shrink-0 text-yellow-600" /> : <Circle className="h-5 w-5 shrink-0 text-muted-foreground" />}
                   <div className="flex-1">
-                    <p className="font-semibold">{statusMessage.message}</p>
-                    <p className="text-muted-foreground text-sm">
-                      {statusMessage.description}
-                    </p>
+                    <p className="">{statusMessage.message}</p>
+            
                   </div>
                 </div>
     )
