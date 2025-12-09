@@ -42,7 +42,7 @@ export function SkladPosesList({
       </div>
 
       {skladData.poses?.length > 0 && (
-        <div className="grid gap-2">
+        <div className="grid gap-4">
           {skladData.poses?.map((pos) => (
             <div key={pos._id}>
               {renderPos(

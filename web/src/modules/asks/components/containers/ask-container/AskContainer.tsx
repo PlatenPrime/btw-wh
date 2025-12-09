@@ -56,7 +56,7 @@ export function AskContainer({ askData }: AskContainerProps) {
       label: "Видалити запит",
       icon: Trash,
       iconColor: "red",
-      variant: "super-destructive",
+      variant: "destructive",
       onClick: () => setDeleteDialogOpen(true),
     },
   ]);

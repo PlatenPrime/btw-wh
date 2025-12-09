@@ -23,7 +23,7 @@ export function AskPullPositionsContainerView({
 
   return (
     <Wrapper className="relative grid gap-4">
-      <div className="flex items-center justify-between">
+      <div className="grid gap-2">
         <h2 className="flex items-center gap-2 text-lg font-semibold">
           Позиції для зняття
           {isFetching && (
@@ -41,7 +41,7 @@ export function AskPullPositionsContainerView({
       {statusMessage ? <AskPullStatusMessage statusMessage={statusMessage} /> : (
         <div
           className={cn(
-            "grid max-w-xl gap-2 transition-opacity duration-200",
+            "grid lg:w-1/2 gap-4 transition-opacity duration-200",
             isFetching && "opacity-60",
           )}
         >

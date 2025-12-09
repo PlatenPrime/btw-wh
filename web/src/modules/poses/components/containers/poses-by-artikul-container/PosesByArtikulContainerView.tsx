@@ -11,7 +11,7 @@ export function PosesByArtikulContainerView({
   return (
     <div className="grid gap-4">
       {/* Позиции по складам */}
-      <div className="grid items-start gap-4 lg:grid-cols-2">
+      <div className="grid items-start gap-2 lg:grid-cols-2">
         <SkladPosesList
           skladData={pogrebi}
           title="Погреби"

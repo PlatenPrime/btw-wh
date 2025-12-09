@@ -17,7 +17,7 @@ export function SkladListPos({ pos, onClick }: SkladListPosProps) {
       )}
       onClick={onClick}
     >
-      <div className="grid grid-cols-3">
+      <div className="grid grid-cols-3 text-sm">
         <div className="min-w-0 flex-1">
           <h4 className="truncate font-bold">
             {pos.data?.palletData?.title || "Невідома палета"}
