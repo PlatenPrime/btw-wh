@@ -9,7 +9,7 @@ import { ZonesControls } from "@/modules/zones/components/controls/zones-control
 import { CreateZoneDialog } from "@/modules/zones/components/dialogs/create-zone-dialog";
 import { DeleteZoneDialog } from "@/modules/zones/components/dialogs/delete-zone-dialog";
 import { UpdateZoneDialog } from "@/modules/zones/components/dialogs/update-zone-dialog";
-import { ZonesFetcher } from "@/modules/zones/components/fetchers";
+import { ZonesFetcher } from "@/modules/zones/components/fetchers/zones-fetcher";
 import { useZonesParams } from "@/modules/zones/hooks/useZonesParams";
 import { handleExportZones } from "@/modules/zones/utils/handle-export-zones/handleExportZones";
 import { Download, FileSpreadsheet, Plus } from "lucide-react";

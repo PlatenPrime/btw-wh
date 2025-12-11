@@ -308,6 +308,43 @@ export function AskFetcher({
 - Не содержат бизнес-логики
 - Используют типизированные props для данных
 
+**Дополнительные состояния и данные**:
+
+Fetchers могут передавать дополнительные данные в ContainerComponent:
+
+```typescript
+interface AskPullPositionsFetcherProps {
+  askId: string;
+  ContainerComponent: ComponentType<{
+    data: GetAskPullResponse;
+    isFetching: boolean;  // Фоновое обновление данных
+  }>;
+  SkeletonComponent: ComponentType;
+}
+
+export function AskPullPositionsFetcher({ askId, ContainerComponent, SkeletonComponent }: AskPullPositionsFetcherProps) {
+  const { data, isLoading, isFetching, error } = useAskPullQuery({ askId });
+
+  if (isLoading) return <SkeletonComponent />;
+  if (error) return <ErrorDisplay error={error} />;
+
+  // Fetcher может вернуть null, если компонент не нужно показывать
+  if (!data || !data.exists || !data.data) {
+    return null;
+  }
+
+  // Передаём данные и состояние фонового обновления
+  return <ContainerComponent data={data.data} isFetching={isFetching} />;
+}
+```
+
+**Паттерны обработки данных**:
+
+- `EntityNotFound` — когда сущность не найдена (с кнопкой retry)
+- `null` — когда компонент не нужно показывать вообще
+- `isFetching` — для индикации фонового обновления данных
+- `LoadingNoData` — когда данных нет, но это не ошибка
+
 **Гибкость архитектуры Fetchers**:
 
 ```typescript
@@ -341,6 +378,26 @@ containers/
 │   ├── components/              # Вложенные компоненты (опционально)
 │   └── index.ts
 ```
+
+**Структура вложенных компонентов**:
+
+Вложенные компоненты могут иметь свою структуру с `components/` и `constants/`:
+
+```
+containers/
+└── {entity}-container/
+    └── components/
+        └── {nested-component}/
+            ├── {NestedComponent}.tsx
+            ├── {NestedComponent}Skeleton.tsx
+            ├── components/              # Вложенные компоненты второго уровня
+            │   └── {sub-component}/
+            │       └── {SubComponent}.tsx
+            └── constants/               # Константы компонента (опционально)
+                └── {constants}.ts
+```
+
+**Пример**: `ask-container/components/ask-events/` содержит `components/ask-event/` и `constants/askEventMeta.ts`
 
 **Пример Container** (`containers/ask-container/AskContainer.tsx`):
 
@@ -464,6 +521,52 @@ export function AskContainerSkeleton() {
 - Используют компоненты из `@/components/ui/skeleton`
 - Соответствуют разметке View компонента
 
+**Паттерн: Container с внутренним Fetcher**
+
+Иногда контейнеры сами используют Fetchers для получения данных. Это полезно, когда контейнеру нужны данные из API, но он не получает их через props.
+
+**Структура**:
+
+```
+containers/
+└── {entity}-container/
+    ├── {Entity}Container.tsx          # Обёртка над Fetcher
+    ├── {Entity}ContainerView.tsx      # Презентация
+    ├── {Entity}ContainerSkeleton.tsx
+    └── index.ts
+```
+
+**Пример** (`containers/ask-pull-positions-container/AskPullPositionsContainer.tsx`):
+
+```typescript
+import { AskPullPositionsFetcher } from "@/modules/asks/components/fetchers/ask-pull-positions-fetcher/AskPullPositionsFetcher";
+import { AskPullPositionsContainerSkeleton } from "./AskPullPositionsContainerSkeleton";
+import { AskPullPositionsContainerView } from "./AskPullPositionsContainerView";
+
+interface AskPullPositionsContainerProps {
+  askId: string;
+}
+
+export function AskPullPositionsContainer({ askId }: AskPullPositionsContainerProps) {
+  return (
+    <AskPullPositionsFetcher
+      askId={askId}
+      ContainerComponent={(props) => (
+        <AskPullPositionsContainerView {...props} askId={askId} />
+      )}
+      SkeletonComponent={AskPullPositionsContainerSkeleton}
+    />
+  );
+}
+```
+
+**Когда использовать**:
+
+- Когда контейнеру нужны данные из API
+- Когда нужна обработка состояний загрузки
+- Когда логика контейнера минимальна (просто обёртка над Fetcher)
+- Когда контейнер используется в других контейнерах, а не напрямую в Page
+
 ### 3. Cards (`components/cards/`)
 
 **Назначение**: Карточные компоненты для отображения сущностей в компактном виде.
@@ -497,9 +600,61 @@ dialogs/
 ├── create-{entity}-dialog/
 │   ├── Create{Entity}Dialog.tsx
 │   ├── Create{Entity}DialogView.tsx
+│   ├── Create{Entity}DialogTrigger.tsx    # Триггер (опционально)
+│   ├── use{Action}{Entity}Dialog.ts      # Кастомный хук (опционально)
 │   └── index.ts
 ├── update-{entity}-dialog/
 └── delete-{entity}-dialog/
+```
+
+**Пример Dialog с кастомным хуком** (`dialogs/create-ask-dialog/CreateAskDialog.tsx`):
+
+```typescript
+import { Dialog } from "@/components/ui/dialog";
+import { useState } from "react";
+import { CreateAskDialogTrigger } from "./CreateAskDialogTrigger";
+import { CreateAskDialogView } from "./CreateAskDialogView";
+import { useCreateAskDialog } from "./useCreateAskDialog";
+
+interface CreateAskDialogProps {
+  onSuccess?: () => void;
+  preFilledArtikul?: string;
+  trigger?: React.ReactNode;
+  showTrigger?: boolean;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+}
+
+export function CreateAskDialog({
+  onSuccess,
+  preFilledArtikul,
+  trigger,
+  showTrigger = true,
+  open: controlledOpen,
+  onOpenChange,
+}: CreateAskDialogProps) {
+  const [internalOpen, setInternalOpen] = useState(false);
+
+  const isControlled = controlledOpen !== undefined;
+  const open = isControlled ? controlledOpen : internalOpen;
+  const handleOpenChange = isControlled ? onOpenChange : setInternalOpen;
+
+  const { handleSuccess, handleCancel } = useCreateAskDialog({
+    onOpenChange: handleOpenChange,
+    onSuccess,
+  });
+
+  return (
+    <Dialog open={open} onOpenChange={handleOpenChange}>
+      {showTrigger && <CreateAskDialogTrigger trigger={trigger} />}
+      <CreateAskDialogView
+        onSuccess={handleSuccess}
+        onCancel={handleCancel}
+        preFilledArtikul={preFilledArtikul}
+      />
+    </Dialog>
+  );
+}
 ```
 
 **Принципы**:
@@ -507,6 +662,16 @@ dialogs/
 - Также следуют паттерну Container/View
 - Содержат формы или подтверждения
 - Управляются состоянием `open/setOpen` извне
+- Поддерживают controlled и uncontrolled режимы
+- Могут иметь кастомные хуки для сложной логики (`use{Dialog}Dialog.ts`)
+- Могут иметь отдельные триггеры (`{Dialog}Trigger.tsx`)
+
+**Когда использовать кастомные хуки**:
+
+- Когда логика диалога сложная
+- Когда нужно переиспользовать логику
+- Когда нужна обработка controlled/uncontrolled режимов
+- Когда нужно обработать несколько событий (onSuccess, onCancel, onOpenChange)
 
 ### 5. Forms (`components/forms/`)
 
@@ -520,10 +685,48 @@ forms/
 │   ├── Create{Entity}Form.tsx
 │   ├── Create{Entity}FormView.tsx
 │   ├── schema.ts
+│   ├── utils/                    # Утилиты формы (опционально)
+│   │   └── {util-function}.ts
 │   └── index.ts
 ├── update-{entity}-form/
 └── schema.ts                    # Общие схемы модуля
 ```
+
+**Пример формы с утилитами** (`forms/ask-pos-edit-form/`):
+
+```
+ask-pos-edit-form/
+├── AskPosEditForm.tsx
+├── AskPosEditFormView.tsx
+├── schema.ts
+└── utils/
+    ├── getAskActionTextUtil.ts
+    ├── handleRemovedBoxesChangeUtil.ts
+    └── handleRemovedQuantChangeUtil.ts
+```
+
+**Пример утилиты формы** (`utils/getAskActionTextUtil.ts`):
+
+```typescript
+export function getAskActionTextUtil({
+  removedQuant,
+  removedBoxes,
+  pos,
+}: {
+  removedQuant: number;
+  removedBoxes: number;
+  pos: PosResponse;
+}) {
+  // Логика генерации текста действия
+  return `Знято ${removedQuant} шт. з позиції ${pos.data?.artikul}`;
+}
+```
+
+**Когда использовать utils в формах**:
+
+- Когда нужны вспомогательные функции для обработки данных формы
+- Когда логика обработки полей сложная
+- Когда нужно переиспользовать логику между формами
 
 **Пример schema** (`forms/create-ask-form/schema.ts`):
 
@@ -581,17 +784,28 @@ lists/
 
 **Назначение**: Мелкие переиспользуемые элементы специфичные для модуля.
 
+**Структура**:
+
+```
+elements/
+└── {entity}-{property}/
+    └── {Entity}{Property}.tsx
+```
+
 **Примеры**:
 
 - `ArtImage` — изображение артикула
 - `ArtLimit` — отображение лимита
 - `AskQuant` — количество в заявке
+- `AskCom` — комментарий в заявке
+- `AskSklad` — склад в заявке
 
 **Принципы**:
 
 - Простые компоненты без сложной логики
 - Принимают минимум props
 - Переиспользуются в разных частях модуля
+- Обычно не имеют вложенных компонентов или утилит
 
 ### 8. Controls (`components/controls/`)
 
@@ -674,6 +888,10 @@ export function Ask() {
 
 ## Поток данных
 
+### Вариант 1: Page → Fetcher → Container → View (стандартный)
+
+Этот вариант используется, когда контейнер получает данные через props:
+
 ```
 ┌─────────┐
 │  Page   │
@@ -710,6 +928,52 @@ export function Ask() {
        └─► Elements
 ```
 
+**Пример**: `pages/ask.tsx` → `AskFetcher` → `AskContainer` → `AskContainerView`
+
+### Вариант 2: Page → Container → Fetcher → ContainerView (контейнер с Fetcher)
+
+Этот вариант используется, когда контейнер сам управляет получением данных:
+
+```
+┌─────────┐
+│  Page   │
+└────┬────┘
+     │
+     ▼
+┌───────────┐
+│ Container │
+└─────┬─────┘
+      │
+      ▼
+┌─────────┐
+│ Fetcher │ ──► API Hook (Query/Mutation)
+└────┬────┘        │
+     │             ▼
+     │        API Service
+     │             │
+     │             ▼
+     │        Backend
+     │
+     ├─► Loading ──► Skeleton
+     ├─► Error ──► ErrorDisplay
+     │
+     ▼
+┌─────────────┐
+│ ContainerView│ ──► Presentation Layer (JSX)
+└──────┬──────┘
+       │
+       ├─► Cards
+       ├─► Lists
+       └─► Elements
+```
+
+**Пример**: `AskContainer` → `AskPullPositionsFetcher` → `AskPullPositionsContainerView`
+
+**Когда использовать каждый вариант**:
+
+- **Вариант 1**: когда контейнер получает данные через props (стандартный случай)
+- **Вариант 2**: когда контейнер сам управляет получением данных (вложенные контейнеры)
+
 ## Паттерны именования
 
 ### Компоненты
@@ -744,6 +1008,38 @@ export function Ask() {
 - Компоненты: `PascalCase.tsx` (например, `AskContainer.tsx`)
 - Утилиты: `camelCase.ts` (например, `sortPosesByType.ts`)
 - Типы: `camelCase.ts` или `dto.ts`, `types.ts`
+
+### Экспорты и index.ts
+
+**Где используются index.ts**:
+
+- В папках компонентов для реэкспорта
+- В папках типов для реэкспорта типов
+- Не обязательны, но улучшают импорты
+
+**Пример** (`containers/ask-container/index.ts`):
+
+```typescript
+export { AskContainer } from "./AskContainer";
+export { AskContainerView } from "./AskContainerView";
+export { AskContainerSkeleton } from "./AskContainerSkeleton";
+```
+
+**Импорт**:
+
+```typescript
+// С index.ts (предпочтительно)
+import { AskContainer } from "@/modules/asks/components/containers/ask-container";
+
+// Без index.ts
+import { AskContainer } from "@/modules/asks/components/containers/ask-container/AskContainer";
+```
+
+**Преимущества index.ts**:
+
+- Более чистые импорты
+- Легче рефакторить (меняем только в одном месте)
+- Явно показывает публичный API компонента
 
 ## Принципы и лучшие практики
 
@@ -806,15 +1102,29 @@ modules/
     │   │   ├── mutations/
     │   │   └── queries/
     │   └── types/
-    │       └── dto.ts
+    │       ├── dto.ts
+    │       └── index.ts
     ├── components/
     │   ├── fetchers/
+    │   │   └── {entity}-fetcher/
+    │   │       ├── {Entity}Fetcher.tsx
+    │   │       └── index.ts
     │   ├── containers/
+    │   │   └── {entity}-container/
+    │   │       ├── {Entity}Container.tsx
+    │   │       ├── {Entity}ContainerView.tsx
+    │   │       ├── {Entity}ContainerSkeleton.tsx
+    │   │       └── index.ts
     │   ├── cards/
     │   ├── dialogs/
     │   ├── forms/
+    │   ├── lists/
     │   └── elements/
-    └── pages/
+    ├── pages/
+    │   └── {entity}.tsx
+    ├── hooks/              # Опционально
+    ├── utils/              # Опционально
+    └── constants/          # Опционально
 ```
 
 ### Шаг 2: Определение типов

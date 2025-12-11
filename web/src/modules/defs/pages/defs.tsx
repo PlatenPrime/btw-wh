@@ -3,11 +3,13 @@ import {
   CalculationStatusContainer,
   CalculationStatusSkeleton,
 } from "@/modules/defs/components/containers/calculation-status-container";
-import { DefsContainer } from "@/modules/defs/components/containers/defs-container/DefsContainer";
-import { DefsContainerSkeleton } from "@/modules/defs/components/containers/defs-container/DefsContainerSkeleton";
+import {
+  DefsContainer,
+  DefsContainerSkeleton,
+} from "@/modules/defs/components/containers/defs-container";
 import { DefControls } from "@/modules/defs/components/controls/def-controls/DefControls";
-import { CalculationStatusFetcher } from "@/modules/defs/components/fetchers/calc-defs-status-fetcher/CalculationStatusFetcher";
-import { LatestDefsFetcher } from "@/modules/defs/components/fetchers/latest-defs-fetcher/LatestDefsFetcher";
+import { CalculationStatusFetcher } from "@/modules/defs/components/fetchers/calc-defs-status-fetcher";
+import { LatestDefsFetcher } from "@/modules/defs/components/fetchers/latest-defs-fetcher";
 import { useState } from "react";
 
 export function Defs() {

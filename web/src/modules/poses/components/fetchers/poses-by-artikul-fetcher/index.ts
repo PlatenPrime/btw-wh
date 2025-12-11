@@ -1,0 +1,2 @@
+export { PosesByArtikulFetcher } from "./PosesByArtikulFetcher";
+

@@ -1,5 +1,5 @@
-export { ZoneFetcher } from "./ZoneFetcher";
-export { ZonesFetcher } from "./ZonesFetcher";
+export { ZoneFetcher } from "./zone-fetcher";
+export { ZonesFetcher } from "./zones-fetcher";
 
 
 

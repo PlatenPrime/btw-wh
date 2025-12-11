@@ -1,2 +1,2 @@
-export { RowFetcher } from "./row-fetcher/RowFetcher";
-export { RowsFetcher } from "./rows-fetcher/RowsFetcher";
+export { RowFetcher } from "./row-fetcher";
+export { RowsFetcher } from "./rows-fetcher";

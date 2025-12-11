@@ -9,7 +9,7 @@ import {
   ZoneContainer,
   ZoneContainerSkeleton,
 } from "@/modules/zones/components/containers/zone-container";
-import { ZoneFetcher } from "@/modules/zones/components/fetchers";
+import { ZoneFetcher } from "@/modules/zones/components/fetchers/zone-fetcher";
 import { useParams } from "react-router";
 
 export function Zone() {

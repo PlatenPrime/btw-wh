@@ -1,4 +1,4 @@
-import { PosesByArtikulFetcher } from "@/modules/poses/components/fetchers/poses-by-artikul-fetcher/PosesByArtikulFetcher";
+import { PosesByArtikulFetcher } from "@/modules/poses/components/fetchers/poses-by-artikul-fetcher";
 import { PosesByArtikulContainerSkeleton } from "./PosesByArtikulContainerSkeleton";
 import { PosesByArtikulContainerView } from "./PosesByArtikulContainerView";
 import type { PosesByArtikulContainerProps } from "./types";
