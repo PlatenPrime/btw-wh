@@ -5,11 +5,11 @@ import { formatDate } from "@/utils/formatDate";
 import { formatRemainingSeconds } from "@/utils/formatRemainingSeconds";
 import { Clock, Loader2 } from "lucide-react";
 
-interface CalcRunContainerProps {
+interface CalculationRunViewProps {
   status: DefsCalculationStatus;
 }
 
-export function CalcRunContainer({ status }: CalcRunContainerProps) {
+export function CalculationRunView({ status }: CalculationRunViewProps) {
   return (
     <Wrapper className="space-y-4 p-4">
       <div className="flex items-center gap-2">
@@ -73,3 +73,4 @@ export function CalcRunContainer({ status }: CalcRunContainerProps) {
     </Wrapper>
   );
 }
+

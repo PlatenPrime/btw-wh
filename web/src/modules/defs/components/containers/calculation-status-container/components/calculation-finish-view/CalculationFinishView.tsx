@@ -4,11 +4,11 @@ import type { DefsCalculationStatus } from "@/modules/defs/api/types/dto";
 import { formatDate } from "@/utils/formatDate";
 import { CheckCircle2, Clock } from "lucide-react";
 
-interface CalcFinishContainerProps {
+interface CalculationFinishViewProps {
   status: DefsCalculationStatus;
 }
 
-export function CalcFinishContainer({ status }: CalcFinishContainerProps) {
+export function CalculationFinishView({ status }: CalculationFinishViewProps) {
   return (
     <Wrapper className="grid gap-4 p-4">
       <div className="flex items-center gap-2">

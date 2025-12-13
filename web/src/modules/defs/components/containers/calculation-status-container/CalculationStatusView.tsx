@@ -1,7 +1,7 @@
 import type { DefsCalculationStatus } from "@/modules/defs/api/types/dto";
-import { CalcFinishContainer } from "./components/calc-finish-container/CalcFinishContainer";
-import { CalcInitContainer } from "./components/calc-init-container/CalcInitContainer";
-import { CalcRunContainer } from "./components/calc-run-container/CalcRunContainer";
+import { CalculationFinishView } from "./components/calculation-finish-view";
+import { CalculationInitView } from "./components/calculation-init-view";
+import { CalculationRunView } from "./components/calculation-run-view";
 
 interface CalculationStatusViewProps {
   status: DefsCalculationStatus;
@@ -13,12 +13,12 @@ export function CalculationStatusView({
   isLoading,
 }: CalculationStatusViewProps) {
   if (isLoading) {
-    return <CalcInitContainer />;
+    return <CalculationInitView />;
   }
 
   if (status.isRunning) {
-    return <CalcRunContainer status={status} />;
+    return <CalculationRunView status={status} />;
   }
 
-  return <CalcFinishContainer status={status} />;
+  return <CalculationFinishView status={status} />;
 }
