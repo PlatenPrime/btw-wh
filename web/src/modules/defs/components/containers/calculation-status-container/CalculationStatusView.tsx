@@ -1,5 +1,5 @@
 import type { DefsCalculationStatus } from "@/modules/defs/api/types/dto";
-import { CalcFinishContainer } from "./components/calc-finish-container/CalcFinishContainer";
+import { CalcFinishContainer } from "./components/calc-finish-container";
 import { CalcInitContainer } from "./components/calc-init-container/CalcInitContainer";
 import { CalcRunContainer } from "./components/calc-run-container/CalcRunContainer";
 
