@@ -9,7 +9,6 @@ import axios, { type AxiosError } from "axios";
 
 export const apiClient = axios.create({
   baseURL: SERVER_URL,
-  timeout: 10000,
 });
 
 /**

@@ -21,7 +21,7 @@ export function ArtDialogImage({ artikul }: ArtImageProps) {
         <Image
           src={getSmallImageUrl(artikul)}
           alt={artikul}
-          className="w-10 cursor-pointer rounded-md object-cover"
+          className="size-10 cursor-pointer rounded-md object-cover"
           loading="lazy"
         />
       </DialogTrigger>

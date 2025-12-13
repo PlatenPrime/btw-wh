@@ -39,6 +39,11 @@ const Asks = lazy(() =>
     default: module.Asks,
   })),
 );
+const Pulls = lazy(() =>
+  import("./modules/asks/pages/pulls").then((module) => ({
+    default: module.Pulls,
+  })),
+);
 
 const Defs = lazy(() =>
   import("./modules/defs/pages/defs").then((module) => ({
@@ -107,11 +112,6 @@ const PalletPage = lazy(() =>
     default: module.Pallet,
   })),
 );
-// const Pulls = lazy(() =>
-//   import("./modules/pulls/pages/pulls").then((module) => ({
-//     default: module.Pulls,
-//   })),
-// );
 const NotFound = lazy(() =>
   import("./pages/not-found").then((module) => ({
     default: module.NotFound,
@@ -309,15 +309,11 @@ export const router = createHashRouter([
             element: <Defs />,
             errorElement: <RouteErrorBoundary />,
           },
-          // {
-          //   path: "pulls",
-          //   element: (
-          //     <ProtectedRoute allowedRoles={[RoleType.ADMIN, RoleType.PRIME]}>
-          //       <Pulls />
-          //     </ProtectedRoute>
-          //   ),
-          //   errorElement: <RouteErrorBoundary />,
-          // },
+          {
+            path: "pulls",
+            element: <Pulls />,
+            errorElement: <RouteErrorBoundary />,
+          },
         ],
       },
 

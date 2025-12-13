@@ -83,11 +83,11 @@ export const appSidebarData = {
           url: "/refiling/defs",
           iconName: "AlertTriangle",
         },
-        // {
-        //   title: "Зняття",
-        //   url: "/refiling/pulls",
-        //   iconName: "PackageSearch",
-        // },
+        {
+          title: "Зняття",
+          url: "/refiling/pulls",
+          iconName: "PackageSearch",
+        },
       ],
     },
   ],

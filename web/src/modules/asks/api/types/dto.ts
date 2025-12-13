@@ -103,3 +103,30 @@ export interface GetAskPullResponse {
 }
 
 export type GetAskPullByIdResponse = EntityResponse<GetAskPullResponse>;
+
+// Типы для получения всех позиций для снятия по всем активным заявкам
+export interface IPositionForPullsPage extends IPositionForPull {
+  /** ID заявки, для которой предназначена позиция */
+  askId: string;
+  /** Артикул из заявки (для удобства и генерации events) */
+  askArtikul: string;
+  /** Количество товара, которое просят в заявке (null если в заявке не указано требуемое количество) */
+  askQuant: number | null;
+  /** Оставшееся количество для снятия по заявке (null если в заявке не указано требуемое количество) */
+  askRemainingQuantity: number | null;
+}
+
+export interface PositionsBySector {
+  /** Номер сектора паллеты */
+  sector: number;
+  /** Позиции в данном секторе */
+  positions: IPositionForPullsPage[];
+}
+
+export interface GetAsksPullsResponse {
+  message: string;
+  data: {
+    /** Позиции для снятия, сгруппированные по секторам паллет. Каждая позиция содержит полную информацию о заявке (askId, askArtikul, askQuant, askRemainingQuantity) */
+    positionsBySector: PositionsBySector[];
+  };
+}

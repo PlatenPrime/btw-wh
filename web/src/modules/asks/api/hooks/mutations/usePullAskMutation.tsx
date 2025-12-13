@@ -8,6 +8,7 @@ import type {
   AskDto,
   GetAskByIdResponse,
   GetAsksByDateResponse,
+  GetAsksPullsResponse,
 } from "@/modules/asks/api/types/dto";
 
 interface UsePullAskMutationParams {
@@ -19,6 +20,49 @@ export function usePullAskMutation({ askId }: UsePullAskMutationParams) {
 
   return useMutation({
     mutationFn: (payload: PullAskRequest) => pullAskById(askId, payload),
+    onMutate: async (payload) => {
+      // Отменяем исходящие запросы для ["asks", "pulls"]
+      await queryClient.cancelQueries({ queryKey: ["asks", "pulls"] });
+
+      // Сохраняем предыдущее значение кеша
+      const previousPullsData = queryClient.getQueryData<GetAsksPullsResponse>([
+        "asks",
+        "pulls",
+      ]);
+
+      // Optimistically удаляем позицию из кеша по palletData._id и askId
+      if (previousPullsData?.data) {
+        queryClient.setQueryData<GetAsksPullsResponse>(
+          ["asks", "pulls"],
+          (oldData) => {
+            if (!oldData?.data) return oldData;
+
+            const updatedPositionsBySector = oldData.data.positionsBySector
+              .map((sectorGroup) => ({
+                ...sectorGroup,
+                positions: sectorGroup.positions.filter(
+                  (pos) =>
+                    !(
+                      pos.askId === askId &&
+                      pos.palletData._id === payload.pullAskData.palletData._id
+                    ),
+                ),
+              }))
+              .filter((sectorGroup) => sectorGroup.positions.length > 0);
+
+            return {
+              ...oldData,
+              data: {
+                positionsBySector: updatedPositionsBySector,
+              },
+            };
+          },
+        );
+      }
+
+      // Возвращаем контекст для отката
+      return { previousPullsData };
+    },
     onSuccess: (updatedAsk: AskDto) => {
       // Обновляем кеш для конкретного ask
       queryClient.setQueryData<GetAskByIdResponse>(
@@ -49,7 +93,13 @@ export function usePullAskMutation({ askId }: UsePullAskMutationParams) {
       // Инвалидируем для других запросов как fallback
       queryClient.invalidateQueries({ queryKey: ["asks", askId] });
       queryClient.invalidateQueries({ queryKey: ["asks", askId, "pull"] });
-      queryClient.invalidateQueries({ queryKey: ["asks"] });
+      queryClient.invalidateQueries({ queryKey: ["asks", "pulls"] });
+    },
+    onError: (_error, _payload, context) => {
+      // Откатываем изменения при ошибке
+      if (context?.previousPullsData) {
+        queryClient.setQueryData(["asks", "pulls"], context.previousPullsData);
+      }
     },
   });
 }
