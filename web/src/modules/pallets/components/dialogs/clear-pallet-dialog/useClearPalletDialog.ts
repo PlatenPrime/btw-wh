@@ -18,6 +18,7 @@ export function useClearPalletDialog({
   const mutation = useDeletePalletPosesMutation({
     palletId: pallet._id,
     palletTitle: pallet.title,
+    rowTitle: pallet.rowData.title,
   });
 
   const isClearing = mutation.isPending;

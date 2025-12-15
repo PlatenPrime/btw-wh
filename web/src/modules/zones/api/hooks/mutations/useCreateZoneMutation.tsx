@@ -9,6 +9,9 @@ export function useCreateZoneMutation() {
     mutationFn: createZone,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["zones"] });
+      // Инвалидируем segs и blocks, так как зона может быть связана с сегментом
+      queryClient.invalidateQueries({ queryKey: ["segs"] });
+      queryClient.invalidateQueries({ queryKey: ["blocks"] });
       toast.success("Зона успешно создана");
     },
     onError: (error: Error) => {

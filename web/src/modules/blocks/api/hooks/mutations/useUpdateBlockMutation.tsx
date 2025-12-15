@@ -23,6 +23,8 @@ export function useUpdateBlockMutation() {
       queryClient.invalidateQueries({ queryKey: ["blocks"] });
       queryClient.invalidateQueries({ queryKey: ["blocks", variables.id] });
       queryClient.invalidateQueries({ queryKey: ["zones"] });
+      // Инвалидируем segs, так как блок содержит сегменты
+      queryClient.invalidateQueries({ queryKey: ["segs"] });
       toast.success("Блок успішно оновлено");
     },
     onError: (error: AxiosError<ApiErrorResponse>) => {

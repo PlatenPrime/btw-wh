@@ -7,7 +7,7 @@ import { createHashRouter, Outlet } from "react-router";
 
 const App = lazy(() => import("./App"));
 
-const Login = lazy(() => import("@//modules/auth/pages/login"));
+const Login = lazy(() => import("@/modules/auth/pages/login"));
 const Register = lazy(() => import("./modules/auth/pages/register"));
 
 const Art = lazy(() =>
@@ -26,7 +26,7 @@ const ArtsUpdate = lazy(() =>
   })),
 );
 const ArtsUtils = lazy(() =>
-  import("./pages/artsUtils").then((module) => ({ default: module.ArtsUtils })),
+  import("./modules/arts/pages/artsUtils").then((module) => ({ default: module.ArtsUtils })),
 );
 
 const Ask = lazy(() =>
@@ -66,14 +66,14 @@ const Rows = lazy(() =>
 );
 
 const Stock = lazy(() =>
-  import("./pages/stock").then((module) => ({ default: module.Stock })),
+  import("./modules/stocks/pages/stock").then((module) => ({ default: module.Stock })),
 );
 const Stocks = lazy(() =>
-  import("./pages/stocks").then((module) => ({ default: module.Stocks })),
+  import("./modules/stocks/pages/stocks").then((module) => ({ default: module.Stocks })),
 );
 
 const WhUtils = lazy(() =>
-  import("./pages/whUtils").then((module) => ({ default: module.WhUtils })),
+  import("./modules/wh/pages/whUtils").then((module) => ({ default: module.WhUtils })),
 );
 const Zones = lazy(() =>
   import("./modules/zones/pages/zones").then((module) => ({

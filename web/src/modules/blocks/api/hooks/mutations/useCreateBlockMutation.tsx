@@ -21,6 +21,8 @@ export function useCreateBlockMutation() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["blocks"] });
       queryClient.invalidateQueries({ queryKey: ["zones"] });
+      // Инвалидируем segs, так как блок содержит сегменты
+      queryClient.invalidateQueries({ queryKey: ["segs"] });
       toast.success("Блок успішно створено");
     },
     onError: (error: AxiosError<ApiErrorResponse>) => {

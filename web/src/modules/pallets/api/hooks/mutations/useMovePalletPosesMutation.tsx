@@ -13,12 +13,13 @@ export function useMovePalletPosesMutation({
   return useMutation({
     mutationFn: (targetPalletId: string) =>
       movePalletPoses(pallet._id, targetPalletId),
-    onSuccess: () => {
+    onSuccess: (data) => {
+      // Инвалидируем source pallet
       queryClient.invalidateQueries({
         queryKey: ["pallet", { title: pallet.title }],
       });
       queryClient.invalidateQueries({
-        queryKey: ["row", { title: pallet.rowData.title }],
+        queryKey: ["row", { rowTitle: pallet.rowData.title }],
       });
       queryClient.invalidateQueries({
         queryKey: ["pallets", { option: "empty" }],
@@ -26,6 +27,30 @@ export function useMovePalletPosesMutation({
       queryClient.invalidateQueries({
         queryKey: ["poses", { by: "pallet", palletId: pallet._id }],
       });
+
+      // Инвалидируем target pallet и его row, если данные доступны
+      if (data.targetPallet) {
+        queryClient.invalidateQueries({
+          queryKey: ["pallet", { title: data.targetPallet.title }],
+        });
+        queryClient.invalidateQueries({
+          queryKey: ["pallet", { id: data.targetPallet._id }],
+        });
+        if (data.targetPallet.rowData) {
+          queryClient.invalidateQueries({
+            queryKey: ["row", { rowTitle: data.targetPallet.rowData.title }],
+          });
+          queryClient.invalidateQueries({
+            queryKey: ["row", { rowId: data.targetPallet.rowData._id }],
+          });
+        }
+        queryClient.invalidateQueries({
+          queryKey: ["poses", { by: "pallet", palletId: data.targetPallet._id }],
+        });
+        queryClient.invalidateQueries({
+          queryKey: ["pallets", { rowId: data.targetPallet.row }],
+        });
+      }
     },
   });
 }

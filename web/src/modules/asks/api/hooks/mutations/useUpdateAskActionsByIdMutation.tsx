@@ -14,6 +14,8 @@ export function useUpdateAskActionsByIdMutation() {
       // Инвалидируем кеш для конкретного ask и списка asks
       queryClient.invalidateQueries({ queryKey: ["asks", id] });
       queryClient.invalidateQueries({ queryKey: ["asks"] });
+      // Инвалидируем кеш дефицитов, так как действия могут влиять на дефициты
+      queryClient.invalidateQueries({ queryKey: ["defs", "latest"] });
     },
   });
 }

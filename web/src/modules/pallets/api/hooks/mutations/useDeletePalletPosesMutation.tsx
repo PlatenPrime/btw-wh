@@ -4,9 +4,11 @@ import { deletePalletPoses } from "@/modules/pallets/api/services/mutations/dele
 export function useDeletePalletPosesMutation({
   palletId,
   palletTitle,
+  rowTitle,
 }: {
   palletId: string;
   palletTitle: string;
+  rowTitle?: string;
 }) {
   const queryClient = useQueryClient();
   return useMutation({
@@ -17,6 +19,11 @@ export function useDeletePalletPosesMutation({
       queryClient.invalidateQueries({
         queryKey: ["pallet", { title: palletTitle }],
       });
+      if (rowTitle) {
+        queryClient.invalidateQueries({
+          queryKey: ["row", { rowTitle }],
+        });
+      }
     },
   });
 }

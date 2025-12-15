@@ -1,4 +1,4 @@
-import { useRegisterHeaderAction } from "@/components/layout/header-actions";
+import { useRegisterHeaderActions } from "@/components/layout/header-actions";
 import { Wrapper } from "@/components/shared/wrappers/Wrapper";
 import { CreatePalletDialog } from "@/modules/pallets/components/dialogs/create-pallet-dialog/CreatePalletDialog";
 import { PalletsList } from "@/modules/pallets/components/lists/pallets-list/PalletsList";
@@ -21,13 +21,15 @@ export function RowContainerView({ row }: RowContainerViewProps) {
   };
 
   // Регистрируем действие удаления в header меню
-  useRegisterHeaderAction({
-    id: "delete-row",
-    label: "Видалити ряд",
-    icon: Trash2Icon,
-    variant: "super-destructive",
-    onClick: () => setDeleteDialogOpen(true),
-  });
+  useRegisterHeaderActions([
+    {
+      id: "delete-row",
+      label: "Видалити ряд",
+      icon: Trash2Icon,
+      variant: "super-destructive",
+      onClick: () => setDeleteDialogOpen(true),
+    },
+  ]);
 
   return (
     <div className="grid gap-2">

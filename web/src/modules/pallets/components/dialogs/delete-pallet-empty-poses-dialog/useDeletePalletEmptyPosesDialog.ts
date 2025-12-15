@@ -18,6 +18,7 @@ export function useDeletePalletEmptyPosesDialog({
   const mutation = useDeletePalletEmptyPosesMutation({
     palletId: pallet._id,
     palletTitle: pallet.title,
+    rowTitle: pallet.rowData.title,
   });
 
   const isDeleting = mutation.isPending;

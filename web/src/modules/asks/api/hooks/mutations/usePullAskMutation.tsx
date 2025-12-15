@@ -94,6 +94,8 @@ export function usePullAskMutation({ askId }: UsePullAskMutationParams) {
       queryClient.invalidateQueries({ queryKey: ["asks", askId] });
       queryClient.invalidateQueries({ queryKey: ["asks", askId, "pull"] });
       queryClient.invalidateQueries({ queryKey: ["asks", "pulls"] });
+      // Инвалидируем кеш дефицитов, так как pull изменяет количество товара
+      queryClient.invalidateQueries({ queryKey: ["defs", "latest"] });
     },
     onError: (_error, _payload, context) => {
       // Откатываем изменения при ошибке

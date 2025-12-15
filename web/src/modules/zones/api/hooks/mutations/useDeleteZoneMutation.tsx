@@ -10,6 +10,9 @@ export function useDeleteZoneMutation() {
     onSuccess: (_, id) => {
       queryClient.invalidateQueries({ queryKey: ["zones"] });
       queryClient.removeQueries({ queryKey: ["zones", id] });
+      // Инвалидируем segs и blocks, так как зона может быть связана с сегментом
+      queryClient.invalidateQueries({ queryKey: ["segs"] });
+      queryClient.invalidateQueries({ queryKey: ["blocks"] });
       toast.success("Зона успешно удалена");
     },
     onError: (error: Error) => {
@@ -19,6 +22,3 @@ export function useDeleteZoneMutation() {
     },
   });
 }
-
-
-

@@ -12,6 +12,9 @@ export function useUpdateZoneMutation() {
     onSuccess: (_, { id }) => {
       queryClient.invalidateQueries({ queryKey: ["zones"] });
       queryClient.invalidateQueries({ queryKey: ["zones", id] });
+      // Инвалидируем segs и blocks, так как зона может быть связана с сегментом
+      queryClient.invalidateQueries({ queryKey: ["segs"] });
+      queryClient.invalidateQueries({ queryKey: ["blocks"] });
       toast.success("Зона успешно обновлена");
     },
     onError: (error: Error) => {

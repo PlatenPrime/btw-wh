@@ -46,6 +46,8 @@ export function useUpdateRowMutation() {
       // Invalidate all row-related queries to ensure UI updates
       queryClient.invalidateQueries({ queryKey: ["rows"] });
       queryClient.invalidateQueries({ queryKey: ["row"] });
+      // Инвалидируем pallets, так как данные ряда могут влиять на отображение паллет
+      queryClient.invalidateQueries({ queryKey: ["pallets"] });
 
       // Also try to update the cache directly for immediate UI feedback
       queryClient.setQueryData(["rows"], (oldData: RowDto[] | undefined) => {

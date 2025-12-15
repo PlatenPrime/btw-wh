@@ -10,6 +10,8 @@ export const useRenameBlockMutation = () => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["blocks"] });
             queryClient.invalidateQueries({ queryKey: ["segs"] });
+            // Инвалидируем zones, так как изменение блока может повлиять на секторы зон
+            queryClient.invalidateQueries({ queryKey: ["zones"] });
         },
     });
 };

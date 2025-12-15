@@ -4,9 +4,11 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 export function useDeletePalletEmptyPosesMutation({
   palletId,
   palletTitle,
+  rowTitle,
 }: {
   palletId: string;
   palletTitle: string;
+  rowTitle?: string;
 }) {
   const queryClient = useQueryClient();
   return useMutation({
@@ -17,6 +19,11 @@ export function useDeletePalletEmptyPosesMutation({
       queryClient.invalidateQueries({
         queryKey: ["pallet", { title: palletTitle }],
       });
+      if (rowTitle) {
+        queryClient.invalidateQueries({
+          queryKey: ["row", { rowTitle }],
+        });
+      }
     },
   });
 }

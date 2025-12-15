@@ -15,7 +15,10 @@ export function useDeletePalletDialog({
   pallet,
   onSuccess,
 }: UseDeletePalletDialogProps): UseDeletePalletDialogReturn {
-  const mutation = useDeletePalletMutation(pallet.rowData._id);
+  const mutation = useDeletePalletMutation(
+    pallet.rowData._id,
+    pallet.rowData.title,
+  );
 
   const isDeleting = mutation.isPending;
 
@@ -37,4 +40,3 @@ export function useDeletePalletDialog({
     handleDelete,
   };
 }
-

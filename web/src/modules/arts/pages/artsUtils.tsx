@@ -1,9 +1,10 @@
 import { SidebarInsetLayout } from "@/components/layout/SidebarInsetLayout";
 
-export function Stock() {
+export function ArtsUtils() {
   return (
-    <SidebarInsetLayout headerText="Залишки">
+    <SidebarInsetLayout headerText="Утиліти артикулів">
       <main className="p-4"></main>
     </SidebarInsetLayout>
   );
 }
+

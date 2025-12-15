@@ -1,5 +1,5 @@
 import { SidebarInsetLayout } from "@/components/layout/SidebarInsetLayout";
-import { useRegisterHeaderAction } from "@/components/layout/header-actions";
+import { useRegisterHeaderActions } from "@/components/layout/header-actions";
 import {
   RowsContainer,
   RowsContainerSkeleton,
@@ -10,14 +10,16 @@ import { FileSpreadsheet } from "lucide-react";
 import { useState } from "react";
 
 function RowsHeaderActions({ onExport }: { onExport: () => void }) {
-  useRegisterHeaderAction({
-    id: "export-poses-stocks",
-    label: "Експорт залишків",
-    icon: FileSpreadsheet,
-    iconColor: "emerald",
-    variant: "default",
-    onClick: onExport,
-  });
+  useRegisterHeaderActions([
+    {
+      id: "export-poses-stocks",
+      label: "Експорт залишків",
+      icon: FileSpreadsheet,
+      iconColor: "emerald",
+      variant: "default",
+      onClick: onExport,
+    },
+  ]);
 
   return null;
 }

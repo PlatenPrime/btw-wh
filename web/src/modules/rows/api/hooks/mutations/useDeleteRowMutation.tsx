@@ -9,6 +9,8 @@ export function useDeleteRowMutation() {
     onSuccess: () => {
       // Invalidate and refetch rows list
       queryClient.invalidateQueries({ queryKey: ["rows"] });
+      // Инвалидируем pallets, так как при удалении ряда паллеты теряют связь с рядом
+      queryClient.invalidateQueries({ queryKey: ["pallets"] });
     },
   });
 }
