@@ -24,7 +24,7 @@ export function LatestDefsFetcher({
         error={defsQuery.error}
         title="Ошибка загрузки дефицитов"
         description="Не удалось загрузить данные о дефицитах"
-        onRetry={() => defsQuery.refetch()}
+        onRetry={defsQuery.refetch}
       />
     );
 
@@ -34,7 +34,7 @@ export function LatestDefsFetcher({
         error="Нет данных о дефицитах"
         title="Нет данных о дефицитах"
         description="Расчеты дефицитов еще не проводились"
-        onRetry={() => defsQuery.refetch()}
+        onRetry={defsQuery.refetch}
       />
     );
 
