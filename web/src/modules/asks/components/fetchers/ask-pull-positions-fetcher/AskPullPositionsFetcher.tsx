@@ -17,23 +17,23 @@ export function AskPullPositionsFetcher({
   ContainerComponent,
   SkeletonComponent,
 }: AskPullPositionsFetcherProps) {
-  const { data, isLoading, isFetching, error } = useAskPullQuery({ askId });
+  const askPullQuery = useAskPullQuery({ askId });
 
-  if (isLoading) return <SkeletonComponent />;
+  if (askPullQuery.isLoading) return <SkeletonComponent />;
 
-  if (error)
+  if (askPullQuery.error)
     return (
       <ErrorDisplay
-        error={error}
+        error={askPullQuery.error}
         title="Помилка завантаження позицій для зняття"
         description="Не вдалося завантажити позиції для зняття"
       />
     );
 
-  if (!data || !data.exists || !data.data) {
+  if (!askPullQuery.data || !askPullQuery.data.exists || !askPullQuery.data.data) {
     return null; // Не показываем контейнер если ask не найден
   }
 
   // Всегда показываем контейнер, даже если снимать не нужно
-  return <ContainerComponent data={data.data} isFetching={isFetching} />;
+  return <ContainerComponent data={askPullQuery.data.data} isFetching={askPullQuery.isFetching} />;
 }

@@ -17,26 +17,26 @@ export function ZonesFetcher({
   ContainerComponent,
   SkeletonComponent,
 }: ZonesFetcherProps) {
-  const { data, isLoading, error } = useZonesQuery(params);
+  const zonesQuery = useZonesQuery(params);
 
-  if (isLoading) {
+  if (zonesQuery.isLoading) {
     return <SkeletonComponent />;
   }
 
-  if (error) {
+  if (zonesQuery.error) {
     return (
       <ErrorDisplay
-        error={error}
+        error={zonesQuery.error}
         title="Помилка завантаження списку зон"
         description="Не вдалося завантажити список зон"
       />
     );
   }
 
-  if (!data?.data || data.data.length === 0) {
+  if (!zonesQuery.data?.data || zonesQuery.data.data.length === 0) {
     return <LoadingNoData description="Зони не знайдено" />;
   }
 
-  return <ContainerComponent data={data} />;
+  return <ContainerComponent data={zonesQuery.data} />;
 }
 

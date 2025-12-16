@@ -27,28 +27,28 @@ export function AsksFetcher({
   // Форматируем дату для API (YYYY-MM-DD)
   const dateString = format(selectedDate, "yyyy-MM-dd");
 
-  const { data, isLoading, isFetching, error } = useAsksByDateQuery({
+  const asksQuery = useAsksByDateQuery({
     date: dateString,
   });
 
-  if (isLoading) return <SkeletonComponent />;
+  if (asksQuery.isLoading) return <SkeletonComponent />;
 
-  if (error)
+  if (asksQuery.error)
     return (
       <ErrorDisplay
-        error={error}
+        error={asksQuery.error}
         title="Помилка завантаження запитів"
         description="Не вдалося завантажити запити для обраної дати"
       />
     );
 
-  if (!data)
+  if (!asksQuery.data)
     return <LoadingNoData description="Немає даних для відображення" />;
 
   return (
     <ContainerComponent
-      data={data}
-      isFetching={isFetching}
+      data={asksQuery.data}
+      isFetching={asksQuery.isFetching}
       selectedDate={selectedDate}
       setSelectedDate={setSelectedDate}
     />

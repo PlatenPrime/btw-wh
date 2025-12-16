@@ -23,25 +23,25 @@ export function AddZonesToSegmentForm({
   const updateSegmentMutation = useUpdateSegmentMutation();
 
   // Получаем текущие зоны сегмента через API
-  const { data: zonesDataForSegment } = useZonesBySegmentQuery({
+  const zonesForSegmentQuery = useZonesBySegmentQuery({
     segId: segment._id,
     enabled: enabled,
   });
+  const zonesDataForSegment = zonesForSegmentQuery.data;
 
   const currentZones = zonesDataForSegment?.data ?? [];
   const currentZoneIds = new Set(currentZones.map((zone) => zone._id));
 
   // Получаем все зоны с infinite scroll для поиска
-  const {
-    data: zonesData,
-    isFetchingNextPage,
-    fetchNextPage,
-    hasNextPage,
-  } = useZonesInfiniteQuery({
+  const zonesInfiniteQuery = useZonesInfiniteQuery({
     limit: 20,
     search,
     enabled: enabled,
   });
+  const zonesData = zonesInfiniteQuery.data;
+  const isFetchingNextPage = zonesInfiniteQuery.isFetchingNextPage;
+  const fetchNextPage = zonesInfiniteQuery.fetchNextPage;
+  const hasNextPage = zonesInfiniteQuery.hasNextPage;
 
   // Собираем все зоны из всех страниц
   const allZones = zonesData?.pages.flatMap((page) => page.data) ?? [];

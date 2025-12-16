@@ -11,9 +11,10 @@ export function DefControls() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   // Получаем статус расчета
-  const { data: statusData } = useDefsCalculationStatus({
+  const statusQuery = useDefsCalculationStatus({
     enabled: true,
   });
+  const statusData = statusQuery.data;
 
   const handleCalculateClick = () => {
     setIsDialogOpen(true);

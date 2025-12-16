@@ -18,17 +18,18 @@ export function PosesByPalletFetcher({
   SkeletonComponent,
   sortParams,
 }: PosesByPalletFetcherProps) {
-  const { data: poses, isLoading, error } = usePosesByPalletQuery(
+  const posesQuery = usePosesByPalletQuery(
     palletId,
     sortParams,
   );
+  const poses = posesQuery.data;
 
-  if (isLoading) return <SkeletonComponent />;
+  if (posesQuery.isLoading) return <SkeletonComponent />;
 
-  if (error)
+  if (posesQuery.error)
     return (
       <ErrorDisplay
-        error={error}
+        error={posesQuery.error}
         title="Помилка завантаження позицій"
         description="Не вдалося завантажити позиції для цієї паллети"
       />

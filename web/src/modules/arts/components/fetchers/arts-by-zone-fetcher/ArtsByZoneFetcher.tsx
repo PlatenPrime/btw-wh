@@ -15,25 +15,25 @@ export function ArtsByZoneFetcher({
   ContainerComponent,
   SkeletonComponent,
 }: ArtsByZoneFetcherProps) {
-  const { data, isLoading, error } = useArtsByZoneQuery(zone);
+  const artsQuery = useArtsByZoneQuery(zone);
 
-  if (isLoading) {
+  if (artsQuery.isLoading) {
     return <SkeletonComponent />;
   }
 
-  if (error) {
+  if (artsQuery.error) {
     return (
       <ErrorDisplay
-        error={error}
+        error={artsQuery.error}
         title="Помилка завантаження артикулів"
         description="Не вдалося завантажити артикули зони"
       />
     );
   }
 
-  if (!data || !data.data || data.data.length === 0) {
+  if (!artsQuery.data || !artsQuery.data.data || artsQuery.data.data.length === 0) {
     return <LoadingNoData description="Ця зона не має артикулів" />;
   }
 
-  return <ContainerComponent data={data.data} total={data.total} />;
+  return <ContainerComponent data={artsQuery.data.data} total={artsQuery.data.total} />;
 }

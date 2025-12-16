@@ -13,20 +13,20 @@ export function RowsFetcher({
   ContainerComponent,
   SkeletonComponent,
 }: RowsFetcherProps) {
-  const { data, isLoading, error } = useRowsQuery();
+  const rowsQuery = useRowsQuery();
 
-  if (isLoading) return <SkeletonComponent />;
+  if (rowsQuery.isLoading) return <SkeletonComponent />;
 
-  if (error)
+  if (rowsQuery.error)
     return (
       <ErrorDisplay
-        error={error}
+        error={rowsQuery.error}
         title="Помилка завантаження рядів"
         description="Не вдалося завантажити дані рядів"
       />
     );
 
-  if (!data) return <LoadingNoData description="Ряди не знайдено" />;
+  if (!rowsQuery.data) return <LoadingNoData description="Ряди не знайдено" />;
 
-  return <ContainerComponent data={data} />;
+  return <ContainerComponent data={rowsQuery.data} />;
 }

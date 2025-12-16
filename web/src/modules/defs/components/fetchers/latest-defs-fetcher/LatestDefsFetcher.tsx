@@ -14,29 +14,29 @@ export function LatestDefsFetcher({
   ContainerComponent,
   SkeletonComponent,
 }: LatestDefsFetcherProps) {
-  const { data, isLoading, error, refetch } = useLatestDefsQuery();
+  const defsQuery = useLatestDefsQuery();
 
-  if (isLoading) return <SkeletonComponent />;
+  if (defsQuery.isLoading) return <SkeletonComponent />;
 
-  if (error)
+  if (defsQuery.error)
     return (
       <ErrorDisplay
-        error={error}
+        error={defsQuery.error}
         title="Ошибка загрузки дефицитов"
         description="Не удалось загрузить данные о дефицитах"
-        onRetry={refetch}
+        onRetry={() => defsQuery.refetch()}
       />
     );
 
-  if (!data?.data)
+  if (!defsQuery.data?.data)
     return (
       <ErrorDisplay
         error="Нет данных о дефицитах"
         title="Нет данных о дефицитах"
         description="Расчеты дефицитов еще не проводились"
-        onRetry={refetch}
+        onRetry={() => defsQuery.refetch()}
       />
     );
 
-  return <ContainerComponent defsData={data.data} />;
+  return <ContainerComponent defsData={defsQuery.data.data} />;
 }

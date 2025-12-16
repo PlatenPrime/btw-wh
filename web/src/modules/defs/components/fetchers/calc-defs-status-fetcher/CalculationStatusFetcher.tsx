@@ -18,14 +18,14 @@ export function CalculationStatusFetcher({
   ContainerComponent,
   SkeletonComponent,
 }: CalculationStatusFetcherProps) {
-  const { data, isLoading, error } = useDefsCalculationStatus({
+  const statusQuery = useDefsCalculationStatus({
     enabled,
     onStatusChange: (status) => {
       onStatusChange?.(status?.data?.isRunning ?? false);
     },
   });
 
-  if (error) {
+  if (statusQuery.error) {
     return null; // Скрываем ошибки, чтобы не мешать основному UI
   }
 
@@ -35,13 +35,13 @@ export function CalculationStatusFetcher({
   }
 
   // Показываем состояние загрузки
-  if (isLoading) {
+  if (statusQuery.isLoading) {
     return <SkeletonComponent />;
   }
 
   // Показываем данные если есть
-  if (data?.data) {
-    return <ContainerComponent status={data.data} isLoading={false} />;
+  if (statusQuery.data?.data) {
+    return <ContainerComponent status={statusQuery.data.data} isLoading={false} />;
   }
 
   // Не показываем ничего, если нет данных

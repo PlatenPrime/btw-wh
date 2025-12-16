@@ -15,24 +15,24 @@ export function PosesByArtikulFetcher({
   ContainerComponent,
   SkeletonComponent,
 }: PosesByArtikulFetcherProps) {
-  const { data, isLoading, error, isFetching } = usePosesByArtikulQuery(artikul);
+  const posesQuery = usePosesByArtikulQuery(artikul);
 
-  if (isLoading || isFetching) return <SkeletonComponent />;
+  if (posesQuery.isLoading || posesQuery.isFetching) return <SkeletonComponent />;
 
-  if (error)
+  if (posesQuery.error)
     return (
       <ErrorDisplay
-        error={error}
+        error={posesQuery.error}
         title="Помилка завантаження позицій"
         description="Не вдалося завантажити позиції для цього артикулу"
       />
     );
 
-  if (!data )
+  if (!posesQuery.data )
     return <LoadingNoData description="Позиції не знайдено" />;
 
   // Дополнительная проверка структуры данных
-  if (!data.pogrebi || !data.merezhi) {
+  if (!posesQuery.data.pogrebi || !posesQuery.data.merezhi) {
     return (
       <div className="text-muted-foreground py-8 text-center">
         Некоректна структура даних
@@ -40,5 +40,5 @@ export function PosesByArtikulFetcher({
     );
   }
 
-  return <ContainerComponent data={data} />;
+  return <ContainerComponent data={posesQuery.data} />;
 }

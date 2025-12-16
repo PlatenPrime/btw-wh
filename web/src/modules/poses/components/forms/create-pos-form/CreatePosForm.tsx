@@ -41,9 +41,11 @@ export function CreatePosForm({
 
   // Поиск артикула при вводе 9 символов
   const shouldSearchArt = artikul.length === 9;
-  const { data: artData, isPending: isArtLoading } = useOneArtQuery(
+  const artQuery = useOneArtQuery(
     shouldSearchArt ? artikul : undefined,
   );
+  const artData = artQuery.data;
+  const isArtLoading = artQuery.isPending;
 
   // Поиск существующей позиции с таким же артикулом
   const existingPos = pallet.poses.find(

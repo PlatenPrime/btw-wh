@@ -22,21 +22,21 @@ export function AllPosesFetcher({
   ContainerComponent,
   SkeletonComponent,
 }: AllPosesFetcherProps) {
-  const { data, isLoading, error } = useAllPosesQuery(params);
+  const posesQuery = useAllPosesQuery(params);
 
-  if (isLoading) return <SkeletonComponent />;
+  if (posesQuery.isLoading) return <SkeletonComponent />;
 
-  if (error)
+  if (posesQuery.error)
     return (
       <ErrorDisplay
-        error={error}
+        error={posesQuery.error}
         title="Помилка завантаження позицій"
         description="Не вдалося завантажити позиції"
       />
     );
 
-  if (!data || !data.data || data.data.length === 0)
+  if (!posesQuery.data || !posesQuery.data.data || posesQuery.data.data.length === 0)
     return <LoadingNoData description="Позиції не знайдено" />;
 
-  return <ContainerComponent data={data} />;
+  return <ContainerComponent data={posesQuery.data} />;
 }

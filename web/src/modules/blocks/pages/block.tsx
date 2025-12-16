@@ -14,7 +14,8 @@ import { useParams } from "react-router";
 
 export function BlockPage() {
   const { id } = useParams<{ id: string }>();
-  const { data: blockData } = useBlockQuery({ id: id ?? "", enabled: !!id });
+  const blockQuery = useBlockQuery({ id: id ?? "", enabled: !!id });
+  const blockData = blockQuery.data;
   const {
     isEditMode,
     isSaving,

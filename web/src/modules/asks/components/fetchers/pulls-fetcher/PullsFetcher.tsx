@@ -15,23 +15,23 @@ export function PullsFetcher({
   ContainerComponent,
   SkeletonComponent,
 }: PullsFetcherProps) {
-  const { data, isLoading, isFetching, error } = useAsksPullsQuery();
+  const pullsQuery = useAsksPullsQuery();
 
-  if (isLoading) return <SkeletonComponent />;
+  if (pullsQuery.isLoading) return <SkeletonComponent />;
 
-  if (error)
+  if (pullsQuery.error)
     return (
       <ErrorDisplay
-        error={error}
+        error={pullsQuery.error}
         title="Помилка завантаження позицій для зняття"
         description="Не вдалося завантажити позиції для зняття"
       />
     );
 
-  if (!data || !data.data) {
+  if (!pullsQuery.data || !pullsQuery.data.data) {
     return null;
   }
 
-  return <ContainerComponent data={data.data} isFetching={isFetching} />;
+  return <ContainerComponent data={pullsQuery.data.data} isFetching={pullsQuery.isFetching} />;
 }
 

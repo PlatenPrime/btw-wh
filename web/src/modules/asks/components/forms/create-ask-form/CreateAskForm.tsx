@@ -44,9 +44,11 @@ export function CreateAskForm({
 
   // Поиск артикула при вводе 9 символов или если артикул предзаполнен
   const shouldSearchArt = artikul.length === 9;
-  const { data: artData, isPending: isArtLoading } = useOneArtQuery(
+  const artQuery = useOneArtQuery(
     shouldSearchArt ? artikul : undefined,
   );
+  const artData = artQuery.data;
+  const isArtLoading = artQuery.isPending;
 
   // Сбрасываем данные артикула при изменении длины (когда пользователь редактирует)
   const [previousArtikulLength, setPreviousArtikulLength] = useState(0);

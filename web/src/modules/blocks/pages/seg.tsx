@@ -9,10 +9,11 @@ import { useParams } from "react-router";
 
 export function SegPage() {
   const { blockId, segId } = useParams<{ blockId: string; segId: string }>();
-  const { data: segmentData } = useSegmentQuery({
+  const segmentQuery = useSegmentQuery({
     id: segId ?? "",
     enabled: !!segId,
   });
+  const segmentData = segmentQuery.data;
 
   if (!blockId || !segId) {
     return (

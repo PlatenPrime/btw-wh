@@ -12,25 +12,25 @@ export function BlocksFetcher({
   ContainerComponent,
   SkeletonComponent,
 }: BlocksFetcherProps) {
-  const { data, isLoading, error } = useBlocksQuery();
+  const blocksQuery = useBlocksQuery();
 
-  if (isLoading) {
+  if (blocksQuery.isLoading) {
     return <SkeletonComponent />;
   }
 
-  if (error) {
+  if (blocksQuery.error) {
     return (
       <ErrorDisplay
-        error={error}
+        error={blocksQuery.error}
         title="Помилка завантаження блоків"
         description="Не вдалося завантажити дані блоків"
       />
     );
   }
 
-  if (!data || !data.exists) {
+  if (!blocksQuery.data || !blocksQuery.data.exists) {
     return <BlocksEmptyState />;
   }
 
-  return <ContainerComponent data={data.data} />;
+  return <ContainerComponent data={blocksQuery.data.data} />;
 }

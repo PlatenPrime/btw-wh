@@ -23,10 +23,11 @@ export function CreateSegmentForm({
   const createSegmentMutation = useCreateSegmentMutation();
 
   // Получаем существующие сегменты блока для вычисления order
-  const { data: segmentsData } = useSegmentsByBlockQuery({
+  const segmentsQuery = useSegmentsByBlockQuery({
     blockId: block._id,
     enabled: enabled,
   });
+  const segmentsData = segmentsQuery.data;
 
   // Вычисляем order автоматически: максимальный order + 1, или 1 если сегментов нет
   const order = useMemo(() => {
@@ -39,16 +40,15 @@ export function CreateSegmentForm({
   }, [segmentsData]);
 
   // Получаем все зоны с infinite scroll для поиска
-  const {
-    data: zonesData,
-    isFetchingNextPage,
-    fetchNextPage,
-    hasNextPage,
-  } = useZonesInfiniteQuery({
+  const zonesInfiniteQuery = useZonesInfiniteQuery({
     limit: 20,
     search,
     enabled: enabled,
   });
+  const zonesData = zonesInfiniteQuery.data;
+  const isFetchingNextPage = zonesInfiniteQuery.isFetchingNextPage;
+  const fetchNextPage = zonesInfiniteQuery.fetchNextPage;
+  const hasNextPage = zonesInfiniteQuery.hasNextPage;
 
   // Собираем все зоны из всех страниц
   const allZones = zonesData?.pages.flatMap((page) => page.data) ?? [];

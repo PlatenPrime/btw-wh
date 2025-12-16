@@ -15,21 +15,21 @@ export function PalletsByRowFetcher({
   ContainerComponent,
   SkeletonComponent,
 }: PalletsByRowFetcherProps) {
-  const { data, isLoading, error } = usePalletsByRowQuery(rowId);
+  const palletsQuery = usePalletsByRowQuery(rowId);
 
-  if (isLoading) return <SkeletonComponent />;
+  if (palletsQuery.isLoading) return <SkeletonComponent />;
 
-  if (error)
+  if (palletsQuery.error)
     return (
       <ErrorDisplay
-        error={error}
+        error={palletsQuery.error}
         title="Помилка завантаження палет"
         description="Не вдалося завантажити дані палет для цього ряду"
       />
     );
 
-  if (!data || !data.length)
+  if (!palletsQuery.data || !palletsQuery.data.length)
     return <LoadingNoData description="Палети не знайдено" />;
 
-  return <ContainerComponent pallets={data} rowId={rowId || ""} />;
+  return <ContainerComponent pallets={palletsQuery.data} rowId={rowId || ""} />;
 }

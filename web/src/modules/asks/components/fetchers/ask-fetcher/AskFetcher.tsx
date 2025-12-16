@@ -15,14 +15,15 @@ export function AskFetcher({
   ContainerComponent,
   SkeletonComponent,
 }: AskFetcherProps) {
-  const { data: askResponse, isLoading, error, refetch } = useAskQuery({ id });
+  const askQuery = useAskQuery({ id });
+  const askResponse = askQuery.data;
 
-  if (isLoading) return <SkeletonComponent />;
+  if (askQuery.isLoading) return <SkeletonComponent />;
 
-  if (error)
+  if (askQuery.error)
     return (
       <ErrorDisplay
-        error={error}
+        error={askQuery.error}
         title="Помилка завантаження запиту"
         description="Не вдалося завантажити запит"
       />
@@ -33,7 +34,7 @@ export function AskFetcher({
       <EntityNotFound
         title="Запит не знайдено"
         description="Запит з таким ID не існує або був видалений"
-        onRetry={() => refetch()}
+        onRetry={() => askQuery.refetch()}
       />
     );
 

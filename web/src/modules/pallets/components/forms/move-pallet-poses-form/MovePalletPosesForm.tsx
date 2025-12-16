@@ -38,7 +38,11 @@ export function MovePalletPosesForm({
     defaultValues: { toPalletId: "" },
   });
 
-  const { data: pallets, isLoading, isError, error } = useEmptyPalletsQuery();
+  const palletsQuery = useEmptyPalletsQuery();
+  const pallets = palletsQuery.data;
+  const isLoading = palletsQuery.isLoading;
+  const isError = palletsQuery.isError;
+  const error = palletsQuery.error;
 
   const filteredPallets = useMemo(() => {
     if (!pallets) return [] as IPallet[];

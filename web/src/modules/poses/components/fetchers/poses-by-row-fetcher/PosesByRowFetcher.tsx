@@ -15,14 +15,15 @@ export function PosesByRowFetcher({
   ContainerComponent,
   SkeletonComponent,
 }: PosesByRowFetcherProps) {
-  const { data: poses, isLoading, error } = usePosesByRowQuery(rowId);
+  const posesQuery = usePosesByRowQuery(rowId);
+  const poses = posesQuery.data;
 
-  if (isLoading) return <SkeletonComponent />;
+  if (posesQuery.isLoading) return <SkeletonComponent />;
 
-  if (error)
+  if (posesQuery.error)
     return (
       <ErrorDisplay
-        error={error}
+        error={posesQuery.error}
         title="Помилка завантаження позицій"
         description="Не вдалося завантажити позиції для цього ряду"
       />

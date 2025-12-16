@@ -15,29 +15,29 @@ export function SegmentsFetcher({
   ContainerComponent,
   SkeletonComponent,
 }: SegmentsFetcherProps) {
-  const { data, isLoading, error } = useSegmentsByBlockQuery({
+  const segmentsQuery = useSegmentsByBlockQuery({
     blockId,
     enabled: !!blockId,
   });
 
-  if (isLoading) {
+  if (segmentsQuery.isLoading) {
     return <SkeletonComponent />;
   }
 
-  if (error) {
+  if (segmentsQuery.error) {
     return (
       <ErrorDisplay
-        error={error}
+        error={segmentsQuery.error}
         title="Помилка завантаження сегментів"
         description="Не вдалося завантажити список сегментів"
       />
     );
   }
 
-  if (!data || !data.exists) {
+  if (!segmentsQuery.data || !segmentsQuery.data.exists) {
     return <LoadingNoData description="Сегменти не знайдено" />;
   }
 
-  return <ContainerComponent data={data.data || []} />;
+  return <ContainerComponent data={segmentsQuery.data.data || []} />;
 }
 
