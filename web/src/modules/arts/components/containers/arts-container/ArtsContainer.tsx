@@ -4,10 +4,11 @@ import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { ArtsContainerView } from "@/modules/arts/components/containers/arts-container/ArtsContainerView.tsx";
 import { DeleteArtsWithoutLatestMarkerDialog } from "@/modules/arts/components/dialogs/delete-arts-without-latest-marker-dialog/DeleteArtsWithoutLatestMarkerDialog";
+import { UpdateAllBtradeStocksDialog } from "@/modules/arts/components/dialogs/update-all-btrade-stocks-dialog/UpdateAllBtradeStocksDialog";
 import { handleExportArtsWithStocks } from "@/modules/arts/utils/handle-export-arts-with-stocks/handleExportArtsWithStocks";
 import { handleExportArts } from "@/modules/arts/utils/handle-export-arts/handleExportArts";
 import { useRole } from "@/modules/auth/hooks/useRole";
-import { FileSpreadsheet, Trash2 } from "lucide-react";
+import { FileSpreadsheet, RefreshCw, Trash2 } from "lucide-react";
 import { useState } from "react";
 
 interface ArtsContainerProps {
@@ -33,8 +34,10 @@ export function ArtsContainer({
     fetchNextPage,
   });
 
-  const { isPrime } = useRole();
+  const { isPrime, isAdmin } = useRole();
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [updateBtradeStocksDialogOpen, setUpdateBtradeStocksDialogOpen] =
+    useState(false);
 
   // Регистрируем действия в header меню
   const headerActions: HeaderAction[] = [
@@ -55,6 +58,18 @@ export function ArtsContainer({
       onClick: () => handleExportArtsWithStocks(),
     },
   ];
+
+  // Добавляем кнопку обновления залишків Btrade только для пользователей с ролью ADMIN и выше
+  if (isAdmin()) {
+    headerActions.push({
+      id: "update-all-btrade-stocks",
+      label: "Оновити залишки Btrade",
+      icon: RefreshCw,
+      iconColor: "blue",
+      variant: "default",
+      onClick: () => setUpdateBtradeStocksDialogOpen(true),
+    });
+  }
 
   // Добавляем кнопку удаления только для пользователей с ролью PRIME
   if (isPrime()) {
@@ -82,6 +97,10 @@ export function ArtsContainer({
       <DeleteArtsWithoutLatestMarkerDialog
         open={deleteDialogOpen}
         onOpenChange={setDeleteDialogOpen}
+      />
+      <UpdateAllBtradeStocksDialog
+        open={updateBtradeStocksDialogOpen}
+        onOpenChange={setUpdateBtradeStocksDialogOpen}
       />
     </>
   );
