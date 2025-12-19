@@ -5,8 +5,10 @@ import { Colors } from "@/constants/theme";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { TouchableOpacity, View } from "react-native";
+import { ProtectedRoute } from "@/modules/auth/components/ProtectedRoute";
+import { RoleType } from "@/constants/roles";
 
-export default function ZonesImportExportScreen() {
+function ZonesImportExportScreen() {
   const { toggleSidebar } = useSidebar();
   const colorScheme = useColorScheme() ?? "light";
 
@@ -26,5 +28,13 @@ export default function ZonesImportExportScreen() {
         <ThemedText type="title">Zones Import Export</ThemedText>
       </View>
     </ThemedView>
+  );
+}
+
+export default function ZonesImportExportScreenProtected() {
+  return (
+    <ProtectedRoute allowedRoles={[RoleType.ADMIN]}>
+      <ZonesImportExportScreen />
+    </ProtectedRoute>
   );
 }

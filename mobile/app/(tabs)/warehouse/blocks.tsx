@@ -1,12 +1,12 @@
 import { View, TouchableOpacity } from 'react-native';
-import { ThemedView } from '@/components/themed-view';
 import { ThemedText } from '@/components/themed-text';
+import { ThemedView } from '@/components/themed-view';
 import { useSidebar } from '@/components/layout/sidebar/SidebarProvider';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
+import { Colors } from '@/constants/theme';
 
-export default function HomeTab() {
+export default function BlocksScreen() {
   const { toggleSidebar } = useSidebar();
   const colorScheme = useColorScheme() ?? 'light';
 
@@ -14,8 +14,7 @@ export default function HomeTab() {
     <ThemedView className="flex-1">
       <TouchableOpacity
         onPress={toggleSidebar}
-        className="absolute top-[50px] left-4 z-[1000] p-2"
-      >
+        className="absolute top-[50px] left-4 z-[1000] p-2">
         <MaterialIcons
           name="menu"
           size={24}
@@ -23,13 +22,9 @@ export default function HomeTab() {
         />
       </TouchableOpacity>
       <View className="flex-1 justify-center items-center p-4">
-        <ThemedText type="title" className="text-center mb-4">
-          BTrade Warehouse App
-        </ThemedText>
-        <ThemedText type="subtitle" className="text-center">
-          Головна
-        </ThemedText>
+        <ThemedText type="title">Блоки</ThemedText>
       </View>
     </ThemedView>
   );
 }
+
