@@ -16,9 +16,25 @@ export interface ArtDto {
   btradeStock: BtradeStockDto;
 }
 
+export interface EntityResponse<T> {
+  exists: boolean;
+  message: string;
+  data: T | null;
+}
+
+export type ArtResponse = EntityResponse<ArtDto>;
+
 export interface ArtsDto {
   data: ArtDto[];
   total: number;
   page: number;
   totalPages: number;
 }
+
+export interface BtradeArtInfoDto {
+  nameukr: string;
+  price: number;
+  quantity: number;
+}
+
+export type BtradeArtInfoResponse = EntityResponse<BtradeArtInfoDto>;

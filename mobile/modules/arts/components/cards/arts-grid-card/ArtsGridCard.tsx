@@ -9,7 +9,7 @@ interface GridCardProps {
 export function ArtsGridCard({ art }: GridCardProps) {
   const router = useRouter();
   const nameukr =
-    art.nameukr.length > 50 ? art.nameukr.slice(0, 47) + "..." : art.nameukr;
+    art.nameukr.length > 50 ? art.nameukr.slice(10, 47) + "..." : art.nameukr.slice(10);
 
   const handlePress = () => {
     router.push(`/(tabs)/arts/${art.artikul}` as any);

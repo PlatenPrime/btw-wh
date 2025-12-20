@@ -1,28 +1,19 @@
+import { useState } from "react";
+import { View, TouchableOpacity } from "react-native";
 import { ThemedText } from "@/components/themed-text";
-import { useColorScheme } from "@/hooks/use-color-scheme";
+import { Image } from "expo-image";
 import { ArtImageModal } from "@/modules/arts/components/dialogs/art-image-modal/ArtImageModal";
 import { getSmallImageUrl } from "@/modules/arts/constants/art-image-url";
-import { Image } from "expo-image";
-import { useState } from "react";
-import { TouchableOpacity, View } from "react-native";
+import type { ArtDto } from "@/modules/arts/api/types/dto";
 
-interface ArtsGridCardViewProps {
-  artikul: string;
-  nameukr: string;
-  onPress: () => void;
+interface ArtImageLinkProps {
+  artikul: ArtDto["artikul"];
+  nameukr?: ArtDto["nameukr"];
 }
 
-export function ArtsGridCardView({
-  artikul,
-  nameukr,
-  onPress,
-}: ArtsGridCardViewProps) {
+export function ArtImageLink({ artikul, nameukr }: ArtImageLinkProps) {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const colorScheme = useColorScheme() ?? "light";
   const imageUrl = getSmallImageUrl(artikul);
-
-  const bgColor = colorScheme === "light" ? "#fff" : "#1f2937";
-  const borderColor = colorScheme === "light" ? "#d1d5db" : "#4b5563";
 
   const handleImagePress = () => {
     setIsModalVisible(true);
@@ -34,13 +25,7 @@ export function ArtsGridCardView({
 
   return (
     <>
-      <View
-        className="flex-row items-center p-2 rounded-lg border"
-        style={{
-          backgroundColor: bgColor,
-          borderColor: borderColor,
-        }}
-      >
+      <View className="flex-row items-start gap-3">
         <TouchableOpacity onPress={handleImagePress} activeOpacity={0.7}>
           <Image
             source={{ uri: imageUrl }}
@@ -50,18 +35,14 @@ export function ArtsGridCardView({
             transition={200}
           />
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={onPress}
-          activeOpacity={0.7}
-          className="ml-3 flex-1"
-        >
-          <ThemedText type="defaultSemiBold" className="text-base mb-1">
+        <View className="flex-1 justify-between">
+          <ThemedText type="defaultSemiBold" className="text-sm mb-1">
             {artikul}
           </ThemedText>
-          <ThemedText type="default" className="text-sm" numberOfLines={2}>
-            {nameukr}
+          <ThemedText type="default" className="text-xs opacity-70">
+            {nameukr ? nameukr.slice(10) : artikul}
           </ThemedText>
-        </TouchableOpacity>
+        </View>
       </View>
 
       <ArtImageModal
@@ -72,3 +53,4 @@ export function ArtsGridCardView({
     </>
   );
 }
+
