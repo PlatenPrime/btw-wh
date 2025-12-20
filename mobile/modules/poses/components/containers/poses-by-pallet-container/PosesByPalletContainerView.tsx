@@ -1,0 +1,31 @@
+import { View } from "react-native";
+import type { IPos } from "@/modules/poses/api/types";
+import { PosesList } from "@/modules/poses/components/lists/poses-list/PosesList";
+import { ThemedText } from "@/components/themed-text";
+
+interface PosesByPalletContainerViewProps {
+  poses: IPos[] | undefined;
+  isLoading: boolean;
+}
+
+export function PosesByPalletContainerView({
+  poses,
+  isLoading,
+}: PosesByPalletContainerViewProps) {
+  if (isLoading) {
+    return (
+      <View className="flex-1 justify-center items-center py-8">
+        <ThemedText type="default" className="text-center">
+          Завантаження...
+        </ThemedText>
+      </View>
+    );
+  }
+
+  return (
+    <View className="flex-1">
+      <PosesList poses={poses} />
+    </View>
+  );
+}
+

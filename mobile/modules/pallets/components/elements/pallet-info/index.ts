@@ -1,0 +1,2 @@
+export { PalletInfo } from "./PalletInfo";
+

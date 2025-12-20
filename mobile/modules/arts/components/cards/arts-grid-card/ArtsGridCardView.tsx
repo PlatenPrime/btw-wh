@@ -1,36 +1,31 @@
 import { ThemedText } from "@/components/themed-text";
-import { useColorScheme } from "@/hooks/use-color-scheme";
 import { ArtImageModal } from "@/modules/arts/components/dialogs/art-image-modal/ArtImageModal";
-import { getSmallImageUrl } from "@/modules/arts/constants/art-image-url";
 import { Image } from "expo-image";
-import { useState } from "react";
 import { TouchableOpacity, View } from "react-native";
 
 interface ArtsGridCardViewProps {
   artikul: string;
   nameukr: string;
   onPress: () => void;
+  imageUrl: string;
+  bgColor: string;
+  borderColor: string;
+  isModalVisible: boolean;
+  onImagePress: () => void;
+  onCloseModal: () => void;
 }
 
 export function ArtsGridCardView({
   artikul,
   nameukr,
   onPress,
+  imageUrl,
+  bgColor,
+  borderColor,
+  isModalVisible,
+  onImagePress,
+  onCloseModal,
 }: ArtsGridCardViewProps) {
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const colorScheme = useColorScheme() ?? "light";
-  const imageUrl = getSmallImageUrl(artikul);
-
-  const bgColor = colorScheme === "light" ? "#fff" : "#1f2937";
-  const borderColor = colorScheme === "light" ? "#d1d5db" : "#4b5563";
-
-  const handleImagePress = () => {
-    setIsModalVisible(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalVisible(false);
-  };
 
   return (
     <>
@@ -41,7 +36,7 @@ export function ArtsGridCardView({
           borderColor: borderColor,
         }}
       >
-        <TouchableOpacity onPress={handleImagePress} activeOpacity={0.7}>
+        <TouchableOpacity onPress={onImagePress} activeOpacity={0.7}>
           <Image
             source={{ uri: imageUrl }}
             style={{ width: 60, height: 60, borderRadius: 8 }}
@@ -67,7 +62,7 @@ export function ArtsGridCardView({
       <ArtImageModal
         artikul={artikul}
         visible={isModalVisible}
-        onClose={handleCloseModal}
+        onClose={onCloseModal}
       />
     </>
   );

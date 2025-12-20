@@ -1,3 +1,4 @@
+import { useColorScheme } from "@/hooks/use-color-scheme";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { ArtDetailCardView } from "./ArtDetailCardView";
 
@@ -6,6 +7,12 @@ interface ArtDetailCardProps {
 }
 
 export function ArtDetailCard({ artData }: ArtDetailCardProps) {
-  return <ArtDetailCardView artData={artData} />;
+  const colorScheme = useColorScheme() ?? "light";
+  const bgColor = colorScheme === "light" ? "#fff" : "#1f2937";
+  const borderColor = colorScheme === "light" ? "#d1d5db" : "#4b5563";
+
+  return (
+    <ArtDetailCardView artData={artData} bgColor={bgColor} borderColor={borderColor} />
+  );
 }
 

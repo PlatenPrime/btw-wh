@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { View, TouchableOpacity } from "react-native";
 import { ThemedText } from "@/components/themed-text";
-import { Image } from "expo-image";
+import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { ArtImageModal } from "@/modules/arts/components/dialogs/art-image-modal/ArtImageModal";
 import { getSmallImageUrl } from "@/modules/arts/constants/art-image-url";
-import type { ArtDto } from "@/modules/arts/api/types/dto";
+import { Image } from "expo-image";
+import { useState } from "react";
+import { TouchableOpacity, View } from "react-native";
 
 interface ArtImageLinkProps {
   artikul: ArtDto["artikul"];
@@ -25,7 +25,7 @@ export function ArtImageLink({ artikul, nameukr }: ArtImageLinkProps) {
 
   return (
     <>
-      <View className="flex-row items-start gap-3">
+      <View className="flex-row items-start" style={{ gap: 12 }}>
         <TouchableOpacity onPress={handleImagePress} activeOpacity={0.7}>
           <Image
             source={{ uri: imageUrl }}
@@ -35,13 +35,20 @@ export function ArtImageLink({ artikul, nameukr }: ArtImageLinkProps) {
             transition={200}
           />
         </TouchableOpacity>
-        <View className="flex-1 justify-between">
+        <View style={{ flex: 1, minWidth: 0 }}>
           <ThemedText type="defaultSemiBold" className="text-sm mb-1">
             {artikul}
           </ThemedText>
-          <ThemedText type="default" className="text-xs opacity-70">
-            {nameukr ? nameukr.slice(10) : artikul}
-          </ThemedText>
+          {nameukr && nameukr.length > 10 && (
+            <ThemedText type="default" className="text-xs opacity-70">
+              {nameukr.slice(10)}
+            </ThemedText>
+          )}
+          {nameukr && nameukr.length <= 10 && (
+            <ThemedText type="default" className="text-xs opacity-70">
+              {nameukr}
+            </ThemedText>
+          )}
         </View>
       </View>
 
@@ -53,4 +60,3 @@ export function ArtImageLink({ artikul, nameukr }: ArtImageLinkProps) {
     </>
   );
 }
-

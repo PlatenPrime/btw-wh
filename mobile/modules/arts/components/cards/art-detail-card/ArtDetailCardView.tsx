@@ -1,6 +1,5 @@
 import { View } from "react-native";
 import { ThemedView } from "@/components/themed-view";
-import { useColorScheme } from "@/hooks/use-color-scheme";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { ArtImageLink } from "@/modules/arts/components/elements/art-image-link/ArtImageLink";
 import { ArtZone } from "@/modules/arts/components/elements/art-zone/ArtZone";
@@ -9,12 +8,15 @@ import { BtradeArtDataFetcher } from "@/modules/arts/components/fetchers/btrade-
 
 interface ArtDetailCardViewProps {
   artData: ArtDto;
+  bgColor: string;
+  borderColor: string;
 }
 
-export function ArtDetailCardView({ artData }: ArtDetailCardViewProps) {
-  const colorScheme = useColorScheme() ?? "light";
-  const bgColor = colorScheme === "light" ? "#fff" : "#1f2937";
-  const borderColor = colorScheme === "light" ? "#d1d5db" : "#4b5563";
+export function ArtDetailCardView({
+  artData,
+  bgColor,
+  borderColor,
+}: ArtDetailCardViewProps) {
 
   return (
     <ThemedView

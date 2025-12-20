@@ -2,8 +2,6 @@ import { Modal, Pressable, View, TouchableOpacity, ScrollView } from "react-nati
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { useColorScheme } from "@/hooks/use-color-scheme";
-import { Colors } from "@/constants/theme";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { UpdateArtLimitForm } from "@/modules/arts/components/forms/update-art-limit-form/UpdateArtLimitForm";
 
@@ -12,6 +10,9 @@ interface UpdateArtLimitDialogViewProps {
   visible: boolean;
   onClose: () => void;
   onSuccess: () => void;
+  bgColor: string;
+  textColor: string;
+  borderColor: string;
 }
 
 export function UpdateArtLimitDialogView({
@@ -19,11 +20,10 @@ export function UpdateArtLimitDialogView({
   visible,
   onClose,
   onSuccess,
+  bgColor,
+  textColor,
+  borderColor,
 }: UpdateArtLimitDialogViewProps) {
-  const colorScheme = useColorScheme() ?? "light";
-  const bgColor = colorScheme === "light" ? "#fff" : "#1f2937";
-  const textColor = colorScheme === "light" ? Colors.light.text : Colors.dark.text;
-  const borderColor = colorScheme === "light" ? "#d1d5db" : "#4b5563";
 
   return (
     <Modal

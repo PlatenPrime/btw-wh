@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useColorScheme } from "@/hooks/use-color-scheme";
+import { Colors } from "@/constants/theme";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { UpdateArtLimitDialogView } from "./UpdateArtLimitDialogView";
 
@@ -16,6 +18,10 @@ export function UpdateArtLimitDialog({
   onSuccess,
 }: UpdateArtLimitDialogProps) {
   const [internalOpen, setInternalOpen] = useState(false);
+  const colorScheme = useColorScheme() ?? "light";
+  const bgColor = colorScheme === "light" ? "#fff" : "#1f2937";
+  const textColor = colorScheme === "light" ? Colors.light.text : Colors.dark.text;
+  const borderColor = colorScheme === "light" ? "#d1d5db" : "#4b5563";
 
   const isControlled = controlledOpen !== undefined;
   const open = isControlled ? controlledOpen : internalOpen;
@@ -36,6 +42,9 @@ export function UpdateArtLimitDialog({
       visible={open}
       onClose={handleCancel}
       onSuccess={handleSuccess}
+      bgColor={bgColor}
+      textColor={textColor}
+      borderColor={borderColor}
     />
   );
 }

@@ -1,0 +1,16 @@
+import { getRowByTitle } from "@/modules/rows/api/services/queries/getRowByTitle";
+import type { RowResponse } from "@/modules/rows/api/types/dto";
+import { useQuery } from "@tanstack/react-query";
+
+export function useRowByTitleQuery(rowTitle?: string) {
+  return useQuery<RowResponse>({
+    queryKey: ["row", { rowTitle }],
+    queryFn: ({ signal }) => {
+      if (!rowTitle) throw new Error("Row title is missing");
+      return getRowByTitle(rowTitle, signal);
+    },
+    enabled: !!rowTitle,
+    staleTime: 5 * 60 * 1000,
+  });
+}
+
