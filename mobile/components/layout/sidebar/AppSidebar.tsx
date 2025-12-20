@@ -9,6 +9,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useSidebar } from "./SidebarProvider";
 import { ProfileSidebarCard } from "./ProfileSidebarCard";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
+import { ModeToggle } from "@/components/shared/mode-toggle";
 
 export function AppSidebar() {
   const router = useRouter();
@@ -62,6 +63,9 @@ export function AppSidebar() {
         </View>
 
         <View className="flex-1 justify-end">
+          <View className="px-4 pb-4">
+            <ModeToggle />
+          </View>
           <ProfileSidebarCard
             handleLogout={handleLogout}
             isLoading={isLoading}
