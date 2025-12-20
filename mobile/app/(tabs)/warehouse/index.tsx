@@ -1,15 +1,13 @@
 import { View, ScrollView, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
-import { ThemedView } from '@/components/themed-view';
 import { ThemedText } from '@/components/themed-text';
-import { useSidebar } from '@/components/layout/sidebar/SidebarProvider';
+import { PageLayout } from '@/components/layout/page-layout';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 
 export default function WarehouseList() {
   const router = useRouter();
-  const { toggleSidebar } = useSidebar();
   const colorScheme = useColorScheme() ?? 'light';
 
   const navigationItems = [
@@ -47,22 +45,9 @@ export default function WarehouseList() {
   const iconColor = colorScheme === 'light' ? Colors.light.text : Colors.dark.text;
 
   return (
-    <ThemedView className="flex-1">
-      <TouchableOpacity
-        onPress={toggleSidebar}
-        className="absolute top-[50px] left-4 z-[1000] p-2"
-      >
-        <MaterialIcons
-          name="menu"
-          size={24}
-          color={colorScheme === 'light' ? Colors.light.text : Colors.dark.text}
-        />
-      </TouchableOpacity>
-      <ScrollView className="flex-1 pt-20 px-4">
-        <ThemedText type="title" className="text-center mb-6">
-          Склад
-        </ThemedText>
-        <View className="gap-3">
+    <PageLayout title="Склад">
+      <ScrollView className="flex-1 px-4">
+        <View className="gap-3 py-4">
           {navigationItems.map((item) => (
             <TouchableOpacity
               key={item.route}
@@ -81,7 +66,6 @@ export default function WarehouseList() {
           ))}
         </View>
       </ScrollView>
-    </ThemedView>
+    </PageLayout>
   );
 }
-
