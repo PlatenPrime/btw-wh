@@ -6,6 +6,7 @@ import { ScrollView, Box, Text, Input, InputField, Button, ButtonText, ButtonSpi
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 import { RoleType } from "@/constants/roles";
 import type { RegisterData } from "@/modules/auth/api/types";
+import { SemanticColors } from "@/constants/theme";
 
 // Zod schema for register form
 const registerSchema = z.object({
@@ -95,7 +96,7 @@ export const RegisterForm = () => {
               <Input className="bg-background-50 border border-outline-200 rounded-lg">
                 <InputField
                   placeholder="Введіть логін"
-                  placeholderTextColor="#9CA3AF"
+                  placeholderTextColor={SemanticColors.placeholder.light}
                   autoComplete="username"
                   autoCapitalize="none"
                   value={value}
@@ -120,7 +121,7 @@ export const RegisterForm = () => {
               <Input className="bg-background-50 border border-outline-200 rounded-lg">
                 <InputField
                   placeholder="Введіть пароль"
-                  placeholderTextColor="#9CA3AF"
+                  placeholderTextColor={SemanticColors.placeholder.light}
                   autoComplete="new-password"
                   secureTextEntry
                   value={value}
@@ -145,7 +146,7 @@ export const RegisterForm = () => {
               <Input className="bg-background-50 border border-outline-200 rounded-lg">
                 <InputField
                   placeholder="Введіть повне ім'я"
-                  placeholderTextColor="#9CA3AF"
+                  placeholderTextColor={SemanticColors.placeholder.light}
                   autoComplete="name"
                   value={value}
                   onChangeText={onChange}
@@ -171,7 +172,7 @@ export const RegisterForm = () => {
               <Input className="bg-background-50 border border-outline-200 rounded-lg">
                 <InputField
                   placeholder="USER, ADMIN, PRIME"
-                  placeholderTextColor="#9CA3AF"
+                  placeholderTextColor={SemanticColors.placeholder.light}
                   autoCapitalize="characters"
                   value={value}
                   onChangeText={onChange}
@@ -194,7 +195,7 @@ export const RegisterForm = () => {
               <Input className="bg-background-50 border border-outline-200 rounded-lg">
                 <InputField
                   placeholder="Введіть telegram"
-                  placeholderTextColor="#9CA3AF"
+                  placeholderTextColor={SemanticColors.placeholder.light}
                   autoCapitalize="none"
                   value={value}
                   onChangeText={onChange}
@@ -217,7 +218,7 @@ export const RegisterForm = () => {
               <Input className="bg-background-50 border border-outline-200 rounded-lg">
                 <InputField
                   placeholder="https://example.com/photo.jpg"
-                  placeholderTextColor="#9CA3AF"
+                  placeholderTextColor={SemanticColors.placeholder.light}
                   autoCapitalize="none"
                   keyboardType="url"
                   value={value}
@@ -239,7 +240,7 @@ export const RegisterForm = () => {
           isDisabled={isLoading}
         >
           {isLoading ? (
-            <ButtonSpinner color="#FFFFFF" />
+            <ButtonSpinner color={SemanticColors.white} />
           ) : (
             <ButtonText className="text-white font-semibold text-base">
               Зареєструватися

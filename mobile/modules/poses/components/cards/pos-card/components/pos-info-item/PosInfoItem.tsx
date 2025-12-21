@@ -2,6 +2,7 @@ import { Box, HStack } from "@/components/ui";
 import { ThemedText } from "@/components/themed-text";
 import { Icon } from "@/components/ui/icon";
 import { useIconColor } from "@/hooks/use-icon-color";
+import { SemanticColors } from "@/constants/theme";
 
 interface PosInfoItemProps {
   icon: string;
@@ -22,7 +23,7 @@ export function PosInfoItem({ icon, value, isError }: PosInfoItemProps) {
         family="MaterialIcons"
         name={icon}
         size={12}
-        color={isError ? "#ef4444" : iconColor}
+        color={isError ? SemanticColors.destructive : iconColor}
       />
       <ThemedText
         type="default"

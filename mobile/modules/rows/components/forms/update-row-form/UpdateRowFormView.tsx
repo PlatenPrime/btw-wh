@@ -4,6 +4,7 @@ import { ThemedView } from "@/components/themed-view";
 import type { RowFormValues } from "@/modules/rows/components/forms/schema";
 import type { UseFormReturn } from "react-hook-form";
 import { Controller } from "react-hook-form";
+import { SemanticColors } from "@/constants/theme";
 
 interface UpdateRowFormViewProps {
   form: UseFormReturn<RowFormValues>;
@@ -41,7 +42,7 @@ export function UpdateRowFormView({
             >
               <InputField
                 placeholder="XX-XX"
-                placeholderTextColor="#9ca3af"
+                placeholderTextColor={SemanticColors.placeholder.light}
                 value={value}
                 onChangeText={onChange}
                 onBlur={onBlur}
@@ -71,7 +72,7 @@ export function UpdateRowFormView({
         <Button
           onPress={onCancel}
           isDisabled={isSubmitting}
-          className="flex-1 rounded-lg border border-outline-200 bg-background-0"
+          className="flex-1 rounded-lg border border-outline-200 bg-background-0 items-center justify-center py-3"
           style={{ opacity: isSubmitting ? 0.5 : 1 }}
         >
           <ButtonText>
@@ -81,11 +82,14 @@ export function UpdateRowFormView({
         <Button
           onPress={handleSubmit(onSubmit)}
           isDisabled={isSubmitting}
-          className="flex-1 rounded-lg bg-info-500"
-          style={{ opacity: isSubmitting ? 0.5 : 1 }}
+          className="flex-1 rounded-lg items-center justify-center py-3"
+          style={{ 
+            opacity: isSubmitting ? 0.5 : 1,
+            backgroundColor: isSubmitting ? SemanticColors.disabled : SemanticColors.primary
+          }}
         >
           {isSubmitting ? (
-            <ButtonSpinner color="#fff" />
+            <ButtonSpinner color={SemanticColors.white} />
           ) : (
             <ButtonText>
               <ThemedText type="defaultSemiBold" className="text-white">

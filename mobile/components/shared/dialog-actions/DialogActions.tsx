@@ -1,6 +1,6 @@
-import { View } from "react-native";
-import { Button, ButtonText, ButtonSpinner, HStack } from "@/components/ui";
 import { ThemedText } from "@/components/themed-text";
+import { Button, ButtonSpinner, ButtonText, HStack } from "@/components/ui";
+import { SemanticColors } from "@/constants/theme";
 
 interface DialogActionsProps {
   onCancel?: () => void;
@@ -25,9 +25,6 @@ export function DialogActions({
 }: DialogActionsProps) {
   const isDisabledState = isDisabled || isSubmitting;
 
-  const submitButtonBgColor =
-    variant === "destructive" ? "bg-error-500" : "bg-info-500";
-
   return (
     <HStack className={`gap-2 ${className || ""}`}>
       {onCancel && (
@@ -45,11 +42,20 @@ export function DialogActions({
       <Button
         onPress={onSubmit}
         isDisabled={isDisabledState}
-        className={`flex-1 rounded-lg ${submitButtonBgColor} items-center justify-center py-3`}
-        style={{ opacity: isDisabledState ? 0.5 : 1 }}
+        className={`flex-1 rounded-lg ${
+          variant === "destructive" ? "bg-error-500" : ""
+        } items-center justify-center py-3`}
+        style={{
+          opacity: isDisabledState ? 0.5 : 1,
+          ...(variant !== "destructive" && {
+            backgroundColor: isDisabledState
+              ? SemanticColors.disabled
+              : SemanticColors.primary,
+          }),
+        }}
       >
         {isSubmitting ? (
-          <ButtonSpinner color="#fff" />
+          <ButtonSpinner color={SemanticColors.white} />
         ) : (
           <ButtonText>
             <ThemedText type="defaultSemiBold" className="text-white">
@@ -61,4 +67,3 @@ export function DialogActions({
     </HStack>
   );
 }
-

@@ -1,6 +1,7 @@
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { ArtDetailCardView } from "./ArtDetailCardView";
+import { SemanticColors } from "@/constants/theme";
 
 interface ArtDetailCardProps {
   artData: ArtDto;
@@ -8,8 +9,8 @@ interface ArtDetailCardProps {
 
 export function ArtDetailCard({ artData }: ArtDetailCardProps) {
   const colorScheme = useColorScheme() ?? "light";
-  const bgColor = colorScheme === "light" ? "#fff" : "#1f2937";
-  const borderColor = colorScheme === "light" ? "#d1d5db" : "#4b5563";
+  const bgColor = colorScheme === "light" ? SemanticColors.card.bg.light : SemanticColors.card.bg.dark;
+  const borderColor = colorScheme === "light" ? SemanticColors.card.border.light : SemanticColors.card.border.dark;
 
   return (
     <ArtDetailCardView artData={artData} bgColor={bgColor} borderColor={borderColor} />

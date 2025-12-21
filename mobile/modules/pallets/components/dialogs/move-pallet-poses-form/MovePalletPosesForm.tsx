@@ -5,6 +5,7 @@ import { Box, VStack, HStack, Input, InputField, FlatList, Pressable, Button, Bu
 import type { IPallet } from "@/modules/pallets/api/types";
 import { useEmptyPalletsQuery } from "@/modules/pallets/api/hooks/queries/useEmptyPalletsQuery";
 import { useIconColor } from "@/hooks/use-icon-color";
+import { SemanticColors } from "@/constants/theme";
 
 interface MovePalletPosesFormProps {
   fromPallet: IPallet;
@@ -67,7 +68,7 @@ export function MovePalletPosesForm({
             value={search}
             onChangeText={setSearch}
             placeholder="Пошук паллети за назвою"
-            placeholderTextColor="#9ca3af"
+            placeholderTextColor={SemanticColors.placeholder.light}
             className="text-typography-900"
           />
         </Input>
@@ -110,7 +111,7 @@ export function MovePalletPosesForm({
                       family="MaterialIcons"
                       name={isSelected ? "radio-button-checked" : "radio-button-unchecked"}
                       size={20}
-                      color={disabled ? "#9ca3af" : iconColor}
+                      color={disabled ? SemanticColors.disabled : iconColor}
                     />
                     <Box className="flex-1">
                       <ThemedText type="default" className="text-sm">
@@ -147,7 +148,7 @@ export function MovePalletPosesForm({
         <Button
           variant="outline"
           onPress={onCancel}
-          className="flex-1 rounded-lg border border-outline-200 bg-background-0"
+          className="flex-1 rounded-lg border border-outline-200 bg-background-0 items-center justify-center py-3"
           isDisabled={isSubmitting}
         >
           <ButtonText>
@@ -157,11 +158,15 @@ export function MovePalletPosesForm({
 
         <Button
           onPress={handleSubmit}
-          className={`flex-1 rounded-lg ${selectedPalletId ? "bg-violet-500" : "bg-typography-400"}`}
+          className="flex-1 rounded-lg items-center justify-center py-3"
+          style={{
+            backgroundColor: !selectedPalletId || isSubmitting ? SemanticColors.disabled : SemanticColors.primary,
+            opacity: !selectedPalletId || isSubmitting ? 0.5 : 1
+          }}
           isDisabled={!selectedPalletId || isSubmitting}
         >
           {isSubmitting ? (
-            <ButtonSpinner color="#fff" />
+            <ButtonSpinner color={SemanticColors.white} />
           ) : (
             <ButtonText>
               <ThemedText type="defaultSemiBold" className="text-white">

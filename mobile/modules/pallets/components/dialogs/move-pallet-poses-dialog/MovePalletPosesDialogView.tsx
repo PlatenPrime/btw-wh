@@ -11,6 +11,7 @@ import {
 import { ThemedText } from "@/components/themed-text";
 import type { IPallet } from "@/modules/pallets/api/types";
 import { MovePalletPosesForm } from "../../dialogs/move-pallet-poses-form/MovePalletPosesForm";
+import { SemanticColors } from "@/constants/theme";
 
 interface MovePalletPosesDialogViewProps {
   pallet: IPallet;
@@ -41,7 +42,7 @@ export function MovePalletPosesDialogView({
     <Modal isOpen={visible} onClose={onClose} className="items-center justify-center">
       <ModalBackdrop
         className="flex-1 justify-center items-center"
-        style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
+        style={{ backgroundColor: SemanticColors.shadow.backdrop }}
       />
       <ModalContent
         className="w-full max-w-md mx-4 rounded-lg p-6 border gap-4"
@@ -50,7 +51,7 @@ export function MovePalletPosesDialogView({
           borderColor: borderColor,
           ...Platform.select({
             ios: {
-              shadowColor: "#000",
+              shadowColor: SemanticColors.shadow.color,
               shadowOffset: { width: 0, height: 4 },
               shadowOpacity: 0.3,
               shadowRadius: 8,

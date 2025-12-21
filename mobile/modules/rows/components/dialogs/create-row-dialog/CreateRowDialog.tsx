@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { useColorScheme } from "@/hooks/use-color-scheme";
-import { Colors } from "@/constants/theme";
+import { useDialogThemeColors } from "@/hooks/use-dialog-theme-colors";
 import { CreateRowDialogView } from "./CreateRowDialogView";
 
 interface CreateRowDialogProps {
@@ -15,11 +14,7 @@ export function CreateRowDialog({
   onSuccess,
 }: CreateRowDialogProps) {
   const [internalOpen, setInternalOpen] = useState(false);
-  const colorScheme = useColorScheme() ?? "light";
-  const bgColor = colorScheme === "light" ? "#fff" : "#1f2937";
-  const textColor =
-    colorScheme === "light" ? Colors.light.text : Colors.dark.text;
-  const borderColor = colorScheme === "light" ? "#d1d5db" : "#4b5563";
+  const { bgColor, textColor, borderColor } = useDialogThemeColors();
 
   const isControlled = controlledOpen !== undefined;
   const open = isControlled ? controlledOpen : internalOpen;

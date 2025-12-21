@@ -1,40 +1,36 @@
-import { View, TouchableOpacity, Platform } from "react-native";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { ThemedText } from "@/components/themed-text";
 import {
   Modal,
   ModalBackdrop,
+  ModalBody,
   ModalContent,
   ModalHeader,
-  ModalBody,
-  ModalFooter,
 } from "@/components/ui";
-import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
-import { DialogDescription } from "@/components/shared/dialog-description/DialogDescription";
-import type { IPallet } from "@/modules/pallets/api/types";
+import { UpdateRowForm } from "@/modules/rows/components/forms/update-row-form/UpdateRowForm";
+import type { RowDto } from "@/modules/rows/api/types/dto";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { TouchableOpacity, View, Platform } from "react-native";
 import { SemanticColors } from "@/constants/theme";
 
-interface DeletePalletDialogViewProps {
-  pallet: IPallet;
+interface UpdateRowDialogViewProps {
+  row: RowDto;
   visible: boolean;
   onClose: () => void;
-  onDelete: () => Promise<void>;
-  isDeleting: boolean;
+  onSuccess: () => void;
   bgColor: string;
   textColor: string;
   borderColor: string;
 }
 
-export function DeletePalletDialogView({
-  pallet,
+export function UpdateRowDialogView({
+  row,
   visible,
   onClose,
-  onDelete,
-  isDeleting,
+  onSuccess,
   bgColor,
   textColor,
   borderColor,
-}: DeletePalletDialogViewProps) {
+}: UpdateRowDialogViewProps) {
   return (
     <Modal isOpen={visible} onClose={onClose} className="items-center justify-center">
       <ModalBackdrop
@@ -62,7 +58,7 @@ export function DeletePalletDialogView({
         <ModalHeader className="flex-col gap-2">
           <View className="flex-row items-center justify-between relative">
             <ThemedText type="defaultSemiBold" className="text-lg text-center flex-1">
-              Видалити палету "{pallet.title}"?
+              Редагувати ряд
             </ThemedText>
             <TouchableOpacity
               onPress={onClose}
@@ -73,22 +69,10 @@ export function DeletePalletDialogView({
               <MaterialIcons name="close" size={16} color={textColor} />
             </TouchableOpacity>
           </View>
-          <DialogDescription>
-            Ви впевнені, що хочете видалити палету "{pallet.title}"? Цю дію
-            неможливо скасувати, вона також призведе до видалення всіх
-            пов'язаних позицій.
-          </DialogDescription>
         </ModalHeader>
-        <ModalFooter className="flex-col-reverse gap-2">
-          <DialogActions
-            onCancel={onClose}
-            onSubmit={onDelete}
-            cancelText="Скасувати"
-            submitText="Видалити"
-            isSubmitting={isDeleting}
-            variant="destructive"
-          />
-        </ModalFooter>
+        <ModalBody>
+          <UpdateRowForm row={row} onSuccess={onSuccess} onCancel={onClose} />
+        </ModalBody>
       </ModalContent>
     </Modal>
   );

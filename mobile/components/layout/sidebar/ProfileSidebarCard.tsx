@@ -3,7 +3,7 @@ import { View, TouchableOpacity, Image, Text } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useAuth } from '@/modules/auth/api/hooks/useAuth';
 import { ThemedText } from '@/components/themed-text';
-import { Colors } from '@/constants/theme';
+import { Colors, SemanticColors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
@@ -19,7 +19,7 @@ export function ProfileSidebarCard({
   const { user } = useAuth();
   const colorScheme = useColorScheme() ?? 'light';
   const textColor = colorScheme === 'light' ? Colors.light.text : Colors.dark.text;
-  const borderColor = colorScheme === 'light' ? '#e5e7eb' : '#374151';
+  const borderColor = colorScheme === 'light' ? SemanticColors.sidebar.border.light : SemanticColors.sidebar.border.dark;
 
   if (isLoading || !user) {
     return null;
@@ -51,7 +51,7 @@ export function ProfileSidebarCard({
           className="w-full rounded-lg border p-3 flex-row items-center justify-center mt-2"
           style={{
             borderColor: borderColor,
-            backgroundColor: colorScheme === 'light' ? '#fff' : '#1f2937',
+            backgroundColor: colorScheme === 'light' ? SemanticColors.dialog.bg.light : SemanticColors.dialog.bg.dark,
           }}
         >
           <MaterialIcons name="logout" size={20} color={textColor} />

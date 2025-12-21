@@ -1,22 +1,22 @@
-import { useState } from "react";
 import { useDialogThemeColors } from "@/hooks/use-dialog-theme-colors";
-import type { IPallet } from "@/modules/pallets/api/types";
-import { MovePalletPosesDialogView } from "./MovePalletPosesDialogView";
-import { useMovePalletPosesDialog } from "./useMovePalletPosesDialog";
+import type { RowDto } from "@/modules/rows/api/types/dto";
+import { useState } from "react";
+import { CreatePalletDialogView } from "./CreatePalletDialogView";
+import { useCreatePalletDialog } from "./useCreatePalletDialog";
 
-interface MovePalletPosesDialogProps {
-  pallet: IPallet;
+interface CreatePalletDialogProps {
+  row: RowDto;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
   onSuccess?: () => void;
 }
 
-export function MovePalletPosesDialog({
-  pallet,
+export function CreatePalletDialog({
+  row,
   open: controlledOpen,
   onOpenChange,
   onSuccess,
-}: MovePalletPosesDialogProps) {
+}: CreatePalletDialogProps) {
   const [internalOpen, setInternalOpen] = useState(false);
   const { bgColor, textColor, borderColor } = useDialogThemeColors();
 
@@ -25,34 +25,30 @@ export function MovePalletPosesDialog({
   const handleOpenChange = isControlled ? onOpenChange : setInternalOpen;
 
   const {
-    isMoving,
-    isSourceEmpty,
-    mutationError,
-    handleSubmit,
-    handleDialogOpenChange,
-  } = useMovePalletPosesDialog({
-    pallet,
+    form,
+    isSubmitting,
+    onSubmit,
+    handleOpenChange: handleDialogOpenChange,
+  } = useCreatePalletDialog({
+    row,
     onOpenChange: handleOpenChange,
     onSuccess,
   });
 
-  const handleCancel = () => {
+  const handleClose = () => {
     handleDialogOpenChange(false);
   };
 
   return (
-    <MovePalletPosesDialogView
-      pallet={pallet}
+    <CreatePalletDialogView
       visible={open}
-      onClose={handleCancel}
-      onSubmit={handleSubmit}
-      isSourceEmpty={isSourceEmpty}
-      mutationError={mutationError}
-      isMoving={isMoving}
+      onClose={handleClose}
+      form={form}
+      onSubmit={onSubmit}
+      isSubmitting={isSubmitting}
       bgColor={bgColor}
       textColor={textColor}
       borderColor={borderColor}
     />
   );
 }
-

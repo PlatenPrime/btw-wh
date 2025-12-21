@@ -27,6 +27,109 @@ export const Colors = {
   },
 };
 
+// Семантические цвета для UI компонентов
+export const SemanticColors = {
+  // Положительные действия (создание, редактирование, подтверждение)
+  primary: "#3b82f6", // blue-500
+  // Деструктивные действия (удаление, очистка)
+  destructive: "#ef4444", // red-500 / error-500
+  // Disabled состояние
+  disabled: "#9ca3af", // gray-400
+  // Placeholder текст
+  placeholder: {
+    light: "#9ca3af", // gray-400
+    dark: "#6b7280", // gray-500
+  },
+  // Белый цвет (для текста на цветном фоне, иконок)
+  white: "#ffffff",
+  // Черный цвет (для теней)
+  black: "#000000",
+  // Цвета для диалогов и модальных окон
+  dialog: {
+    bg: {
+      light: "#fff",
+      dark: "#1f2937", // gray-800
+    },
+    border: {
+      light: "#d1d5db", // gray-300
+      dark: "#4b5563", // gray-600
+    },
+  },
+  // Цвета для ошибок
+  error: {
+    border: "#ef4444", // red-500
+    text: "#ef4444", // red-500
+    bg: {
+      light: "#fee2e2", // red-100
+      dark: "#7f1d1d", // red-900
+    },
+  },
+  // Цвета для иконок (специфичные цвета)
+  icon: {
+    warehouse: "#0ea5e9", // sky-500
+    money: "#10b981", // emerald-500
+    orange: "#f97316", // orange-500
+  },
+  // Цвета для Switch компонента
+  switch: {
+    track: {
+      false: {
+        light: "#d1d5db", // gray-300
+        dark: "#374151", // gray-700
+      },
+      true: {
+        light: "#3b82f6", // blue-500
+        dark: "#6366f1", // indigo-500
+      },
+    },
+    thumb: "#ffffff", // white
+  },
+  // Цвета для карточек
+  card: {
+    bg: {
+      light: "#fff",
+      dark: "#1f2937", // gray-800
+    },
+    border: {
+      light: "#d1d5db", // gray-300
+      dark: "#4b5563", // gray-600
+    },
+  },
+  // Цвета для sidebar
+  sidebar: {
+    border: {
+      light: "#e5e7eb", // gray-200
+      dark: "#374151", // gray-700
+    },
+  },
+  // Цвета для теней и backdrop
+  shadow: {
+    color: "#000000", // black
+    backdrop: "rgba(0, 0, 0, 0.5)", // полупрозрачный черный для backdrop
+    backdropDark: "rgba(0, 0, 0, 0.8)", // более темный backdrop
+  },
+  // Цвета для иконок в header actions menu
+  iconColors: {
+    red: "#ef4444",
+    orange: "#f97316",
+    amber: "#f59e0b",
+    yellow: "#eab308",
+    lime: "#84cc16",
+    green: "#22c55e",
+    emerald: "#10b981",
+    teal: "#14b8a6",
+    cyan: "#06b6d4",
+    sky: "#0ea5e9",
+    blue: "#3b82f6",
+    indigo: "#6366f1",
+    violet: "#8b5cf6",
+    purple: "#a855f7",
+    fuchsia: "#d946ef",
+    pink: "#ec4899",
+    rose: "#f43f5e",
+  },
+} as const;
+
 export const Fonts = Platform.select({
   ios: {
     /** iOS `UIFontDescriptorSystemDesignDefault` */

@@ -12,6 +12,7 @@ import {
 import type { RowFormValues } from "@/modules/rows/components/forms/schema";
 import type { UseFormReturn } from "react-hook-form";
 import { Controller } from "react-hook-form";
+import { SemanticColors } from "@/constants/theme";
 
 interface CreateRowFormViewProps {
   form: UseFormReturn<RowFormValues>;
@@ -49,7 +50,7 @@ export function CreateRowFormView({
             >
               <InputField
                 placeholder="XX-XX"
-                placeholderTextColor="#9ca3af"
+                placeholderTextColor={SemanticColors.placeholder.light}
                 value={value}
                 onChangeText={onChange}
                 onBlur={onBlur}
@@ -91,13 +92,16 @@ export function CreateRowFormView({
         <Button
           onPress={handleSubmit(onSubmit)}
           isDisabled={isSubmitting}
-          className="flex-1 rounded-lg bg-info-500 items-center justify-center"
-          style={{ opacity: isSubmitting ? 0.5 : 1 }}
+          className="flex-1 rounded-lg items-center justify-center py-3"
+          style={{ 
+            opacity: isSubmitting ? 0.5 : 1,
+            backgroundColor: isSubmitting ? SemanticColors.disabled : SemanticColors.primary
+          }}
         >
           {isSubmitting ? (
-            <ButtonSpinner color="#fff" />
+            <ButtonSpinner color={SemanticColors.white} />
           ) : (
-            <ButtonText className="text-typography-900">
+            <ButtonText>
               <ThemedText type="defaultSemiBold" className="text-white">
                 Створити
               </ThemedText>

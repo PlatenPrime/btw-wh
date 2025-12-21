@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { ScrollView, Box, Text, Input, InputField, Button, ButtonText, ButtonSpinner } from "@/components/ui";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
+import { SemanticColors } from "@/constants/theme";
 
 // Zod schema for login form
 const loginSchema = z.object({
@@ -70,7 +71,7 @@ export const LoginForm = () => {
               <Input className="bg-background-50 border border-outline-200 rounded-lg">
                 <InputField
                   placeholder="Введіть логін"
-                  placeholderTextColor="#9CA3AF"
+                  placeholderTextColor={SemanticColors.placeholder.light}
                   autoComplete="username"
                   autoCapitalize="none"
                   value={value}
@@ -95,7 +96,7 @@ export const LoginForm = () => {
               <Input className="bg-background-50 border border-outline-200 rounded-lg">
                 <InputField
                   placeholder="Введіть пароль"
-                  placeholderTextColor="#9CA3AF"
+                  placeholderTextColor={SemanticColors.placeholder.light}
                   autoComplete="current-password"
                   secureTextEntry
                   value={value}
@@ -117,7 +118,7 @@ export const LoginForm = () => {
           isDisabled={isLoading}
         >
           {isLoading ? (
-            <ButtonSpinner color="#FFFFFF" />
+            <ButtonSpinner color={SemanticColors.white} />
           ) : (
             <ButtonText className="text-white font-semibold text-base">Вхід</ButtonText>
           )}

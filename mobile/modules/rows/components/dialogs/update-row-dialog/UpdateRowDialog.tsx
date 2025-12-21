@@ -1,22 +1,21 @@
 import { useState } from "react";
 import { useDialogThemeColors } from "@/hooks/use-dialog-theme-colors";
-import type { IPallet } from "@/modules/pallets/api/types";
-import { DeletePalletEmptyPosesDialogView } from "./DeletePalletEmptyPosesDialogView";
-import { useDeletePalletEmptyPosesDialog } from "./useDeletePalletEmptyPosesDialog";
+import type { RowDto } from "@/modules/rows/api/types/dto";
+import { UpdateRowDialogView } from "./UpdateRowDialogView";
 
-interface DeletePalletEmptyPosesDialogProps {
-  pallet: IPallet;
+interface UpdateRowDialogProps {
+  row: RowDto;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
   onSuccess?: () => void;
 }
 
-export function DeletePalletEmptyPosesDialog({
-  pallet,
+export function UpdateRowDialog({
+  row,
   open: controlledOpen,
   onOpenChange,
   onSuccess,
-}: DeletePalletEmptyPosesDialogProps) {
+}: UpdateRowDialogProps) {
   const [internalOpen, setInternalOpen] = useState(false);
   const { bgColor, textColor, borderColor } = useDialogThemeColors();
 
@@ -24,14 +23,9 @@ export function DeletePalletEmptyPosesDialog({
   const open = isControlled ? controlledOpen : internalOpen;
   const handleOpenChange = isControlled ? onOpenChange : setInternalOpen;
 
-  const { isDeleting, handleDelete } = useDeletePalletEmptyPosesDialog({
-    pallet,
-    onSuccess,
-  });
-
-  const handleDeleteAndClose = async () => {
-    await handleDelete();
+  const handleSuccess = () => {
     handleOpenChange?.(false);
+    onSuccess?.();
   };
 
   const handleCancel = () => {
@@ -39,12 +33,11 @@ export function DeletePalletEmptyPosesDialog({
   };
 
   return (
-    <DeletePalletEmptyPosesDialogView
-      pallet={pallet}
+    <UpdateRowDialogView
+      row={row}
       visible={open}
       onClose={handleCancel}
-      onDelete={handleDeleteAndClose}
-      isDeleting={isDeleting}
+      onSuccess={handleSuccess}
       bgColor={bgColor}
       textColor={textColor}
       borderColor={borderColor}

@@ -2,6 +2,7 @@ import { Modal, Pressable, View, TouchableOpacity } from "react-native";
 import { Image } from "expo-image";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { getBigImageUrl } from "@/modules/arts/constants/art-image-url";
+import { SemanticColors } from "@/constants/theme";
 
 interface ArtImageModalProps {
   artikul: string;
@@ -29,7 +30,7 @@ export function ArtImageModal({
     >
       <Pressable
         className="flex-1 justify-center items-center"
-        style={{ backgroundColor: "rgba(0, 0, 0, 0.8)" }}
+        style={{ backgroundColor: SemanticColors.shadow.backdropDark }}
         onPress={onClose}
       >
         <Pressable
@@ -40,10 +41,10 @@ export function ArtImageModal({
             <TouchableOpacity
               onPress={onClose}
               className="absolute top-2 right-2 z-10 p-2 rounded-full"
-              style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
+              style={{ backgroundColor: SemanticColors.shadow.backdrop }}
               activeOpacity={0.7}
             >
-              <MaterialIcons name="close" size={24} color="#ffffff" />
+              <MaterialIcons name="close" size={24} color={SemanticColors.white} />
             </TouchableOpacity>
 
             <Image

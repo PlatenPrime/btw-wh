@@ -12,6 +12,7 @@ import {
 import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
 import { DialogDescription } from "@/components/shared/dialog-description/DialogDescription";
 import type { IPallet } from "@/modules/pallets/api/types";
+import { SemanticColors } from "@/constants/theme";
 
 interface DeletePalletEmptyPosesDialogViewProps {
   pallet: IPallet;
@@ -38,7 +39,7 @@ export function DeletePalletEmptyPosesDialogView({
     <Modal isOpen={visible} onClose={onClose} className="items-center justify-center">
       <ModalBackdrop
         className="flex-1 justify-center items-center"
-        style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
+        style={{ backgroundColor: SemanticColors.shadow.backdrop }}
       />
       <ModalContent
         className="w-full max-w-md mx-4 rounded-lg p-6 border gap-4"
@@ -47,7 +48,7 @@ export function DeletePalletEmptyPosesDialogView({
           borderColor: borderColor,
           ...Platform.select({
             ios: {
-              shadowColor: "#000",
+              shadowColor: SemanticColors.shadow.color,
               shadowOffset: { width: 0, height: 4 },
               shadowOpacity: 0.3,
               shadowRadius: 8,

@@ -1,22 +1,22 @@
 import { useState } from "react";
 import { useDialogThemeColors } from "@/hooks/use-dialog-theme-colors";
-import type { IPallet } from "@/modules/pallets/api/types";
-import { DeletePalletEmptyPosesDialogView } from "./DeletePalletEmptyPosesDialogView";
-import { useDeletePalletEmptyPosesDialog } from "./useDeletePalletEmptyPosesDialog";
+import type { RowDto } from "@/modules/rows/api/types/dto";
+import { DeleteRowDialogView } from "./DeleteRowDialogView";
+import { useDeleteRowDialog } from "./useDeleteRowDialog";
 
-interface DeletePalletEmptyPosesDialogProps {
-  pallet: IPallet;
+interface DeleteRowDialogProps {
+  row: RowDto;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
   onSuccess?: () => void;
 }
 
-export function DeletePalletEmptyPosesDialog({
-  pallet,
+export function DeleteRowDialog({
+  row,
   open: controlledOpen,
   onOpenChange,
   onSuccess,
-}: DeletePalletEmptyPosesDialogProps) {
+}: DeleteRowDialogProps) {
   const [internalOpen, setInternalOpen] = useState(false);
   const { bgColor, textColor, borderColor } = useDialogThemeColors();
 
@@ -24,8 +24,8 @@ export function DeletePalletEmptyPosesDialog({
   const open = isControlled ? controlledOpen : internalOpen;
   const handleOpenChange = isControlled ? onOpenChange : setInternalOpen;
 
-  const { isDeleting, handleDelete } = useDeletePalletEmptyPosesDialog({
-    pallet,
+  const { isDeleting, handleDelete } = useDeleteRowDialog({
+    row,
     onSuccess,
   });
 
@@ -39,8 +39,8 @@ export function DeletePalletEmptyPosesDialog({
   };
 
   return (
-    <DeletePalletEmptyPosesDialogView
-      pallet={pallet}
+    <DeleteRowDialogView
+      row={row}
       visible={open}
       onClose={handleCancel}
       onDelete={handleDeleteAndClose}

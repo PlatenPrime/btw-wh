@@ -1,42 +1,45 @@
-import { View, TouchableOpacity, Platform } from "react-native";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { ThemedText } from "@/components/themed-text";
 import {
   Modal,
   ModalBackdrop,
+  ModalBody,
   ModalContent,
   ModalHeader,
-  ModalBody,
-  ModalFooter,
 } from "@/components/ui";
-import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
-import { DialogDescription } from "@/components/shared/dialog-description/DialogDescription";
-import type { IPallet } from "@/modules/pallets/api/types";
+import { CreatePalletFormView } from "@/modules/pallets/components/forms/create-pallet-form/CreatePalletFormView";
+import type { PalletFormValues } from "@/modules/pallets/components/forms/schema";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import type { UseFormReturn } from "react-hook-form";
+import { Platform, TouchableOpacity, View } from "react-native";
 import { SemanticColors } from "@/constants/theme";
 
-interface DeletePalletDialogViewProps {
-  pallet: IPallet;
+interface CreatePalletDialogViewProps {
   visible: boolean;
   onClose: () => void;
-  onDelete: () => Promise<void>;
-  isDeleting: boolean;
+  form: UseFormReturn<PalletFormValues>;
+  onSubmit: (data: PalletFormValues) => Promise<void>;
+  isSubmitting: boolean;
   bgColor: string;
   textColor: string;
   borderColor: string;
 }
 
-export function DeletePalletDialogView({
-  pallet,
+export function CreatePalletDialogView({
   visible,
   onClose,
-  onDelete,
-  isDeleting,
+  form,
+  onSubmit,
+  isSubmitting,
   bgColor,
   textColor,
   borderColor,
-}: DeletePalletDialogViewProps) {
+}: CreatePalletDialogViewProps) {
   return (
-    <Modal isOpen={visible} onClose={onClose} className="items-center justify-center">
+    <Modal
+      isOpen={visible}
+      onClose={onClose}
+      className="items-center justify-center"
+    >
       <ModalBackdrop
         className="flex-1 justify-center items-center"
         style={{ backgroundColor: SemanticColors.shadow.backdrop }}
@@ -61,8 +64,11 @@ export function DeletePalletDialogView({
       >
         <ModalHeader className="flex-col gap-2">
           <View className="flex-row items-center justify-between relative">
-            <ThemedText type="defaultSemiBold" className="text-lg text-center flex-1">
-              Видалити палету "{pallet.title}"?
+            <ThemedText
+              type="defaultSemiBold"
+              className="text-lg text-center flex-1"
+            >
+              Додати палету
             </ThemedText>
             <TouchableOpacity
               onPress={onClose}
@@ -73,24 +79,16 @@ export function DeletePalletDialogView({
               <MaterialIcons name="close" size={16} color={textColor} />
             </TouchableOpacity>
           </View>
-          <DialogDescription>
-            Ви впевнені, що хочете видалити палету "{pallet.title}"? Цю дію
-            неможливо скасувати, вона також призведе до видалення всіх
-            пов'язаних позицій.
-          </DialogDescription>
         </ModalHeader>
-        <ModalFooter className="flex-col-reverse gap-2">
-          <DialogActions
+        <ModalBody>
+          <CreatePalletFormView
+            form={form}
+            onSubmit={onSubmit}
             onCancel={onClose}
-            onSubmit={onDelete}
-            cancelText="Скасувати"
-            submitText="Видалити"
-            isSubmitting={isDeleting}
-            variant="destructive"
+            isSubmitting={isSubmitting}
           />
-        </ModalFooter>
+        </ModalBody>
       </ModalContent>
     </Modal>
   );
 }
-

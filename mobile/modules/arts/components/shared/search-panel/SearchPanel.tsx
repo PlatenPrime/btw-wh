@@ -1,7 +1,7 @@
 import { View, TextInput } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useTheme } from "@/providers/theme-provider";
-import { Colors } from "@/constants/theme";
+import { Colors, SemanticColors } from "@/constants/theme";
 import { useIconColor } from "@/hooks/use-icon-color";
 
 interface SearchPanelProps {
@@ -18,10 +18,10 @@ export function SearchPanel({
   const { resolvedTheme } = useTheme();
   const iconColor = useIconColor();
 
-  const bgColor = resolvedTheme === "light" ? "#fff" : "#1f2937";
-  const borderColor = resolvedTheme === "light" ? "#d1d5db" : "#4b5563";
+  const bgColor = resolvedTheme === "light" ? SemanticColors.dialog.bg.light : SemanticColors.dialog.bg.dark;
+  const borderColor = resolvedTheme === "light" ? SemanticColors.dialog.border.light : SemanticColors.dialog.border.dark;
   const textColor = resolvedTheme === "light" ? Colors.light.text : Colors.dark.text;
-  const placeholderColor = resolvedTheme === "light" ? "#9ca3af" : "#9BA1A6";
+  const placeholderColor = resolvedTheme === "light" ? SemanticColors.placeholder.light : SemanticColors.placeholder.dark;
 
   return (
     <View

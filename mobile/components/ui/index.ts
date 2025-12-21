@@ -83,3 +83,7 @@ export {
 } from './icon';
 export type { IconFamily } from './icon';
 
+// Switch
+export { Switch } from './switch';
+export type { SwitchProps, SwitchPropsType } from './switch';
+

@@ -6,16 +6,15 @@ import {
   ModalBackdrop,
   ModalContent,
   ModalHeader,
-  ModalBody,
   ModalFooter,
 } from "@/components/ui";
 import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
 import { DialogDescription } from "@/components/shared/dialog-description/DialogDescription";
-import type { IPallet } from "@/modules/pallets/api/types";
+import type { RowDto } from "@/modules/rows/api/types/dto";
 import { SemanticColors } from "@/constants/theme";
 
-interface DeletePalletDialogViewProps {
-  pallet: IPallet;
+interface DeleteRowDialogViewProps {
+  row: RowDto;
   visible: boolean;
   onClose: () => void;
   onDelete: () => Promise<void>;
@@ -25,8 +24,8 @@ interface DeletePalletDialogViewProps {
   borderColor: string;
 }
 
-export function DeletePalletDialogView({
-  pallet,
+export function DeleteRowDialogView({
+  row,
   visible,
   onClose,
   onDelete,
@@ -34,7 +33,7 @@ export function DeletePalletDialogView({
   bgColor,
   textColor,
   borderColor,
-}: DeletePalletDialogViewProps) {
+}: DeleteRowDialogViewProps) {
   return (
     <Modal isOpen={visible} onClose={onClose} className="items-center justify-center">
       <ModalBackdrop
@@ -62,7 +61,7 @@ export function DeletePalletDialogView({
         <ModalHeader className="flex-col gap-2">
           <View className="flex-row items-center justify-between relative">
             <ThemedText type="defaultSemiBold" className="text-lg text-center flex-1">
-              Видалити палету "{pallet.title}"?
+              Видалити ряд "{row.title}"?
             </ThemedText>
             <TouchableOpacity
               onPress={onClose}
@@ -74,9 +73,9 @@ export function DeletePalletDialogView({
             </TouchableOpacity>
           </View>
           <DialogDescription>
-            Ви впевнені, що хочете видалити палету "{pallet.title}"? Цю дію
+            Ви впевнені, що хочете видалити ряд "{row.title}"? Цю дію
             неможливо скасувати, вона також призведе до видалення всіх
-            пов'язаних позицій.
+            пов'язаних палет та позицій.
           </DialogDescription>
         </ModalHeader>
         <ModalFooter className="flex-col-reverse gap-2">
