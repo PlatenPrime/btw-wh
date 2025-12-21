@@ -1,4 +1,4 @@
-import { FlatList, View, StyleSheet } from "react-native";
+import { FlatList, Box } from "@/components/ui";
 import type { RowDto } from "@/modules/rows/api/types/dto";
 import { RowCard } from "@/modules/rows/components/cards/row-card/RowCard";
 import { ThemedText } from "@/components/themed-text";
@@ -10,11 +10,11 @@ interface RowsListViewProps {
 export function RowsListView({ rows }: RowsListViewProps) {
   if (!rows || rows.length === 0) {
     return (
-      <View className="flex-1 justify-center items-center py-8">
+      <Box className="flex-1 justify-center items-center py-8">
         <ThemedText type="default" className="text-center">
           Немає рядів для відображення
         </ThemedText>
-      </View>
+      </Box>
     );
   }
 
@@ -22,23 +22,14 @@ export function RowsListView({ rows }: RowsListViewProps) {
     <FlatList
       data={rows}
       renderItem={({ item }) => (
-        <View style={styles.itemContainer}>
+        <Box className="mb-2">
           <RowCard row={item} />
-        </View>
+        </Box>
       )}
       keyExtractor={(item) => item._id}
-      contentContainerStyle={styles.contentContainer}
+      contentContainerClassName="p-2"
       showsVerticalScrollIndicator={false}
     />
   );
 }
-
-const styles = StyleSheet.create({
-  contentContainer: {
-    padding: 8,
-  },
-  itemContainer: {
-    marginBottom: 8,
-  },
-});
 

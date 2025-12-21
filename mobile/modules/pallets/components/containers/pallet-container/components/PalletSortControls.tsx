@@ -1,7 +1,4 @@
-import { Colors } from "@/constants/theme";
-import { useColorScheme } from "@/hooks/use-color-scheme";
 import type { GetPosesByPalletIdParams } from "@/modules/poses/api/services/queries/getPosesByPalletId";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useState } from "react";
 import { PalletSortControlsView } from "./PalletSortControlsView";
 
@@ -13,13 +10,13 @@ interface PalletSortControlsProps {
 type SortByOption = {
   value: "artikul" | "updatedAt";
   label: string;
-  icon: keyof typeof MaterialIcons.glyphMap;
+  icon: string;
 };
 
 type SortOrderOption = {
   value: "asc" | "desc";
   label: string;
-  icon: keyof typeof MaterialIcons.glyphMap;
+  icon: string;
 };
 
 const sortByOptions: SortByOption[] = [
@@ -37,15 +34,6 @@ export function PalletSortControls({
   onSortParamsChange,
 }: PalletSortControlsProps) {
   const [modalVisible, setModalVisible] = useState(false);
-  const colorScheme = useColorScheme() ?? "light";
-  const textColor =
-    colorScheme === "light" ? Colors.light.text : Colors.dark.text;
-  const bgColor =
-    colorScheme === "light" ? Colors.light.background : Colors.dark.background;
-  const borderColor = colorScheme === "light" ? "#e5e7eb" : "#374151";
-  const modalBgColor = colorScheme === "light" ? "#ffffff" : "#1f2937";
-  const itemBgColor = colorScheme === "light" ? "#f9fafb" : "#374151";
-  const selectedBgColor = colorScheme === "light" ? "#e5e7eb" : "#4b5563";
 
   const currentSortBy = sortByOptions.find(
     (opt) => opt.value === (sortParams.sortBy || "updatedAt")
@@ -79,12 +67,6 @@ export function PalletSortControls({
       currentSortOrder={currentSortOrder}
       sortByOptions={sortByOptions}
       sortOrderOptions={sortOrderOptions}
-      textColor={textColor}
-      bgColor={bgColor}
-      borderColor={borderColor}
-      modalBgColor={modalBgColor}
-      itemBgColor={itemBgColor}
-      selectedBgColor={selectedBgColor}
     />
   );
 }

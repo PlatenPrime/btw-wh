@@ -1,40 +1,31 @@
 import { ThemedText } from "@/components/themed-text";
-import { TouchableOpacity, View } from "react-native";
+import { Pressable, Box } from "@/components/ui";
 
 interface RowCardViewProps {
   title: string;
   palletsCount: number;
   onPress: () => void;
-  bgColor: string;
-  borderColor: string;
 }
 
 export function RowCardView({
   title,
   palletsCount,
   onPress,
-  bgColor,
-  borderColor,
 }: RowCardViewProps) {
   return (
-    <TouchableOpacity
+    <Pressable
       onPress={onPress}
-      activeOpacity={0.7}
-      className="p-4 rounded-lg border"
-      style={{
-        backgroundColor: bgColor,
-        borderColor: borderColor,
-      }}
+      className="p-4 rounded-lg border border-outline-200 bg-background-0"
     >
-      <View className="items-center">
+      <Box className="items-center">
         <ThemedText type="title" className="text-xl mb-2">
           {title}
         </ThemedText>
         <ThemedText type="default" className="text-sm">
           Паллет: {palletsCount}
         </ThemedText>
-      </View>
-    </TouchableOpacity>
+      </Box>
+    </Pressable>
   );
 }
 

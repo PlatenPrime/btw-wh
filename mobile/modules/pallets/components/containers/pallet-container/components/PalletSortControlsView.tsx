@@ -1,8 +1,8 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import type { GetPosesByPalletIdParams } from "@/modules/poses/api/services/queries/getPosesByPalletId";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { Modal, Pressable, TouchableOpacity, View } from "react-native";
+import { Modal, ModalBackdrop, ModalContent, ModalHeader, ModalCloseButton, Pressable, Box, HStack, VStack } from "@/components/ui";
+import { Icon } from "@/components/ui/icon";
 
 interface PalletSortControlsViewProps {
   sortParams: GetPosesByPalletIdParams;
@@ -14,32 +14,26 @@ interface PalletSortControlsViewProps {
     | {
         value: "artikul" | "updatedAt";
         label: string;
-        icon: keyof typeof MaterialIcons.glyphMap;
+        icon: string;
       }
     | undefined;
   currentSortOrder:
     | {
         value: "asc" | "desc";
         label: string;
-        icon: keyof typeof MaterialIcons.glyphMap;
+        icon: string;
       }
     | undefined;
   sortByOptions: {
     value: "artikul" | "updatedAt";
     label: string;
-    icon: keyof typeof MaterialIcons.glyphMap;
+    icon: string;
   }[];
   sortOrderOptions: {
     value: "asc" | "desc";
     label: string;
-    icon: keyof typeof MaterialIcons.glyphMap;
+    icon: string;
   }[];
-  textColor: string;
-  bgColor: string;
-  borderColor: string;
-  modalBgColor: string;
-  itemBgColor: string;
-  selectedBgColor: string;
 }
 
 export function PalletSortControlsView({
@@ -52,178 +46,136 @@ export function PalletSortControlsView({
   currentSortOrder,
   sortByOptions,
   sortOrderOptions,
-  textColor,
-  bgColor,
-  borderColor,
-  modalBgColor,
-  itemBgColor,
-  selectedBgColor,
 }: PalletSortControlsViewProps) {
   return (
     <>
-      <TouchableOpacity
+      <Pressable
         onPress={() => onModalVisibleChange(true)}
-        className="flex-row items-center gap-2 px-3 py-2 rounded-lg border"
-        style={{
-          backgroundColor: bgColor,
-          borderColor: borderColor,
-        }}
-        activeOpacity={0.7}
+        className="flex-row items-center gap-2 px-3 py-2 rounded-lg border border-outline-200 bg-background-0"
       >
-        <MaterialIcons
+        <Icon
+          family="MaterialIcons"
           name={currentSortBy?.icon || "sort"}
           size={18}
-          color={textColor}
+          className="text-typography-900"
         />
         <ThemedText type="default" className="text-sm">
           {currentSortBy?.label}
         </ThemedText>
-        <MaterialIcons
+        <Icon
+          family="MaterialIcons"
           name={currentSortOrder?.icon || "arrow-downward"}
           size={18}
-          color={textColor}
+          className="text-typography-900"
         />
-      </TouchableOpacity>
+      </Pressable>
 
-      <Modal
-        visible={modalVisible}
-        transparent
-        animationType="fade"
-        onRequestClose={() => onModalVisibleChange(false)}
-      >
-        <Pressable
-          className="flex-1 justify-center items-center"
-          style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
-          onPress={() => onModalVisibleChange(false)}
-        >
-          <Pressable
-            className="w-full max-w-md mx-4"
-            onPress={(e) => e.stopPropagation()}
-          >
-            <ThemedView
-              className="rounded-xl p-6 border"
-              style={{
-                backgroundColor: modalBgColor,
-                borderColor: borderColor,
-              }}
-            >
-              <View className="flex-row items-center justify-between mb-4">
-                <ThemedText type="defaultSemiBold" className="text-lg">
-                  Сортування
-                </ThemedText>
-                <TouchableOpacity
-                  onPress={() => onModalVisibleChange(false)}
-                  className="p-2"
-                  activeOpacity={0.7}
-                >
-                  <MaterialIcons name="close" size={24} color={textColor} />
-                </TouchableOpacity>
-              </View>
-
-              <View className="gap-4">
-                <View className="gap-2">
-                  <ThemedText
-                    type="default"
-                    className="text-sm mb-1"
-                    style={{ color: textColor }}
+      <Modal isOpen={modalVisible} onClose={() => onModalVisibleChange(false)}>
+        <ModalBackdrop />
+        <ModalContent className="w-full max-w-md mx-4 rounded-xl border border-outline-200 bg-background-0 p-6">
+          <ModalHeader>
+            <HStack className="items-center justify-between">
+              <ThemedText type="defaultSemiBold" className="text-lg">
+                Сортування
+              </ThemedText>
+              <ModalCloseButton onPress={() => onModalVisibleChange(false)}>
+                <Icon
+                  family="MaterialIcons"
+                  name="close"
+                  size={24}
+                  className="text-typography-900"
+                />
+              </ModalCloseButton>
+            </HStack>
+          </ModalHeader>
+          <VStack className="gap-4">
+            <VStack className="gap-2">
+              <ThemedText type="default" className="text-sm mb-1 text-typography-900">
+                Сортувати по:
+              </ThemedText>
+              {sortByOptions.map((option) => {
+                const isSelected =
+                  option.value === (sortParams.sortBy || "updatedAt");
+                return (
+                  <Pressable
+                    key={option.value}
+                    onPress={() => {
+                      onSortByChange(option.value);
+                      onModalVisibleChange(false);
+                    }}
+                    className={`flex-row items-center gap-3 p-3 rounded-lg ${
+                      isSelected ? "bg-background-200" : "bg-background-50"
+                    }`}
                   >
-                    Сортувати по:
-                  </ThemedText>
-                  {sortByOptions.map((option) => {
-                    const isSelected =
-                      option.value === (sortParams.sortBy || "updatedAt");
-                    return (
-                      <TouchableOpacity
-                        key={option.value}
-                        onPress={() => {
-                          onSortByChange(option.value);
-                          onModalVisibleChange(false);
-                        }}
-                        className="flex-row items-center gap-3 p-3 rounded-lg"
-                        style={{
-                          backgroundColor: isSelected
-                            ? selectedBgColor
-                            : itemBgColor,
-                        }}
-                        activeOpacity={0.7}
-                      >
-                        <MaterialIcons
-                          name={option.icon}
-                          size={22}
-                          color={textColor}
-                        />
-                        <ThemedText
-                          type="default"
-                          className="flex-1 text-base"
-                          style={{ color: textColor }}
-                        >
-                          {option.label}
-                        </ThemedText>
-                        {isSelected && (
-                          <MaterialIcons
-                            name="check"
-                            size={22}
-                            color={textColor}
-                          />
-                        )}
-                      </TouchableOpacity>
-                    );
-                  })}
-                </View>
+                    <Icon
+                      family="MaterialIcons"
+                      name={option.icon}
+                      size={22}
+                      className="text-typography-900"
+                    />
+                    <ThemedText
+                      type="default"
+                      className="flex-1 text-base text-typography-900"
+                    >
+                      {option.label}
+                    </ThemedText>
+                    {isSelected && (
+                      <Icon
+                        family="MaterialIcons"
+                        name="check"
+                        size={22}
+                        className="text-typography-900"
+                      />
+                    )}
+                  </Pressable>
+                );
+              })}
+            </VStack>
 
-                <View className="gap-2">
-                  <ThemedText
-                    type="default"
-                    className="text-sm mb-1"
-                    style={{ color: textColor }}
+            <VStack className="gap-2">
+              <ThemedText type="default" className="text-sm mb-1 text-typography-900">
+                Порядок:
+              </ThemedText>
+              {sortOrderOptions.map((option) => {
+                const isSelected =
+                  option.value === (sortParams.sortOrder || "desc");
+                return (
+                  <Pressable
+                    key={option.value}
+                    onPress={() => {
+                      onSortOrderChange(option.value);
+                      onModalVisibleChange(false);
+                    }}
+                    className={`flex-row items-center gap-3 p-3 rounded-lg ${
+                      isSelected ? "bg-background-200" : "bg-background-50"
+                    }`}
                   >
-                    Порядок:
-                  </ThemedText>
-                  {sortOrderOptions.map((option) => {
-                    const isSelected =
-                      option.value === (sortParams.sortOrder || "desc");
-                    return (
-                      <TouchableOpacity
-                        key={option.value}
-                        onPress={() => {
-                          onSortOrderChange(option.value);
-                          onModalVisibleChange(false);
-                        }}
-                        className="flex-row items-center gap-3 p-3 rounded-lg"
-                        style={{
-                          backgroundColor: isSelected
-                            ? selectedBgColor
-                            : itemBgColor,
-                        }}
-                        activeOpacity={0.7}
-                      >
-                        <MaterialIcons
-                          name={option.icon}
-                          size={22}
-                          color={textColor}
-                        />
-                        <ThemedText
-                          type="default"
-                          className="flex-1 text-base"
-                          style={{ color: textColor }}
-                        >
-                          {option.label}
-                        </ThemedText>
-                        {isSelected && (
-                          <MaterialIcons
-                            name="check"
-                            size={22}
-                            color={textColor}
-                          />
-                        )}
-                      </TouchableOpacity>
-                    );
-                  })}
-                </View>
-              </View>
-            </ThemedView>
-          </Pressable>
-        </Pressable>
+                    <Icon
+                      family="MaterialIcons"
+                      name={option.icon}
+                      size={22}
+                      className="text-typography-900"
+                    />
+                    <ThemedText
+                      type="default"
+                      className="flex-1 text-base text-typography-900"
+                    >
+                      {option.label}
+                    </ThemedText>
+                    {isSelected && (
+                      <Icon
+                        family="MaterialIcons"
+                        name="check"
+                        size={22}
+                        className="text-typography-900"
+                      />
+                    )}
+                  </Pressable>
+                );
+              })}
+            </VStack>
+          </VStack>
+        </ModalContent>
       </Modal>
     </>
   );

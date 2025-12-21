@@ -1,4 +1,4 @@
-import { FlatList, View, StyleSheet } from "react-native";
+import { FlatList, Box } from "@/components/ui";
 import type { PalletShortDto } from "@/modules/pallets/api/types";
 import { PalletCard } from "@/modules/pallets/components/cards/pallet-card/PalletCard";
 import { ThemedText } from "@/components/themed-text";
@@ -11,11 +11,11 @@ interface PalletsListViewProps {
 export function PalletsListView({ pallets, rowId }: PalletsListViewProps) {
   if (!pallets || pallets.length === 0) {
     return (
-      <View className="flex-1 justify-center items-center py-8">
+      <Box className="flex-1 justify-center items-center py-8">
         <ThemedText type="default" className="text-center">
           Немає паллет для відображення
         </ThemedText>
-      </View>
+      </Box>
     );
   }
 
@@ -23,23 +23,14 @@ export function PalletsListView({ pallets, rowId }: PalletsListViewProps) {
     <FlatList
       data={pallets}
       renderItem={({ item }) => (
-        <View style={styles.itemContainer}>
+        <Box className="mb-2">
           <PalletCard pallet={item} rowId={rowId} />
-        </View>
+        </Box>
       )}
       keyExtractor={(item) => item._id}
-      contentContainerStyle={styles.contentContainer}
+      contentContainerClassName="p-2"
       showsVerticalScrollIndicator={false}
     />
   );
 }
-
-const styles = StyleSheet.create({
-  contentContainer: {
-    padding: 8,
-  },
-  itemContainer: {
-    marginBottom: 8,
-  },
-});
 

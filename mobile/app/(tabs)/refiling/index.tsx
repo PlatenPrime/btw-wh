@@ -1,14 +1,12 @@
-import { View, ScrollView, TouchableOpacity } from 'react-native';
+import { ScrollView, VStack } from '@/components/ui';
+import { Pressable } from '@/components/ui';
 import { useRouter } from 'expo-router';
 import { ThemedText } from '@/components/themed-text';
 import { PageLayout } from '@/components/layout/page-layout';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { Icon } from '@/components/ui/icon';
 
 export default function RefilingList() {
   const router = useRouter();
-  const colorScheme = useColorScheme() ?? 'light';
 
   const navigationItems = [
     {
@@ -32,29 +30,28 @@ export default function RefilingList() {
     router.push(`/(tabs)/refiling/${route}` as any);
   };
 
-  const iconColor = colorScheme === 'light' ? Colors.light.text : Colors.dark.text;
-
   return (
     <PageLayout title="Поповнення">
       <ScrollView className="flex-1 px-4">
-        <View className="gap-3 py-4">
+        <VStack className="gap-3 py-4">
           {navigationItems.map((item) => (
-            <TouchableOpacity
+            <Pressable
               key={item.route}
               onPress={() => handleNavigation(item.route)}
-              className="flex-row items-center p-4 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800"
-              style={{
-                backgroundColor: colorScheme === 'light' ? '#fff' : '#1f2937',
-                borderColor: colorScheme === 'light' ? '#d1d5db' : '#4b5563',
-              }}
+              className="flex-row items-center p-4 rounded-lg border border-outline-200 bg-background-0"
             >
-              <MaterialIcons name={item.icon as any} size={24} color={iconColor} />
+              <Icon
+                family="MaterialIcons"
+                name={item.icon as any}
+                size={24}
+                className="text-typography-900"
+              />
               <ThemedText type="defaultSemiBold" className="ml-3 text-base">
                 {item.title}
               </ThemedText>
-            </TouchableOpacity>
+            </Pressable>
           ))}
-        </View>
+        </VStack>
       </ScrollView>
     </PageLayout>
   );

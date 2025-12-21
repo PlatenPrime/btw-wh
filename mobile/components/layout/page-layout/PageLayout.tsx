@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { Box } from "@/components/ui";
 import { ThemedView } from "@/components/themed-view";
 import { Header, HeaderActionsProvider } from "@/components/layout/header";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -16,9 +16,9 @@ export function PageLayout({ title, children }: PageLayoutProps) {
     <HeaderActionsProvider>
       <ThemedView className="flex-1">
         <Header title={title} />
-        <View style={{ flex: 1, paddingTop: headerHeight }}>
+        <Box className="flex-1" style={{ paddingTop: headerHeight }}>
           {children}
-        </View>
+        </Box>
       </ThemedView>
     </HeaderActionsProvider>
   );

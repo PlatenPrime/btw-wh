@@ -2,7 +2,7 @@ import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { View, TextInput, Pressable, Text, ActivityIndicator, ScrollView } from "react-native";
+import { ScrollView, Box, Text, Input, InputField, Button, ButtonText, ButtonSpinner } from "@/components/ui";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 import { RoleType } from "@/constants/roles";
 import type { RegisterData } from "@/modules/auth/api/types";
@@ -69,95 +69,98 @@ export const RegisterForm = () => {
       contentContainerClassName="flex-1 justify-center items-center p-6"
       keyboardShouldPersistTaps="handled"
     >
-      <View className="w-full max-w-sm bg-background-0 rounded-xl border border-outline-200 p-6 gap-4">
+      <Box className="w-full max-w-sm bg-background-0 rounded-xl border border-outline-200 p-6 gap-4">
         <Text className="text-2xl font-semibold text-typography-900">
           Реєстрація
         </Text>
 
         {errors.root && (
-          <View className="bg-error-100 border border-error-300 rounded-lg p-3">
+          <Box className="bg-error-100 border border-error-300 rounded-lg p-3">
             <Text className="text-error-700 text-sm">{errors.root.message}</Text>
-          </View>
+          </Box>
         )}
 
         {error && (
-          <View className="bg-error-100 border border-error-300 rounded-lg p-3">
+          <Box className="bg-error-100 border border-error-300 rounded-lg p-3">
             <Text className="text-error-700 text-sm">{error}</Text>
-          </View>
+          </Box>
         )}
 
-        <View className="gap-2">
+        <Box className="gap-2">
           <Text className="text-sm font-medium text-typography-700">Логін</Text>
           <Controller
             control={control}
             name="username"
             render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput
-                className="bg-background-50 border border-outline-200 rounded-lg px-4 py-3 text-typography-900"
-                placeholder="Введіть логін"
-                placeholderTextColor="#9CA3AF"
-                autoComplete="username"
-                autoCapitalize="none"
-                value={value}
-                onChangeText={onChange}
-                onBlur={onBlur}
-                editable={!isLoading}
-              />
+              <Input className="bg-background-50 border border-outline-200 rounded-lg">
+                <InputField
+                  placeholder="Введіть логін"
+                  placeholderTextColor="#9CA3AF"
+                  autoComplete="username"
+                  autoCapitalize="none"
+                  value={value}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  editable={!isLoading}
+                />
+              </Input>
             )}
           />
           {errors.username && (
             <Text className="text-error-600 text-sm">{errors.username.message}</Text>
           )}
-        </View>
+        </Box>
 
-        <View className="gap-2">
+        <Box className="gap-2">
           <Text className="text-sm font-medium text-typography-700">Пароль</Text>
           <Controller
             control={control}
             name="password"
             render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput
-                className="bg-background-50 border border-outline-200 rounded-lg px-4 py-3 text-typography-900"
-                placeholder="Введіть пароль"
-                placeholderTextColor="#9CA3AF"
-                autoComplete="new-password"
-                secureTextEntry
-                value={value}
-                onChangeText={onChange}
-                onBlur={onBlur}
-                editable={!isLoading}
-              />
+              <Input className="bg-background-50 border border-outline-200 rounded-lg">
+                <InputField
+                  placeholder="Введіть пароль"
+                  placeholderTextColor="#9CA3AF"
+                  autoComplete="new-password"
+                  secureTextEntry
+                  value={value}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  editable={!isLoading}
+                />
+              </Input>
             )}
           />
           {errors.password && (
             <Text className="text-error-600 text-sm">{errors.password.message}</Text>
           )}
-        </View>
+        </Box>
 
-        <View className="gap-2">
+        <Box className="gap-2">
           <Text className="text-sm font-medium text-typography-700">Повне ім'я</Text>
           <Controller
             control={control}
             name="fullname"
             render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput
-                className="bg-background-50 border border-outline-200 rounded-lg px-4 py-3 text-typography-900"
-                placeholder="Введіть повне ім'я"
-                placeholderTextColor="#9CA3AF"
-                autoComplete="name"
-                value={value}
-                onChangeText={onChange}
-                onBlur={onBlur}
-                editable={!isLoading}
-              />
+              <Input className="bg-background-50 border border-outline-200 rounded-lg">
+                <InputField
+                  placeholder="Введіть повне ім'я"
+                  placeholderTextColor="#9CA3AF"
+                  autoComplete="name"
+                  value={value}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  editable={!isLoading}
+                />
+              </Input>
             )}
           />
           {errors.fullname && (
             <Text className="text-error-600 text-sm">{errors.fullname.message}</Text>
           )}
-        </View>
+        </Box>
 
-        <View className="gap-2">
+        <Box className="gap-2">
           <Text className="text-sm font-medium text-typography-700">
             Роль (необов'язково)
           </Text>
@@ -165,21 +168,22 @@ export const RegisterForm = () => {
             control={control}
             name="role"
             render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput
-                className="bg-background-50 border border-outline-200 rounded-lg px-4 py-3 text-typography-900"
-                placeholder="USER, ADMIN, PRIME"
-                placeholderTextColor="#9CA3AF"
-                autoCapitalize="characters"
-                value={value}
-                onChangeText={onChange}
-                onBlur={onBlur}
-                editable={!isLoading}
-              />
+              <Input className="bg-background-50 border border-outline-200 rounded-lg">
+                <InputField
+                  placeholder="USER, ADMIN, PRIME"
+                  placeholderTextColor="#9CA3AF"
+                  autoCapitalize="characters"
+                  value={value}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  editable={!isLoading}
+                />
+              </Input>
             )}
           />
-        </View>
+        </Box>
 
-        <View className="gap-2">
+        <Box className="gap-2">
           <Text className="text-sm font-medium text-typography-700">
             Telegram (необов'язково)
           </Text>
@@ -187,21 +191,22 @@ export const RegisterForm = () => {
             control={control}
             name="telegram"
             render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput
-                className="bg-background-50 border border-outline-200 rounded-lg px-4 py-3 text-typography-900"
-                placeholder="Введіть telegram"
-                placeholderTextColor="#9CA3AF"
-                autoCapitalize="none"
-                value={value}
-                onChangeText={onChange}
-                onBlur={onBlur}
-                editable={!isLoading}
-              />
+              <Input className="bg-background-50 border border-outline-200 rounded-lg">
+                <InputField
+                  placeholder="Введіть telegram"
+                  placeholderTextColor="#9CA3AF"
+                  autoCapitalize="none"
+                  value={value}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  editable={!isLoading}
+                />
+              </Input>
             )}
           />
-        </View>
+        </Box>
 
-        <View className="gap-2">
+        <Box className="gap-2">
           <Text className="text-sm font-medium text-typography-700">
             URL фото (необов'язково)
           </Text>
@@ -209,40 +214,39 @@ export const RegisterForm = () => {
             control={control}
             name="photo"
             render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput
-                className="bg-background-50 border border-outline-200 rounded-lg px-4 py-3 text-typography-900"
-                placeholder="https://example.com/photo.jpg"
-                placeholderTextColor="#9CA3AF"
-                autoCapitalize="none"
-                keyboardType="url"
-                value={value}
-                onChangeText={onChange}
-                onBlur={onBlur}
-                editable={!isLoading}
-              />
+              <Input className="bg-background-50 border border-outline-200 rounded-lg">
+                <InputField
+                  placeholder="https://example.com/photo.jpg"
+                  placeholderTextColor="#9CA3AF"
+                  autoCapitalize="none"
+                  keyboardType="url"
+                  value={value}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  editable={!isLoading}
+                />
+              </Input>
             )}
           />
           {errors.photo && (
             <Text className="text-error-600 text-sm">{errors.photo.message}</Text>
           )}
-        </View>
+        </Box>
 
-        <Pressable
-          className={`w-full bg-primary-500 rounded-lg py-3 items-center justify-center ${
-            isLoading ? "opacity-50" : ""
-          }`}
+        <Button
+          className="w-full bg-primary-500 rounded-lg py-3 items-center justify-center"
           onPress={handleSubmit(onSubmit)}
-          disabled={isLoading}
+          isDisabled={isLoading}
         >
           {isLoading ? (
-            <ActivityIndicator color="#FFFFFF" />
+            <ButtonSpinner color="#FFFFFF" />
           ) : (
-            <Text className="text-white font-semibold text-base">
+            <ButtonText className="text-white font-semibold text-base">
               Зареєструватися
-            </Text>
+            </ButtonText>
           )}
-        </Pressable>
-      </View>
+        </Button>
+      </Box>
     </ScrollView>
   );
 };

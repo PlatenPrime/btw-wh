@@ -1,11 +1,14 @@
 import {
   Modal,
-  Pressable,
-  View,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+  ModalBackdrop,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalCloseButton,
+  Box,
+  HStack,
+} from "@/components/ui";
+import { Icon } from "@/components/ui/icon";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import type { IPallet } from "@/modules/pallets/api/types";
@@ -19,9 +22,6 @@ interface MovePalletPosesDialogViewProps {
   isSourceEmpty: boolean;
   mutationError: string | null;
   isMoving: boolean;
-  bgColor: string;
-  textColor: string;
-  borderColor: string;
 }
 
 export function MovePalletPosesDialogView({
@@ -32,71 +32,49 @@ export function MovePalletPosesDialogView({
   isSourceEmpty,
   mutationError,
   isMoving,
-  bgColor,
-  textColor,
-  borderColor,
 }: MovePalletPosesDialogViewProps) {
   return (
-    <Modal
-      visible={visible}
-      transparent
-      animationType="fade"
-      onRequestClose={onClose}
-    >
-      <Pressable
-        className="flex-1 justify-center items-center"
-        style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
-        onPress={onClose}
-      >
-        <Pressable
-          className="w-full max-w-md mx-4"
-          onPress={(e) => e.stopPropagation()}
-        >
-          <ThemedView
-            className="rounded-xl p-6 border"
-            style={{
-              backgroundColor: bgColor,
-              borderColor: borderColor,
-            }}
-          >
-            <View className="flex-row items-center justify-between mb-4">
-              <ThemedText type="defaultSemiBold" className="text-lg">
-                Перемістити позиції
+    <Modal isOpen={visible} onClose={onClose}>
+      <ModalBackdrop />
+      <ModalContent className="w-full max-w-md mx-4 rounded-xl border border-outline-200 bg-background-0">
+        <ModalHeader>
+          <HStack className="items-center justify-between">
+            <ThemedText type="defaultSemiBold" className="text-lg">
+              Перемістити позиції
+            </ThemedText>
+            <ModalCloseButton onPress={onClose}>
+              <Icon 
+                family="Ionicons" 
+                name="close" 
+                size={24} 
+                color="#1f2937"
+              />
+            </ModalCloseButton>
+          </HStack>
+        </ModalHeader>
+        <ModalBody>
+          {mutationError && (
+            <Box className="mb-4 p-3 rounded-lg border border-error-500 bg-error-50">
+              <ThemedText type="default" className="text-error-700">
+                {mutationError}
               </ThemedText>
-              <TouchableOpacity
-                onPress={onClose}
-                className="p-2"
-                activeOpacity={0.7}
-              >
-                <MaterialIcons name="close" size={24} color={textColor} />
-              </TouchableOpacity>
-            </View>
+            </Box>
+          )}
 
-            <ScrollView keyboardShouldPersistTaps="handled">
-              {mutationError && (
-                <View className="mb-4 p-3 rounded-lg bg-red-100 dark:bg-red-900/20">
-                  <ThemedText type="default" style={{ color: "#ef4444" }}>
-                    {mutationError}
-                  </ThemedText>
-                </View>
-              )}
-
-              {isSourceEmpty ? (
-                <ThemedText type="default" className="text-sm mb-4">
-                  На цій паллеті немає позицій для переміщення
-                </ThemedText>
-              ) : (
-                <MovePalletPosesForm
-                  fromPallet={pallet}
-                  onSuccess={onSubmit}
-                  isSubmitting={isMoving}
-                  onCancel={onClose}
-                />
-              )}
-            </ScrollView>
-          </ThemedView>
-        </Pressable>
-      </Pressable>
+          {isSourceEmpty ? (
+            <ThemedText type="default" className="text-sm mb-4">
+              На цій паллеті немає позицій для переміщення
+            </ThemedText>
+          ) : (
+            <MovePalletPosesForm
+              fromPallet={pallet}
+              onSuccess={onSubmit}
+              isSubmitting={isMoving}
+              onCancel={onClose}
+            />
+          )}
+        </ModalBody>
+      </ModalContent>
     </Modal>
   );
 }

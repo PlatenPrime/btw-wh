@@ -1,8 +1,6 @@
-import { View, TextInput, TouchableOpacity, ActivityIndicator } from "react-native";
+import { Box, Input, InputField, Button, ButtonText, ButtonSpinner, HStack } from "@/components/ui";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { useColorScheme } from "@/hooks/use-color-scheme";
-import { Colors } from "@/constants/theme";
 import type { RowFormValues } from "@/modules/rows/components/forms/schema";
 import type { UseFormReturn } from "react-hook-form";
 import { Controller } from "react-hook-form";
@@ -20,12 +18,6 @@ export function CreateRowFormView({
   onSubmit,
   onCancel,
 }: CreateRowFormViewProps) {
-  const colorScheme = useColorScheme() ?? "light";
-  const bgColor = colorScheme === "light" ? "#fff" : "#1f2937";
-  const borderColor = colorScheme === "light" ? "#d1d5db" : "#4b5563";
-  const textColor = colorScheme === "light" ? Colors.light.text : Colors.dark.text;
-  const placeholderColor = colorScheme === "light" ? "#9ca3af" : "#6b7280";
-
   const {
     control,
     handleSubmit,
@@ -33,8 +25,8 @@ export function CreateRowFormView({
   } = form;
 
   return (
-    <View className="gap-4">
-      <View className="gap-2">
+    <Box className="gap-4">
+      <Box className="gap-2">
         <ThemedText type="defaultSemiBold" className="text-sm">
           Назва ряду *
         </ThemedText>
@@ -42,78 +34,71 @@ export function CreateRowFormView({
           control={control}
           name="title"
           render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              className="rounded-lg px-4 py-3 border"
-              style={{
-                backgroundColor: bgColor,
-                borderColor: errors.title ? "#ef4444" : borderColor,
-                color: textColor,
-              }}
-              placeholder="XX-XX"
-              placeholderTextColor={placeholderColor}
-              value={value}
-              onChangeText={onChange}
-              onBlur={onBlur}
-              autoFocus
-              editable={!isSubmitting}
-            />
+            <Input
+              className={`rounded-lg border bg-background-0 ${
+                errors.title ? "border-error-500" : "border-outline-200"
+              }`}
+            >
+              <InputField
+                placeholder="XX-XX"
+                placeholderTextColor="#9ca3af"
+                value={value}
+                onChangeText={onChange}
+                onBlur={onBlur}
+                autoFocus
+                editable={!isSubmitting}
+                className="text-typography-900"
+              />
+            </Input>
           )}
         />
         {errors.title && (
-          <ThemedText type="default" className="text-xs" style={{ color: "#ef4444" }}>
+          <ThemedText type="default" className="text-xs text-error-600">
             {errors.title.message}
           </ThemedText>
         )}
-      </View>
+      </Box>
 
       {errors.root && (
-        <ThemedView
-          className="rounded-lg p-3 border"
-          style={{
-            backgroundColor: colorScheme === "light" ? "#fee2e2" : "#7f1d1d",
-            borderColor: "#ef4444",
-          }}
-        >
-          <ThemedText type="default" className="text-xs" style={{ color: "#ef4444" }}>
+        <ThemedView className="rounded-lg p-3 border border-error-500 bg-error-50">
+          <ThemedText type="default" className="text-xs text-error-700">
             {errors.root.message}
           </ThemedText>
         </ThemedView>
       )}
 
-      <View className="flex-row gap-2">
+      <HStack className="gap-2">
         {onCancel && (
-          <TouchableOpacity
+          <Button
+            variant="outline"
             onPress={onCancel}
-            disabled={isSubmitting}
-            className="flex-1 rounded-lg px-4 py-3 border items-center justify-center"
-            style={{
-              backgroundColor: bgColor,
-              borderColor: borderColor,
-              opacity: isSubmitting ? 0.5 : 1,
-            }}
+            isDisabled={isSubmitting}
+            className="flex-1 rounded-lg border border-outline-200 bg-background-0"
+            opacity={isSubmitting ? 0.5 : 1}
           >
-            <ThemedText type="defaultSemiBold">Скасувати</ThemedText>
-          </TouchableOpacity>
+            <ButtonText>
+              <ThemedText type="defaultSemiBold">Скасувати</ThemedText>
+            </ButtonText>
+          </Button>
         )}
-        <TouchableOpacity
+        <Button
           onPress={handleSubmit(onSubmit)}
-          disabled={isSubmitting}
-          className="flex-1 rounded-lg px-4 py-3 items-center justify-center"
-          style={{
-            backgroundColor: "#3b82f6",
-            opacity: isSubmitting ? 0.5 : 1,
-          }}
+          isDisabled={isSubmitting}
+          className="flex-1 rounded-lg bg-info-500"
+          opacity={isSubmitting ? 0.5 : 1}
         >
           {isSubmitting ? (
-            <ActivityIndicator color="#fff" />
+            <ButtonSpinner color="#fff" />
           ) : (
-            <ThemedText type="defaultSemiBold" style={{ color: "#fff" }}>
-              Створити
-            </ThemedText>
+            <ButtonText>
+              <ThemedText type="defaultSemiBold" className="text-white">
+                Створити
+              </ThemedText>
+            </ButtonText>
           )}
-        </TouchableOpacity>
-      </View>
-    </View>
+        </Button>
+      </HStack>
+    </Box>
   );
 }
 

@@ -19,11 +19,6 @@ export function MovePalletPosesDialog({
   onSuccess,
 }: MovePalletPosesDialogProps) {
   const [internalOpen, setInternalOpen] = useState(false);
-  const colorScheme = useColorScheme() ?? "light";
-  const bgColor = colorScheme === "light" ? "#fff" : "#1f2937";
-  const textColor =
-    colorScheme === "light" ? Colors.light.text : Colors.dark.text;
-  const borderColor = colorScheme === "light" ? "#d1d5db" : "#4b5563";
 
   const isControlled = controlledOpen !== undefined;
   const open = isControlled ? controlledOpen : internalOpen;
@@ -54,9 +49,6 @@ export function MovePalletPosesDialog({
       isSourceEmpty={isSourceEmpty}
       mutationError={mutationError}
       isMoving={isMoving}
-      bgColor={bgColor}
-      textColor={textColor}
-      borderColor={borderColor}
     />
   );
 }

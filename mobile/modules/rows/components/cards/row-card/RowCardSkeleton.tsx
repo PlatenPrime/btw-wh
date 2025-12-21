@@ -1,14 +1,13 @@
-import { View } from "react-native";
-import { ThemedText } from "@/components/themed-text";
+import { Box } from "@/components/ui";
 
 export function RowCardSkeleton() {
   return (
-    <View className="p-4 rounded-lg border border-gray-300 bg-gray-100 dark:bg-gray-800 dark:border-gray-700">
-      <View className="items-center">
-        <View className="h-6 w-24 bg-gray-300 dark:bg-gray-600 rounded mb-2" />
-        <View className="h-4 w-16 bg-gray-300 dark:bg-gray-600 rounded" />
-      </View>
-    </View>
+    <Box className="p-4 rounded-lg border border-outline-200 bg-background-0 items-center">
+      <Box className="items-center">
+        <Box className="h-6 w-24 rounded bg-background-200 mb-2" />
+        <Box className="h-4 w-16 rounded bg-background-200" />
+      </Box>
+    </Box>
   );
 }
 

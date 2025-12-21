@@ -1,19 +1,17 @@
-import { View } from "react-native";
+import { Box } from "@/components/ui";
 
 export function PalletCardSkeleton() {
   return (
-    <View className="p-4 rounded-lg border border-gray-300 bg-gray-100 dark:bg-gray-800 dark:border-gray-700">
-      <View className="gap-2">
-        <View className="flex-row items-center justify-between">
-          <View className="h-5 w-24 bg-gray-300 dark:bg-gray-600 rounded" />
-          <View className="h-4 w-16 bg-gray-300 dark:bg-gray-600 rounded" />
-        </View>
-        <View className="gap-1">
-          <View className="h-3 w-full bg-gray-300 dark:bg-gray-600 rounded" />
-          <View className="h-3 w-3/4 bg-gray-300 dark:bg-gray-600 rounded" />
-        </View>
-      </View>
-    </View>
+    <Box className="p-4 rounded-lg border border-outline-200 bg-background-0 gap-2">
+      <Box className="flex-row items-center justify-between">
+        <Box className="h-5 w-24 rounded bg-background-200" />
+        <Box className="h-4 w-16 rounded bg-background-200" />
+      </Box>
+      <Box className="gap-1">
+        <Box className="h-3 w-full rounded bg-background-200" />
+        <Box className="h-3 w-3/4 rounded bg-background-200" />
+      </Box>
+    </Box>
   );
 }
 

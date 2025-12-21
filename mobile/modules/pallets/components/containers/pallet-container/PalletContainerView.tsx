@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { Box, VStack, HStack } from "@/components/ui";
 import { ThemedText } from "@/components/themed-text";
 import type { IPallet } from "@/modules/pallets/api/types";
 import { PalletInfo } from "@/modules/pallets/components/elements/pallet-info";
@@ -20,9 +20,9 @@ export function PalletContainerView({
   onSortParamsChange,
 }: PalletContainerViewProps) {
   return (
-    <View className="flex-1">
-      <View className="p-4 gap-4">
-        <View className="gap-2">
+    <Box className="flex-1">
+      <Box className="p-4 gap-4">
+        <VStack className="gap-2">
           <ThemedText type="title" className="mb-2">
             {pallet.title}
           </ThemedText>
@@ -34,22 +34,22 @@ export function PalletContainerView({
               Сектор: {pallet.sector}
             </ThemedText>
           )}
-        </View>
+        </VStack>
 
-        <View className="flex-row items-center justify-between gap-4">
+        <HStack className="items-center justify-between gap-4">
           <PalletSortControls
             sortParams={sortParams}
             onSortParamsChange={onSortParamsChange}
           />
           <PalletInfo pallet={pallet} />
-        </View>
-      </View>
+        </HStack>
+      </Box>
 
       <PosesByPalletFetcher
         palletId={pallet._id}
         sortParams={sortParams}
       />
-    </View>
+    </Box>
   );
 }
 

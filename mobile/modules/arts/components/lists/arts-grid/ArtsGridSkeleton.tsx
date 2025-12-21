@@ -1,4 +1,4 @@
-import { FlatList, View, StyleSheet } from "react-native";
+import { FlatList, Box } from "@/components/ui";
 import { ArtGridCardSkeleton } from "@/modules/arts/components/cards/arts-grid-card/ArtGridCardSkeleton";
 
 export function ArtsGridSkeleton() {
@@ -6,23 +6,14 @@ export function ArtsGridSkeleton() {
     <FlatList
       data={Array.from({ length: 10 })}
       renderItem={() => (
-        <View style={styles.itemContainer}>
+        <Box className="mb-2">
           <ArtGridCardSkeleton />
-        </View>
+        </Box>
       )}
       keyExtractor={(_, index) => `skeleton-${index}`}
       numColumns={1}
-      contentContainerStyle={styles.contentContainer}
+      contentContainerClassName="p-2"
       showsVerticalScrollIndicator={false}
     />
   );
 }
-
-const styles = StyleSheet.create({
-  contentContainer: {
-    padding: 8,
-  },
-  itemContainer: {
-    marginBottom: 8,
-  },
-});
