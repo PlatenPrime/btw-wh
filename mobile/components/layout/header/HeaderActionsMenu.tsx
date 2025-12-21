@@ -8,6 +8,7 @@ import { Box, Pressable, HStack } from "@/components/ui";
 import { Icon } from "@/components/ui/icon";
 import { ThemedText } from "@/components/themed-text";
 import { useHeaderActions } from "./useHeaderActions";
+import { useIconColor } from "@/hooks/use-icon-color";
 
 interface HeaderActionsMenuProps {
   trigger?: React.ReactNode;
@@ -37,6 +38,7 @@ const iconColorMap: Record<string, string> = {
 export function HeaderActionsMenu({ trigger }: HeaderActionsMenuProps) {
   const { actions } = useHeaderActions();
   const [modalVisible, setModalVisible] = useState(false);
+  const defaultIconColor = useIconColor();
 
   // Если нет действий, не рендерим меню
   if (actions.length === 0) {
@@ -68,7 +70,7 @@ export function HeaderActionsMenu({ trigger }: HeaderActionsMenuProps) {
     textColorClass: string
   ) => {
     const iconColor =
-      iconColorMap[action.iconColor || "default"] || undefined;
+      iconColorMap[action.iconColor || "default"] || defaultIconColor;
     return (
       <Pressable
         key={action.id}
@@ -161,7 +163,7 @@ export function HeaderActionsMenu({ trigger }: HeaderActionsMenuProps) {
           family="MaterialIcons"
           name="more-vert"
           size={24}
-          className="text-typography-900"
+          color={defaultIconColor}
         />
       </Pressable>
       {modalContent}

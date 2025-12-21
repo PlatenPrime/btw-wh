@@ -3,6 +3,7 @@ import { ThemedView } from "@/components/themed-view";
 import type { GetPosesByPalletIdParams } from "@/modules/poses/api/services/queries/getPosesByPalletId";
 import { Modal, ModalBackdrop, ModalContent, ModalHeader, ModalCloseButton, Pressable, Box, HStack, VStack } from "@/components/ui";
 import { Icon } from "@/components/ui/icon";
+import { useIconColor } from "@/hooks/use-icon-color";
 
 interface PalletSortControlsViewProps {
   sortParams: GetPosesByPalletIdParams;
@@ -47,6 +48,8 @@ export function PalletSortControlsView({
   sortByOptions,
   sortOrderOptions,
 }: PalletSortControlsViewProps) {
+  const iconColor = useIconColor();
+  
   return (
     <>
       <Pressable
@@ -57,7 +60,7 @@ export function PalletSortControlsView({
           family="MaterialIcons"
           name={currentSortBy?.icon || "sort"}
           size={18}
-          className="text-typography-900"
+          color={iconColor}
         />
         <ThemedText type="default" className="text-sm">
           {currentSortBy?.label}
@@ -66,7 +69,7 @@ export function PalletSortControlsView({
           family="MaterialIcons"
           name={currentSortOrder?.icon || "arrow-downward"}
           size={18}
-          className="text-typography-900"
+          color={iconColor}
         />
       </Pressable>
 
@@ -83,7 +86,7 @@ export function PalletSortControlsView({
                   family="MaterialIcons"
                   name="close"
                   size={24}
-                  className="text-typography-900"
+                  color={iconColor}
                 />
               </ModalCloseButton>
             </HStack>
@@ -111,11 +114,11 @@ export function PalletSortControlsView({
                       family="MaterialIcons"
                       name={option.icon}
                       size={22}
-                      className="text-typography-900"
+                      color={iconColor}
                     />
                     <ThemedText
                       type="default"
-                      className="flex-1 text-base text-typography-900"
+                      className="flex-1 text-base"
                     >
                       {option.label}
                     </ThemedText>
@@ -124,7 +127,7 @@ export function PalletSortControlsView({
                         family="MaterialIcons"
                         name="check"
                         size={22}
-                        className="text-typography-900"
+                        color={iconColor}
                       />
                     )}
                   </Pressable>
@@ -154,11 +157,11 @@ export function PalletSortControlsView({
                       family="MaterialIcons"
                       name={option.icon}
                       size={22}
-                      className="text-typography-900"
+                      color={iconColor}
                     />
                     <ThemedText
                       type="default"
-                      className="flex-1 text-base text-typography-900"
+                      className="flex-1 text-base"
                     >
                       {option.label}
                     </ThemedText>
@@ -167,7 +170,7 @@ export function PalletSortControlsView({
                         family="MaterialIcons"
                         name="check"
                         size={22}
-                        className="text-typography-900"
+                        color={iconColor}
                       />
                     )}
                   </Pressable>

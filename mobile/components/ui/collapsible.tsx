@@ -4,9 +4,11 @@ import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import { Pressable, HStack } from '@/components/ui';
+import { useIconColor } from '@/hooks/use-icon-color';
 
 export function Collapsible({ children, title }: PropsWithChildren & { title: string }) {
   const [isOpen, setIsOpen] = useState(false);
+  const iconColor = useIconColor();
 
   return (
     <ThemedView>
@@ -19,7 +21,7 @@ export function Collapsible({ children, title }: PropsWithChildren & { title: st
             name="chevron.right"
             size={18}
             weight="medium"
-            color="#374151"
+            color={iconColor}
             style={{ transform: [{ rotate: isOpen ? '90deg' : '0deg' }] }}
           />
           <ThemedText type="defaultSemiBold">{title}</ThemedText>

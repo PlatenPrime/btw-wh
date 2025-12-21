@@ -4,6 +4,7 @@ import { Icon } from "@/components/ui/icon";
 import { ThemedText } from "@/components/themed-text";
 import { useSidebar } from "@/components/layout/sidebar/SidebarProvider";
 import { HeaderActionsMenu } from "./HeaderActionsMenu";
+import { useIconColor } from "@/hooks/use-icon-color";
 
 interface HeaderProps {
   title: string;
@@ -12,6 +13,7 @@ interface HeaderProps {
 export function Header({ title }: HeaderProps) {
   const { toggleSidebar } = useSidebar();
   const insets = useSafeAreaInsets();
+  const iconColor = useIconColor();
 
   const headerHeight = 56 + insets.top;
 
@@ -29,7 +31,7 @@ export function Header({ title }: HeaderProps) {
           onPress={toggleSidebar}
           className="p-2 min-w-[40px]"
         >
-          <Icon family="MaterialIcons" name="menu" size={24} color="#1f2937" />
+          <Icon family="MaterialIcons" name="menu" size={24} color={iconColor} />
         </Pressable>
 
         {/* Центральная секция - заголовок */}

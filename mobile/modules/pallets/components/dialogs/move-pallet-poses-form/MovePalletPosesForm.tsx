@@ -4,6 +4,7 @@ import { ThemedView } from "@/components/themed-view";
 import { Box, VStack, HStack, Input, InputField, FlatList, Pressable, Button, ButtonText, ButtonSpinner, Spinner, Icon } from "@/components/ui";
 import type { IPallet } from "@/modules/pallets/api/types";
 import { useEmptyPalletsQuery } from "@/modules/pallets/api/hooks/queries/useEmptyPalletsQuery";
+import { useIconColor } from "@/hooks/use-icon-color";
 
 interface MovePalletPosesFormProps {
   fromPallet: IPallet;
@@ -20,6 +21,7 @@ export function MovePalletPosesForm({
 }: MovePalletPosesFormProps) {
   const [search, setSearch] = useState("");
   const [selectedPalletId, setSelectedPalletId] = useState<string>("");
+  const iconColor = useIconColor();
 
   const palletsQuery = useEmptyPalletsQuery();
   const pallets = palletsQuery.data;
@@ -74,7 +76,7 @@ export function MovePalletPosesForm({
       <Box className="max-h-64 rounded-lg border border-outline-200 overflow-hidden">
         {isLoading ? (
           <Box className="p-4 items-center">
-            <Spinner size="small" color="#1f2937" />
+            <Spinner size="small" color={iconColor} />
           </Box>
         ) : filteredPallets.length === 0 ? (
           <Box className="p-4">
@@ -108,7 +110,7 @@ export function MovePalletPosesForm({
                       family="MaterialIcons"
                       name={isSelected ? "radio-button-checked" : "radio-button-unchecked"}
                       size={20}
-                      color={disabled ? "#9ca3af" : "#1f2937"}
+                      color={disabled ? "#9ca3af" : iconColor}
                     />
                     <Box className="flex-1">
                       <ThemedText type="default" className="text-sm">

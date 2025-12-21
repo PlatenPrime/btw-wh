@@ -1,9 +1,10 @@
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import React from 'react';
+import { Colors } from '@/constants/theme';
 
 export type IconName = keyof typeof MaterialIcons.glyphMap;
 
-export const getIcon = (iconName: string, size = 20, color = '#000') => {
+export const getIcon = (iconName: string, size = 20, color?: string) => {
   const iconMap: Record<string, IconName> = {
     StickyNote: 'note',
     RefreshCcwDot: 'refresh',
@@ -18,7 +19,10 @@ export const getIcon = (iconName: string, size = 20, color = '#000') => {
   };
 
   const mappedIcon = iconMap[iconName] || 'menu';
-  return <MaterialIcons name={mappedIcon} size={size} color={color} />;
+  // Если цвет не передан, используем цвет по умолчанию из констант
+  // Вызывающий код должен использовать useIconColor() для получения правильного цвета
+  const defaultColor = color || Colors.light.icon;
+  return <MaterialIcons name={mappedIcon} size={size} color={color || defaultColor} />;
 };
 
 export const appSidebarData = {

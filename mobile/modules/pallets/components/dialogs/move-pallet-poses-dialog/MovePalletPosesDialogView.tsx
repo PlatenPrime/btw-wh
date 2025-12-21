@@ -13,6 +13,7 @@ import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import type { IPallet } from "@/modules/pallets/api/types";
 import { MovePalletPosesForm } from "../../dialogs/move-pallet-poses-form/MovePalletPosesForm";
+import { useIconColor } from "@/hooks/use-icon-color";
 
 interface MovePalletPosesDialogViewProps {
   pallet: IPallet;
@@ -33,6 +34,8 @@ export function MovePalletPosesDialogView({
   mutationError,
   isMoving,
 }: MovePalletPosesDialogViewProps) {
+  const iconColor = useIconColor();
+  
   return (
     <Modal isOpen={visible} onClose={onClose}>
       <ModalBackdrop />
@@ -47,7 +50,7 @@ export function MovePalletPosesDialogView({
                 family="Ionicons" 
                 name="close" 
                 size={24} 
-                color="#1f2937"
+                color={iconColor}
               />
             </ModalCloseButton>
           </HStack>

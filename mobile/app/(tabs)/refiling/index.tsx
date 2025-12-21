@@ -4,9 +4,11 @@ import { useRouter } from 'expo-router';
 import { ThemedText } from '@/components/themed-text';
 import { PageLayout } from '@/components/layout/page-layout';
 import { Icon } from '@/components/ui/icon';
+import { useIconColor } from '@/hooks/use-icon-color';
 
 export default function RefilingList() {
   const router = useRouter();
+  const iconColor = useIconColor();
 
   const navigationItems = [
     {
@@ -44,7 +46,7 @@ export default function RefilingList() {
                 family="MaterialIcons"
                 name={item.icon as any}
                 size={24}
-                className="text-typography-900"
+                color={iconColor}
               />
               <ThemedText type="defaultSemiBold" className="ml-3 text-base">
                 {item.title}

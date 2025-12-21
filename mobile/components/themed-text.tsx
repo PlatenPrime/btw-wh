@@ -1,6 +1,7 @@
 import { type TextProps } from 'react-native';
 
 import { Text } from '@/components/ui/text';
+import { useTheme } from '@/providers/theme-provider';
 
 export type ThemedTextProps = TextProps & {
   lightColor?: string;
@@ -25,9 +26,11 @@ export function ThemedText({
   className,
   ...rest
 }: ThemedTextProps) {
+  const { resolvedTheme } = useTheme();
+  
   // Use custom colors if provided, otherwise use theme tokens
   const customStyle = (lightColor || darkColor) 
-    ? { color: lightColor || darkColor }
+    ? { color: resolvedTheme === 'dark' ? (darkColor || lightColor) : (lightColor || darkColor) }
     : undefined;
 
   const typeClassName = typeClasses[type] || typeClasses.default;

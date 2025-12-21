@@ -1,20 +1,19 @@
-import { ThemedText } from "@/components/themed-text";
+import { ModeToggle } from "@/components/shared/mode-toggle";
 import { Colors } from "@/constants/theme";
-import { useColorScheme } from "@/hooks/use-color-scheme";
+import { useAuth } from "@/modules/auth/api/hooks/useAuth";
+import { useTheme } from "@/providers/theme-provider";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useRouter } from "expo-router";
 import React from "react";
 import { Pressable, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useSidebar } from "./SidebarProvider";
 import { ProfileSidebarCard } from "./ProfileSidebarCard";
-import { useAuth } from "@/modules/auth/api/hooks/useAuth";
-import { ModeToggle } from "@/components/shared/mode-toggle";
+import { useSidebar } from "./SidebarProvider";
 
 export function AppSidebar() {
   const router = useRouter();
   const { isOpen, setIsOpen } = useSidebar();
-  const colorScheme = useColorScheme() ?? "light";
+  const { resolvedTheme } = useTheme();
   const insets = useSafeAreaInsets();
   const { logout, isLoading } = useAuth();
 
@@ -29,9 +28,11 @@ export function AppSidebar() {
   }
 
   const bgColor =
-    colorScheme === "light" ? Colors.light.background : Colors.dark.background;
+    resolvedTheme === "light"
+      ? Colors.light.background
+      : Colors.dark.background;
   const textColor =
-    colorScheme === "light" ? Colors.light.text : Colors.dark.text;
+    resolvedTheme === "light" ? Colors.light.text : Colors.dark.text;
 
   return (
     <>
@@ -49,10 +50,7 @@ export function AppSidebar() {
           top: 0,
         }}
       >
-        <View className="flex-row items-center justify-between p-4 border-b border-black/10">
-          <ThemedText type="title" className="text-2xl font-bold">
-            BTW
-          </ThemedText>
+        <View className="flex-row items-center justify-end p-4 border-b border-black/10">
           <TouchableOpacity
             onPress={() => setIsOpen(false)}
             className="p-2 rounded-full active:bg-black/10 dark:active:bg-white/10"
@@ -63,7 +61,7 @@ export function AppSidebar() {
         </View>
 
         <View className="flex-1 justify-end">
-          <View className="px-4 pb-4">
+          <View className="px-4 py-4">
             <ModeToggle />
           </View>
           <ProfileSidebarCard

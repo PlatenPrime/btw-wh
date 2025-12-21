@@ -1,6 +1,7 @@
 import { Box, HStack } from "@/components/ui";
 import { ThemedText } from "@/components/themed-text";
 import { Icon } from "@/components/ui/icon";
+import { useIconColor } from "@/hooks/use-icon-color";
 
 interface PosInfoItemProps {
   icon: string;
@@ -9,6 +10,8 @@ interface PosInfoItemProps {
 }
 
 export function PosInfoItem({ icon, value, isError }: PosInfoItemProps) {
+  const iconColor = useIconColor();
+  
   return (
     <Box
       className={`flex-row items-center justify-center gap-1 rounded-lg px-2 py-1 ${
@@ -19,7 +22,7 @@ export function PosInfoItem({ icon, value, isError }: PosInfoItemProps) {
         family="MaterialIcons"
         name={icon}
         size={12}
-        className={isError ? "text-error-600" : "text-typography-700"}
+        color={isError ? "#ef4444" : iconColor}
       />
       <ThemedText
         type="default"

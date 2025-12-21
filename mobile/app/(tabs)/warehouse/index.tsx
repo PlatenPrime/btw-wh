@@ -3,9 +3,11 @@ import { ThemedText } from "@/components/themed-text";
 import { Pressable, ScrollView, VStack } from "@/components/ui";
 import { Icon } from "@/components/ui/icon";
 import { useRouter } from "expo-router";
+import { useIconColor } from "@/hooks/use-icon-color";
 
 export default function WarehouseList() {
   const router = useRouter();
+  const iconColor = useIconColor();
 
   const navigationItems = [
     {
@@ -43,7 +45,7 @@ export default function WarehouseList() {
                 family="MaterialIcons"
                 name={item.icon as any}
                 size={24}
-                color="#1f2937"
+                color={iconColor}
               />
               <ThemedText type="defaultSemiBold" className="ml-3 text-base">
                 {item.title}
