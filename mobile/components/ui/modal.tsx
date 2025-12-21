@@ -1,5 +1,6 @@
 import { createModal } from "@gluestack-ui/core/modal/creator";
-import { Pressable, Modal as RNModal, View } from "react-native";
+import { Pressable, Modal as RNModal, View, ScrollView } from "react-native";
+import type { ScrollViewProps } from "react-native";
 
 export const Modal = createModal({
   Root: RNModal,
@@ -17,6 +18,27 @@ export const ModalCloseButton = Modal.CloseButton;
 export const ModalHeader = Modal.Header;
 export const ModalBody = Modal.Body;
 export const ModalFooter = Modal.Footer;
+
+/**
+ * Скроллируемый ModalBody для использования в диалогах с формами
+ * Оборачивает контент в ScrollView для поддержки скролла при большом количестве инпутов
+ */
+export function ScrollableModalBody({
+  children,
+  className,
+  ...props
+}: ScrollViewProps & { className?: string }) {
+  return (
+    <ScrollView
+      className={className}
+      keyboardShouldPersistTaps="handled"
+      showsVerticalScrollIndicator={true}
+      {...props}
+    >
+      {children}
+    </ScrollView>
+  );
+}
 
 export type ModalProps = React.ComponentProps<typeof Modal>;
 export type ModalBackdropProps = React.ComponentProps<typeof ModalBackdrop>;

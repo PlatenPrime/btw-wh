@@ -34,14 +34,7 @@ function RowDetailContent({ row, rowId }: RowDetailContentProps) {
 
   return (
     <View className="flex-1 p-4">
-      <View className="mb-4">
-        <ThemedText type="title" className="mb-2">
-          {row.title}
-        </ThemedText>
-        <ThemedText type="default">
-          Паллет: {row.pallets.length}
-        </ThemedText>
-      </View>
+
       <PalletsByRowFetcher rowId={rowId} />
       <CreatePalletDialog
         row={row}
@@ -80,7 +73,7 @@ export default function RowDetailScreen() {
   const row = data.data;
 
   return (
-    <PageLayout title={row.title}>
+    <PageLayout title={`Ряд:  ${row.title}`}>
       <RowDetailContent row={row} rowId={rowId} />
     </PageLayout>
   );

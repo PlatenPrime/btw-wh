@@ -1,4 +1,3 @@
-import { useDialogThemeColors } from "@/hooks/use-dialog-theme-colors";
 import type { RowDto } from "@/modules/rows/api/types/dto";
 import { useState } from "react";
 import { CreatePalletDialogView } from "./CreatePalletDialogView";
@@ -18,7 +17,6 @@ export function CreatePalletDialog({
   onSuccess,
 }: CreatePalletDialogProps) {
   const [internalOpen, setInternalOpen] = useState(false);
-  const { bgColor, textColor, borderColor } = useDialogThemeColors();
 
   const isControlled = controlledOpen !== undefined;
   const open = isControlled ? controlledOpen : internalOpen;
@@ -46,9 +44,6 @@ export function CreatePalletDialog({
       form={form}
       onSubmit={onSubmit}
       isSubmitting={isSubmitting}
-      bgColor={bgColor}
-      textColor={textColor}
-      borderColor={borderColor}
     />
   );
 }

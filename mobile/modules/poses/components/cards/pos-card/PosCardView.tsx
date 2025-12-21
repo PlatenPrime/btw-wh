@@ -1,32 +1,30 @@
-import { ThemedText } from "@/components/themed-text";
-import { Box } from "@/components/ui";
-import type { IPos } from "@/modules/poses/api/types";
+import { Box, HStack } from "@/components/ui";
 import { ArtImageLink } from "@/modules/arts/components/elements/art-image-link/ArtImageLink";
+import type { IPos } from "@/modules/poses/api/types";
+import { View } from "react-native";
 import { PosInfoItem } from "./components/pos-info-item/PosInfoItem";
 
 interface PosCardViewProps {
   pos: IPos;
   skladName: string;
+  menu?: React.ReactNode;
 }
 
-export function PosCardView({
-  pos,
-  skladName,
-}: PosCardViewProps) {
+export function PosCardView({ pos, skladName, menu }: PosCardViewProps) {
   return (
     <Box className="p-2 rounded-lg border border-outline-200 bg-background-0">
-      {/* Header with image and title */}
-      <Box className="mb-2">
-        <ArtImageLink artikul={pos.artikul} nameukr={pos.nameukr} />
-      </Box>
+      {/* Header with image, title and menu */}
+      <HStack className="items-start justify-between mb-2">
+        <Box className="flex-1">
+          <ArtImageLink artikul={pos.artikul} nameukr={pos.nameukr} />
+        </Box>
+        {menu && <View>{menu}</View>}
+      </HStack>
 
       {/* Content with metrics */}
       <Box className="flex-row gap-1.5">
         <Box className="flex-1">
-          <PosInfoItem
-            icon="warehouse"
-            value={skladName}
-          />
+          <PosInfoItem icon="warehouse" value={skladName} />
         </Box>
         <Box className="flex-1">
           <PosInfoItem

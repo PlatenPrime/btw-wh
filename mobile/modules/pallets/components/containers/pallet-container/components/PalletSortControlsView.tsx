@@ -54,7 +54,7 @@ export function PalletSortControlsView({
     <>
       <Pressable
         onPress={() => onModalVisibleChange(true)}
-        className="flex-row items-center gap-2 px-3 py-2 rounded-lg border border-outline-200 bg-background-0"
+        className="flex-row items-center gap-2 px-3 py-2 p-2 rounded-lg border border-outline-200 bg-background-0"
       >
         <Icon
           family="MaterialIcons"

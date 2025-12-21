@@ -8,6 +8,7 @@ import { ClearPalletDialog } from "../../dialogs/clear-pallet-dialog/ClearPallet
 import { DeletePalletDialog } from "../../dialogs/delete-pallet-dialog/DeletePalletDialog";
 import { DeletePalletEmptyPosesDialog } from "../../dialogs/delete-pallet-empty-poses-dialog/DeletePalletEmptyPosesDialog";
 import { MovePalletPosesDialog } from "../../dialogs/move-pallet-poses-dialog/MovePalletPosesDialog";
+import { CreatePosDialog } from "@/modules/poses/components/dialogs/create-pos-dialog/CreatePosDialog";
 
 interface PalletContainerProps {
   pallet: IPallet;
@@ -30,6 +31,7 @@ export function PalletContainer({
     useState(false);
   const [moveDialogOpen, setMoveDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [createPosDialogOpen, setCreatePosDialogOpen] = useState(false);
 
   const handlePosCreated = () => {
     onPosCreated?.();
@@ -79,6 +81,13 @@ export function PalletContainer({
         handlePosCreated={handlePosCreated}
         sortParams={sortParams}
         onSortParamsChange={setSortParams}
+        onCreatePosClick={() => setCreatePosDialogOpen(true)}
+      />
+      <CreatePosDialog
+        pallet={pallet}
+        open={createPosDialogOpen}
+        onOpenChange={setCreatePosDialogOpen}
+        onSuccess={handlePosCreated}
       />
       <ClearPalletDialog
         pallet={pallet}

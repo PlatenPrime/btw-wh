@@ -145,12 +145,53 @@ interface DialogActionsProps {
 
 Используется для ввода данных (создание, редактирование)
 
-**Структура**:
+**Рекомендуемый подход**: Использовать компонент `FormDialog` для диалогов с формами. Он автоматически:
+- Обрабатывает клавиатуру (модальное окно сжимается благодаря `maxHeight`)
+- Добавляет скролл при большом количестве инпутов
+- Обеспечивает единообразную структуру с заголовком и футером
+
+**Структура с FormDialog**:
+- Заголовок в `ModalHeader`
+- Форма в `ModalBody` со `ScrollView` внутри
+- Кнопки действий в `ModalFooter` (рекомендуется) или внутри формы
+
+**Пример с FormDialog**:
+```tsx
+import { FormDialog } from "@/components/shared/form-dialog";
+import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
+
+export function CreateRowDialogView({
+  visible,
+  onClose,
+  onSuccess,
+}: CreateRowDialogViewProps) {
+  return (
+    <FormDialog
+      visible={visible}
+      onClose={onClose}
+      title="Створити ряд"
+      footer={
+        <DialogActions
+          onCancel={onClose}
+          onSubmit={handleSubmit}
+          cancelText="Скасувати"
+          submitText="Створити"
+          isSubmitting={isSubmitting}
+        />
+      }
+    >
+      <CreateRowForm onSuccess={onSuccess} onCancel={onClose} />
+    </FormDialog>
+  );
+}
+```
+
+**Структура без FormDialog (для простых форм)**:
 - Заголовок
 - Форма в ModalBody
 - Кнопки действий в форме (не в ModalFooter)
 
-**Пример**:
+**Пример без FormDialog**:
 ```tsx
 <ModalContent className="w-full max-w-md mx-4 rounded-lg p-6 border gap-4" style={{ shadowColor: "#000", shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.3, shadowRadius: 8, elevation: 8 }}>
   <ModalHeader className="flex flex-col gap-2">
@@ -178,6 +219,68 @@ interface DialogActionsProps {
 - Список/форма выбора в ModalBody
 - Кнопки действий в форме
 
+## Компонент FormDialog
+
+### Назначение
+
+Удобный компонент для создания диалогов с формами, который автоматически обрабатывает:
+- Скролл контента при большом количестве инпутов
+- Обработку клавиатуры (модальное окно сжимается благодаря `maxHeight: "90%"`)
+- Единообразную структуру с заголовком и футером
+
+### Props
+
+```typescript
+interface FormDialogProps {
+  visible: boolean;              // Видимость диалога
+  onClose: () => void;           // Обработчик закрытия
+  title: string;                 // Заголовок диалога
+  children: React.ReactNode;     // Контент формы
+  footer?: React.ReactNode;      // Футер с кнопками действий (опционально)
+}
+```
+
+### Структура
+
+```
+FormDialog
+  └─ Modal
+      └─ ModalBackdrop
+      └─ ModalContent (maxHeight: 90%)
+          ├─ ModalHeader
+          ├─ ModalBody
+          │   └─ ScrollView (keyboardShouldPersistTaps="handled")
+          │       └─ Форма с инпутами
+          └─ ModalFooter (опционально)
+              └─ DialogActions
+```
+
+### Обработка клавиатуры
+
+- Модальное окно автоматически сжимается при открытии клавиатуры благодаря `maxHeight: "90%"` на `ModalContent`
+- `ScrollView` внутри `ModalBody` обеспечивает скролл контента при большом количестве инпутов
+- `keyboardShouldPersistTaps="handled"` позволяет взаимодействовать с элементами формы при открытой клавиатуре
+- Контент скроллится внутри `ModalBody`, заголовок и футер остаются видимыми
+
+### ScrollableModalBody
+
+Для ручного использования скроллируемого контента в ModalBody:
+
+```tsx
+import { ScrollableModalBody } from "@/components/ui";
+
+<ModalBody>
+  <ScrollableModalBody>
+    {/* Контент с инпутами */}
+  </ScrollableModalBody>
+</ModalBody>
+```
+
+`ScrollableModalBody` автоматически:
+- Оборачивает контент в `ScrollView`
+- Устанавливает `keyboardShouldPersistTaps="handled"`
+- Показывает вертикальный индикатор скролла
+
 ## Анимации
 
 - **Overlay**: плавное появление/исчезновение (fade)
@@ -199,8 +302,10 @@ interface DialogActionsProps {
 - Использовать `ThemedText` и `ThemedView` для поддержки темы
 - Использовать `DialogActions` для кнопок действий
 - Использовать единую структуру Header/Body/Footer
-- Использовать `rounded-xl` для скругления контейнера
+- Использовать `rounded-lg` для скругления контейнера
 - Использовать `p-6` для отступов контейнера
+- Использовать `FormDialog` для диалогов с формами (автоматическая обработка клавиатуры через `maxHeight` и скролл контента)
+- Использовать `ScrollableModalBody` для скроллируемого контента в обычных Modal
 
 ### ❌ Неправильно
 
@@ -209,6 +314,8 @@ interface DialogActionsProps {
 - Создавать кастомные кнопки действий вместо `DialogActions`
 - Разные стили для похожих диалогов
 - Разные размеры отступов и скруглений
+- Игнорировать обработку клавиатуры в диалогах с формами
+- Использовать обычный `ModalBody` для форм с большим количеством инпутов без скролла
 
 ## Примеры использования
 

@@ -1,17 +1,8 @@
-import { ThemedText } from "@/components/themed-text";
-import {
-  Modal,
-  ModalBackdrop,
-  ModalBody,
-  ModalContent,
-  ModalHeader,
-} from "@/components/ui";
+import { FormDialog } from "@/components/shared/form-dialog";
 import { CreatePalletFormView } from "@/modules/pallets/components/forms/create-pallet-form/CreatePalletFormView";
+import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
 import type { PalletFormValues } from "@/modules/pallets/components/forms/schema";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import type { UseFormReturn } from "react-hook-form";
-import { Platform, TouchableOpacity, View } from "react-native";
-import { SemanticColors } from "@/constants/theme";
 
 interface CreatePalletDialogViewProps {
   visible: boolean;
@@ -19,9 +10,6 @@ interface CreatePalletDialogViewProps {
   form: UseFormReturn<PalletFormValues>;
   onSubmit: (data: PalletFormValues) => Promise<void>;
   isSubmitting: boolean;
-  bgColor: string;
-  textColor: string;
-  borderColor: string;
 }
 
 export function CreatePalletDialogView({
@@ -30,65 +18,31 @@ export function CreatePalletDialogView({
   form,
   onSubmit,
   isSubmitting,
-  bgColor,
-  textColor,
-  borderColor,
 }: CreatePalletDialogViewProps) {
+  const { handleSubmit } = form;
+
   return (
-    <Modal
-      isOpen={visible}
+    <FormDialog
+      visible={visible}
       onClose={onClose}
-      className="items-center justify-center"
+      title="Додати палету"
+      footer={
+        <DialogActions
+          onCancel={onClose}
+          onSubmit={handleSubmit(onSubmit)}
+          cancelText="Скасувати"
+          submitText="Додати"
+          isSubmitting={isSubmitting}
+        />
+      }
     >
-      <ModalBackdrop
-        className="flex-1 justify-center items-center"
-        style={{ backgroundColor: SemanticColors.shadow.backdrop }}
+      <CreatePalletFormView
+        form={form}
+        onSubmit={onSubmit}
+        onCancel={onClose}
+        isSubmitting={isSubmitting}
+        hideActions={true}
       />
-      <ModalContent
-        className="w-full max-w-md mx-4 rounded-lg p-6 border gap-4"
-        style={{
-          backgroundColor: bgColor,
-          borderColor: borderColor,
-          ...Platform.select({
-            ios: {
-              shadowColor: SemanticColors.shadow.color,
-              shadowOffset: { width: 0, height: 4 },
-              shadowOpacity: 0.3,
-              shadowRadius: 8,
-            },
-            android: {
-              elevation: 8,
-            },
-          }),
-        }}
-      >
-        <ModalHeader className="flex-col gap-2">
-          <View className="flex-row items-center justify-between relative">
-            <ThemedText
-              type="defaultSemiBold"
-              className="text-lg text-center flex-1"
-            >
-              Додати палету
-            </ThemedText>
-            <TouchableOpacity
-              onPress={onClose}
-              className="absolute top-4 right-4"
-              activeOpacity={0.7}
-              style={{ opacity: 0.7 }}
-            >
-              <MaterialIcons name="close" size={16} color={textColor} />
-            </TouchableOpacity>
-          </View>
-        </ModalHeader>
-        <ModalBody>
-          <CreatePalletFormView
-            form={form}
-            onSubmit={onSubmit}
-            onCancel={onClose}
-            isSubmitting={isSubmitting}
-          />
-        </ModalBody>
-      </ModalContent>
-    </Modal>
+    </FormDialog>
   );
 }

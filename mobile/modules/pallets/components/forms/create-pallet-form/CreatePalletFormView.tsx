@@ -18,6 +18,7 @@ interface CreatePalletFormViewProps {
   isSubmitting: boolean;
   onSubmit: (data: PalletFormValues) => void;
   onCancel?: () => void;
+  hideActions?: boolean;
 }
 
 export function CreatePalletFormView({
@@ -25,6 +26,7 @@ export function CreatePalletFormView({
   isSubmitting,
   onSubmit,
   onCancel,
+  hideActions = false,
 }: CreatePalletFormViewProps) {
   const {
     control,
@@ -124,13 +126,15 @@ export function CreatePalletFormView({
         </ThemedView>
       )}
 
-      <DialogActions
-        onCancel={onCancel}
-        onSubmit={handleSubmit(onSubmit)}
-        cancelText="Скасувати"
-        submitText="Додати"
-        isSubmitting={isSubmitting}
-      />
+      {!hideActions && (
+        <DialogActions
+          onCancel={onCancel}
+          onSubmit={handleSubmit(onSubmit)}
+          cancelText="Скасувати"
+          submitText="Додати"
+          isSubmitting={isSubmitting}
+        />
+      )}
     </Box>
   );
 }

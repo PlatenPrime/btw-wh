@@ -36,7 +36,7 @@ export default function PalletDetailScreen() {
   };
 
   return (
-    <PageLayout title={pallet.title}>
+    <PageLayout title={`Палета: ${pallet.title}`}>
       <PalletContainer pallet={pallet} onPosCreated={handlePosCreated} />
     </PageLayout>
   );

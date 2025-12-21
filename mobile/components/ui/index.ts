@@ -29,6 +29,7 @@ export {
   ModalHeader,
   ModalBody,
   ModalFooter,
+  ScrollableModalBody,
 } from './modal';
 export type {
   ModalProps,
