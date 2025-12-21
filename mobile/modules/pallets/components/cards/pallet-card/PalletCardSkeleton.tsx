@@ -4,12 +4,12 @@ export function PalletCardSkeleton() {
   return (
     <Box className="p-4 rounded-lg border border-outline-200 bg-background-0 gap-2">
       <Box className="flex-row items-center justify-between">
-        <Box className="h-5 w-24 rounded bg-background-200" />
-        <Box className="h-4 w-16 rounded bg-background-200" />
+        <Box className="rounded bg-secondary-300" style={{ height: 20, width: 96 }} />
+        <Box className="rounded bg-secondary-300" style={{ height: 16, width: 64 }} />
       </Box>
       <Box className="gap-1">
-        <Box className="h-3 w-full rounded bg-background-200" />
-        <Box className="h-3 w-3/4 rounded bg-background-200" />
+        <Box className="rounded bg-secondary-300" style={{ height: 12, width: '100%' }} />
+        <Box className="rounded bg-secondary-300" style={{ height: 12, width: '75%' }} />
       </Box>
     </Box>
   );

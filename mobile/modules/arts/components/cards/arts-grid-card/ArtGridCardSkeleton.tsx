@@ -1,58 +1,14 @@
-import { View } from "react-native";
-import { ThemedView } from "@/components/themed-view";
-import { useColorScheme } from "@/hooks/use-color-scheme";
+import { Box } from "@/components/ui";
 
 export function ArtGridCardSkeleton() {
-  const colorScheme = useColorScheme() ?? "light";
-
-  const bgColor = colorScheme === "light" ? "#fff" : "#1f2937";
-  const borderColor = colorScheme === "light" ? "#d1d5db" : "#4b5563";
-  const skeletonColor = colorScheme === "light" ? "#e5e7eb" : "#374151";
-
   return (
-    <View
-      className="flex-row items-center p-3 rounded-lg border"
-      style={{
-        backgroundColor: bgColor,
-        borderColor: borderColor,
-      }}
-    >
-      <View
-        style={{
-          width: 60,
-          height: 60,
-          borderRadius: 8,
-          backgroundColor: skeletonColor,
-        }}
-      />
-      <View className="ml-3 flex-1">
-        <View
-          style={{
-            height: 16,
-            width: 120,
-            borderRadius: 4,
-            backgroundColor: skeletonColor,
-            marginBottom: 8,
-          }}
-        />
-        <View
-          style={{
-            height: 14,
-            width: "100%",
-            borderRadius: 4,
-            backgroundColor: skeletonColor,
-            marginBottom: 4,
-          }}
-        />
-        <View
-          style={{
-            height: 14,
-            width: "80%",
-            borderRadius: 4,
-            backgroundColor: skeletonColor,
-          }}
-        />
-      </View>
-    </View>
+    <Box className="flex-row items-center p-3 rounded-lg border border-outline-200 bg-background-0">
+      <Box className="rounded-lg bg-secondary-300" style={{ height: 60, width: 60 }} />
+      <Box className="ml-3 flex-1 gap-2">
+        <Box className="rounded bg-secondary-300" style={{ height: 16, width: 120 }} />
+        <Box className="rounded bg-secondary-300" style={{ height: 14, width: '100%' }} />
+        <Box className="rounded bg-secondary-300" style={{ height: 14, width: '80%' }} />
+      </Box>
+    </Box>
   );
 }

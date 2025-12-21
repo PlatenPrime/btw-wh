@@ -1,18 +1,17 @@
-import { View } from "react-native";
-import { ThemedView } from "@/components/themed-view";
+import { Box } from "@/components/ui";
 
 export function BtradeArtDataSkeleton() {
   return (
-    <View className="gap-2">
-      <View className="flex-row items-center gap-2">
-        <ThemedView className="h-4 w-4 rounded" />
-        <ThemedView className="h-4 w-12 rounded" />
-      </View>
-      <View className="flex-row items-center gap-2">
-        <ThemedView className="h-4 w-4 rounded" />
-        <ThemedView className="h-4 w-12 rounded" />
-      </View>
-    </View>
+    <Box className="gap-2">
+      <Box className="flex-row items-center gap-2">
+        <Box className="rounded bg-secondary-300" style={{ height: 16, width: 16 }} />
+        <Box className="rounded bg-secondary-300" style={{ height: 16, width: 48 }} />
+      </Box>
+      <Box className="flex-row items-center gap-2">
+        <Box className="rounded bg-secondary-300" style={{ height: 16, width: 16 }} />
+        <Box className="rounded bg-secondary-300" style={{ height: 16, width: 48 }} />
+      </Box>
+    </Box>
   );
 }
 

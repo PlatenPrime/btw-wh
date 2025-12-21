@@ -18,12 +18,10 @@ export function RowCardView({
       className="p-4 rounded-lg border border-outline-200 bg-background-0"
     >
       <Box className="items-center">
-        <ThemedText type="title" className="text-xl mb-2">
+        <ThemedText type="title" className="text-xl ">
           {title}
         </ThemedText>
-        <ThemedText type="default" className="text-sm">
-          Паллет: {palletsCount}
-        </ThemedText>
+
       </Box>
     </Pressable>
   );

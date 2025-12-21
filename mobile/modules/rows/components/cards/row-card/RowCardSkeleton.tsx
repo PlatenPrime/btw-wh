@@ -3,11 +3,12 @@ import { Box } from "@/components/ui";
 export function RowCardSkeleton() {
   return (
     <Box className="p-4 rounded-lg border border-outline-200 bg-background-0 items-center">
-      <Box className="items-center">
-        <Box className="h-6 w-24 rounded bg-background-200 mb-2" />
-        <Box className="h-4 w-16 rounded bg-background-200" />
+      <Box className="items-center gap-2">
+        <Box
+          className="rounded bg-secondary-300"
+          style={{ height: 24, width: 96 }}
+        />
       </Box>
     </Box>
   );
 }
-

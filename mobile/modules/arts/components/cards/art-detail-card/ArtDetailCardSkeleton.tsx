@@ -1,45 +1,33 @@
-import { View } from "react-native";
-import { ThemedView } from "@/components/themed-view";
-import { useColorScheme } from "@/hooks/use-color-scheme";
+import { Box } from "@/components/ui";
 import { BtradeArtDataSkeleton } from "@/modules/arts/components/containers/btrade-art-data-container/BtradeArtDataSkeleton";
 
 export function ArtDetailCardSkeleton() {
-  const colorScheme = useColorScheme() ?? "light";
-  const bgColor = colorScheme === "light" ? "#fff" : "#1f2937";
-  const borderColor = colorScheme === "light" ? "#d1d5db" : "#4b5563";
-
   return (
-    <ThemedView
-      className="p-3 rounded-lg border"
-      style={{
-        backgroundColor: bgColor,
-        borderColor: borderColor,
-      }}
-    >
-      <View className="gap-3">
+    <Box className="p-3 rounded-lg border border-outline-200 bg-background-0">
+      <Box className="gap-3">
         {/* Скелетон для изображения и названия */}
-        <View className="flex-row items-start gap-3">
-          <ThemedView className="h-[60px] w-[60px] rounded-lg" />
-          <View className="flex-1 gap-2">
-            <ThemedView className="h-4 w-32 rounded" />
-            <ThemedView className="h-3 w-48 rounded" />
-          </View>
-        </View>
+        <Box className="flex-row items-start gap-3">
+          <Box className="rounded-lg bg-secondary-300" style={{ height: 60, width: 60 }} />
+          <Box className="flex-1 gap-2">
+            <Box className="rounded bg-secondary-300" style={{ height: 16, width: 128 }} />
+            <Box className="rounded bg-secondary-300" style={{ height: 12, width: 192 }} />
+          </Box>
+        </Box>
 
         {/* Скелетон для зоны, лимита и данных Btrade */}
-        <View className="gap-2">
-          <View className="flex-row items-center gap-2">
-            <ThemedView className="h-4 w-4 rounded" />
-            <ThemedView className="h-3 w-12 rounded" />
-          </View>
-          <View className="flex-row items-center gap-2">
-            <ThemedView className="h-4 w-4 rounded" />
-            <ThemedView className="h-3 w-12 rounded" />
-          </View>
+        <Box className="gap-2">
+          <Box className="flex-row items-center gap-2">
+            <Box className="rounded bg-secondary-300" style={{ height: 16, width: 16 }} />
+            <Box className="rounded bg-secondary-300" style={{ height: 12, width: 48 }} />
+          </Box>
+          <Box className="flex-row items-center gap-2">
+            <Box className="rounded bg-secondary-300" style={{ height: 16, width: 16 }} />
+            <Box className="rounded bg-secondary-300" style={{ height: 12, width: 48 }} />
+          </Box>
           <BtradeArtDataSkeleton />
-        </View>
-      </View>
-    </ThemedView>
+        </Box>
+      </Box>
+    </Box>
   );
 }
 
