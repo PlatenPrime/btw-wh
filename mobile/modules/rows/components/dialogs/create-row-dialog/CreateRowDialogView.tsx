@@ -1,42 +1,32 @@
-import { TouchableOpacity, View, Platform } from "react-native";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { ThemedText } from "@/components/themed-text";
 import {
   Modal,
   ModalBackdrop,
+  ModalBody,
   ModalContent,
   ModalHeader,
-  ModalBody,
-  Box,
 } from "@/components/ui";
-import { ThemedText } from "@/components/themed-text";
-import type { IPallet } from "@/modules/pallets/api/types";
-import { MovePalletPosesForm } from "../../dialogs/move-pallet-poses-form/MovePalletPosesForm";
+import { CreateRowForm } from "@/modules/rows/components/forms/create-row-form/CreateRowForm";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { TouchableOpacity, View, Platform } from "react-native";
 
-interface MovePalletPosesDialogViewProps {
-  pallet: IPallet;
+interface CreateRowDialogViewProps {
   visible: boolean;
   onClose: () => void;
-  onSubmit: (targetPalletId: string) => Promise<void>;
-  isSourceEmpty: boolean;
-  mutationError: string | null;
-  isMoving: boolean;
+  onSuccess: () => void;
   bgColor: string;
   textColor: string;
   borderColor: string;
 }
 
-export function MovePalletPosesDialogView({
-  pallet,
+export function CreateRowDialogView({
   visible,
   onClose,
-  onSubmit,
-  isSourceEmpty,
-  mutationError,
-  isMoving,
+  onSuccess,
   bgColor,
   textColor,
   borderColor,
-}: MovePalletPosesDialogViewProps) {
+}: CreateRowDialogViewProps) {
   return (
     <Modal isOpen={visible} onClose={onClose} className="items-center justify-center">
       <ModalBackdrop
@@ -64,7 +54,7 @@ export function MovePalletPosesDialogView({
         <ModalHeader className="flex-col gap-2">
           <View className="flex-row items-center justify-between relative">
             <ThemedText type="defaultSemiBold" className="text-lg text-center flex-1">
-              Перемістити позиції
+              Створити ряд
             </ThemedText>
             <TouchableOpacity
               onPress={onClose}
@@ -77,29 +67,9 @@ export function MovePalletPosesDialogView({
           </View>
         </ModalHeader>
         <ModalBody>
-          {mutationError && (
-            <Box className="mb-4 p-3 rounded-lg border border-error-500 bg-error-50">
-              <ThemedText type="default" className="text-error-700">
-                {mutationError}
-              </ThemedText>
-            </Box>
-          )}
-
-          {isSourceEmpty ? (
-            <ThemedText type="default" className="text-sm mb-4">
-              На цій паллеті немає позицій для переміщення
-            </ThemedText>
-          ) : (
-            <MovePalletPosesForm
-              fromPallet={pallet}
-              onSuccess={onSubmit}
-              isSubmitting={isMoving}
-              onCancel={onClose}
-            />
-          )}
+          <CreateRowForm onSuccess={onSuccess} onCancel={onClose} />
         </ModalBody>
       </ModalContent>
     </Modal>
   );
 }
-

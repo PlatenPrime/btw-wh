@@ -1,10 +1,5 @@
-import { createModal } from '@gluestack-ui/core/modal/creator';
-import {
-  Modal as RNModal,
-  Pressable,
-  View,
-  Text as RNText,
-} from 'react-native';
+import { createModal } from "@gluestack-ui/core/modal/creator";
+import { Pressable, Modal as RNModal, View } from "react-native";
 
 export const Modal = createModal({
   Root: RNModal,
@@ -14,7 +9,6 @@ export const Modal = createModal({
   Header: View,
   Body: View, // Changed from ScrollView to View to avoid nesting VirtualizedLists
   Footer: View,
-  AnimatedContent: View,
 });
 
 export const ModalBackdrop = Modal.Backdrop;
@@ -27,8 +21,9 @@ export const ModalFooter = Modal.Footer;
 export type ModalProps = React.ComponentProps<typeof Modal>;
 export type ModalBackdropProps = React.ComponentProps<typeof ModalBackdrop>;
 export type ModalContentProps = React.ComponentProps<typeof ModalContent>;
-export type ModalCloseButtonProps = React.ComponentProps<typeof ModalCloseButton>;
+export type ModalCloseButtonProps = React.ComponentProps<
+  typeof ModalCloseButton
+>;
 export type ModalHeaderProps = React.ComponentProps<typeof ModalHeader>;
 export type ModalBodyProps = React.ComponentProps<typeof ModalBody>;
 export type ModalFooterProps = React.ComponentProps<typeof ModalFooter>;
-

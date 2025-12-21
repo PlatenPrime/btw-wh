@@ -1,6 +1,14 @@
-import { Box, Input, InputField, Button, ButtonText, ButtonSpinner, HStack } from "@/components/ui";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
+import {
+  Box,
+  Button,
+  ButtonSpinner,
+  ButtonText,
+  HStack,
+  Input,
+  InputField,
+} from "@/components/ui";
 import type { RowFormValues } from "@/modules/rows/components/forms/schema";
 import type { UseFormReturn } from "react-hook-form";
 import { Controller } from "react-hook-form";
@@ -70,11 +78,10 @@ export function CreateRowFormView({
       <HStack className="gap-2">
         {onCancel && (
           <Button
-            variant="outline"
             onPress={onCancel}
             isDisabled={isSubmitting}
-            className="flex-1 rounded-lg border border-outline-200 bg-background-0"
-            opacity={isSubmitting ? 0.5 : 1}
+            className="flex-1 rounded-lg border border-outline-200 bg-background-0 items-center justify-center py-3 "
+            style={{ opacity: isSubmitting ? 0.5 : 1 }}
           >
             <ButtonText>
               <ThemedText type="defaultSemiBold">Скасувати</ThemedText>
@@ -84,13 +91,13 @@ export function CreateRowFormView({
         <Button
           onPress={handleSubmit(onSubmit)}
           isDisabled={isSubmitting}
-          className="flex-1 rounded-lg bg-info-500"
-          opacity={isSubmitting ? 0.5 : 1}
+          className="flex-1 rounded-lg bg-info-500 items-center justify-center"
+          style={{ opacity: isSubmitting ? 0.5 : 1 }}
         >
           {isSubmitting ? (
             <ButtonSpinner color="#fff" />
           ) : (
-            <ButtonText>
+            <ButtonText className="text-typography-900">
               <ThemedText type="defaultSemiBold" className="text-white">
                 Створити
               </ThemedText>
@@ -101,4 +108,3 @@ export function CreateRowFormView({
     </Box>
   );
 }
-

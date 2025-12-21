@@ -69,11 +69,10 @@ export function UpdateRowFormView({
 
       <HStack className="gap-2">
         <Button
-          variant="outline"
           onPress={onCancel}
           isDisabled={isSubmitting}
           className="flex-1 rounded-lg border border-outline-200 bg-background-0"
-          opacity={isSubmitting ? 0.5 : 1}
+          style={{ opacity: isSubmitting ? 0.5 : 1 }}
         >
           <ButtonText>
             <ThemedText type="defaultSemiBold">Скасувати</ThemedText>
@@ -83,7 +82,7 @@ export function UpdateRowFormView({
           onPress={handleSubmit(onSubmit)}
           isDisabled={isSubmitting}
           className="flex-1 rounded-lg bg-info-500"
-          opacity={isSubmitting ? 0.5 : 1}
+          style={{ opacity: isSubmitting ? 0.5 : 1 }}
         >
           {isSubmitting ? (
             <ButtonSpinner color="#fff" />

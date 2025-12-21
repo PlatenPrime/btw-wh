@@ -1,23 +1,19 @@
 import { useState } from "react";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { Colors } from "@/constants/theme";
-import type { IPallet } from "@/modules/pallets/api/types";
-import { MovePalletPosesDialogView } from "./MovePalletPosesDialogView";
-import { useMovePalletPosesDialog } from "./useMovePalletPosesDialog";
+import { CreateRowDialogView } from "./CreateRowDialogView";
 
-interface MovePalletPosesDialogProps {
-  pallet: IPallet;
+interface CreateRowDialogProps {
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
   onSuccess?: () => void;
 }
 
-export function MovePalletPosesDialog({
-  pallet,
+export function CreateRowDialog({
   open: controlledOpen,
   onOpenChange,
   onSuccess,
-}: MovePalletPosesDialogProps) {
+}: CreateRowDialogProps) {
   const [internalOpen, setInternalOpen] = useState(false);
   const colorScheme = useColorScheme() ?? "light";
   const bgColor = colorScheme === "light" ? "#fff" : "#1f2937";
@@ -29,31 +25,20 @@ export function MovePalletPosesDialog({
   const open = isControlled ? controlledOpen : internalOpen;
   const handleOpenChange = isControlled ? onOpenChange : setInternalOpen;
 
-  const {
-    isMoving,
-    isSourceEmpty,
-    mutationError,
-    handleSubmit,
-    handleDialogOpenChange,
-  } = useMovePalletPosesDialog({
-    pallet,
-    onOpenChange: handleOpenChange,
-    onSuccess,
-  });
+  const handleSuccess = () => {
+    handleOpenChange?.(false);
+    onSuccess?.();
+  };
 
   const handleCancel = () => {
-    handleDialogOpenChange(false);
+    handleOpenChange?.(false);
   };
 
   return (
-    <MovePalletPosesDialogView
-      pallet={pallet}
+    <CreateRowDialogView
       visible={open}
       onClose={handleCancel}
-      onSubmit={handleSubmit}
-      isSourceEmpty={isSourceEmpty}
-      mutationError={mutationError}
-      isMoving={isMoving}
+      onSuccess={handleSuccess}
       bgColor={bgColor}
       textColor={textColor}
       borderColor={borderColor}

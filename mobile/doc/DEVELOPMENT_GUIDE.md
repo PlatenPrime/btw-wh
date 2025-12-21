@@ -1,0 +1,807 @@
+# Руководство по разработке мобильного приложения
+
+## Содержание
+
+1. [Технологический стек](#технологический-стек)
+2. [Архитектура проекта](#архитектура-проекта)
+3. [Паттерны разработки](#паттерны-разработки)
+4. [Стилизация и темизация](#стилизация-и-темизация)
+5. [Навигация и роутинг](#навигация-и-роутинг)
+6. [Работа с данными](#работа-с-данными)
+7. [Правила и конвенции](#правила-и-конвенции)
+
+---
+
+## Технологический стек
+
+### Основные технологии
+
+- **Expo** (~54.0.30) - фреймворк для разработки React Native приложений
+- **React Native** (0.81.5) - кроссплатформенная разработка
+- **TypeScript** (5.9.2) - типизация кода
+- **Expo Router** (~6.0.21) - file-based routing для навигации
+
+### Ключевые библиотеки
+
+#### Управление состоянием и данными
+
+- **@tanstack/react-query** (^5.87.4) - управление серверным состоянием, кеширование, синхронизация
+- **React Hook Form** (^7.60.0) - управление формами
+- **Zod** (^3.25.75) - валидация схем и типизация
+
+#### UI и стилизация
+
+- **NativeWind** (^4.1.23) - Tailwind CSS для React Native
+- **@gluestack-ui/core** (^3.0.10) - UI компоненты
+- **@expo/vector-icons** (^15.0.3) - иконки
+
+#### Навигация
+
+- **@react-navigation/native** (^7.1.8) - навигация
+- **@react-navigation/bottom-tabs** (^7.4.0) - табы
+
+#### Анимации и жесты
+
+- **react-native-reanimated** (~4.1.0) - анимации
+- **react-native-gesture-handler** (~2.28.0) - обработка жестов
+- **@legendapp/motion** (^2.3.0) - анимации
+
+#### Безопасность и хранение
+
+- **expo-secure-store** (~15.0.8) - безопасное хранение токенов
+- **@react-native-async-storage/async-storage** (^2.1.0) - локальное хранилище
+
+---
+
+## Архитектура проекта
+
+### Модульная структура
+
+Проект организован по модульному принципу. Каждый модуль представляет собой функциональную область приложения и содержит:
+
+```
+modules/
+  {module-name}/
+    api/
+      hooks/
+        queries/      # React Query hooks для запросов
+        mutations/    # React Query hooks для мутаций
+      services/
+        queries/      # Функции для GET запросов
+        mutations/    # Функции для POST/PUT/DELETE запросов
+      types/
+        dto.ts        # TypeScript типы для API
+    components/
+      cards/          # Карточки для отображения данных
+      containers/     # Контейнеры с логикой
+      dialogs/        # Модальные окна
+      elements/       # Переиспользуемые элементы
+      fetchers/       # Компоненты для загрузки данных
+      forms/          # Формы с валидацией
+      lists/          # Списки элементов
+      shared/         # Общие компоненты модуля
+    constants/        # Константы модуля
+```
+
+### Организация файлов
+
+#### Корневые директории
+
+- `app/` - файлы роутинга (Expo Router file-based routing)
+- `components/` - общие компоненты приложения
+  - `layout/` - компоненты макета (header, sidebar, page-layout)
+  - `shared/` - переиспользуемые компоненты
+  - `ui/` - базовые UI компоненты (Gluestack UI)
+- `modules/` - функциональные модули
+- `providers/` - провайдеры контекста (Theme, Auth, Query)
+- `constants/` - глобальные константы
+- `hooks/` - переиспользуемые хуки
+
+### Принципы разделения ответственности
+
+1. **Модульность** - каждая функциональная область изолирована в своем модуле
+2. **Разделение слоев** - четкое разделение между API, бизнес-логикой и представлением
+3. **Переиспользование** - общие компоненты выносятся в `components/` или `modules/{module}/components/shared/`
+4. **Типизация** - все данные типизированы через TypeScript и Zod схемы
+
+---
+
+## Паттерны разработки
+
+### Fetcher → Container → View
+
+Проект использует трехслойную архитектуру компонентов:
+
+#### 1. Fetcher (Загрузчик данных)
+
+**Назначение**: Загрузка данных, обработка состояний загрузки и ошибок
+
+**Правила**:
+
+- Использует React Query hooks для получения данных
+- Обрабатывает состояния: `isLoading`, `error`, `data`
+- Показывает скелетоны во время загрузки
+- Передает данные в Container компонент
+- Может принимать кастомные Container и Skeleton компоненты через props
+
+**Пример**:
+
+```typescript
+// modules/arts/components/fetchers/art-fetcher/ArtFetcher.tsx
+export function ArtFetcher({
+  artikul,
+  ContainerComponent = ArtContainer,
+  SkeletonComponent = ArtContainerSkeleton,
+}: ArtFetcherProps) {
+  const { data, isLoading, error } = useOneArtQuery(artikul);
+
+  if (isLoading) return <SkeletonComponent />;
+  if (error) return <ErrorView error={error} />;
+  if (!data) return <NotFoundView />;
+
+  return <ContainerComponent artData={data} />;
+}
+```
+
+#### 2. Container (Контейнер с логикой)
+
+**Назначение**: Бизнес-логика, состояние, обработка событий
+
+**Правила**:
+
+- Содержит всю логику компонента (хуки, вычисления, обработчики)
+- Управляет локальным состоянием (`useState`, `useEffect`)
+- Регистрирует действия в header через `useRegisterHeaderActions`
+- Вызывает мутации и обрабатывает их результаты
+- Передает данные и колбэки в View компонент
+
+**Пример**:
+
+```typescript
+// modules/arts/components/containers/art-container/ArtContainer.tsx
+export function ArtContainer({ artData }: ArtContainerProps) {
+  const [updateLimitDialogOpen, setUpdateLimitDialogOpen] = useState(false);
+
+  useRegisterHeaderActions([
+    {
+      id: "update-art-limit",
+      label: "Змінити ліміт",
+      icon: "edit",
+      onClick: () => setUpdateLimitDialogOpen(true),
+    },
+  ]);
+
+  return (
+    <ArtContainerView
+      artData={artData}
+      updateLimitDialogOpen={updateLimitDialogOpen}
+      setUpdateLimitDialogOpen={setUpdateLimitDialogOpen}
+    />
+  );
+}
+```
+
+#### 3. View (Презентационный компонент)
+
+**Назначение**: Только рендеринг UI, без логики
+
+**КРИТИЧЕСКИ ВАЖНО**: Компоненты с суффиксом `View` должны быть **чистыми презентационными компонентами** без логики.
+
+**Что НЕ должно быть в View компонентах**:
+
+- ❌ Хуки React (`useState`, `useEffect`, `useColorScheme`, `useQuery` и т.д.)
+- ❌ Вычисления и бизнес-логика
+- ❌ Обращения к API
+- ❌ Условная логика (кроме простых условных рендеров)
+- ❌ Обработка данных (`.map()`, `.filter()`, `.find()` и т.д.)
+
+**Что ДОЛЖНО быть в View компонентах**:
+
+- ✅ Только рендеринг UI
+- ✅ Получение данных через props
+- ✅ Вызов колбэков через props
+- ✅ Простые условные рендеры (`{condition && <Component />}`)
+
+**Пример**:
+
+```typescript
+// modules/arts/components/containers/art-container/ArtContainerView.tsx
+export function ArtContainerView({
+  artData,
+  updateLimitDialogOpen,
+  setUpdateLimitDialogOpen,
+}: ArtContainerViewProps) {
+  return (
+    <>
+      <ScrollView className="flex-1" contentContainerClassName="p-4 gap-4">
+        <ArtDetailCard artData={artData} />
+      </ScrollView>
+      <UpdateArtLimitDialog
+        artData={artData}
+        open={updateLimitDialogOpen}
+        onOpenChange={setUpdateLimitDialogOpen}
+      />
+    </>
+  );
+}
+```
+
+**Преимущества такого подхода**:
+
+1. **Тестируемость** - View компоненты легко тестировать, так как они чистые функции
+2. **Переиспользование** - View компоненты можно использовать в разных контекстах
+3. **Разделение ответственности** - логика отделена от представления
+4. **Производительность** - легче оптимизировать и мемоизировать
+
+### Структура API слоя
+
+#### Services (Сервисы)
+
+**Назначение**: Чистые функции для выполнения HTTP запросов
+
+**Правила**:
+
+- Используют `fetch` API
+- Получают токен из secure storage
+- Обрабатывают ошибки и возвращают типизированные данные
+- Поддерживают `AbortSignal` для отмены запросов
+
+**Пример**:
+
+```typescript
+// modules/rows/api/services/queries/getRows.ts
+export const getRows = async ({
+  signal,
+}: {
+  signal?: AbortSignal;
+}): Promise<RowDto[]> => {
+  const token = await getItem("auth_token");
+  const headers: HeadersInit = {
+    "Content-Type": "application/json",
+  };
+
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+
+  const res = await fetch(`${SERVER_URL}rows`, {
+    method: "GET",
+    headers,
+    signal,
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch rows");
+  }
+
+  return res.json() as Promise<RowDto[]>;
+};
+```
+
+#### Hooks (React Query хуки)
+
+**Назначение**: Обертки над React Query для удобного использования в компонентах
+
+**Правила**:
+
+- Используют `useQuery` для GET запросов
+- Используют `useMutation` для POST/PUT/DELETE запросов
+- Определяют `queryKey` для кеширования
+- Настраивают `enabled`, `staleTime` и другие опции
+- Передают `signal` в сервисы для поддержки отмены
+
+**Пример**:
+
+```typescript
+// modules/rows/api/hooks/queries/useRowsQuery.tsx
+export function useRowsQuery() {
+  return useQuery<RowDto[]>({
+    queryKey: ["rows"],
+    queryFn: ({ signal }) => getRows({ signal }),
+    enabled: true,
+    staleTime: 5 * 60 * 1000, // 5 минут
+  });
+}
+```
+
+### Работа с формами
+
+#### React Hook Form + Zod
+
+**Назначение**: Управление формами с валидацией
+
+**Правила**:
+
+1. Создавать Zod схему в отдельном файле `schema.ts`
+2. Использовать `zodResolver` для интеграции с React Hook Form
+3. Типизировать данные формы через `z.infer<typeof schema>`
+4. Использовать `Controller` для кастомных компонентов
+5. Обрабатывать ошибки валидации и серверные ошибки
+
+**Пример схемы**:
+
+```typescript
+// modules/arts/components/forms/update-art-limit-form/schema.ts
+import { z } from "zod";
+
+export const updateArtLimitSchema = z.object({
+  limit: z
+    .number()
+    .min(0, "Ліміт не може бути від'ємним")
+    .max(999999, "Ліміт не може перевищувати 999999"),
+});
+
+export type UpdateArtLimitFormData = z.infer<typeof updateArtLimitSchema>;
+```
+
+**Пример формы**:
+
+```typescript
+const form = useForm<UpdateArtLimitFormData>({
+  resolver: zodResolver(updateArtLimitSchema),
+  mode: "onSubmit",
+  reValidateMode: "onChange",
+  defaultValues: {
+    limit: artData.limit || 0,
+  },
+});
+
+const onSubmit = async (data: UpdateArtLimitFormData) => {
+  try {
+    await updateMutation.mutateAsync({ id, data });
+    onSuccess();
+  } catch (error) {
+    form.setError("root", {
+      message: error instanceof Error ? error.message : "Помилка",
+    });
+  }
+};
+```
+
+---
+
+## Стилизация и темизация
+
+### NativeWind (Tailwind CSS для React Native)
+
+**Конфигурация**: `tailwind.config.js`
+
+**Правила использования стилей**:
+
+- ✅ Используй `gap` для создания промежутков между элементами
+- ❌ НЕ используй `space-x` или `space-y` - они не работают корректно в React Native
+- Используй `className` для применения стилей
+- Комбинируй Tailwind классы с инлайн стилями при необходимости
+
+**Пример**:
+
+```typescript
+// ✅ ПРАВИЛЬНО
+<View className="flex-row gap-4">
+  <Button />
+  <Button />
+</View>
+
+// ❌ НЕПРАВИЛЬНО
+<View className="flex-row space-x-4">
+  <Button />
+  <Button />
+</View>
+```
+
+### Работа с темой
+
+#### Цветовая схема
+
+Тема определена в `constants/theme.ts`:
+
+- `Colors.light` - цвета для светлой темы
+- `Colors.dark` - цвета для темной темы
+
+#### Использование темы в компонентах
+
+```typescript
+import { useColorScheme } from "@/hooks/use-color-scheme";
+import { Colors } from "@/constants/theme";
+
+const colorScheme = useColorScheme() ?? "light";
+const textColor =
+  colorScheme === "light" ? Colors.light.text : Colors.dark.text;
+```
+
+#### Themed компоненты
+
+Используй готовые компоненты для автоматической поддержки темы:
+
+- `ThemedView` - View с поддержкой темы
+- `ThemedText` - Text с поддержкой темы
+
+```typescript
+import { ThemedView } from "@/components/themed-view";
+import { ThemedText } from "@/components/themed-text";
+
+<ThemedView className="flex-1">
+  <ThemedText type="defaultSemiBold">Заголовок</ThemedText>
+</ThemedView>;
+```
+
+### Цветовая палитра
+
+Проект использует расширенную цветовую палитру через CSS переменные:
+
+- `primary`, `secondary`, `tertiary` - основные цвета
+- `error`, `success`, `warning`, `info` - семантические цвета
+- `typography`, `outline`, `background` - системные цвета
+
+Доступ через Tailwind классы: `bg-primary-500`, `text-error-600`, `border-outline-300`
+
+### Импорты
+
+**Правило**: Используй абсолютные импорты от директории `src` (которая в проекте является корнем `mobile/`)
+
+**Формат**: `@/path/to/file`
+
+**Пример**:
+
+```typescript
+// ✅ ПРАВИЛЬНО
+import { useAuth } from "@/modules/auth/api/hooks/useAuth";
+import { ThemedView } from "@/components/themed-view";
+import { SERVER_URL } from "@/constants/server";
+
+// ❌ НЕПРАВИЛЬНО
+import { useAuth } from "../../../modules/auth/api/hooks/useAuth";
+```
+
+---
+
+## Навигация и роутинг
+
+### Expo Router (File-based Routing)
+
+**Принцип**: Структура файлов в `app/` определяет структуру роутов
+
+**Структура**:
+
+```
+app/
+  index.tsx              # / (главная страница)
+  login.tsx              # /login
+  (tabs)/                # Группа табов
+    index.tsx            # /(tabs)/
+    arts/
+      index.tsx          # /(tabs)/arts
+      [artikul].tsx      # /(tabs)/arts/:artikul
+  modal.tsx              # /modal (модальное окно)
+```
+
+### Защита роутов
+
+#### ProtectedRoute компонент
+
+**Назначение**: Защита страниц от неавторизованных пользователей и проверка прав доступа
+
+**Использование**:
+
+```typescript
+import { ProtectedRoute } from "@/modules/auth/components/ProtectedRoute";
+
+// Доступно только авторизованным
+<ProtectedRoute>
+  <Dashboard />
+</ProtectedRoute>
+
+// Доступно только админам и выше (с учетом иерархии)
+<ProtectedRoute allowedRoles={[RoleType.ADMIN]}>
+  <AdminPanel />
+</ProtectedRoute>
+
+// Доступно только PRIME (точное совпадение)
+<ProtectedRoute allowedRoles={[RoleType.PRIME]} exactMatch>
+  <SuperAdminPanel />
+</ProtectedRoute>
+```
+
+**Параметры**:
+
+- `allowedRoles?: RoleType[]` - разрешенные роли (по умолчанию - все авторизованные)
+- `exactMatch?: boolean` - точное совпадение роли без учета иерархии (по умолчанию - false)
+
+**Иерархия ролей**: `PRIME > ADMIN > USER`
+
+### Навигация программно
+
+```typescript
+import { useRouter } from "expo-router";
+
+const router = useRouter();
+
+// Переход на страницу
+router.push("/arts/12345");
+
+// Замена текущей страницы
+router.replace("/login");
+
+// Назад
+router.back();
+```
+
+---
+
+## Работа с данными
+
+### TanStack Query паттерны
+
+#### Query Keys (Ключи запросов)
+
+**Правила**:
+
+- Используй массив для ключей: `["resource"]` или `["resource", { id }]`
+- Включай все параметры запроса в ключ для правильного кеширования
+- Используй консистентную структуру во всем приложении
+
+**Примеры**:
+
+```typescript
+// Простой список
+queryKey: ["rows"];
+
+// С параметрами
+queryKey: ["art", { artikul }];
+queryKey: ["row", { rowId }];
+
+// Вложенные ресурсы
+queryKey: ["pallet", { palletId }, "poses"];
+```
+
+#### Настройка запросов
+
+**Рекомендуемые настройки**:
+
+```typescript
+useQuery({
+  queryKey: ["resource", { id }],
+  queryFn: ({ signal }) => getResource(id, signal),
+  enabled: !!id, // Запрос выполняется только если id существует
+  staleTime: 5 * 60 * 1000, // 5 минут - данные считаются свежими
+  gcTime: 10 * 60 * 1000, // 10 минут - время хранения в кеше
+});
+```
+
+#### Infinite Queries (Бесконечная прокрутка)
+
+Для списков с пагинацией:
+
+```typescript
+const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+  useInfiniteQuery({
+    queryKey: ["arts", { search }],
+    queryFn: ({ pageParam = 0, signal }) =>
+      getArts({ page: pageParam, search, signal }),
+    getNextPageParam: (lastPage, pages) =>
+      lastPage.hasNext ? pages.length : undefined,
+    initialPageParam: 0,
+  });
+```
+
+#### Mutations (Мутации)
+
+```typescript
+const mutation = useMutation({
+  mutationFn: (data: CreateRowData) => createRow(data),
+  onSuccess: () => {
+    // Инвалидировать связанные запросы
+    queryClient.invalidateQueries({ queryKey: ["rows"] });
+  },
+  onError: (error) => {
+    // Обработка ошибок
+    console.error("Ошибка создания:", error);
+  },
+});
+
+// Использование
+await mutation.mutateAsync({ title: "Новая строка" });
+```
+
+### Обработка ошибок и состояний загрузки
+
+#### Стандартные состояния
+
+```typescript
+const { data, isLoading, error, refetch } = useQuery(...);
+
+// Загрузка
+if (isLoading) return <SkeletonComponent />;
+
+// Ошибка
+if (error) {
+  return (
+    <ErrorView
+      message={error instanceof Error ? error.message : "Ошибка загрузки"}
+      onRetry={refetch}
+    />
+  );
+}
+
+// Нет данных
+if (!data) return <NotFoundView />;
+
+// Успешная загрузка
+return <ContainerComponent data={data} />;
+```
+
+#### Обработка ошибок в сервисах
+
+```typescript
+if (!res.ok) {
+  const message =
+    typeof data === "object" && data && "message" in data
+      ? (data as { message?: string }).message
+      : undefined;
+  throw new Error(message || "Failed to fetch resource");
+}
+```
+
+---
+
+## Правила и конвенции
+
+### Именование файлов и компонентов
+
+#### Файлы
+
+- **Компоненты**: PascalCase - `ArtContainer.tsx`, `ArtContainerView.tsx`
+- **Хуки**: camelCase с префиксом `use` - `useRowsQuery.tsx`, `useAuth.ts`
+- **Сервисы**: camelCase - `getRows.ts`, `createRow.ts`
+- **Типы**: camelCase - `dto.ts`, `types.ts`
+- **Константы**: UPPER_SNAKE_CASE - `SERVER_URL`, `ROLES`
+
+#### Компоненты
+
+- **Container**: `{Resource}Container` - `ArtContainer`, `RowsContainer`
+- **View**: `{Resource}ContainerView` - `ArtContainerView`, `RowsContainerView`
+- **Fetcher**: `{Resource}Fetcher` - `ArtFetcher`, `RowsFetcher`
+- **Card**: `{Resource}Card` или `{Resource}DetailCard` - `ArtDetailCard`, `ArtsGridCard`
+- **Form**: `{Action}{Resource}Form` - `UpdateArtLimitForm`, `CreateRowForm`
+- **Dialog**: `{Action}{Resource}Dialog` - `UpdateArtLimitDialog`
+
+### Структура модулей
+
+Каждый модуль должен следовать стандартной структуре:
+
+```
+modules/{module-name}/
+  api/
+    hooks/
+      queries/
+        use{Resource}Query.tsx
+        use{Resource}ByIdQuery.tsx
+      mutations/
+        useCreate{Resource}Mutation.tsx
+        useUpdate{Resource}Mutation.tsx
+    services/
+      queries/
+        get{Resource}s.ts
+        get{Resource}ById.ts
+      mutations/
+        create{Resource}.ts
+        update{Resource}.ts
+    types/
+      dto.ts
+  components/
+    containers/
+      {resource}-container/
+        {Resource}Container.tsx
+        {Resource}ContainerView.tsx
+        {Resource}ContainerSkeleton.tsx
+    fetchers/
+      {resource}-fetcher/
+        {Resource}Fetcher.tsx
+    # ... другие типы компонентов
+```
+
+### Обработка ошибок
+
+1. **В сервисах**: Бросай `Error` с понятным сообщением
+2. **В формах**: Используй `form.setError()` для отображения ошибок
+3. **В компонентах**: Показывай пользователю понятные сообщения об ошибках
+4. **Логирование**: Используй `console.error()` для отладки, но не в production
+
+### Типизация
+
+1. **Все данные API**: Типизируй через TypeScript интерфейсы/типы
+2. **Props компонентов**: Всегда определяй интерфейсы для props
+3. **Формы**: Используй `z.infer<typeof schema>` для типов данных форм
+4. **Функции**: Типизируй параметры и возвращаемые значения
+
+**Пример**:
+
+```typescript
+// ✅ ПРАВИЛЬНО
+interface ArtContainerProps {
+  artData: ArtDto;
+}
+
+export function ArtContainer({ artData }: ArtContainerProps) {
+  // ...
+}
+
+// ❌ НЕПРАВИЛЬНО
+export function ArtContainer({ artData }: any) {
+  // ...
+}
+```
+
+### Комментарии и документация
+
+1. **JSDoc для компонентов**: Документируй сложные компоненты и функции
+2. **Комментарии для сложной логики**: Объясняй неочевидные решения
+3. **Примеры использования**: Добавляй примеры в JSDoc для переиспользуемых компонентов
+
+**Пример**:
+
+```typescript
+/**
+ * Компонент для защиты роутов от неавторизованных пользователей
+ * и проверки прав доступа на основе ролей
+ *
+ * @example
+ * <ProtectedRoute allowedRoles={[RoleType.ADMIN]}>
+ *   <AdminPanel />
+ * </ProtectedRoute>
+ */
+export function ProtectedRoute({
+  children,
+  allowedRoles,
+}: ProtectedRouteProps) {
+  // ...
+}
+```
+
+### Производительность
+
+1. **Мемоизация**: Используй `useMemo` и `useCallback` для тяжелых вычислений и функций
+2. **Ленивая загрузка**: Используй `React.lazy` для больших компонентов
+3. **Оптимизация списков**: Используй `FlatList` или `VirtualizedList` для длинных списков
+4. **Кеширование**: Настраивай `staleTime` и `gcTime` в React Query
+
+### Безопасность
+
+1. **Токены**: Храни токены в `expo-secure-store`, не в `AsyncStorage`
+2. **Валидация**: Всегда валидируй пользовательский ввод через Zod
+3. **Защита роутов**: Используй `ProtectedRoute` для всех приватных страниц
+4. **Проверка прав**: Проверяй права доступа на клиенте и сервере
+
+---
+
+## Полезные ссылки
+
+- [Expo Router Documentation](https://docs.expo.dev/router/introduction/)
+- [TanStack Query Documentation](https://tanstack.com/query/latest)
+- [React Hook Form Documentation](https://react-hook-form.com/)
+- [Zod Documentation](https://zod.dev/)
+- [NativeWind Documentation](https://www.nativewind.dev/)
+- [Gluestack UI Documentation](https://ui.gluestack.io/)
+
+---
+
+## Чеклист для нового модуля
+
+При создании нового модуля убедись, что:
+
+- [ ] Создана структура директорий согласно стандарту
+- [ ] Определены типы в `api/types/dto.ts`
+- [ ] Созданы сервисы для всех API endpoints
+- [ ] Созданы React Query hooks для всех запросов
+- [ ] Реализованы Fetcher компоненты
+- [ ] Реализованы Container компоненты с логикой
+- [ ] Реализованы View компоненты (чистые, без логики)
+- [ ] Добавлены Skeleton компоненты для состояний загрузки
+- [ ] Реализованы формы с валидацией (если нужны)
+- [ ] Добавлена обработка ошибок
+- [ ] Все компоненты типизированы
+- [ ] Используются абсолютные импорты (`@/`)
+
+---
+
+_Последнее обновление: 2025-12-21_

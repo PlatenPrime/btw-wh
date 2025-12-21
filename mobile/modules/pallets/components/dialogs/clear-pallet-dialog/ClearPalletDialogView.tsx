@@ -1,14 +1,16 @@
-import {
-  Modal,
-  Pressable,
-  View,
-  TouchableOpacity,
-  ScrollView,
-  ActivityIndicator,
-} from "react-native";
+import { View, TouchableOpacity, Platform } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { ThemedText } from "@/components/themed-text";
-import { ThemedView } from "@/components/themed-view";
+import {
+  Modal,
+  ModalBackdrop,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from "@/components/ui";
+import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
+import { DialogDescription } from "@/components/shared/dialog-description/DialogDescription";
 import type { IPallet } from "@/modules/pallets/api/types";
 
 interface ClearPalletDialogViewProps {
@@ -33,84 +35,60 @@ export function ClearPalletDialogView({
   borderColor,
 }: ClearPalletDialogViewProps) {
   return (
-    <Modal
-      visible={visible}
-      transparent
-      animationType="fade"
-      onRequestClose={onClose}
-    >
-      <Pressable
+    <Modal isOpen={visible} onClose={onClose} className="items-center justify-center">
+      <ModalBackdrop
         className="flex-1 justify-center items-center"
         style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
-        onPress={onClose}
+      />
+      <ModalContent
+        className="w-full max-w-md mx-4 rounded-lg p-6 border gap-4"
+        style={{
+          backgroundColor: bgColor,
+          borderColor: borderColor,
+          ...Platform.select({
+            ios: {
+              shadowColor: "#000",
+              shadowOffset: { width: 0, height: 4 },
+              shadowOpacity: 0.3,
+              shadowRadius: 8,
+            },
+            android: {
+              elevation: 8,
+            },
+          }),
+        }}
       >
-        <Pressable
-          className="w-full max-w-md mx-4"
-          onPress={(e) => e.stopPropagation()}
-        >
-          <ThemedView
-            className="rounded-xl p-6 border"
-            style={{
-              backgroundColor: bgColor,
-              borderColor: borderColor,
-            }}
-          >
-            <View className="flex-row items-center justify-between mb-4">
-              <ThemedText type="defaultSemiBold" className="text-lg">
-                Очистити палету "{pallet.title}"?
-              </ThemedText>
-              <TouchableOpacity
-                onPress={onClose}
-                className="p-2"
-                activeOpacity={0.7}
-              >
-                <MaterialIcons name="close" size={24} color={textColor} />
-              </TouchableOpacity>
-            </View>
-
-            <ThemedText type="default" className="mb-6 text-sm">
-              Ви впевнені, що хочете очистити палету "{pallet.title}"? Цю дію
-              неможливо скасувати, вона також призведе до видалення всіх
-              пов'язаних позицій.
+        <ModalHeader className="flex-col gap-2">
+          <View className="flex-row items-center justify-between relative">
+            <ThemedText type="defaultSemiBold" className="text-lg text-center flex-1">
+              Очистити палету "{pallet.title}"?
             </ThemedText>
-
-            <View className="flex-row gap-3">
-              <TouchableOpacity
-                onPress={onClose}
-                className="flex-1 items-center justify-center py-3 rounded-lg border"
-                style={{
-                  borderColor: borderColor,
-                }}
-                activeOpacity={0.7}
-                disabled={isClearing}
-              >
-                <ThemedText type="defaultSemiBold">Скасувати</ThemedText>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                onPress={onClear}
-                className="flex-1 items-center justify-center py-3 rounded-lg"
-                style={{
-                  backgroundColor: "#ef4444",
-                }}
-                activeOpacity={0.7}
-                disabled={isClearing}
-              >
-                {isClearing ? (
-                  <ActivityIndicator color="#fff" />
-                ) : (
-                  <ThemedText
-                    type="defaultSemiBold"
-                    style={{ color: "#fff" }}
-                  >
-                    Очистити
-                  </ThemedText>
-                )}
-              </TouchableOpacity>
-            </View>
-          </ThemedView>
-        </Pressable>
-      </Pressable>
+            <TouchableOpacity
+              onPress={onClose}
+              className="absolute top-4 right-4"
+              activeOpacity={0.7}
+              style={{ opacity: 0.7 }}
+            >
+              <MaterialIcons name="close" size={16} color={textColor} />
+            </TouchableOpacity>
+          </View>
+          <DialogDescription>
+            Ви впевнені, що хочете очистити палету "{pallet.title}"? Цю дію
+            неможливо скасувати, вона також призведе до видалення всіх
+            пов'язаних позицій.
+          </DialogDescription>
+        </ModalHeader>
+        <ModalFooter className="flex-col-reverse gap-2">
+          <DialogActions
+            onCancel={onClose}
+            onSubmit={onClear}
+            cancelText="Скасувати"
+            submitText="Очистити"
+            isSubmitting={isClearing}
+            variant="destructive"
+          />
+        </ModalFooter>
+      </ModalContent>
     </Modal>
   );
 }
