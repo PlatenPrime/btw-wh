@@ -16,6 +16,8 @@ interface ArtsFetcherProps {
     fetchNextPage: () => void;
     search: string;
     onSearchChange: React.Dispatch<React.SetStateAction<string>>;
+    refreshing?: boolean;
+    onRefresh?: () => void;
   }>;
   SkeletonComponent?: ComponentType;
   limit?: number;
@@ -37,6 +39,8 @@ export function ArtsFetcher({
     fetchNextPage,
     hasNextPage,
     error,
+    refetch,
+    isRefetching,
   } = useArtsInfiniteQuery({
     limit,
     search,
@@ -77,6 +81,8 @@ export function ArtsFetcher({
       fetchNextPage={fetchNextPage}
       search={search}
       onSearchChange={setSearch}
+      refreshing={isRefetching}
+      onRefresh={() => void refetch()}
     />
   );
 }

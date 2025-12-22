@@ -1,4 +1,5 @@
 import { FlatList, Box } from "@/components/ui";
+import { RefreshControl } from "react-native";
 import type { PalletShortDto } from "@/modules/pallets/api/types";
 import { PalletCard } from "@/modules/pallets/components/cards/pallet-card/PalletCard";
 import { ThemedText } from "@/components/themed-text";
@@ -6,9 +7,16 @@ import { ThemedText } from "@/components/themed-text";
 interface PalletsListViewProps {
   pallets: PalletShortDto[] | undefined;
   rowId: string;
+  refreshing?: boolean;
+  onRefresh?: () => void;
 }
 
-export function PalletsListView({ pallets, rowId }: PalletsListViewProps) {
+export function PalletsListView({
+  pallets,
+  rowId,
+  refreshing = false,
+  onRefresh,
+}: PalletsListViewProps) {
   if (!pallets || pallets.length === 0) {
     return (
       <Box className="flex-1 justify-center items-center py-8">
@@ -30,6 +38,11 @@ export function PalletsListView({ pallets, rowId }: PalletsListViewProps) {
       keyExtractor={(item) => item._id}
       contentContainerClassName="p-2"
       showsVerticalScrollIndicator={false}
+      refreshControl={
+        onRefresh ? (
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        ) : undefined
+      }
     />
   );
 }

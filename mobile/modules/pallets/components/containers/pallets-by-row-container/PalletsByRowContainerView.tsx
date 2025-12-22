@@ -7,12 +7,16 @@ interface PalletsByRowContainerViewProps {
   pallets: PalletShortDto[] | undefined;
   rowId: string;
   isLoading: boolean;
+  refreshing?: boolean;
+  onRefresh?: () => void;
 }
 
 export function PalletsByRowContainerView({
   pallets,
   rowId,
   isLoading,
+  refreshing,
+  onRefresh,
 }: PalletsByRowContainerViewProps) {
   if (isLoading) {
     return (
@@ -26,7 +30,12 @@ export function PalletsByRowContainerView({
 
   return (
     <Box className="flex-1">
-      <PalletsList pallets={pallets} rowId={rowId} />
+      <PalletsList
+        pallets={pallets}
+        rowId={rowId}
+        refreshing={refreshing}
+        onRefresh={onRefresh}
+      />
     </Box>
   );
 }

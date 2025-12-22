@@ -7,12 +7,20 @@ interface PalletsByRowFetcherProps {
 }
 
 export function PalletsByRowFetcher({ rowId }: PalletsByRowFetcherProps) {
-  const { data, isLoading } = usePalletsByRowQuery(rowId);
+  const { data, isLoading, refetch, isRefetching } = usePalletsByRowQuery(rowId);
 
   if (isLoading) {
     return <PalletsByRowContainerSkeleton />;
   }
 
-  return <PalletsByRowContainer pallets={data} rowId={rowId} isLoading={isLoading} />;
+  return (
+    <PalletsByRowContainer
+      pallets={data}
+      rowId={rowId}
+      isLoading={isLoading}
+      refreshing={isRefetching}
+      onRefresh={() => void refetch()}
+    />
+  );
 }
 

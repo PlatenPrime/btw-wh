@@ -5,9 +5,15 @@ import { useRegisterHeaderActions } from "@/components/layout/header";
 
 interface ArtContainerProps {
   artData: ArtDto;
+  refreshing?: boolean;
+  onRefresh?: () => void;
 }
 
-export function ArtContainer({ artData }: ArtContainerProps) {
+export function ArtContainer({
+  artData,
+  refreshing,
+  onRefresh,
+}: ArtContainerProps) {
   const [updateLimitDialogOpen, setUpdateLimitDialogOpen] = useState(false);
 
   // Регистрируем действия в header меню
@@ -26,6 +32,8 @@ export function ArtContainer({ artData }: ArtContainerProps) {
       artData={artData}
       updateLimitDialogOpen={updateLimitDialogOpen}
       setUpdateLimitDialogOpen={setUpdateLimitDialogOpen}
+      refreshing={refreshing}
+      onRefresh={onRefresh}
     />
   );
 }

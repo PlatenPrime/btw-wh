@@ -6,9 +6,16 @@ import { RowsContainerView } from "./RowsContainerView";
 interface RowsContainerProps {
   data: RowDto[] | undefined;
   isLoading: boolean;
+  refreshing?: boolean;
+  onRefresh?: () => void;
 }
 
-export function RowsContainer({ data, isLoading }: RowsContainerProps) {
+export function RowsContainer({
+  data,
+  isLoading,
+  refreshing,
+  onRefresh,
+}: RowsContainerProps) {
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
 
   useRegisterHeaderActions([
@@ -33,6 +40,8 @@ export function RowsContainer({ data, isLoading }: RowsContainerProps) {
       createDialogOpen={createDialogOpen}
       setCreateDialogOpen={setCreateDialogOpen}
       onCreateSuccess={handleCreateSuccess}
+      refreshing={refreshing}
+      onRefresh={onRefresh}
     />
   );
 }

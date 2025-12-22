@@ -12,12 +12,22 @@ export function PosesByPalletFetcher({
   palletId,
   sortParams,
 }: PosesByPalletFetcherProps) {
-  const { data, isLoading } = usePosesByPalletQuery(palletId, sortParams);
+  const { data, isLoading, refetch, isRefetching } = usePosesByPalletQuery(
+    palletId,
+    sortParams,
+  );
 
   if (isLoading) {
     return <PosesByPalletContainerSkeleton />;
   }
 
-  return <PosesByPalletContainer poses={data} isLoading={isLoading} />;
+  return (
+    <PosesByPalletContainer
+      poses={data}
+      isLoading={isLoading}
+      refreshing={isRefetching}
+      onRefresh={() => void refetch()}
+    />
+  );
 }
 

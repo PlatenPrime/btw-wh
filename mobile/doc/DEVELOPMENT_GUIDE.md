@@ -642,6 +642,108 @@ if (!res.ok) {
 }
 ```
 
+### Pull-to-Refresh (Обновление потягиванием)
+
+**Правило**: Все компоненты со списками (`FlatList`) и скроллируемым контентом (`ScrollView`) ДОЛЖНЫ поддерживать pull-to-refresh по умолчанию.
+
+**Реализация**:
+
+1. **Fetcher компоненты** должны извлекать `refetch` и `isRefetching` из React Query hooks и передавать их в Container
+2. **Container компоненты** должны передавать `refreshing` и `onRefresh` в View компоненты
+3. **View компоненты** должны использовать `RefreshControl` с `refetch` для обновления данных
+
+**Пример для FlatList**:
+
+```typescript
+// View компонент
+import { RefreshControl } from 'react-native';
+import { FlatList } from '@/components/ui';
+
+interface MyListViewProps {
+  data: Item[];
+  refreshing?: boolean;
+  onRefresh?: () => void;
+}
+
+export function MyListView({ data, refreshing = false, onRefresh }: MyListViewProps) {
+  return (
+    <FlatList
+      data={data}
+      refreshControl={
+        onRefresh ? (
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        ) : undefined
+      }
+      // ... другие props
+    />
+  );
+}
+```
+
+**Пример для ScrollView**:
+
+```typescript
+// View компонент
+import { RefreshControl } from 'react-native';
+import { ScrollView } from '@/components/ui';
+
+interface MyContainerViewProps {
+  refreshing?: boolean;
+  onRefresh?: () => void;
+}
+
+export function MyContainerView({ refreshing = false, onRefresh }: MyContainerViewProps) {
+  return (
+    <ScrollView
+      refreshControl={
+        onRefresh ? (
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        ) : undefined
+      }
+      // ... другие props
+    />
+  );
+}
+```
+
+**Поток данных**:
+
+```typescript
+// Fetcher: извлекает refetch и isRefetching из query hook
+const { data, refetch, isRefetching } = useQuery(...);
+
+// Container: получает refreshing и onRefresh, передает в View
+<ContainerComponent
+  data={data}
+  refreshing={isRefetching}
+  onRefresh={() => void refetch()}
+/>
+
+// View: использует RefreshControl
+<FlatList
+  refreshControl={
+    onRefresh ? (
+      <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+    ) : undefined
+  }
+/>
+```
+
+**Особенности для Infinite Queries**:
+
+Для `useInfiniteQuery` функция `refetch()` автоматически сбросит пагинацию и загрузит данные заново с первой страницы:
+
+```typescript
+const { data, refetch, isRefetching } = useInfiniteQuery(...);
+
+// refetch() автоматически сбросит пагинацию
+<ContainerComponent
+  data={flatData}
+  refreshing={isRefetching}
+  onRefresh={() => void refetch()}
+/>
+```
+
 ---
 
 ## Правила и конвенции

@@ -9,7 +9,11 @@ import { ArtContainerSkeleton } from "@/modules/arts/components/containers/art-c
 
 interface ArtFetcherProps {
   artikul: string;
-  ContainerComponent?: ComponentType<{ artData: ArtDto }>;
+  ContainerComponent?: ComponentType<{
+    artData: ArtDto;
+    refreshing?: boolean;
+    onRefresh?: () => void;
+  }>;
   SkeletonComponent?: ComponentType;
 }
 
@@ -23,6 +27,7 @@ export function ArtFetcher({
     isLoading,
     error,
     refetch,
+    isRefetching,
   } = useOneArtQuery(artikul);
 
   if (isLoading) return <SkeletonComponent />;
@@ -53,6 +58,12 @@ export function ArtFetcher({
     );
   }
 
-  return <ContainerComponent artData={artResponse.data!} />;
+  return (
+    <ContainerComponent
+      artData={artResponse.data!}
+      refreshing={isRefetching}
+      onRefresh={() => void refetch()}
+    />
+  );
 }
 

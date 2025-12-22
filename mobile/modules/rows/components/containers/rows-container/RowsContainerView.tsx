@@ -10,6 +10,8 @@ interface RowsContainerViewProps {
   createDialogOpen: boolean;
   setCreateDialogOpen: (open: boolean) => void;
   onCreateSuccess: () => void;
+  refreshing?: boolean;
+  onRefresh?: () => void;
 }
 
 export function RowsContainerView({
@@ -18,6 +20,8 @@ export function RowsContainerView({
   createDialogOpen,
   setCreateDialogOpen,
   onCreateSuccess,
+  refreshing,
+  onRefresh,
 }: RowsContainerViewProps) {
   if (isLoading) {
     return (
@@ -32,7 +36,7 @@ export function RowsContainerView({
   return (
     <>
       <Box className="flex-1">
-        <RowsList rows={data} />
+        <RowsList rows={data} refreshing={refreshing} onRefresh={onRefresh} />
       </Box>
       <CreateRowDialog
         open={createDialogOpen}

@@ -6,11 +6,15 @@ import { ThemedText } from "@/components/themed-text";
 interface PosesByPalletContainerViewProps {
   poses: IPos[] | undefined;
   isLoading: boolean;
+  refreshing?: boolean;
+  onRefresh?: () => void;
 }
 
 export function PosesByPalletContainerView({
   poses,
   isLoading,
+  refreshing,
+  onRefresh,
 }: PosesByPalletContainerViewProps) {
   if (isLoading) {
     return (
@@ -24,7 +28,11 @@ export function PosesByPalletContainerView({
 
   return (
     <View className="flex-1">
-      <PosesList poses={poses} />
+      <PosesList
+        poses={poses}
+        refreshing={refreshing}
+        onRefresh={onRefresh}
+      />
     </View>
   );
 }

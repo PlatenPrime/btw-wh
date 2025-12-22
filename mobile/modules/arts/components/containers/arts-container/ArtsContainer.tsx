@@ -9,6 +9,8 @@ interface ArtsContainerProps {
   fetchNextPage: () => void;
   search: string;
   onSearchChange: React.Dispatch<React.SetStateAction<string>>;
+  refreshing?: boolean;
+  onRefresh?: () => void;
 }
 
 export function ArtsContainer({
@@ -18,6 +20,8 @@ export function ArtsContainer({
   fetchNextPage,
   search,
   onSearchChange,
+  refreshing,
+  onRefresh,
 }: ArtsContainerProps) {
   const handleEndReached = () => {
     if (hasNextPage && !isFetchingNextPage) {
@@ -32,6 +36,8 @@ export function ArtsContainer({
       search={search}
       onSearchChange={onSearchChange}
       onEndReached={handleEndReached}
+      refreshing={refreshing}
+      onRefresh={onRefresh}
     />
   );
 }

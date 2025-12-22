@@ -1,4 +1,5 @@
 import { FlatList, Box } from "@/components/ui";
+import { RefreshControl } from "react-native";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { ArtsGridCard } from "@/modules/arts/components/cards/arts-grid-card/ArtsGridCard";
 import { ThemedText } from "@/components/themed-text";
@@ -7,12 +8,16 @@ interface ViewProps {
   arts: ArtDto[] | undefined;
   onEndReached?: () => void;
   onEndReachedThreshold?: number;
+  refreshing?: boolean;
+  onRefresh?: () => void;
 }
 
 export function ArtsGridView({
   arts,
   onEndReached,
   onEndReachedThreshold = 0.5,
+  refreshing = false,
+  onRefresh,
 }: ViewProps) {
   if (!arts || arts.length === 0) {
     return (
@@ -38,6 +43,11 @@ export function ArtsGridView({
       onEndReached={onEndReached}
       onEndReachedThreshold={onEndReachedThreshold}
       showsVerticalScrollIndicator={false}
+      refreshControl={
+        onRefresh ? (
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        ) : undefined
+      }
     />
   );
 }

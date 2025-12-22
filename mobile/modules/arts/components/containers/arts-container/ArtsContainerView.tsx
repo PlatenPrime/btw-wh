@@ -10,6 +10,8 @@ interface ArtsContainerViewProps {
   search: string;
   onSearchChange: (text: string) => void;
   onEndReached?: () => void;
+  refreshing?: boolean;
+  onRefresh?: () => void;
 }
 
 export function ArtsContainerView({
@@ -18,6 +20,8 @@ export function ArtsContainerView({
   search,
   onSearchChange,
   onEndReached,
+  refreshing,
+  onRefresh,
 }: ArtsContainerViewProps) {
   return (
     <View className="flex-1">
@@ -28,7 +32,12 @@ export function ArtsContainerView({
           placeholder="Пошук артикулів..."
         />
       </View>
-      <ArtsGrid arts={data} onEndReached={onEndReached} />
+      <ArtsGrid
+        arts={data}
+        onEndReached={onEndReached}
+        refreshing={refreshing}
+        onRefresh={onRefresh}
+      />
       {isFetchingNextPage && (
         <View className="py-2">
           <ThemedText type="default" className="text-center">
