@@ -1,12 +1,13 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
-import { Platform } from 'react-native';
-import { HapticTab } from '@/components/haptic-tab';
-import { useColorScheme } from '@/hooks/use-color-scheme';
-import { Colors } from '@/constants/theme';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { ProtectedRoute } from '@/modules/auth/components/ProtectedRoute';
-import { useSidebar } from '@/components/layout/sidebar/SidebarProvider';
+import { HapticTab } from "@/components/haptic-tab";
+import { useSidebar } from "@/components/layout/sidebar/SidebarProvider";
+import { Colors } from "@/constants/theme";
+import { useColorScheme } from "@/hooks/use-color-scheme";
+import { ProtectedRoute } from "@/modules/auth/components/ProtectedRoute";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { Tabs } from "expo-router";
+import React from "react";
+import { Platform } from "react-native";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -14,28 +15,29 @@ export default function TabLayout() {
 
   const baseTabBarStyle = Platform.select({
     ios: {
-      position: 'absolute' as const,
+      position: "absolute" as const,
     },
     default: {},
   });
 
   const tabBarStyle = isOpen
-    ? { ...baseTabBarStyle, height: 0, overflow: 'hidden' as const }
+    ? { ...baseTabBarStyle, height: 0, overflow: "hidden" as const }
     : baseTabBarStyle;
 
   return (
     <ProtectedRoute>
       <Tabs
         screenOptions={{
-          tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+          tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
           headerShown: false,
           tabBarButton: HapticTab,
           tabBarStyle,
-        }}>
+        }}
+      >
         <Tabs.Screen
           name="index"
           options={{
-            title: 'Головна',
+            title: "Головна",
             tabBarIcon: ({ color }) => (
               <MaterialIcons size={28} name="home" color={color} />
             ),
@@ -44,16 +46,16 @@ export default function TabLayout() {
         <Tabs.Screen
           name="arts"
           options={{
-            title: 'Артикули',
+            title: "Артикули",
             tabBarIcon: ({ color }) => (
-              <MaterialIcons size={28} name="note" color={color} />
+              <MaterialIcons size={28} name="article" color={color} />
             ),
           }}
         />
         <Tabs.Screen
           name="warehouse"
           options={{
-            title: 'Склад',
+            title: "Склад",
             tabBarIcon: ({ color }) => (
               <MaterialIcons size={28} name="warehouse" color={color} />
             ),
@@ -62,9 +64,9 @@ export default function TabLayout() {
         <Tabs.Screen
           name="refiling"
           options={{
-            title: 'Поповнення',
+            title: "Поповнення",
             tabBarIcon: ({ color }) => (
-              <MaterialIcons size={28} name="refresh" color={color} />
+              <AntDesign name="down-square" size={28} color={color} />
             ),
           }}
         />
@@ -72,4 +74,3 @@ export default function TabLayout() {
     </ProtectedRoute>
   );
 }
-

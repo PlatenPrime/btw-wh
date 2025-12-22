@@ -2,6 +2,7 @@ import { View, ScrollView, RefreshControl } from "react-native";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { ArtDetailCard } from "@/modules/arts/components/cards/art-detail-card/ArtDetailCard";
 import { UpdateArtLimitDialog } from "@/modules/arts/components/dialogs/update-art-limit-dialog/UpdateArtLimitDialog";
+import { ArtPosesByArtikulContainer } from "@/modules/arts/components/containers/poses-by-artikul-container/ArtPosesByArtikulContainer";
 
 interface ArtContainerViewProps {
   artData: ArtDto;
@@ -30,7 +31,7 @@ export function ArtContainerView({
         }
       >
         <ArtDetailCard artData={artData} />
-        {/* PosesByArtikulContainer будет добавлен позже */}
+        <ArtPosesByArtikulContainer artikul={artData.artikul} />
       </ScrollView>
 
       <UpdateArtLimitDialog

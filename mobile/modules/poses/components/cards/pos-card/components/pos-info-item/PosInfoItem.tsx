@@ -1,26 +1,32 @@
-import { Box, HStack } from "@/components/ui";
 import { ThemedText } from "@/components/themed-text";
-import { Icon } from "@/components/ui/icon";
-import { useIconColor } from "@/hooks/use-icon-color";
+import { Box } from "@/components/ui";
+import { Icon, type IconFamily } from "@/components/ui/icon";
 import { SemanticColors } from "@/constants/theme";
+import { useIconColor } from "@/hooks/use-icon-color";
 
 interface PosInfoItemProps {
   icon: string;
   value: string | number;
   isError?: boolean;
+  iconFamily?: IconFamily;
 }
 
-export function PosInfoItem({ icon, value, isError }: PosInfoItemProps) {
+export function PosInfoItem({
+  icon,
+  value,
+  isError,
+  iconFamily = "MaterialIcons",
+}: PosInfoItemProps) {
   const iconColor = useIconColor();
-  
+
   return (
     <Box
-      className={`flex-row items-center justify-center gap-1 rounded-lg px-2 py-1 ${
+      className={`flex-row items-center justify-center gap-2 rounded-lg px-2 py-1 ${
         isError ? "bg-error-50" : "bg-background-100"
       }`}
     >
       <Icon
-        family="MaterialIcons"
+        family={iconFamily}
         name={icon}
         size={12}
         color={isError ? SemanticColors.destructive : iconColor}
@@ -35,4 +41,3 @@ export function PosInfoItem({ icon, value, isError }: PosInfoItemProps) {
     </Box>
   );
 }
-

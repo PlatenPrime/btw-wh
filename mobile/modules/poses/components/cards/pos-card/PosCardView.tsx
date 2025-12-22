@@ -28,7 +28,8 @@ export function PosCardView({ pos, skladName, menu }: PosCardViewProps) {
         </Box>
         <Box className="flex-1">
           <PosInfoItem
-            icon="inventory-2"
+            icon="box"
+            iconFamily="Feather"
             value={pos.boxes || 0}
             isError={pos.boxes === 0}
           />

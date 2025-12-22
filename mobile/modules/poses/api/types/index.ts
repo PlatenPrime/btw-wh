@@ -53,3 +53,18 @@ export interface DeletePosResponse {
   message: string;
 }
 
+// Типы для получения позиций по артикулу
+export interface WarehouseData {
+  poses: IPos[];
+  quant: number;
+  boxes: number;
+}
+
+export interface GetPosesByArtikulResponse {
+  total: number;
+  pogrebi: WarehouseData;
+  merezhi: WarehouseData;
+  totalQuant: number;
+  totalBoxes: number;
+}
+

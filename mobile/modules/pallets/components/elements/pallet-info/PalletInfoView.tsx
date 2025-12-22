@@ -30,8 +30,8 @@ export function PalletInfoView({
 
       <HStack className="items-center gap-1">
         <Icon 
-          family="MaterialIcons" 
-          name="inventory" 
+          family="Feather" 
+          name="box" 
           size={16} 
           color={iconColor}
         />
