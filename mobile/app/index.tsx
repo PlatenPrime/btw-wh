@@ -6,7 +6,7 @@ import { ProtectedRoute } from "@/modules/auth/components/ProtectedRoute";
 import { ThemedView } from "@/components/themed-view";
 import { ThemedText } from "@/components/themed-text";
 import { useSidebar } from "@/components/layout/sidebar/SidebarProvider";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { Icon } from "@/components/ui/icon";
 import { Colors } from "@/constants/theme";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 
@@ -20,9 +20,10 @@ function MainScreen() {
         onPress={toggleSidebar}
         className="absolute top-[50px] left-4 z-[1000] p-2"
       >
-        <MaterialIcons
+        <Icon
+          family="MaterialIcons"
           name="menu"
-          size={24}
+          size="md"
           color={colorScheme === "light" ? Colors.light.text : Colors.dark.text}
         />
       </TouchableOpacity>

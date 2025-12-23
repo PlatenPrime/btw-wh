@@ -6,8 +6,8 @@ import {
   ModalContent,
   ModalHeader,
 } from "@/components/ui";
+import { Icon } from "@/components/ui/icon";
 import { CreateRowForm } from "@/modules/rows/components/forms/create-row-form/CreateRowForm";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { TouchableOpacity, View, Platform } from "react-native";
 import { SemanticColors } from "@/constants/theme";
 
@@ -63,7 +63,7 @@ export function CreateRowDialogView({
               activeOpacity={0.7}
               style={{ opacity: 0.7 }}
             >
-              <MaterialIcons name="close" size={16} color={textColor} />
+              <Icon family="MaterialIcons" name="close" size={16} color={textColor} />
             </TouchableOpacity>
           </View>
         </ModalHeader>

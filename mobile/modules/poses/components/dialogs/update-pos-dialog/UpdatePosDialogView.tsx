@@ -6,9 +6,9 @@ import {
   ModalContent,
   ModalHeader,
 } from "@/components/ui";
+import { Icon } from "@/components/ui/icon";
 import { UpdatePosForm } from "@/modules/poses/components/forms/update-pos-form/UpdatePosForm";
 import type { IPos } from "@/modules/poses/api/types";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { TouchableOpacity, View, Platform } from "react-native";
 import { SemanticColors } from "@/constants/theme";
 
@@ -66,7 +66,7 @@ export function UpdatePosDialogView({
               activeOpacity={0.7}
               style={{ opacity: 0.7 }}
             >
-              <MaterialIcons name="close" size={16} color={textColor} />
+              <Icon family="MaterialIcons" name="close" size={16} color={textColor} />
             </TouchableOpacity>
           </View>
         </ModalHeader>

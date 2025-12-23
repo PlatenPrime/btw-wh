@@ -1,5 +1,4 @@
 import { View, TouchableOpacity, ScrollView, Platform } from "react-native";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { ThemedText } from "@/components/themed-text";
 import {
   Modal,
@@ -8,6 +7,7 @@ import {
   ModalHeader,
   ModalBody,
 } from "@/components/ui";
+import { Icon } from "@/components/ui/icon";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { UpdateArtLimitForm } from "@/modules/arts/components/forms/update-art-limit-form/UpdateArtLimitForm";
 import { SemanticColors } from "@/constants/theme";
@@ -66,7 +66,7 @@ export function UpdateArtLimitDialogView({
               activeOpacity={0.7}
               style={{ opacity: 0.7 }}
             >
-              <MaterialIcons name="close" size={16} color={textColor} />
+              <Icon family="MaterialIcons" name="close" size={16} color={textColor} />
             </TouchableOpacity>
           </View>
         </ModalHeader>

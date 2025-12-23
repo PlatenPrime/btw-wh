@@ -2,7 +2,7 @@ import { ModeToggle } from "@/components/shared/mode-toggle";
 import { Colors } from "@/constants/theme";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 import { useTheme } from "@/providers/theme-provider";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { Icon } from "@/components/ui/icon";
 import { useRouter } from "expo-router";
 import React from "react";
 import { Pressable, TouchableOpacity, View } from "react-native";
@@ -56,7 +56,7 @@ export function AppSidebar() {
             className="p-2 rounded-full active:bg-black/10 dark:active:bg-white/10"
             activeOpacity={0.7}
           >
-            <MaterialIcons name="close" size={24} color={textColor} />
+            <Icon family="MaterialIcons" name="close" size={24} color={textColor} />
           </TouchableOpacity>
         </View>
 

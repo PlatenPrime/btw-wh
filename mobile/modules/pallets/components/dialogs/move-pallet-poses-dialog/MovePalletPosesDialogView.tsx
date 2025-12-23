@@ -1,5 +1,4 @@
 import { TouchableOpacity, View, Platform } from "react-native";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import {
   Modal,
   ModalBackdrop,
@@ -8,6 +7,7 @@ import {
   ModalBody,
   Box,
 } from "@/components/ui";
+import { Icon } from "@/components/ui/icon";
 import { ThemedText } from "@/components/themed-text";
 import type { IPallet } from "@/modules/pallets/api/types";
 import { MovePalletPosesForm } from "../../dialogs/move-pallet-poses-form/MovePalletPosesForm";
@@ -73,7 +73,7 @@ export function MovePalletPosesDialogView({
               activeOpacity={0.7}
               style={{ opacity: 0.7 }}
             >
-              <MaterialIcons name="close" size={16} color={textColor} />
+              <Icon family="MaterialIcons" name="close" size={16} color={textColor} />
             </TouchableOpacity>
           </View>
         </ModalHeader>

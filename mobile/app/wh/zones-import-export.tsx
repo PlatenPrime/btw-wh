@@ -3,7 +3,7 @@ import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { Colors } from "@/constants/theme";
 import { useColorScheme } from "@/hooks/use-color-scheme";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { Icon } from "@/components/ui/icon";
 import { TouchableOpacity, View } from "react-native";
 import { ProtectedRoute } from "@/modules/auth/components/ProtectedRoute";
 import { RoleType } from "@/constants/roles";
@@ -18,7 +18,8 @@ function ZonesImportExportScreen() {
         onPress={toggleSidebar}
         className="absolute top-[50px] left-4 z-[1000] p-2"
       >
-        <MaterialIcons
+        <Icon
+          family="MaterialIcons"
           name="menu"
           size={24}
           color={colorScheme === "light" ? Colors.light.text : Colors.dark.text}

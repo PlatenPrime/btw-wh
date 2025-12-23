@@ -5,7 +5,7 @@ import { useAuth } from '@/modules/auth/api/hooks/useAuth';
 import { ThemedText } from '@/components/themed-text';
 import { Colors, SemanticColors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { Icon } from '@/components/ui/icon';
 
 interface ProfileSidebarCardProps {
   handleLogout: () => void;
@@ -54,7 +54,7 @@ export function ProfileSidebarCard({
             backgroundColor: colorScheme === 'light' ? SemanticColors.dialog.bg.light : SemanticColors.dialog.bg.dark,
           }}
         >
-          <MaterialIcons name="logout" size={20} color={textColor} />
+          <Icon family="MaterialIcons" name="logout" size={20} color={textColor} />
           <Text
             className="ml-2 font-semibold"
             style={{ color: textColor }}

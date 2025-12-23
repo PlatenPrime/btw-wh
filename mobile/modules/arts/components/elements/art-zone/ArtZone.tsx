@@ -1,6 +1,6 @@
 import { View } from "react-native";
 import { ThemedText } from "@/components/themed-text";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { Icon } from "@/components/ui/icon";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { SemanticColors } from "@/constants/theme";
@@ -15,7 +15,7 @@ export function ArtZone({ artData }: ArtZoneProps) {
 
   return (
     <View className="flex-row items-center gap-2">
-      <MaterialIcons name="place" size={16} color={iconColor} />
+      <Icon family="MaterialIcons" name="place" size={16} color={iconColor} />
       <ThemedText type="default" className="text-xs">
         {artData.zone}
       </ThemedText>

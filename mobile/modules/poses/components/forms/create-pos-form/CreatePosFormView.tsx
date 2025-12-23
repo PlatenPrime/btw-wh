@@ -350,13 +350,11 @@ export function CreatePosFormView({
           <Button
             onPress={handleSubmit(onSubmit)}
             isDisabled={isSubmitting || !isFormValid}
+            variant="solid"
+            action="primary"
             className="flex-1 rounded-lg items-center justify-center py-3"
             style={{
               opacity: isSubmitting || !isFormValid ? 0.5 : 1,
-              backgroundColor:
-                isSubmitting || !isFormValid
-                  ? SemanticColors.disabled
-                  : SemanticColors.primary,
             }}
           >
             {isSubmitting ? (

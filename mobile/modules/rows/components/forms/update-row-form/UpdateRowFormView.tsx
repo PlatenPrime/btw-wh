@@ -82,10 +82,11 @@ export function UpdateRowFormView({
         <Button
           onPress={handleSubmit(onSubmit)}
           isDisabled={isSubmitting}
+          variant="solid"
+          action="primary"
           className="flex-1 rounded-lg items-center justify-center py-3"
           style={{ 
             opacity: isSubmitting ? 0.5 : 1,
-            backgroundColor: isSubmitting ? SemanticColors.disabled : SemanticColors.primary
           }}
         >
           {isSubmitting ? (

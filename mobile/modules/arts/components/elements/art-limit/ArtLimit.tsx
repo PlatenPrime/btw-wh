@@ -1,6 +1,6 @@
 import { View } from "react-native";
 import { ThemedText } from "@/components/themed-text";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { Icon } from "@/components/ui/icon";
 import { SemanticColors } from "@/constants/theme";
 
 interface ArtLimitProps {
@@ -14,7 +14,7 @@ export function ArtLimit({ limit }: ArtLimitProps) {
 
   return (
     <View className="flex-row items-center gap-2">
-      <MaterialIcons name="swap-horiz" size={16} color={iconColor} />
+      <Icon family="MaterialIcons" name="swap-horiz" size={16} color={iconColor} />
       <ThemedText type="default" className="text-xs">
         {limit}
       </ThemedText>

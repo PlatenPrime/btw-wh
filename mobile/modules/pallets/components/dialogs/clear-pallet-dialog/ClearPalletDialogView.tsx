@@ -1,5 +1,4 @@
 import { View, TouchableOpacity, Platform } from "react-native";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { ThemedText } from "@/components/themed-text";
 import {
   Modal,
@@ -9,6 +8,7 @@ import {
   ModalBody,
   ModalFooter,
 } from "@/components/ui";
+import { Icon } from "@/components/ui/icon";
 import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
 import { DialogDescription } from "@/components/shared/dialog-description/DialogDescription";
 import type { IPallet } from "@/modules/pallets/api/types";
@@ -70,7 +70,7 @@ export function ClearPalletDialogView({
               activeOpacity={0.7}
               style={{ opacity: 0.7 }}
             >
-              <MaterialIcons name="close" size={16} color={textColor} />
+              <Icon family="MaterialIcons" name="close" size={16} color={textColor} />
             </TouchableOpacity>
           </View>
           <DialogDescription>

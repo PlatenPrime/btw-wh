@@ -1,6 +1,6 @@
 import { Modal, Pressable, View, TouchableOpacity } from "react-native";
 import { Image } from "expo-image";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { Icon } from "@/components/ui/icon";
 import { getBigImageUrl } from "@/modules/arts/constants/art-image-url";
 import { SemanticColors } from "@/constants/theme";
 
@@ -44,7 +44,7 @@ export function ArtImageModal({
               style={{ backgroundColor: SemanticColors.shadow.backdrop }}
               activeOpacity={0.7}
             >
-              <MaterialIcons name="close" size={24} color={SemanticColors.white} />
+              <Icon family="MaterialIcons" name="close" size={24} color={SemanticColors.white} />
             </TouchableOpacity>
 
             <Image

@@ -44,7 +44,7 @@ export default function WarehouseList() {
               <Icon
                 family="MaterialIcons"
                 name={item.icon as any}
-                size={24}
+                size="md"
                 color={iconColor}
               />
               <ThemedText type="defaultSemiBold" className="ml-3 text-base">

@@ -28,7 +28,7 @@ export function PosInfoItem({
       <Icon
         family={iconFamily}
         name={icon}
-        size={12}
+        size="xs"
         color={isError ? SemanticColors.destructive : iconColor}
       />
       <ThemedText

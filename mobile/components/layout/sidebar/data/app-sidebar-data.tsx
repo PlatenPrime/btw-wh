@@ -1,6 +1,7 @@
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import React from 'react';
+import { Icon } from '@/components/ui/icon';
 import { Colors } from '@/constants/theme';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 export type IconName = keyof typeof MaterialIcons.glyphMap;
 
@@ -22,7 +23,7 @@ export const getIcon = (iconName: string, size = 20, color?: string) => {
   // Если цвет не передан, используем цвет по умолчанию из констант
   // Вызывающий код должен использовать useIconColor() для получения правильного цвета
   const defaultColor = color || Colors.light.icon;
-  return <MaterialIcons name={mappedIcon} size={size} color={color || defaultColor} />;
+  return <Icon family="MaterialIcons" name={mappedIcon} size={size} color={color || defaultColor} />;
 };
 
 export const appSidebarData = {

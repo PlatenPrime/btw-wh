@@ -1,5 +1,5 @@
 import { View, TextInput } from "react-native";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { Icon } from "@/components/ui/icon";
 import { useTheme } from "@/providers/theme-provider";
 import { Colors, SemanticColors } from "@/constants/theme";
 import { useIconColor } from "@/hooks/use-icon-color";
@@ -31,7 +31,7 @@ export function SearchPanel({
         borderColor: borderColor,
       }}
     >
-      <MaterialIcons name="search" size={20} color={iconColor} />
+      <Icon family="MaterialIcons" name="search" size={20} color={iconColor} />
       <TextInput
         value={search}
         onChangeText={onSearchChange}

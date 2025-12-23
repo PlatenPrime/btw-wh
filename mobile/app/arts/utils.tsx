@@ -2,7 +2,7 @@ import { View, TouchableOpacity } from 'react-native';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { useSidebar } from '@/components/layout/sidebar/SidebarProvider';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { Icon } from '@/components/ui/icon';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { Colors } from '@/constants/theme';
 
@@ -15,7 +15,8 @@ export default function ArtsUtilsScreen() {
       <TouchableOpacity
         onPress={toggleSidebar}
         className="absolute top-[50px] left-4 z-[1000] p-2">
-        <MaterialIcons
+        <Icon
+          family="MaterialIcons"
           name="menu"
           size={24}
           color={colorScheme === 'light' ? Colors.light.text : Colors.dark.text}

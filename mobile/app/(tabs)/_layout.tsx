@@ -3,8 +3,7 @@ import { useSidebar } from "@/components/layout/sidebar/SidebarProvider";
 import { Colors } from "@/constants/theme";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { ProtectedRoute } from "@/modules/auth/components/ProtectedRoute";
-import AntDesign from "@expo/vector-icons/AntDesign";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { Icon } from "@/components/ui/icon";
 import { Tabs } from "expo-router";
 import React from "react";
 import { Platform } from "react-native";
@@ -39,7 +38,7 @@ export default function TabLayout() {
           options={{
             title: "Головна",
             tabBarIcon: ({ color }) => (
-              <MaterialIcons size={28} name="home" color={color} />
+              <Icon family="MaterialIcons" name="home" size={28} color={color} />
             ),
           }}
         />
@@ -48,7 +47,7 @@ export default function TabLayout() {
           options={{
             title: "Артикули",
             tabBarIcon: ({ color }) => (
-              <MaterialIcons size={28} name="article" color={color} />
+              <Icon family="MaterialIcons" name="article" size={28} color={color} />
             ),
           }}
         />
@@ -57,7 +56,7 @@ export default function TabLayout() {
           options={{
             title: "Склад",
             tabBarIcon: ({ color }) => (
-              <MaterialIcons size={28} name="warehouse" color={color} />
+              <Icon family="MaterialIcons" name="warehouse" size={28} color={color} />
             ),
           }}
         />
@@ -66,7 +65,7 @@ export default function TabLayout() {
           options={{
             title: "Поповнення",
             tabBarIcon: ({ color }) => (
-              <AntDesign name="down-square" size={28} color={color} />
+              <Icon family="AntDesign" name="down-square" size={28} color={color} />
             ),
           }}
         />
