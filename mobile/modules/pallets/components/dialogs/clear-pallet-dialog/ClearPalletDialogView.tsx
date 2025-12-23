@@ -7,7 +7,7 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-} from "@/components/ui";
+} from "@/components/ui/modal-native";
 import { Icon } from "@/components/ui/icon";
 import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
 import { DialogDescription } from "@/components/shared/dialog-description/DialogDescription";

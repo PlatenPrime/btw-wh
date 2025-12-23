@@ -83,10 +83,10 @@ export * from './keyboard-avoiding-view';
 export * from './link';
 
 // Menu
-export * from './menu';
+export * from './menu-native';
 
 // Modal
-export * from './modal';
+export * from './modal-native';
 
 // Popover
 export * from './popover';

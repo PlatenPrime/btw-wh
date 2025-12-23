@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Pressable } from "@/components/ui";
-import { Menu, MenuItem, MenuItemLabel } from "@/components/ui/menu";
+import { Menu, MenuItem, MenuItemLabel } from "@/components/ui/menu-native";
 import { Icon } from "@/components/ui/icon";
 import { useIconColor } from "@/hooks/use-icon-color";
 import type { IPos } from "@/modules/poses/api/types";
@@ -44,9 +44,9 @@ export function PosCardMenu({ pos, onSuccess }: PosCardMenuProps) {
       <Menu
         placement="bottom"
         offset={5}
-        trigger={({ ...triggerProps }) => {
+        trigger={({ onPress, ref }) => {
           return (
-            <Pressable {...triggerProps} className="p-2">
+            <Pressable ref={ref} onPress={onPress} className="p-2">
               <Icon
                 family="MaterialIcons"
                 name="more-vert"
@@ -57,10 +57,10 @@ export function PosCardMenu({ pos, onSuccess }: PosCardMenuProps) {
           );
         }}
       >
-        <MenuItem key="edit" textValue="Редагувати" onPress={handleEdit}>
+        <MenuItem key="edit" itemKey="edit" textValue="Редагувати" onPress={handleEdit}>
           <MenuItemLabel size="sm">Редагувати</MenuItemLabel>
         </MenuItem>
-        <MenuItem key="delete" textValue="Видалити" onPress={handleDelete}>
+        <MenuItem key="delete" itemKey="delete" textValue="Видалити" onPress={handleDelete}>
           <MenuItemLabel size="sm" className="text-error-600">
             Видалити
           </MenuItemLabel>

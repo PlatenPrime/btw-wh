@@ -5,7 +5,7 @@ import {
   ModalBody,
   ModalContent,
   ModalHeader,
-} from "@/components/ui";
+} from "@/components/ui/modal-native";
 import { Icon } from "@/components/ui/icon";
 import { CreateRowForm } from "@/modules/rows/components/forms/create-row-form/CreateRowForm";
 import { TouchableOpacity, View, Platform } from "react-native";

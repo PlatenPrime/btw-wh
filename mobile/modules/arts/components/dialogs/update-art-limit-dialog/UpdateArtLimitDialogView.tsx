@@ -6,7 +6,7 @@ import {
   ModalContent,
   ModalHeader,
   ModalBody,
-} from "@/components/ui";
+} from "@/components/ui/modal-native";
 import { Icon } from "@/components/ui/icon";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { UpdateArtLimitForm } from "@/modules/arts/components/forms/update-art-limit-form/UpdateArtLimitForm";

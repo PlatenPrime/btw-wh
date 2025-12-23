@@ -5,7 +5,7 @@ import {
   ModalBody,
   ModalContent,
   ModalHeader,
-} from "@/components/ui";
+} from "@/components/ui/modal-native";
 import { Icon } from "@/components/ui/icon";
 import { UpdateRowForm } from "@/modules/rows/components/forms/update-row-form/UpdateRowForm";
 import type { RowDto } from "@/modules/rows/api/types/dto";

@@ -6,7 +6,7 @@ import {
   ModalHeader,
   ModalBody,
   Box,
-} from "@/components/ui";
+} from "@/components/ui/modal-native";
 import { Icon } from "@/components/ui/icon";
 import { ThemedText } from "@/components/themed-text";
 import type { IPallet } from "@/modules/pallets/api/types";

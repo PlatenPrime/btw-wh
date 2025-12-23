@@ -5,7 +5,7 @@ import {
   ModalBody,
   ModalContent,
   ModalHeader,
-} from "@/components/ui";
+} from "@/components/ui/modal-native";
 import { Icon } from "@/components/ui/icon";
 import { UpdatePosForm } from "@/modules/poses/components/forms/update-pos-form/UpdatePosForm";
 import type { IPos } from "@/modules/poses/api/types";
