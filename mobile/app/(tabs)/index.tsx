@@ -2,9 +2,6 @@ import { View } from 'react-native';
 import { ThemedText } from '@/components/themed-text';
 import { PageLayout } from '@/components/layout/page-layout';
 import { Spinner } from '@/components/ui/spinner';
-import { AccordionExample } from '@/components/examples/Accordion';
-import { ButtonExample } from '@/components/examples/Button';
-import { MenuExample } from '@/components/examples/Menu';
 
 export default function HomeTab() {
   return (
@@ -17,10 +14,6 @@ export default function HomeTab() {
           Головна
         </ThemedText>
         <Spinner size="large" color="grey" />
-        <AccordionExample />
-
-        <ButtonExample />
-        <MenuExample />
       </View>
     </PageLayout>
   );

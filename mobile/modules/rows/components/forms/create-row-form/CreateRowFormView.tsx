@@ -84,9 +84,7 @@ export function CreateRowFormView({
             className="flex-1 rounded-lg border border-outline-200 bg-background-0 items-center justify-center py-3 "
             style={{ opacity: isSubmitting ? 0.5 : 1 }}
           >
-            <ButtonText>
-              <ThemedText type="defaultSemiBold">Скасувати</ThemedText>
-            </ButtonText>
+            <ButtonText className="font-semibold">Скасувати</ButtonText>
           </Button>
         )}
         <Button
@@ -102,11 +100,7 @@ export function CreateRowFormView({
           {isSubmitting ? (
             <ButtonSpinner color={SemanticColors.white} />
           ) : (
-            <ButtonText>
-              <ThemedText type="defaultSemiBold" className="text-white">
-                Створити
-              </ThemedText>
-            </ButtonText>
+            <ButtonText className="text-white font-semibold">Створити</ButtonText>
           )}
         </Button>
       </HStack>

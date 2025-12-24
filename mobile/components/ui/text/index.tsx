@@ -1,6 +1,6 @@
 import React from 'react';
 
-import type { VariantProps } from '@gluestack-ui/utils/nativewind-utils';
+import type { VariantProps } from '@/lib/tv';
 import { Text as RNText } from 'react-native';
 import { textStyle } from './styles';
 

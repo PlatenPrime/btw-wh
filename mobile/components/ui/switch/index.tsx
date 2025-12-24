@@ -1,41 +1,34 @@
 'use client';
 import React from 'react';
-import { Switch as RNSwitch } from 'react-native';
-import { createSwitch } from '@gluestack-ui/core/switch/creator';
-import { tva } from '@gluestack-ui/utils/nativewind-utils';
-import { withStyleContext } from '@gluestack-ui/utils/nativewind-utils';
-import type { VariantProps } from '@gluestack-ui/utils/nativewind-utils';
+import { Switch as RNSwitch, type SwitchProps as RNSwitchProps } from 'react-native';
+import { useTheme } from '@/providers/theme-provider';
+import { SemanticColors } from '@/constants/theme';
 
-const UISwitch = createSwitch({
-  Root: withStyleContext(RNSwitch),
-});
+export interface SwitchProps extends Omit<RNSwitchProps, 'trackColor' | 'thumbColor'> {
+  className?: string;
+}
 
-const switchStyle = tva({
-  base: 'data-[focus=true]:outline-0 data-[focus=true]:ring-2 data-[focus=true]:ring-indicator-primary web:cursor-pointer disabled:cursor-not-allowed data-[disabled=true]:opacity-40 data-[invalid=true]:border-error-700 data-[invalid=true]:rounded-xl data-[invalid=true]:border-2',
+export const Switch = React.forwardRef<React.ComponentRef<typeof RNSwitch>, SwitchProps>(
+  function Switch({ className, ...props }, ref) {
+    const { resolvedTheme } = useTheme();
+    const theme = resolvedTheme === 'dark' ? 'dark' : 'light';
 
-  variants: {
-    size: {
-      sm: 'scale-75',
-      md: '',
-      lg: 'scale-125',
-    },
-  },
-});
+    const trackColor = {
+      false: SemanticColors.switch.track.false[theme],
+      true: SemanticColors.switch.track.true[theme],
+    };
 
-type ISwitchProps = React.ComponentProps<typeof UISwitch> &
-  VariantProps<typeof switchStyle>;
-const Switch = React.forwardRef<
-  React.ComponentRef<typeof UISwitch>,
-  ISwitchProps
->(function Switch({ className, size = 'md', ...props }, ref) {
-  return (
-    <UISwitch
-      ref={ref}
-      {...props}
-      className={switchStyle({ size, class: className })}
-    />
-  );
-});
+    return (
+      <RNSwitch
+        ref={ref}
+        {...props}
+        trackColor={trackColor}
+        thumbColor={SemanticColors.switch.thumb}
+        ios_backgroundColor={trackColor.false}
+      />
+    );
+  }
+);
 
 Switch.displayName = 'Switch';
-export { Switch };
+

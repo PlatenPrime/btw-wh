@@ -13,7 +13,6 @@ import { useOneArtQuery } from "@/modules/arts/api/hooks/queries/useOneArtQuery"
 import type { IPallet } from "@/modules/pallets/api/types";
 import type { IPos } from "@/modules/poses/api/types";
 import { Button, ButtonText, ButtonSpinner, HStack } from "@/components/ui";
-import { ThemedText } from "@/components/themed-text";
 import { SemanticColors } from "@/constants/theme";
 
 interface CreatePosFormWithActionsProps {
@@ -159,9 +158,7 @@ export function CreatePosFormWithActions({
             className="flex-1 rounded-lg border border-outline-200 bg-background-0 items-center justify-center py-3"
             style={{ opacity: isFormSubmitting ? 0.5 : 1 }}
           >
-            <ButtonText>
-              <ThemedText type="defaultSemiBold">Скасувати</ThemedText>
-            </ButtonText>
+            <ButtonText className="font-semibold">Скасувати</ButtonText>
           </Button>
           <Button
             onPress={handleSubmit(onSubmit)}
@@ -178,11 +175,7 @@ export function CreatePosFormWithActions({
             {isFormSubmitting ? (
               <ButtonSpinner color={SemanticColors.white} />
             ) : (
-              <ButtonText>
-                <ThemedText type="defaultSemiBold" className="text-white">
-                  Створити
-                </ThemedText>
-              </ButtonText>
+              <ButtonText className="text-white font-semibold">Створити</ButtonText>
             )}
           </Button>
         </HStack>

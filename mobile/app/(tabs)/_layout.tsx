@@ -1,7 +1,7 @@
 import { HapticTab } from "@/components/haptic-tab";
 import { useSidebar } from "@/components/layout/sidebar/SidebarProvider";
 import { Colors } from "@/constants/theme";
-import { useColorScheme } from "@/hooks/use-color-scheme";
+import { useTheme } from "@/providers/theme-provider";
 import { ProtectedRoute } from "@/modules/auth/components/ProtectedRoute";
 import { Icon } from "@/components/ui/icon";
 import { Tabs } from "expo-router";
@@ -9,14 +9,21 @@ import React from "react";
 import { Platform } from "react-native";
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const { resolvedTheme } = useTheme();
   const { isOpen } = useSidebar();
+  const theme = resolvedTheme === "dark" ? "dark" : "light";
+  const themeColors = Colors[theme];
 
   const baseTabBarStyle = Platform.select({
     ios: {
       position: "absolute" as const,
+      backgroundColor: themeColors.background,
+      borderTopColor: theme === "dark" ? "rgba(115, 116, 116, 0.3)" : "rgba(221, 220, 219, 0.3)",
     },
-    default: {},
+    default: {
+      backgroundColor: themeColors.background,
+      borderTopColor: theme === "dark" ? "rgba(115, 116, 116, 0.3)" : "rgba(221, 220, 219, 0.3)",
+    },
   });
 
   const tabBarStyle = isOpen
@@ -27,10 +34,14 @@ export default function TabLayout() {
     <ProtectedRoute>
       <Tabs
         screenOptions={{
-          tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+          tabBarActiveTintColor: themeColors.tabIconSelected,
+          tabBarInactiveTintColor: themeColors.tabIconDefault,
           headerShown: false,
           tabBarButton: HapticTab,
           tabBarStyle,
+          tabBarLabelStyle: {
+            fontSize: 12,
+          },
         }}
       >
         <Tabs.Screen

@@ -11,18 +11,18 @@ const tintColorDark = "#fff";
 export const Colors = {
   light: {
     text: "#11181C",
-    background: "#fff",
+    background: "#ffffff", // rgb(255, 255, 255) - соответствует background-0
     tint: tintColorLight,
     icon: "#687076",
-    tabIconDefault: "#687076",
+    tabIconDefault: "#687076", // rgb(104, 112, 118) - соответствует typography-500
     tabIconSelected: tintColorLight,
   },
   dark: {
-    text: "#ECEDEE",
-    background: "#151718",
+    text: "#E5E5E5", // rgb(229, 229, 229) - соответствует typography-700
+    background: "#121212", // rgb(18, 18, 18) - соответствует background-0
     tint: tintColorDark,
-    icon: "#D1D5DB", // Светло-серый цвет для хорошей видимости в темной теме
-    tabIconDefault: "#9BA1A6",
+    icon: "#A3A3A3", // rgb(163, 163, 163) - соответствует typography-500 в темной теме
+    tabIconDefault: "#A3A3A3", // rgb(163, 163, 163) - соответствует typography-500 в темной теме
     tabIconSelected: tintColorDark,
   },
 };
@@ -47,12 +47,12 @@ export const SemanticColors = {
   // Цвета для диалогов и модальных окон
   dialog: {
     bg: {
-      light: "#fff",
-      dark: "#1f2937", // gray-800
+      light: "#ffffff", // rgb(255, 255, 255) - соответствует background-0
+      dark: "#121212", // rgb(18, 18, 18) - соответствует background-0
     },
     border: {
-      light: "#d1d5db", // gray-300
-      dark: "#4b5563", // gray-600
+      light: "#DDDCDB", // rgb(221, 220, 219) - соответствует outline-200
+      dark: "#737474", // rgb(115, 116, 116) - соответствует outline-200
     },
   },
   // Цвета для ошибок
@@ -87,12 +87,12 @@ export const SemanticColors = {
   // Цвета для карточек
   card: {
     bg: {
-      light: "#fff",
-      dark: "#1f2937", // gray-800
+      light: "#ffffff", // rgb(255, 255, 255) - соответствует background-0
+      dark: "#121212", // rgb(18, 18, 18) - соответствует background-0
     },
     border: {
-      light: "#d1d5db", // gray-300
-      dark: "#4b5563", // gray-600
+      light: "#DDDCDB", // rgb(221, 220, 219) - соответствует outline-200
+      dark: "#737474", // rgb(115, 116, 116) - соответствует outline-200
     },
   },
   // Цвета для sidebar

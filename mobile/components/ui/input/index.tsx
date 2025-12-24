@@ -1,41 +1,22 @@
 'use client';
-import React from 'react';
-import { createInput } from '@gluestack-ui/core/input/creator';
-import { View, Pressable, TextInput } from 'react-native';
-import { tva } from '@gluestack-ui/utils/nativewind-utils';
-import {
-  withStyleContext,
-  useStyleContext,
-} from '@gluestack-ui/utils/nativewind-utils';
-import { cssInterop } from 'nativewind';
-import type { VariantProps } from '@gluestack-ui/utils/nativewind-utils';
-import { PrimitiveIcon, UIIcon } from '@gluestack-ui/core/icon/creator';
+import React, { createContext, useContext } from 'react';
+import { tva, type VariantProps } from '@/lib/tv';
+import { View, Pressable, TextInput, type ViewProps, type PressableProps, type TextInputProps } from 'react-native';
+import { Icon, type IconProps } from '../icon';
 
 const SCOPE = 'INPUT';
 
-const UIInput = createInput({
-  Root: withStyleContext(View, SCOPE),
-  Icon: UIIcon,
-  Slot: Pressable,
-  Input: TextInput,
-});
+type InputContextType = {
+  variant?: 'underlined' | 'outline' | 'rounded';
+  size?: 'xl' | 'lg' | 'md' | 'sm';
+};
 
-cssInterop(PrimitiveIcon, {
-  className: {
-    target: 'style',
-    nativeStyleToProp: {
-      height: true,
-      width: true,
-      fill: true,
-      color: 'classNameColor',
-      stroke: true,
-    },
-  },
-});
+const InputContext = createContext<InputContextType>({});
+
+const useInputContext = () => useContext(InputContext);
 
 const inputStyle = tva({
   base: 'border-background-300 flex-row overflow-hidden content-center data-[hover=true]:border-outline-400 data-[focus=true]:border-primary-700 data-[focus=true]:hover:border-primary-700 data-[disabled=true]:opacity-40 data-[disabled=true]:hover:border-background-300 items-center',
-
   variants: {
     size: {
       xl: 'h-12',
@@ -43,14 +24,11 @@ const inputStyle = tva({
       md: 'h-10',
       sm: 'h-9',
     },
-
     variant: {
       underlined:
         'rounded-none border-b data-[invalid=true]:border-b-2 data-[invalid=true]:border-error-700 data-[invalid=true]:hover:border-error-700 data-[invalid=true]:data-[focus=true]:border-error-700 data-[invalid=true]:data-[focus=true]:hover:border-error-700 data-[invalid=true]:data-[disabled=true]:hover:border-error-700',
-
       outline:
         'rounded border data-[invalid=true]:border-error-700 data-[invalid=true]:hover:border-error-700 data-[invalid=true]:data-[focus=true]:border-error-700 data-[invalid=true]:data-[focus=true]:hover:border-error-700 data-[invalid=true]:data-[disabled=true]:hover:border-error-700 data-[focus=true]:web:ring-1 data-[focus=true]:web:ring-inset data-[focus=true]:web:ring-indicator-primary data-[invalid=true]:web:ring-1 data-[invalid=true]:web:ring-inset data-[invalid=true]:web:ring-indicator-error data-[invalid=true]:data-[focus=true]:hover:web:ring-1 data-[invalid=true]:data-[focus=true]:hover:web:ring-inset data-[invalid=true]:data-[focus=true]:hover:web:ring-indicator-error data-[invalid=true]:data-[disabled=true]:hover:web:ring-1 data-[invalid=true]:data-[disabled=true]:hover:web:ring-inset data-[invalid=true]:data-[disabled=true]:hover:web:ring-indicator-error',
-
       rounded:
         'rounded-full border data-[invalid=true]:border-error-700 data-[invalid=true]:hover:border-error-700 data-[invalid=true]:data-[focus=true]:border-error-700 data-[invalid=true]:data-[focus=true]:hover:border-error-700 data-[invalid=true]:data-[disabled=true]:hover:border-error-700 data-[focus=true]:web:ring-1 data-[focus=true]:web:ring-inset data-[focus=true]:web:ring-indicator-primary data-[invalid=true]:web:ring-1 data-[invalid=true]:web:ring-inset data-[invalid=true]:web:ring-indicator-error data-[invalid=true]:data-[focus=true]:hover:web:ring-1 data-[invalid=true]:data-[focus=true]:hover:web:ring-inset data-[invalid=true]:data-[focus=true]:hover:web:ring-indicator-error data-[invalid=true]:data-[disabled=true]:hover:web:ring-1 data-[invalid=true]:data-[disabled=true]:hover:web:ring-inset data-[invalid=true]:data-[disabled=true]:hover:web:ring-indicator-error',
     },
@@ -77,14 +55,12 @@ const inputSlotStyle = tva({
 
 const inputFieldStyle = tva({
   base: 'flex-1 text-typography-900 py-0 px-3 placeholder:text-typography-500 h-full ios:leading-[0px] web:cursor-text web:data-[disabled=true]:cursor-not-allowed',
-
   parentVariants: {
     variant: {
       underlined: 'web:outline-0 web:outline-none px-0',
       outline: 'web:outline-0 web:outline-none',
       rounded: 'web:outline-0 web:outline-none px-4',
     },
-
     size: {
       '2xs': 'text-2xs',
       'xs': 'text-xs',
@@ -101,25 +77,31 @@ const inputFieldStyle = tva({
   },
 });
 
-type IInputProps = React.ComponentProps<typeof UIInput> &
+type IInputProps = ViewProps &
   VariantProps<typeof inputStyle> & { className?: string };
-const Input = React.forwardRef<React.ComponentRef<typeof UIInput>, IInputProps>(
+
+const Input = React.forwardRef<React.ComponentRef<typeof View>, IInputProps>(
   function Input(
-    { className, variant = 'outline', size = 'md', ...props },
+    { className, variant = 'outline', size = 'md', children, ...props },
     ref
   ) {
+    const contextValue: InputContextType = { variant, size };
+
     return (
-      <UIInput
-        ref={ref}
-        {...props}
-        className={inputStyle({ variant, size, class: className })}
-        context={{ variant, size }}
-      />
+      <InputContext.Provider value={contextValue}>
+        <View
+          ref={ref}
+          {...props}
+          className={inputStyle({ variant, size, class: className })}
+        >
+          {children}
+        </View>
+      </InputContext.Provider>
     );
   }
 );
 
-type IInputIconProps = React.ComponentProps<typeof UIInput.Icon> &
+type IInputIconProps = IconProps &
   VariantProps<typeof inputIconStyle> & {
     className?: string;
     height?: number;
@@ -127,14 +109,14 @@ type IInputIconProps = React.ComponentProps<typeof UIInput.Icon> &
   };
 
 const InputIcon = React.forwardRef<
-  React.ComponentRef<typeof UIInput.Icon>,
+  React.ComponentRef<typeof Icon>,
   IInputIconProps
 >(function InputIcon({ className, size, ...props }, ref) {
-  const { size: parentSize } = useStyleContext(SCOPE);
+  const { size: parentSize } = useInputContext();
 
   if (typeof size === 'number') {
     return (
-      <UIInput.Icon
+      <Icon
         ref={ref}
         {...props}
         className={inputIconStyle({ class: className })}
@@ -146,7 +128,7 @@ const InputIcon = React.forwardRef<
     size === undefined
   ) {
     return (
-      <UIInput.Icon
+      <Icon
         ref={ref}
         {...props}
         className={inputIconStyle({ class: className })}
@@ -154,7 +136,7 @@ const InputIcon = React.forwardRef<
     );
   }
   return (
-    <UIInput.Icon
+    <Icon
       ref={ref}
       {...props}
       className={inputIconStyle({
@@ -167,15 +149,15 @@ const InputIcon = React.forwardRef<
   );
 });
 
-type IInputSlotProps = React.ComponentProps<typeof UIInput.Slot> &
+type IInputSlotProps = PressableProps &
   VariantProps<typeof inputSlotStyle> & { className?: string };
 
 const InputSlot = React.forwardRef<
-  React.ComponentRef<typeof UIInput.Slot>,
+  React.ComponentRef<typeof Pressable>,
   IInputSlotProps
 >(function InputSlot({ className, ...props }, ref) {
   return (
-    <UIInput.Slot
+    <Pressable
       ref={ref}
       {...props}
       className={inputSlotStyle({
@@ -185,17 +167,17 @@ const InputSlot = React.forwardRef<
   );
 });
 
-type IInputFieldProps = React.ComponentProps<typeof UIInput.Input> &
+type IInputFieldProps = TextInputProps &
   VariantProps<typeof inputFieldStyle> & { className?: string };
 
 const InputField = React.forwardRef<
-  React.ComponentRef<typeof UIInput.Input>,
+  React.ComponentRef<typeof TextInput>,
   IInputFieldProps
 >(function InputField({ className, ...props }, ref) {
-  const { variant: parentVariant, size: parentSize } = useStyleContext(SCOPE);
+  const { variant: parentVariant, size: parentSize } = useInputContext();
 
   return (
-    <UIInput.Input
+    <TextInput
       ref={ref}
       {...props}
       className={inputFieldStyle({

@@ -17,7 +17,6 @@ export function RowCard({ row }: RowCardProps) {
   return (
     <RowCardView
       title={row.title}
-      palletsCount={row.pallets.length}
       onPress={handlePress}
       menu={<RowCardMenu row={row} />}
     />

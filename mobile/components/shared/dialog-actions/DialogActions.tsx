@@ -1,4 +1,3 @@
-import { ThemedText } from "@/components/themed-text";
 import { Button, ButtonSpinner, ButtonText, HStack } from "@/components/ui";
 import { SemanticColors } from "@/constants/theme";
 
@@ -34,9 +33,7 @@ export function DialogActions({
           className="flex-1 rounded-lg border border-outline-200 bg-background-0 items-center justify-center py-3"
           style={{ opacity: isSubmitting ? 0.5 : 1 }}
         >
-          <ButtonText>
-            <ThemedText type="defaultSemiBold">{cancelText}</ThemedText>
-          </ButtonText>
+          <ButtonText className="font-semibold">{cancelText}</ButtonText>
         </Button>
       )}
       <Button
@@ -57,11 +54,7 @@ export function DialogActions({
         {isSubmitting ? (
           <ButtonSpinner color={SemanticColors.white} />
         ) : (
-          <ButtonText>
-            <ThemedText type="defaultSemiBold" className="text-white">
-              {submitText}
-            </ThemedText>
-          </ButtonText>
+          <ButtonText className="text-white font-semibold">{submitText}</ButtonText>
         )}
       </Button>
     </HStack>

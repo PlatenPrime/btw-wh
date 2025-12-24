@@ -2,21 +2,28 @@ import { DarkTheme, DefaultTheme, ThemeProvider as NavigationThemeProvider } fro
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { View } from 'react-native';
 import 'react-native-reanimated';
 
-import { GluestackUIProvider } from '@/components/ui/gluestack-ui-provider';
 import { SidebarProvider } from '@/components/layout/sidebar/SidebarProvider';
 import { AppSidebar } from '@/components/layout/sidebar/AppSidebar';
 import { Providers } from '@/providers/providers';
 import { useTheme } from '@/providers/theme-provider';
+import { config } from '@/components/ui/gluestack-ui-provider/config';
 import '@/global.css';
 
 function AppContent() {
   const { resolvedTheme } = useTheme();
+  const themeMode = resolvedTheme === 'dark' ? 'dark' : 'light';
 
   return (
     <SafeAreaProvider>
-      <GluestackUIProvider mode={resolvedTheme === 'dark' ? 'dark' : 'light'}>
+      <View
+        style={[
+          config[themeMode],
+          { flex: 1, height: '100%', width: '100%' },
+        ]}
+      >
         <NavigationThemeProvider value={resolvedTheme === 'dark' ? DarkTheme : DefaultTheme}>
           <SidebarProvider>
             <Stack>
@@ -32,7 +39,7 @@ function AppContent() {
             <StatusBar style={resolvedTheme === 'dark' ? 'light' : 'dark'} />
           </SidebarProvider>
         </NavigationThemeProvider>
-      </GluestackUIProvider>
+      </View>
     </SafeAreaProvider>
   );
 }

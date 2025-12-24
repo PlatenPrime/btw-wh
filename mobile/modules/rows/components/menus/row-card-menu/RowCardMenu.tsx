@@ -50,7 +50,7 @@ export function RowCardMenu({ row, onSuccess }: RowCardMenuProps) {
               <Icon
                 family="MaterialIcons"
                 name="more-vert"
-                size={20}
+                size="md"
                 color={defaultIconColor}
               />
             </Pressable>

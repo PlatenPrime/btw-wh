@@ -261,23 +261,23 @@ export const config = {
     '--color-typography-400': '140 140 140',
     '--color-typography-500': '163 163 163',
     '--color-typography-600': '212 212 212',
-    '--color-typography-700': '219 219 220',
-    '--color-typography-800': '229 229 229',
-    '--color-typography-900': '245 245 245',
+    '--color-typography-700': '229 229 229',
+    '--color-typography-800': '245 245 245',
+    '--color-typography-900': '254 254 255',
     '--color-typography-950': '254 254 255',
 
     /* Outline */
     '--color-outline-0': '26 23 23',
     '--color-outline-50': '39 38 36',
     '--color-outline-100': '65 65 65',
-    '--color-outline-200': '83 82 82',
-    '--color-outline-300': '115 116 116',
-    '--color-outline-400': '140 141 141',
-    '--color-outline-500': '165 163 163',
-    '--color-outline-600': '211 211 211',
-    '--color-outline-700': '221 220 219',
-    '--color-outline-800': '230 230 230',
-    '--color-outline-900': '243 243 243',
+    '--color-outline-200': '115 116 116',
+    '--color-outline-300': '140 141 141',
+    '--color-outline-400': '165 163 163',
+    '--color-outline-500': '211 211 211',
+    '--color-outline-600': '221 220 219',
+    '--color-outline-700': '230 230 230',
+    '--color-outline-800': '243 243 243',
+    '--color-outline-900': '253 254 254',
     '--color-outline-950': '253 254 254',
 
     /* Background */
@@ -298,7 +298,7 @@ export const config = {
     '--color-background-error': '66 43 43',
     '--color-background-warning': '65 47 35',
     '--color-background-success': '28 43 33',
-    '--color-background-muted': '51 51 51',
+    '--color-background-muted': '39 38 37',
     '--color-background-info': '26 40 46',
 
     /* Focus Ring Indicator  */

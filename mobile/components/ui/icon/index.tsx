@@ -1,23 +1,10 @@
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Feather from "@expo/vector-icons/Feather";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import {
-  createIcon,
-  IPrimitiveIcon,
-  PrimitiveIcon,
-  Svg,
-} from "@gluestack-ui/core/icon/creator";
-import { tva, VariantProps } from "@gluestack-ui/utils/nativewind-utils";
+import { tva, type VariantProps } from "@/lib/tv";
 import { cssInterop } from "nativewind";
 import React from "react";
-import { Path } from "react-native-svg";
-
-export const UIIcon = createIcon({
-  Root: PrimitiveIcon,
-}) as React.ForwardRefExoticComponent<
-  React.ComponentPropsWithoutRef<typeof PrimitiveIcon> &
-    React.RefAttributes<React.ComponentRef<typeof Svg>>
->;
+import Svg, { Path, type SvgProps } from "react-native-svg";
 
 const iconStyle = tva({
   base: "text-typography-950 fill-none pointer-events-none",
@@ -33,7 +20,7 @@ const iconStyle = tva({
   },
 });
 
-cssInterop(UIIcon, {
+cssInterop(Svg, {
   className: {
     target: "style",
     nativeStyleToProp: {
@@ -48,13 +35,16 @@ cssInterop(UIIcon, {
 
 export type IconFamily = "MaterialIcons" | "AntDesign" | "Feather";
 
-type IIConProps = IPrimitiveIcon &
-  VariantProps<typeof iconStyle> &
-  React.ComponentPropsWithoutRef<typeof UIIcon> & {
-    family?: IconFamily;
-    name?: string;
-    color?: string;
-  };
+type IconProps = VariantProps<typeof iconStyle> & {
+  className?: string;
+  family?: IconFamily;
+  name?: string;
+  color?: string;
+  height?: number | string;
+  width?: number | string;
+  viewBox?: string;
+  children?: React.ReactNode;
+} & Omit<SvgProps, "children">;
 
 const getSizeValue = (size: string | number | undefined): number => {
   if (typeof size === "number") return size;
@@ -69,9 +59,9 @@ const getSizeValue = (size: string | number | undefined): number => {
   return sizeMap[size || "md"] || 18;
 };
 
-const Icon = React.forwardRef<React.ComponentRef<typeof UIIcon>, IIConProps>(
+const Icon = React.forwardRef<React.ComponentRef<typeof Svg>, IconProps>(
   function Icon(
-    { size = "md", className, family, name, color, ...props },
+    { size = "md", className, family, name, color, children, ...props },
     ref
   ) {
     // Если указан family и name, используем иконки из expo-vector-icons
@@ -109,73 +99,63 @@ const Icon = React.forwardRef<React.ComponentRef<typeof UIIcon>, IIConProps>(
       }
     }
 
-    // Иначе используем стандартный UIIcon для SVG иконок
-    if (typeof size === "number") {
-      return (
-        <UIIcon
-          ref={ref}
-          {...props}
-          className={iconStyle({ class: className })}
-          size={size}
-        />
-      );
-    } else if (
-      (props.height !== undefined || props.width !== undefined) &&
-      size === undefined
-    ) {
-      return (
-        <UIIcon
-          ref={ref}
-          {...props}
-          className={iconStyle({ class: className })}
-        />
-      );
-    }
+    // Иначе используем SVG иконки
+    const sizeValue = typeof size === "number" ? size : getSizeValue(size);
+    const width = props.width ?? sizeValue;
+    const height = props.height ?? sizeValue;
+
     return (
-      <UIIcon
+      <Svg
         ref={ref}
         {...props}
+        width={width}
+        height={height}
+        viewBox={props.viewBox || "0 0 24 24"}
         className={iconStyle({ size, class: className })}
-      />
+      >
+        {children}
+      </Svg>
     );
   }
 );
 
 export { Icon };
 
-type ParameterTypes = Omit<Parameters<typeof createIcon>[0], "Root">;
+// Функция для создания SVG иконок
+type CreateIconProps = {
+  viewBox?: string;
+  path?: React.ReactNode;
+  d?: string;
+};
 
-const createIconUI = ({ ...props }: ParameterTypes) => {
-  const UIIconCreateIcon = createIcon({
-    Root: Svg,
-    ...props,
-  }) as React.ForwardRefExoticComponent<
-    React.ComponentPropsWithoutRef<typeof PrimitiveIcon> &
-      React.RefAttributes<React.ComponentRef<typeof Svg>>
-  >;
+const createIcon = ({ viewBox = "0 0 24 24", path, d }: CreateIconProps) => {
+  const IconComponent = React.forwardRef<
+    React.ComponentRef<typeof Svg>,
+    Omit<IconProps, "viewBox" | "children"> & { className?: string }
+  >(function CreatedIcon({ className, size, ...props }, ref) {
+    const sizeValue = typeof size === "number" ? size : getSizeValue(size);
+    const width = props.width ?? sizeValue;
+    const height = props.height ?? sizeValue;
 
-  return React.forwardRef<React.ComponentRef<typeof Svg>>(function UIIcon(
-    {
-      className,
-      size,
-      ...inComingProps
-    }: VariantProps<typeof iconStyle> &
-      React.ComponentPropsWithoutRef<typeof UIIconCreateIcon>,
-    ref
-  ) {
     return (
-      <UIIconCreateIcon
+      <Svg
         ref={ref}
-        {...inComingProps}
+        {...props}
+        width={width}
+        height={height}
+        viewBox={viewBox}
         className={iconStyle({ size, class: className })}
-      />
+      >
+        {path || (d && <Path d={d} />)}
+      </Svg>
     );
   });
+
+  return IconComponent;
 };
-export { createIconUI as createIcon };
+
 // All Icons
 const AddIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
     <>
@@ -199,7 +179,6 @@ AddIcon.displayName = "AddIcon";
 export { AddIcon };
 
 const AlertCircleIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
     <>
@@ -229,7 +208,6 @@ AlertCircleIcon.displayName = "AlertCircleIcon";
 export { AlertCircleIcon };
 
 const ArrowUpIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
     <>
@@ -250,8 +228,6 @@ const ArrowUpIcon = createIcon({
 });
 
 const ArrowDownIcon = createIcon({
-  Root: Svg,
-
   viewBox: "0 0 24 24",
   path: (
     <>
@@ -272,8 +248,6 @@ const ArrowDownIcon = createIcon({
 });
 
 const ArrowRightIcon = createIcon({
-  Root: Svg,
-
   viewBox: "0 0 24 24",
   path: (
     <>
@@ -294,7 +268,6 @@ const ArrowRightIcon = createIcon({
 });
 
 const ArrowLeftIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
     <>
@@ -322,34 +295,29 @@ ArrowLeftIcon.displayName = "ArrowLeftIcon";
 export { ArrowDownIcon, ArrowLeftIcon, ArrowRightIcon, ArrowUpIcon };
 
 const AtSignIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
     <>
-      <>
-        <Path
-          d="M12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <Path
-          d="M16 7.99999V13C16 13.7956 16.3161 14.5587 16.8787 15.1213C17.4413 15.6839 18.2044 16 19 16C19.7957 16 20.5587 15.6839 21.1213 15.1213C21.6839 14.5587 22 13.7956 22 13V12C21.9999 9.74302 21.2362 7.55247 19.8333 5.78452C18.4303 4.01658 16.4706 2.77521 14.2726 2.26229C12.0747 1.74936 9.76794 1.99503 7.72736 2.95936C5.68677 3.92368 4.03241 5.54995 3.03327 7.57371C2.03413 9.59748 1.74898 11.8997 2.22418 14.1061C2.69938 16.3125 3.90699 18.2932 5.65064 19.7263C7.39429 21.1593 9.57144 21.9603 11.8281 21.9991C14.0847 22.0379 16.2881 21.3122 18.08 19.94"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </>
+      <Path
+        d="M12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <Path
+        d="M16 7.99999V13C16 13.7956 16.3161 14.5587 16.8787 15.1213C17.4413 15.6839 18.2044 16 19 16C19.7957 16 20.5587 15.6839 21.1213 15.1213C21.6839 14.5587 22 13.7956 22 13V12C21.9999 9.74302 21.2362 7.55247 19.8333 5.78452C18.4303 4.01658 16.4706 2.77521 14.2726 2.26229C12.0747 1.74936 9.76794 1.99503 7.72736 2.95936C5.68677 3.92368 4.03241 5.54995 3.03327 7.57371C2.03413 9.59748 1.74898 11.8997 2.22418 14.1061C2.69938 16.3125 3.90699 18.2932 5.65064 19.7263C7.39429 21.1593 9.57144 21.9603 11.8281 21.9991C14.0847 22.0379 16.2881 21.3122 18.08 19.94"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </>
   ),
 });
 
 AtSignIcon.displayName = "AtSignIcon";
-
 export { AtSignIcon };
 
 const BellIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
     <>
@@ -370,11 +338,9 @@ const BellIcon = createIcon({
 });
 
 BellIcon.displayName = "BellIcon";
-
 export { BellIcon };
 
 const CalendarDaysIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
     <>
@@ -443,26 +409,21 @@ const CalendarDaysIcon = createIcon({
 });
 
 CalendarDaysIcon.displayName = "CalendarDaysIcon";
-
 export { CalendarDaysIcon };
 
 const CheckIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
-    <>
-      <Path
-        d="M20 6L9 17L4 12"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </>
+    <Path
+      d="M20 6L9 17L4 12"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   ),
 });
 
 const CheckCircleIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
     <>
@@ -484,74 +445,57 @@ const CheckCircleIcon = createIcon({
 
 CheckIcon.displayName = "CheckIcon";
 CheckCircleIcon.displayName = "CheckCircleIcon";
-
 export { CheckCircleIcon, CheckIcon };
 
 const ChevronUpIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
-  d: "M12 10L8 6L4 10",
   path: (
-    <>
-      <Path
-        d="M18 15L12 9L6 15"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </>
+    <Path
+      d="M18 15L12 9L6 15"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   ),
 });
 
 const ChevronDownIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
-    <>
-      <Path
-        d="M6 9L12 15L18 9"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </>
+    <Path
+      d="M6 9L12 15L18 9"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   ),
 });
 
 const ChevronLeftIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
-    <>
-      <Path
-        d="M15 18L9 12L15 6"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </>
+    <Path
+      d="M15 18L9 12L15 6"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   ),
 });
 
 const ChevronRightIcon = createIcon({
-  Root: Svg,
-
   viewBox: "0 0 24 24",
   path: (
-    <>
-      <Path
-        d="M9 18L15 12L9 6"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </>
+    <Path
+      d="M9 18L15 12L9 6"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   ),
 });
 
 const ChevronsLeftIcon = createIcon({
-  Root: Svg,
-
   viewBox: "0 0 24 24",
   path: (
     <>
@@ -572,8 +516,6 @@ const ChevronsLeftIcon = createIcon({
 });
 
 const ChevronsRightIcon = createIcon({
-  Root: Svg,
-
   viewBox: "0 0 24 24",
   path: (
     <>
@@ -594,8 +536,6 @@ const ChevronsRightIcon = createIcon({
 });
 
 const ChevronsUpDownIcon = createIcon({
-  Root: Svg,
-
   viewBox: "0 0 24 24",
   path: (
     <>
@@ -634,26 +574,21 @@ export {
 };
 
 const CircleIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
-    <>
-      <Path
-        d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </>
+    <Path
+      d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   ),
 });
 
 CircleIcon.displayName = "CircleIcon";
-
 export { CircleIcon };
 
 const ClockIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
     <>
@@ -674,11 +609,9 @@ const ClockIcon = createIcon({
 });
 
 ClockIcon.displayName = "ClockIcon";
-
 export { ClockIcon };
 
 const CloseIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
     <>
@@ -699,7 +632,6 @@ const CloseIcon = createIcon({
 });
 
 const CloseCircleIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
     <>
@@ -727,11 +659,9 @@ const CloseCircleIcon = createIcon({
 
 CloseIcon.displayName = "CloseIcon";
 CloseCircleIcon.displayName = "CloseCircleIcon";
-
 export { CloseCircleIcon, CloseIcon };
 
 const CopyIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
     <>
@@ -752,11 +682,9 @@ const CopyIcon = createIcon({
 });
 
 CopyIcon.displayName = "CopyIcon";
-
 export { CopyIcon };
 
 const DownloadIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
     <>
@@ -786,7 +714,6 @@ DownloadIcon.displayName = "DownloadIcon";
 export { DownloadIcon };
 
 const EditIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
     <>
@@ -810,7 +737,6 @@ EditIcon.displayName = "EditIcon";
 export { EditIcon };
 
 const EyeIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
     <>
@@ -833,7 +759,6 @@ const EyeIcon = createIcon({
 EyeIcon.displayName = "EyeIcon";
 
 const EyeOffIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
     <>
@@ -869,17 +794,14 @@ EyeOffIcon.displayName = "EyeOffIcon";
 export { EyeIcon, EyeOffIcon };
 
 const FavouriteIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
-    <>
-      <Path
-        d="M20.42 4.58C19.9183 4.07658 19.3222 3.67714 18.6658 3.40459C18.0094 3.13204 17.3057 2.99174 16.595 2.99174C15.8843 2.99174 15.1806 3.13204 14.5242 3.40459C13.8678 3.67714 13.2717 4.07658 12.77 4.58L12 5.36L11.23 4.58C10.7283 4.07658 10.1322 3.67714 9.47582 3.40459C8.81944 3.13204 8.11571 2.99174 7.40499 2.99174C6.69428 2.99174 5.99055 3.13204 5.33417 3.40459C4.67779 3.67714 4.08167 4.07658 3.57999 4.58C1.45999 6.7 1.32999 10.28 3.99999 13L12 21L20 13C22.67 10.28 22.54 6.7 20.42 4.58Z"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </>
+    <Path
+      d="M20.42 4.58C19.9183 4.07658 19.3222 3.67714 18.6658 3.40459C18.0094 3.13204 17.3057 2.99174 16.595 2.99174C15.8843 2.99174 15.1806 3.13204 14.5242 3.40459C13.8678 3.67714 13.2717 4.07658 12.77 4.58L12 5.36L11.23 4.58C10.7283 4.07658 10.1322 3.67714 9.47582 3.40459C8.81944 3.13204 8.11571 2.99174 7.40499 2.99174C6.69428 2.99174 5.99055 3.13204 5.33417 3.40459C4.67779 3.67714 4.08167 4.07658 3.57999 4.58C1.45999 6.7 1.32999 10.28 3.99999 13L12 21L20 13C22.67 10.28 22.54 6.7 20.42 4.58Z"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   ),
 });
 
@@ -887,7 +809,6 @@ FavouriteIcon.displayName = "FavouriteIcon";
 export { FavouriteIcon };
 
 const GlobeIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
     <>
@@ -917,7 +838,6 @@ GlobeIcon.displayName = "GlobeIcon";
 export { GlobeIcon };
 
 const GripVerticalIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
     <>
@@ -965,7 +885,6 @@ GripVerticalIcon.displayName = "GripVerticalIcon";
 export { GripVerticalIcon };
 
 const HelpCircleIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
     <>
@@ -995,7 +914,6 @@ HelpCircleIcon.displayName = "HelpCircleIcon";
 export { HelpCircleIcon };
 
 const InfoIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
     <>
@@ -1025,7 +943,6 @@ InfoIcon.displayName = "InfoIcon";
 export { InfoIcon };
 
 const LinkIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
     <>
@@ -1048,7 +965,6 @@ const LinkIcon = createIcon({
 LinkIcon.displayName = "LinkIcon";
 
 const ExternalLinkIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
     <>
@@ -1078,17 +994,14 @@ ExternalLinkIcon.displayName = "ExternalLinkIcon";
 export { ExternalLinkIcon, LinkIcon };
 
 const LoaderIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
-    <>
-      <Path
-        d="M21 12C20.9999 13.9006 20.3981 15.7524 19.2809 17.2899C18.1637 18.8275 16.5885 19.9719 14.7809 20.5592C12.9733 21.1464 11.0262 21.1464 9.21864 20.559C7.41109 19.9716 5.83588 18.8271 4.71876 17.2895C3.60165 15.7519 2.99999 13.9001 3 11.9995C3.00001 10.0989 3.60171 8.24711 4.71884 6.7095C5.83598 5.17189 7.4112 4.02741 9.21877 3.44008C11.0263 2.85274 12.9734 2.85272 14.781 3.44"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </>
+    <Path
+      d="M21 12C20.9999 13.9006 20.3981 15.7524 19.2809 17.2899C18.1637 18.8275 16.5885 19.9719 14.7809 20.5592C12.9733 21.1464 11.0262 21.1464 9.21864 20.559C7.41109 19.9716 5.83588 18.8271 4.71876 17.2895C3.60165 15.7519 2.99999 13.9001 3 11.9995C3.00001 10.0989 3.60171 8.24711 4.71884 6.7095C5.83598 5.17189 7.4112 4.02741 9.21877 3.44008C11.0263 2.85274 12.9734 2.85272 14.781 3.44"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   ),
 });
 
@@ -1096,7 +1009,6 @@ LoaderIcon.displayName = "LoaderIcon";
 export { LoaderIcon };
 
 const LockIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
     <>
@@ -1120,7 +1032,6 @@ LockIcon.displayName = "LockIcon";
 export { LockIcon };
 
 const MailIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
     <>
@@ -1144,7 +1055,6 @@ MailIcon.displayName = "MailIcon";
 export { MailIcon };
 
 const MenuIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
     <>
@@ -1174,36 +1084,29 @@ MenuIcon.displayName = "MenuIcon";
 export { MenuIcon };
 
 const MessageCircleIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
-    <>
-      <Path
-        d="M21 11.5C21.0034 12.8199 20.6951 14.1219 20.1 15.3C19.3944 16.7117 18.3098 17.8992 16.9674 18.7293C15.6251 19.5594 14.0782 19.9994 12.5 20C11.1801 20.0034 9.87812 19.6951 8.7 19.1L3 21L4.9 15.3C4.30493 14.1219 3.99656 12.8199 4 11.5C4.00061 9.92176 4.44061 8.37485 5.27072 7.03255C6.10083 5.69025 7.28825 4.60557 8.7 3.9C9.87812 3.30493 11.1801 2.99656 12.5 3H13C15.0843 3.11499 17.053 3.99476 18.5291 5.47086C20.0052 6.94695 20.885 8.91565 21 11V11.5Z"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </>
+    <Path
+      d="M21 11.5C21.0034 12.8199 20.6951 14.1219 20.1 15.3C19.3944 16.7117 18.3098 17.8992 16.9674 18.7293C15.6251 19.5594 14.0782 19.9994 12.5 20C11.1801 20.0034 9.87812 19.6951 8.7 19.1L3 21L4.9 15.3C4.30493 14.1219 3.99656 12.8199 4 11.5C4.00061 9.92176 4.44061 8.37485 5.27072 7.03255C6.10083 5.69025 7.28825 4.60557 8.7 3.9C9.87812 3.30493 11.1801 2.99656 12.5 3H13C15.0843 3.11499 17.053 3.99476 18.5291 5.47086C20.0052 6.94695 20.885 8.91565 21 11V11.5Z"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   ),
 });
 
 MessageCircleIcon.displayName = "MessageCircleIcon";
-
 export { MessageCircleIcon };
 
 const MoonIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
-    <>
-      <Path
-        d="M12 3C10.8134 4.19491 10.1488 5.81141 10.1518 7.49539C10.1547 9.17936 10.825 10.7935 12.0157 11.9843C13.2065 13.175 14.8206 13.8453 16.5046 13.8482C18.1886 13.8512 19.8051 13.1866 21 12C21 13.78 20.4722 15.5201 19.4832 17.0001C18.4943 18.4802 17.0887 19.6337 15.4442 20.3149C13.7996 20.9961 11.99 21.1743 10.2442 20.8271C8.49836 20.4798 6.89472 19.6226 5.63604 18.364C4.37737 17.1053 3.5202 15.5016 3.17294 13.7558C2.82567 12.01 3.0039 10.2004 3.68509 8.55585C4.36628 6.91131 5.51983 5.50571 6.99987 4.51677C8.47991 3.52784 10.22 3 12 3V3Z"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </>
+    <Path
+      d="M12 3C10.8134 4.19491 10.1488 5.81141 10.1518 7.49539C10.1547 9.17936 10.825 10.7935 12.0157 11.9843C13.2065 13.175 14.8206 13.8453 16.5046 13.8482C18.1886 13.8512 19.8051 13.1866 21 12C21 13.78 20.4722 15.5201 19.4832 17.0001C18.4943 18.4802 17.0887 19.6337 15.4442 20.3149C13.7996 20.9961 11.99 21.1743 10.2442 20.8271C8.49836 20.4798 6.89472 19.6226 5.63604 18.364C4.37737 17.1053 3.5202 15.5016 3.17294 13.7558C2.82567 12.01 3.0039 10.2004 3.68509 8.55585C4.36628 6.91131 5.51983 5.50571 6.99987 4.51677C8.47991 3.52784 10.22 3 12 3V3Z"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   ),
 });
 
@@ -1211,17 +1114,14 @@ MoonIcon.displayName = "MoonIcon";
 export { MoonIcon };
 
 const PaperclipIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
-    <>
-      <Path
-        d="M21.44 11.05L12.25 20.24C11.1242 21.3658 9.59718 21.9983 8.005 21.9983C6.41282 21.9983 4.88584 21.3658 3.76 20.24C2.63416 19.1141 2.00166 17.5872 2.00166 15.995C2.00166 14.4028 2.63416 12.8758 3.76 11.75L12.33 3.17997C13.0806 2.42808 14.0991 2.00515 15.1615 2.00421C16.2239 2.00328 17.2431 2.42441 17.995 3.17497C18.7469 3.92554 19.1698 4.94404 19.1708 6.00644C19.1717 7.06883 18.7506 8.08808 18 8.83997L9.41 17.41C9.03472 17.7853 8.52573 17.9961 7.995 17.9961C7.46427 17.9961 6.95528 17.7853 6.58 17.41C6.20472 17.0347 5.99389 16.5257 5.99389 15.995C5.99389 15.4642 6.20472 14.9553 6.58 14.58L15.07 6.09997"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </>
+    <Path
+      d="M21.44 11.05L12.25 20.24C11.1242 21.3658 9.59718 21.9983 8.005 21.9983C6.41282 21.9983 4.88584 21.3658 3.76 20.24C2.63416 19.1141 2.00166 17.5872 2.00166 15.995C2.00166 14.4028 2.63416 12.8758 3.76 11.75L12.33 3.17997C13.0806 2.42808 14.0991 2.00515 15.1615 2.00421C16.2239 2.00328 17.2431 2.42441 17.995 3.17497C18.7469 3.92554 19.1698 4.94404 19.1708 6.00644C19.1717 7.06883 18.7506 8.08808 18 8.83997L9.41 17.41C9.03472 17.7853 8.52573 17.9961 7.995 17.9961C7.46427 17.9961 6.95528 17.7853 6.58 17.41C6.20472 17.0347 5.99389 16.5257 5.99389 15.995C5.99389 15.4642 6.20472 14.9553 6.58 14.58L15.07 6.09997"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   ),
 });
 
@@ -1229,17 +1129,14 @@ PaperclipIcon.displayName = "PaperclipIcon";
 export { PaperclipIcon };
 
 const PhoneIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
-    <>
-      <Path
-        d="M22 16.92V19.92C22.0011 20.1985 21.9441 20.4742 21.8325 20.7294C21.7209 20.9845 21.5573 21.2136 21.3521 21.4019C21.1469 21.5901 20.9046 21.7335 20.6408 21.8227C20.3769 21.9119 20.0974 21.9451 19.82 21.92C16.7428 21.5856 13.787 20.5342 11.19 18.85C8.77383 17.3147 6.72534 15.2662 5.19 12.85C3.49998 10.2412 2.44824 7.271 2.12 4.18001C2.09501 3.90347 2.12788 3.62477 2.2165 3.36163C2.30513 3.09849 2.44757 2.85669 2.63477 2.65163C2.82196 2.44656 3.04981 2.28271 3.30379 2.17053C3.55778 2.05834 3.83234 2.00027 4.11 2.00001H7.11C7.59531 1.99523 8.06579 2.16708 8.43376 2.48354C8.80173 2.79999 9.04208 3.23945 9.11 3.72001C9.23662 4.68007 9.47145 5.62273 9.81 6.53001C9.94455 6.88793 9.97366 7.27692 9.89391 7.65089C9.81415 8.02485 9.62886 8.36812 9.36 8.64001L8.09 9.91001C9.51356 12.4136 11.5865 14.4865 14.09 15.91L15.36 14.64C15.6319 14.3711 15.9752 14.1859 16.3491 14.1061C16.7231 14.0263 17.1121 14.0555 17.47 14.19C18.3773 14.5286 19.3199 14.7634 20.28 14.89C20.7658 14.9585 21.2094 15.2032 21.5265 15.5775C21.8437 15.9518 22.0122 16.4296 22 16.92Z"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </>
+    <Path
+      d="M22 16.92V19.92C22.0011 20.1985 21.9441 20.4742 21.8325 20.7294C21.7209 20.9845 21.5573 21.2136 21.3521 21.4019C21.1469 21.5901 20.9046 21.7335 20.6408 21.8227C20.3769 21.9119 20.0974 21.9451 19.82 21.92C16.7428 21.5856 13.787 20.5342 11.19 18.85C8.77383 17.3147 6.72534 15.2662 5.19 12.85C3.49998 10.2412 2.44824 7.271 2.12 4.18001C2.09501 3.90347 2.12788 3.62477 2.2165 3.36163C2.30513 3.09849 2.44757 2.85669 2.63477 2.65163C2.82196 2.44656 3.04981 2.28271 3.30379 2.17053C3.55778 2.05834 3.83234 2.00027 4.11 2.00001H7.11C7.59531 1.99523 8.06579 2.16708 8.43376 2.48354C8.80173 2.79999 9.04208 3.23945 9.11 3.72001C9.23662 4.68007 9.47145 5.62273 9.81 6.53001C9.94455 6.88793 9.97366 7.27692 9.89391 7.65089C9.81415 8.02485 9.62886 8.36812 9.36 8.64001L8.09 9.91001C9.51356 12.4136 11.5865 14.4865 14.09 15.91L15.36 14.64C15.6319 14.3711 15.9752 14.1859 16.3491 14.1061C16.7231 14.0263 17.1121 14.0555 17.47 14.19C18.3773 14.5286 19.3199 14.7634 20.28 14.89C20.7658 14.9585 21.2094 15.2032 21.5265 15.5775C21.8437 15.9518 22.0122 16.4296 22 16.92Z"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   ),
 });
 
@@ -1247,7 +1144,6 @@ PhoneIcon.displayName = "PhoneIcon";
 export { PhoneIcon };
 
 const PlayIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
     <>
@@ -1271,17 +1167,14 @@ PlayIcon.displayName = "PlayIcon";
 export { PlayIcon };
 
 const RemoveIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
-    <>
-      <Path
-        d="M5 12H19"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </>
+    <Path
+      d="M5 12H19"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   ),
 });
 
@@ -1289,7 +1182,6 @@ RemoveIcon.displayName = "RemoveIcon";
 export { RemoveIcon };
 
 const RepeatIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
     <>
@@ -1324,7 +1216,6 @@ const RepeatIcon = createIcon({
 RepeatIcon.displayName = "RepeatIcon";
 
 const Repeat1Icon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
     <>
@@ -1366,7 +1257,6 @@ Repeat1Icon.displayName = "Repeat1Icon";
 export { Repeat1Icon, RepeatIcon };
 
 const SearchIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
     <>
@@ -1390,7 +1280,6 @@ SearchIcon.displayName = "SearchIcon";
 export { SearchIcon };
 
 const SettingsIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
     <>
@@ -1414,7 +1303,6 @@ SettingsIcon.displayName = "SettingsIcon";
 export { SettingsIcon };
 
 const ShareIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
     <>
@@ -1456,7 +1344,6 @@ ShareIcon.displayName = "ShareIcon";
 export { ShareIcon };
 
 const SlashIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
     <>
@@ -1480,17 +1367,14 @@ SlashIcon.displayName = "SlashIcon";
 export { SlashIcon };
 
 const StarIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
-    <>
-      <Path
-        d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </>
+    <Path
+      d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   ),
 });
 
@@ -1498,7 +1382,6 @@ StarIcon.displayName = "StarIcon";
 export { StarIcon };
 
 const SunIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
     <>
@@ -1564,7 +1447,6 @@ SunIcon.displayName = "SunIcon";
 export { SunIcon };
 
 const ThreeDotsIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
     <>
@@ -1594,7 +1476,6 @@ ThreeDotsIcon.displayName = "ThreeDotsIcon";
 export { ThreeDotsIcon };
 
 const TrashIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
     <>
@@ -1624,7 +1505,6 @@ TrashIcon.displayName = "TrashIcon";
 export { TrashIcon };
 
 const UnlockIcon = createIcon({
-  Root: Svg,
   viewBox: "0 0 24 24",
   path: (
     <>
