@@ -5,6 +5,7 @@ export default function RefilingLayout() {
     <Stack>
       <Stack.Screen name="index" options={{ headerShown: false }} />
       <Stack.Screen name="asks" options={{ headerShown: false }} />
+      <Stack.Screen name="asks/[id]" options={{ headerShown: false }} />
       <Stack.Screen name="defs" options={{ headerShown: false }} />
       <Stack.Screen name="pulls" options={{ headerShown: false }} />
     </Stack>

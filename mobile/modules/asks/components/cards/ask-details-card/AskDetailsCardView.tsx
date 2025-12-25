@@ -68,11 +68,11 @@ export function AskDetailsCardView({
                   style={{ width: 24, height: 24, borderRadius: 12 }}
                 />
               ) : null}
-              <ThemedText className="text-xs">{askerData.fullname}</ThemedText>
+              <ThemedText className="text-sm">{askerData.fullname}</ThemedText>
             </View>
           )}
 
-          <ThemedText className="text-xs opacity-70">
+          <ThemedText className="text-sm opacity-70">
             {formattedDate}
           </ThemedText>
         </View>

@@ -54,7 +54,7 @@ export function AskStatusBadge({ status }: AskStatusBadgeProps) {
       }}
     >
       <ThemedText
-        className="text-xs font-semibold"
+        className="text-sm font-semibold"
         style={{ color: config.textColor }}
       >
         {config.text}

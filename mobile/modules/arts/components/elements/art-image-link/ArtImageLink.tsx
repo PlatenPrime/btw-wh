@@ -36,16 +36,16 @@ export function ArtImageLink({ artikul, nameukr }: ArtImageLinkProps) {
           />
         </TouchableOpacity>
         <View style={{ flex: 1, minWidth: 0 }}>
-          <ThemedText type="defaultSemiBold" className="text-sm mb-1">
+          <ThemedText type="defaultSemiBold" className="text-base mb-1">
             {artikul}
           </ThemedText>
           {nameukr && nameukr.length > 10 && (
-            <ThemedText type="default" className="text-xs opacity-70">
+            <ThemedText type="default" className="text-sm opacity-70">
               {nameukr.slice(10)}
             </ThemedText>
           )}
           {nameukr && nameukr.length <= 10 && (
-            <ThemedText type="default" className="text-xs opacity-70">
+            <ThemedText type="default" className="text-sm opacity-70">
               {nameukr}
             </ThemedText>
           )}

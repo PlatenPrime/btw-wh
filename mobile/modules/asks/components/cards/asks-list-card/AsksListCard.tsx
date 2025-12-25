@@ -14,7 +14,7 @@ export function AsksListCard({ ask }: AsksListCardProps) {
   const borderColor = card.border;
 
   const handlePress = () => {
-    router.push(`/refiling/asks/${ask._id}` as any);
+    router.push(`/(tabs)/refiling/asks/${ask._id}` as any);
   };
 
   return (

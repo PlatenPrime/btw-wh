@@ -49,6 +49,8 @@ export function AsksFetcher({ initialDate = new Date() }: AsksFetcherProps) {
       isFetching={asksQuery.isFetching}
       selectedDate={selectedDate}
       setSelectedDate={setSelectedDate}
+      refreshing={asksQuery.isRefetching}
+      onRefresh={() => void asksQuery.refetch()}
     />
   );
 }

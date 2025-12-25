@@ -9,6 +9,8 @@ interface AsksContainerProps {
   isFetching: boolean;
   selectedDate: Date;
   setSelectedDate: React.Dispatch<React.SetStateAction<Date>>;
+  refreshing?: boolean;
+  onRefresh?: () => void;
 }
 
 export function AsksContainer({
@@ -16,6 +18,8 @@ export function AsksContainer({
   isFetching,
   selectedDate,
   setSelectedDate,
+  refreshing,
+  onRefresh,
 }: AsksContainerProps) {
   const [createAskDialogOpen, setCreateAskDialogOpen] = useState(false);
 
@@ -59,6 +63,8 @@ export function AsksContainer({
       createAskDialogOpen={createAskDialogOpen}
       setCreateAskDialogOpen={setCreateAskDialogOpen}
       onCreateAskSuccess={handleCreateAskSuccess}
+      refreshing={refreshing}
+      onRefresh={onRefresh}
     />
   );
 }

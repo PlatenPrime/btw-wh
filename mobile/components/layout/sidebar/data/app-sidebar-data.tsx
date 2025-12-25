@@ -71,7 +71,7 @@ export const appSidebarData = {
       items: [
         {
           title: 'Запити',
-          url: '/refiling/asks',
+          url: '/(tabs)/refiling/asks',
           iconName: 'FileQuestion',
         },
         {

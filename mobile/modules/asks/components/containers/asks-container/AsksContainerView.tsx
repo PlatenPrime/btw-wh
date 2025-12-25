@@ -5,7 +5,7 @@ import type { GetAsksByDateResponse } from "@/modules/asks/api/types/dto";
 import { CreateAskDialog } from "@/modules/asks/components/dialogs/create-ask-dialog/CreateAskDialog";
 import { AsksList } from "@/modules/asks/components/lists/asks-list/AsksList";
 import { formatDate } from "@/modules/asks/utils/format-date";
-import { ScrollView, TouchableOpacity, View } from "react-native";
+import { ScrollView, TouchableOpacity, View, RefreshControl } from "react-native";
 
 interface AsksContainerViewProps {
   selectedDate: Date;
@@ -17,6 +17,8 @@ interface AsksContainerViewProps {
   createAskDialogOpen: boolean;
   setCreateAskDialogOpen: (open: boolean) => void;
   onCreateAskSuccess: () => void;
+  refreshing?: boolean;
+  onRefresh?: () => void;
 }
 
 export function AsksContainerView({
@@ -28,12 +30,22 @@ export function AsksContainerView({
   createAskDialogOpen,
   setCreateAskDialogOpen,
   onCreateAskSuccess,
+  refreshing = false,
+  onRefresh,
 }: AsksContainerViewProps) {
   const formattedDate = formatDate(selectedDate);
 
   return (
     <>
-      <ScrollView className="flex-1" contentContainerClassName="gap-4 p-4">
+      <ScrollView
+        className="flex-1"
+        contentContainerClassName="gap-4 p-4"
+        refreshControl={
+          onRefresh ? (
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          ) : undefined
+        }
+      >
         <View className="gap-2">
           <HStack className="items-center justify-between">
             <TouchableOpacity onPress={onPreviousDay}>

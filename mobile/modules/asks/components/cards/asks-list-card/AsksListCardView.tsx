@@ -57,13 +57,13 @@ export function AsksListCardView({
                     style={{ width: 20, height: 20, borderRadius: 10 }}
                   />
                 ) : null}
-                <ThemedText className="text-xs">
+                <ThemedText className="text-sm">
                   {ask.askerData.fullname}
                 </ThemedText>
               </View>
             )}
 
-            <ThemedText className="text-xs opacity-70">
+            <ThemedText className="text-sm opacity-70">
               {formattedDate}
             </ThemedText>
           </View>
