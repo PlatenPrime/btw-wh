@@ -1,4 +1,5 @@
 import type { PropsWithChildren, ReactElement } from 'react';
+import { useMemo } from 'react';
 import Animated, {
   interpolate,
   useAnimatedRef,
@@ -27,6 +28,7 @@ export default function ParallaxScrollView({
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollOffset = useScrollOffset(scrollRef);
   const headerAnimatedStyle = useAnimatedStyle(() => {
+    'worklet';
     return {
       transform: [
         {
@@ -43,6 +45,11 @@ export default function ParallaxScrollView({
     };
   });
 
+  const headerBackgroundColorMemo = useMemo(
+    () => headerBackgroundColor[colorScheme],
+    [headerBackgroundColor, colorScheme]
+  );
+
   return (
     <Animated.ScrollView
       ref={scrollRef}
@@ -53,7 +60,7 @@ export default function ParallaxScrollView({
         className="overflow-hidden"
         style={[
           { height: HEADER_HEIGHT },
-          { backgroundColor: headerBackgroundColor[colorScheme] },
+          { backgroundColor: headerBackgroundColorMemo },
           headerAnimatedStyle,
         ]}>
         {headerImage}

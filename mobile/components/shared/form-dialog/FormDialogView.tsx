@@ -8,7 +8,7 @@ import {
   ModalFooter,
 } from "@/components/ui/modal-native";
 import { Icon } from "@/components/ui/icon";
-import { KeyboardAvoidingView, Platform, ScrollView, TouchableOpacity, View } from "react-native";
+import { Platform, ScrollView, TouchableOpacity, View } from "react-native";
 import { SemanticColors } from "@/constants/theme";
 
 interface FormDialogViewProps {

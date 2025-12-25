@@ -21,7 +21,7 @@ export function PosInfoItem({
 
   return (
     <Box
-      className={`flex-row items-center justify-center gap-2 rounded-lg px-2 py-1 ${
+      className={`flex-row items-center justify-center gap-2 rounded-lg p-1 ${
         isError ? "bg-error-50" : "bg-background-100"
       }`}
     >

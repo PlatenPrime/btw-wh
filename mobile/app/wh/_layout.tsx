@@ -1,6 +1,5 @@
 import { Stack } from 'expo-router';
 import { ProtectedRoute } from '@/modules/auth/components/ProtectedRoute';
-import { RoleType } from '@/constants/roles';
 
 export default function WhLayout() {
   return (

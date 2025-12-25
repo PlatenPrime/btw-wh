@@ -4,8 +4,6 @@ import { tva, type VariantProps } from '@/lib/tv';
 import { View, Pressable, TextInput, type ViewProps, type PressableProps, type TextInputProps } from 'react-native';
 import { Icon, type IconProps } from '../icon';
 
-const SCOPE = 'INPUT';
-
 type InputContextType = {
   variant?: 'underlined' | 'outline' | 'rounded';
   size?: 'xl' | 'lg' | 'md' | 'sm';

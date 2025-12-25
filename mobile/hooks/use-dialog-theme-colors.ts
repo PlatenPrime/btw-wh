@@ -1,5 +1,4 @@
-import { useTheme } from "@/providers/theme-provider";
-import { Colors, SemanticColors } from "@/constants/theme";
+import { useThemeColors } from "@/hooks/use-theme-colors";
 
 export interface DialogThemeColors {
   bgColor: string;
@@ -10,15 +9,17 @@ export interface DialogThemeColors {
 /**
  * Хук для получения цветов темы для диалогов
  * Возвращает bgColor, textColor и borderColor в зависимости от текущей темы
+ * 
+ * @deprecated Используйте напрямую useThemeColors() для получения цветов
+ * Этот хук оставлен для обратной совместимости
  */
 export function useDialogThemeColors(): DialogThemeColors {
-  const { resolvedTheme } = useTheme();
-  const theme = resolvedTheme === "dark" ? "dark" : "light";
+  const { dialog, text } = useThemeColors();
   
   return {
-    bgColor: theme === "light" ? SemanticColors.dialog.bg.light : SemanticColors.dialog.bg.dark,
-    textColor: theme === "light" ? Colors.light.text : Colors.dark.text,
-    borderColor: theme === "light" ? SemanticColors.dialog.border.light : SemanticColors.dialog.border.dark,
+    bgColor: dialog.bg,
+    textColor: text.primary,
+    borderColor: dialog.border,
   };
 }
 

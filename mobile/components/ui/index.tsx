@@ -4,6 +4,9 @@ export * from './box';
 // Button
 export * from './button';
 
+// Card
+export * from './card';
+
 // FlatList
 export * from './flat-list';
 

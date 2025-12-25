@@ -36,8 +36,6 @@ export function useRegisterHeaderAction(action: HeaderAction | null) {
     return () => {
       unregisterAction(currentAction.id);
     };
-    // Регистрируем только при монтировании/размонтировании или изменении id
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [action?.id, registerAction, unregisterAction]);
 }
 
@@ -70,7 +68,5 @@ export function useRegisterHeaderActions(actions: HeaderAction[]) {
         unregisterAction(action.id);
       });
     };
-    // Регистрируем только при изменении списка ID
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actionsIds, registerAction, unregisterAction]);
 }

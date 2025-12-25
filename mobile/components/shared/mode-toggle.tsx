@@ -13,7 +13,7 @@ import {
 import { Icon } from "@/components/ui/icon";
 import { useIconColor } from "@/hooks/use-icon-color";
 import { useTheme } from "@/providers/theme-provider";
-import React, { useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 
 type ThemeOption = {
   value: "light" | "dark" | "system";
@@ -27,34 +27,46 @@ const themeOptions: ThemeOption[] = [
   { value: "system", label: "Системна", icon: "settings-brightness" },
 ];
 
-export function ModeToggle() {
+export const ModeToggle = React.memo(function ModeToggle() {
   const { theme, setTheme } = useTheme();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [contentHeight, setContentHeight] = useState(0);
   const iconColor = useIconColor();
 
-  const getIconName = (): string => {
+  const iconName = useMemo(() => {
     if (theme === "system") {
       return "settings-brightness";
     }
     return theme === "dark" ? "dark-mode" : "wb-sunny";
-  };
+  }, [theme]);
 
-  const handleThemeSelect = (selectedTheme: "light" | "dark" | "system") => {
+  const handleThemeSelect = useCallback((selectedTheme: "light" | "dark" | "system") => {
     setTheme(selectedTheme);
     setIsModalVisible(false);
-  };
+  }, [setTheme]);
+
+  const handleOpenModal = useCallback(() => {
+    setIsModalVisible(true);
+  }, []);
+
+  const handleCloseModal = useCallback(() => {
+    setIsModalVisible(false);
+  }, []);
+
+  const handleLayout = useCallback((e: { nativeEvent: { layout: { height: number } } }) => {
+    setContentHeight(e.nativeEvent.layout.height);
+  }, []);
 
   return (
     <>
       <Pressable
-        onPress={() => setIsModalVisible(true)}
+        onPress={handleOpenModal}
         className="flex-row items-center justify-between p-4 rounded-lg border border-outline-200 bg-background-0"
       >
         <HStack className="items-center gap-3">
           <Icon
             family="MaterialIcons"
-            name={getIconName()}
+            name={iconName}
             size={24}
             color={iconColor}
           />
@@ -68,11 +80,11 @@ export function ModeToggle() {
         />
       </Pressable>
 
-      <Modal isOpen={isModalVisible} onClose={() => setIsModalVisible(false)}>
+      <Modal isOpen={isModalVisible} onClose={handleCloseModal}>
         <ModalBackdrop />
         <ModalContent
           className="rounded-lg p-4 w-[280px] bg-background-0 border border-outline-200"
-          onLayout={(e: { nativeEvent: { layout: { height: number } } }) => setContentHeight(e.nativeEvent.layout.height)}
+          onLayout={handleLayout}
           style={{
             position: "absolute",
             top: "50%",
@@ -88,7 +100,7 @@ export function ModeToggle() {
               <ThemedText type="subtitle" className="text-lg">
                 Виберіть тему
               </ThemedText>
-              <ModalCloseButton onPress={() => setIsModalVisible(false)}>
+              <ModalCloseButton onPress={handleCloseModal}>
                 <Icon
                   family="Ionicons"
                   name="close"
@@ -136,4 +148,4 @@ export function ModeToggle() {
       </Modal>
     </>
   );
-}
+});

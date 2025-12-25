@@ -1,5 +1,4 @@
-import { ScrollView, VStack } from '@/components/ui';
-import { Pressable } from '@/components/ui';
+import { ScrollView, VStack, Pressable } from '@/components/ui';
 import { useRouter } from 'expo-router';
 import { ThemedText } from '@/components/themed-text';
 import { PageLayout } from '@/components/layout/page-layout';

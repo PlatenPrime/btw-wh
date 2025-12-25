@@ -1,7 +1,6 @@
 import { View, TextInput } from "react-native";
 import { Icon } from "@/components/ui/icon";
-import { useTheme } from "@/providers/theme-provider";
-import { Colors, SemanticColors } from "@/constants/theme";
+import { useThemeColors } from "@/hooks/use-theme-colors";
 import { useIconColor } from "@/hooks/use-icon-color";
 
 interface SearchPanelProps {
@@ -15,13 +14,12 @@ export function SearchPanel({
   onSearchChange,
   placeholder = "Пошук артикулів...",
 }: SearchPanelProps) {
-  const { resolvedTheme } = useTheme();
+  const { dialog, text, placeholder: placeholderColor } = useThemeColors();
   const iconColor = useIconColor();
 
-  const bgColor = resolvedTheme === "light" ? SemanticColors.dialog.bg.light : SemanticColors.dialog.bg.dark;
-  const borderColor = resolvedTheme === "light" ? SemanticColors.dialog.border.light : SemanticColors.dialog.border.dark;
-  const textColor = resolvedTheme === "light" ? Colors.light.text : Colors.dark.text;
-  const placeholderColor = resolvedTheme === "light" ? SemanticColors.placeholder.light : SemanticColors.placeholder.dark;
+  const bgColor = dialog.bg;
+  const borderColor = dialog.border;
+  const textColor = text.primary;
 
   return (
     <View

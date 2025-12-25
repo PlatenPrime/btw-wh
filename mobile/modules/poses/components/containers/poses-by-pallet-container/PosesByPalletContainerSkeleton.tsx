@@ -4,12 +4,11 @@ import { PosCardSkeleton } from "@/modules/poses/components/cards/pos-card/PosCa
 export function PosesByPalletContainerSkeleton() {
   return (
     <Box className="flex-1 p-2">
-      {[1, 2, 3, 4].map((i) => (
-        <Box key={i} className="mb-2">
+      {Array.from({ length: 16 }, (_, index) => index).map((index) => (
+        <Box key={index} className="mb-2">
           <PosCardSkeleton />
         </Box>
       ))}
     </Box>
   );
 }
-

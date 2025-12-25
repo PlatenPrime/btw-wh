@@ -4,8 +4,8 @@ import { RowCardSkeleton } from "@/modules/rows/components/cards/row-card/RowCar
 export function RowsContainerSkeleton() {
   return (
     <Box className="flex-1 p-2">
-      {[1, 2, 3, 4].map((i) => (
-        <Box key={i} className="mb-2">
+      {Array.from({ length: 16 }, (_, index) => index).map((index) => (
+        <Box key={index} className="mb-2">
           <RowCardSkeleton />
         </Box>
       ))}

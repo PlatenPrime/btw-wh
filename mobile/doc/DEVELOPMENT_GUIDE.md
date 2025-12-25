@@ -397,16 +397,215 @@ const onSubmit = async (data: UpdateArtLimitFormData) => {
 
 - `Colors.light` - цвета для светлой темы
 - `Colors.dark` - цвета для темной темы
+- `SemanticColors` - семантические цвета для UI компонентов (card, dialog, error и т.д.)
 
-#### Использование темы в компонентах
+#### Централизованная система темизации
+
+Для работы с темами в переиспользуемых компонентах используется централизованная система:
+
+##### Хук `useThemeColors`
+
+**Назначение**: Централизованное получение цветов темы для текущей темы (light/dark)
+
+**Расположение**: `hooks/use-theme-colors.ts`
+
+**Использование**:
 
 ```typescript
-import { useColorScheme } from "@/hooks/use-color-scheme";
-import { Colors } from "@/constants/theme";
+import { useThemeColors } from "@/hooks/use-theme-colors";
 
-const colorScheme = useColorScheme() ?? "light";
-const textColor =
-  colorScheme === "light" ? Colors.light.text : Colors.dark.text;
+function MyComponent() {
+  const { card, dialog, text, error } = useThemeColors();
+
+  return (
+    <Box
+      style={{
+        backgroundColor: card.bg,
+        borderColor: card.border,
+      }}
+    >
+      <Text style={{ color: text.primary }}>Текст</Text>
+    </Box>
+  );
+}
+```
+
+**Доступные цвета**:
+
+- `card.bg`, `card.border` - цвета для карточек
+- `dialog.bg`, `dialog.border` - цвета для диалогов
+- `error.bg`, `error.border`, `error.text` - цвета для ошибок
+- `sidebar.border` - цвет границы sidebar
+- `text.primary`, `text.icon` - цвета текста
+- `background.primary` - основной цвет фона
+- `placeholder` - цвет placeholder текста
+- `switch.track`, `switch.thumb` - цвета для Switch
+- `static.*` - статические цвета (не зависят от темы)
+
+##### Компонент `Card`
+
+**Назначение**: Базовый компонент карточки с автоматической поддержкой темы
+
+**Расположение**: `components/ui/card/`
+
+**Варианты**:
+
+- `default` - базовая карточка с закругленными углами
+- `outlined` - карточка с границей
+- `elevated` - карточка с тенью
+
+**Использование**:
+
+```typescript
+import { Card } from "@/components/ui";
+
+// Автоматически применяет тему
+<Card variant="outlined" className="p-4">
+  <Text>Содержимое карточки</Text>
+</Card>
+
+// С кастомными стилями
+<Card
+  variant="default"
+  className="p-2"
+  style={{ padding: 16 }} // Переопределяет базовые стили
+>
+  <Text>Кастомная карточка</Text>
+</Card>
+```
+
+**Преимущества**:
+
+- Автоматическое применение цветов темы
+- Поддержка вариантов (default, outlined, elevated)
+- Возможность кастомизации через `className` и `style`
+- Типизированные пропсы
+
+##### Утилиты для работы со стилями
+
+**Расположение**: `utils/theme-styles.ts`
+
+**Функции**:
+
+- `combineThemeStyles(baseStyles, customStyles)` - комбинирует базовые стили темы с кастомными
+- `createCardStyles(bgColor, borderColor?, additionalStyles?)` - создает стили для карточки
+
+**Использование**:
+
+```typescript
+import { combineThemeStyles, createCardStyles } from "@/utils/theme-styles";
+import { useThemeColors } from "@/hooks/use-theme-colors";
+
+function MyComponent() {
+  const { card } = useThemeColors();
+
+  // Комбинирование стилей
+  const baseStyles = { backgroundColor: card.bg, borderColor: card.border };
+  const customStyles = { padding: 16 };
+  const combined = combineThemeStyles(baseStyles, customStyles);
+
+  // Или использование готовой функции
+  const cardStyles = createCardStyles(card.bg, card.border, { padding: 16 });
+
+  return <Box style={combined}>...</Box>;
+}
+```
+
+#### Принципы использования темы
+
+##### Для базовых компонентов (Card, Button)
+
+Используй готовые компоненты с поддержкой темы из коробки:
+
+```typescript
+// ✅ ПРАВИЛЬНО - автоматическая поддержка темы
+<Card variant="outlined" className="p-4">
+  <Button variant="default">Кнопка</Button>
+</Card>
+```
+
+##### Для кастомизации через пропсы
+
+Используй `className` и `style` для дополнительной кастомизации:
+
+```typescript
+<Card
+  variant="outlined"
+  className="p-4 rounded-xl" // Дополнительные Tailwind классы
+  style={{ margin: 8 }} // Дополнительные inline стили
+>
+  ...
+</Card>
+```
+
+##### Для специфичных случаев
+
+Используй хук `useThemeColors` для получения цветов и применения через `style`:
+
+```typescript
+import { useThemeColors } from "@/hooks/use-theme-colors";
+import { Box } from "@/components/ui";
+
+function CustomComponent() {
+  const { card, error } = useThemeColors();
+
+  return (
+    <Box
+      className="p-2 rounded-lg"
+      style={{
+        backgroundColor: card.bg,
+        borderColor: error.border,
+      }}
+    >
+      ...
+    </Box>
+  );
+}
+```
+
+#### Миграция существующих компонентов
+
+При обновлении существующих компонентов для использования новой системы:
+
+**Было**:
+
+```typescript
+import { useTheme } from "@/providers/theme-provider";
+import { SemanticColors } from "@/constants/theme";
+
+function PosCardView() {
+  const { resolvedTheme } = useTheme();
+  const theme = resolvedTheme === "dark" ? "dark" : "light";
+  const bgColor =
+    theme === "light"
+      ? SemanticColors.card.bg.light
+      : SemanticColors.card.bg.dark;
+  const borderColor =
+    theme === "light" ? SemanticColors.card.border.light : undefined;
+
+  return (
+    <Box
+      className="p-2 rounded-lg border"
+      style={{ backgroundColor: bgColor, borderColor: borderColor }}
+    >
+      ...
+    </Box>
+  );
+}
+```
+
+**Стало**:
+
+```typescript
+import { Card } from "@/components/ui";
+
+function PosCardView() {
+  return (
+    <Card variant="outlined" className="p-2">
+      ...
+    </Card>
+  );
+}
 ```
 
 #### Themed компоненты
@@ -415,13 +614,17 @@ const textColor =
 
 - `ThemedView` - View с поддержкой темы
 - `ThemedText` - Text с поддержкой темы
+- `Card` - карточка с поддержкой темы
 
 ```typescript
 import { ThemedView } from "@/components/themed-view";
 import { ThemedText } from "@/components/themed-text";
+import { Card } from "@/components/ui";
 
 <ThemedView className="flex-1">
-  <ThemedText type="defaultSemiBold">Заголовок</ThemedText>
+  <Card variant="outlined">
+    <ThemedText type="defaultSemiBold">Заголовок</ThemedText>
+  </Card>
 </ThemedView>;
 ```
 
@@ -656,8 +859,8 @@ if (!res.ok) {
 
 ```typescript
 // View компонент
-import { RefreshControl } from 'react-native';
-import { FlatList } from '@/components/ui';
+import { RefreshControl } from "react-native";
+import { FlatList } from "@/components/ui";
 
 interface MyListViewProps {
   data: Item[];
@@ -665,7 +868,11 @@ interface MyListViewProps {
   onRefresh?: () => void;
 }
 
-export function MyListView({ data, refreshing = false, onRefresh }: MyListViewProps) {
+export function MyListView({
+  data,
+  refreshing = false,
+  onRefresh,
+}: MyListViewProps) {
   return (
     <FlatList
       data={data}
@@ -684,15 +891,18 @@ export function MyListView({ data, refreshing = false, onRefresh }: MyListViewPr
 
 ```typescript
 // View компонент
-import { RefreshControl } from 'react-native';
-import { ScrollView } from '@/components/ui';
+import { RefreshControl } from "react-native";
+import { ScrollView } from "@/components/ui";
 
 interface MyContainerViewProps {
   refreshing?: boolean;
   onRefresh?: () => void;
 }
 
-export function MyContainerView({ refreshing = false, onRefresh }: MyContainerViewProps) {
+export function MyContainerView({
+  refreshing = false,
+  onRefresh,
+}: MyContainerViewProps) {
   return (
     <ScrollView
       refreshControl={
@@ -906,4 +1116,4 @@ export function ProtectedRoute({
 
 ---
 
-_Последнее обновление: 2025-12-21_
+_Последнее обновление: 2025-01-27_

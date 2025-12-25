@@ -1,10 +1,9 @@
 import { useState } from "react";
 import {
   Modal,
-  TouchableOpacity,
   TouchableWithoutFeedback,
 } from "react-native";
-import { Box, Pressable, HStack } from "@/components/ui";
+import { Box, Pressable } from "@/components/ui";
 import { Icon } from "@/components/ui/icon";
 import { ThemedText } from "@/components/themed-text";
 import { useHeaderActions } from "./useHeaderActions";

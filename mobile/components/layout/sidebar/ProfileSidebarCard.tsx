@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, TouchableOpacity, Image, Text } from 'react-native';
-import { useRouter } from 'expo-router';
 import { useAuth } from '@/modules/auth/api/hooks/useAuth';
 import { ThemedText } from '@/components/themed-text';
 import { Colors, SemanticColors } from '@/constants/theme';

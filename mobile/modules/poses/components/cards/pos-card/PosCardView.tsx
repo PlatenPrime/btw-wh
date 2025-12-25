@@ -1,4 +1,4 @@
-import { Box, HStack } from "@/components/ui";
+import { Box, Card, HStack } from "@/components/ui";
 import { ArtImageLink } from "@/modules/arts/components/elements/art-image-link/ArtImageLink";
 import type { IPos } from "@/modules/poses/api/types";
 import { View } from "react-native";
@@ -12,7 +12,7 @@ interface PosCardViewProps {
 
 export function PosCardView({ pos, skladName, menu }: PosCardViewProps) {
   return (
-    <Box className="p-2 rounded-lg border border-outline-200 bg-background-0">
+    <Card variant="outlined" className="p-2 " >
       {/* Header with image, title and menu */}
       <HStack className="items-start justify-between mb-2">
         <Box className="flex-1">
@@ -22,7 +22,7 @@ export function PosCardView({ pos, skladName, menu }: PosCardViewProps) {
       </HStack>
 
       {/* Content with metrics */}
-      <Box className="flex-row gap-1.5">
+      <Box className="flex-row gap-2">
         <Box className="flex-1">
           <PosInfoItem icon="warehouse" value={skladName} />
         </Box>
@@ -42,6 +42,6 @@ export function PosCardView({ pos, skladName, menu }: PosCardViewProps) {
           />
         </Box>
       </Box>
-    </Box>
+    </Card>
   );
 }
