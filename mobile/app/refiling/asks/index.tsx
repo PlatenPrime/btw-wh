@@ -1,29 +1,13 @@
-import { View, TouchableOpacity } from 'react-native';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { useSidebar } from '@/components/layout/sidebar/SidebarProvider';
-import { Icon } from '@/components/ui/icon';
-import { useColorScheme } from '@/hooks/use-color-scheme';
-import { Colors } from '@/constants/theme';
+import { AsksFetcher } from "@/modules/asks/components/fetchers/asks-fetcher/AsksFetcher";
+import { ThemedView } from "@/components/themed-view";
+import { ThemedText } from "@/components/themed-text";
+import { View } from "react-native";
 
 export default function AsksScreen() {
-  const { toggleSidebar } = useSidebar();
-  const colorScheme = useColorScheme() ?? 'light';
-
   return (
     <ThemedView className="flex-1">
-      <TouchableOpacity
-        onPress={toggleSidebar}
-        className="absolute top-[50px] left-4 z-[1000] p-2">
-        <Icon
-          family="MaterialIcons"
-          name="menu"
-          size={24}
-          color={colorScheme === 'light' ? Colors.light.text : Colors.dark.text}
-        />
-      </TouchableOpacity>
-      <View className="flex-1 justify-center items-center p-4">
-        <ThemedText type="title">Запити</ThemedText>
+      <View className="flex-1">
+        <AsksFetcher />
       </View>
     </ThemedView>
   );
