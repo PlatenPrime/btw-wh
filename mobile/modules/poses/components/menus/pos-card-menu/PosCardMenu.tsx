@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Pressable } from "@/components/ui";
-import { Menu, MenuItem, MenuItemLabel } from "@/components/ui/menu-native";
+import { Modal, TouchableWithoutFeedback } from "react-native";
+import { Pressable, Box } from "@/components/ui";
 import { Icon } from "@/components/ui/icon";
+import { ThemedText } from "@/components/themed-text";
 import { useIconColor } from "@/hooks/use-icon-color";
 import type { IPos } from "@/modules/poses/api/types";
 import { UpdatePosDialog } from "@/modules/poses/components/dialogs/update-pos-dialog/UpdatePosDialog";
@@ -13,17 +14,20 @@ interface PosCardMenuProps {
 }
 
 export function PosCardMenu({ pos, onSuccess }: PosCardMenuProps) {
+  const [modalVisible, setModalVisible] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const defaultIconColor = useIconColor();
 
   const handleEdit = () => {
+    setModalVisible(false);
     setTimeout(() => {
       setIsEditOpen(true);
     }, 100);
   };
 
   const handleDelete = () => {
+    setModalVisible(false);
     setTimeout(() => {
       setIsDeleteOpen(true);
     }, 100);
@@ -41,31 +45,49 @@ export function PosCardMenu({ pos, onSuccess }: PosCardMenuProps) {
 
   return (
     <>
-      <Menu
-        placement="bottom"
-        offset={5}
-        trigger={({ onPress, ref }) => {
-          return (
-            <Pressable ref={ref} onPress={onPress} className="p-2">
-              <Icon
-                family="MaterialIcons"
-                name="more-vert"
-                size={20}
-                color={defaultIconColor}
-              />
-            </Pressable>
-          );
-        }}
+      <Pressable onPress={() => setModalVisible(true)} className="p-2">
+        <Icon
+          family="MaterialIcons"
+          name="more-vert"
+          size={20}
+          color={defaultIconColor}
+        />
+      </Pressable>
+
+      <Modal
+        visible={modalVisible}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setModalVisible(false)}
       >
-        <MenuItem key="edit" itemKey="edit" textValue="Редагувати" onPress={handleEdit}>
-          <MenuItemLabel size="sm">Редагувати</MenuItemLabel>
-        </MenuItem>
-        <MenuItem key="delete" itemKey="delete" textValue="Видалити" onPress={handleDelete}>
-          <MenuItemLabel size="sm" className="text-error-600">
-            Видалити
-          </MenuItemLabel>
-        </MenuItem>
-      </Menu>
+        <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+          <Box className="flex-1 bg-black/50 items-center justify-center">
+            <TouchableWithoutFeedback>
+              <Box className="min-w-[200px] rounded-xl border border-outline-200 bg-background-0 p-2 shadow-lg">
+                <Pressable
+                  onPress={handleEdit}
+                  className="flex-row items-center py-3 px-4"
+                >
+                  <ThemedText type="default" className="text-sm">
+                    Редагувати
+                  </ThemedText>
+                </Pressable>
+
+                <Box className="h-px bg-outline-200 my-1" />
+
+                <Pressable
+                  onPress={handleDelete}
+                  className="flex-row items-center py-3 px-4"
+                >
+                  <ThemedText type="default" className="text-sm text-error-600">
+                    Видалити
+                  </ThemedText>
+                </Pressable>
+              </Box>
+            </TouchableWithoutFeedback>
+          </Box>
+        </TouchableWithoutFeedback>
+      </Modal>
       
       <UpdatePosDialog
         pos={pos}

@@ -63,7 +63,7 @@ export function CreateRowDialogView({
               activeOpacity={0.7}
               style={{ opacity: 0.7 }}
             >
-              <Icon family="MaterialIcons" name="close" size={16} color={textColor} />
+              <Icon family="MaterialIcons" name="close" size="md" color={textColor} />
             </TouchableOpacity>
           </View>
         </ModalHeader>

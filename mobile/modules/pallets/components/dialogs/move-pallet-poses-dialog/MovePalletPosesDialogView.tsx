@@ -5,8 +5,8 @@ import {
   ModalContent,
   ModalHeader,
   ModalBody,
-  Box,
 } from "@/components/ui/modal-native";
+import { Box } from "@/components/ui/box";
 import { Icon } from "@/components/ui/icon";
 import { ThemedText } from "@/components/themed-text";
 import type { IPallet } from "@/modules/pallets/api/types";
@@ -77,7 +77,7 @@ export function MovePalletPosesDialogView({
             </TouchableOpacity>
           </View>
         </ModalHeader>
-        <ModalBody>
+        <ModalBody scrollable={false}>
           {mutationError && (
             <Box className="mb-4 p-3 rounded-lg border border-error-500 bg-error-50">
               <ThemedText type="default" className="text-error-700">

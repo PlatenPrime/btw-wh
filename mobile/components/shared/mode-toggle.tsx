@@ -72,7 +72,7 @@ export function ModeToggle() {
         <ModalBackdrop />
         <ModalContent
           className="rounded-lg p-4 w-[280px] bg-background-0 border border-outline-200"
-          onLayout={(e) => setContentHeight(e.nativeEvent.layout.height)}
+          onLayout={(e: { nativeEvent: { layout: { height: number } } }) => setContentHeight(e.nativeEvent.layout.height)}
           style={{
             position: "absolute",
             top: "50%",

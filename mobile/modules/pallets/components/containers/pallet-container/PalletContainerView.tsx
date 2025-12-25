@@ -1,4 +1,4 @@
-import { Box, Button, ButtonText, HStack } from "@/components/ui";
+import { Box, Button, HStack, Text } from "@/components/ui";
 import { Icon } from "@/components/ui/icon";
 import { SemanticColors } from "@/constants/theme";
 import type { IPallet } from "@/modules/pallets/api/types";
@@ -30,12 +30,7 @@ export function PalletContainerView({
             sortParams={sortParams}
             onSortParamsChange={onSortParamsChange}
           />
-          <Button
-            onPress={onCreatePosClick}
-            variant="solid"
-            action="primary"
-            className="rounded-lg items-center justify-center py-3 px-6"
-          >
+          <Button onPress={onCreatePosClick} className="rounded-lg">
             <HStack className="items-center gap-2">
               <Icon
                 family="MaterialIcons"
@@ -43,9 +38,9 @@ export function PalletContainerView({
                 size="md"
                 color={SemanticColors.white}
               />
-              <ButtonText className="text-white font-semibold text-base">
+              <Text className="text-white font-semibold text-base">
                 Позиція
-              </ButtonText>
+              </Text>
             </HStack>
           </Button>
           <PalletInfo pallet={pallet} />

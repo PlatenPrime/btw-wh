@@ -25,10 +25,10 @@ export function DeletePalletEmptyPosesDialogView({
     <DialogContent>
       <DialogHeader>
         <DialogTitle>
-          Видалити порожні позиції палети "{pallet.title}"?
+         Очистити порожні позиції палети "{pallet.title}"?
         </DialogTitle>
         <DialogDescription>
-          Ви впевнені, що хочете видалити тільки порожні позиції? Цю дію
+          Ви впевнені, що хочете очистити порожні позиції палети "{pallet.title}"? Цю дію
           неможливо скасувати.
         </DialogDescription>
       </DialogHeader>
@@ -37,7 +37,7 @@ export function DeletePalletEmptyPosesDialogView({
           onCancel={onCancel}
           onSubmit={onDelete}
           cancelText="Скасувати"
-          submitText="Видалити порожні"
+          submitText="Очистити"
           isSubmitting={isDeleting}
           variant="destructive"
           className="w-full"

@@ -1,7 +1,8 @@
 import { useState, useMemo } from "react";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { Box, VStack, HStack, Input, InputField, FlatList, Pressable, Button, ButtonText, ButtonSpinner, Spinner, Icon } from "@/components/ui";
+import { Box, VStack, HStack, Input, InputField, FlatList, Pressable, Button, Spinner, Icon, Text } from "@/components/ui";
+import { ActivityIndicator } from "react-native";
 import type { IPallet } from "@/modules/pallets/api/types";
 import { useEmptyPalletsQuery } from "@/modules/pallets/api/hooks/queries/useEmptyPalletsQuery";
 import { useIconColor } from "@/hooks/use-icon-color";
@@ -104,7 +105,7 @@ export function MovePalletPosesForm({
                     isSelected ? "bg-background-200" : "bg-background-50"
                   }`}
                   disabled={disabled || isSubmitting}
-                  opacity={disabled ? 0.5 : 1}
+                  style={{ opacity: disabled ? 0.5 : 1 }}
                 >
                   <HStack className="items-center gap-3 flex-1">
                     <Icon
@@ -148,25 +149,21 @@ export function MovePalletPosesForm({
         <Button
           variant="outline"
           onPress={onCancel}
-          className="flex-1 rounded-lg border border-outline-200 bg-background-0 items-center justify-center py-3"
-          isDisabled={isSubmitting}
+          className="flex-1"
+          disabled={isSubmitting}
         >
-          <ButtonText className="font-semibold">Скасувати</ButtonText>
+          <Text className="font-semibold">Скасувати</Text>
         </Button>
 
         <Button
           onPress={handleSubmit}
-          className="flex-1 rounded-lg items-center justify-center py-3"
-          style={{
-            backgroundColor: !selectedPalletId || isSubmitting ? SemanticColors.disabled : SemanticColors.primary,
-            opacity: !selectedPalletId || isSubmitting ? 0.5 : 1
-          }}
-          isDisabled={!selectedPalletId || isSubmitting}
+          className="flex-1"
+          disabled={!selectedPalletId || isSubmitting}
         >
           {isSubmitting ? (
-            <ButtonSpinner color={SemanticColors.white} />
+            <ActivityIndicator color={SemanticColors.white} />
           ) : (
-            <ButtonText className="text-white font-semibold">Підтвердити</ButtonText>
+            <Text className="text-white font-semibold">Підтвердити</Text>
           )}
         </Button>
       </HStack>

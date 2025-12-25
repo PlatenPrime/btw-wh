@@ -24,11 +24,10 @@ export function ClearPalletDialogView({
   return (
     <DialogContent>
       <DialogHeader>
-        <DialogTitle>Очистити палету "{pallet.title}"?</DialogTitle>
+        <DialogTitle>Видалити всі позиції палети "{pallet.title}"?</DialogTitle>
         <DialogDescription>
-          Ви впевнені, що хочете очистити палету "{pallet.title}"? Цю дію
-          неможливо скасувати, вона також призведе до видалення всіх
-          пов'язаних позицій.
+          Ви впевнені, що хочете видалити всі позиції палети "{pallet.title}"?
+          Цю дію неможливо скасувати.
         </DialogDescription>
       </DialogHeader>
       <DialogFooter>
@@ -36,7 +35,7 @@ export function ClearPalletDialogView({
           onCancel={onCancel}
           onSubmit={onClear}
           cancelText="Скасувати"
-          submitText="Очистити"
+          submitText="Видалити"
           isSubmitting={isClearing}
           variant="destructive"
           className="w-full"

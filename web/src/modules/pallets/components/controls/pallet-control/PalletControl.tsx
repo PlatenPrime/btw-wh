@@ -20,9 +20,9 @@ export function PalletControl({ pallet }: PalletActionsProps) {
   return (
     <Card className="flex w-full p-0 lg:w-fit">
       <CardContent className="flex flex-wrap items-center justify-between gap-4 p-0">
-        <ClearPalletDialog pallet={pallet} onSuccess={() => {}} />
-        <DeletePalletEmptyPosesDialog pallet={pallet} onSuccess={() => {}} />
         <MovePalletPosesDialog pallet={pallet} />
+        <DeletePalletEmptyPosesDialog pallet={pallet} onSuccess={() => {}} />
+        <ClearPalletDialog pallet={pallet} onSuccess={() => {}} />
         <DeletePalletDialog pallet={pallet} onSuccess={handleDelete} />
       </CardContent>
     </Card>

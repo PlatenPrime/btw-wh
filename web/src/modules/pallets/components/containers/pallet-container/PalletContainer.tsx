@@ -50,19 +50,20 @@ export function PalletContainer({
       variant: "default",
       onClick: () => setMoveDialogOpen(true),
     },
-    {
-      id: "clear-pallet",
-      label: "Очистити палету",
-      icon: EraserIcon,
-      variant: "destructive",
-      onClick: () => setClearDialogOpen(true),
-    },
+
     {
       id: "delete-empty-poses",
-      label: "Видалити порожні",
+      label: "Очистити порожні",
       icon: TrashIcon,
       variant: "destructive",
       onClick: () => setDeleteEmptyPosesDialogOpen(true),
+    },
+    {
+      id: "clear-pallet",
+      label: "Видалити позиції",
+      icon: EraserIcon,
+      variant: "super-destructive",
+      onClick: () => setClearDialogOpen(true),
     },
     {
       id: "delete-pallet",

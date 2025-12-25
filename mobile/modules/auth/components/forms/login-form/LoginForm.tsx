@@ -2,7 +2,8 @@ import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { ScrollView, Box, Text, Input, InputField, Button, ButtonText, ButtonSpinner } from "@/components/ui";
+import { ScrollView, Box, Text, Input, InputField, Button } from "@/components/ui";
+import { ActivityIndicator } from "react-native";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 import { SemanticColors } from "@/constants/theme";
 
@@ -113,14 +114,14 @@ export const LoginForm = () => {
         </Box>
 
         <Button
-          className="w-full bg-primary-500 rounded-lg py-3 items-center justify-center"
+          className="w-full"
           onPress={handleSubmit(onSubmit)}
-          isDisabled={isLoading}
+          disabled={isLoading}
         >
           {isLoading ? (
-            <ButtonSpinner color={SemanticColors.white} />
+            <ActivityIndicator color={SemanticColors.white} />
           ) : (
-            <ButtonText className="text-white font-semibold text-base">Вхід</ButtonText>
+            <Text className="text-white font-semibold text-base">Вхід</Text>
           )}
         </Button>
       </Box>

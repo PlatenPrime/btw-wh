@@ -52,7 +52,7 @@ export function HeaderActionsMenu({ trigger }: HeaderActionsMenuProps) {
 
   const renderActionItem = (
     action: typeof actions[0],
-    textColorClass: string
+    textColorClass: string | undefined
   ) => {
     const iconColor =
       iconColorMap[action.iconColor || "default"] || defaultIconColor;
@@ -101,7 +101,7 @@ export function HeaderActionsMenu({ trigger }: HeaderActionsMenuProps) {
               {destructiveActions.map((action) =>
                 renderActionItem(
                   action,
-                  iconColorMap[action.iconColor || "default"]
+                  iconColorMap[action.iconColor || "default"] !== undefined
                     ? undefined
                     : "text-error-600"
                 )
@@ -115,7 +115,7 @@ export function HeaderActionsMenu({ trigger }: HeaderActionsMenuProps) {
               {superDestructiveActions.map((action) =>
                 renderActionItem(
                   action,
-                  iconColorMap[action.iconColor || "default"]
+                  iconColorMap[action.iconColor || "default"] !== undefined
                     ? undefined
                     : "text-error-700"
                 )

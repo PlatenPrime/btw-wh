@@ -1,11 +1,12 @@
-import { useState } from "react";
-import { Pressable } from "@/components/ui";
-import { Menu, MenuItem, MenuItemLabel } from "@/components/ui/menu-native";
+import { ThemedText } from "@/components/themed-text";
+import { Box, Pressable } from "@/components/ui";
 import { Icon } from "@/components/ui/icon";
 import { useIconColor } from "@/hooks/use-icon-color";
 import type { RowDto } from "@/modules/rows/api/types/dto";
-import { UpdateRowDialog } from "@/modules/rows/components/dialogs/update-row-dialog/UpdateRowDialog";
 import { DeleteRowDialog } from "@/modules/rows/components/dialogs/delete-row-dialog/DeleteRowDialog";
+import { UpdateRowDialog } from "@/modules/rows/components/dialogs/update-row-dialog/UpdateRowDialog";
+import { useState } from "react";
+import { Modal, TouchableWithoutFeedback } from "react-native";
 
 interface RowCardMenuProps {
   row: RowDto;
@@ -13,17 +14,20 @@ interface RowCardMenuProps {
 }
 
 export function RowCardMenu({ row, onSuccess }: RowCardMenuProps) {
+  const [modalVisible, setModalVisible] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const defaultIconColor = useIconColor();
 
   const handleEdit = () => {
+    setModalVisible(false);
     setTimeout(() => {
       setIsEditOpen(true);
     }, 100);
   };
 
   const handleDelete = () => {
+    setModalVisible(false);
     setTimeout(() => {
       setIsDeleteOpen(true);
     }, 100);
@@ -41,39 +45,57 @@ export function RowCardMenu({ row, onSuccess }: RowCardMenuProps) {
 
   return (
     <>
-      <Menu
-        placement="bottom"
-        offset={5}
-        trigger={({ onPress, ref }) => {
-          return (
-            <Pressable ref={ref} onPress={onPress} className="p-2">
-              <Icon
-                family="MaterialIcons"
-                name="more-vert"
-                size="md"
-                color={defaultIconColor}
-              />
-            </Pressable>
-          );
-        }}
+      <Pressable onPress={() => setModalVisible(true)} className="p-2">
+        <Icon
+          family="MaterialIcons"
+          name="more-vert"
+          size="md"
+          color={defaultIconColor}
+        />
+      </Pressable>
+
+      <Modal
+        visible={modalVisible}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setModalVisible(false)}
       >
-        <MenuItem key="edit" itemKey="edit" textValue="Редагувати" onPress={handleEdit}>
-          <MenuItemLabel size="sm">Редагувати</MenuItemLabel>
-        </MenuItem>
-        <MenuItem key="delete" itemKey="delete" textValue="Видалити" onPress={handleDelete}>
-          <MenuItemLabel size="sm" className="text-error-600">
-            Видалити
-          </MenuItemLabel>
-        </MenuItem>
-      </Menu>
-      
+        <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+          <Box className="flex-1 bg-black/50 items-center justify-center">
+            <TouchableWithoutFeedback>
+              <Box className="min-w-[200px] rounded-xl border border-outline-200 bg-background-0 p-2 shadow-lg">
+                <Pressable
+                  onPress={handleEdit}
+                  className="flex-row items-center py-3 px-4"
+                >
+                  <ThemedText type="default" className="text-sm">
+                    Редагувати
+                  </ThemedText>
+                </Pressable>
+
+                <Box className="h-px bg-outline-200 my-1" />
+
+                <Pressable
+                  onPress={handleDelete}
+                  className="flex-row items-center py-3 px-4"
+                >
+                  <ThemedText type="default" className="text-sm text-error-600">
+                    Видалити
+                  </ThemedText>
+                </Pressable>
+              </Box>
+            </TouchableWithoutFeedback>
+          </Box>
+        </TouchableWithoutFeedback>
+      </Modal>
+
       <UpdateRowDialog
         row={row}
         open={isEditOpen}
         onOpenChange={setIsEditOpen}
         onSuccess={handleEditSuccess}
       />
-      
+
       <DeleteRowDialog
         row={row}
         open={isDeleteOpen}
@@ -83,4 +105,3 @@ export function RowCardMenu({ row, onSuccess }: RowCardMenuProps) {
     </>
   );
 }
-

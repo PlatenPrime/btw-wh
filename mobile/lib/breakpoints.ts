@@ -48,13 +48,19 @@ export const getBreakPointValue = <T>(
 
   for (let i = currentIndex; i < breakpointOrder.length; i++) {
     const key = breakpointOrder[i];
-    if (key in values && values[key] !== undefined) {
-      return values[key] as T;
+    if (typeof values === 'object' && values !== null && key in values) {
+      const recordValues = values as Partial<Record<BreakpointKey, T>>;
+      if (recordValues[key] !== undefined) {
+        return recordValues[key] as T;
+      }
     }
   }
 
   // Если ничего не найдено, возвращаем base или undefined
-  return values.base as T | undefined;
+  if (typeof values === 'object' && values !== null && 'base' in values) {
+    return (values as Partial<Record<BreakpointKey, T>>).base as T | undefined;
+  }
+  return undefined;
 };
 
 /**

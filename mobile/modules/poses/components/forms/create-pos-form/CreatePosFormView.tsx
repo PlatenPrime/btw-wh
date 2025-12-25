@@ -4,10 +4,10 @@ import {
   InputField,
   HStack,
   Button,
-  ButtonText,
-  ButtonSpinner,
   Pressable,
+  Text,
 } from "@/components/ui";
+import { ActivityIndicator } from "react-native";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { Icon } from "@/components/ui/icon";
@@ -287,7 +287,7 @@ export function CreatePosFormView({
                         : "border-outline-200 bg-background-0"
                     }`}
                     disabled={isSubmitting}
-                    opacity={isSubmitting ? 0.5 : 1}
+                    style={{ opacity: isSubmitting ? 0.5 : 1 }}
                   >
                     <ThemedText
                       type="default"
@@ -338,27 +338,22 @@ export function CreatePosFormView({
           {onCancel && (
             <Button
               onPress={onCancel}
-              isDisabled={isSubmitting}
-              className="flex-1 rounded-lg border border-outline-200 bg-background-0 items-center justify-center py-3"
-              style={{ opacity: isSubmitting ? 0.5 : 1 }}
+              disabled={isSubmitting}
+              variant="outline"
+              className="flex-1"
             >
-              <ButtonText className="font-semibold">Скасувати</ButtonText>
+              <Text className="font-semibold">Скасувати</Text>
             </Button>
           )}
           <Button
             onPress={handleSubmit(onSubmit)}
-            isDisabled={isSubmitting || !isFormValid}
-            variant="solid"
-            action="primary"
-            className="flex-1 rounded-lg items-center justify-center py-3"
-            style={{
-              opacity: isSubmitting || !isFormValid ? 0.5 : 1,
-            }}
+            disabled={isSubmitting || !isFormValid}
+            className="flex-1"
           >
             {isSubmitting ? (
-              <ButtonSpinner color={SemanticColors.white} />
+              <ActivityIndicator color={SemanticColors.white} />
             ) : (
-              <ButtonText className="text-white font-semibold">Створити</ButtonText>
+              <Text className="text-white font-semibold">Створити</Text>
             )}
           </Button>
         </HStack>

@@ -15,7 +15,7 @@ const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 type Placement = 'top' | 'bottom' | 'left' | 'right';
 
 interface MenuProps {
-  trigger: (props: { onPress: () => void; ref: React.RefObject<View> }) => React.ReactNode;
+  trigger: (props: { onPress: () => void; ref: React.RefObject<View | null> }) => React.ReactNode;
   placement?: Placement;
   offset?: number;
   disabledKeys?: string[];

@@ -31,9 +31,8 @@ interface ModalBackdropProps {
   children?: React.ReactNode;
 }
 
-interface ModalContentProps {
+interface ModalContentProps extends ViewProps {
   className?: string;
-  style?: ViewStyle;
   children: React.ReactNode;
 }
 
@@ -45,6 +44,7 @@ interface ModalHeaderProps {
 interface ModalBodyProps {
   className?: string;
   children: React.ReactNode;
+  scrollable?: boolean;
 }
 
 interface ModalFooterProps {
@@ -94,12 +94,13 @@ function ModalBackdrop({ onPress, className, style, children }: ModalBackdropPro
   );
 }
 
-function ModalContent({ className, style, children }: ModalContentProps) {
+function ModalContent({ className, style, children, ...viewProps }: ModalContentProps) {
   return (
     <TouchableWithoutFeedback>
       <View
         className={`bg-background-0 rounded-md overflow-hidden border border-outline-100 shadow-hard-2 p-6 ${className || ''}`}
         style={style}
+        {...viewProps}
       >
         {children}
       </View>
@@ -115,7 +116,15 @@ function ModalHeader({ className, children }: ModalHeaderProps) {
   );
 }
 
-function ModalBody({ className, children }: ModalBodyProps) {
+function ModalBody({ className, children, scrollable = true }: ModalBodyProps) {
+  if (!scrollable) {
+    return (
+      <View className={`mt-2 mb-6 ${className || ''}`}>
+        {children}
+      </View>
+    );
+  }
+
   return (
     <ScrollView
       keyboardShouldPersistTaps="handled"

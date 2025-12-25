@@ -3,12 +3,12 @@ import { ThemedView } from "@/components/themed-view";
 import {
   Box,
   Button,
-  ButtonSpinner,
-  ButtonText,
   HStack,
   Input,
   InputField,
+  Text,
 } from "@/components/ui";
+import { ActivityIndicator } from "react-native";
 import type { RowFormValues } from "@/modules/rows/components/forms/schema";
 import type { UseFormReturn } from "react-hook-form";
 import { Controller } from "react-hook-form";
@@ -80,27 +80,22 @@ export function CreateRowFormView({
         {onCancel && (
           <Button
             onPress={onCancel}
-            isDisabled={isSubmitting}
-            className="flex-1 rounded-lg border border-outline-200 bg-background-0 items-center justify-center py-3 "
-            style={{ opacity: isSubmitting ? 0.5 : 1 }}
+            disabled={isSubmitting}
+            variant="outline"
+            className="flex-1"
           >
-            <ButtonText className="font-semibold">Скасувати</ButtonText>
+            <Text className="font-semibold">Скасувати</Text>
           </Button>
         )}
         <Button
           onPress={handleSubmit(onSubmit)}
-          isDisabled={isSubmitting}
-          variant="solid"
-          action="primary"
-          className="flex-1 rounded-lg items-center justify-center py-3"
-          style={{ 
-            opacity: isSubmitting ? 0.5 : 1,
-          }}
+          disabled={isSubmitting}
+          className="flex-1"
         >
           {isSubmitting ? (
-            <ButtonSpinner color={SemanticColors.white} />
+            <ActivityIndicator color={SemanticColors.white} />
           ) : (
-            <ButtonText className="text-white font-semibold">Створити</ButtonText>
+            <Text className="text-white font-semibold">Створити</Text>
           )}
         </Button>
       </HStack>

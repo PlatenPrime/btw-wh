@@ -1,4 +1,5 @@
-import { Button, ButtonSpinner, ButtonText, HStack } from "@/components/ui";
+import { Button, HStack, Text } from "@/components/ui";
+import { ActivityIndicator } from "react-native";
 import { SemanticColors } from "@/constants/theme";
 
 interface DialogActionsProps {
@@ -29,32 +30,23 @@ export function DialogActions({
       {onCancel && (
         <Button
           onPress={onCancel}
-          isDisabled={isSubmitting}
-          className="flex-1 rounded-lg border border-outline-200 bg-background-0 items-center justify-center py-3"
-          style={{ opacity: isSubmitting ? 0.5 : 1 }}
+          disabled={isSubmitting}
+          variant="outline"
+          className="flex-1"
         >
-          <ButtonText className="font-semibold">{cancelText}</ButtonText>
+          <Text className="font-semibold">{cancelText}</Text>
         </Button>
       )}
       <Button
         onPress={onSubmit}
-        isDisabled={isDisabledState}
-        className={`flex-1 rounded-lg ${
-          variant === "destructive" ? "bg-error-500" : ""
-        } items-center justify-center py-3`}
-        style={{
-          opacity: isDisabledState ? 0.5 : 1,
-          ...(variant !== "destructive" && {
-            backgroundColor: isDisabledState
-              ? SemanticColors.disabled
-              : SemanticColors.primary,
-          }),
-        }}
+        disabled={isDisabledState}
+        variant={variant === "destructive" ? "destructive" : "default"}
+        className="flex-1"
       >
         {isSubmitting ? (
-          <ButtonSpinner color={SemanticColors.white} />
+          <ActivityIndicator color={SemanticColors.white} />
         ) : (
-          <ButtonText className="text-white font-semibold">{submitText}</ButtonText>
+          <Text className="text-white font-semibold">{submitText}</Text>
         )}
       </Button>
     </HStack>

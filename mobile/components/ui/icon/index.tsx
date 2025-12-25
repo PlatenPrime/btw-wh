@@ -1,5 +1,6 @@
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Feather from "@expo/vector-icons/Feather";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { tva, type VariantProps } from "@/lib/tv";
 import { cssInterop } from "nativewind";
@@ -27,19 +28,20 @@ cssInterop(Svg, {
       height: true,
       width: true,
       fill: true,
-      color: "classNameColor",
+      color: true,
       stroke: true,
     },
   },
 });
 
-export type IconFamily = "MaterialIcons" | "AntDesign" | "Feather";
+export type IconFamily = "MaterialIcons" | "AntDesign" | "Feather" | "Ionicons";
 
-type IconProps = VariantProps<typeof iconStyle> & {
+export type IconProps = VariantProps<typeof iconStyle> & {
   className?: string;
   family?: IconFamily;
   name?: string;
   color?: string;
+  size?: "2xs" | "xs" | "sm" | "md" | "lg" | "xl" | number;
   height?: number | string;
   width?: number | string;
   viewBox?: string;
@@ -92,6 +94,16 @@ const Icon = React.forwardRef<React.ComponentRef<typeof Svg>, IconProps>(
         return (
           <Feather
             name={name as keyof typeof Feather.glyphMap}
+            size={iconSize}
+            color={color}
+          />
+        );
+      }
+
+      if (family === "Ionicons") {
+        return (
+          <Ionicons
+            name={name as keyof typeof Ionicons.glyphMap}
             size={iconSize}
             color={color}
           />

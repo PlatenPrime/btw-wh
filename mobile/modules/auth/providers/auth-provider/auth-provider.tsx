@@ -1,5 +1,5 @@
 import { hasAnyRole as checkAnyRole, hasRoleAccess } from "@/constants/roles";
-import * as api from "@/modules/auth/api/services/index.ts";
+import * as api from "@/modules/auth/api/services/index";
 import { getItem, removeItem, setItem } from "@/modules/auth/utils/storage";
 import { createContext, useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "expo-router";
