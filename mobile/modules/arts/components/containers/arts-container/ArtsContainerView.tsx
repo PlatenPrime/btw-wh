@@ -25,7 +25,7 @@ export function ArtsContainerView({
 }: ArtsContainerViewProps) {
   return (
     <View className="flex-1">
-      <View className="px-4 pt-2 pb-2 mt-2">
+      <View className="p-2">
         <SearchPanel
           search={search}
           onSearchChange={onSearchChange}

@@ -1,6 +1,7 @@
 import { ThemedText } from "@/components/themed-text";
 import { Box, Pressable } from "@/components/ui";
 import { Icon } from "@/components/ui/icon";
+import { SemanticColors } from "@/constants/theme";
 import { useIconColor } from "@/hooks/use-icon-color";
 import type { RowDto } from "@/modules/rows/api/types/dto";
 import { DeleteRowDialog } from "@/modules/rows/components/dialogs/delete-row-dialog/DeleteRowDialog";
@@ -66,8 +67,14 @@ export function RowCardMenu({ row, onSuccess }: RowCardMenuProps) {
               <Box className="min-w-[200px] rounded-xl border border-outline-200 bg-background-0 p-2 shadow-lg">
                 <Pressable
                   onPress={handleEdit}
-                  className="flex-row items-center py-3 px-4"
+                  className="flex-row items-center p-3"
                 >
+                  <Icon
+                    family="MaterialIcons"
+                    name="edit"
+                    size="md"
+                    color={defaultIconColor}
+                  />
                   <ThemedText type="default" className="text-sm">
                     Редагувати
                   </ThemedText>
@@ -77,8 +84,14 @@ export function RowCardMenu({ row, onSuccess }: RowCardMenuProps) {
 
                 <Pressable
                   onPress={handleDelete}
-                  className="flex-row items-center py-3 px-4"
+                  className="flex-row items-center p-3"
                 >
+                  <Icon
+                    family="MaterialIcons"
+                    name="delete"
+                    size="md"
+                    color={SemanticColors.error.text}
+                  />
                   <ThemedText type="default" className="text-sm text-error-600">
                     Видалити
                   </ThemedText>

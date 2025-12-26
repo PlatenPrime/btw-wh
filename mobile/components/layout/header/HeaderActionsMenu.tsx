@@ -59,7 +59,7 @@ export function HeaderActionsMenu({ trigger }: HeaderActionsMenuProps) {
       <Pressable
         key={action.id}
         onPress={() => handleActionClick(action.onClick)}
-        className="flex-row items-center py-3 px-4"
+        className="flex-row items-center p-3"
       >
         {action.icon && (
           <Icon

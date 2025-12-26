@@ -43,6 +43,7 @@ export function PalletCardView({
               {sector ?? "Немає"}
             </ThemedText>
           </HStack>
+          <Box className="h-px bg-outline-200 my-1" />
           <HStack className="items-center justify-between">
             <ThemedText type="default" className="text-xs">
               Аналіз:
@@ -52,6 +53,7 @@ export function PalletCardView({
             </ThemedText>
           </HStack>
         </Box>
+        <Box className="h-px bg-outline-200 my-1" />
       </Box>
     </Pressable>
   );
