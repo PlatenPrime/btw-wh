@@ -7,12 +7,11 @@ import { hstackStyle } from './styles';
 type IHStackProps = ViewProps & VariantProps<typeof hstackStyle>;
 
 const HStack = React.forwardRef<React.ComponentRef<typeof View>, IHStackProps>(
-  function HStack({ className, space, reversed, ...props }, ref) {
+  function HStack({ className, ...props }, ref) {
     return (
       <View
         className={hstackStyle({
-          space,
-          reversed: reversed as boolean,
+
           class: className,
         })}
         {...props}

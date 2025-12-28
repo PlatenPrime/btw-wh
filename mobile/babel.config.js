@@ -17,6 +17,8 @@ module.exports = function (api) {
         },
       ],
       'react-native-worklets/plugin',
+      // Плагин react-native-reanimated добавляется автоматически через babel-preset-expo
+      // и должен быть последним в списке плагинов
     ],
   };
 };

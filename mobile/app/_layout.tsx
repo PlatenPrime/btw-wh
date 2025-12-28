@@ -7,7 +7,8 @@ import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useColorScheme } from "nativewind";
 import { useEffect } from "react";
-import { View } from "react-native";
+import { LogBox, View } from "react-native";
+
 import "react-native-reanimated";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
@@ -17,6 +18,31 @@ import { config } from "@/components/ui/gluestack-ui-provider/config";
 import "@/global.css";
 import { Providers } from "@/providers/providers";
 import { useTheme } from "@/providers/theme-provider";
+
+// Перехватываем и игнорируем предупреждения Reanimated о чтении/записи value во время рендера
+// Эти предупреждения приходят из сторонних библиотек (@gorhom/bottom-sheet, @legendapp/motion)
+const originalWarn = console.warn;
+console.warn = (...args: unknown[]) => {
+  const message = args[0];
+  if (
+    typeof message === "string" &&
+    (message.includes(
+      "[Reanimated] Reading from `value` during component render"
+    ) ||
+      message.includes(
+        "[Reanimated] Writing to `value` during component render"
+      ))
+  ) {
+    return; // Игнорируем эти предупреждения
+  }
+  originalWarn.apply(console, args);
+};
+
+// Дополнительная фильтрация через LogBox
+LogBox.ignoreLogs([
+  /\[Reanimated\] Reading from `value` during component render/,
+  /\[Reanimated\] Writing to `value` during component render/,
+]);
 
 function AppContent() {
   const { resolvedTheme } = useTheme();

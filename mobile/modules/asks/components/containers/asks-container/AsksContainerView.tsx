@@ -59,8 +59,8 @@ export function AsksContainerView({
             </TouchableOpacity>
           </HStack>
 
-          <HStack className="items-center justify-between">
-            <ThemedText type="default" className="text-sm">
+          <HStack className="items-center justify-center">
+            <ThemedText type="default" className="text-lg">
               {data.completedCount + data.rejectedCount}/{data.count}
             </ThemedText>
           </HStack>

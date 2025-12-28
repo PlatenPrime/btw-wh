@@ -20,9 +20,9 @@ const buttonVariants = tva({
       link: "text-primary-500 underline-offset-4 data-[hover=true]:underline",
     },
     size: {
-      default: "h-9 p-2",
-      sm: "h-8 p-3 gap-1.5",
-      lg: "h-10 p-4",
+      default: "min-h-9 p-2",
+      sm: "min-h-8 p-3 gap-1.5",
+      lg: "min-h-10 p-4",
       icon: "h-9 w-9",
     },
   },

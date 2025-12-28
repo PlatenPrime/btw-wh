@@ -1,15 +1,16 @@
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useOneArtQuery } from "@/modules/arts/api/hooks/queries/useOneArtQuery";
 import { useCreateAskMutation } from "@/modules/asks/api/hooks/mutations/useCreateAskMutation";
 import type { CreateAskRequest } from "@/modules/asks/api/services/mutations/createAsk";
 import {
-  createAskFormSchema,
   createAskFormDefaultValues,
+  createAskFormSchema,
   type CreateAskFormData,
 } from "@/modules/asks/components/forms/create-ask-form/schema";
-import { CreateAskFormView } from "./CreateAskFormView";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
-import { useOneArtQuery } from "@/modules/arts/api/hooks/queries/useOneArtQuery";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { CreateAskFormView } from "./CreateAskFormView";
 
 interface CreateAskFormProps {
   onSuccess?: () => void;
@@ -22,10 +23,11 @@ export function CreateAskForm({
   onCancel,
   preFilledArtikul,
 }: CreateAskFormProps) {
+  const { user } = useAuth();
+
   const form = useForm<CreateAskFormData>({
     resolver: zodResolver(createAskFormSchema),
-    mode: "onSubmit",
-    reValidateMode: "onChange",
+    mode: "onChange",
     defaultValues: {
       ...createAskFormDefaultValues,
       artikul: preFilledArtikul || createAskFormDefaultValues.artikul,
@@ -35,19 +37,47 @@ export function CreateAskForm({
   const {
     watch,
     setValue,
+    reset,
     formState: { isSubmitting },
   } = form;
   const artikul = watch("artikul");
 
-  const createMutation = useCreateAskMutation();
-  const isFormSubmitting = createMutation.isPending || isSubmitting;
-  const { user } = useAuth();
+  // Синхронизируем preFilledArtikul при изменении
+  useEffect(() => {
+    if (preFilledArtikul && preFilledArtikul !== artikul) {
+      setValue("artikul", preFilledArtikul, { shouldValidate: true });
+    }
+  }, [preFilledArtikul, setValue, artikul]);
 
-  // Поиск артикула при вводе 9 символов
+  const createMutation = useCreateAskMutation();
+
+  // Поиск артикула при вводе 9 символов или если артикул предзаполнен
   const shouldSearchArt = artikul.length === 9;
   const artQuery = useOneArtQuery(shouldSearchArt ? artikul : undefined);
   const artData = artQuery.data?.data || undefined;
   const isArtLoading = artQuery.isPending;
+
+  // Сбрасываем данные артикула при изменении длины (когда пользователь редактирует)
+  const [previousArtikulLength, setPreviousArtikulLength] = useState(
+    artikul.length
+  );
+  const [currentArtData, setCurrentArtData] = useState(artData);
+
+  // Обновляем текущие данные артикула только если артикул изменился
+  useEffect(() => {
+    if (artikul.length === 9 && artData) {
+      setCurrentArtData(artData);
+    } else if (artikul.length !== 9) {
+      setCurrentArtData(undefined);
+    }
+
+    // Если длина изменилась и стала меньше 9, сбрасываем данные
+    if (artikul.length < previousArtikulLength && artikul.length < 9) {
+      setCurrentArtData(undefined);
+    }
+
+    setPreviousArtikulLength(artikul.length);
+  }, [artikul.length, artData, previousArtikulLength]);
 
   // Обработка изменения артикула
   const handleArtikulChange = (value: string) => {
@@ -65,7 +95,7 @@ export function CreateAskForm({
     try {
       const createData: CreateAskRequest = {
         artikul: data.artikul.trim(),
-        nameukr: artData?.nameukr,
+        nameukr: currentArtData?.nameukr,
         quant: data.quant && data.quant.trim() ? Number(data.quant) : undefined,
         com: data.com && data.com.trim() ? data.com.trim() : undefined,
         sklad: data.sklad,
@@ -74,7 +104,10 @@ export function CreateAskForm({
 
       await createMutation.mutateAsync(createData);
       onSuccess?.();
-      form.reset();
+      reset({
+        ...createAskFormDefaultValues,
+        artikul: preFilledArtikul || createAskFormDefaultValues.artikul,
+      });
     } catch (error) {
       console.error("Помилка створення запиту:", error);
       form.setError("root", {
@@ -84,6 +117,8 @@ export function CreateAskForm({
     }
   };
 
+  const isFormSubmitting = isSubmitting || createMutation.isPending;
+
   return (
     <CreateAskFormView
       form={form}
@@ -91,10 +126,9 @@ export function CreateAskForm({
       onArtikulChange={handleArtikulChange}
       isSubmitting={isFormSubmitting}
       isArtLoading={isArtLoading}
-      artData={artData}
+      artData={currentArtData}
       onSubmit={onSubmit}
       onCancel={onCancel}
     />
   );
 }
-

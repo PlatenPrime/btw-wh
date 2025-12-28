@@ -1,7 +1,6 @@
-import { View } from 'react-native';
-import { ThemedText } from '@/components/themed-text';
-import { PageLayout } from '@/components/layout/page-layout';
-import { Spinner } from '@/components/ui/spinner';
+import { PageLayout } from "@/components/layout/page-layout";
+import { ThemedText } from "@/components/themed-text";
+import { View } from "react-native";
 
 export default function HomeTab() {
   return (
@@ -10,10 +9,6 @@ export default function HomeTab() {
         <ThemedText type="title" className="text-center mb-4">
           BTrade Warehouse App
         </ThemedText>
-        <ThemedText type="subtitle" className="text-center">
-          Головна
-        </ThemedText>
-        <Spinner size="large" color="grey" />
       </View>
     </PageLayout>
   );
