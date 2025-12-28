@@ -2,7 +2,7 @@ import { Box } from "@/components/ui";
 
 export function PalletCardSkeleton() {
   return (
-    <Box className="p-4 rounded-lg border border-outline-200 bg-background-0 gap-2">
+    <Box className="p-4 rounded-lg border border-outline-100 bg-background-0 gap-2">
       <Box className="flex-row items-center justify-between">
         <Box className="rounded bg-secondary-300" style={{ height: 20, width: 96 }} />
         <Box className="rounded bg-secondary-300" style={{ height: 16, width: 64 }} />

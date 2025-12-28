@@ -64,7 +64,7 @@ export function MovePalletPosesForm({
           Цільова паллета
         </ThemedText>
 
-        <Input className="rounded-lg border border-outline-200 bg-background-50">
+        <Input className="rounded-lg border border-outline-100 bg-background-50">
           <InputField
             value={search}
             onChangeText={setSearch}
@@ -75,7 +75,7 @@ export function MovePalletPosesForm({
         </Input>
       </VStack>
 
-      <Box className="max-h-64 rounded-lg border border-outline-200 overflow-hidden">
+      <Box className="max-h-64 rounded-lg border border-outline-100 overflow-hidden">
         {isLoading ? (
           <Box className="p-4 items-center">
             <Spinner size="small" color={iconColor} />
@@ -101,7 +101,7 @@ export function MovePalletPosesForm({
               return (
                 <Pressable
                   onPress={() => !disabled && setSelectedPalletId(item._id)}
-                  className={`flex-row items-center justify-between p-3 border-b border-outline-200 ${
+                  className={`flex-row items-center justify-between p-3 border-b border-outline-100 ${
                     isSelected ? "bg-background-200" : "bg-background-50"
                   }`}
                   disabled={disabled || isSubmitting}

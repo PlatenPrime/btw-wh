@@ -15,13 +15,13 @@ export function DefCardQuants({ defItem }: DefCardQuantsProps) {
 
   return (
     <View className="gap-1 px-2 pb-2">
-            <View className="flex-row justify-between border-b border-outline-200 pb-1">
+            <View className="flex-row justify-between border-b border-outline-100 pb-1">
         <ThemedText className="text-xs">Сайт:</ThemedText>
         <ThemedText className="text-xs font-medium">
           {defItem.sharikQuant}
         </ThemedText>
       </View>
-      <View className="flex-row justify-between border-b border-outline-200 pb-1">
+      <View className="flex-row justify-between border-b border-outline-100 pb-1">
         <ThemedText className="text-xs">Запаси:</ThemedText>
         <ThemedText
           className="text-xs font-medium"
@@ -31,7 +31,7 @@ export function DefCardQuants({ defItem }: DefCardQuantsProps) {
         </ThemedText>
       </View>
 
-      <View className="flex-row justify-between border-b border-outline-200 pb-1">
+      <View className="flex-row justify-between border-b border-outline-100 pb-1">
         <ThemedText className="text-xs">Вітрина:</ThemedText>
         <ThemedText
           className="text-xs font-medium"

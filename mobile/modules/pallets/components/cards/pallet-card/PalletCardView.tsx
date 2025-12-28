@@ -19,7 +19,7 @@ export function PalletCardView({
   return (
     <Pressable
       onPress={onPress}
-      className="p-4 rounded-lg border border-outline-200 bg-background-0"
+      className="p-4 rounded-lg border border-outline-100 bg-background-0"
     >
       <Box className="gap-2">
         <HStack className="items-center justify-between">

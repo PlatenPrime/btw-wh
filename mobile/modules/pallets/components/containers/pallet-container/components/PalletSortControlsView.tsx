@@ -54,7 +54,7 @@ export function PalletSortControlsView({
     <>
       <Pressable
         onPress={() => onModalVisibleChange(true)}
-        className="flex-row items-center gap-2 px-3 py-2 p-2 rounded-lg border border-outline-200 bg-background-0"
+        className="flex-row items-center gap-2 px-3 py-2 p-2 rounded-lg border border-outline-100 bg-background-0"
       >
         <Icon
           family="MaterialIcons"
@@ -75,7 +75,7 @@ export function PalletSortControlsView({
 
       <Modal isOpen={modalVisible} onClose={() => onModalVisibleChange(false)}>
         <ModalBackdrop />
-        <ModalContent className="w-full max-w-md mx-4 rounded-xl border border-outline-200 bg-background-0 p-6">
+        <ModalContent className="w-full max-w-md mx-4 rounded-xl border border-outline-100 bg-background-0 p-6">
           <ModalHeader>
             <HStack className="items-center justify-between">
               <ThemedText type="defaultSemiBold" className="text-lg">

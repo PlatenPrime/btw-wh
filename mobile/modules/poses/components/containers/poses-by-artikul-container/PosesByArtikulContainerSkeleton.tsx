@@ -7,7 +7,7 @@ export function PosesByArtikulContainerSkeleton() {
       {/* Позиции по складам */}
       <VStack className="gap-4">
         {/* Погреби */}
-        <ThemedView className="p-4 rounded-lg border border-outline-200">
+        <ThemedView className="p-4 rounded-lg border border-outline-100">
           <VStack className="gap-2">
             <HStack className="items-center justify-between">
               <Box className="h-5 w-16 bg-background-200 rounded" />
@@ -23,7 +23,7 @@ export function PosesByArtikulContainerSkeleton() {
         </ThemedView>
 
         {/* Мережі */}
-        <ThemedView className="p-4 rounded-lg border border-outline-200">
+        <ThemedView className="p-4 rounded-lg border border-outline-100">
           <VStack className="gap-2">
             <HStack className="items-center justify-between">
               <Box className="h-5 w-16 bg-background-200 rounded" />

@@ -93,8 +93,8 @@ export const SemanticColors = {
       dark: "#121212", // rgb(18, 18, 18) - соответствует background-0
     },
     border: {
-      light: "#DDDCDB", // rgb(221, 220, 219) - соответствует outline-200
-      dark: "#737474", // rgb(115, 116, 116) - соответствует outline-200
+      light: "#E6E6E6", // rgb(230, 230, 230) - соответствует outline-100
+      dark: "#414141", // rgb(65, 65, 65) - соответствует outline-100
     },
   },
   // Цвета для sidebar

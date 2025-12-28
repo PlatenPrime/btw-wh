@@ -61,7 +61,7 @@ export const ModeToggle = React.memo(function ModeToggle() {
     <>
       <Pressable
         onPress={handleOpenModal}
-        className="flex-row items-center justify-between p-4 rounded-lg border border-outline-200 bg-background-0"
+        className="flex-row items-center justify-between p-4 rounded-lg border border-outline-100 bg-background-0"
       >
         <HStack className="items-center gap-3">
           <Icon
@@ -83,7 +83,7 @@ export const ModeToggle = React.memo(function ModeToggle() {
       <Modal isOpen={isModalVisible} onClose={handleCloseModal}>
         <ModalBackdrop />
         <ModalContent
-          className="rounded-lg p-4 w-[280px] bg-background-0 border border-outline-200"
+          className="rounded-lg p-4 w-[280px] bg-background-0 border border-outline-100"
           onLayout={handleLayout}
           style={{
             position: "absolute",

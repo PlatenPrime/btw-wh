@@ -90,7 +90,7 @@ export function AskPosEditFormView({
           render={({ field: { onChange, onBlur, value } }) => (
             <Input
               className={`rounded-lg border bg-background-0 ${
-                errors.removedQuant ? "border-error-500" : "border-outline-200"
+                errors.removedQuant ? "border-error-500" : "border-outline-100"
               }`}
             >
               <InputField
@@ -127,7 +127,7 @@ export function AskPosEditFormView({
           render={({ field: { onChange, onBlur, value } }) => (
             <Input
               className={`rounded-lg border bg-background-0 ${
-                errors.removedBoxes ? "border-error-500" : "border-outline-200"
+                errors.removedBoxes ? "border-error-500" : "border-outline-100"
               }`}
             >
               <InputField

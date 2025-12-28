@@ -29,7 +29,7 @@ Modal (isOpen, onClose)
 
 - **Скругление**: `rounded-lg` (8px) - соответствует веб-версии
 - **Отступы**: `p-6` (24px со всех сторон)
-- **Граница**: `border` с цветом из темы (`border-outline-200`)
+- **Граница**: `border` с цветом из темы (`border-outline-100`)
 - **Тень**: `shadow-lg` (через Platform.select для iOS/Android)
 - **Gap между элементами**: `gap-4` (16px)
 - **Максимальная ширина**: `max-w-md` (448px)
@@ -95,7 +95,7 @@ interface DialogActionsProps {
 
 - **Контейнер**: `flex-row gap-2` (8px промежуток, как в веб-версии)
 - **Кнопки**: `flex-1` (равная ширина), `py-3` (высота), `rounded-lg`
-- **Кнопка отмены**: `border border-outline-200 bg-background-0`
+- **Кнопка отмены**: `border border-outline-100 bg-background-0`
 - **Кнопка подтверждения**: 
   - `default`: `bg-info-500` или `bg-violet-500`
   - `destructive`: `bg-error-500` или `#ef4444` / `#dc2626`

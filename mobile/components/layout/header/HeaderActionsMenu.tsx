@@ -87,7 +87,7 @@ export function HeaderActionsMenu({ trigger }: HeaderActionsMenuProps) {
       <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
         <Box className="flex-1 bg-black/50 items-center justify-center">
           <TouchableWithoutFeedback>
-            <Box className="min-w-[200px] rounded-xl border border-outline-200 bg-background-0 p-2 shadow-lg">
+            <Box className="min-w-[200px] rounded-xl border border-outline-100 bg-background-0 p-2 shadow-lg">
               {defaultActions.map((action) =>
                 renderActionItem(action, "text-typography-900")
               )}

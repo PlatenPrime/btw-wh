@@ -39,7 +39,7 @@ export default function RefilingList() {
             <Pressable
               key={item.route}
               onPress={() => handleNavigation(item.route)}
-              className="flex-row items-center p-4 rounded-lg border border-outline-200 bg-background-0"
+              className="flex-row items-center p-4 rounded-lg border border-outline-100 bg-background-0"
             >
               <Icon
                 family="MaterialIcons"

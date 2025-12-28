@@ -20,7 +20,7 @@ export function ArtDetailCardView({
 
   return (
     <ThemedView
-      className="p-3 rounded-lg border"
+      className="p-3 rounded-lg border "
       style={{
         backgroundColor: bgColor,
         borderColor: borderColor,

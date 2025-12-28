@@ -71,7 +71,7 @@ export const RegisterForm = () => {
       contentContainerClassName="flex-1 justify-center items-center p-6"
       keyboardShouldPersistTaps="handled"
     >
-      <Box className="w-full max-w-sm bg-background-0 rounded-xl border border-outline-200 p-6 gap-4">
+      <Box className="w-full max-w-sm bg-background-0 rounded-xl border border-outline-100 p-6 gap-4">
         <Text className="text-2xl font-semibold text-typography-900">
           Реєстрація
         </Text>
@@ -94,7 +94,7 @@ export const RegisterForm = () => {
             control={control}
             name="username"
             render={({ field: { onChange, onBlur, value } }) => (
-              <Input className="bg-background-50 border border-outline-200 rounded-lg">
+              <Input className="bg-background-50 border border-outline-100 rounded-lg">
                 <InputField
                   placeholder="Введіть логін"
                   placeholderTextColor={SemanticColors.placeholder.light}
@@ -119,7 +119,7 @@ export const RegisterForm = () => {
             control={control}
             name="password"
             render={({ field: { onChange, onBlur, value } }) => (
-              <Input className="bg-background-50 border border-outline-200 rounded-lg">
+              <Input className="bg-background-50 border border-outline-100 rounded-lg">
                 <InputField
                   placeholder="Введіть пароль"
                   placeholderTextColor={SemanticColors.placeholder.light}
@@ -144,7 +144,7 @@ export const RegisterForm = () => {
             control={control}
             name="fullname"
             render={({ field: { onChange, onBlur, value } }) => (
-              <Input className="bg-background-50 border border-outline-200 rounded-lg">
+              <Input className="bg-background-50 border border-outline-100 rounded-lg">
                 <InputField
                   placeholder="Введіть повне ім'я"
                   placeholderTextColor={SemanticColors.placeholder.light}
@@ -170,7 +170,7 @@ export const RegisterForm = () => {
             control={control}
             name="role"
             render={({ field: { onChange, onBlur, value } }) => (
-              <Input className="bg-background-50 border border-outline-200 rounded-lg">
+              <Input className="bg-background-50 border border-outline-100 rounded-lg">
                 <InputField
                   placeholder="USER, ADMIN, PRIME"
                   placeholderTextColor={SemanticColors.placeholder.light}
@@ -193,7 +193,7 @@ export const RegisterForm = () => {
             control={control}
             name="telegram"
             render={({ field: { onChange, onBlur, value } }) => (
-              <Input className="bg-background-50 border border-outline-200 rounded-lg">
+              <Input className="bg-background-50 border border-outline-100 rounded-lg">
                 <InputField
                   placeholder="Введіть telegram"
                   placeholderTextColor={SemanticColors.placeholder.light}
@@ -216,7 +216,7 @@ export const RegisterForm = () => {
             control={control}
             name="photo"
             render={({ field: { onChange, onBlur, value } }) => (
-              <Input className="bg-background-50 border border-outline-200 rounded-lg">
+              <Input className="bg-background-50 border border-outline-100 rounded-lg">
                 <InputField
                   placeholder="https://example.com/photo.jpg"
                   placeholderTextColor={SemanticColors.placeholder.light}

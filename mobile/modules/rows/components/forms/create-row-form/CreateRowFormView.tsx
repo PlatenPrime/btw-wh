@@ -45,7 +45,7 @@ export function CreateRowFormView({
           render={({ field: { onChange, onBlur, value } }) => (
             <Input
               className={`rounded-lg border bg-background-0 ${
-                errors.title ? "border-error-500" : "border-outline-200"
+                errors.title ? "border-error-500" : "border-outline-100"
               }`}
             >
               <InputField

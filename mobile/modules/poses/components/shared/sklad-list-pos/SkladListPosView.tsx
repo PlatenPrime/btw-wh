@@ -13,7 +13,7 @@ export function SkladListPosView({ pos, onPress }: SkladListPosViewProps) {
 
   return (
     <Pressable onPress={onPress}>
-      <Box className="px-3 py-2 p-2 rounded-lg border border-outline-200 bg-background-0">
+      <Box className="px-3 py-2 p-2 rounded-lg border border-outline-100 bg-background-0">
         <HStack className="items-center">
           {/* Название паллеты слева */}
           <Box className="flex-1 min-w-0">

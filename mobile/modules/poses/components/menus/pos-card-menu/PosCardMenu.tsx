@@ -63,7 +63,7 @@ export function PosCardMenu({ pos, onSuccess }: PosCardMenuProps) {
         <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
           <Box className="flex-1 bg-black/50 items-center justify-center">
             <TouchableWithoutFeedback>
-              <Box className="min-w-[200px] rounded-xl border border-outline-200 bg-background-0 p-2 shadow-lg">
+              <Box className="min-w-[200px] rounded-xl border border-outline-100 bg-background-0 p-2 shadow-lg">
                 <Pressable
                   onPress={handleEdit}
                   className="flex-row items-center py-3 px-4"

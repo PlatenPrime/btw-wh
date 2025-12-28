@@ -9,6 +9,7 @@ export default function WarehouseLayout() {
       {/* Маршрут stocks оставлен для совместимости, недоступен через главное меню */}
       <Stack.Screen name="stocks" options={{ headerShown: false }} />
       <Stack.Screen name="zones" options={{ headerShown: false }} />
+      <Stack.Screen name="zones/[id]" options={{ headerShown: false }} />
       <Stack.Screen name="blocks" options={{ headerShown: false }} />
       {/* Маршрут pallets оставлен для совместимости, недоступен через главное меню */}
       <Stack.Screen name="pallets" options={{ headerShown: false }} />
