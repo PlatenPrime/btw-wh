@@ -29,7 +29,7 @@ export function DefCardView({ artikul, defItem }: DefCardViewProps) {
       <View className="gap-2">
         <View className="flex-row items-start justify-between">
           <View className="flex-1">
-            <ArtImageLink artikul={artikul} nameukr={defItem.nameukr} />
+            <ArtImageLink artikul={artikul} nameukr={defItem.nameukr}  />
           </View>
           <View style={{ alignSelf: "flex-start" }}>
             <DefCardIndicator defItem={defItem} />

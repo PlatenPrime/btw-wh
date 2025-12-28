@@ -1,8 +1,9 @@
+import { tva, type VariantProps } from "@/lib/tv";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Feather from "@expo/vector-icons/Feather";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { tva, type VariantProps } from "@/lib/tv";
 import { cssInterop } from "nativewind";
 import React from "react";
 import Svg, { Path, type SvgProps } from "react-native-svg";
@@ -34,7 +35,12 @@ cssInterop(Svg, {
   },
 });
 
-export type IconFamily = "MaterialIcons" | "AntDesign" | "Feather" | "Ionicons";
+export type IconFamily =
+  | "MaterialIcons"
+  | "AntDesign"
+  | "Feather"
+  | "Ionicons"
+  | "FontAwesome5";
 
 export type IconProps = VariantProps<typeof iconStyle> & {
   className?: string;
@@ -104,6 +110,16 @@ const Icon = React.forwardRef<React.ComponentRef<typeof Svg>, IconProps>(
         return (
           <Ionicons
             name={name as keyof typeof Ionicons.glyphMap}
+            size={iconSize}
+            color={color}
+          />
+        );
+      }
+
+      if (family === "FontAwesome5") {
+        return (
+          <FontAwesome5
+            name={name as keyof typeof FontAwesome5.glyphMap}
             size={iconSize}
             color={color}
           />

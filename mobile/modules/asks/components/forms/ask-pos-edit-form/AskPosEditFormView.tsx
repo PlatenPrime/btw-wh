@@ -1,21 +1,21 @@
+import { ThemedText } from "@/components/themed-text";
+import { ThemedView } from "@/components/themed-view";
 import {
   Box,
+  Button,
+  HStack,
   Input,
   InputField,
-  HStack,
-  Button,
   Text,
   VStack,
 } from "@/components/ui";
-import { ActivityIndicator } from "react-native";
-import { ThemedText } from "@/components/themed-text";
-import { ThemedView } from "@/components/themed-view";
 import type { PosResponse } from "@/modules/poses/api/types";
-import { useFormContext } from "react-hook-form";
-import type { AskPosEditFormData } from "./schema";
-import { Controller } from "react-hook-form";
+import { ActivityIndicator } from "react-native";
+
 import { SemanticColors } from "@/constants/theme";
 import { useThemeColors } from "@/hooks/use-theme-colors";
+import { Controller, useFormContext } from "react-hook-form";
+import type { AskPosEditFormData } from "./schema";
 
 interface AskPosEditFormViewProps {
   form: ReturnType<typeof useFormContext<AskPosEditFormData>>;
@@ -94,7 +94,7 @@ export function AskPosEditFormView({
               }`}
             >
               <InputField
-                placeholder="Введіть кількість (може бути від'ємним)"
+                placeholder="Введіть кількість"
                 placeholderTextColor={SemanticColors.placeholder.light}
                 value={value === "0" ? "" : value || ""}
                 onChangeText={(text) => {
@@ -131,7 +131,7 @@ export function AskPosEditFormView({
               }`}
             >
               <InputField
-                placeholder="Введіть кількість коробок (може бути від'ємним)"
+                placeholder="Введіть кількість коробок"
                 placeholderTextColor={SemanticColors.placeholder.light}
                 value={value === "0" ? "" : value || ""}
                 onChangeText={(text) => {
@@ -157,8 +157,8 @@ export function AskPosEditFormView({
       <ThemedView
         className={`rounded-lg border p-3 ${
           remainingQuant < 0 || remainingBoxes < 0
-            ? "border-error-500 bg-error-50"
-            : "border-success-500 bg-success-50"
+            ? "border-error-500 bg-error-50/25"
+            : "border-success-500 bg-success-50/25"
         }`}
       >
         <VStack className="gap-2">
@@ -233,4 +233,3 @@ export function AskPosEditFormView({
     </VStack>
   );
 }
-

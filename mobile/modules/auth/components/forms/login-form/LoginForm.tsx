@@ -1,11 +1,20 @@
-import React from "react";
-import { useForm, Controller } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { ScrollView, Box, Text, Input, InputField, Button } from "@/components/ui";
-import { ActivityIndicator } from "react-native";
-import { useAuth } from "@/modules/auth/api/hooks/useAuth";
+import {
+  Box,
+  Button,
+  Input,
+  InputField,
+  InputIcon,
+  InputSlot,
+  ScrollView,
+  Text,
+} from "@/components/ui";
 import { SemanticColors } from "@/constants/theme";
+import { useAuth } from "@/modules/auth/api/hooks/useAuth";
+import { zodResolver } from "@hookform/resolvers/zod";
+import React, { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { ActivityIndicator } from "react-native";
+import { z } from "zod";
 
 // Zod schema for login form
 const loginSchema = z.object({
@@ -17,6 +26,7 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 
 export const LoginForm = () => {
   const { login, isLoading, error } = useAuth();
+  const [showPassword, setShowPassword] = useState(false);
   const {
     control,
     handleSubmit,
@@ -53,7 +63,9 @@ export const LoginForm = () => {
 
         {errors.root && (
           <Box className="bg-error-100 border border-error-300 rounded-lg p-3">
-            <Text className="text-error-700 text-sm">{errors.root.message}</Text>
+            <Text className="text-error-700 text-sm">
+              {errors.root.message}
+            </Text>
           </Box>
         )}
 
@@ -84,12 +96,16 @@ export const LoginForm = () => {
             )}
           />
           {errors.username && (
-            <Text className="text-error-600 text-sm">{errors.username.message}</Text>
+            <Text className="text-error-600 text-sm">
+              {errors.username.message}
+            </Text>
           )}
         </Box>
 
         <Box className="gap-2">
-          <Text className="text-sm font-medium text-typography-700">Пароль</Text>
+          <Text className="text-sm font-medium text-typography-700">
+            Пароль
+          </Text>
           <Controller
             control={control}
             name="password"
@@ -99,17 +115,27 @@ export const LoginForm = () => {
                   placeholder="Введіть пароль"
                   placeholderTextColor={SemanticColors.placeholder.light}
                   autoComplete="current-password"
-                  secureTextEntry
+                  secureTextEntry={!showPassword}
                   value={value}
                   onChangeText={onChange}
                   onBlur={onBlur}
                   editable={!isLoading}
                 />
+                <InputSlot onPress={() => setShowPassword(!showPassword)}>
+                  <InputIcon
+                    family="FontAwesome5"
+                    name={showPassword ? "eye-slash" : "eye"}
+                    size={22}
+                    color={SemanticColors.placeholder.light}
+                  />
+                </InputSlot>
               </Input>
             )}
           />
           {errors.password && (
-            <Text className="text-error-600 text-sm">{errors.password.message}</Text>
+            <Text className="text-error-600 text-sm">
+              {errors.password.message}
+            </Text>
           )}
         </Box>
 
@@ -128,4 +154,3 @@ export const LoginForm = () => {
     </ScrollView>
   );
 };
-

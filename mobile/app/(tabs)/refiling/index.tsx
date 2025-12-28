@@ -22,7 +22,7 @@ export default function RefilingList() {
     },
     {
       title: 'Зняття',
-      icon: 'inventory-2',
+      icon: 'arrow-downward',
       route: 'pulls',
     },
   ];

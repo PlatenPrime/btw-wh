@@ -1,6 +1,7 @@
 import { ThemedText } from "@/components/themed-text";
-import { HStack } from "@/components/ui";
+import { Box, HStack } from "@/components/ui";
 import { Icon } from "@/components/ui/icon";
+import { SemanticColors } from "@/constants/theme";
 import type { GetAsksByDateResponse } from "@/modules/asks/api/types/dto";
 import { CreateAskDialog } from "@/modules/asks/components/dialogs/create-ask-dialog/CreateAskDialog";
 import { AsksList } from "@/modules/asks/components/lists/asks-list/AsksList";
@@ -49,21 +50,22 @@ export function AsksContainerView({
         <View className="gap-2">
           <HStack className="items-center justify-between">
             <TouchableOpacity onPress={onPreviousDay}>
-              <Icon family="MaterialIcons" name="chevron-left" size={24} />
+              <Icon family="MaterialIcons" name="chevron-left" size={32} color={SemanticColors.iconColors.indigo} />
             </TouchableOpacity>
-            <ThemedText type="title" className="text-lg">
+            <ThemedText type="title" className="text-lg ">
               {formattedDate}
             </ThemedText>
             <TouchableOpacity onPress={onNextDay}>
-              <Icon family="MaterialIcons" name="chevron-right" size={24} />
+              <Icon family="MaterialIcons" name="chevron-right" size={32} color={SemanticColors.iconColors.indigo} />
             </TouchableOpacity>
           </HStack>
+          <Box className="border-b border-outline-200" />
 
-          <HStack className="items-center justify-center">
-            <ThemedText type="default" className="text-lg">
+         {data.count > 0 && <HStack className="items-center justify-center">
+            <ThemedText type="default" className="text-lg font-semibold">
               {data.completedCount + data.rejectedCount}/{data.count}
             </ThemedText>
-          </HStack>
+          </HStack>}
         </View>
 
         <View style={{ opacity: isFetching ? 0.5 : 1 }}>
