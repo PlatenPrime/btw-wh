@@ -1,5 +1,6 @@
 import { ThemedText } from "@/components/themed-text";
-import { Pressable, Box, HStack } from "@/components/ui";
+import { Box, HStack, Pressable } from "@/components/ui";
+import { View } from "react-native";
 
 interface PalletCardViewProps {
   title: string;
@@ -7,6 +8,7 @@ interface PalletCardViewProps {
   isEmpty: boolean;
   isDef: boolean;
   onPress: () => void;
+  menu?: React.ReactNode;
 }
 
 export function PalletCardView({
@@ -15,6 +17,7 @@ export function PalletCardView({
   isEmpty,
   isDef,
   onPress,
+  menu,
 }: PalletCardViewProps) {
   return (
     <Pressable
@@ -23,16 +26,19 @@ export function PalletCardView({
     >
       <Box className="gap-2">
         <HStack className="items-center justify-between">
-          <ThemedText type="title" className="text-lg">
+          <ThemedText type="title" className="text-lg flex-1">
             {title}
           </ThemedText>
-          {isEmpty && (
-            <Box className="rounded-md px-2 py-1 bg-background-200">
-              <ThemedText type="default" className="text-xs">
-                порожня
-              </ThemedText>
-            </Box>
-          )}
+          <HStack className="items-center gap-2">
+            {isEmpty && (
+              <Box className="rounded-md px-2 py-1 bg-background-200">
+                <ThemedText type="default" className="text-xs">
+                  порожня
+                </ThemedText>
+              </Box>
+            )}
+            {menu && <View>{menu}</View>}
+          </HStack>
         </HStack>
         <Box className="gap-1">
           <HStack className="items-center justify-between">
@@ -58,4 +64,3 @@ export function PalletCardView({
     </Pressable>
   );
 }
-
