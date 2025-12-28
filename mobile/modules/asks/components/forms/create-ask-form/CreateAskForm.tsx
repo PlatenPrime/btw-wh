@@ -14,14 +14,22 @@ import { useOneArtQuery } from "@/modules/arts/api/hooks/queries/useOneArtQuery"
 interface CreateAskFormProps {
   onSuccess?: () => void;
   onCancel?: () => void;
+  preFilledArtikul?: string;
 }
 
-export function CreateAskForm({ onSuccess, onCancel }: CreateAskFormProps) {
+export function CreateAskForm({
+  onSuccess,
+  onCancel,
+  preFilledArtikul,
+}: CreateAskFormProps) {
   const form = useForm<CreateAskFormData>({
     resolver: zodResolver(createAskFormSchema),
     mode: "onSubmit",
     reValidateMode: "onChange",
-    defaultValues: createAskFormDefaultValues,
+    defaultValues: {
+      ...createAskFormDefaultValues,
+      artikul: preFilledArtikul || createAskFormDefaultValues.artikul,
+    },
   });
 
   const {

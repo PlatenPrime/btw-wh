@@ -3,11 +3,14 @@ import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { ArtDetailCard } from "@/modules/arts/components/cards/art-detail-card/ArtDetailCard";
 import { UpdateArtLimitDialog } from "@/modules/arts/components/dialogs/update-art-limit-dialog/UpdateArtLimitDialog";
 import { ArtPosesByArtikulContainer } from "@/modules/arts/components/containers/poses-by-artikul-container/ArtPosesByArtikulContainer";
+import { CreateAskDialog } from "@/modules/asks/components/dialogs/create-ask-dialog/CreateAskDialog";
 
 interface ArtContainerViewProps {
   artData: ArtDto;
   updateLimitDialogOpen: boolean;
   setUpdateLimitDialogOpen: (open: boolean) => void;
+  createAskDialogOpen: boolean;
+  setCreateAskDialogOpen: (open: boolean) => void;
   refreshing?: boolean;
   onRefresh?: () => void;
 }
@@ -16,6 +19,8 @@ export function ArtContainerView({
   artData,
   updateLimitDialogOpen,
   setUpdateLimitDialogOpen,
+  createAskDialogOpen,
+  setCreateAskDialogOpen,
   refreshing = false,
   onRefresh,
 }: ArtContainerViewProps) {
@@ -38,6 +43,12 @@ export function ArtContainerView({
         artData={artData}
         open={updateLimitDialogOpen}
         onOpenChange={setUpdateLimitDialogOpen}
+      />
+      <CreateAskDialog
+        preFilledArtikul={artData.artikul}
+        open={createAskDialogOpen}
+        onOpenChange={setCreateAskDialogOpen}
+        onSuccess={() => setCreateAskDialogOpen(false)}
       />
     </>
   );

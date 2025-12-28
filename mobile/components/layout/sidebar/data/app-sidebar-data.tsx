@@ -30,44 +30,44 @@ export const appSidebarData = {
   navMain: [
     {
       title: 'Артикули',
-      url: '/arts',
+      url: '/(tabs)/arts',
       items: [
         {
           title: 'Артикули',
-          url: '/arts/dashboard',
+          url: '/(tabs)/arts/dashboard',
           iconName: 'StickyNote',
         },
         {
           title: 'Оновити артикули',
-          url: '/arts/update',
+          url: '/(tabs)/arts/update',
           iconName: 'RefreshCcwDot',
         },
       ],
     },
     {
       title: 'Склад',
-      url: '/wh',
+      url: '/(tabs)/warehouse',
       items: [
         {
           title: 'Ряди',
-          url: '/wh/rows',
+          url: '/(tabs)/warehouse/rows',
           iconName: 'Rows4',
         },
         {
           title: 'Зони',
-          url: '/wh/zones',
+          url: '/(tabs)/warehouse/zones',
           iconName: 'MapPin',
         },
         {
           title: 'Блоки',
-          url: '/wh/blocks',
+          url: '/(tabs)/warehouse/blocks',
           iconName: 'Route',
         },
       ],
     },
     {
       title: 'Поповнення',
-      url: '/refiling',
+      url: '/(tabs)/refiling',
       items: [
         {
           title: 'Запити',
@@ -76,12 +76,12 @@ export const appSidebarData = {
         },
         {
           title: 'Дефіцити',
-          url: '/refiling/defs',
+          url: '/(tabs)/refiling/defs',
           iconName: 'AlertTriangle',
         },
         {
           title: 'Зняття',
-          url: '/refiling/pulls',
+          url: '/(tabs)/refiling/pulls',
           iconName: 'PackageSearch',
         },
       ],

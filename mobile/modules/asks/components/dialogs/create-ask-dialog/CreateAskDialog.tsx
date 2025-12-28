@@ -6,12 +6,14 @@ interface CreateAskDialogProps {
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
   onSuccess?: () => void;
+  preFilledArtikul?: string;
 }
 
 export function CreateAskDialog({
   open: controlledOpen,
   onOpenChange,
   onSuccess,
+  preFilledArtikul,
 }: CreateAskDialogProps) {
   const [internalOpen, setInternalOpen] = useState(false);
   const { bgColor, textColor, borderColor } = useDialogThemeColors();
@@ -34,6 +36,7 @@ export function CreateAskDialog({
       visible={open}
       onClose={handleCancel}
       onSuccess={handleSuccess}
+      preFilledArtikul={preFilledArtikul}
       bgColor={bgColor}
       textColor={textColor}
       borderColor={borderColor}

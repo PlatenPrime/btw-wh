@@ -15,6 +15,7 @@ interface CreateAskDialogViewProps {
   visible: boolean;
   onClose: () => void;
   onSuccess: () => void;
+  preFilledArtikul?: string;
   bgColor: string;
   textColor: string;
   borderColor: string;
@@ -24,6 +25,7 @@ export function CreateAskDialogView({
   visible,
   onClose,
   onSuccess,
+  preFilledArtikul,
   bgColor,
   textColor,
   borderColor,
@@ -68,7 +70,11 @@ export function CreateAskDialogView({
           </View>
         </ModalHeader>
         <ModalBody>
-          <CreateAskForm onSuccess={onSuccess} onCancel={onClose} />
+          <CreateAskForm
+            onSuccess={onSuccess}
+            onCancel={onClose}
+            preFilledArtikul={preFilledArtikul}
+          />
         </ModalBody>
       </ModalContent>
     </Modal>
