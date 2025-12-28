@@ -32,7 +32,7 @@ export function PalletCardView({
           <HStack className="items-center gap-2">
             {isEmpty && (
               <Box className="rounded-md px-2 py-1 bg-background-200">
-                <ThemedText type="default" className="text-xs">
+                <ThemedText type="default" className="text-sm">
                   порожня
                 </ThemedText>
               </Box>
@@ -40,26 +40,26 @@ export function PalletCardView({
             {menu && <View>{menu}</View>}
           </HStack>
         </HStack>
+        <Box className="h-px bg-outline-200 my-1" />
         <Box className="gap-1">
-          <HStack className="items-center justify-between">
-            <ThemedText type="default" className="text-xs">
+          <HStack className="items-center justify-start gap-2">
+            <ThemedText type="default" className="text-sm">
               Сектор:
             </ThemedText>
-            <ThemedText type="default" className="text-xs">
+            <ThemedText type="default" className="text-sm">
               {sector ?? "Немає"}
             </ThemedText>
           </HStack>
-          <Box className="h-px bg-outline-200 my-1" />
-          <HStack className="items-center justify-between">
-            <ThemedText type="default" className="text-xs">
+
+          <HStack className="items-center justify-start gap-2">
+            <ThemedText type="default" className="text-sm">
               Аналіз:
             </ThemedText>
-            <ThemedText type="default" className="text-xs">
+            <ThemedText type="default" className="text-sm">
               {isDef ? "Так" : "Ні"}
             </ThemedText>
           </HStack>
         </Box>
-        <Box className="h-px bg-outline-200 my-1" />
       </Box>
     </Pressable>
   );

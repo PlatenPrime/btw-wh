@@ -2,11 +2,7 @@ import { getBtradeArtDataByArtikul } from "@/modules/arts/api/services/queries/g
 import type { BtradeArtInfoResponse } from "@/modules/arts/api/types/dto";
 import { useQuery } from "@tanstack/react-query";
 
-export function useBtradeArtDataQuery(artikul: string) {
-  if (!artikul) {
-    throw new Error("Artikul is required for useBtradeArtDataQuery");
-  }
-
+export function useBtradeArtDataQuery(artikul: string | undefined) {
   return useQuery<BtradeArtInfoResponse>({
     queryKey: ["btradeArtInfo", { artikul }],
     queryFn: async ({ signal }) => {

@@ -17,7 +17,7 @@ export function BtradeArtDataContainer({
         <ThemedText type="defaultSemiBold" className="text-center mb-1">
           Дані про товар не знайдені
         </ThemedText>
-        <ThemedText type="default" className="text-center text-xs opacity-70">
+        <ThemedText type="default" className="text-center text-sm opacity-70">
           {message || `Товар з артикулом ${artikul} відсутній на sharik.ua`}
         </ThemedText>
       </ThemedView>
@@ -26,7 +26,7 @@ export function BtradeArtDataContainer({
 
   if (!data) {
     return (
-      <ThemedText type="default" className="text-xs opacity-70">
+      <ThemedText type="default" className="text-sm opacity-70">
         Дані тимчасово недоступні
       </ThemedText>
     );

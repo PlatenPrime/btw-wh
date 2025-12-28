@@ -1,11 +1,10 @@
-import { View } from "react-native";
-import { ThemedView } from "@/components/themed-view";
 import { ThemedText } from "@/components/themed-text";
+import { ThemedView } from "@/components/themed-view";
 import { useBtradeArtDataQuery } from "@/modules/arts/api/hooks/queries/useBtradeArtDataQuery";
 import type { BtradeArtInfoDto } from "@/modules/arts/api/types/dto";
-import type { ComponentType } from "react";
 import { BtradeArtDataContainer } from "@/modules/arts/components/containers/btrade-art-data-container/BtradeArtDataContainer";
 import { BtradeArtDataSkeleton } from "@/modules/arts/components/containers/btrade-art-data-container/BtradeArtDataSkeleton";
+import type { ComponentType } from "react";
 
 export interface BtradeArtDataContainerProps {
   artikul: string;
@@ -26,22 +25,22 @@ export function BtradeArtDataFetcher({
   ContainerComponent = BtradeArtDataContainer,
   SkeletonComponent = BtradeArtDataSkeleton,
 }: BtradeArtDataFetcherProps) {
-  if (!artikul) {
-    return (
-      <ThemedView className="p-3">
-        <ThemedText type="default" className="text-xs opacity-70 text-center">
-          Артикул не передан для завантаження даних
-        </ThemedText>
-      </ThemedView>
-    );
-  }
-
   const {
     data: btradeArtResponse,
     isLoading,
     error,
     refetch,
   } = useBtradeArtDataQuery(artikul);
+
+  if (!artikul) {
+    return (
+      <ThemedView className="p-3">
+        <ThemedText type="default" className="text-sm opacity-70 text-center">
+          Артикул не передан для завантаження даних
+        </ThemedText>
+      </ThemedView>
+    );
+  }
 
   if (isLoading) return <SkeletonComponent />;
 
@@ -52,7 +51,9 @@ export function BtradeArtDataFetcher({
           Помилка завантаження даних з sharik.ua
         </ThemedText>
         <ThemedText type="default" className="text-center text-xs opacity-70">
-          {error instanceof Error ? error.message : "Не вдалося завантажити дані з sharik.ua"}
+          {error instanceof Error
+            ? error.message
+            : "Не вдалося завантажити дані з sharik.ua"}
         </ThemedText>
       </ThemedView>
     );
@@ -80,4 +81,3 @@ export function BtradeArtDataFetcher({
 
   return <ContainerComponent {...containerProps} />;
 }
-

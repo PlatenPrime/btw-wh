@@ -15,7 +15,7 @@ export function ArtLimit({ limit }: ArtLimitProps) {
   return (
     <View className="flex-row items-center gap-2">
       <Icon family="MaterialIcons" name="swap-horiz" size={16} color={iconColor} />
-      <ThemedText type="default" className="text-xs">
+      <ThemedText type="default" className="text-sm">
         {limit}
       </ThemedText>
     </View>

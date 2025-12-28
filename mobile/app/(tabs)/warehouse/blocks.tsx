@@ -1,13 +1,10 @@
-import { View } from 'react-native';
-import { ThemedText } from '@/components/themed-text';
-import { PageLayout } from '@/components/layout/page-layout';
+import { PageLayout } from "@/components/layout/page-layout";
+import { BlocksFetcher } from "@/modules/blocks/components/fetchers/blocks-fetcher";
 
 export default function BlocksScreen() {
   return (
     <PageLayout title="Блоки">
-      <View className="flex-1 justify-center items-center p-4">
-        <ThemedText type="title">Блоки</ThemedText>
-      </View>
+      <BlocksFetcher />
     </PageLayout>
   );
 }

@@ -1116,4 +1116,74 @@ export function ProtectedRoute({
 
 ---
 
+## Типичные ошибки и их решения
+
+### Ошибка: "Cannot read property 'displayName' of undefined" при использовании компонента Skeleton
+
+**Проблема**: При использовании компонента `Skeleton` из `@/components/ui` возникает ошибка:
+```
+TypeError: Cannot read property 'displayName' of undefined
+```
+
+**Причина**: Компонент `Skeleton` из UI библиотеки не имеет свойства `displayName`, что вызывает проблему с `react-native-css-interop` при попытке обернуть компонент.
+
+**Решение**: **НЕ используй компонент `Skeleton`**. Вместо этого используй компонент `Box` с инлайн стилями и классом `bg-secondary-300` для создания скелетонов.
+
+**Правильный подход**:
+
+```typescript
+// ✅ ПРАВИЛЬНО - используй Box с инлайн стилями
+import { Box } from "@/components/ui";
+
+export function MyCardSkeleton() {
+  return (
+    <Box className="p-4 rounded-lg border border-outline-100 bg-background-0">
+      <Box className="gap-2">
+        <Box className="rounded bg-secondary-300" style={{ height: 24, width: "75%" }} />
+        <Box className="gap-1">
+          <Box className="rounded bg-secondary-300" style={{ height: 16, width: "100%" }} />
+          <Box className="h-px bg-outline-200 my-1" />
+          <Box className="rounded bg-secondary-300" style={{ height: 16, width: "100%" }} />
+        </Box>
+      </Box>
+    </Box>
+  );
+}
+```
+
+**Неправильный подход**:
+
+```typescript
+// ❌ НЕПРАВИЛЬНО - не используй компонент Skeleton
+import { Box, Skeleton } from "@/components/ui";
+
+export function MyCardSkeleton() {
+  return (
+    <Box className="p-4 rounded-lg border border-outline-100 bg-background-0">
+      <Skeleton className="h-6 w-3/4" /> {/* Это вызовет ошибку */}
+    </Box>
+  );
+}
+```
+
+**Примеры правильной реализации**:
+
+Смотри примеры в существующих модулях:
+- `mobile/modules/pallets/components/cards/pallet-card/PalletCardSkeleton.tsx`
+- `mobile/modules/defs/components/cards/def-card/DefCardSkeleton.tsx`
+- `mobile/modules/arts/components/cards/art-detail-card/ArtDetailCardSkeleton.tsx`
+
+**Правила для скелетонов**:
+
+1. ✅ Используй `Box` компонент с инлайн стилями
+2. ✅ Используй класс `bg-secondary-300` для цвета скелетона
+3. ✅ Используй класс `rounded` для закругления углов
+4. ✅ Задавай размеры через инлайн стили: `style={{ height: 24, width: "75%" }}`
+5. ❌ НЕ используй компонент `Skeleton` из `@/components/ui`
+6. ❌ НЕ используй Tailwind классы для размеров скелетона (например, `h-6`, `w-3/4`)
+
+**Почему это важно**: Эта ошибка может привести к краху приложения при рендеринге скелетонов во время загрузки данных. Всегда используй `Box` с инлайн стилями для создания скелетонов.
+
+---
+
 _Последнее обновление: 2025-01-27_

@@ -16,15 +16,15 @@ export function DefCardQuants({ defItem }: DefCardQuantsProps) {
   return (
     <View className="gap-1 px-2 pb-2">
             <View className="flex-row justify-between border-b border-outline-100 pb-1">
-        <ThemedText className="text-xs">Сайт:</ThemedText>
-        <ThemedText className="text-xs font-medium">
+        <ThemedText className="text-sm">Сайт:</ThemedText>
+        <ThemedText className="text-sm font-medium">
           {defItem.sharikQuant}
         </ThemedText>
       </View>
       <View className="flex-row justify-between border-b border-outline-100 pb-1">
-        <ThemedText className="text-xs">Запаси:</ThemedText>
+        <ThemedText className="text-sm">Запаси:</ThemedText>
         <ThemedText
-          className="text-xs font-medium"
+          className="text-sm font-medium"
           style={quantColor ? { color: quantColor } : undefined}
         >
           {defItem.quant}
@@ -32,9 +32,9 @@ export function DefCardQuants({ defItem }: DefCardQuantsProps) {
       </View>
 
       <View className="flex-row justify-between border-b border-outline-100 pb-1">
-        <ThemedText className="text-xs">Вітрина:</ThemedText>
+        <ThemedText className="text-sm">Вітрина:</ThemedText>
         <ThemedText
-          className="text-xs font-medium"
+          className="text-sm font-medium"
           style={{ color: difQuantColor }}
         >
           {defItem.difQuant}

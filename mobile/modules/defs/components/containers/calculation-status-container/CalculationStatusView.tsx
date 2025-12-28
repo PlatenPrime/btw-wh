@@ -2,6 +2,7 @@ import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { Spinner } from "@/components/ui";
 import { Icon } from "@/components/ui/icon";
+import { SemanticColors } from "@/constants/theme";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import { formatDateTime } from "@/modules/asks/utils/format-date";
 import type { DefsCalculationStatus } from "@/modules/defs/api/types/dto";
@@ -130,7 +131,7 @@ export function CalculationStatusView({
         <View className="mt-3 gap-3">
           {status.startedAt && (
             <View className="flex-row items-center gap-2">
-              <Icon family="MaterialIcons" name="access-time" size={16} />
+              <Icon family="MaterialIcons" name="access-time" size={16} color={SemanticColors.iconColors.fuchsia} />
               <View>
                 <ThemedText className="text-sm font-medium">
                   Розпочато
@@ -145,7 +146,7 @@ export function CalculationStatusView({
           {status.estimatedTimeRemaining !== undefined &&
             status.estimatedTimeRemaining > 0 && (
               <View className="flex-row items-center gap-2">
-                <Icon family="MaterialIcons" name="schedule" size={16} />
+                <Icon family="MaterialIcons" name="schedule" size={16} color={SemanticColors.iconColors.fuchsia} />
                 <View>
                   <ThemedText className="text-sm font-medium">
                     Залишилось часу
@@ -176,7 +177,7 @@ export function CalculationStatusView({
           size={20}
           color="#22c55e"
         />
-        <ThemedText type="title" className="text-lg">
+        <ThemedText type="title" className="text-sm">
           Розрахунок дефіцитів завершено
         </ThemedText>
       </View>
@@ -193,10 +194,10 @@ export function CalculationStatusView({
           </View>
         )}
 
-      <View className="mt-3 gap-3">
+      <View className="mt-3 gap-2">
         {status.startedAt && (
           <View className="flex-row items-center gap-2">
-            <Icon family="MaterialIcons" name="access-time" size={16} />
+            <Icon family="MaterialIcons" name="access-time" size={16} color={SemanticColors.iconColors.fuchsia} />
             <View>
               <ThemedText className="text-sm font-medium">Розпочато</ThemedText>
               <ThemedText className="text-xs opacity-70">
@@ -208,7 +209,7 @@ export function CalculationStatusView({
 
         {status.lastUpdate && (
           <View className="flex-row items-center gap-2">
-            <Icon family="MaterialIcons" name="check-circle" size={16} />
+            <Icon family="MaterialIcons" name="check-circle" size={16} color={SemanticColors.iconColors.fuchsia} />
             <View>
               <ThemedText className="text-sm font-medium">Завершено</ThemedText>
               <ThemedText className="text-xs opacity-70">

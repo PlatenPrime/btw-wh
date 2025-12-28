@@ -16,7 +16,7 @@ export function ArtZone({ artData }: ArtZoneProps) {
   return (
     <View className="flex-row items-center gap-2">
       <Icon family="MaterialIcons" name="place" size={16} color={iconColor} />
-      <ThemedText type="default" className="text-xs">
+      <ThemedText type="default" className="text-sm">
         {artData.zone}
       </ThemedText>
     </View>

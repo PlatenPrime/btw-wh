@@ -15,13 +15,13 @@ export function BtradeArtDataContainerView({
     <View className="gap-2">
       <View className="flex-row items-center gap-2">
         <Icon family="MaterialIcons" name="warehouse" size={16} color={SemanticColors.icon.warehouse} />
-        <ThemedText type="default" className="text-xs">
+        <ThemedText type="default" className="text-sm">
           {data.quantity}
         </ThemedText>
       </View>
       <View className="flex-row items-center gap-2">
         <Icon family="MaterialIcons" name="attach-money" size={16} color={SemanticColors.icon.money} />
-        <ThemedText type="default" className="text-xs">
+        <ThemedText type="default" className="text-sm">
           {data.price} грн
         </ThemedText>
       </View>

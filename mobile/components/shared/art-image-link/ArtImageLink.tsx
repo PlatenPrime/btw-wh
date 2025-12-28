@@ -41,12 +41,12 @@ export function ArtImageLink({ artikul, nameukr, link, onPress }: ArtImageLinkPr
         {artikul}
       </ThemedText>
       {nameukr && nameukr.length > 10 && (
-        <ThemedText type="default" className="text-sm opacity-70">
+        <ThemedText type="default" className="text-sm ">
           {nameukr.slice(10)}
         </ThemedText>
       )}
       {nameukr && nameukr.length <= 10 && (
-        <ThemedText type="default" className="text-sm opacity-70">
+        <ThemedText type="default" className="text-sm ">
           {nameukr}
         </ThemedText>
       )}

@@ -22,18 +22,18 @@ export function PosInfoItem({
   return (
     <Box
       className={`flex-row items-center justify-center gap-2 rounded-lg p-1 ${
-        isError ? "bg-error-50" : "bg-background-100"
+        isError ? "bg-error-50" : "bg-background-100/50"
       }`}
     >
       <Icon
         family={iconFamily}
         name={icon}
-        size="xs"
+        size="sm"
         color={isError ? SemanticColors.destructive : iconColor}
       />
       <ThemedText
         type="default"
-        className={`text-xs font-medium ${isError ? "text-error-600" : ""}`}
+        className={`text-sm font-medium ${isError ? "text-error-600" : ""}`}
         numberOfLines={1}
       >
         {value}
