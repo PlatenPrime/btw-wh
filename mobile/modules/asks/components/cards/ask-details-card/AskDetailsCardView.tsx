@@ -1,6 +1,6 @@
+import { ArtImageLink } from "@/components/shared/art-image-link";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { ArtImageLink } from "@/modules/arts/components/elements/art-image-link/ArtImageLink";
 import type { AskDto } from "@/modules/asks/api/types/dto";
 import { AskCom } from "@/modules/asks/components/elements/ask-com/AskCom";
 import { AskQuant } from "@/modules/asks/components/elements/ask-quant/AskQuant";
@@ -48,7 +48,11 @@ export function AskDetailsCardView({
       <View className="gap-3">
         <View className="flex-row items-start justify-between">
           <View className="flex-1">
-            <ArtImageLink artikul={artikul} nameukr={nameukr} />
+            <ArtImageLink
+              artikul={artikul}
+              nameukr={nameukr}
+              link={`/(tabs)/arts/${artikul}`}
+            />
           </View>
           <View style={{ alignSelf: "flex-start" }}>
             <AskStatusBadge status={status} />

@@ -2,6 +2,7 @@ import { ThemedText } from "@/components/themed-text";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { ArtImageModal } from "@/modules/arts/components/dialogs/art-image-modal/ArtImageModal";
 import { getSmallImageUrl } from "@/modules/arts/constants/art-image-url";
+import { useRouter } from "expo-router";
 import { Image } from "expo-image";
 import { useState } from "react";
 import { TouchableOpacity, View } from "react-native";
@@ -9,9 +10,12 @@ import { TouchableOpacity, View } from "react-native";
 interface ArtImageLinkProps {
   artikul: ArtDto["artikul"];
   nameukr?: ArtDto["nameukr"];
+  link?: string;
+  onPress?: () => void;
 }
 
-export function ArtImageLink({ artikul, nameukr }: ArtImageLinkProps) {
+export function ArtImageLink({ artikul, nameukr, link, onPress }: ArtImageLinkProps) {
+  const router = useRouter();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const imageUrl = getSmallImageUrl(artikul);
 
@@ -22,6 +26,32 @@ export function ArtImageLink({ artikul, nameukr }: ArtImageLinkProps) {
   const handleCloseModal = () => {
     setIsModalVisible(false);
   };
+
+  const handleTextPress = () => {
+    if (link) {
+      router.push(link as any);
+    } else if (onPress) {
+      onPress();
+    }
+  };
+
+  const textContent = (
+    <View style={{ flex: 1, minWidth: 0 }}>
+      <ThemedText type="defaultSemiBold" className="text-base mb-1">
+        {artikul}
+      </ThemedText>
+      {nameukr && nameukr.length > 10 && (
+        <ThemedText type="default" className="text-sm opacity-70">
+          {nameukr.slice(10)}
+        </ThemedText>
+      )}
+      {nameukr && nameukr.length <= 10 && (
+        <ThemedText type="default" className="text-sm opacity-70">
+          {nameukr}
+        </ThemedText>
+      )}
+    </View>
+  );
 
   return (
     <>
@@ -35,21 +65,13 @@ export function ArtImageLink({ artikul, nameukr }: ArtImageLinkProps) {
             transition={200}
           />
         </TouchableOpacity>
-        <View style={{ flex: 1, minWidth: 0 }}>
-          <ThemedText type="defaultSemiBold" className="text-base mb-1">
-            {artikul}
-          </ThemedText>
-          {nameukr && nameukr.length > 10 && (
-            <ThemedText type="default" className="text-sm opacity-70">
-              {nameukr.slice(10)}
-            </ThemedText>
-          )}
-          {nameukr && nameukr.length <= 10 && (
-            <ThemedText type="default" className="text-sm opacity-70">
-              {nameukr}
-            </ThemedText>
-          )}
-        </View>
+        {link || onPress ? (
+          <TouchableOpacity onPress={handleTextPress} activeOpacity={0.7} style={{ flex: 1, minWidth: 0 }}>
+            {textContent}
+          </TouchableOpacity>
+        ) : (
+          textContent
+        )}
       </View>
 
       <ArtImageModal
@@ -60,3 +82,4 @@ export function ArtImageLink({ artikul, nameukr }: ArtImageLinkProps) {
     </>
   );
 }
+

@@ -1,8 +1,8 @@
-import { View, TouchableOpacity } from "react-native";
+import { View } from "react-native";
 import { ThemedView } from "@/components/themed-view";
 import { ThemedText } from "@/components/themed-text";
 import type { AskDto } from "@/modules/asks/api/types/dto";
-import { ArtImageLink } from "@/modules/arts/components/elements/art-image-link/ArtImageLink";
+import { ArtImageLink } from "@/components/shared/art-image-link";
 import { AskStatusBadge } from "@/modules/asks/components/elements/ask-status-badge/AskStatusBadge";
 import { AskQuant } from "@/modules/asks/components/elements/ask-quant/AskQuant";
 import { AskCom } from "@/modules/asks/components/elements/ask-com/AskCom";
@@ -14,31 +14,28 @@ interface AsksListCardViewProps {
   ask: AskDto;
   bgColor: string;
   borderColor: string;
-  onPress: () => void;
 }
 
 export function AsksListCardView({
   ask,
   bgColor,
   borderColor,
-  onPress,
 }: AsksListCardViewProps) {
   const formattedDate = formatDateTime(ask.createdAt);
 
   return (
-    <TouchableOpacity onPress={onPress} activeOpacity={0.7}>
-      <ThemedView
-        className="p-3 rounded-lg border"
-        style={{
-          backgroundColor: bgColor,
-          borderColor: borderColor,
-        }}
-      >
-        <View className="gap-2">
-          <View className="flex-row items-start justify-between">
-            <View className="flex-1">
-              <ArtImageLink artikul={ask.artikul} nameukr={ask.nameukr} />
-            </View>
+    <ThemedView
+      className="p-3 rounded-lg border"
+      style={{
+        backgroundColor: bgColor,
+        borderColor: borderColor,
+      }}
+    >
+      <View className="gap-2">
+        <View className="flex-row items-start justify-between">
+          <View className="flex-1">
+            <ArtImageLink artikul={ask.artikul} nameukr={ask.nameukr} link={`/(tabs)/refiling/asks/${ask._id}`} />
+          </View>
             <View style={{ alignSelf: 'flex-start' }}>
               <AskStatusBadge status={ask.status} />
             </View>
@@ -69,7 +66,6 @@ export function AsksListCardView({
           </View>
         </View>
       </ThemedView>
-    </TouchableOpacity>
   );
 }
 

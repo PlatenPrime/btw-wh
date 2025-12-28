@@ -1,5 +1,5 @@
 import { Box, Card, HStack } from "@/components/ui";
-import { ArtImageLink } from "@/modules/arts/components/elements/art-image-link/ArtImageLink";
+import { ArtImageLink } from "@/components/shared/art-image-link";
 import type { IPos } from "@/modules/poses/api/types";
 import { View } from "react-native";
 import { PosInfoItem } from "./components/pos-info-item/PosInfoItem";
@@ -16,7 +16,7 @@ export function PosCardView({ pos, skladName, menu }: PosCardViewProps) {
       {/* Header with image, title and menu */}
       <HStack className="items-start justify-between mb-2">
         <Box className="flex-1">
-          <ArtImageLink artikul={pos.artikul} nameukr={pos.nameukr} />
+          <ArtImageLink artikul={pos.artikul} nameukr={pos.nameukr} link={`/(tabs)/arts/${pos.artikul}`} />
         </Box>
         {menu && <View>{menu}</View>}
       </HStack>

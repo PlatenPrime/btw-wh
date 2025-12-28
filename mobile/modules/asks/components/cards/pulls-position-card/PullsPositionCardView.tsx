@@ -3,7 +3,7 @@ import { ThemedView } from "@/components/themed-view";
 import { Button, Text } from "@/components/ui";
 import { HStack, VStack } from "@/components/ui";
 import { Icon } from "@/components/ui/icon";
-import { ArtImageLink } from "@/modules/arts/components/elements/art-image-link/ArtImageLink";
+import { ArtImageLink } from "@/components/shared/art-image-link";
 import type { IPositionForPullsPage } from "@/modules/asks/api/types/dto";
 import { AskPosEditDialog } from "@/modules/asks/components/dialogs/ask-pos-edit-dialog/AskPosEditDialog";
 import type { PosResponse } from "@/modules/poses/api/types";
@@ -38,7 +38,7 @@ export function PullsPositionCardView({
         }}
       >
         <VStack className="gap-2">
-          <ArtImageLink artikul={position.artikul} nameukr={position.nameukr} />
+          <ArtImageLink artikul={position.artikul} nameukr={position.nameukr} link={`/(tabs)/arts/${position.artikul}`} />
 
           <HStack className="items-center justify-between">
             <VStack className="gap-2 flex-1">

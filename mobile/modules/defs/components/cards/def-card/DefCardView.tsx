@@ -1,12 +1,12 @@
-import { View } from "react-native";
+import { ArtImageLink } from "@/components/shared/art-image-link";
 import { ThemedView } from "@/components/themed-view";
+import { useThemeColors } from "@/hooks/use-theme-colors";
 import type { DeficitItem } from "@/modules/defs/api/types/dto";
-import { ArtImageLink } from "@/modules/arts/components/elements/art-image-link/ArtImageLink";
+import { DefAskButton } from "@/modules/defs/components/elements/def-ask-button/DefAskButton";
+import { View } from "react-native";
+import { DefCardAskBid } from "./components/DefCardAskBid";
 import { DefCardIndicator } from "./components/DefCardIndicator";
 import { DefCardQuants } from "./components/DefCardQuants";
-import { DefCardAskBid } from "./components/DefCardAskBid";
-import { DefAskButton } from "@/modules/defs/components/elements/def-ask-button/DefAskButton";
-import { useThemeColors } from "@/hooks/use-theme-colors";
 
 interface DefCardViewProps {
   artikul: string;
@@ -29,7 +29,11 @@ export function DefCardView({ artikul, defItem }: DefCardViewProps) {
       <View className="gap-2">
         <View className="flex-row items-start justify-between">
           <View className="flex-1">
-            <ArtImageLink artikul={artikul} nameukr={defItem.nameukr}  />
+            <ArtImageLink
+              artikul={artikul}
+              nameukr={defItem.nameukr}
+              link={`/(tabs)/arts/${artikul}`}
+            />
           </View>
           <View style={{ alignSelf: "flex-start" }}>
             <DefCardIndicator defItem={defItem} />
