@@ -18,7 +18,7 @@ export function ZoneCardMenu({ zone, onSuccess }: ZoneCardMenuProps) {
   const [modalVisible, setModalVisible] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-  const defaultIconColor = useIconColor();
+
 
   const handleEdit = () => {
     setModalVisible(false);
@@ -51,7 +51,7 @@ export function ZoneCardMenu({ zone, onSuccess }: ZoneCardMenuProps) {
           family="MaterialIcons"
           name="more-vert"
           size="md"
-          color={defaultIconColor}
+          color={SemanticColors.iconColors.sky}
         />
       </Pressable>
 
@@ -73,7 +73,7 @@ export function ZoneCardMenu({ zone, onSuccess }: ZoneCardMenuProps) {
                     family="MaterialIcons"
                     name="edit"
                     size="md"
-                    color={defaultIconColor}
+                    color={SemanticColors.iconColors.sky}
                   />
                   <ThemedText type="default" className="text-sm">
                     Редагувати
@@ -90,7 +90,7 @@ export function ZoneCardMenu({ zone, onSuccess }: ZoneCardMenuProps) {
                     family="MaterialIcons"
                     name="delete"
                     size="md"
-                    color={SemanticColors.error.text}
+                    color={SemanticColors.iconColors.red}
                   />
                   <ThemedText type="default" className="text-sm text-error-600">
                     Видалити

@@ -17,11 +17,11 @@ export function SegmentInfoView({
   return (
     <Box className="p-4 rounded-lg border border-outline-100 bg-background-0">
       <VStack className="gap-2">
-        <ThemedText type="title" className="text-xl">
+        <ThemedText type="title" className="text-lg text-center">
           Сегмент {order}
         </ThemedText>
         <Box className="gap-1">
-          <HStack className="items-center justify-between">
+          <HStack className="items-center justify-start gap-2">
             <ThemedText type="default" className="text-sm">
               Блок:
             </ThemedText>
@@ -29,8 +29,8 @@ export function SegmentInfoView({
               {blockTitle}
             </ThemedText>
           </HStack>
-          <Box className="h-px bg-outline-200 my-1" />
-          <HStack className="items-center justify-between">
+
+          <HStack className="items-center justify-start gap-2">
             <ThemedText type="default" className="text-sm">
               Порядок:
             </ThemedText>
@@ -38,8 +38,8 @@ export function SegmentInfoView({
               {order}
             </ThemedText>
           </HStack>
-          <Box className="h-px bg-outline-200 my-1" />
-          <HStack className="items-center justify-between">
+
+          <HStack className="items-center justify-start gap-2">
             <ThemedText type="default" className="text-sm">
               Сектор:
             </ThemedText>
@@ -47,10 +47,10 @@ export function SegmentInfoView({
               {sector}
             </ThemedText>
           </HStack>
-          <Box className="h-px bg-outline-200 my-1" />
-          <HStack className="items-center justify-between">
+
+          <HStack className="items-center justify-start gap-2">
             <ThemedText type="default" className="text-sm">
-              Зон:
+              Зони:
             </ThemedText>
             <ThemedText type="defaultSemiBold" className="text-sm">
               {zonesCount}

@@ -90,6 +90,7 @@ export function CompleteAskDialogView({
           <Button
             onPress={onComplete}
             disabled={isCompleting}
+            variant="confirm"
             className="flex-1"
           >
             {isCompleting ? (

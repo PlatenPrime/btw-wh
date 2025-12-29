@@ -288,7 +288,7 @@ export function CreatePosFormView({
                     onPress={() => !isSubmitting && onChange(key)}
                     className={`flex-row items-center justify-between p-3 rounded-lg border ${
                       isSelected
-                        ? "border-info-500 bg-info-50"
+                        ? "border-info-500 bg-info-50/25"
                         : "border-outline-100 bg-background-0"
                     }`}
                     disabled={isSubmitting}
@@ -353,6 +353,7 @@ export function CreatePosFormView({
           <Button
             onPress={handleSubmit(onSubmit)}
             disabled={isSubmitting}
+            variant="create"
             className="flex-1"
           >
             {isSubmitting ? (

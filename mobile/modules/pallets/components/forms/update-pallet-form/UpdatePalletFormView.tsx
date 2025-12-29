@@ -129,6 +129,7 @@ export function UpdatePalletFormView({
         cancelText="Скасувати"
         submitText="Зберегти"
         isSubmitting={isSubmitting}
+        variant="confirm"
       />
     </Box>
   );

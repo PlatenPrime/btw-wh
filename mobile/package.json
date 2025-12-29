@@ -4,6 +4,13 @@
   "version": "1.0.0",
   "scripts": {
     "start": "expo start",
+    "sc" : "expo start --clear",
+    "sca": "expo start --android --clear",
+    "sci": "expo start --ios --clear",
+    "scw": "expo start --web --clear",
+    "ba": "expo build --platform android --profile production",
+    "bap": "expo build --platform android --profile preview",
+    "bad": "expo build --platform android --profile development",
     "reset-project": "node ./scripts/reset-project.js",
     "android": "expo start --android",
     "ios": "expo start --ios",

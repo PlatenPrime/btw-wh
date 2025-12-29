@@ -13,8 +13,8 @@ export function ArtsByZoneContainerView({
   total,
 }: ArtsByZoneContainerViewProps) {
   return (
-    <VStack className="gap-4">
-      <ThemedText type="defaultSemiBold" className="text-lg">
+    <VStack className="gap-2">
+      <ThemedText type="defaultSemiBold" className="text-lg text-center">
         Артикули
       </ThemedText>
       {data.length === 0 ? (

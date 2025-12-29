@@ -1,6 +1,6 @@
 import { HapticTab } from "@/components/haptic-tab";
 import { useSidebar } from "@/components/layout/sidebar/SidebarProvider";
-import { Colors } from "@/constants/theme";
+import { Colors, SemanticColors } from "@/constants/theme";
 import { useTheme } from "@/providers/theme-provider";
 import { ProtectedRoute } from "@/modules/auth/components/ProtectedRoute";
 import { Icon } from "@/components/ui/icon";
@@ -49,7 +49,7 @@ export default function TabLayout() {
           options={{
             title: "Головна",
             tabBarIcon: ({ color }) => (
-              <Icon family="MaterialIcons" name="home" size={28} color={color} />
+              <Icon family="MaterialIcons" name="home" size={28} color={SemanticColors.iconColors.teal} />
             ),
           }}
         />
@@ -58,7 +58,7 @@ export default function TabLayout() {
           options={{
             title: "Артикули",
             tabBarIcon: ({ color }) => (
-              <Icon family="MaterialIcons" name="article" size={28} color={color} />
+              <Icon family="MaterialIcons" name="article" size={28} color={SemanticColors.iconColors.sky} />
             ),
           }}
         />
@@ -67,7 +67,7 @@ export default function TabLayout() {
           options={{
             title: "Склад",
             tabBarIcon: ({ color }) => (
-              <Icon family="MaterialIcons" name="warehouse" size={28} color={color} />
+              <Icon family="MaterialIcons" name="warehouse" size={28} color={SemanticColors.iconColors.yellow} />
             ),
           }}
         />
@@ -76,7 +76,7 @@ export default function TabLayout() {
           options={{
             title: "Поповнення",
             tabBarIcon: ({ color }) => (
-              <Icon family="AntDesign" name="down-square" size={28} color={color} />
+              <Icon family="AntDesign" name="down-square" size={28} color={SemanticColors.iconColors.purple} />
             ),
           }}
         />

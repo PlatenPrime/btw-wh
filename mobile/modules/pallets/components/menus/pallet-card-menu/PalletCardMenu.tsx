@@ -23,7 +23,6 @@ export function PalletCardMenu({
   const [modalVisible, setModalVisible] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-  const defaultIconColor = useIconColor();
 
   const handleEdit = () => {
     setModalVisible(false);
@@ -62,7 +61,7 @@ export function PalletCardMenu({
           family="MaterialIcons"
           name="more-horiz"
           size="md"
-          color={defaultIconColor}
+          color={SemanticColors.iconColors.sky}
         />
       </Pressable>
 
@@ -84,9 +83,9 @@ export function PalletCardMenu({
                     family="MaterialIcons"
                     name="edit"
                     size="md"
-                    color={defaultIconColor}
+                    color={SemanticColors.iconColors.sky}
                   />
-                  <ThemedText type="default" className="text-sm">
+                  <ThemedText type="default" className="text-sm ">
                     Редагувати
                   </ThemedText>
                 </Pressable>

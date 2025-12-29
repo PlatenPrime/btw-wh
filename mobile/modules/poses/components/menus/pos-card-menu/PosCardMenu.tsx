@@ -7,6 +7,7 @@ import { useIconColor } from "@/hooks/use-icon-color";
 import type { IPos } from "@/modules/poses/api/types";
 import { UpdatePosDialog } from "@/modules/poses/components/dialogs/update-pos-dialog/UpdatePosDialog";
 import { DeletePosDialog } from "@/modules/poses/components/dialogs/delete-pos-dialog/DeletePosDialog";
+import { SemanticColors } from "@/constants/theme";
 
 interface PosCardMenuProps {
   pos: IPos;
@@ -17,7 +18,6 @@ export function PosCardMenu({ pos, onSuccess }: PosCardMenuProps) {
   const [modalVisible, setModalVisible] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-  const defaultIconColor = useIconColor();
 
   const handleEdit = () => {
     setModalVisible(false);
@@ -50,7 +50,7 @@ export function PosCardMenu({ pos, onSuccess }: PosCardMenuProps) {
           family="MaterialIcons"
           name="more-vert"
           size={20}
-          color={defaultIconColor}
+          color={SemanticColors.iconColors.sky}
         />
       </Pressable>
 
@@ -68,6 +68,12 @@ export function PosCardMenu({ pos, onSuccess }: PosCardMenuProps) {
                   onPress={handleEdit}
                   className="flex-row items-center py-3 px-4"
                 >
+                  <Icon
+                    family="MaterialIcons"
+                    name="edit"
+                    size={20}
+                    color={SemanticColors.iconColors.sky}
+                  />
                   <ThemedText type="default" className="text-sm">
                     Редагувати
                   </ThemedText>
@@ -79,6 +85,12 @@ export function PosCardMenu({ pos, onSuccess }: PosCardMenuProps) {
                   onPress={handleDelete}
                   className="flex-row items-center py-3 px-4"
                 >
+                  <Icon
+                    family="MaterialIcons"
+                    name="delete"
+                    size={20}
+                    color={SemanticColors.error.text}
+                  />
                   <ThemedText type="default" className="text-sm text-error-600">
                     Видалити
                   </ThemedText>

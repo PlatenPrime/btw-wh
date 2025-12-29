@@ -23,6 +23,7 @@ function RowDetailContent({ row, rowId }: RowDetailContentProps) {
       label: "Створити палету",
       icon: "add",
       iconColor: "emerald",
+      textColor: "emerald",
       variant: "default",
       onClick: () => setCreateDialogOpen(true),
     },

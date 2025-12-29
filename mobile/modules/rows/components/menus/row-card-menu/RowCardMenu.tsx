@@ -18,7 +18,6 @@ export function RowCardMenu({ row, onSuccess }: RowCardMenuProps) {
   const [modalVisible, setModalVisible] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-  const defaultIconColor = useIconColor();
 
   const handleEdit = () => {
     setModalVisible(false);
@@ -51,7 +50,7 @@ export function RowCardMenu({ row, onSuccess }: RowCardMenuProps) {
           family="MaterialIcons"
           name="more-vert"
           size="md"
-          color={defaultIconColor}
+          color={SemanticColors.iconColors.sky}
         />
       </Pressable>
 
@@ -73,9 +72,9 @@ export function RowCardMenu({ row, onSuccess }: RowCardMenuProps) {
                     family="MaterialIcons"
                     name="edit"
                     size="md"
-                    color={defaultIconColor}
+                    color={SemanticColors.iconColors.sky}
                   />
-                  <ThemedText type="default" className="text-sm">
+                  <ThemedText type="default" className="text-sm ">
                     Редагувати
                   </ThemedText>
                 </Pressable>

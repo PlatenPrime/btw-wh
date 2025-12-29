@@ -1,6 +1,29 @@
-export type HeaderActionVariant = "default" | "destructive" | "super-destructive";
+export type HeaderActionVariant =
+  | "default"
+  | "destructive"
+  | "super-destructive";
 
 export type HeaderActionIconColor =
+  | "red"
+  | "orange"
+  | "amber"
+  | "yellow"
+  | "lime"
+  | "green"
+  | "emerald"
+  | "teal"
+  | "cyan"
+  | "sky"
+  | "blue"
+  | "indigo"
+  | "violet"
+  | "purple"
+  | "fuchsia"
+  | "pink"
+  | "rose"
+  | "default";
+
+export type HeaderActionTextColor =
   | "red"
   | "orange"
   | "amber"
@@ -25,6 +48,7 @@ export interface HeaderAction {
   label: string;
   icon?: string;
   iconColor?: HeaderActionIconColor;
+  textColor?: HeaderActionTextColor;
   variant?: HeaderActionVariant;
   onClick: () => void;
 }

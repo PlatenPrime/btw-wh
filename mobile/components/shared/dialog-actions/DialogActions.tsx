@@ -9,7 +9,7 @@ interface DialogActionsProps {
   submitText?: string;
   isSubmitting?: boolean;
   isDisabled?: boolean;
-  variant?: "default" | "destructive";
+  variant?: "default" | "destructive" | "confirm" | "create";
   className?: string;
 }
 
@@ -40,7 +40,15 @@ export function DialogActions({
       <Button
         onPress={onSubmit}
         disabled={isDisabledState}
-        variant={variant === "destructive" ? "destructive" : "default"}
+        variant={
+          variant === "destructive"
+            ? "destructive"
+            : variant === "create"
+              ? "create"
+              : variant === "confirm"
+                ? "confirm"
+                : "default"
+        }
         className="flex-1"
       >
         {isSubmitting ? (

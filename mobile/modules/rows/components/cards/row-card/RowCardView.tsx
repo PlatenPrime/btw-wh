@@ -16,7 +16,7 @@ export function RowCardView({
   menu,
 }: RowCardViewProps) {
   return (
-    <View className="p-4 rounded-lg border border-outline-100 bg-background-0">
+    <View className="p-2 rounded-lg border  border-outline-100 bg-background-0">
       <HStack className="items-center justify-between">
         <Pressable onPress={onPress} className="flex-1">
           <Box className="flex-1 min-w-0 items-center">

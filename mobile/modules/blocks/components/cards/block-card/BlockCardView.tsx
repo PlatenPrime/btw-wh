@@ -26,7 +26,6 @@ export function BlockCardView({
             {title}
           </ThemedText>
         </HStack>
-        <Box className="h-px bg-outline-200 my-1" />
         <Box className="gap-1">
           <HStack className="items-center justify-start gap-2">
             <ThemedText type="default" className="text-sm">

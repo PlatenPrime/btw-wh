@@ -1,6 +1,4 @@
 import { Box, Button, HStack, Text } from "@/components/ui";
-import { Icon } from "@/components/ui/icon";
-import { SemanticColors } from "@/constants/theme";
 import type { IPallet } from "@/modules/pallets/api/types";
 import { PalletInfo } from "@/modules/pallets/components/elements/pallet-info";
 import type { GetPosesByPalletIdParams } from "@/modules/poses/api/services/queries/getPosesByPalletId";
@@ -30,18 +28,14 @@ export function PalletContainerView({
             sortParams={sortParams}
             onSortParamsChange={onSortParamsChange}
           />
-          <Button onPress={onCreatePosClick} className="rounded-lg">
-            <HStack className="items-center gap-2">
-              <Icon
-                family="MaterialIcons"
-                name="add"
-                size="md"
-                color={SemanticColors.white}
-              />
-              <Text className="text-white font-semibold text-base">
-                Позиція
-              </Text>
-            </HStack>
+          <Button
+            onPress={onCreatePosClick}
+            className="rounded-lg"
+            variant="create"
+          >
+            <Text className="text-white font-semibold text-base">
+              Додати позицію
+            </Text>
           </Button>
           <PalletInfo pallet={pallet} />
         </HStack>

@@ -157,6 +157,7 @@ export function MovePalletPosesForm({
 
         <Button
           onPress={handleSubmit}
+          variant="confirm"
           className="flex-1"
           disabled={!selectedPalletId || isSubmitting}
         >

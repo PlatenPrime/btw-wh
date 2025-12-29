@@ -1,18 +1,17 @@
-import { View, TouchableOpacity, Platform } from "react-native";
+import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
+import { DialogDescription } from "@/components/shared/dialog-description/DialogDescription";
 import { ThemedText } from "@/components/themed-text";
+import { Icon } from "@/components/ui/icon";
 import {
   Modal,
   ModalBackdrop,
   ModalContent,
-  ModalHeader,
-  ModalBody,
   ModalFooter,
+  ModalHeader,
 } from "@/components/ui/modal-native";
-import { Icon } from "@/components/ui/icon";
-import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
-import { DialogDescription } from "@/components/shared/dialog-description/DialogDescription";
-import type { IPallet } from "@/modules/pallets/api/types";
 import { SemanticColors } from "@/constants/theme";
+import type { IPallet } from "@/modules/pallets/api/types";
+import { Platform, TouchableOpacity, View } from "react-native";
 
 interface DeletePalletEmptyPosesDialogViewProps {
   pallet: IPallet;
@@ -36,7 +35,11 @@ export function DeletePalletEmptyPosesDialogView({
   borderColor,
 }: DeletePalletEmptyPosesDialogViewProps) {
   return (
-    <Modal isOpen={visible} onClose={onClose} className="items-center justify-center">
+    <Modal
+      isOpen={visible}
+      onClose={onClose}
+      className="items-center justify-center"
+    >
       <ModalBackdrop
         className="flex-1 justify-center items-center"
         style={{ backgroundColor: SemanticColors.shadow.backdrop }}
@@ -61,8 +64,11 @@ export function DeletePalletEmptyPosesDialogView({
       >
         <ModalHeader className="flex-col gap-2">
           <View className="flex-row items-center justify-between relative">
-            <ThemedText type="defaultSemiBold" className="text-lg text-center flex-1">
-              Видалити порожні позиції?
+            <ThemedText
+              type="defaultSemiBold"
+              className="text-lg text-center flex-1"
+            >
+              Очистити порожні позиції?
             </ThemedText>
             <TouchableOpacity
               onPress={onClose}
@@ -70,12 +76,17 @@ export function DeletePalletEmptyPosesDialogView({
               activeOpacity={0.7}
               style={{ opacity: 0.7 }}
             >
-              <Icon family="MaterialIcons" name="close" size={16} color={textColor} />
+              <Icon
+                family="MaterialIcons"
+                name="close"
+                size={16} 
+                color={textColor}
+              />
             </TouchableOpacity>
           </View>
           <DialogDescription>
-            Ви впевнені, що хочете видалити тільки порожні позиції палети "
-            {pallet.title}"? Цю дію неможливо скасувати.
+            Ви впевнені, що хочете очистити порожні позиції палети &quot;
+            {pallet.title}&quot;? Цю дію неможливо скасувати.
           </DialogDescription>
         </ModalHeader>
         <ModalFooter className="flex-col-reverse gap-2">
@@ -83,7 +94,7 @@ export function DeletePalletEmptyPosesDialogView({
             onCancel={onClose}
             onSubmit={onDelete}
             cancelText="Скасувати"
-            submitText="Видалити порожні"
+            submitText="Очистити порожні"
             isSubmitting={isDeleting}
             variant="destructive"
           />
@@ -92,4 +103,3 @@ export function DeletePalletEmptyPosesDialogView({
     </Modal>
   );
 }
-

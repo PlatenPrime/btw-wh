@@ -1,29 +1,31 @@
-import { ScrollView, VStack, Pressable } from '@/components/ui';
-import { useRouter } from 'expo-router';
-import { ThemedText } from '@/components/themed-text';
-import { PageLayout } from '@/components/layout/page-layout';
-import { Icon } from '@/components/ui/icon';
-import { useIconColor } from '@/hooks/use-icon-color';
+import { PageLayout } from "@/components/layout/page-layout";
+import { ThemedText } from "@/components/themed-text";
+import { Pressable, ScrollView, VStack } from "@/components/ui";
+import { Icon } from "@/components/ui/icon";
+import { SemanticColors } from "@/constants/theme";
+import { useRouter } from "expo-router";
 
 export default function RefilingList() {
   const router = useRouter();
-  const iconColor = useIconColor();
 
   const navigationItems = [
     {
-      title: 'Запити',
-      icon: 'help-outline',
-      route: 'asks',
+      title: "Запити",
+      icon: "help-outline",
+      iconColor: SemanticColors.iconColors.purple,
+      route: "asks",
     },
     {
-      title: 'Дефіцити',
-      icon: 'warning',
-      route: 'defs',
+      title: "Дефіцити",
+      icon: "warning",
+      iconColor: SemanticColors.iconColors.rose,
+      route: "defs",
     },
     {
-      title: 'Зняття',
-      icon: 'arrow-downward',
-      route: 'pulls',
+      title: "Зняття",
+      icon: "arrow-downward",
+      iconColor: SemanticColors.iconColors.green,
+      route: "pulls",
     },
   ];
 
@@ -45,7 +47,7 @@ export default function RefilingList() {
                 family="MaterialIcons"
                 name={item.icon as any}
                 size={24}
-                color={iconColor}
+                color={item.iconColor}
               />
               <ThemedText type="defaultSemiBold" className="ml-3 text-base">
                 {item.title}

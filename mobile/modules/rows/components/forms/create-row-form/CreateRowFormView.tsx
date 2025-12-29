@@ -90,6 +90,7 @@ export function CreateRowFormView({
         <Button
           onPress={handleSubmit(onSubmit)}
           disabled={isSubmitting}
+          variant="create"
           className="flex-1"
         >
           {isSubmitting ? (

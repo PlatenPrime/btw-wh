@@ -35,7 +35,7 @@ export function RowsContainerView({
 
   return (
     <>
-      <Box className="flex-1">
+      <Box className="flex-1 ">
         <RowsList rows={data} refreshing={refreshing} onRefresh={onRefresh} />
       </Box>
       <CreateRowDialog

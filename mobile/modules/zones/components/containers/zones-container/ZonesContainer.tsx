@@ -39,6 +39,7 @@ export function ZonesContainer({
       label: "Створити зону",
       icon: "add",
       iconColor: "emerald",
+      textColor: "emerald",
       variant: "default",
       onClick: () => setCreateDialogOpen(true),
     },

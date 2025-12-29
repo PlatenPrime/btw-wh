@@ -287,6 +287,7 @@ export function CreateAskFormView({
         <Button
           onPress={handleSubmit(onSubmit)}
           disabled={isSubmitting}
+          variant="create"
           className="flex-1"
         >
           {isSubmitting ? (

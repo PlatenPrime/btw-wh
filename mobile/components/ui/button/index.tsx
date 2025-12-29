@@ -18,6 +18,12 @@ const buttonVariants = tva({
       ghost:
         "bg-transparent data-[hover=true]:bg-background-50 data-[active=true]:bg-background-100",
       link: "text-primary-500 underline-offset-4 data-[hover=true]:underline",
+      create:
+        "bg-success-500 text-typography-0 data-[hover=true]:bg-success-600 data-[active=true]:bg-success-700",
+      delete:
+        "bg-error-500 text-typography-0 data-[hover=true]:bg-error-600 data-[active=true]:bg-error-700",
+      confirm:
+        "bg-info-500 text-typography-0 data-[hover=true]:bg-info-600 data-[active=true]:bg-info-700",
     },
     size: {
       default: "min-h-9 p-2",
@@ -39,7 +45,10 @@ export interface ButtonProps extends PressableProps {
     | "outline"
     | "secondary"
     | "ghost"
-    | "link";
+    | "link"
+    | "create"
+    | "delete"
+    | "confirm";
   size?: "default" | "sm" | "lg" | "icon";
   className?: string;
 }

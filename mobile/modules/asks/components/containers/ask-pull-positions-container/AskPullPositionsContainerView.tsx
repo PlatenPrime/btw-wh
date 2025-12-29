@@ -33,8 +33,8 @@ export function AskPullPositionsContainerView({
     >
       <VStack className="gap-4">
         <VStack className="gap-2">
-          <HStack className="items-center gap-2">
-            <ThemedText type="defaultSemiBold" className="text-base">
+          <HStack className="items-center justify-center gap-2">
+            <ThemedText type="defaultSemiBold" className="text-base text-center">
               Позиції для зняття
             </ThemedText>
             {isFetching && <ActivityIndicator size="small" />}

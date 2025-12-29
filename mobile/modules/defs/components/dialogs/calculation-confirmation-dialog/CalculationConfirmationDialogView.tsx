@@ -100,6 +100,7 @@ export function CalculationConfirmationDialogView({
           <Button
             onPress={onConfirm}
             disabled={isPending}
+            variant="confirm"
             className="flex-1"
           >
             {isPending ? (

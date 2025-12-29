@@ -23,7 +23,7 @@ export function PalletInfoView({
           size={16} 
           color={iconColor}
         />
-        <ThemedText type="defaultSemiBold" className="text-sm">
+        <ThemedText type="defaultSemiBold" className="text-base">
           {totalPositions}
         </ThemedText>
       </HStack>
@@ -35,7 +35,7 @@ export function PalletInfoView({
           size={16} 
           color={iconColor}
         />
-        <ThemedText type="defaultSemiBold" className="text-sm">
+        <ThemedText type="defaultSemiBold" className="text-base">
           {totalBoxes}
         </ThemedText>
       </HStack>

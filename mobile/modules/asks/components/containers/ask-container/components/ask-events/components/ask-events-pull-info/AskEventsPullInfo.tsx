@@ -1,5 +1,4 @@
 import { ThemedText } from "@/components/themed-text";
-import { HStack } from "@/components/ui";
 
 interface AskEventsPullInfoProps {
   totalQuant: number;
@@ -11,11 +10,8 @@ export function AskEventsPullInfo({
   totalBoxes,
 }: AskEventsPullInfoProps) {
   return (
-    <HStack className="items-center gap-2">
-      <ThemedText type="defaultSemiBold" className="text-base">
-        Знято: {totalQuant} шт. / {totalBoxes} кор.
-      </ThemedText>
-    </HStack>
+    <ThemedText type="defaultSemiBold" className="text-base text-center">
+      Знято: {totalQuant} шт. / {totalBoxes} кор.
+    </ThemedText>
   );
 }
-

@@ -205,6 +205,7 @@ export function UpdatePosFormView({
         <Button
           onPress={handleSubmit(onSubmit)}
           disabled={isSubmitting}
+          variant="confirm"
           className="flex-1"
         >
           {isSubmitting ? (

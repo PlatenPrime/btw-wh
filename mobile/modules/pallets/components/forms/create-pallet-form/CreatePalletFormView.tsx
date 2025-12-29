@@ -133,6 +133,7 @@ export function CreatePalletFormView({
           cancelText="Скасувати"
           submitText="Додати"
           isSubmitting={isSubmitting}
+          variant="create"
         />
       )}
     </Box>

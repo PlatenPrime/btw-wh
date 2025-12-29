@@ -15,11 +15,11 @@ export function BlockInfoView({
   return (
     <Box className="p-4 rounded-lg border border-outline-100 bg-background-0">
       <VStack className="gap-2">
-        <ThemedText type="title" className="text-xl">
+        <ThemedText type="title" className="text-lg text-center">
           {title}
         </ThemedText>
         <Box className="gap-1">
-          <HStack className="items-center justify-between">
+          <HStack className="items-center justify-start gap-2">
             <ThemedText type="default" className="text-sm">
               Порядок:
             </ThemedText>
@@ -27,8 +27,8 @@ export function BlockInfoView({
               {order}
             </ThemedText>
           </HStack>
-          <Box className="h-px bg-outline-200 my-1" />
-          <HStack className="items-center justify-between">
+  
+          <HStack className="items-center justify-start gap-2">
             <ThemedText type="default" className="text-sm">
               Сегментів:
             </ThemedText>

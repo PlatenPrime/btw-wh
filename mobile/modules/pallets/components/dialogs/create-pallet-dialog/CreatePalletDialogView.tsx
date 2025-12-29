@@ -33,6 +33,7 @@ export function CreatePalletDialogView({
           cancelText="Скасувати"
           submitText="Додати"
           isSubmitting={isSubmitting}
+          variant="create"
         />
       }
     >

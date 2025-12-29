@@ -29,14 +29,14 @@ export function AskEvent({ event, index }: AskEventProps) {
   return (
     <ThemedView
       key={event._id ?? `${event.eventName}-${event.date}-${index}`}
-      className={`rounded-md border px-3 py-2 bg-${meta.accentBgColor} border-${meta.accentBorderColor}`}
+      className={`rounded-md border  p-2 bg-${meta.accentBgColor} border-${meta.accentBorderColor}`}
       style={{
         backgroundColor: card.bg,
         borderColor: card.border,
       }}
     >
       <VStack className="gap-1">
-        <HStack className="items-center gap-2">
+        <HStack className="items-center gap-2 ">
           <Icon
             family="MaterialIcons"
             name={meta.iconName}

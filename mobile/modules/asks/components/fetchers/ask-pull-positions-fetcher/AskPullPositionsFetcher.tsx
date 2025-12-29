@@ -1,10 +1,9 @@
-import { View } from "react-native";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
+import { Button, Text } from "@/components/ui";
 import { useAskPullQuery } from "@/modules/asks/api/hooks/queries/useAskPullQuery";
 import type { GetAskPullResponse } from "@/modules/asks/api/types/dto";
 import type { ComponentType } from "react";
-import { Button, Text } from "@/components/ui";
 
 interface AskPullPositionsFetcherProps {
   askId: string;
@@ -33,7 +32,10 @@ export function AskPullPositionsFetcher({
         <ThemedText type="default" className="text-center mb-4">
           Помилка завантаження позицій для зняття
         </ThemedText>
-        <ThemedText type="default" className="text-center text-xs opacity-70 mb-4">
+        <ThemedText
+          type="default"
+          className="text-center text-xs opacity-70 mb-4"
+        >
           Не вдалося завантажити позиції для зняття
         </ThemedText>
         <Button onPress={() => askPullQuery.refetch()} variant="outline">
@@ -43,7 +45,7 @@ export function AskPullPositionsFetcher({
     );
   }
 
-  if (!askPullQuery.data || !askPullQuery.data.exists || !askPullQuery.data.data) {
+  if (!askPullQuery.data || !askPullQuery.data.data) {
     return null; // Не показываем контейнер если ask не найден
   }
 
@@ -56,4 +58,3 @@ export function AskPullPositionsFetcher({
     />
   );
 }
-

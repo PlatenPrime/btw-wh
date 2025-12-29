@@ -28,7 +28,6 @@ export function SegmentCardView({
           </ThemedText>
         </HStack>
         <Box className="gap-1">
-          <Box className="h-px bg-outline-200 " />
           <HStack className="items-center justify-start gap-2">
             <ThemedText type="default" className="text-sm">
               Сегмент:

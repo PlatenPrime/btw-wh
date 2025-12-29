@@ -36,7 +36,7 @@ export function Header({ title }: HeaderProps) {
 
         {/* Центральная секция - заголовок */}
         <Box className="flex-1 items-center justify-center px-2">
-          <ThemedText type="defaultSemiBold" className="text-lg text-center">
+          <ThemedText type="defaultSemiBold" className="text-xl text-center">
             {title}
           </ThemedText>
         </Box>

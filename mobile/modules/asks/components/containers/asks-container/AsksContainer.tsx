@@ -29,6 +29,8 @@ export function AsksContainer({
       id: "create-ask",
       label: "Створити запит",
       icon: "add",
+      iconColor: "emerald",
+      textColor: "emerald",
       variant: "default",
       onClick: () => setCreateAskDialogOpen(true),
     },

@@ -162,6 +162,7 @@ export function CreateZoneFormView({
         <Button
           onPress={handleSubmit(onSubmit)}
           disabled={isSubmitting}
+          variant="create"
           className="flex-1"
         >
           {isSubmitting ? (

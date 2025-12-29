@@ -40,12 +40,12 @@ export function ZoneBySegmentCardView({
       >
         <Box className="gap-2">
           <HStack className="items-center justify-between">
-            <ThemedText type="title" className="text-lg flex-1">
+            <ThemedText type="title" className="text-lg flex-1 text-center">
               Зона {zoneTitle}
             </ThemedText>
           </HStack>
           <Box className="gap-1">
-            <HStack className="items-center justify-between">
+            <HStack className="items-center justify-start gap-2">
               <ThemedText type="default" className="text-sm">
                 Штрих-код:
               </ThemedText>
@@ -53,8 +53,7 @@ export function ZoneBySegmentCardView({
                 {bar}
               </ThemedText>
             </HStack>
-            <Box className="h-px bg-outline-200 my-1" />
-            <HStack className="items-center justify-between">
+            <HStack className="items-center justify-start gap-2">
               <ThemedText type="default" className="text-sm">
                 Сектор:
               </ThemedText>

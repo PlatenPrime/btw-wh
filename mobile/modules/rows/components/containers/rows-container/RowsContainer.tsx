@@ -24,6 +24,7 @@ export function RowsContainer({
       label: "Створити ряд",
       icon: "add",
       iconColor: "emerald",
+      textColor: "emerald",
       variant: "default",
       onClick: () => setCreateDialogOpen(true),
     },

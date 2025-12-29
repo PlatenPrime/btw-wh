@@ -11,14 +11,11 @@ export function ZoneDetailsCard({ zone }: ZoneDetailsCardProps) {
   return (
     <View className="p-4 rounded-lg border border-outline-100 bg-background-0">
       <Box className="gap-2">
-        <ThemedText type="title" className="text-xl">
-          Зона: {zone.title}
-        </ThemedText>
         <Box className="gap-1">
-          <ThemedText type="default" className="text-sm text-typography-500">
+          <ThemedText type="default" className="text-sm text-typography-900">
             Штрих-код: {zone.bar}
           </ThemedText>
-          <ThemedText type="default" className="text-sm text-typography-500">
+          <ThemedText type="default" className="text-sm text-typography-900">
             Сектор: {zone.sector}
           </ThemedText>
         </Box>

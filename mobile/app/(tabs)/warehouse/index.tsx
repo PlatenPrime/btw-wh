@@ -2,27 +2,29 @@ import { PageLayout } from "@/components/layout/page-layout";
 import { ThemedText } from "@/components/themed-text";
 import { Pressable, ScrollView, VStack } from "@/components/ui";
 import { Icon } from "@/components/ui/icon";
+import { SemanticColors } from "@/constants/theme";
 import { useRouter } from "expo-router";
-import { useIconColor } from "@/hooks/use-icon-color";
 
 export default function WarehouseList() {
   const router = useRouter();
-  const iconColor = useIconColor();
 
   const navigationItems = [
     {
       title: "Ряди",
       icon: "view-list",
+      iconColor: SemanticColors.iconColors.teal,
       route: "rows",
     },
     {
       title: "Зони",
       icon: "location-on",
+      iconColor: SemanticColors.iconColors.orange,
       route: "zones",
     },
     {
       title: "Блоки",
       icon: "view-module",
+      iconColor: SemanticColors.iconColors.yellow,
       route: "blocks",
     },
   ];
@@ -45,7 +47,7 @@ export default function WarehouseList() {
                 family="MaterialIcons"
                 name={item.icon as any}
                 size={24}
-                color={iconColor}
+                color={item.iconColor}
               />
               <ThemedText type="defaultSemiBold" className="ml-3 text-base">
                 {item.title}

@@ -19,6 +19,27 @@ const iconColorMap: Record<string, string | undefined> = {
   default: undefined,
 };
 
+const textColorMap: Record<string, string | undefined> = {
+  red: "text-red-500",
+  orange: "text-orange-500",
+  amber: "text-amber-500",
+  yellow: "text-yellow-500",
+  lime: "text-lime-500",
+  green: "text-green-500",
+  emerald: "text-emerald-500",
+  teal: "text-teal-500",
+  cyan: "text-cyan-500",
+  sky: "text-sky-500",
+  blue: "text-blue-500",
+  indigo: "text-indigo-500",
+  violet: "text-violet-500",
+  purple: "text-purple-500",
+  fuchsia: "text-fuchsia-500",
+  pink: "text-pink-500",
+  rose: "text-rose-500",
+  default: undefined,
+};
+
 export function HeaderActionsMenu({ trigger }: HeaderActionsMenuProps) {
   const { actions } = useHeaderActions();
   const [modalVisible, setModalVisible] = useState(false);
@@ -55,6 +76,9 @@ export function HeaderActionsMenu({ trigger }: HeaderActionsMenuProps) {
   ) => {
     const iconColor =
       iconColorMap[action.iconColor || "default"] || defaultIconColor;
+    // Приоритетно используем action.textColor через маппинг, если он задан, иначе используем переданный textColorClass
+    const finalTextColorClass =
+      textColorMap[action.textColor || "default"] ?? textColorClass;
     return (
       <Pressable
         key={action.id}
@@ -70,7 +94,7 @@ export function HeaderActionsMenu({ trigger }: HeaderActionsMenuProps) {
             className="mr-3"
           />
         )}
-        <ThemedText type="default" className={textColorClass}>
+        <ThemedText type="default" className={finalTextColorClass}>
           {action.label}
         </ThemedText>
       </Pressable>
