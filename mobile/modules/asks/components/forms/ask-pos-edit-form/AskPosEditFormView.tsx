@@ -9,16 +9,15 @@ import {
   Text,
   VStack,
 } from "@/components/ui";
-import type { PosResponse } from "@/modules/poses/api/types";
-import { ActivityIndicator } from "react-native";
-
 import { SemanticColors } from "@/constants/theme";
 import { useThemeColors } from "@/hooks/use-theme-colors";
-import { Controller, useFormContext } from "react-hook-form";
+import type { PosResponse } from "@/modules/poses/api/types";
+import { Controller, type UseFormReturn } from "react-hook-form";
+import { ActivityIndicator } from "react-native";
 import type { AskPosEditFormData } from "./schema";
 
 interface AskPosEditFormViewProps {
-  form: ReturnType<typeof useFormContext<AskPosEditFormData>>;
+  form: UseFormReturn<AskPosEditFormData>;
   pos: PosResponse;
   remainingQuant: number;
   remainingBoxes: number;
@@ -42,19 +41,35 @@ export function AskPosEditFormView({
 }: AskPosEditFormViewProps) {
   const {
     handleSubmit,
-    formState: { errors },
     watch,
+    formState: { errors, isValid },
   } = form;
 
   const removedQuantValue = watch("removedQuant");
-  const removedBoxesValue = watch("removedBoxes");
   const { card } = useThemeColors();
 
-  const isDisabled =
-    remainingQuant < 0 ||
-    remainingBoxes < 0 ||
-    removedQuantValue === "" ||
-    isSubmitting;
+  // #region agent log
+  const logData = {
+    removedQuantValue,
+    remainingQuant,
+    remainingBoxes,
+    isSubmitting,
+    errors: Object.keys(errors),
+  };
+  fetch("http://127.0.0.1:7242/ingest/95c9df87-1dd6-4841-9332-e064e1013b10", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      location: "AskPosEditFormView.tsx:48",
+      message: "Form state check",
+      data: logData,
+      timestamp: Date.now(),
+      sessionId: "debug-session",
+      runId: "run1",
+      hypothesisId: "C",
+    }),
+  }).catch(() => {});
+  // #endregion
 
   return (
     <VStack className="gap-4">
@@ -98,7 +113,27 @@ export function AskPosEditFormView({
                 placeholderTextColor={SemanticColors.placeholder.light}
                 value={value === "0" ? "" : value || ""}
                 onChangeText={(text) => {
-                  onChange(text);
+                  // Форматируем значение
+                  const cleanValue = text.replace(/[^0-9-]/g, "");
+                  const hasMinus = cleanValue.includes("-");
+                  const numericPart = cleanValue.replace(/-/g, "");
+
+                  let processedValue: string;
+                  if (hasMinus && !cleanValue.startsWith("-")) {
+                    processedValue = numericPart;
+                  } else if (cleanValue === "" || cleanValue === "-") {
+                    processedValue = "";
+                  } else if (numericPart === "0") {
+                    processedValue = hasMinus ? "-0" : "0";
+                  } else {
+                    processedValue = hasMinus
+                      ? `-${numericPart.replace(/^0+/, "") || "0"}`
+                      : numericPart.replace(/^0+/, "") || "0";
+                  }
+
+                  // Вызываем onChange для немедленного обновления watch
+                  onChange(processedValue);
+                  // Также вызываем утилиту для синхронизации через setValue
                   onRemovedQuantChange(text);
                 }}
                 onBlur={onBlur}
@@ -135,7 +170,27 @@ export function AskPosEditFormView({
                 placeholderTextColor={SemanticColors.placeholder.light}
                 value={value === "0" ? "" : value || ""}
                 onChangeText={(text) => {
-                  onChange(text);
+                  // Форматируем значение
+                  const cleanValue = text.replace(/[^0-9-]/g, "");
+                  const hasMinus = cleanValue.includes("-");
+                  const numericPart = cleanValue.replace(/-/g, "");
+
+                  let processedValue: string;
+                  if (hasMinus && !cleanValue.startsWith("-")) {
+                    processedValue = numericPart;
+                  } else if (cleanValue === "" || cleanValue === "-") {
+                    processedValue = "";
+                  } else if (numericPart === "0") {
+                    processedValue = hasMinus ? "-0" : "0";
+                  } else {
+                    processedValue = hasMinus
+                      ? `-${numericPart.replace(/^0+/, "") || "0"}`
+                      : numericPart.replace(/^0+/, "") || "0";
+                  }
+
+                  // Вызываем onChange для немедленного обновления watch
+                  onChange(processedValue);
+                  // Также вызываем утилиту для синхронизации через setValue
                   onRemovedBoxesChange(text);
                 }}
                 onBlur={onBlur}
@@ -219,8 +274,11 @@ export function AskPosEditFormView({
           </Button>
         )}
         <Button
-          onPress={handleSubmit(onSubmit)}
-          disabled={isDisabled}
+          onPress={(e) => {
+            console.log("Button pressed, isValid:", isValid, "errors:", errors);
+            handleSubmit(onSubmit)(e);
+          }}
+          disabled={isSubmitting}
           className="flex-1"
         >
           {isSubmitting ? (

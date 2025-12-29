@@ -1,5 +1,5 @@
 import { usePullAskMutation } from "@/modules/asks/api/hooks/mutations/usePullAskMutation";
-import { useUpdateAskActionsMutation } from "@/modules/asks/api/hooks/mutations/useUpdateAskActionsMutation";
+import { useUpdateAskActionsByIdMutation } from "@/modules/asks/api/hooks/mutations/useUpdateAskActionsByIdMutation";
 import { AskPosEditFormView } from "@/modules/asks/components/forms/ask-pos-edit-form/AskPosEditFormView";
 import {
   askPosEditFormSchema,
@@ -7,7 +7,7 @@ import {
   type AskPosEditFormData,
 } from "@/modules/asks/components/forms/ask-pos-edit-form/schema";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
-import { useUpdatePosMutation } from "@/modules/poses/api/hooks/mutations/useUpdatePosMutation";
+import { useUpdatePosByIdMutation } from "@/modules/poses/api/hooks/mutations/useUpdatePosByIdMutation";
 import type { PosResponse } from "@/modules/poses/api/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -46,11 +46,14 @@ export function AskPosEditForm({
   const removedBoxes = watch("removedBoxes");
 
   const { user } = useAuth();
-  const updatePosMutation = useUpdatePosMutation(pos.data!);
-  const pullAskMutation = usePullAskMutation(askId);
-  const updateAskActionsMutation = useUpdateAskActionsMutation(askId);
+  const updatePosMutation = useUpdatePosByIdMutation();
+  const pullAskMutation = usePullAskMutation({ askId });
+  const updateAskActionsMutation = useUpdateAskActionsByIdMutation();
 
   const handleRemovedQuantChange = (value: string) => {
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/95c9df87-1dd6-4841-9332-e064e1013b10',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'AskPosEditForm.tsx:53',message:'handleRemovedQuantChange called',data:{value},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
+    // #endregion
     handleRemovedQuantChangeUtil({ name: "removedQuant", value, setValue });
   };
 
@@ -59,6 +62,9 @@ export function AskPosEditForm({
   };
 
   const onSubmit = async (data: AskPosEditFormData) => {
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/95c9df87-1dd6-4841-9332-e064e1013b10',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'AskPosEditForm.tsx:61',message:'onSubmit called',data:{removedQuant:data.removedQuant,removedBoxes:data.removedBoxes,hasUser:!!user},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E'})}).catch(()=>{});
+    // #endregion
     if (!user) {
       console.error("User not found");
       return;
@@ -77,6 +83,7 @@ export function AskPosEditForm({
       if (newQuant < 0) {
         throw new Error("Не можна зняти більше товару, ніж є в наявності");
       }
+
       if (newBoxes < 0) {
         throw new Error("Не можна зняти більше коробок, ніж є в наявності");
       }
@@ -101,6 +108,9 @@ export function AskPosEditForm({
         }
 
         // Оновлюємо позицію
+        // #region agent log
+        fetch('http://127.0.0.1:7242/ingest/95c9df87-1dd6-4841-9332-e064e1013b10',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'AskPosEditForm.tsx:105',message:'Before updatePosMutation',data:{posId:pos.data!._id,newQuant,newBoxes},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E'})}).catch(()=>{});
+        // #endregion
         await updatePosMutation.mutateAsync({
           id: pos.data!._id,
           data: {
@@ -109,6 +119,9 @@ export function AskPosEditForm({
             sklad: pos.data!.sklad,
           },
         });
+        // #region agent log
+        fetch('http://127.0.0.1:7242/ingest/95c9df87-1dd6-4841-9332-e064e1013b10',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'AskPosEditForm.tsx:113',message:'After updatePosMutation',data:{success:true},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E'})}).catch(()=>{});
+        // #endregion
 
         await pullAskMutation.mutateAsync({
           solverId: user._id,

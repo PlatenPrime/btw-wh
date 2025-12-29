@@ -18,6 +18,7 @@ export function useClearPalletDialog({
   const mutation = useClearPalletMutation({
     palletId: pallet._id,
     palletTitle: pallet.title,
+    rowId: pallet.row,
     rowTitle: pallet.rowData.title,
   });
 

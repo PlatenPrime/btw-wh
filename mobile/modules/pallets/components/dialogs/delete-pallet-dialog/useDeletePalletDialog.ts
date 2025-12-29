@@ -15,7 +15,11 @@ export function useDeletePalletDialog({
   pallet,
   onSuccess,
 }: UseDeletePalletDialogProps): UseDeletePalletDialogReturn {
-  const mutation = useDeletePalletMutation(pallet.row, pallet.rowData.title);
+  const mutation = useDeletePalletMutation(
+    pallet.row,
+    pallet.rowData.title,
+    pallet._id,
+  );
 
   const isDeleting = mutation.isPending;
 

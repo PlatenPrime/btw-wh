@@ -1,16 +1,16 @@
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import type { IPallet } from "@/modules/pallets/api/types";
-import type { IPos } from "@/modules/poses/api/types";
-import { useCreatePosMutation } from "@/modules/poses/api/hooks/mutations/useCreatePosMutation";
-import { useUpdatePosMutation } from "@/modules/poses/api/hooks/mutations/useUpdatePosMutation";
+
 import { useOneArtQuery } from "@/modules/arts/api/hooks/queries/useOneArtQuery";
+import { useCreatePosMutation } from "@/modules/poses/api/hooks/mutations/useCreatePosMutation";
+import { useUpdatePosByIdMutation } from "@/modules/poses/api/hooks/mutations/useUpdatePosByIdMutation";
+import { CreatePosFormView } from "@/modules/poses/components/forms/create-pos-form/CreatePosFormView";
 import {
   createPosFormDefaultValues,
   createPosFormSchema,
   type CreatePosFormData,
-} from "./schema";
-import { CreatePosFormView } from "./CreatePosFormView";
+} from "@/modules/poses/components/forms/create-pos-form/schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 
 interface CreatePosFormProps {
   pallet: IPallet;
@@ -32,41 +32,24 @@ export function CreatePosForm({
   const {
     watch,
     setValue,
+    reset,
     formState: { isSubmitting },
   } = form;
   const artikul = watch("artikul");
 
   const createPosMutation = useCreatePosMutation(pallet);
+  const updatePosMutation = useUpdatePosByIdMutation();
 
   // Поиск артикула при вводе 9 символов
   const shouldSearchArt = artikul.length === 9;
   const artQuery = useOneArtQuery(shouldSearchArt ? artikul : undefined);
-  const artData = artQuery.data?.data || undefined;
+  const artData = artQuery.data?.data;
   const isArtLoading = artQuery.isPending;
 
   // Поиск существующей позиции с таким же артикулом
   const existingPos = pallet.poses.find(
     (pos) => pos.artikul === artikul && pos.sklad === watch("sklad"),
   );
-
-  // Используем useUpdatePosMutation только если есть existingPos
-  // Создаем минимальный IPos для хука, если existingPos отсутствует
-  const posForMutation: IPos = existingPos || ({
-    _id: "",
-    pallet: pallet._id,
-    row: pallet.row,
-    palletData: { _id: pallet._id, title: pallet.title },
-    rowData: { _id: pallet.rowData._id, title: pallet.rowData.title },
-    palletTitle: pallet.title,
-    rowTitle: pallet.rowData.title,
-    artikul: "",
-    quant: 0,
-    boxes: 0,
-    sklad: watch("sklad"),
-    comment: "",
-  } as IPos);
-
-  const updatePosMutation = useUpdatePosMutation(posForMutation);
 
   // Обработчики для числовых полей без ведущих нулей
   const handleQuantChange = (value: string) => {
@@ -100,12 +83,18 @@ export function CreatePosForm({
   };
 
   const onSubmit = async (data: CreatePosFormData) => {
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/95c9df87-1dd6-4841-9332-e064e1013b10',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'CreatePosForm.tsx:85',message:'onSubmit called',data:{artikul:data.artikul,quant:data.quant,boxes:data.boxes,sklad:data.sklad,hasExistingPos:!!existingPos},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E'})}).catch(()=>{});
+    // #endregion
     // Защита от двойной отправки
     if (
       createPosMutation.isPending ||
       updatePosMutation.isPending ||
       isSubmitting
     ) {
+      // #region agent log
+      fetch('http://127.0.0.1:7242/ingest/95c9df87-1dd6-4841-9332-e064e1013b10',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'CreatePosForm.tsx:92',message:'onSubmit blocked by pending',data:{createPending:createPosMutation.isPending,updatePending:updatePosMutation.isPending,isSubmitting},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E'})}).catch(()=>{});
+      // #endregion
       return;
     }
 
@@ -119,6 +108,7 @@ export function CreatePosForm({
             boxes: existingPos.boxes + data.boxes,
           },
         });
+        reset(createPosFormDefaultValues);
         onSuccess?.();
       } else {
         // Создаем новую позицию
@@ -131,6 +121,7 @@ export function CreatePosForm({
           boxes: data.boxes,
           sklad: data.sklad,
         });
+        reset(createPosFormDefaultValues);
         onSuccess?.();
       }
     } catch (error) {
@@ -165,7 +156,6 @@ export function CreatePosForm({
       existingPos={existingPos}
       onSubmit={onSubmit}
       onCancel={onCancel}
-      hideActions={true}
     />
   );
 }

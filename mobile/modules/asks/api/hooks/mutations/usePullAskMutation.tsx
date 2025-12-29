@@ -4,16 +4,20 @@ import {
 } from "@/modules/asks/api/services/mutations/pullAskById";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export function usePullAskMutation(id: string) {
+interface UsePullAskMutationParams {
+  askId: string;
+}
+
+export function usePullAskMutation({ askId }: UsePullAskMutationParams) {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (data: PullAskRequest) => pullAskById(id, data),
+    mutationFn: (data: PullAskRequest) => pullAskById(askId, data),
     onSuccess: () => {
       // Инвалидируем кеш для конкретного ask
-      queryClient.invalidateQueries({ queryKey: ["asks", id] });
+      queryClient.invalidateQueries({ queryKey: ["asks", askId] });
       // Инвалидируем позиции для снятия
-      queryClient.invalidateQueries({ queryKey: ["asks", id, "pull"] });
+      queryClient.invalidateQueries({ queryKey: ["asks", askId, "pull"] });
       // Инвалидируем все списки asks
       queryClient.invalidateQueries({ queryKey: ["asks"] });
       // Инвалидируем все позиции для снятия

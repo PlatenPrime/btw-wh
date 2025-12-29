@@ -4,10 +4,12 @@ import { deletePalletEmptyPoses } from "@/modules/pallets/api/services/mutations
 export function useDeletePalletEmptyPosesMutation({
   palletId,
   palletTitle,
+  rowId,
   rowTitle,
 }: {
   palletId: string;
   palletTitle: string;
+  rowId?: string;
   rowTitle?: string;
 }) {
   const queryClient = useQueryClient();
@@ -21,6 +23,18 @@ export function useDeletePalletEmptyPosesMutation({
       queryClient.invalidateQueries({
         queryKey: ["pallet", { id: palletId }],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["pallet", { palletId }],
+      });
+      queryClient.invalidateQueries({ queryKey: ["pallets"] });
+      if (rowId) {
+        queryClient.invalidateQueries({
+          queryKey: ["pallets", { by: "row", rowId }],
+        });
+        queryClient.invalidateQueries({
+          queryKey: ["row", { rowId }],
+        });
+      }
       if (rowTitle) {
         queryClient.invalidateQueries({
           queryKey: ["row", { rowTitle }],

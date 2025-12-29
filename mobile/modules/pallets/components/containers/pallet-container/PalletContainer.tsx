@@ -1,14 +1,14 @@
-import { useState } from "react";
-import { useRouter } from "expo-router";
 import { useRegisterHeaderActions } from "@/components/layout/header/useHeaderActions";
 import type { IPallet } from "@/modules/pallets/api/types";
-import { PalletContainerView } from "./PalletContainerView";
 import type { GetPosesByPalletIdParams } from "@/modules/poses/api/services/queries/getPosesByPalletId";
+import { CreatePosDialog } from "@/modules/poses/components/dialogs/create-pos-dialog/CreatePosDialog";
+import { useRouter } from "expo-router";
+import { useState } from "react";
 import { ClearPalletDialog } from "../../dialogs/clear-pallet-dialog/ClearPalletDialog";
 import { DeletePalletDialog } from "../../dialogs/delete-pallet-dialog/DeletePalletDialog";
 import { DeletePalletEmptyPosesDialog } from "../../dialogs/delete-pallet-empty-poses-dialog/DeletePalletEmptyPosesDialog";
 import { MovePalletPosesDialog } from "../../dialogs/move-pallet-poses-dialog/MovePalletPosesDialog";
-import { CreatePosDialog } from "@/modules/poses/components/dialogs/create-pos-dialog/CreatePosDialog";
+import { PalletContainerView } from "./PalletContainerView";
 
 interface PalletContainerProps {
   pallet: IPallet;
@@ -52,21 +52,22 @@ export function PalletContainer({
       onClick: () => setMoveDialogOpen(true),
     },
     {
-      id: "clear-pallet",
-      label: "Очистити палету",
-      icon: "delete-sweep",
-      iconColor: "rose",
-      variant: "destructive",
-      onClick: () => setClearDialogOpen(true),
-    },
-    {
       id: "delete-empty-poses",
-      label: "Видалити порожні",
+      label: "Очистити порожні",
       icon: "delete-outline",
       iconColor: "red",
       variant: "destructive",
       onClick: () => setDeleteEmptyPosesDialogOpen(true),
     },
+    {
+      id: "clear-pallet",
+      label: "Видалити позиції",
+      icon: "delete-sweep",
+      iconColor: "rose",
+      variant: "super-destructive",
+      onClick: () => setClearDialogOpen(true),
+    },
+
     {
       id: "delete-pallet",
       label: "Видалити палету",
@@ -118,4 +119,3 @@ export function PalletContainer({
     </>
   );
 }
-

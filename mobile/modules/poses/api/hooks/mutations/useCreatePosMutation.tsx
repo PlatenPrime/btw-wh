@@ -16,8 +16,20 @@ export function useCreatePosMutation(pallet: IPallet) {
         queryKey: ["pallet", { palletId: pallet._id }],
       });
       queryClient.invalidateQueries({
+        queryKey: ["pallet", { id: pallet._id }],
+      });
+      queryClient.invalidateQueries({ queryKey: ["pallets"] });
+      queryClient.invalidateQueries({
+        queryKey: ["pallets", { by: "row", rowId: pallet.row }],
+      });
+      queryClient.invalidateQueries({
         queryKey: ["row", { rowId: pallet.row }],
       });
+      if (pallet.rowData?.title) {
+        queryClient.invalidateQueries({
+          queryKey: ["row", { rowTitle: pallet.rowData.title }],
+        });
+      }
     },
   });
 }

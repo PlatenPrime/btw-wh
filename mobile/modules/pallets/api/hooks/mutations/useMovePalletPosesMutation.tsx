@@ -15,32 +15,43 @@ export function useMovePalletPosesMutation({
       movePalletPoses(pallet._id, targetPalletId),
     onSuccess: (data) => {
       // Инвалидируем source pallet
+      queryClient.invalidateQueries({ queryKey: ["poses"] });
+      queryClient.invalidateQueries({
+        queryKey: ["poses", { by: "pallet", palletId: pallet._id }],
+      });
       queryClient.invalidateQueries({
         queryKey: ["pallet", { id: pallet._id }],
       });
       queryClient.invalidateQueries({
-        queryKey: ["row", { rowId: pallet.row }],
+        queryKey: ["pallet", { palletId: pallet._id }],
+      });
+      queryClient.invalidateQueries({ queryKey: ["pallets"] });
+      queryClient.invalidateQueries({
+        queryKey: ["pallets", { by: "row", rowId: pallet.row }],
       });
       queryClient.invalidateQueries({
-        queryKey: ["poses", { by: "pallet", palletId: pallet._id }],
+        queryKey: ["row", { rowId: pallet.row }],
       });
 
       // Инвалидируем target pallet и его row, если данные доступны
       if (data.targetPallet) {
         queryClient.invalidateQueries({
+          queryKey: ["poses", { by: "pallet", palletId: data.targetPallet._id }],
+        });
+        queryClient.invalidateQueries({
           queryKey: ["pallet", { id: data.targetPallet._id }],
+        });
+        queryClient.invalidateQueries({
+          queryKey: ["pallet", { palletId: data.targetPallet._id }],
+        });
+        queryClient.invalidateQueries({
+          queryKey: ["pallets", { by: "row", rowId: data.targetPallet.row }],
         });
         if (data.targetPallet.rowData) {
           queryClient.invalidateQueries({
             queryKey: ["row", { rowId: data.targetPallet.rowData._id }],
           });
         }
-        queryClient.invalidateQueries({
-          queryKey: ["poses", { by: "pallet", palletId: data.targetPallet._id }],
-        });
-        queryClient.invalidateQueries({
-          queryKey: ["pallets", { by: "row", rowId: data.targetPallet.row }],
-        });
       }
     },
   });

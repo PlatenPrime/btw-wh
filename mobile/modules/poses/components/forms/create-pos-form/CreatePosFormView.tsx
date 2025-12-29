@@ -62,17 +62,16 @@ export function CreatePosFormView({
   const watchedValues = watch();
   
   // Проверка валидности формы для активации кнопки
-  // Проверяем, что артикул в правильном формате (9 символов с дефисом)
-  // и что все числовые поля больше 0
-  const isFormValid = 
-    artikul.trim().length === 9 &&
-    /^\d{4}-\d{4}$/.test(artikul.trim()) &&
-    typeof watchedValues.quant === 'number' &&
-    watchedValues.quant > 0 &&
-    typeof watchedValues.boxes === 'number' &&
-    watchedValues.boxes > 0 &&
-    watchedValues.sklad &&
-    watchedValues.sklad.length > 0;
+  const artikulValid = artikul.trim().length === 9 && /^\d{4}-\d{4}$/.test(artikul.trim());
+  const quantValid = typeof watchedValues.quant === 'number' && watchedValues.quant > 0;
+  const boxesValid = typeof watchedValues.boxes === 'number' && watchedValues.boxes > 0;
+  const skladValid = watchedValues.sklad && watchedValues.sklad.length > 0;
+  
+  const isFormValid = artikulValid && quantValid && boxesValid && skladValid;
+
+  // #region agent log
+  fetch('http://127.0.0.1:7242/ingest/95c9df87-1dd6-4841-9332-e064e1013b10',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'CreatePosFormView.tsx:77',message:'Form validation check',data:{isFormValid,artikulValid,quantValid,boxesValid,skladValid,artikul,artikulLength:artikul.trim().length,quant:watchedValues.quant,boxes:watchedValues.boxes,sklad:watchedValues.sklad,errors:Object.keys(errors),formIsValid:isValid},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});
+  // #endregion
 
   // Информация об артикуле
   const renderArtInfo = () => {
@@ -169,6 +168,9 @@ export function CreatePosFormView({
           name="quant"
           render={({ field: { onChange, onBlur, value } }) => {
             const handleChange = (text: string) => {
+              // #region agent log
+              fetch('http://127.0.0.1:7242/ingest/95c9df87-1dd6-4841-9332-e064e1013b10',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'CreatePosFormView.tsx:169',message:'quant handleChange called',data:{text,currentValue:value},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
+              // #endregion
               const numericValue = text.replace(/\D/g, "");
 
               let processedValue: string;
@@ -181,6 +183,9 @@ export function CreatePosFormView({
               }
 
               const numValue = processedValue === "" ? 0 : parseInt(processedValue, 10);
+              // #region agent log
+              fetch('http://127.0.0.1:7242/ingest/95c9df87-1dd6-4841-9332-e064e1013b10',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'CreatePosFormView.tsx:181',message:'quant before onChange',data:{numValue,processedValue},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
+              // #endregion
               onChange(numValue);
               onQuantChange(processedValue);
             };
@@ -318,7 +323,7 @@ export function CreatePosFormView({
       {existingPos && (
         <ThemedView className="rounded-lg p-3 border border-info-500 bg-info-50">
           <ThemedText type="default" className="text-xs text-info-700">
-            Такий артикул вже є на палеті. При повній відповідності кількість буде об'єднана
+            Такий артикул вже є на палеті. При повній відповідності кількість буде об&apos;єднана
           </ThemedText>
         </ThemedView>
       )}
@@ -347,7 +352,7 @@ export function CreatePosFormView({
           )}
           <Button
             onPress={handleSubmit(onSubmit)}
-            disabled={isSubmitting || !isFormValid}
+            disabled={isSubmitting}
             className="flex-1"
           >
             {isSubmitting ? (

@@ -4,7 +4,6 @@ import {
   ModalBackdrop,
   ModalBody,
   ModalContent,
-  ModalFooter,
   ModalHeader,
 } from "@/components/ui/modal-native";
 import { Icon } from "@/components/ui/icon";
