@@ -9,6 +9,8 @@ export function useDeleteZoneMutation() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["zones"] });
     },
+    onError: () => {
+    },
   });
 }
 

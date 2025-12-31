@@ -1,0 +1,2 @@
+export { HomeLogo } from "./HomeLogo";
+

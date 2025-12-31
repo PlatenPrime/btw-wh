@@ -6,6 +6,7 @@ import { HStack } from "@/components/ui";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import { SemanticColors } from "@/constants/theme";
 import { useColorScheme } from "nativewind";
+import { View } from "react-native";
 
 interface AskPullStatusMessageProps {
   statusMessage: AskPullStatusMessage;
@@ -21,7 +22,7 @@ export function AskPullStatusMessage({
   const statusMessageVariants = {
     success: {
       borderColor: SemanticColors.iconColors.emerald,
-      bgColor: theme === "light" ? "#d1fae5" : "#064e3b",
+      bgColor: theme === "light" ? "#d1fae555" : "#064e3b55",
       iconColor: SemanticColors.iconColors.emerald,
     },
     warning: {
@@ -32,15 +33,15 @@ export function AskPullStatusMessage({
     default: {
       borderColor: card.border,
       bgColor: card.bg,
-      iconColor: SemanticColors.iconColors.gray || "#6b7280",
+      iconColor: SemanticColors.iconColors.teal ,
     },
   };
 
   const variant = statusMessageVariants[statusMessage.variant];
 
   return (
-    <ThemedView
-      className="rounded-lg border p-4"
+    <View
+      className="rounded-lg border p-2 "
       style={{
         backgroundColor: variant.bgColor,
         borderColor: variant.borderColor,
@@ -57,7 +58,7 @@ export function AskPullStatusMessage({
           {statusMessage.message}
         </ThemedText>
       </HStack>
-    </ThemedView>
+    </View>
   );
 }
 

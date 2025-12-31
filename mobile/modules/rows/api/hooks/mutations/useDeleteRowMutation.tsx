@@ -10,6 +10,8 @@ export function useDeleteRowMutation() {
       queryClient.invalidateQueries({ queryKey: ["rows"] });
       queryClient.invalidateQueries({ queryKey: ["pallets"] });
     },
+    onError: () => {
+    },
   });
 }
 

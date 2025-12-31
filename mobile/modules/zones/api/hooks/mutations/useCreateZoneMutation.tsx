@@ -10,6 +10,8 @@ export function useCreateZoneMutation() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["zones"] });
     },
+    onError: () => {
+    },
   });
 }
 

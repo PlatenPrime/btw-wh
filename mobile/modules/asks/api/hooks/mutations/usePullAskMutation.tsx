@@ -23,6 +23,8 @@ export function usePullAskMutation({ askId }: UsePullAskMutationParams) {
       // Инвалидируем все позиции для снятия
       queryClient.invalidateQueries({ queryKey: ["asks", "pulls"] });
     },
+    onError: () => {
+    },
   });
 }
 

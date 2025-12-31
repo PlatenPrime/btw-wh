@@ -22,6 +22,8 @@ export function useUpdateZoneMutation() {
         };
       });
     },
+    onError: () => {
+    },
   });
 }
 

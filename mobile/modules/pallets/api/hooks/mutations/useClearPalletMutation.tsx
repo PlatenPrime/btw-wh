@@ -41,6 +41,8 @@ export function useClearPalletMutation({
         });
       }
     },
+    onError: () => {
+    },
   });
 }
 

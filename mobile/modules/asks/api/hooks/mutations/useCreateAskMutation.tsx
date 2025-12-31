@@ -15,6 +15,8 @@ export function useCreateAskMutation() {
       // Инвалидируем кеш дефицитов, чтобы обновить информацию о существующих заявках
       queryClient.invalidateQueries({ queryKey: ["defs", "latest"] });
     },
+    onError: () => {
+    },
   });
 }
 

@@ -6,6 +6,10 @@ export function useCalculateDefsMutation() {
 
   return useMutation({
     mutationFn: () => calculateDefs(),
+    onMutate: () => {
+      // Инвалидируем кеш сразу, чтобы начать обновление данных
+      queryClient.invalidateQueries({ queryKey: ["defs", "latest"] });
+    },
     onSuccess: () => {
       // Инвалидируем кеш статуса расчета, чтобы начать отслеживание
       queryClient.invalidateQueries({
@@ -15,6 +19,8 @@ export function useCalculateDefsMutation() {
       queryClient.invalidateQueries({
         queryKey: ["defs", "latest"],
       });
+    },
+    onError: () => {
     },
   });
 }

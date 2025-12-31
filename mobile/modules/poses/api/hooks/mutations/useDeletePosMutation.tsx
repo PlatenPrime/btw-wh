@@ -15,6 +15,8 @@ export function useDeletePosMutation(pos: IPos) {
         queryKey: ["row", { rowId: pos.row }],
       });
     },
+    onError: () => {
+    },
   });
 }
 

@@ -16,6 +16,8 @@ export function useUpdateAskActionsMutation(id: string) {
       // Инвалидируем все списки asks
       queryClient.invalidateQueries({ queryKey: ["asks"] });
     },
+    onError: () => {
+    },
   });
 }
 

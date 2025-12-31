@@ -10,6 +10,8 @@ export function useCreateRowMutation() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["rows"] });
     },
+    onError: () => {
+    },
   });
 }
 

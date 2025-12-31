@@ -15,6 +15,8 @@ export function useUpdateAskActionsByIdMutation() {
       queryClient.invalidateQueries({ queryKey: ["asks", id] });
       queryClient.invalidateQueries({ queryKey: ["asks"] });
     },
+    onError: () => {
+    },
   });
 }
 

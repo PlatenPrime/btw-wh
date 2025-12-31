@@ -24,6 +24,8 @@ export function useUpdateRowMutation() {
         data: updatedRow,
       });
     },
+    onError: () => {
+    },
   });
 }
 

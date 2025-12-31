@@ -2,6 +2,7 @@ import { View } from "react-native";
 import { ThemedView } from "@/components/themed-view";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import { Box } from "@/components/ui";
+import { BtradeArtDataSkeleton } from "@/modules/arts/components/containers/btrade-art-data-container/BtradeArtDataSkeleton";
 
 export function AskDetailsCardSkeleton() {
   const { card } = useThemeColors();
@@ -32,6 +33,7 @@ export function AskDetailsCardSkeleton() {
           <Box className="rounded bg-secondary-300" style={{ height: 16, width: 64 }} />
           <Box className="rounded bg-secondary-300" style={{ height: 16, width: 128 }} />
           <Box className="rounded bg-secondary-300" style={{ height: 16, width: 96 }} />
+          <BtradeArtDataSkeleton />
           <Box className="rounded bg-secondary-300" style={{ height: 16, width: 112 }} />
           <Box className="rounded bg-secondary-300" style={{ height: 12, width: 80 }} />
         </View>

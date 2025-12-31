@@ -1,6 +1,7 @@
 import { ArtImageLink } from "@/components/shared/art-image-link";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
+import { BtradeArtDataFetcher } from "@/modules/arts/components/fetchers/btrade-art-data-fetcher/BtradeArtDataFetcher";
 import type { AskDto } from "@/modules/asks/api/types/dto";
 import { AskCom } from "@/modules/asks/components/elements/ask-com/AskCom";
 import { AskQuant } from "@/modules/asks/components/elements/ask-quant/AskQuant";
@@ -63,6 +64,7 @@ export function AskDetailsCardView({
           <AskQuant quant={quant} />
           <AskCom com={com} />
           <AskSklad sklad={sklad} />
+          <BtradeArtDataFetcher artikul={artikul} />
 
           {askerData && (
             <View className="flex-row items-center gap-2">

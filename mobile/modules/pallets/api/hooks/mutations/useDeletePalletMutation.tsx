@@ -29,6 +29,8 @@ export function useDeletePalletMutation(
         queryClient.invalidateQueries({ queryKey: ["row", { rowTitle }] });
       }
     },
+    onError: () => {
+    },
   });
 }
 

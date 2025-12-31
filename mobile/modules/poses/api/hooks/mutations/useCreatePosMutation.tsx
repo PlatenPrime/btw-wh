@@ -31,6 +31,8 @@ export function useCreatePosMutation(pallet: IPallet) {
         });
       }
     },
+    onError: () => {
+    },
   });
 }
 

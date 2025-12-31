@@ -14,6 +14,8 @@ export function useCreatePalletMutation(rowId: string, rowTitle?: string) {
         queryClient.invalidateQueries({ queryKey: ["row", { rowTitle }] });
       }
     },
+    onError: () => {
+    },
   });
 }
 

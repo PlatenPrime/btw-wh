@@ -33,6 +33,8 @@ export function useUpdatePosByIdMutation() {
         queryClient.invalidateQueries({ queryKey: ["row"] });
       }
     },
+    onError: () => {
+    },
   });
 }
 

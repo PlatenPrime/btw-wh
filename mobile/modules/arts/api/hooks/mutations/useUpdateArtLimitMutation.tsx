@@ -2,7 +2,6 @@ import {
   updateArtLimitById,
   type UpdateArtLimitRequest,
 } from "@/modules/arts/api/services/mutations/updateArtLimitById";
-import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface UseUpdateArtLimitMutationProps {
@@ -25,6 +24,6 @@ export function useUpdateArtLimitMutation({
       });
       queryClient.invalidateQueries({ queryKey: ["arts"] });
     },
+    onError: () => {},
   });
 }
-

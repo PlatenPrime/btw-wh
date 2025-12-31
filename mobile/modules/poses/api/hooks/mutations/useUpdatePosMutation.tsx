@@ -16,6 +16,8 @@ export function useUpdatePosMutation(pos: IPos) {
         queryKey: ["row", { rowId: pos.row }],
       });
     },
+    onError: () => {
+    },
   });
 }
 
