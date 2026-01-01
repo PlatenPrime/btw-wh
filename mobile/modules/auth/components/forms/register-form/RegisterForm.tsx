@@ -7,7 +7,7 @@ import { ActivityIndicator } from "react-native";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 import { RoleType } from "@/constants/roles";
 import type { RegisterData } from "@/modules/auth/api/types";
-import { SemanticColors } from "@/constants/theme";
+import { useThemeColors } from "@/hooks/use-theme-colors";
 
 // Zod schema for register form
 const registerSchema = z.object({
@@ -27,6 +27,7 @@ type RegisterFormValues = z.infer<typeof registerSchema>;
 
 export const RegisterForm = () => {
   const { register: registerUser, isLoading, error } = useAuth();
+  const { placeholder, static: staticColors } = useThemeColors();
   const {
     control,
     handleSubmit,
@@ -97,7 +98,7 @@ export const RegisterForm = () => {
               <Input className="bg-background-50 border border-outline-100 rounded-lg">
                 <InputField
                   placeholder="Введіть логін"
-                  placeholderTextColor={SemanticColors.placeholder.light}
+                  placeholderTextColor={placeholder}
                   autoComplete="username"
                   autoCapitalize="none"
                   value={value}
@@ -122,7 +123,7 @@ export const RegisterForm = () => {
               <Input className="bg-background-50 border border-outline-100 rounded-lg">
                 <InputField
                   placeholder="Введіть пароль"
-                  placeholderTextColor={SemanticColors.placeholder.light}
+                  placeholderTextColor={placeholder}
                   autoComplete="new-password"
                   secureTextEntry
                   value={value}
@@ -147,7 +148,7 @@ export const RegisterForm = () => {
               <Input className="bg-background-50 border border-outline-100 rounded-lg">
                 <InputField
                   placeholder="Введіть повне ім'я"
-                  placeholderTextColor={SemanticColors.placeholder.light}
+                  placeholderTextColor={placeholder}
                   autoComplete="name"
                   value={value}
                   onChangeText={onChange}
@@ -173,7 +174,7 @@ export const RegisterForm = () => {
               <Input className="bg-background-50 border border-outline-100 rounded-lg">
                 <InputField
                   placeholder="USER, ADMIN, PRIME"
-                  placeholderTextColor={SemanticColors.placeholder.light}
+                  placeholderTextColor={placeholder}
                   autoCapitalize="characters"
                   value={value}
                   onChangeText={onChange}
@@ -196,7 +197,7 @@ export const RegisterForm = () => {
               <Input className="bg-background-50 border border-outline-100 rounded-lg">
                 <InputField
                   placeholder="Введіть telegram"
-                  placeholderTextColor={SemanticColors.placeholder.light}
+                  placeholderTextColor={placeholder}
                   autoCapitalize="none"
                   value={value}
                   onChangeText={onChange}
@@ -219,7 +220,7 @@ export const RegisterForm = () => {
               <Input className="bg-background-50 border border-outline-100 rounded-lg">
                 <InputField
                   placeholder="https://example.com/photo.jpg"
-                  placeholderTextColor={SemanticColors.placeholder.light}
+                  placeholderTextColor={placeholder}
                   autoCapitalize="none"
                   keyboardType="url"
                   value={value}
@@ -241,7 +242,7 @@ export const RegisterForm = () => {
           disabled={isLoading}
         >
           {isLoading ? (
-            <ActivityIndicator color={SemanticColors.white} />
+            <ActivityIndicator color={staticColors.white} />
           ) : (
             <Text className="text-white font-semibold text-base">
               Зареєструватися

@@ -10,7 +10,7 @@ import {
 import { Icon } from "@/components/ui/icon";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { UpdateArtLimitForm } from "@/modules/arts/components/forms/update-art-limit-form/UpdateArtLimitForm";
-import { SemanticColors } from "@/constants/theme";
+import { useThemeColors } from "@/hooks/use-theme-colors";
 
 interface UpdateArtLimitDialogViewProps {
   artData: ArtDto;
@@ -31,11 +31,13 @@ export function UpdateArtLimitDialogView({
   textColor,
   borderColor,
 }: UpdateArtLimitDialogViewProps) {
+  const { static: staticColors } = useThemeColors();
+  
   return (
     <Modal isOpen={visible} onClose={onClose} className="items-center justify-center">
       <ModalBackdrop
         className="flex-1 justify-center items-center"
-        style={{ backgroundColor: SemanticColors.shadow.backdrop }}
+        style={{ backgroundColor: staticColors.shadow.backdrop }}
       />
       <ModalContent
         className="w-full max-w-md mx-4 rounded-lg p-6 border gap-4"
@@ -44,7 +46,7 @@ export function UpdateArtLimitDialogView({
           borderColor: borderColor,
           ...Platform.select({
             ios: {
-              shadowColor: SemanticColors.shadow.color,
+              shadowColor: staticColors.shadow.color,
               shadowOffset: { width: 0, height: 4 },
               shadowOpacity: 0.3,
               shadowRadius: 8,

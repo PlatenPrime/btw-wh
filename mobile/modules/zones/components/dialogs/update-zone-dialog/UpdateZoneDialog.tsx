@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDialogThemeColors } from "@/hooks/use-dialog-theme-colors";
+import { useThemeColors } from "@/hooks/use-theme-colors";
 import type { ZoneDto } from "@/modules/zones/api/types/dto";
 import { UpdateZoneDialogView } from "./UpdateZoneDialogView";
 
@@ -17,7 +17,10 @@ export function UpdateZoneDialog({
   onSuccess,
 }: UpdateZoneDialogProps) {
   const [internalOpen, setInternalOpen] = useState(false);
-  const { bgColor, textColor, borderColor } = useDialogThemeColors();
+  const { dialog, text } = useThemeColors();
+  const bgColor = dialog.bg;
+  const textColor = text.primary;
+  const borderColor = dialog.border;
 
   const isControlled = controlledOpen !== undefined;
   const open = isControlled ? controlledOpen : internalOpen;

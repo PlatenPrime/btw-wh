@@ -1,10 +1,9 @@
-import React from 'react';
-import { View, TouchableOpacity, Image, Text } from 'react-native';
-import { useAuth } from '@/modules/auth/api/hooks/useAuth';
-import { ThemedText } from '@/components/themed-text';
-import { Colors, SemanticColors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
-import { Icon } from '@/components/ui/icon';
+import { ThemedText } from "@/components/themed-text";
+import { Icon } from "@/components/ui/icon";
+import { useThemeColors } from "@/hooks/use-theme-colors";
+import { useAuth } from "@/modules/auth/api/hooks/useAuth";
+import React from "react";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 
 interface ProfileSidebarCardProps {
   handleLogout: () => void;
@@ -16,9 +15,7 @@ export function ProfileSidebarCard({
   isLoading,
 }: ProfileSidebarCardProps) {
   const { user } = useAuth();
-  const colorScheme = useColorScheme() ?? 'light';
-  const textColor = colorScheme === 'light' ? Colors.light.text : Colors.dark.text;
-  const borderColor = colorScheme === 'light' ? SemanticColors.sidebar.border.light : SemanticColors.sidebar.border.dark;
+  const {  static: staticColors } = useThemeColors();
 
   if (isLoading || !user) {
     return null;
@@ -26,37 +23,44 @@ export function ProfileSidebarCard({
 
   return (
     <View
-      className="mt-auto border-t p-4"
+      className="mt-auto border-t border-outline-100 p-4"
       style={{
-        borderTopColor: borderColor,
+        borderTopColor: staticColors.black[300],
       }}
     >
-      <View className="flex-col items-center gap-2">
+      <View className="flex-col items-center gap-2 ">
         {user.photo && (
           <Image
             source={{ uri: user.photo }}
             className="h-12 w-12 rounded-full"
-            style={{ width: 48, height: 48, borderRadius: 24 }}
+            style={{ width: 96, height: 96, borderRadius: 48 }}
           />
         )}
-        <ThemedText type="defaultSemiBold" className="text-sm">
+        <ThemedText type="defaultSemiBold" className="text-lg">
           {user.fullname}
         </ThemedText>
-        <ThemedText type="default" className="text-xs opacity-70">
+        <ThemedText type="default" className="text-lg opacity-70">
           @{user.username}
         </ThemedText>
         <TouchableOpacity
           onPress={handleLogout}
-          className="w-full rounded-lg border p-3 flex-row items-center justify-center mt-2"
+          className="w-full p-3 flex-row items-center justify-center mt-2"
           style={{
-            borderColor: borderColor,
-            backgroundColor: colorScheme === 'light' ? SemanticColors.dialog.bg.light : SemanticColors.dialog.bg.dark,
+            backgroundColor: staticColors.destructive,
+            borderWidth: 1,
+            borderColor: staticColors.destructive,
+            borderRadius: 8,
           }}
         >
-          <Icon family="MaterialIcons" name="logout" size={20} color={textColor} />
+          <Icon
+            family="MaterialIcons"
+            name="logout"
+            size={20}
+            color={staticColors.white}
+          />
           <Text
             className="ml-2 font-semibold"
-            style={{ color: textColor }}
+            style={{ color: staticColors.white }}
           >
             Вийти
           </Text>
@@ -65,4 +69,3 @@ export function ProfileSidebarCard({
     </View>
   );
 }
-

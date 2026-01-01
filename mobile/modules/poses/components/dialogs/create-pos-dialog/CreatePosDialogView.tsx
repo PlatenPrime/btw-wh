@@ -10,8 +10,7 @@ import { Icon } from "@/components/ui/icon";
 import { CreatePosForm } from "@/modules/poses/components/forms/create-pos-form/CreatePosForm";
 import type { IPallet } from "@/modules/pallets/api/types";
 import { TouchableOpacity, View, Platform } from "react-native";
-import { SemanticColors } from "@/constants/theme";
-import { useDialogThemeColors } from "@/hooks/use-dialog-theme-colors";
+import { useThemeColors } from "@/hooks/use-theme-colors";
 
 interface CreatePosDialogViewProps {
   visible: boolean;
@@ -26,13 +25,16 @@ export function CreatePosDialogView({
   onSuccess,
   pallet,
 }: CreatePosDialogViewProps) {
-  const { bgColor, textColor, borderColor } = useDialogThemeColors();
+  const { dialog, text, static: staticColors } = useThemeColors();
+  const bgColor = dialog.bg;
+  const textColor = text.primary;
+  const borderColor = dialog.border;
 
   return (
     <Modal isOpen={visible} onClose={onClose} className="items-center justify-center">
       <ModalBackdrop
         className="flex-1 justify-center items-center"
-        style={{ backgroundColor: SemanticColors.shadow.backdrop }}
+        style={{ backgroundColor: staticColors.shadow.backdrop }}
       />
       <ModalContent
         className="w-full max-w-md mx-4 rounded-lg p-6 border gap-4"
@@ -42,7 +44,7 @@ export function CreatePosDialogView({
           maxHeight: "90%",
           ...Platform.select({
             ios: {
-              shadowColor: SemanticColors.shadow.color,
+              shadowColor: staticColors.shadow.color,
               shadowOffset: { width: 0, height: 4 },
               shadowOpacity: 0.3,
               shadowRadius: 8,

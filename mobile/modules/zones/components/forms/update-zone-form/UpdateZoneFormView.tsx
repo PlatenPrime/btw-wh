@@ -12,7 +12,7 @@ import { ActivityIndicator } from "react-native";
 import type { UpdateZoneFormValues } from "@/modules/zones/components/forms/schema";
 import type { UseFormReturn } from "react-hook-form";
 import { Controller } from "react-hook-form";
-import { SemanticColors } from "@/constants/theme";
+import { useThemeColors } from "@/hooks/use-theme-colors";
 
 interface UpdateZoneFormViewProps {
   form: UseFormReturn<UpdateZoneFormValues>;
@@ -32,6 +32,7 @@ export function UpdateZoneFormView({
     handleSubmit,
     formState: { errors },
   } = form;
+  const { placeholder, static: staticColors } = useThemeColors();
 
   return (
     <Box className="gap-4">
@@ -50,7 +51,7 @@ export function UpdateZoneFormView({
             >
               <InputField
                 placeholder="42-5-2"
-                placeholderTextColor={SemanticColors.placeholder.light}
+                placeholderTextColor={placeholder}
                 value={value || ""}
                 onChangeText={onChange}
                 onBlur={onBlur}
@@ -83,7 +84,7 @@ export function UpdateZoneFormView({
             >
               <InputField
                 placeholder="420502"
-                placeholderTextColor={SemanticColors.placeholder.light}
+                placeholderTextColor={placeholder}
                 value={value ? String(value) : ""}
                 onChangeText={(text) => {
                   const num = text === "" ? undefined : Number(text);
@@ -119,7 +120,7 @@ export function UpdateZoneFormView({
             >
               <InputField
                 placeholder="0"
-                placeholderTextColor={SemanticColors.placeholder.light}
+                placeholderTextColor={placeholder}
                 value={value ? String(value) : ""}
                 onChangeText={(text) => {
                   const num = text === "" ? undefined : Number(text);
@@ -164,7 +165,7 @@ export function UpdateZoneFormView({
           className="flex-1"
         >
           {isSubmitting ? (
-            <ActivityIndicator color={SemanticColors.white} />
+            <ActivityIndicator color={staticColors.white} />
           ) : (
             <Text className="text-white font-semibold">Оновити</Text>
           )}

@@ -6,7 +6,7 @@ import { Icon } from "@/components/ui/icon";
 import type { UpdatePosFormData } from "./schema";
 import type { UseFormReturn } from "react-hook-form";
 import { Controller } from "react-hook-form";
-import { SemanticColors } from "@/constants/theme";
+import { useThemeColors } from "@/hooks/use-theme-colors";
 import { sklads, type ISklads } from "@/constants/sklad";
 import { useIconColor } from "@/hooks/use-icon-color";
 
@@ -30,6 +30,7 @@ export function UpdatePosFormView({
   } = form;
 
   const iconColor = useIconColor();
+  const { placeholder, static: staticColors } = useThemeColors();
 
   return (
     <Box className="gap-4">
@@ -66,7 +67,7 @@ export function UpdatePosFormView({
               >
                 <InputField
                   placeholder="Введіть кількість"
-                  placeholderTextColor={SemanticColors.placeholder.light}
+                  placeholderTextColor={placeholder}
                   value={value || ""}
                   onChangeText={handleChange}
                   onBlur={onBlur}
@@ -118,7 +119,7 @@ export function UpdatePosFormView({
               >
                 <InputField
                   placeholder="Введіть кількість коробок"
-                  placeholderTextColor={SemanticColors.placeholder.light}
+                  placeholderTextColor={placeholder}
                   value={value || ""}
                   onChangeText={handleChange}
                   onBlur={onBlur}
@@ -170,7 +171,7 @@ export function UpdatePosFormView({
                       family="MaterialIcons"
                       name={isSelected ? "radio-button-checked" : "radio-button-unchecked"}
                       size={20}
-                      color={isSelected ? SemanticColors.info : iconColor}
+                      color={isSelected ? staticColors.info : iconColor}
                     />
                   </Pressable>
                 );
@@ -209,7 +210,7 @@ export function UpdatePosFormView({
           className="flex-1"
         >
           {isSubmitting ? (
-            <ActivityIndicator color={SemanticColors.white} />
+            <ActivityIndicator color={staticColors.white} />
           ) : (
             <Text className="text-white font-semibold">Оновити</Text>
           )}

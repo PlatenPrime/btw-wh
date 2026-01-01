@@ -4,6 +4,7 @@ import { HStack, VStack } from "@/components/ui";
 import { Icon } from "@/components/ui/icon";
 import { SemanticColors } from "@/constants/theme";
 import { useThemeColors } from "@/hooks/use-theme-colors";
+import { hexToRgba } from "@/utils/color-utils";
 import type { AskEvent } from "@/modules/asks/api/types/dto";
 import { formatDateTime } from "@/modules/asks/utils/format-date";
 import { ASK_EVENT_META } from "../../constants/askEventMeta";
@@ -12,6 +13,22 @@ interface AskEventProps {
   event: AskEvent;
   index: number;
 }
+
+/**
+ * Маппинг accent цветов на цвета из iconColors
+ * accentBgColor и accentBorderColor из meta не определены в нашей системе токенов,
+ * поэтому используем соответствующие цвета из iconColors с opacity
+ */
+const accentColorMap: Record<string, keyof typeof SemanticColors.iconColors> = {
+  "emerald-50": "emerald",
+  "emerald-200": "emerald",
+  "yellow-50": "yellow",
+  "yellow-200": "yellow",
+  "gray-50": "typography" as any, // Используем typography как fallback
+  "gray-200": "typography" as any,
+  "rose-50": "rose",
+  "rose-200": "rose",
+};
 
 export function AskEvent({ event, index }: AskEventProps) {
   const meta = ASK_EVENT_META[event.eventName];
@@ -26,17 +43,29 @@ export function AskEvent({ event, index }: AskEventProps) {
       meta.iconColor as keyof typeof SemanticColors.iconColors
     ] || text.icon;
 
+  // Получаем цвета для accentBg и accentBorder через iconColors с opacity
+  const accentBgColorKey = accentColorMap[meta.accentBgColor];
+  const accentBorderColorKey = accentColorMap[meta.accentBorderColor];
+  
+  const accentBgColor = accentBgColorKey && accentBgColorKey !== "typography"
+    ? hexToRgba(SemanticColors.iconColors[accentBgColorKey], 0.1)
+    : card.bg;
+    
+  const accentBorderColor = accentBorderColorKey && accentBorderColorKey !== "typography"
+    ? hexToRgba(SemanticColors.iconColors[accentBorderColorKey], 0.3)
+    : card.border;
+
   return (
     <ThemedView
       key={event._id ?? `${event.eventName}-${event.date}-${index}`}
-      className={`rounded-md border  p-2 bg-${meta.accentBgColor} border-${meta.accentBorderColor}`}
+      className="rounded-md border p-2"
       style={{
-        backgroundColor: card.bg,
-        borderColor: card.border,
+        backgroundColor: accentBgColor,
+        borderColor: accentBorderColor,
       }}
     >
       <VStack className="gap-1">
-        <HStack className="items-center gap-2 ">
+        <HStack className="items-center gap-2">
           <Icon
             family="MaterialIcons"
             name={meta.iconName}

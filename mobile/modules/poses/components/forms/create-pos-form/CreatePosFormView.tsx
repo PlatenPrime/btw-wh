@@ -17,6 +17,7 @@ import { Controller } from "react-hook-form";
 import { SemanticColors } from "@/constants/theme";
 import { sklads, type ISklads } from "@/constants/sklad";
 import { useIconColor } from "@/hooks/use-icon-color";
+import { useThemeColors } from "@/hooks/use-theme-colors";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import type { IPos } from "@/modules/poses/api/types";
 import { Image } from "expo-image";
@@ -59,6 +60,7 @@ export function CreatePosFormView({
   } = form;
 
   const iconColor = useIconColor();
+  const { placeholder } = useThemeColors();
   const watchedValues = watch();
   
   // Проверка валидности формы для активации кнопки
@@ -134,7 +136,7 @@ export function CreatePosFormView({
               >
                 <InputField
                   placeholder="1111-1111"
-                  placeholderTextColor={SemanticColors.placeholder.light}
+                  placeholderTextColor={placeholder}
                   value={value || ""}
                   onChangeText={handleChange}
                   onBlur={onBlur}
@@ -198,7 +200,7 @@ export function CreatePosFormView({
               >
                 <InputField
                   placeholder="Введіть кількість"
-                  placeholderTextColor={SemanticColors.placeholder.light}
+                  placeholderTextColor={placeholder}
                   value={value === 0 ? "" : value.toString()}
                   onChangeText={handleChange}
                   onBlur={onBlur}
@@ -251,7 +253,7 @@ export function CreatePosFormView({
               >
                 <InputField
                   placeholder="Введіть кількість коробок"
-                  placeholderTextColor={SemanticColors.placeholder.light}
+                  placeholderTextColor={placeholder}
                   value={value === 0 ? "" : value.toString()}
                   onChangeText={handleChange}
                   onBlur={onBlur}

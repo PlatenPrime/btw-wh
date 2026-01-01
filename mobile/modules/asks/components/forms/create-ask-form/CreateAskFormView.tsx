@@ -13,6 +13,7 @@ import { Icon } from "@/components/ui/icon";
 import { sklads } from "@/constants/sklad";
 import { SemanticColors } from "@/constants/theme";
 import { useIconColor } from "@/hooks/use-icon-color";
+import { useThemeColors } from "@/hooks/use-theme-colors";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { getSmallImageUrl } from "@/modules/arts/constants/art-image-url";
 import type { CreateAskFormData } from "@/modules/asks/components/forms/create-ask-form/schema";
@@ -48,6 +49,7 @@ export function CreateAskFormView({
     formState: { errors },
   } = form;
   const iconColor = useIconColor();
+  const { placeholder } = useThemeColors();
 
   // Информация об артикуле
   const renderArtInfo = () => {
@@ -113,7 +115,7 @@ export function CreateAskFormView({
               >
                 <InputField
                   placeholder="1111-1111"
-                  placeholderTextColor={SemanticColors.placeholder.light}
+                  placeholderTextColor={placeholder}
                   value={value || ""}
                   onChangeText={handleChange}
                   onBlur={onBlur}

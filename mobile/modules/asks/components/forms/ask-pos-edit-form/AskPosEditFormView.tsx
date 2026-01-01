@@ -9,7 +9,6 @@ import {
   Text,
   VStack,
 } from "@/components/ui";
-import { SemanticColors } from "@/constants/theme";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import type { PosResponse } from "@/modules/poses/api/types";
 import { Controller, type UseFormReturn } from "react-hook-form";
@@ -46,7 +45,7 @@ export function AskPosEditFormView({
   } = form;
 
   const removedQuantValue = watch("removedQuant");
-  const { card } = useThemeColors();
+  const { card, placeholder, static: staticColors } = useThemeColors();
 
   // #region agent log
   const logData = {
@@ -110,7 +109,7 @@ export function AskPosEditFormView({
             >
               <InputField
                 placeholder="Введіть кількість"
-                placeholderTextColor={SemanticColors.placeholder.light}
+                placeholderTextColor={placeholder}
                 value={value === "0" ? "" : value || ""}
                 onChangeText={(text) => {
                   // Форматируем значение
@@ -167,7 +166,7 @@ export function AskPosEditFormView({
             >
               <InputField
                 placeholder="Введіть кількість коробок"
-                placeholderTextColor={SemanticColors.placeholder.light}
+                placeholderTextColor={placeholder}
                 value={value === "0" ? "" : value || ""}
                 onChangeText={(text) => {
                   // Форматируем значение
@@ -282,7 +281,7 @@ export function AskPosEditFormView({
           className="flex-1"
         >
           {isSubmitting ? (
-            <ActivityIndicator color={SemanticColors.white} />
+            <ActivityIndicator color={staticColors.white} />
           ) : (
             <Text className="text-white font-semibold">Підтвердити</Text>
           )}

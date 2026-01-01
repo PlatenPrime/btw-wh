@@ -1,4 +1,4 @@
-import { useDialogThemeColors } from "@/hooks/use-dialog-theme-colors";
+import { useThemeColors } from "@/hooks/use-theme-colors";
 import { FormDialogView } from "./FormDialogView";
 
 interface FormDialogProps {
@@ -16,7 +16,10 @@ export function FormDialog({
   children,
   footer,
 }: FormDialogProps) {
-  const { bgColor, textColor, borderColor } = useDialogThemeColors();
+  const { dialog, text } = useThemeColors();
+  const bgColor = dialog.bg;
+  const textColor = text.primary;
+  const borderColor = dialog.border;
 
   return (
     <FormDialogView

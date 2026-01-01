@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDialogThemeColors } from "@/hooks/use-dialog-theme-colors";
+import { useThemeColors } from "@/hooks/use-theme-colors";
 import { RejectAskDialogView } from "./RejectAskDialogView";
 import { useRejectAskDialog } from "./useRejectAskDialog";
 
@@ -19,7 +19,10 @@ export function RejectAskDialog({
   onSuccess,
 }: RejectAskDialogProps) {
   const [internalOpen, setInternalOpen] = useState(false);
-  const { bgColor, textColor, borderColor } = useDialogThemeColors();
+  const { dialog, text } = useThemeColors();
+  const bgColor = dialog.bg;
+  const textColor = text.primary;
+  const borderColor = dialog.border;
 
   const isControlled = controlledOpen !== undefined;
   const open = isControlled ? controlledOpen : internalOpen;

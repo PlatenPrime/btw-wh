@@ -1,28 +1,48 @@
 import { HapticTab } from "@/components/haptic-tab";
 import { useSidebar } from "@/components/layout/sidebar/SidebarProvider";
-import { Colors, SemanticColors } from "@/constants/theme";
-import { useTheme } from "@/providers/theme-provider";
-import { ProtectedRoute } from "@/modules/auth/components/ProtectedRoute";
 import { Icon } from "@/components/ui/icon";
+import { Colors, SemanticColors } from "@/constants/theme";
+import { useThemeColors } from "@/hooks/use-theme-colors";
+import { useThemeTokenHex } from "@/hooks/use-theme-token";
+import { ProtectedRoute } from "@/modules/auth/components/ProtectedRoute";
+import { useTheme } from "@/providers/theme-provider";
+import { getTokenColorWithOpacity } from "@/utils/color-tokens";
 import { Tabs } from "expo-router";
 import React from "react";
 import { Platform } from "react-native";
 
 export default function TabLayout() {
-  const { resolvedTheme } = useTheme();
+  const { background, theme } = useThemeColors();
   const { isOpen } = useSidebar();
-  const theme = resolvedTheme === "dark" ? "dark" : "light";
-  const themeColors = Colors[theme];
+  const { resolvedTheme } = useTheme();
+  const themeMode = resolvedTheme === "dark" ? "dark" : "light";
+
+  // Получаем цвета текста из токенов с fallback на старые цвета
+  const selectedToken = themeMode === "light" ? "primary-600" : "primary-500";
+  const tabIconSelectedHex = useThemeTokenHex(selectedToken);
+  const tabIconDefaultHex = useThemeTokenHex("typography-500");
+
+  const tabBarActiveTintColor =
+    tabIconSelectedHex || Colors[themeMode].tabIconSelected;
+  const tabBarInactiveTintColor =
+    tabIconDefaultHex || Colors[themeMode].tabIconDefault;
+
+  // Получаем цвет границы из токенов с opacity
+  const borderColor = getTokenColorWithOpacity(
+    "outline-200",
+    0.3,
+    theme as "light" | "dark"
+  );
 
   const baseTabBarStyle = Platform.select({
     ios: {
       position: "absolute" as const,
-      backgroundColor: themeColors.background,
-      borderTopColor: theme === "dark" ? "rgba(115, 116, 116, 0.3)" : "rgba(221, 220, 219, 0.3)",
+      backgroundColor: background.primary,
+      borderTopColor: borderColor,
     },
     default: {
-      backgroundColor: themeColors.background,
-      borderTopColor: theme === "dark" ? "rgba(115, 116, 116, 0.3)" : "rgba(221, 220, 219, 0.3)",
+      backgroundColor: background.primary,
+      borderTopColor: borderColor,
     },
   });
 
@@ -34,8 +54,9 @@ export default function TabLayout() {
     <ProtectedRoute>
       <Tabs
         screenOptions={{
-          tabBarActiveTintColor: themeColors.tabIconSelected,
-          tabBarInactiveTintColor: themeColors.tabIconDefault,
+          tabBarActiveTintColor,
+          tabBarInactiveTintColor,
+          tabBarShowLabel: true,
           headerShown: false,
           tabBarButton: HapticTab,
           tabBarStyle,
@@ -48,8 +69,14 @@ export default function TabLayout() {
           name="index"
           options={{
             title: "Головна",
+            tabBarLabel: "Головна",
             tabBarIcon: ({ color }) => (
-              <Icon family="MaterialIcons" name="home" size={28} color={SemanticColors.iconColors.teal} />
+              <Icon
+                family="MaterialIcons"
+                name="home"
+                size={28}
+                color={SemanticColors.iconColors.teal}
+              />
             ),
           }}
         />
@@ -57,8 +84,14 @@ export default function TabLayout() {
           name="arts"
           options={{
             title: "Артикули",
+            tabBarLabel: "Артикули",
             tabBarIcon: ({ color }) => (
-              <Icon family="MaterialIcons" name="article" size={28} color={SemanticColors.iconColors.sky} />
+              <Icon
+                family="MaterialIcons"
+                name="article"
+                size={28}
+                color={SemanticColors.iconColors.sky}
+              />
             ),
           }}
         />
@@ -66,8 +99,14 @@ export default function TabLayout() {
           name="warehouse"
           options={{
             title: "Склад",
+            tabBarLabel: "Склад",
             tabBarIcon: ({ color }) => (
-              <Icon family="MaterialIcons" name="warehouse" size={28} color={SemanticColors.iconColors.yellow} />
+              <Icon
+                family="MaterialIcons"
+                name="warehouse"
+                size={28}
+                color={SemanticColors.iconColors.yellow}
+              />
             ),
           }}
         />
@@ -75,8 +114,14 @@ export default function TabLayout() {
           name="refiling"
           options={{
             title: "Поповнення",
+            tabBarLabel: "Поповнення",
             tabBarIcon: ({ color }) => (
-              <Icon family="AntDesign" name="down-square" size={28} color={SemanticColors.iconColors.purple} />
+              <Icon
+                family="AntDesign"
+                name="down-square"
+                size={28}
+                color={SemanticColors.iconColors.purple}
+              />
             ),
           }}
         />

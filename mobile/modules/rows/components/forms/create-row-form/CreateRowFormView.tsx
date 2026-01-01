@@ -12,7 +12,7 @@ import { ActivityIndicator } from "react-native";
 import type { RowFormValues } from "@/modules/rows/components/forms/schema";
 import type { UseFormReturn } from "react-hook-form";
 import { Controller } from "react-hook-form";
-import { SemanticColors } from "@/constants/theme";
+import { useThemeColors } from "@/hooks/use-theme-colors";
 
 interface CreateRowFormViewProps {
   form: UseFormReturn<RowFormValues>;
@@ -32,6 +32,7 @@ export function CreateRowFormView({
     handleSubmit,
     formState: { errors },
   } = form;
+  const { placeholder, static: staticColors } = useThemeColors();
 
   return (
     <Box className="gap-4">
@@ -50,7 +51,7 @@ export function CreateRowFormView({
             >
               <InputField
                 placeholder="XX-XX"
-                placeholderTextColor={SemanticColors.placeholder.light}
+                placeholderTextColor={placeholder}
                 value={value}
                 onChangeText={onChange}
                 onBlur={onBlur}
@@ -94,7 +95,7 @@ export function CreateRowFormView({
           className="flex-1"
         >
           {isSubmitting ? (
-            <ActivityIndicator color={SemanticColors.white} />
+            <ActivityIndicator color={staticColors.white} />
           ) : (
             <Text className="text-white font-semibold">Створити</Text>
           )}

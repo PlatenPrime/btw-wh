@@ -1,11 +1,10 @@
 import { ThemedText } from "@/components/themed-text";
-import { ThemedView } from "@/components/themed-view";
 import { Icon } from "@/components/ui/icon";
 import type { AskPullStatusMessage } from "@/modules/asks/utils/get-ask-pull-status-message/getAskPullStatusMessage";
 import { HStack } from "@/components/ui";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import { SemanticColors } from "@/constants/theme";
-import { useColorScheme } from "nativewind";
+import { hexToRgba } from "@/utils/color-utils";
 import { View } from "react-native";
 
 interface AskPullStatusMessageProps {
@@ -15,25 +14,27 @@ interface AskPullStatusMessageProps {
 export function AskPullStatusMessage({
   statusMessage,
 }: AskPullStatusMessageProps) {
-  const { card } = useThemeColors();
-  const { colorScheme } = useColorScheme();
-  const theme = colorScheme === "dark" ? "dark" : "light";
+  const { card, error } = useThemeColors();
 
+  // Используем цвета из токенов через useThemeColors
+  // Для success используем emerald из iconColors (специфичный цвет)
+  // и создаем полупрозрачный фон через opacity
   const statusMessageVariants = {
     success: {
       borderColor: SemanticColors.iconColors.emerald,
-      bgColor: theme === "light" ? "#d1fae555" : "#064e3b55",
+      // Используем hexToRgba для создания полупрозрачного фона из hex цвета
+      bgColor: hexToRgba(SemanticColors.iconColors.emerald, 0.15),
       iconColor: SemanticColors.iconColors.emerald,
     },
     warning: {
-      borderColor: SemanticColors.error.border,
-      bgColor: SemanticColors.error.bg[theme],
-      iconColor: SemanticColors.error.text,
+      borderColor: error.border,
+      bgColor: error.bg,
+      iconColor: error.text,
     },
     default: {
       borderColor: card.border,
       bgColor: card.bg,
-      iconColor: SemanticColors.iconColors.teal ,
+      iconColor: SemanticColors.iconColors.teal,
     },
   };
 
@@ -41,7 +42,7 @@ export function AskPullStatusMessage({
 
   return (
     <View
-      className="rounded-lg border p-2 "
+      className="rounded-lg border p-2"
       style={{
         backgroundColor: variant.bgColor,
         borderColor: variant.borderColor,

@@ -59,7 +59,7 @@ export function PalletCardMenu({
       >
         <Icon
           family="MaterialIcons"
-          name="more-horiz"
+          name="more-vert"
           size="md"
           color={SemanticColors.iconColors.sky}
         />

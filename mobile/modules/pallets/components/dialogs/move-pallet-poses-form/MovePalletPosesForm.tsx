@@ -6,7 +6,7 @@ import { ActivityIndicator } from "react-native";
 import type { IPallet } from "@/modules/pallets/api/types";
 import { useEmptyPalletsQuery } from "@/modules/pallets/api/hooks/queries/useEmptyPalletsQuery";
 import { useIconColor } from "@/hooks/use-icon-color";
-import { SemanticColors } from "@/constants/theme";
+import { useThemeColors } from "@/hooks/use-theme-colors";
 
 interface MovePalletPosesFormProps {
   fromPallet: IPallet;
@@ -24,6 +24,7 @@ export function MovePalletPosesForm({
   const [search, setSearch] = useState("");
   const [selectedPalletId, setSelectedPalletId] = useState<string>("");
   const iconColor = useIconColor();
+  const { placeholder, static: staticColors } = useThemeColors();
 
   const palletsQuery = useEmptyPalletsQuery();
   const pallets = palletsQuery.data;
@@ -69,7 +70,7 @@ export function MovePalletPosesForm({
             value={search}
             onChangeText={setSearch}
             placeholder="Пошук паллети за назвою"
-            placeholderTextColor={SemanticColors.placeholder.light}
+            placeholderTextColor={placeholder}
             className="text-typography-900"
           />
         </Input>
@@ -112,7 +113,7 @@ export function MovePalletPosesForm({
                       family="MaterialIcons"
                       name={isSelected ? "radio-button-checked" : "radio-button-unchecked"}
                       size={20}
-                      color={disabled ? SemanticColors.disabled : iconColor}
+                      color={disabled ? staticColors.disabled : iconColor}
                     />
                     <Box className="flex-1">
                       <ThemedText type="default" className="text-sm">
@@ -162,7 +163,7 @@ export function MovePalletPosesForm({
           disabled={!selectedPalletId || isSubmitting}
         >
           {isSubmitting ? (
-            <ActivityIndicator color={SemanticColors.white} />
+            <ActivityIndicator color={staticColors.white} />
           ) : (
             <Text className="text-white font-semibold">Підтвердити</Text>
           )}

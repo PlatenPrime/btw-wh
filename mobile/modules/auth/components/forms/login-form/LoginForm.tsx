@@ -8,7 +8,7 @@ import {
   ScrollView,
   Text,
 } from "@/components/ui";
-import { SemanticColors } from "@/constants/theme";
+import { useThemeColors } from "@/hooks/use-theme-colors";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useState } from "react";
@@ -27,6 +27,7 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 export const LoginForm = () => {
   const { login, isLoading, error } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
+  const { placeholder, static: staticColors } = useThemeColors();
   const {
     control,
     handleSubmit,
@@ -84,7 +85,7 @@ export const LoginForm = () => {
               <Input className="bg-background-50 border border-outline-100 rounded-lg">
                 <InputField
                   placeholder="Введіть логін"
-                  placeholderTextColor={SemanticColors.placeholder.light}
+                  placeholderTextColor={placeholder}
                   autoComplete="username"
                   autoCapitalize="none"
                   value={value}
@@ -113,7 +114,7 @@ export const LoginForm = () => {
               <Input className="bg-background-50 border border-outline-100 rounded-lg">
                 <InputField
                   placeholder="Введіть пароль"
-                  placeholderTextColor={SemanticColors.placeholder.light}
+                  placeholderTextColor={placeholder}
                   autoComplete="current-password"
                   secureTextEntry={!showPassword}
                   value={value}
@@ -126,7 +127,7 @@ export const LoginForm = () => {
                     family="FontAwesome5"
                     name={showPassword ? "eye-slash" : "eye"}
                     size={22}
-                    color={SemanticColors.placeholder.light}
+                    color={placeholder}
                   />
                 </InputSlot>
               </Input>
@@ -145,7 +146,7 @@ export const LoginForm = () => {
           disabled={isLoading}
         >
           {isLoading ? (
-            <ActivityIndicator color={SemanticColors.white} />
+            <ActivityIndicator color={staticColors.white} />
           ) : (
             <Text className="text-white font-semibold text-base">Вхід</Text>
           )}

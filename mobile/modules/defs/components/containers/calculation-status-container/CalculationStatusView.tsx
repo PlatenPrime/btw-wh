@@ -4,6 +4,7 @@ import { Spinner } from "@/components/ui";
 import { Icon } from "@/components/ui/icon";
 import { SemanticColors } from "@/constants/theme";
 import { useThemeColors } from "@/hooks/use-theme-colors";
+import { useThemeTokenHex } from "@/hooks/use-theme-token";
 import { formatDateTime } from "@/modules/asks/utils/format-date";
 import type { DefsCalculationStatus } from "@/modules/defs/api/types/dto";
 import { View } from "react-native";
@@ -29,9 +30,13 @@ export function CalculationStatusView({
   status,
   isLoading,
 }: CalculationStatusViewProps) {
-  const { card, theme } = useThemeColors();
+  const { card, theme, text } = useThemeColors();
   const bgColor = card.bg;
   const borderColor = card.border;
+  // Получаем цвета для спиннера и прогресс-бара из токенов
+  const spinnerColor = useThemeTokenHex('info-500');
+  const progressBgColor = useThemeTokenHex(theme === 'dark' ? 'typography-700' : 'typography-300');
+  const progressFillColor = useThemeTokenHex('info-500');
 
   if (isLoading) {
     return (
@@ -45,7 +50,7 @@ export function CalculationStatusView({
         <View className="flex-row items-center gap-2">
           <Spinner
             size="small"
-            color={theme === "dark" ? "#60a5fa" : "#2563eb"}
+            color={spinnerColor || "#2563eb"}
           />
           <ThemedText type="title" className="text-lg">
             Розрахунок дефіцитів виконується
@@ -78,7 +83,7 @@ export function CalculationStatusView({
         <View className="flex-row items-center gap-2">
           <Spinner
             size="small"
-            color={theme === "dark" ? "#60a5fa" : "#2563eb"}
+            color={spinnerColor || "#2563eb"}
           />
           <ThemedText type="title" className="text-lg">
             Розрахунок дефіцитів виконується
@@ -97,14 +102,14 @@ export function CalculationStatusView({
               className="rounded-full overflow-hidden"
               style={{
                 height: 8,
-                backgroundColor: theme === "dark" ? "#374151" : "#e5e7eb",
+                backgroundColor: progressBgColor || "#e5e7eb",
               }}
             >
               <View
                 style={{
                   height: "100%",
                   width: `${status.progress}%`,
-                  backgroundColor: theme === "dark" ? "#60a5fa" : "#2563eb",
+                  backgroundColor: progressFillColor || "#2563eb",
                 }}
               />
             </View>
@@ -175,7 +180,7 @@ export function CalculationStatusView({
           family="MaterialIcons"
           name="check-circle"
           size={20}
-          color="#22c55e"
+          color={SemanticColors.iconColors.green}
         />
         <ThemedText type="title" className="text-sm">
           Розрахунок дефіцитів завершено

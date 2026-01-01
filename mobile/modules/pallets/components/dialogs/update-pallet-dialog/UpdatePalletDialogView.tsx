@@ -10,7 +10,7 @@ import { Icon } from "@/components/ui/icon";
 import { UpdatePalletForm } from "@/modules/pallets/components/forms/update-pallet-form/UpdatePalletForm";
 import type { PalletShortDto } from "@/modules/pallets/api/types";
 import { TouchableOpacity, View, Platform } from "react-native";
-import { SemanticColors } from "@/constants/theme";
+import { useThemeColors } from "@/hooks/use-theme-colors";
 
 interface UpdatePalletDialogViewProps {
   pallet: PalletShortDto;
@@ -33,11 +33,13 @@ export function UpdatePalletDialogView({
   textColor,
   borderColor,
 }: UpdatePalletDialogViewProps) {
+  const { static: staticColors } = useThemeColors();
+  
   return (
     <Modal isOpen={visible} onClose={onClose} className="items-center justify-center">
       <ModalBackdrop
         className="flex-1 justify-center items-center"
-        style={{ backgroundColor: SemanticColors.shadow.backdrop }}
+        style={{ backgroundColor: staticColors.shadow.backdrop }}
       />
       <ModalContent
         className="w-full max-w-md mx-4 rounded-lg p-6 border gap-4"
@@ -46,7 +48,7 @@ export function UpdatePalletDialogView({
           borderColor: borderColor,
           ...Platform.select({
             ios: {
-              shadowColor: SemanticColors.shadow.color,
+              shadowColor: staticColors.shadow.color,
               shadowOffset: { width: 0, height: 4 },
               shadowOpacity: 0.3,
               shadowRadius: 8,

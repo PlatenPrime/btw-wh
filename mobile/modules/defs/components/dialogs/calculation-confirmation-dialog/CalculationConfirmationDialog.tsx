@@ -1,4 +1,4 @@
-import { useDialogThemeColors } from "@/hooks/use-dialog-theme-colors";
+import { useThemeColors } from "@/hooks/use-theme-colors";
 import { CalculationConfirmationDialogView } from "./CalculationConfirmationDialogView";
 
 interface CalculationConfirmationDialogProps {
@@ -14,7 +14,10 @@ export function CalculationConfirmationDialog({
   onConfirm,
   isPending,
 }: CalculationConfirmationDialogProps) {
-  const { bgColor, textColor, borderColor } = useDialogThemeColors();
+  const { dialog, text } = useThemeColors();
+  const bgColor = dialog.bg;
+  const textColor = text.primary;
+  const borderColor = dialog.border;
 
   return (
     <CalculationConfirmationDialogView

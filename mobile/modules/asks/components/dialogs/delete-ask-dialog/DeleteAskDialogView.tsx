@@ -9,7 +9,7 @@ import {
   ModalFooter,
   ModalHeader,
 } from "@/components/ui/modal-native";
-import { SemanticColors } from "@/constants/theme";
+import { useThemeColors } from "@/hooks/use-theme-colors";
 import {
   ActivityIndicator,
   Platform,
@@ -38,6 +38,8 @@ export function DeleteAskDialogView({
   textColor,
   borderColor,
 }: DeleteAskDialogViewProps) {
+  const { static: staticColors } = useThemeColors();
+  
   return (
     <Modal
       isOpen={visible}
@@ -46,7 +48,7 @@ export function DeleteAskDialogView({
     >
       <ModalBackdrop
         className="flex-1 justify-center items-center"
-        style={{ backgroundColor: SemanticColors.shadow.backdrop }}
+        style={{ backgroundColor: staticColors.shadow.backdrop }}
       />
       <ModalContent
         className="w-full max-w-md mx-4 rounded-lg p-6 border gap-4"
@@ -55,7 +57,7 @@ export function DeleteAskDialogView({
           borderColor: borderColor,
           ...Platform.select({
             ios: {
-              shadowColor: SemanticColors.shadow.color,
+              shadowColor: staticColors.shadow.color,
               shadowOffset: { width: 0, height: 4 },
               shadowOpacity: 0.3,
               shadowRadius: 8,
@@ -111,7 +113,7 @@ export function DeleteAskDialogView({
             className="flex-1"
           >
             {isDeleting ? (
-              <ActivityIndicator color={SemanticColors.white} />
+              <ActivityIndicator color={staticColors.white} />
             ) : (
               <Text className="text-white font-semibold">Видалити</Text>
             )}

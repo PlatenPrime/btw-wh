@@ -1,16 +1,13 @@
-import { useForm, Controller } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { View, TextInput, TouchableOpacity, ActivityIndicator } from "react-native";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { useColorScheme } from "@/hooks/use-color-scheme";
-import { Colors, SemanticColors } from "@/constants/theme";
+import { Input, InputField } from "@/components/ui";
+import { useThemeColors } from "@/hooks/use-theme-colors";
 import { useUpdateArtLimitMutation } from "@/modules/arts/api/hooks/mutations/useUpdateArtLimitMutation";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
-import {
-  updateArtLimitSchema,
-  type UpdateArtLimitFormData,
-} from "./schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller, useForm } from "react-hook-form";
+import { ActivityIndicator, TouchableOpacity, View } from "react-native";
+import { updateArtLimitSchema, type UpdateArtLimitFormData } from "./schema";
 
 interface UpdateArtLimitFormProps {
   artData: ArtDto;
@@ -23,11 +20,7 @@ export function UpdateArtLimitForm({
   onSuccess,
   onCancel,
 }: UpdateArtLimitFormProps) {
-  const colorScheme = useColorScheme() ?? "light";
-  const bgColor = colorScheme === "light" ? SemanticColors.dialog.bg.light : SemanticColors.dialog.bg.dark;
-  const borderColor = colorScheme === "light" ? SemanticColors.dialog.border.light : SemanticColors.dialog.border.dark;
-  const textColor = colorScheme === "light" ? Colors.light.text : Colors.dark.text;
-  const placeholderColor = colorScheme === "light" ? SemanticColors.placeholder.light : SemanticColors.placeholder.dark;
+  const { placeholder, static: staticColors } = useThemeColors();
 
   const form = useForm<UpdateArtLimitFormData>({
     resolver: zodResolver(updateArtLimitSchema),
@@ -54,9 +47,7 @@ export function UpdateArtLimitForm({
       console.error("Помилка оновлення ліміту:", error);
       form.setError("root", {
         message:
-          error instanceof Error
-            ? error.message
-            : "Помилка оновлення ліміту",
+          error instanceof Error ? error.message : "Помилка оновлення ліміту",
       });
     }
   };
@@ -88,43 +79,38 @@ export function UpdateArtLimitForm({
           control={control}
           name="limit"
           render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              className="rounded-lg px-4 py-3 border"
-              style={{
-                backgroundColor: bgColor,
-                borderColor: errors.limit ? SemanticColors.error.border : borderColor,
-                color: textColor,
-              }}
-              placeholder="Введіть ліміт"
-              placeholderTextColor={placeholderColor}
-              keyboardType="numeric"
-              value={limitValue === 0 ? "" : limitValue.toString()}
-              onChangeText={(text) => {
-                handleLimitChange(text);
-                onChange(text === "" ? 0 : Number(text));
-              }}
-              onBlur={onBlur}
-              autoFocus
-              editable={!isSubmitting}
-            />
+            <Input
+              className={`rounded-lg border bg-background-0 ${
+                errors.limit ? "border-error-500" : "border-outline-100"
+              }`}
+            >
+              <InputField
+                placeholder="Введіть ліміт"
+                placeholderTextColor={placeholder}
+                keyboardType="numeric"
+                value={limitValue === 0 ? "" : limitValue.toString()}
+                onChangeText={(text) => {
+                  handleLimitChange(text);
+                  onChange(text === "" ? 0 : Number(text));
+                }}
+                onBlur={onBlur}
+                autoFocus
+                editable={!isSubmitting}
+                className="text-typography-900"
+              />
+            </Input>
           )}
         />
         {errors.limit && (
-          <ThemedText type="default" className="text-xs" style={{ color: SemanticColors.error.text }}>
+          <ThemedText type="default" className="text-xs text-error-600">
             {errors.limit.message}
           </ThemedText>
         )}
       </View>
 
       {errors.root && (
-        <ThemedView
-          className="rounded-lg p-3 border"
-          style={{
-            backgroundColor: colorScheme === "light" ? SemanticColors.error.bg.light : SemanticColors.error.bg.dark,
-            borderColor: SemanticColors.error.border,
-          }}
-        >
-          <ThemedText type="default" className="text-xs" style={{ color: SemanticColors.error.text }}>
+        <ThemedView className="rounded-lg p-3 border border-error-500 bg-error-50">
+          <ThemedText type="default" className="text-xs text-error-700">
             {errors.root.message}
           </ThemedText>
         </ThemedView>
@@ -132,11 +118,7 @@ export function UpdateArtLimitForm({
 
       <View className="flex-row gap-2">
         <TouchableOpacity
-          className="flex-1 rounded-lg py-3 items-center justify-center border"
-          style={{
-            backgroundColor: bgColor,
-            borderColor: borderColor,
-          }}
+          className="flex-1 rounded-lg py-3 items-center justify-center border border-outline-100 bg-background-0"
           onPress={onCancel}
           disabled={isSubmitting}
         >
@@ -145,16 +127,21 @@ export function UpdateArtLimitForm({
         <TouchableOpacity
           className="flex-1 rounded-lg py-3 items-center justify-center"
           style={{
-            backgroundColor: isSubmitting ? SemanticColors.disabled : SemanticColors.primary,
+            backgroundColor: isSubmitting
+              ? staticColors.disabled
+              : staticColors.primary,
             opacity: isSubmitting ? 0.5 : 1,
           }}
           onPress={handleSubmit(onSubmit)}
           disabled={isSubmitting}
         >
           {isSubmitting ? (
-            <ActivityIndicator color={SemanticColors.white} />
+            <ActivityIndicator color={staticColors.white} />
           ) : (
-            <ThemedText type="defaultSemiBold" style={{ color: SemanticColors.white }}>
+            <ThemedText
+              type="defaultSemiBold"
+              style={{ color: staticColors.white }}
+            >
               Зберегти
             </ThemedText>
           )}
@@ -163,4 +150,3 @@ export function UpdateArtLimitForm({
     </View>
   );
 }
-

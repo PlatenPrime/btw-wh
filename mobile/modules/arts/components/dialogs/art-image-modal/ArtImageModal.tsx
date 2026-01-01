@@ -2,7 +2,7 @@ import { Modal, View, TouchableOpacity, TouchableWithoutFeedback } from "react-n
 import { Image } from "expo-image";
 import { Icon } from "@/components/ui/icon";
 import { getBigImageUrl } from "@/modules/arts/constants/art-image-url";
-import { SemanticColors } from "@/constants/theme";
+import { useThemeColors } from "@/hooks/use-theme-colors";
 
 interface ArtImageModalProps {
   artikul: string;
@@ -19,6 +19,7 @@ export function ArtImageModal({
   visible,
   onClose,
 }: ArtImageModalProps) {
+  const { static: staticColors } = useThemeColors();
   const imageUrl = getBigImageUrl(artikul);
 
   return (
@@ -31,17 +32,17 @@ export function ArtImageModal({
       <TouchableWithoutFeedback onPress={onClose}>
         <View
           className="flex-1 justify-center items-center"
-          style={{ backgroundColor: SemanticColors.shadow.backdropDark }}
+          style={{ backgroundColor: staticColors.shadow.backdropDark }}
         >
           <TouchableWithoutFeedback>
             <View className="relative w-full max-w-md p-4">
               <TouchableOpacity
                 onPress={onClose}
                 className="absolute top-2 right-2 z-10 p-2 rounded-full"
-                style={{ backgroundColor: SemanticColors.shadow.backdrop }}
+                style={{ backgroundColor: staticColors.shadow.backdrop }}
                 activeOpacity={0.7}
               >
-                <Icon family="MaterialIcons" name="close" size={24} color={SemanticColors.white} />
+                <Icon family="MaterialIcons" name="close" size={24} color={staticColors.white} />
               </TouchableOpacity>
 
               <Image

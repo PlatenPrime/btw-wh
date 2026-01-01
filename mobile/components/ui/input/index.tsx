@@ -21,7 +21,7 @@ const InputContext = createContext<InputContextType>({});
 const useInputContext = () => useContext(InputContext);
 
 const inputStyle = tva({
-  base: "border-background-300 flex-row overflow-hidden content-center data-[hover=true]:border-outline-400 data-[focus=true]:border-primary-700 data-[focus=true]:hover:border-primary-700 data-[disabled=true]:opacity-40 data-[disabled=true]:hover:border-background-300 items-center",
+  base: "border-outline-100 flex-row overflow-hidden content-center data-[hover=true]:border-outline-400 data-[focus=true]:border-primary-700 data-[focus=true]:hover:border-primary-700 data-[disabled=true]:opacity-40 data-[disabled=true]:hover:border-outline-100 items-center",
   variants: {
     size: {
       xl: "h-12",

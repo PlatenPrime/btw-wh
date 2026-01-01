@@ -1,5 +1,8 @@
 /**
  * Утилиты для работы с цветами
+ * 
+ * Этот файл содержит базовые утилиты для работы с hex цветами.
+ * Для работы с Tailwind токенами используйте utils/color-tokens.ts
  */
 
 /**
@@ -22,5 +25,26 @@ export function hexToRgba(hex: string, opacity: number): string {
   const b = parseInt(cleanHex.substring(4, 6), 16);
   
   return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+}
+
+/**
+ * Валидирует hex цвет
+ * 
+ * @param hex - Hex цвет для валидации
+ * @returns true, если hex цвет валиден
+ */
+export function isValidHex(hex: string): boolean {
+  const hexPattern = /^#?[0-9A-Fa-f]{6}$/;
+  return hexPattern.test(hex);
+}
+
+/**
+ * Нормализует hex цвет (добавляет # если отсутствует)
+ * 
+ * @param hex - Hex цвет
+ * @returns Нормализованный hex цвет с #
+ */
+export function normalizeHex(hex: string): string {
+  return hex.startsWith('#') ? hex : `#${hex}`;
 }
 

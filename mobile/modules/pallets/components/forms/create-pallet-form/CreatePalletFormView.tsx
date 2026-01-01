@@ -11,7 +11,7 @@ import type { PalletFormValues } from "@/modules/pallets/components/forms/schema
 import type { UseFormReturn } from "react-hook-form";
 import { Controller } from "react-hook-form";
 import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
-import { SemanticColors } from "@/constants/theme";
+import { useThemeColors } from "@/hooks/use-theme-colors";
 
 interface CreatePalletFormViewProps {
   form: UseFormReturn<PalletFormValues>;
@@ -33,6 +33,7 @@ export function CreatePalletFormView({
     handleSubmit,
     formState: { errors },
   } = form;
+  const { placeholder } = useThemeColors();
 
   return (
     <Box className="gap-4">
@@ -51,7 +52,7 @@ export function CreatePalletFormView({
             >
               <InputField
                 placeholder="Введіть назву"
-                placeholderTextColor={SemanticColors.placeholder.light}
+                placeholderTextColor={placeholder}
                 value={value}
                 onChangeText={onChange}
                 onBlur={onBlur}
@@ -84,7 +85,7 @@ export function CreatePalletFormView({
             >
               <InputField
                 placeholder="Введіть сектор"
-                placeholderTextColor={SemanticColors.placeholder.light}
+                placeholderTextColor={placeholder}
                 value={value || ""}
                 onChangeText={onChange}
                 onBlur={onBlur}
