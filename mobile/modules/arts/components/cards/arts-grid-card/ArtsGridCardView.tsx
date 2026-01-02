@@ -1,5 +1,5 @@
+import { ArtImageModal } from "@/components/shared/art-image-modal/ArtImageModal";
 import { ThemedText } from "@/components/themed-text";
-import { ArtImageModal } from "@/modules/arts/components/dialogs/art-image-modal/ArtImageModal";
 import { Image } from "expo-image";
 import { TouchableOpacity, View } from "react-native";
 
@@ -26,7 +26,6 @@ export function ArtsGridCardView({
   onImagePress,
   onCloseModal,
 }: ArtsGridCardViewProps) {
-
   return (
     <>
       <View

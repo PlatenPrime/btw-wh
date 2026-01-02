@@ -25,7 +25,7 @@ export function Header({ title }: HeaderProps) {
         height: headerHeight,
       }}
     >
-      <HStack className="items-center justify-between h-14 px-2">
+      <HStack className="items-center justify-between  p-2">
         {/* Левая секция - триггер сайдбара */}
         <Pressable
           onPress={toggleSidebar}
@@ -36,7 +36,7 @@ export function Header({ title }: HeaderProps) {
 
         {/* Центральная секция - заголовок */}
         <Box className="flex-1 items-center justify-center px-2">
-          <ThemedText type="defaultSemiBold" className="text-xl text-center">
+          <ThemedText type="defaultSemiBold" className="text-xl text-center ">
             {title}
           </ThemedText>
         </Box>

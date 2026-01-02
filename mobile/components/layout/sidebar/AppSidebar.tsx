@@ -1,21 +1,20 @@
 import { ModeToggle } from "@/components/shared/mode-toggle";
-import { Colors } from "@/constants/theme";
-import { useAuth } from "@/modules/auth/api/hooks/useAuth";
-import { useTheme } from "@/providers/theme-provider";
 import { Icon } from "@/components/ui/icon";
+import { useThemeColors } from "@/hooks/use-theme-colors";
+import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 import { useRouter } from "expo-router";
 import React from "react";
 import { Pressable, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { ProfileSidebarCard } from "./ProfileSidebarCard";
+import { ProfileSidebarCard } from "./components/profile-sidebar-card/ProfileSidebarCard";
 import { useSidebar } from "./SidebarProvider";
 
 export function AppSidebar() {
   const router = useRouter();
   const { isOpen, setIsOpen } = useSidebar();
-  const { resolvedTheme } = useTheme();
   const insets = useSafeAreaInsets();
   const { logout, isLoading } = useAuth();
+  const { background, text } = useThemeColors();
 
   const handleLogout = () => {
     logout();
@@ -27,12 +26,8 @@ export function AppSidebar() {
     return null;
   }
 
-  const bgColor =
-    resolvedTheme === "light"
-      ? Colors.light.background
-      : Colors.dark.background;
-  const textColor =
-    resolvedTheme === "light" ? Colors.light.text : Colors.dark.text;
+  const bgColor = background.primary;
+  const textColor = text.primary;
 
   return (
     <>
@@ -56,7 +51,12 @@ export function AppSidebar() {
             className="p-2 rounded-full active:bg-black/10 dark:active:bg-white/10"
             activeOpacity={0.7}
           >
-            <Icon family="MaterialIcons" name="close" size={24} color={textColor} />
+            <Icon
+              family="MaterialIcons"
+              name="close"
+              size={24}
+              color={textColor}
+            />
           </TouchableOpacity>
         </View>
 

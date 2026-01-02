@@ -3,7 +3,6 @@ import { ThemedView } from "@/components/themed-view";
 import { Pressable, VStack } from "@/components/ui";
 import { Icon, type IconFamily } from "@/components/ui/icon";
 import { SemanticColors } from "@/constants/theme";
-import { useThemeColors } from "@/hooks/use-theme-colors";
 import { hexToRgba } from "@/utils/color-utils";
 import type { QuickAccessTrigger } from "./types";
 
@@ -12,7 +11,6 @@ interface QuickAccessPanelViewProps {
 }
 
 export function QuickAccessPanelView({ triggers }: QuickAccessPanelViewProps) {
-  // Используем Tailwind классы для статических цветов вместо style prop
   if (triggers.length === 0) {
     return null;
   }
@@ -25,7 +23,6 @@ export function QuickAccessPanelView({ triggers }: QuickAccessPanelViewProps) {
         </ThemedText>
         <VStack className="gap-3">
           {triggers.map((trigger) => {
-            // iconColors остаются статическими hex значениями, так как это специфичные цвета
             const colorHex = SemanticColors.iconColors[trigger.color];
             const backgroundColor = hexToRgba(colorHex, 0.15);
             const borderColor = hexToRgba(colorHex, 0.9);

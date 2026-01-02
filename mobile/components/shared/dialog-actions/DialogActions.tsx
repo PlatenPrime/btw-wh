@@ -1,6 +1,8 @@
-import { Button, HStack, Text } from "@/components/ui";
-import { ActivityIndicator } from "react-native";
+import { Button, ButtonProps, HStack, Text } from "@/components/ui";
 import { SemanticColors } from "@/constants/theme";
+import { ActivityIndicator } from "react-native";
+
+type DialogActionsVariant = "default" | "destructive" | "confirm" | "create";
 
 interface DialogActionsProps {
   onCancel?: () => void;
@@ -9,7 +11,7 @@ interface DialogActionsProps {
   submitText?: string;
   isSubmitting?: boolean;
   isDisabled?: boolean;
-  variant?: "default" | "destructive" | "confirm" | "create";
+  variant?: DialogActionsVariant;
   className?: string;
 }
 
@@ -24,6 +26,13 @@ export function DialogActions({
   className,
 }: DialogActionsProps) {
   const isDisabledState = isDisabled || isSubmitting;
+
+  const variants: Record<DialogActionsVariant, ButtonProps["variant"]> = {
+    default: "default",
+    destructive: "destructive",
+    create: "create",
+    confirm: "confirm",
+  };
 
   return (
     <HStack className={`gap-2 ${className || ""}`}>
@@ -40,15 +49,7 @@ export function DialogActions({
       <Button
         onPress={onSubmit}
         disabled={isDisabledState}
-        variant={
-          variant === "destructive"
-            ? "destructive"
-            : variant === "create"
-              ? "create"
-              : variant === "confirm"
-                ? "confirm"
-                : "default"
-        }
+        variant={variants[variant] || "default"}
         className="flex-1"
       >
         {isSubmitting ? (
