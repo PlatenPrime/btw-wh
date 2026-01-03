@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useThemeColors } from "@/hooks/use-theme-colors";
 import type { RowDto } from "@/modules/rows/api/types/dto";
 import { DeleteRowDialogView } from "./DeleteRowDialogView";
 import { useDeleteRowDialog } from "./useDeleteRowDialog";
@@ -18,10 +17,6 @@ export function DeleteRowDialog({
   onSuccess,
 }: DeleteRowDialogProps) {
   const [internalOpen, setInternalOpen] = useState(false);
-  const { dialog, text } = useThemeColors();
-  const bgColor = dialog.bg;
-  const textColor = text.primary;
-  const borderColor = dialog.border;
 
   const isControlled = controlledOpen !== undefined;
   const open = isControlled ? controlledOpen : internalOpen;
@@ -48,9 +43,6 @@ export function DeleteRowDialog({
       onClose={handleCancel}
       onDelete={handleDeleteAndClose}
       isDeleting={isDeleting}
-      bgColor={bgColor}
-      textColor={textColor}
-      borderColor={borderColor}
     />
   );
 }

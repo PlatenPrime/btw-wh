@@ -1,16 +1,6 @@
-import { ThemedText } from "@/components/themed-text";
-import {
-  Modal,
-  ModalBackdrop,
-  ModalBody,
-  ModalContent,
-  ModalHeader,
-} from "@/components/ui/modal-native";
-import { Icon } from "@/components/ui/icon";
+import { FormDialog } from "@/components/shared/form-dialog";
 import { UpdatePalletForm } from "@/modules/pallets/components/forms/update-pallet-form/UpdatePalletForm";
 import type { PalletShortDto } from "@/modules/pallets/api/types";
-import { TouchableOpacity, View, Platform } from "react-native";
-import { useThemeColors } from "@/hooks/use-theme-colors";
 
 interface UpdatePalletDialogViewProps {
   pallet: PalletShortDto;
@@ -18,9 +8,6 @@ interface UpdatePalletDialogViewProps {
   visible: boolean;
   onClose: () => void;
   onSuccess: () => void;
-  bgColor: string;
-  textColor: string;
-  borderColor: string;
 }
 
 export function UpdatePalletDialogView({
@@ -29,56 +16,15 @@ export function UpdatePalletDialogView({
   visible,
   onClose,
   onSuccess,
-  bgColor,
-  textColor,
-  borderColor,
 }: UpdatePalletDialogViewProps) {
-  const { static: staticColors } = useThemeColors();
-  
   return (
-    <Modal isOpen={visible} onClose={onClose} className="items-center justify-center">
-      <ModalBackdrop
-        className="flex-1 justify-center items-center"
-        style={{ backgroundColor: staticColors.shadow.backdrop }}
-      />
-      <ModalContent
-        className="w-full max-w-md mx-4 rounded-lg p-6 border gap-4"
-        style={{
-          backgroundColor: bgColor,
-          borderColor: borderColor,
-          ...Platform.select({
-            ios: {
-              shadowColor: staticColors.shadow.color,
-              shadowOffset: { width: 0, height: 4 },
-              shadowOpacity: 0.3,
-              shadowRadius: 8,
-            },
-            android: {
-              elevation: 8,
-            },
-          }),
-        }}
-      >
-        <ModalHeader className="flex-col gap-2">
-          <View className="flex-row items-center justify-between relative">
-            <ThemedText type="defaultSemiBold" className="text-lg text-center flex-1">
-              Редагувати палету
-            </ThemedText>
-            <TouchableOpacity
-              onPress={onClose}
-              className="absolute top-4 right-4"
-              activeOpacity={0.7}
-              style={{ opacity: 0.7 }}
-            >
-              <Icon family="MaterialIcons" name="close" size={16} color={textColor} />
-            </TouchableOpacity>
-          </View>
-        </ModalHeader>
-        <ModalBody>
-          <UpdatePalletForm pallet={pallet} rowId={rowId} onSuccess={onSuccess} onCancel={onClose} />
-        </ModalBody>
-      </ModalContent>
-    </Modal>
+    <FormDialog
+      visible={visible}
+      onClose={onClose}
+      title="Редагувати палету"
+    >
+      <UpdatePalletForm pallet={pallet} rowId={rowId} onSuccess={onSuccess} onCancel={onClose} />
+    </FormDialog>
   );
 }
 

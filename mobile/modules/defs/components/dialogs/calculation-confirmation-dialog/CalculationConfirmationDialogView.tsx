@@ -1,15 +1,8 @@
-import { ThemedText } from "@/components/themed-text";
-import {
-  Modal,
-  ModalBackdrop,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-} from "@/components/ui/modal-native";
+import { FormDialog } from "@/components/shared/form-dialog";
 import { Icon } from "@/components/ui/icon";
 import { Button, Text } from "@/components/ui";
-import { TouchableOpacity, View, Platform, ActivityIndicator } from "react-native";
+import { ThemedText } from "@/components/themed-text";
+import { ActivityIndicator, View } from "react-native";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 
 interface CalculationConfirmationDialogViewProps {
@@ -17,9 +10,6 @@ interface CalculationConfirmationDialogViewProps {
   onClose: () => void;
   onConfirm: () => void;
   isPending: boolean;
-  bgColor: string;
-  textColor: string;
-  borderColor: string;
 }
 
 export function CalculationConfirmationDialogView({
@@ -27,70 +17,18 @@ export function CalculationConfirmationDialogView({
   onClose,
   onConfirm,
   isPending,
-  bgColor,
-  textColor,
-  borderColor,
 }: CalculationConfirmationDialogViewProps) {
-  const { static: staticColors } = useThemeColors();
+  const { dialog, text, static: staticColors } = useThemeColors();
+  const bgColor = dialog.bg;
+  const textColor = text.primary;
   
   return (
-    <Modal isOpen={visible} onClose={onClose} className="items-center justify-center">
-      <ModalBackdrop
-        className="flex-1 justify-center items-center"
-        style={{ backgroundColor: staticColors.shadow.backdrop }}
-      />
-      <ModalContent
-        className="w-full max-w-md mx-4 rounded-lg p-6 border gap-4"
-        style={{
-          backgroundColor: bgColor,
-          borderColor: borderColor,
-          ...Platform.select({
-            ios: {
-              shadowColor: staticColors.shadow.color,
-              shadowOffset: { width: 0, height: 4 },
-              shadowOpacity: 0.3,
-              shadowRadius: 8,
-            },
-            android: {
-              elevation: 8,
-            },
-          }),
-        }}
-      >
-        <ModalHeader className="flex-col gap-2">
-          <View className="flex-row items-center justify-between relative">
-            <View className="flex-row items-center gap-2 flex-1">
-              <Icon family="MaterialIcons" name="calculate" size={20} color={textColor} />
-              <ThemedText type="defaultSemiBold" className="text-lg">
-                Запуск розрахунку дефіцитів
-              </ThemedText>
-            </View>
-            <TouchableOpacity
-              onPress={onClose}
-              className="absolute top-0 right-0 p-1"
-              activeOpacity={0.7}
-              style={{ opacity: 0.7 }}
-            >
-              <Icon family="MaterialIcons" name="close" size={16} color={textColor} />
-            </TouchableOpacity>
-          </View>
-        </ModalHeader>
-        <ModalBody>
-          <ThemedText type="default" className="text-sm opacity-70 mb-3">
-            Розрахунок дефіцитів може зайняти кілька хвилин. Процес буде виконуватися у
-            фоновому режимі, і ви зможете відстежувати прогрес у реальному часі.
-          </ThemedText>
-          <View
-            className="flex-row items-center gap-2 rounded-lg p-3"
-            style={{ backgroundColor: bgColor }}
-          >
-            <Icon family="MaterialIcons" name="access-time" size={16} color={textColor} />
-            <ThemedText type="default" className="text-sm opacity-70">
-              Очікуваний час виконання: 6-8 хвилин
-            </ThemedText>
-          </View>
-        </ModalBody>
-        <ModalFooter className="flex-row gap-2">
+    <FormDialog
+      visible={visible}
+      onClose={onClose}
+      title="Запуск розрахунку дефіцитів"
+      footer={
+        <View className="flex-row gap-2">
           <Button
             onPress={onClose}
             disabled={isPending}
@@ -111,8 +49,25 @@ export function CalculationConfirmationDialogView({
               <Text className="text-white font-semibold">Запустити</Text>
             )}
           </Button>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
+        </View>
+      }
+    >
+      <View className="flex-row items-center gap-2 mb-3">
+        <Icon family="MaterialIcons" name="calculate" size={20} color={textColor} />
+        <ThemedText type="default" className="text-sm opacity-70 flex-1">
+          Розрахунок дефіцитів може зайняти кілька хвилин. Процес буде виконуватися у
+          фоновому режимі, і ви зможете відстежувати прогрес у реальному часі.
+        </ThemedText>
+      </View>
+      <View
+        className="flex-row items-center gap-2 rounded-lg p-3"
+        style={{ backgroundColor: bgColor }}
+      >
+        <Icon family="MaterialIcons" name="access-time" size={16} color={textColor} />
+        <ThemedText type="default" className="text-sm opacity-70">
+          Очікуваний час виконання: 6-8 хвилин
+        </ThemedText>
+      </View>
+    </FormDialog>
   );
 }

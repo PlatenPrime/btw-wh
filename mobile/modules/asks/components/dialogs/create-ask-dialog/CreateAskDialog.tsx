@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useThemeColors } from "@/hooks/use-theme-colors";
 import { CreateAskDialogView } from "./CreateAskDialogView";
 
 interface CreateAskDialogProps {
@@ -16,10 +15,6 @@ export function CreateAskDialog({
   preFilledArtikul,
 }: CreateAskDialogProps) {
   const [internalOpen, setInternalOpen] = useState(false);
-  const { dialog, text } = useThemeColors();
-  const bgColor = dialog.bg;
-  const textColor = text.primary;
-  const borderColor = dialog.border;
 
   const isControlled = controlledOpen !== undefined;
   const open = isControlled ? controlledOpen : internalOpen;
@@ -40,9 +35,6 @@ export function CreateAskDialog({
       onClose={handleCancel}
       onSuccess={handleSuccess}
       preFilledArtikul={preFilledArtikul}
-      bgColor={bgColor}
-      textColor={textColor}
-      borderColor={borderColor}
     />
   );
 }

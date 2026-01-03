@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useThemeColors } from "@/hooks/use-theme-colors";
 import { CompleteAskDialogView } from "./CompleteAskDialogView";
 import { useCompleteAskDialog } from "./useCompleteAskDialog";
 
@@ -19,10 +18,6 @@ export function CompleteAskDialog({
   onSuccess,
 }: CompleteAskDialogProps) {
   const [internalOpen, setInternalOpen] = useState(false);
-  const { dialog, text } = useThemeColors();
-  const bgColor = dialog.bg;
-  const textColor = text.primary;
-  const borderColor = dialog.border;
 
   const isControlled = controlledOpen !== undefined;
   const open = isControlled ? controlledOpen : internalOpen;
@@ -51,9 +46,6 @@ export function CompleteAskDialog({
       onComplete={handleCompleteAndClose}
       onCancel={handleCancel}
       visible={open}
-      bgColor={bgColor}
-      textColor={textColor}
-      borderColor={borderColor}
     />
   );
 }

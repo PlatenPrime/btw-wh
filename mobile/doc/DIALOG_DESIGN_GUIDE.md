@@ -100,65 +100,111 @@ interface DialogActionsProps {
   - `default`: `bg-info-500` или `bg-violet-500`
   - `destructive`: `bg-error-500` или `#ef4444` / `#dc2626`
 
+## Стандартный подход: использование FormDialog
+
+**ВАЖНО**: Все диалоги в мобильной части должны использовать компонент `FormDialog`. Это стандартный подход, который обеспечивает:
+- Единообразную структуру всех диалогов
+- Автоматическую обработку клавиатуры
+- Автоматический скролл контента
+- Управление темами (светлая/темная)
+- Упрощенную поддержку и обновление
+
 ## Типы диалогов
 
 ### 1. Диалог подтверждения
 
 Используется для подтверждения действий (удаление, очистка и т.д.)
 
-**Структура**:
-- Заголовок с вопросом
-- Описание действия (DialogDescription)
-- Кнопки действий (DialogActions) с `variant="destructive"` для опасных действий
+**Структура с FormDialog**:
+- Заголовок с вопросом в `title` prop
+- Описание действия (DialogDescription) в `children`
+- Кнопки действий (DialogActions) в `footer` prop с `variant="destructive"` для опасных действий
 
 **Пример**:
 ```tsx
-<ModalContent className="w-full max-w-md mx-4 rounded-lg p-6 border gap-4" style={{ shadowColor: "#000", shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.3, shadowRadius: 8, elevation: 8 }}>
-  <ModalHeader className="flex flex-col gap-2">
-    <View className="flex-row items-center justify-between relative">
-      <ThemedText type="defaultSemiBold" className="text-lg text-center flex-1">
-        Видалити палету "{pallet.title}"?
-      </ThemedText>
-      <TouchableOpacity onPress={onClose} className="absolute top-0 right-0 p-1" activeOpacity={0.7} style={{ opacity: 0.7 }}>
-        <MaterialIcons name="close" size={16} color={textColor} />
-      </TouchableOpacity>
-    </View>
-    <DialogDescription>
-      Ви впевнені, що хочете видалити палету "{pallet.title}"? 
-      Цю дію неможливо скасувати.
-    </DialogDescription>
-  </ModalHeader>
-  <ModalFooter className="flex flex-col-reverse gap-2">
-    <DialogActions
-      onCancel={onClose}
-      onSubmit={onDelete}
-      cancelText="Скасувати"
-      submitText="Видалити"
-      isSubmitting={isDeleting}
-      variant="destructive"
-    />
-  </ModalFooter>
-</ModalContent>
+import { FormDialog } from "@/components/shared/form-dialog";
+import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
+import { DialogDescription } from "@/components/shared/dialog-description/DialogDescription";
+
+export function DeletePalletDialogView({
+  pallet,
+  visible,
+  onClose,
+  onDelete,
+  isDeleting,
+}: DeletePalletDialogViewProps) {
+  return (
+    <FormDialog
+      visible={visible}
+      onClose={onClose}
+      title={`Видалити палету "${pallet.title}"?`}
+      footer={
+        <DialogActions
+          onCancel={onClose}
+          onSubmit={onDelete}
+          cancelText="Скасувати"
+          submitText="Видалити"
+          isSubmitting={isDeleting}
+          variant="destructive"
+        />
+      }
+    >
+      <DialogDescription>
+        Ви впевнені, що хочете видалити палету "{pallet.title}"? 
+        Цю дію неможливо скасувати, вона також призведе до видалення всіх
+        пов'язаних позицій.
+      </DialogDescription>
+    </FormDialog>
+  );
+}
 ```
 
 ### 2. Диалог формы
 
 Используется для ввода данных (создание, редактирование)
 
-**Рекомендуемый подход**: Использовать компонент `FormDialog` для диалогов с формами. Он автоматически:
-- Обрабатывает клавиатуру (модальное окно сжимается благодаря `maxHeight`)
-- Добавляет скролл при большом количестве инпутов
-- Обеспечивает единообразную структуру с заголовком и футером
-
 **Структура с FormDialog**:
-- Заголовок в `ModalHeader`
-- Форма в `ModalBody` со `ScrollView` внутри
-- Кнопки действий в `ModalFooter` (рекомендуется) или внутри формы
+- Заголовок в `title` prop
+- Форма в `children` (автоматически обернута в ScrollView)
+- Кнопки действий в `footer` prop (опционально, если форма сама управляет кнопками)
 
-**Пример с FormDialog**:
+**Пример с footer**:
 ```tsx
 import { FormDialog } from "@/components/shared/form-dialog";
 import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
+
+export function CreateRowDialogView({
+  visible,
+  onClose,
+  onSuccess,
+}: CreateRowDialogViewProps) {
+  const { handleSubmit } = form;
+
+  return (
+    <FormDialog
+      visible={visible}
+      onClose={onClose}
+      title="Створити ряд"
+      footer={
+        <DialogActions
+          onCancel={onClose}
+          onSubmit={handleSubmit(onSubmit)}
+          cancelText="Скасувати"
+          submitText="Створити"
+          isSubmitting={isSubmitting}
+          variant="create"
+        />
+      }
+    >
+      <CreateRowForm onSuccess={onSuccess} onCancel={onClose} hideActions={true} />
+    </FormDialog>
+  );
+}
+```
+
+**Пример без footer (кнопки в форме)**:
+```tsx
+import { FormDialog } from "@/components/shared/form-dialog";
 
 export function CreateRowDialogView({
   visible,
@@ -170,15 +216,6 @@ export function CreateRowDialogView({
       visible={visible}
       onClose={onClose}
       title="Створити ряд"
-      footer={
-        <DialogActions
-          onCancel={onClose}
-          onSubmit={handleSubmit}
-          cancelText="Скасувати"
-          submitText="Створити"
-          isSubmitting={isSubmitting}
-        />
-      }
     >
       <CreateRowForm onSuccess={onSuccess} onCancel={onClose} />
     </FormDialog>
@@ -186,47 +223,66 @@ export function CreateRowDialogView({
 }
 ```
 
-**Структура без FormDialog (для простых форм)**:
-- Заголовок
-- Форма в ModalBody
-- Кнопки действий в форме (не в ModalFooter)
+### 3. Диалог с кастомным футером
 
-**Пример без FormDialog**:
+Используется когда нужны кастомные кнопки или дополнительная логика в футере
+
+**Структура с FormDialog**:
+- Заголовок в `title` prop
+- Контент в `children`
+- Кастомный футер в `footer` prop
+
+**Пример**:
 ```tsx
-<ModalContent className="w-full max-w-md mx-4 rounded-lg p-6 border gap-4" style={{ shadowColor: "#000", shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.3, shadowRadius: 8, elevation: 8 }}>
-  <ModalHeader className="flex flex-col gap-2">
-    <View className="flex-row items-center justify-between relative">
-      <ThemedText type="defaultSemiBold" className="text-lg text-center flex-1">
-        Створити ряд
+import { FormDialog } from "@/components/shared/form-dialog";
+import { Button, Text } from "@/components/ui";
+import { View, ActivityIndicator } from "react-native";
+
+export function CompleteAskDialogView({
+  artikul,
+  isCompleting,
+  onComplete,
+  onCancel,
+  visible,
+}: CompleteAskDialogViewProps) {
+  return (
+    <FormDialog
+      visible={visible}
+      onClose={onCancel}
+      title={`Виконати запит "${artikul}"?`}
+      footer={
+        <View className="flex-row gap-2">
+          <Button onPress={onCancel} disabled={isCompleting} variant="outline" className="flex-1">
+            <Text className="font-semibold">Скасувати</Text>
+          </Button>
+          <Button onPress={onComplete} disabled={isCompleting} variant="confirm" className="flex-1">
+            {isCompleting ? (
+              <ActivityIndicator color={staticColors.white} />
+            ) : (
+              <Text className="text-white font-semibold">Виконати</Text>
+            )}
+          </Button>
+        </View>
+      }
+    >
+      <ThemedText type="default" className="text-sm opacity-70">
+        Ви впевнені, що хочете виконати запит "{artikul}"? Ця дія змінить статус
+        запиту на "виконано".
       </ThemedText>
-      <TouchableOpacity onPress={onClose} className="absolute top-0 right-0 p-1" activeOpacity={0.7} style={{ opacity: 0.7 }}>
-        <MaterialIcons name="close" size={16} color={textColor} />
-      </TouchableOpacity>
-    </View>
-  </ModalHeader>
-  <ModalBody>
-    <CreateRowForm onSuccess={onSuccess} onCancel={onClose} />
-  </ModalBody>
-</ModalContent>
+    </FormDialog>
+  );
+}
 ```
-
-### 3. Диалог с выбором
-
-Используется для выбора из списка (перемещение, выбор цели)
-
-**Структура**:
-- Заголовок
-- Список/форма выбора в ModalBody
-- Кнопки действий в форме
 
 ## Компонент FormDialog
 
 ### Назначение
 
-Удобный компонент для создания диалогов с формами, который автоматически обрабатывает:
+**FormDialog** - стандартный компонент для создания всех диалогов в мобильной части. Он автоматически обрабатывает:
 - Скролл контента при большом количестве инпутов
 - Обработку клавиатуры (модальное окно сжимается благодаря `maxHeight: "90%"`)
 - Единообразную структуру с заголовком и футером
+- Управление темами (светлая/темная) - не нужно передавать `bgColor`, `textColor`, `borderColor`
 
 ### Props
 
@@ -235,7 +291,7 @@ interface FormDialogProps {
   visible: boolean;              // Видимость диалога
   onClose: () => void;           // Обработчик закрытия
   title: string;                 // Заголовок диалога
-  children: React.ReactNode;     // Контент формы
+  children: React.ReactNode;     // Контент диалога (форма, текст, список и т.д.)
   footer?: React.ReactNode;      // Футер с кнопками действий (опционально)
 }
 ```
@@ -248,11 +304,13 @@ FormDialog
       └─ ModalBackdrop
       └─ ModalContent (maxHeight: 90%)
           ├─ ModalHeader
+          │   ├─ Заголовок (title)
+          │   └─ Кнопка закрытия
           ├─ ModalBody
           │   └─ ScrollView (keyboardShouldPersistTaps="handled")
-          │       └─ Форма с инпутами
-          └─ ModalFooter (опционально)
-              └─ DialogActions
+          │       └─ children (контент диалога)
+          └─ ModalFooter (опционально, если передан footer)
+              └─ footer
 ```
 
 ### Обработка клавиатуры
@@ -262,24 +320,13 @@ FormDialog
 - `keyboardShouldPersistTaps="handled"` позволяет взаимодействовать с элементами формы при открытой клавиатуре
 - Контент скроллится внутри `ModalBody`, заголовок и футер остаются видимыми
 
-### ScrollableModalBody
+### Преимущества использования FormDialog
 
-Для ручного использования скроллируемого контента в ModalBody:
-
-```tsx
-import { ScrollableModalBody } from "@/components/ui";
-
-<ModalBody>
-  <ScrollableModalBody>
-    {/* Контент с инпутами */}
-  </ScrollableModalBody>
-</ModalBody>
-```
-
-`ScrollableModalBody` автоматически:
-- Оборачивает контент в `ScrollView`
-- Устанавливает `keyboardShouldPersistTaps="handled"`
-- Показывает вертикальный индикатор скролла
+1. **Единообразие**: Все диалоги выглядят одинаково
+2. **Меньше кода**: Не нужно дублировать структуру Modal
+3. **Автоматическая обработка тем**: Не нужно передавать цвета вручную
+4. **Упрощенная поддержка**: Изменения в одном месте применяются ко всем диалогам
+5. **Автоматическая обработка клавиатуры**: Не нужно думать о скролле и размерах
 
 ## Анимации
 
@@ -298,20 +345,22 @@ import { ScrollableModalBody } from "@/components/ui";
 
 ### ✅ Правильно
 
+- **ВСЕГДА использовать `FormDialog`** для создания диалогов
 - Использовать `gap-3` или `gap-4` для промежутков
 - Использовать `ThemedText` и `ThemedView` для поддержки темы
-- Использовать `DialogActions` для кнопок действий
-- Использовать единую структуру Header/Body/Footer
-- Использовать `rounded-lg` для скругления контейнера
-- Использовать `p-6` для отступов контейнера
-- Использовать `FormDialog` для диалогов с формами (автоматическая обработка клавиатуры через `maxHeight` и скролл контента)
-- Использовать `ScrollableModalBody` для скроллируемого контента в обычных Modal
+- Использовать `DialogActions` для стандартных кнопок действий
+- Использовать `DialogDescription` для описаний в диалогах подтверждения
+- Передавать заголовок через `title` prop, а не создавать ModalHeader вручную
+- Использовать `footer` prop для кнопок действий
+- Не передавать `bgColor`, `textColor`, `borderColor` - FormDialog управляет темами автоматически
 
 ### ❌ Неправильно
 
+- Создавать диалоги без использования `FormDialog` (дублирование структуры Modal)
 - Использовать `space-x` или `space-y` для промежутков
 - Хардкодить цвета вместо использования темы
-- Создавать кастомные кнопки действий вместо `DialogActions`
+- Передавать `bgColor`, `textColor`, `borderColor` в View компоненты диалогов
+- Создавать кастомные кнопки действий вместо `DialogActions` (кроме случаев, когда нужна кастомная логика)
 - Разные стили для похожих диалогов
 - Разные размеры отступов и скруглений
 - Игнорировать обработку клавиатуры в диалогах с формами
@@ -322,72 +371,97 @@ import { ScrollableModalBody } from "@/components/ui";
 ### Полный пример диалога подтверждения
 
 ```tsx
-import { Modal, ModalBackdrop, ModalContent, ModalHeader, ModalBody, ModalFooter } from "@/components/ui";
-import { ThemedText } from "@/components/themed-text";
+import { FormDialog } from "@/components/shared/form-dialog";
 import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
-import { TouchableOpacity, View } from "react-native";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { useColorScheme } from "@/hooks/use-color-scheme";
-import { Colors } from "@/constants/theme";
+import { DialogDescription } from "@/components/shared/dialog-description/DialogDescription";
 
-export function DeleteDialogView({
+export function DeletePalletDialogView({
+  pallet,
   visible,
   onClose,
   onDelete,
   isDeleting,
-}: DeleteDialogViewProps) {
-  const colorScheme = useColorScheme() ?? "light";
-  const bgColor = colorScheme === "light" ? Colors.light.background : Colors.dark.background;
-  const textColor = colorScheme === "light" ? Colors.light.text : Colors.dark.text;
-  const borderColor = colorScheme === "light" ? "#e5e7eb" : "#374151";
-
+}: DeletePalletDialogViewProps) {
   return (
-    <Modal isOpen={visible} onClose={onClose}>
-      <ModalBackdrop
-        className="flex-1 justify-center items-center"
-        style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
-      />
-      <ModalContent
-        className="w-full max-w-md mx-4 rounded-xl p-6 border"
-        style={{
-          backgroundColor: bgColor,
-          borderColor: borderColor,
-        }}
-      >
-        <ModalHeader className="mb-4">
-          <View className="flex-row items-center justify-between">
-            <ThemedText type="defaultSemiBold" className="text-lg">
-              Видалити?
-            </ThemedText>
-            <TouchableOpacity
-              onPress={onClose}
-              className="p-2"
-              activeOpacity={0.7}
-            >
-              <MaterialIcons name="close" size={24} color={textColor} />
-            </TouchableOpacity>
-          </View>
-        </ModalHeader>
-        <ModalBody>
-          <ThemedText type="default" className="text-sm mb-6">
-            Ви впевнені, що хочете видалити? Цю дію неможливо скасувати.
-          </ThemedText>
-        </ModalBody>
-        <ModalFooter>
-          <DialogActions
-            onCancel={onClose}
-            onSubmit={onDelete}
-            cancelText="Скасувати"
-            submitText="Видалити"
-            isSubmitting={isDeleting}
-            variant="destructive"
-          />
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
+    <FormDialog
+      visible={visible}
+      onClose={onClose}
+      title={`Видалити палету "${pallet.title}"?`}
+      footer={
+        <DialogActions
+          onCancel={onClose}
+          onSubmit={onDelete}
+          cancelText="Скасувати"
+          submitText="Видалити"
+          isSubmitting={isDeleting}
+          variant="destructive"
+        />
+      }
+    >
+      <DialogDescription>
+        Ви впевнені, що хочете видалити палету "{pallet.title}"? 
+        Цю дію неможливо скасувати, вона також призведе до видалення всіх
+        пов'язаних позицій.
+      </DialogDescription>
+    </FormDialog>
   );
 }
 ```
+
+### Полный пример диалога формы с react-hook-form
+
+```tsx
+import { FormDialog } from "@/components/shared/form-dialog";
+import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
+import { CreatePalletFormView } from "@/modules/pallets/components/forms/create-pallet-form/CreatePalletFormView";
+import type { UseFormReturn } from "react-hook-form";
+
+export function CreatePalletDialogView({
+  visible,
+  onClose,
+  form,
+  onSubmit,
+  isSubmitting,
+}: CreatePalletDialogViewProps) {
+  const { handleSubmit } = form;
+
+  return (
+    <FormDialog
+      visible={visible}
+      onClose={onClose}
+      title="Додати палету"
+      footer={
+        <DialogActions
+          onCancel={onClose}
+          onSubmit={handleSubmit(onSubmit)}
+          cancelText="Скасувати"
+          submitText="Додати"
+          isSubmitting={isSubmitting}
+          variant="create"
+        />
+      }
+    >
+      <CreatePalletFormView
+        form={form}
+        onSubmit={onSubmit}
+        onCancel={onClose}
+        isSubmitting={isSubmitting}
+        hideActions={true}
+      />
+    </FormDialog>
+  );
+}
+```
+
+## Миграция существующих диалогов
+
+Если у вас есть старый диалог, который использует Modal напрямую, выполните следующие шаги:
+
+1. **Удалите импорты**: `Modal`, `ModalBackdrop`, `ModalContent`, `ModalHeader`, `ModalBody`, `ModalFooter`, `Platform`, `useThemeColors`
+2. **Добавьте импорт**: `FormDialog` из `@/components/shared/form-dialog`
+3. **Удалите props**: `bgColor`, `textColor`, `borderColor` из интерфейса
+4. **Замените структуру**: Вся структура Modal заменяется на `FormDialog` с `title` и `footer` props
+5. **Обновите контейнер**: Уберите передачу `bgColor`, `textColor`, `borderColor` из контейнера (Dialog.tsx)
 
 ## Соответствие веб-версии
 

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useThemeColors } from "@/hooks/use-theme-colors";
 import type { IPos } from "@/modules/poses/api/types";
 import { DeletePosDialogView } from "./DeletePosDialogView";
 import { useDeletePosDialog } from "./useDeletePosDialog";
@@ -18,10 +17,6 @@ export function DeletePosDialog({
   onSuccess,
 }: DeletePosDialogProps) {
   const [internalOpen, setInternalOpen] = useState(false);
-  const { dialog, text } = useThemeColors();
-  const bgColor = dialog.bg;
-  const textColor = text.primary;
-  const borderColor = dialog.border;
 
   const isControlled = controlledOpen !== undefined;
   const open = isControlled ? controlledOpen : internalOpen;
@@ -48,9 +43,6 @@ export function DeletePosDialog({
       onClose={handleCancel}
       onDelete={handleDeleteAndClose}
       isDeleting={isDeleting}
-      bgColor={bgColor}
-      textColor={textColor}
-      borderColor={borderColor}
     />
   );
 }

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useThemeColors } from "@/hooks/use-theme-colors";
 import type { IPallet } from "@/modules/pallets/api/types";
 import { DeletePalletEmptyPosesDialogView } from "./DeletePalletEmptyPosesDialogView";
 import { useDeletePalletEmptyPosesDialog } from "./useDeletePalletEmptyPosesDialog";
@@ -18,10 +17,6 @@ export function DeletePalletEmptyPosesDialog({
   onSuccess,
 }: DeletePalletEmptyPosesDialogProps) {
   const [internalOpen, setInternalOpen] = useState(false);
-  const { dialog, text } = useThemeColors();
-  const bgColor = dialog.bg;
-  const textColor = text.primary;
-  const borderColor = dialog.border;
 
   const isControlled = controlledOpen !== undefined;
   const open = isControlled ? controlledOpen : internalOpen;
@@ -48,9 +43,6 @@ export function DeletePalletEmptyPosesDialog({
       onClose={handleCancel}
       onDelete={handleDeleteAndClose}
       isDeleting={isDeleting}
-      bgColor={bgColor}
-      textColor={textColor}
-      borderColor={borderColor}
     />
   );
 }
