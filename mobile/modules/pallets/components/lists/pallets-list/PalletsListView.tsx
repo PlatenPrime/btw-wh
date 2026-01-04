@@ -1,4 +1,4 @@
-import { FlatList, Box } from "@/components/ui";
+import { ThemedFlatList, ThemedBox } from "@/components/themed";
 import { RefreshControl } from "react-native";
 import type { PalletShortDto } from "@/modules/pallets/api/types";
 import { PalletCard } from "@/modules/pallets/components/cards/pallet-card/PalletCard";
@@ -19,21 +19,21 @@ export function PalletsListView({
 }: PalletsListViewProps) {
   if (!pallets || pallets.length === 0) {
     return (
-      <Box className="flex-1 justify-center items-center py-8">
+      <ThemedBox className="flex-1 justify-center items-center py-8">
         <ThemedText type="default" className="text-center">
           Немає паллет для відображення
         </ThemedText>
-      </Box>
+      </ThemedBox>
     );
   }
 
   return (
-    <FlatList
+    <ThemedFlatList
       data={pallets}
       renderItem={({ item }) => (
-        <Box className="mb-2">
+        <ThemedBox className="mb-2">
           <PalletCard pallet={item} rowId={rowId} />
-        </Box>
+        </ThemedBox>
       )}
       keyExtractor={(item) => item._id}
       contentContainerClassName="p-2"

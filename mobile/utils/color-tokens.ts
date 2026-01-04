@@ -5,7 +5,7 @@
  * получать RGB/RGBA значения и создавать цвета с opacity.
  */
 
-import { config } from '@/components/ui/gluestack-ui-provider/config';
+import { config } from '@/constants/color-config';
 import { getToken, type ColorShade } from '@/constants/theme-tokens';
 
 type Theme = 'light' | 'dark';

@@ -14,7 +14,7 @@
 
 ## Архитектура системы
 
-Система цветов основана на едином источнике истины - **Tailwind токенах**, определенных в `components/ui/gluestack-ui-provider/config.ts`. Все цвета доступны через CSS переменные и автоматически поддерживают темную и светлую темы.
+Система цветов основана на едином источнике истины - **Tailwind токенах**, определенных в `constants/color-config.ts`. Все цвета доступны через CSS переменные и автоматически поддерживают темную и светлую темы.
 
 ### Структура файлов
 
@@ -29,8 +29,8 @@ mobile/
 ├── utils/
 │   ├── color-utils.ts        # Базовые утилиты для работы с hex цветами
 │   └── color-tokens.ts       # Утилиты для работы с Tailwind токенами
-└── components/ui/gluestack-ui-provider/
-    └── config.ts             # Определение всех цветов через CSS переменные
+└── constants/
+    └── color-config.ts       # Определение всех цветов через CSS переменные
 ```
 
 ### Доступные цветовые категории
@@ -274,18 +274,17 @@ function ColoredButton({ color }: { color: keyof typeof SemanticColors.iconColor
 ### Пример 4: Использование Themed компонентов
 
 ```tsx
-import { ThemedView, ThemedText } from '@/components/themed/themed-view';
-import { Card } from '@/components/ui';
+import { ThemedView, ThemedText, ThemedCard } from '@/components/themed';
 
 // ThemedView автоматически применяет bg-background-0
 <ThemedView className="p-4 rounded-lg border border-outline-100">
   <ThemedText type="defaultSemiBold">Заголовок</ThemedText>
 </ThemedView>
 
-// Card компонент с вариантами
-<Card variant="outlined" className="p-4">
+// ThemedCard компонент с вариантами
+<ThemedCard variant="outlined" className="p-4">
   <ThemedText>Содержимое</ThemedText>
-</Card>
+</ThemedCard>
 ```
 
 ---

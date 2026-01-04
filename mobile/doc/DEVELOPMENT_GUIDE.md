@@ -457,21 +457,21 @@ function MyComponent() {
 **Использование**:
 
 ```typescript
-import { Card } from "@/components/ui";
+import { ThemedCard, ThemedText } from "@/components/themed";
 
 // Автоматически применяет тему
-<Card variant="outlined" className="p-4">
-  <Text>Содержимое карточки</Text>
-</Card>
+<ThemedCard variant="outlined" className="p-4">
+  <ThemedText>Содержимое карточки</ThemedText>
+</ThemedCard>
 
 // С кастомными стилями
-<Card
+<ThemedCard
   variant="default"
   className="p-2"
   style={{ padding: 16 }} // Переопределяет базовые стили
 >
-  <Text>Кастомная карточка</Text>
-</Card>
+  <ThemedText>Кастомная карточка</ThemedText>
+</ThemedCard>
 ```
 
 **Преимущества**:
@@ -519,9 +519,11 @@ function MyComponent() {
 
 ```typescript
 // ✅ ПРАВИЛЬНО - автоматическая поддержка темы
-<Card variant="outlined" className="p-4">
-  <Button variant="default">Кнопка</Button>
-</Card>
+import { ThemedCard, ThemedButton } from '@/components/themed';
+
+<ThemedCard variant="outlined" className="p-4">
+  <ThemedButton variant="default">Кнопка</ThemedButton>
+</ThemedCard>
 ```
 
 ##### Для кастомизации через пропсы
@@ -544,13 +546,13 @@ function MyComponent() {
 
 ```typescript
 import { useThemeColors } from "@/hooks/use-theme-colors";
-import { Box } from "@/components/ui";
+import { ThemedBox } from "@/components/themed";
 
 function CustomComponent() {
   const { card, error } = useThemeColors();
 
   return (
-    <Box
+    <ThemedBox
       className="p-2 rounded-lg"
       style={{
         backgroundColor: card.bg,
@@ -558,7 +560,7 @@ function CustomComponent() {
       }}
     >
       ...
-    </Box>
+    </ThemedBox>
   );
 }
 ```
@@ -597,13 +599,13 @@ function PosCardView() {
 **Стало**:
 
 ```typescript
-import { Card } from "@/components/ui";
+import { ThemedCard } from "@/components/themed";
 
 function PosCardView() {
   return (
-    <Card variant="outlined" className="p-2">
+    <ThemedCard variant="outlined" className="p-2">
       ...
-    </Card>
+    </ThemedCard>
   );
 }
 ```
@@ -617,14 +619,12 @@ function PosCardView() {
 - `Card` - карточка с поддержкой темы
 
 ```typescript
-import { ThemedView } from "@/components/themed/themed-view";
-import { ThemedText } from "@/components/themed/themed-text";
-import { Card } from "@/components/ui";
+import { ThemedView, ThemedText, ThemedCard } from "@/components/themed";
 
 <ThemedView className="flex-1">
-  <Card variant="outlined">
+  <ThemedCard variant="outlined">
     <ThemedText type="defaultSemiBold">Заголовок</ThemedText>
-  </Card>
+  </ThemedCard>
 </ThemedView>;
 ```
 
@@ -860,7 +860,7 @@ if (!res.ok) {
 ```typescript
 // View компонент
 import { RefreshControl } from "react-native";
-import { FlatList } from "@/components/ui";
+import { ThemedFlatList } from "@/components/themed";
 
 interface MyListViewProps {
   data: Item[];
@@ -874,7 +874,7 @@ export function MyListView({
   onRefresh,
 }: MyListViewProps) {
   return (
-    <FlatList
+    <ThemedFlatList
       data={data}
       refreshControl={
         onRefresh ? (
@@ -892,7 +892,7 @@ export function MyListView({
 ```typescript
 // View компонент
 import { RefreshControl } from "react-native";
-import { ScrollView } from "@/components/ui";
+import { ThemedScrollView } from "@/components/themed";
 
 interface MyContainerViewProps {
   refreshing?: boolean;
@@ -904,7 +904,7 @@ export function MyContainerView({
   onRefresh,
 }: MyContainerViewProps) {
   return (
-    <ScrollView
+    <ThemedScrollView
       refreshControl={
         onRefresh ? (
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -1132,21 +1132,21 @@ TypeError: Cannot read property 'displayName' of undefined
 **Правильный подход**:
 
 ```typescript
-// ✅ ПРАВИЛЬНО - используй Box с инлайн стилями
-import { Box } from "@/components/ui";
+// ✅ ПРАВИЛЬНО - используй ThemedBox с инлайн стилями
+import { ThemedBox } from "@/components/themed";
 
 export function MyCardSkeleton() {
   return (
-    <Box className="p-4 rounded-lg border border-outline-100 bg-background-0">
-      <Box className="gap-2">
-        <Box className="rounded bg-secondary-300" style={{ height: 24, width: "75%" }} />
-        <Box className="gap-1">
-          <Box className="rounded bg-secondary-300" style={{ height: 16, width: "100%" }} />
-          <Box className="h-px bg-outline-200 my-1" />
-          <Box className="rounded bg-secondary-300" style={{ height: 16, width: "100%" }} />
-        </Box>
-      </Box>
-    </Box>
+    <ThemedBox className="p-4 rounded-lg border border-outline-100 bg-background-0">
+      <ThemedBox className="gap-2">
+        <ThemedBox className="rounded bg-secondary-300" style={{ height: 24, width: "75%" }} />
+        <ThemedBox className="gap-1">
+          <ThemedBox className="rounded bg-secondary-300" style={{ height: 16, width: "100%" }} />
+          <ThemedBox className="h-px bg-outline-200 my-1" />
+          <ThemedBox className="rounded bg-secondary-300" style={{ height: 16, width: "100%" }} />
+        </ThemedBox>
+      </ThemedBox>
+    </ThemedBox>
   );
 }
 ```
@@ -1155,13 +1155,14 @@ export function MyCardSkeleton() {
 
 ```typescript
 // ❌ НЕПРАВИЛЬНО - не используй компонент Skeleton
-import { Box, Skeleton } from "@/components/ui";
+import { ThemedBox } from "@/components/themed";
+// ❌ НЕ импортируй Skeleton - его не существует в проекте
 
 export function MyCardSkeleton() {
   return (
-    <Box className="p-4 rounded-lg border border-outline-100 bg-background-0">
-      <Skeleton className="h-6 w-3/4" /> {/* Это вызовет ошибку */}
-    </Box>
+    <ThemedBox className="p-4 rounded-lg border border-outline-100 bg-background-0">
+      {/* ❌ НЕ используй Skeleton - это вызовет ошибку */}
+    </ThemedBox>
   );
 }
 ```
@@ -1175,14 +1176,14 @@ export function MyCardSkeleton() {
 
 **Правила для скелетонов**:
 
-1. ✅ Используй `Box` компонент с инлайн стилями
+1. ✅ Используй `ThemedBox` компонент с инлайн стилями
 2. ✅ Используй класс `bg-secondary-300` для цвета скелетона
 3. ✅ Используй класс `rounded` для закругления углов
 4. ✅ Задавай размеры через инлайн стили: `style={{ height: 24, width: "75%" }}`
-5. ❌ НЕ используй компонент `Skeleton` из `@/components/ui`
+5. ❌ НЕ используй компонент `Skeleton` из `@/components/ui` (его не существует)
 6. ❌ НЕ используй Tailwind классы для размеров скелетона (например, `h-6`, `w-3/4`)
 
-**Почему это важно**: Эта ошибка может привести к краху приложения при рендеринге скелетонов во время загрузки данных. Всегда используй `Box` с инлайн стилями для создания скелетонов.
+**Почему это важно**: Эта ошибка может привести к краху приложения при рендеринге скелетонов во время загрузки данных. Всегда используй `ThemedBox` с инлайн стилями для создания скелетонов.
 
 ---
 

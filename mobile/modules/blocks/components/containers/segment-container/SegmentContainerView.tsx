@@ -1,5 +1,5 @@
 import { ThemedText } from "@/components/themed/themed-text";
-import { Box, VStack } from "@/components/ui";
+import { ThemedBox, ThemedVStack } from "@/components/themed";
 import type {
   SegmentDto,
   ZoneWithSegmentDto,
@@ -23,23 +23,23 @@ export function SegmentContainerView({
   onRefresh,
 }: SegmentContainerViewProps) {
   return (
-    <VStack className="flex-1 gap-4 p-2">
+    <ThemedVStack className="flex-1 gap-4 p-2">
       <SegmentInfo segment={segment} />
       {isLoadingZones ? (
-        <Box className="flex-1 justify-center items-center py-8">
+        <ThemedBox className="flex-1 justify-center items-center py-8">
           <ThemedText type="default" className="text-center">
             Завантаження зон...
           </ThemedText>
-        </Box>
+        </ThemedBox>
       ) : (
-        <Box className="flex-1">
+        <ThemedBox className="flex-1">
           <ZonesBySegmentList
             zones={zones}
             refreshing={refreshing}
             onRefresh={onRefresh}
           />
-        </Box>
+        </ThemedBox>
       )}
-    </VStack>
+    </ThemedVStack>
   );
 }

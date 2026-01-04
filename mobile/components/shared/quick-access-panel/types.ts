@@ -1,4 +1,4 @@
-import type { IconFamily } from "@/components/ui/icon";
+import type { IconFamily } from "@/components/types";
 import { SemanticColors } from "@/constants/theme";
 
 export type QuickAccessTriggerColor = keyof typeof SemanticColors.iconColors;

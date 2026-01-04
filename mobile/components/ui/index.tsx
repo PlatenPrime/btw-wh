@@ -7,9 +7,6 @@ export * from './button';
 // Card
 export * from './card';
 
-// FlatList
-export * from './flat-list';
-
 // HStack
 export * from './hstack';
 
@@ -30,9 +27,6 @@ export * from './modal-native';
 
 // Pressable
 export * from './pressable';
-
-// Scroll View
-export * from './scroll-view';
 
 // Spinner
 export * from './spinner';

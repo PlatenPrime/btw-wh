@@ -1,16 +1,16 @@
 import { ThemedText } from "@/components/themed/themed-text";
 import {
-  HStack,
-  Modal,
-  ModalBackdrop,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalHeader,
-  Pressable,
-  VStack,
-} from "@/components/ui";
-import { Icon } from "@/components/ui/icon";
+  ThemedModal,
+  ThemedModalBackdrop,
+  ThemedModalBody,
+  ThemedModalCloseButton,
+  ThemedModalContent,
+  ThemedModalHeader,
+  ThemedHStack,
+  ThemedVStack,
+  ThemedPressable,
+  ThemedIcon,
+} from "@/components/themed";
 import { useIconColor } from "@/hooks/use-icon-color";
 import { useTheme } from "@/providers/theme-provider";
 import React, { useCallback, useMemo, useState } from "react";
@@ -65,30 +65,30 @@ export const ModeToggle = React.memo(function ModeToggle() {
 
   return (
     <>
-      <Pressable
+      <ThemedPressable
         onPress={handleOpenModal}
         className="flex-row items-center justify-between p-4 rounded-lg border border-outline-100 bg-background-0"
       >
-        <HStack className="items-center gap-3">
-          <Icon
+        <ThemedHStack className="items-center gap-3">
+          <ThemedIcon
             family="MaterialIcons"
             name={iconName}
             size={24}
             color={iconColor}
           />
           <ThemedText type="defaultSemiBold">Тема</ThemedText>
-        </HStack>
-        <Icon
+        </ThemedHStack>
+        <ThemedIcon
           family="MaterialIcons"
           name="chevron-right"
           size={24}
           color={iconColor}
         />
-      </Pressable>
+      </ThemedPressable>
 
-      <Modal isOpen={isModalVisible} onClose={handleCloseModal}>
-        <ModalBackdrop />
-        <ModalContent
+      <ThemedModal isOpen={isModalVisible} onClose={handleCloseModal}>
+        <ThemedModalBackdrop />
+        <ThemedModalContent
           className="rounded-lg p-4 w-[280px] bg-background-0 border border-outline-100"
           onLayout={handleLayout}
           style={{
@@ -101,34 +101,34 @@ export const ModeToggle = React.memo(function ModeToggle() {
             ],
           }}
         >
-          <ModalHeader>
-            <HStack className="items-center justify-between w-full">
+          <ThemedModalHeader>
+            <ThemedHStack className="items-center justify-between w-full">
               <ThemedText type="subtitle" className="text-lg">
                 Виберіть тему
               </ThemedText>
-              <ModalCloseButton onPress={handleCloseModal}>
-                <Icon
+              <ThemedModalCloseButton onPress={handleCloseModal}>
+                <ThemedIcon
                   family="Ionicons"
                   name="close"
                   size={24}
                   color={iconColor}
                 />
-              </ModalCloseButton>
-            </HStack>
-          </ModalHeader>
-          <ModalBody>
-            <VStack className="gap-2">
+              </ThemedModalCloseButton>
+            </ThemedHStack>
+          </ThemedModalHeader>
+          <ThemedModalBody>
+            <ThemedVStack className="gap-2">
               {themeOptions.map((option) => {
                 const isSelected = theme === option.value;
                 return (
-                  <Pressable
+                  <ThemedPressable
                     key={option.value}
                     onPress={() => handleThemeSelect(option.value)}
                     className={`flex-row items-center gap-3 p-3 rounded-lg ${
                       isSelected ? "bg-background-200" : "bg-background-50"
                     }`}
                   >
-                    <Icon
+                    <ThemedIcon
                       family="MaterialIcons"
                       name={option.icon}
                       size={22}
@@ -138,20 +138,20 @@ export const ModeToggle = React.memo(function ModeToggle() {
                       {option.label}
                     </ThemedText>
                     {isSelected && (
-                      <Icon
+                      <ThemedIcon
                         family="MaterialIcons"
                         name="check"
                         size={22}
                         color={iconColor}
                       />
                     )}
-                  </Pressable>
+                  </ThemedPressable>
                 );
               })}
-            </VStack>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
+            </ThemedVStack>
+          </ThemedModalBody>
+        </ThemedModalContent>
+      </ThemedModal>
     </>
   );
 });

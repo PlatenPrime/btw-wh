@@ -9,7 +9,7 @@ import {
   Pressable,
   Text,
 } from "@/components/ui";
-import { Icon } from "@/components/ui/icon";
+import { ThemedIcon } from "@/components/themed";
 import { sklads } from "@/constants/sklad";
 import { SemanticColors } from "@/constants/theme";
 import { useIconColor } from "@/hooks/use-icon-color";
@@ -244,7 +244,7 @@ export function CreateAskFormView({
                     >
                       {label}
                     </ThemedText>
-                    <Icon
+                    <ThemedIcon
                       family="MaterialIcons"
                       name={
                         isSelected

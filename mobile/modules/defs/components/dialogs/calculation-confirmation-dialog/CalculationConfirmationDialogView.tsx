@@ -1,7 +1,7 @@
 import { FormDialog } from "@/components/shared/dialog/form-dialog";
 import { ThemedText } from "@/components/themed/themed-text";
-import { Button, Text } from "@/components/ui";
-import { Icon } from "@/components/ui/icon";
+import { ThemedButton, ThemedText as ThemedTextButton } from "@/components/themed";
+import { ThemedIcon } from "@/components/themed";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import { ActivityIndicator, View } from "react-native";
 
@@ -29,15 +29,15 @@ export function CalculationConfirmationDialogView({
       title="Запуск розрахунку дефіцитів"
       footer={
         <View className="flex-row gap-2">
-          <Button
+          <ThemedButton
             onPress={onClose}
             disabled={isPending}
             variant="outline"
             className="flex-1"
           >
-            <Text className="font-semibold">Скасувати</Text>
-          </Button>
-          <Button
+            <ThemedTextButton className="font-semibold">Скасувати</ThemedTextButton>
+          </ThemedButton>
+          <ThemedButton
             onPress={onConfirm}
             disabled={isPending}
             variant="confirm"
@@ -46,14 +46,14 @@ export function CalculationConfirmationDialogView({
             {isPending ? (
               <ActivityIndicator color={staticColors.white} />
             ) : (
-              <Text className="text-white font-semibold">Запустити</Text>
+              <ThemedTextButton className="text-white font-semibold">Запустити</ThemedTextButton>
             )}
-          </Button>
+          </ThemedButton>
         </View>
       }
     >
       <View className="flex-row items-center gap-2 mb-3">
-        <Icon
+        <ThemedIcon
           family="MaterialIcons"
           name="calculate"
           size={20}
@@ -69,7 +69,7 @@ export function CalculationConfirmationDialogView({
         className="flex-row items-center gap-2 rounded-lg p-3"
         style={{ backgroundColor: bgColor }}
       >
-        <Icon
+        <ThemedIcon
           family="MaterialIcons"
           name="access-time"
           size={16}

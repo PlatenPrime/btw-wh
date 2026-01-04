@@ -1,13 +1,13 @@
 import { ThemedText } from "@/components/themed/themed-text";
 import {
-  Modal,
-  ModalBackdrop,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-} from "@/components/ui/modal-native";
-import { Icon } from "@/components/ui/icon";
+  ThemedModal,
+  ThemedModalBackdrop,
+  ThemedModalContent,
+  ThemedModalHeader,
+  ThemedModalBody,
+  ThemedModalFooter,
+  ThemedIcon,
+} from "@/components/themed";
 import { Platform, ScrollView, TouchableOpacity, View } from "react-native";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 
@@ -35,12 +35,12 @@ export function FormDialogView({
   const { static: staticColors } = useThemeColors();
   
   return (
-    <Modal isOpen={visible} onClose={onClose} className="items-center justify-center">
-      <ModalBackdrop
+    <ThemedModal isOpen={visible} onClose={onClose} className="items-center justify-center">
+      <ThemedModalBackdrop
         className="flex-1 justify-center items-center"
         style={{ backgroundColor: staticColors.shadow.backdrop }}
       />
-      <ModalContent
+      <ThemedModalContent
         className="w-full max-w-md mx-4 rounded-lg p-6 border gap-4"
         style={{
           backgroundColor: bgColor,
@@ -59,7 +59,7 @@ export function FormDialogView({
           }),
         }}
       >
-        <ModalHeader className="flex-col gap-2">
+        <ThemedModalHeader className="flex-col gap-2">
           <View className="flex-row items-center justify-between relative">
             <ThemedText type="defaultSemiBold" className="text-lg text-center flex-1">
               {title}
@@ -70,22 +70,22 @@ export function FormDialogView({
               activeOpacity={0.7}
               style={{ opacity: 0.7 }}
             >
-              <Icon family="MaterialIcons" name="close" size={16} color={textColor} />
+              <ThemedIcon family="MaterialIcons" name="close" size={16} color={textColor} />
             </TouchableOpacity>
           </View>
-        </ModalHeader>
-        <ModalBody>
+        </ThemedModalHeader>
+        <ThemedModalBody>
           <ScrollView keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={true}>
             {children}
           </ScrollView>
-        </ModalBody>
+        </ThemedModalBody>
         {footer && (
-          <ModalFooter>
+          <ThemedModalFooter>
             {footer}
-          </ModalFooter>
+          </ThemedModalFooter>
         )}
-      </ModalContent>
-    </Modal>
+      </ThemedModalContent>
+    </ThemedModal>
   );
 }
 

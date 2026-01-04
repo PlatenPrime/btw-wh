@@ -1,4 +1,5 @@
-import { Box, Input, InputField, Button, HStack, Text } from "@/components/ui";
+import { Input, InputField } from "@/components/ui/input";
+import { ThemedBox, ThemedButton, ThemedHStack, ThemedText as ThemedTextButton } from "@/components/themed";
 import { ActivityIndicator } from "react-native";
 import { ThemedText } from "@/components/themed/themed-text";
 import { ThemedView } from "@/components/themed/themed-view";
@@ -28,8 +29,8 @@ export function UpdateRowFormView({
   const { placeholder, static: staticColors } = useThemeColors();
 
   return (
-    <Box className="gap-4">
-      <Box className="gap-2">
+    <ThemedBox className="gap-4">
+      <ThemedBox className="gap-2">
         <ThemedText type="defaultSemiBold" className="text-sm">
           Назва ряду *
         </ThemedText>
@@ -60,7 +61,7 @@ export function UpdateRowFormView({
             {errors.title.message}
           </ThemedText>
         )}
-      </Box>
+      </ThemedBox>
 
       {errors.root && (
         <ThemedView className="rounded-lg p-3 border border-error-500 bg-error-50">
@@ -70,16 +71,16 @@ export function UpdateRowFormView({
         </ThemedView>
       )}
 
-      <HStack className="gap-2">
-        <Button
+      <ThemedHStack className="gap-2">
+        <ThemedButton
           onPress={onCancel}
           disabled={isSubmitting}
           variant="outline"
           className="flex-1"
         >
-          <Text className="font-semibold">Скасувати</Text>
-        </Button>
-        <Button
+          <ThemedTextButton className="font-semibold">Скасувати</ThemedTextButton>
+        </ThemedButton>
+        <ThemedButton
           onPress={handleSubmit(onSubmit)}
           disabled={isSubmitting}
           variant="confirm"
@@ -88,11 +89,11 @@ export function UpdateRowFormView({
           {isSubmitting ? (
             <ActivityIndicator color={staticColors.white} />
           ) : (
-            <Text className="text-white font-semibold">Оновити</Text>
+            <ThemedTextButton className="text-white font-semibold">Оновити</ThemedTextButton>
           )}
-        </Button>
-      </HStack>
-    </Box>
+        </ThemedButton>
+      </ThemedHStack>
+    </ThemedBox>
   );
 }
 

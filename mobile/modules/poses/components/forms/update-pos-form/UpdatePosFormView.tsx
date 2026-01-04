@@ -1,14 +1,21 @@
-import { Box, Input, InputField, HStack, Button, Pressable, Text } from "@/components/ui";
-import { ActivityIndicator } from "react-native";
+import {
+  ThemedBox,
+  ThemedButton,
+  ThemedHStack,
+  ThemedPressable,
+  ThemedText as ThemedTextButton,
+} from "@/components/themed";
 import { ThemedText } from "@/components/themed/themed-text";
 import { ThemedView } from "@/components/themed/themed-view";
-import { Icon } from "@/components/ui/icon";
-import type { UpdatePosFormData } from "./schema";
+import { ThemedIcon } from "@/components/themed";
+import { Input, InputField } from "@/components/ui/input";
+import { sklads } from "@/constants/sklad";
+import { useIconColor } from "@/hooks/use-icon-color";
+import { useThemeColors } from "@/hooks/use-theme-colors";
 import type { UseFormReturn } from "react-hook-form";
 import { Controller } from "react-hook-form";
-import { useThemeColors } from "@/hooks/use-theme-colors";
-import { sklads, type ISklads } from "@/constants/sklad";
-import { useIconColor } from "@/hooks/use-icon-color";
+import { ActivityIndicator } from "react-native";
+import type { UpdatePosFormData } from "./schema";
 
 interface UpdatePosFormViewProps {
   form: UseFormReturn<UpdatePosFormData>;
@@ -33,8 +40,8 @@ export function UpdatePosFormView({
   const { placeholder, static: staticColors } = useThemeColors();
 
   return (
-    <Box className="gap-4">
-      <Box className="gap-2">
+    <ThemedBox className="gap-4">
+      <ThemedBox className="gap-2">
         <ThemedText type="defaultSemiBold" className="text-sm">
           Кількість *
         </ThemedText>
@@ -45,7 +52,7 @@ export function UpdatePosFormView({
             const handleChange = (text: string) => {
               // Обрабатываем значение через кастомный обработчик
               const numericValue = text.replace(/\D/g, "");
-              
+
               let processedValue: string;
               if (numericValue === "") {
                 processedValue = "";
@@ -54,7 +61,7 @@ export function UpdatePosFormView({
               } else {
                 processedValue = numericValue.replace(/^0+/, "");
               }
-              
+
               // Обновляем через field.onChange
               onChange(processedValue);
             };
@@ -84,9 +91,9 @@ export function UpdatePosFormView({
             {errors.quant.message}
           </ThemedText>
         )}
-      </Box>
+      </ThemedBox>
 
-      <Box className="gap-2">
+      <ThemedBox className="gap-2">
         <ThemedText type="defaultSemiBold" className="text-sm">
           Коробки *
         </ThemedText>
@@ -97,7 +104,7 @@ export function UpdatePosFormView({
             const handleChange = (text: string) => {
               // Обрабатываем значение через кастомный обработчик
               const numericValue = text.replace(/\D/g, "");
-              
+
               let processedValue: string;
               if (numericValue === "") {
                 processedValue = "";
@@ -106,7 +113,7 @@ export function UpdatePosFormView({
               } else {
                 processedValue = numericValue.replace(/^0+/, "");
               }
-              
+
               // Обновляем через field.onChange
               onChange(processedValue);
             };
@@ -136,9 +143,9 @@ export function UpdatePosFormView({
             {errors.boxes.message}
           </ThemedText>
         )}
-      </Box>
+      </ThemedBox>
 
-      <Box className="gap-2">
+      <ThemedBox className="gap-2">
         <ThemedText type="defaultSemiBold" className="text-sm">
           Склад *
         </ThemedText>
@@ -146,11 +153,11 @@ export function UpdatePosFormView({
           control={control}
           name="sklad"
           render={({ field: { onChange, value } }) => (
-            <Box className="gap-2">
+            <ThemedBox className="gap-2">
               {Object.entries(sklads).map(([key, label]) => {
                 const isSelected = value === key;
                 return (
-                  <Pressable
+                  <ThemedPressable
                     key={key}
                     onPress={() => !isSubmitting && onChange(key)}
                     className={`flex-row items-center justify-between p-3 rounded-lg border ${
@@ -163,20 +170,26 @@ export function UpdatePosFormView({
                   >
                     <ThemedText
                       type="default"
-                      className={isSelected ? "text-info-700" : "text-typography-900"}
+                      className={
+                        isSelected ? "text-info-700" : "text-typography-900"
+                      }
                     >
                       {label}
                     </ThemedText>
-                    <Icon
+                    <ThemedIcon
                       family="MaterialIcons"
-                      name={isSelected ? "radio-button-checked" : "radio-button-unchecked"}
+                      name={
+                        isSelected
+                          ? "radio-button-checked"
+                          : "radio-button-unchecked"
+                      }
                       size={20}
                       color={isSelected ? staticColors.info : iconColor}
                     />
-                  </Pressable>
+                  </ThemedPressable>
                 );
               })}
-            </Box>
+            </ThemedBox>
           )}
         />
         {errors.sklad && (
@@ -184,7 +197,7 @@ export function UpdatePosFormView({
             {errors.sklad.message}
           </ThemedText>
         )}
-      </Box>
+      </ThemedBox>
 
       {errors.root && (
         <ThemedView className="rounded-lg p-3 border border-error-500 bg-error-50">
@@ -194,16 +207,18 @@ export function UpdatePosFormView({
         </ThemedView>
       )}
 
-      <HStack className="gap-2">
-        <Button
+      <ThemedHStack className="gap-2">
+        <ThemedButton
           onPress={onCancel}
           disabled={isSubmitting}
           variant="outline"
           className="flex-1"
         >
-          <Text className="font-semibold">Скасувати</Text>
-        </Button>
-        <Button
+          <ThemedTextButton className="font-semibold">
+            Скасувати
+          </ThemedTextButton>
+        </ThemedButton>
+        <ThemedButton
           onPress={handleSubmit(onSubmit)}
           disabled={isSubmitting}
           variant="confirm"
@@ -212,11 +227,12 @@ export function UpdatePosFormView({
           {isSubmitting ? (
             <ActivityIndicator color={staticColors.white} />
           ) : (
-            <Text className="text-white font-semibold">Оновити</Text>
+            <ThemedTextButton className="text-white font-semibold">
+              Оновити
+            </ThemedTextButton>
           )}
-        </Button>
-      </HStack>
-    </Box>
+        </ThemedButton>
+      </ThemedHStack>
+    </ThemedBox>
   );
 }
-

@@ -1,4 +1,4 @@
-import { Box } from "@/components/ui";
+import { ThemedBox } from "@/components/themed";
 import type { BlockDto } from "@/modules/blocks/api/types";
 import { BlocksList } from "@/modules/blocks/components/lists/blocks-list";
 import { ThemedText } from "@/components/themed/themed-text";
@@ -18,22 +18,22 @@ export function BlocksContainerView({
 }: BlocksContainerViewProps) {
   if (isLoading) {
     return (
-      <Box className="flex-1 justify-center items-center py-8">
+      <ThemedBox className="flex-1 justify-center items-center py-8">
         <ThemedText type="default" className="text-center">
           Завантаження...
         </ThemedText>
-      </Box>
+      </ThemedBox>
     );
   }
 
   return (
-    <Box className="flex-1">
+    <ThemedBox className="flex-1">
       <BlocksList
         blocks={blocks}
         refreshing={refreshing}
         onRefresh={onRefresh}
       />
-    </Box>
+    </ThemedBox >
   );
 }
 

@@ -1,5 +1,5 @@
 import { ThemedText } from "@/components/themed/themed-text";
-import { Box, HStack, Pressable } from "@/components/ui";
+import { ThemedBox, ThemedHStack, ThemedPressable } from "@/components/themed";
 import { View } from "react-native";
 
 interface PalletCardViewProps {
@@ -20,46 +20,46 @@ export function PalletCardView({
   menu,
 }: PalletCardViewProps) {
   return (
-    <Pressable
+    <ThemedPressable
       onPress={onPress}
       className="p-4 rounded-lg border border-outline-100 bg-background-0"
     >
-      <Box className="gap-2">
-        <HStack className="items-center justify-between">
+      <ThemedBox className="gap-2">
+        <ThemedHStack className="items-center justify-between">
           <ThemedText type="title" className="text-lg flex-1">
             {title}
           </ThemedText>
-          <HStack className="items-center gap-2">
+          <ThemedHStack className="items-center gap-2">
             {isEmpty && (
-              <Box className="rounded-md px-2 py-1 bg-background-200">
+              <ThemedBox className="rounded-md px-2 py-1 bg-background-200">
                 <ThemedText type="default" className="text-sm">
                   порожня
                 </ThemedText>
-              </Box>
+              </ThemedBox>
             )}
             {menu && <View>{menu}</View>}
-          </HStack>
-        </HStack>
-        <Box className="gap-1">
-          <HStack className="items-center justify-start gap-2">
+          </ThemedHStack>
+        </ThemedHStack>
+        <ThemedBox className="gap-1">
+          <ThemedHStack className="items-center justify-start gap-2">
             <ThemedText type="default" className="text-sm">
               Сектор:
             </ThemedText>
             <ThemedText type="default" className="text-sm">
               {sector ?? "Немає"}
             </ThemedText>
-          </HStack>
+          </ThemedHStack>
 
-          <HStack className="items-center justify-start gap-2">
+          <ThemedHStack className="items-center justify-start gap-2">
             <ThemedText type="default" className="text-sm">
               Аналіз:
             </ThemedText>
             <ThemedText type="default" className="text-sm">
               {isDef ? "Так" : "Ні"}
             </ThemedText>
-          </HStack>
-        </Box>
-      </Box>
-    </Pressable>
+          </ThemedHStack>
+        </ThemedBox>
+      </ThemedBox>
+    </ThemedPressable>
   );
 }

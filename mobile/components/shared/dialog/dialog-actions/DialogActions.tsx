@@ -1,4 +1,5 @@
-import { Button, ButtonProps, HStack, Text } from "@/components/ui";
+import type { ButtonProps } from "@/components/types";
+import { ThemedButton, ThemedHStack, ThemedText as ThemedTextButton } from "@/components/themed";
 import { SemanticColors } from "@/constants/theme";
 import { ActivityIndicator } from "react-native";
 
@@ -35,18 +36,18 @@ export function DialogActions({
   };
 
   return (
-    <HStack className={`gap-2 ${className || ""}`}>
+    <ThemedHStack className={`gap-2 ${className || ""}`}>
       {onCancel && (
-        <Button
+        <ThemedButton
           onPress={onCancel}
           disabled={isSubmitting}
           variant="outline"
           className="flex-1"
         >
-          <Text className="font-semibold">{cancelText}</Text>
-        </Button>
+          <ThemedTextButton className="font-semibold">{cancelText}</ThemedTextButton>
+        </ThemedButton>
       )}
-      <Button
+      <ThemedButton
         onPress={onSubmit}
         disabled={isDisabledState}
         variant={variants[variant] || "default"}
@@ -55,9 +56,9 @@ export function DialogActions({
         {isSubmitting ? (
           <ActivityIndicator color={SemanticColors.white} />
         ) : (
-          <Text className="text-white font-semibold">{submitText}</Text>
+          <ThemedTextButton className="text-white font-semibold">{submitText}</ThemedTextButton>
         )}
-      </Button>
-    </HStack>
+      </ThemedButton>
+    </ThemedHStack>
   );
 }

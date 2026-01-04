@@ -1,6 +1,6 @@
 import { ThemedText } from "@/components/themed/themed-text";
-import { Box, HStack, VStack } from "@/components/ui";
-import { Icon } from "@/components/ui/icon";
+import { ThemedBox, ThemedHStack, ThemedVStack } from "@/components/themed";
+import { ThemedIcon } from "@/components/themed";
 import { useIconColor } from "@/hooks/use-icon-color";
 import type { WarehouseData } from "@/modules/poses/api/types";
 import type { ReactNode } from "react";
@@ -25,35 +25,35 @@ export function SkladPosesListView({
 
   if (!skladData.poses?.length) {
     return (
-      <Box className="p-4 rounded-lg border border-outline-100 bg-background-0">
+      <ThemedBox className="p-4 rounded-lg border border-outline-100 bg-background-0">
         <ThemedText type="default" className="text-center">
           На складі {title} немає позицій з цим артикулом
         </ThemedText>
-      </Box>
+      </ThemedBox>
     );
   }
 
   return (
-    <Box className="p-4 rounded-lg border border-outline-100 bg-background-0">
-      <VStack className="gap-2">
-        <HStack className="items-center">
+    <ThemedBox className="p-4 rounded-lg border border-outline-100 bg-background-0">
+      <ThemedVStack className="gap-2">
+        <ThemedHStack className="items-center">
           {/* Название склада слева */}
-          <Box className="flex-1">
+          <ThemedBox className="flex-1">
             <ThemedText type="defaultSemiBold">{title}</ThemedText>
-          </Box>
+          </ThemedBox>
           {/* Количество коробок по центру */}
-          <Box className="flex-1 items-center">
-            <HStack className="items-center gap-1">
-              <Icon family="Feather" name="box" size={14} color={iconColor} />
+          <ThemedBox className="flex-1 items-center">
+            <ThemedHStack className="items-center gap-1">
+              <ThemedIcon family="Feather" name="box" size={14} color={iconColor} />
               <ThemedText type="default" className="font-semibold">
                 {skladData.boxes || 0}
               </ThemedText>
-            </HStack>
-          </Box>
+            </ThemedHStack>
+          </ThemedBox>
           {/* Количество товара справа */}
-          <Box className="flex-1 items-end">
-            <HStack className="items-center gap-1">
-              <Icon
+          <ThemedBox className="flex-1 items-end">
+            <ThemedHStack className="items-center gap-1">
+              <ThemedIcon
                 family="MaterialIcons"
                 name="radio-button-unchecked"
                 size={14}
@@ -62,23 +62,23 @@ export function SkladPosesListView({
               <ThemedText type="default" className="font-semibold">
                 {skladData.quant || 0}
               </ThemedText>
-            </HStack>
-          </Box>
-        </HStack>
+            </ThemedHStack>
+          </ThemedBox>
+        </ThemedHStack>
 
         {skladData.poses?.length > 0 && (
-          <VStack className="gap-4">
+          <ThemedVStack className="gap-4">
             {skladData.poses.map((pos) => (
-              <Box key={pos._id}>
+              <ThemedBox key={pos._id}>
                 {renderPos(
                   { exists: true, message: "", data: pos },
                   additionalProps
                 )}
-              </Box>
+              </ThemedBox>
             ))}
-          </VStack>
+          </ThemedVStack>
         )}
-      </VStack>
-    </Box>
+      </ThemedVStack>
+    </ThemedBox>
   );
 }

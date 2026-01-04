@@ -1,5 +1,5 @@
-import { HStack } from "@/components/ui";
-import { Icon } from "@/components/ui/icon";
+import { ThemedHStack } from "@/components/themed";
+import { ThemedIcon } from "@/components/themed";
 import { ThemedText } from "@/components/themed/themed-text";
 import { sklads, type ISklads } from "@/constants/sklad";
 import { useIconColor } from "@/hooks/use-icon-color";
@@ -14,12 +14,12 @@ export function AskSklad({ sklad }: AskSkladProps) {
   if (!sklad) return null;
 
   return (
-    <HStack className="items-center gap-2">
-      <Icon family="MaterialIcons" name="warehouse" size={16} color={iconColor} />
+    <ThemedHStack className="items-center gap-2">
+      <ThemedIcon family="MaterialIcons" name="warehouse" size={16} color={iconColor} />
       <ThemedText className="text-sm">
         {sklads[sklad as keyof ISklads] || sklad}
       </ThemedText>
-    </HStack>
+    </ThemedHStack>
   );
 }
 

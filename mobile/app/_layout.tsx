@@ -14,7 +14,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { AppSidebar } from "@/components/layout/sidebar/AppSidebar";
 import { SidebarProvider } from "@/components/layout/sidebar/SidebarProvider";
-import { config } from "@/components/ui/gluestack-ui-provider/config";
+import { config } from "@/constants/color-config";
 import "@/global.css";
 import { Providers } from "@/providers/providers";
 import { useTheme } from "@/providers/theme-provider";

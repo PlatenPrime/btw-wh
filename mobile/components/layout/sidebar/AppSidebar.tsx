@@ -1,5 +1,5 @@
 import { ModeToggle } from "@/components/shared/mode-toggle/mode-toggle";
-import { Icon } from "@/components/ui/icon";
+import { ThemedIcon } from "@/components/themed";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 import { useRouter } from "expo-router";
@@ -51,7 +51,7 @@ export function AppSidebar() {
             className="p-2 rounded-full active:bg-black/10 dark:active:bg-white/10"
             activeOpacity={0.7}
           >
-            <Icon
+            <ThemedIcon
               family="MaterialIcons"
               name="close"
               size={24}

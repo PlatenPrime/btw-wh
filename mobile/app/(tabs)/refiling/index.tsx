@@ -1,7 +1,12 @@
 import { PageLayout } from "@/components/layout/page-layout";
+import {
+  ThemedIcon,
+  ThemedPressable,
+  ThemedScrollView,
+  ThemedVStack,
+} from "@/components/themed";
 import { ThemedText } from "@/components/themed/themed-text";
-import { Pressable, ScrollView, VStack } from "@/components/ui";
-import { Icon } from "@/components/ui/icon";
+
 import { SemanticColors } from "@/constants/theme";
 import { useRouter } from "expo-router";
 
@@ -35,15 +40,15 @@ export default function RefilingList() {
 
   return (
     <PageLayout title="Поповнення">
-      <ScrollView className="flex-1 px-4">
-        <VStack className="gap-3 py-4">
+      <ThemedScrollView className="flex-1 px-4">
+        <ThemedVStack className="gap-3 py-4">
           {navigationItems.map((item) => (
-            <Pressable
+            <ThemedPressable
               key={item.route}
               onPress={() => handleNavigation(item.route)}
               className="flex-row items-center p-4 rounded-lg border border-outline-100 bg-background-0"
             >
-              <Icon
+              <ThemedIcon
                 family="MaterialIcons"
                 name={item.icon as any}
                 size={24}
@@ -52,10 +57,10 @@ export default function RefilingList() {
               <ThemedText type="defaultSemiBold" className="ml-3 text-base">
                 {item.title}
               </ThemedText>
-            </Pressable>
+            </ThemedPressable>
           ))}
-        </VStack>
-      </ScrollView>
+        </ThemedVStack>
+      </ThemedScrollView>
     </PageLayout>
   );
 }

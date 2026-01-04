@@ -1,6 +1,6 @@
 import { ThemedText } from "@/components/themed/themed-text";
-import { Box, HStack } from "@/components/ui";
-import { Icon } from "@/components/ui/icon";
+import { ThemedBox, ThemedHStack } from "@/components/themed";
+import { ThemedIcon } from "@/components/themed";
 import { SemanticColors } from "@/constants/theme";
 import type { GetAsksByDateResponse } from "@/modules/asks/api/types/dto";
 import { CreateAskDialog } from "@/modules/asks/components/dialogs/create-ask-dialog/CreateAskDialog";
@@ -48,24 +48,24 @@ export function AsksContainerView({
         }
       >
         <View className="gap-2">
-          <HStack className="items-center justify-between">
+          <ThemedHStack className="items-center justify-between">
             <TouchableOpacity onPress={onPreviousDay}>
-              <Icon family="MaterialIcons" name="chevron-left" size={32} color={SemanticColors.iconColors.indigo} />
+              <ThemedIcon family="MaterialIcons" name="chevron-left" size={32} color={SemanticColors.iconColors.indigo} />
             </TouchableOpacity>
             <ThemedText type="title" className="text-lg ">
               {formattedDate}
             </ThemedText>
             <TouchableOpacity onPress={onNextDay}>
-              <Icon family="MaterialIcons" name="chevron-right" size={32} color={SemanticColors.iconColors.indigo} />
+              <ThemedIcon family="MaterialIcons" name="chevron-right" size={32} color={SemanticColors.iconColors.indigo} />
             </TouchableOpacity>
-          </HStack>
-          <Box className="border-b border-outline-100" />
+          </ThemedHStack>
+          <ThemedBox className="border-b border-outline-100" />
 
-         {data.count > 0 && <HStack className="items-center justify-center">
+         {data.count > 0 && <ThemedHStack className="items-center justify-center">
             <ThemedText type="default" className="text-lg font-semibold">
               {data.completedCount + data.rejectedCount}/{data.count}
             </ThemedText>
-          </HStack>}
+          </ThemedHStack>}
         </View>
 
         <View style={{ opacity: isFetching ? 0.5 : 1 }}>

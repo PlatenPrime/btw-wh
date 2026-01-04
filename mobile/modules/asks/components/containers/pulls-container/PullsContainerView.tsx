@@ -1,5 +1,5 @@
 import { ThemedText } from "@/components/themed/themed-text";
-import { VStack, HStack } from "@/components/ui";
+import { ThemedVStack, ThemedHStack } from "@/components/themed";
 import type { GetAsksPullsResponse } from "@/modules/asks/api/types/dto";
 import { PullsPositionCard } from "@/modules/asks/components/cards/pulls-position-card/PullsPositionCard";
 import { ScrollView, RefreshControl, ActivityIndicator } from "react-native";
@@ -32,21 +32,21 @@ export function PullsContainerView({
         ) : undefined
       }
     >
-      <VStack className="gap-2">
-        <HStack className="items-center gap-2">
+      <ThemedVStack className="gap-2">
+        <ThemedHStack className="items-center gap-2">
           <ThemedText type="defaultSemiBold" className="text-lg text-center w-full">
             Позиції для зняття
           </ThemedText>
           {isFetching && <ActivityIndicator size="small" />}
-        </HStack>
-      </VStack>
+        </ThemedHStack>
+      </ThemedVStack>
 
       {allPositions.length === 0 ? (
         <ThemedText type="default" className="text-center py-8 opacity-70">
           Немає позицій для зняття
         </ThemedText>
       ) : (
-        <VStack
+        <ThemedVStack
           className="gap-4"
           style={{ opacity: isFetching ? 0.6 : 1 }}
         >
@@ -56,7 +56,7 @@ export function PullsContainerView({
               position={position}
             />
           ))}
-        </VStack>
+        </ThemedVStack>
       )}
     </ScrollView>
   );

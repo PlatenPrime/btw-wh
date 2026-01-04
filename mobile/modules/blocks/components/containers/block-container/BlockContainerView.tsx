@@ -1,4 +1,4 @@
-import { Box } from "@/components/ui";
+import { ThemedBox } from "@/components/themed";
 import type { BlockDto, SegmentDto } from "@/modules/blocks/api/types";
 import { BlockInfo } from "@/modules/blocks/components/elements/block-info";
 import { SegmentsList } from "@/modules/blocks/components/lists/segments-list";
@@ -20,13 +20,13 @@ export function BlockContainerView({
   onRefresh,
 }: BlockContainerViewProps) {
   return (
-    <Box className="flex-1">
+    <ThemedBox className="flex-1">
       {isLoadingSegments ? (
-        <Box className="flex-1 justify-center items-center py-8">
+        <ThemedBox className="flex-1 justify-center items-center py-8">
           <ThemedText type="default" className="text-center">
             Завантаження сегментів...
           </ThemedText>
-        </Box>
+        </ThemedBox>
       ) : (
         <SegmentsList
           segments={segments}
@@ -36,7 +36,7 @@ export function BlockContainerView({
           headerComponent={<BlockInfo block={block} />}
         />
       )}
-    </Box>
+    </ThemedBox>
   );
 }
 

@@ -1,6 +1,6 @@
 import { Modal, View, TouchableOpacity, TouchableWithoutFeedback } from "react-native";
 import { Image } from "expo-image";
-import { Icon } from "@/components/ui/icon";
+import { ThemedIcon } from "@/components/themed";
 import { getBigImageUrl } from "@/modules/arts/constants/art-image-url";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 
@@ -42,7 +42,7 @@ export function ArtImageModal({
                 style={{ backgroundColor: staticColors.shadow.backdrop }}
                 activeOpacity={0.7}
               >
-                <Icon family="MaterialIcons" name="close" size={24} color={staticColors.white} />
+                <ThemedIcon family="MaterialIcons" name="close" size={24} color={staticColors.white} />
               </TouchableOpacity>
 
               <Image

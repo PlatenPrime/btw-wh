@@ -1,6 +1,6 @@
 import { ThemedText } from "@/components/themed/themed-text";
 import { ThemedView } from "@/components/themed/themed-view";
-import { Button, Text } from "@/components/ui";
+import { ThemedButton, ThemedText as ThemedTextButton } from "@/components/themed";
 import { useAskPullQuery } from "@/modules/asks/api/hooks/queries/useAskPullQuery";
 import type { GetAskPullResponse } from "@/modules/asks/api/types/dto";
 import type { ComponentType } from "react";
@@ -38,9 +38,9 @@ export function AskPullPositionsFetcher({
         >
           Не вдалося завантажити позиції для зняття
         </ThemedText>
-        <Button onPress={() => askPullQuery.refetch()} variant="outline">
-          <Text>Спробувати ще раз</Text>
-        </Button>
+        <ThemedButton onPress={() => askPullQuery.refetch()} variant="outline">
+          <ThemedTextButton>Спробувати ще раз</ThemedTextButton>
+        </ThemedButton>
       </ThemedView>
     );
   }

@@ -1,6 +1,7 @@
 import { ThemedText } from "@/components/themed/themed-text";
-import { Box } from "@/components/ui";
-import { Icon, type IconFamily } from "@/components/ui/icon";
+import { ThemedBox } from "@/components/themed";
+import { ThemedIcon } from "@/components/themed";
+import type { IconFamily } from "@/components/types";
 import { SemanticColors } from "@/constants/theme";
 import { useIconColor } from "@/hooks/use-icon-color";
 
@@ -20,12 +21,12 @@ export function PosInfoItem({
   const iconColor = useIconColor();
 
   return (
-    <Box
+    <ThemedBox
       className={`flex-row items-center justify-center gap-2 rounded-lg p-1 ${
         isError ? "bg-error-50" : "bg-background-100/50"
       }`}
     >
-      <Icon
+      <ThemedIcon
         family={iconFamily}
         name={icon}
         size="sm"
@@ -38,6 +39,6 @@ export function PosInfoItem({
       >
         {value}
       </ThemedText>
-    </Box>
+    </ThemedBox>
   );
 }

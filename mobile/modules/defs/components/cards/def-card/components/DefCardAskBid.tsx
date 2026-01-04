@@ -1,5 +1,5 @@
 import { ThemedText } from "@/components/themed/themed-text";
-import { Icon } from "@/components/ui/icon";
+import { ThemedIcon } from "@/components/themed";
 import { SemanticColors } from "@/constants/theme";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import { formatDateTime } from "@/modules/asks/utils/format-date";
@@ -23,11 +23,11 @@ export function DefCardAskBid({ ask }: DefCardAskBidProps) {
       }}
     >
       <View className="flex-row items-center gap-2">
-        <Icon family="MaterialIcons" name="person" size={16} color={SemanticColors.iconColors.indigo} />
+        <ThemedIcon family="MaterialIcons" name="person" size={16} color={SemanticColors.iconColors.indigo} />
         <ThemedText className="text-sm">{ask.askerName}</ThemedText>
       </View>
       <View className="flex-row items-center gap-2">
-        <Icon family="MaterialIcons" name="calendar-month" size={16} color={SemanticColors.iconColors.indigo} />
+        <ThemedIcon family="MaterialIcons" name="calendar-month" size={16} color={SemanticColors.iconColors.indigo} />
         <ThemedText className="text-sm">{formatDateTime(ask.createdAt)}</ThemedText>
       </View>
     </View>

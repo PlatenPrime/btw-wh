@@ -1,6 +1,6 @@
 import { ThemedText } from "@/components/themed/themed-text";
-import { Box, Pressable } from "@/components/ui";
-import { Icon } from "@/components/ui/icon";
+import { ThemedBox, ThemedPressable } from "@/components/themed";
+import { ThemedIcon } from "@/components/themed";
 import { SemanticColors } from "@/constants/theme";
 import { useIconColor } from "@/hooks/use-icon-color";
 import type { PalletShortDto } from "@/modules/pallets/api/types";
@@ -50,20 +50,20 @@ export function PalletCardMenu({
 
   return (
     <>
-      <Pressable
+      <ThemedPressable
         onPress={(e) => {
           e.stopPropagation?.();
           setModalVisible(true);
         }}
         className="p-2"
       >
-        <Icon
+        <ThemedIcon
           family="MaterialIcons"
           name="more-vert"
           size="md"
           color={SemanticColors.iconColors.sky}
         />
-      </Pressable>
+      </ThemedPressable>
 
       <Modal
         visible={modalVisible}
@@ -72,14 +72,14 @@ export function PalletCardMenu({
         onRequestClose={() => setModalVisible(false)}
       >
         <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
-          <Box className="flex-1 bg-black/50 items-center justify-center">
+          <ThemedBox className="flex-1 bg-black/50 items-center justify-center">
             <TouchableWithoutFeedback>
-              <Box className="min-w-[200px] rounded-xl border border-outline-100 bg-background-0 p-2 shadow-lg">
-                <Pressable
+              <ThemedBox className="min-w-[200px] rounded-xl border border-outline-100 bg-background-0 p-2 shadow-lg">
+                <ThemedPressable
                   onPress={handleEdit}
                   className="flex-row items-center p-3"
                 >
-                  <Icon
+                  <ThemedIcon
                     family="MaterialIcons"
                     name="edit"
                     size="md"
@@ -88,15 +88,15 @@ export function PalletCardMenu({
                   <ThemedText type="default" className="text-sm ">
                     Редагувати
                   </ThemedText>
-                </Pressable>
+                </ThemedPressable>
 
-                <Box className="h-px bg-outline-200 my-1" />
+                <ThemedBox className="h-px bg-outline-200 my-1" />
 
-                <Pressable
+                <ThemedPressable
                   onPress={handleDelete}
                   className="flex-row items-center p-3"
                 >
-                  <Icon
+                  <ThemedIcon
                     family="MaterialIcons"
                     name="delete"
                     size="md"
@@ -105,10 +105,10 @@ export function PalletCardMenu({
                   <ThemedText type="default" className="text-sm text-error-600">
                     Видалити
                   </ThemedText>
-                </Pressable>
-              </Box>
+                </ThemedPressable>
+              </ThemedBox>
             </TouchableWithoutFeedback>
-          </Box>
+          </ThemedBox>
         </TouchableWithoutFeedback>
       </Modal>
 

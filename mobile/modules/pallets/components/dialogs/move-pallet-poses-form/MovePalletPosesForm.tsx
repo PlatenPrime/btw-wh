@@ -1,11 +1,13 @@
-import { ThemedText } from "@/components/themed/themed-text";
-import { ThemedView } from "@/components/themed/themed-view";
+import {
+  ThemedFlatList,
+  ThemedIcon,
+  ThemedText,
+  ThemedView,
+} from "@/components/themed";
 import {
   Box,
   Button,
-  FlatList,
   HStack,
-  Icon,
   Input,
   InputField,
   Pressable,
@@ -112,7 +114,7 @@ export function MovePalletPosesForm({
             </ThemedText>
           </Box>
         ) : (
-          <FlatList
+          <ThemedFlatList
             data={filteredPallets}
             keyExtractor={(item) => item._id}
             keyboardShouldPersistTaps="handled"
@@ -135,7 +137,7 @@ export function MovePalletPosesForm({
                   style={{ opacity: disabled ? 0.5 : 1 }}
                 >
                   <HStack className="items-center gap-3 flex-1">
-                    <Icon
+                    <ThemedIcon
                       family="MaterialIcons"
                       name={
                         isSelected

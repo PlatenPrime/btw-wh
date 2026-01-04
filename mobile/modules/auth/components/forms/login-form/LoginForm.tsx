@@ -1,3 +1,4 @@
+import { ThemedScrollView } from "@/components/themed";
 import {
   Box,
   Button,
@@ -5,9 +6,9 @@ import {
   InputField,
   InputIcon,
   InputSlot,
-  ScrollView,
   Text,
 } from "@/components/ui";
+import { useIconColor } from "@/hooks/use-icon-color";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -28,6 +29,7 @@ export const LoginForm = () => {
   const { login, isLoading, error } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const { placeholder, static: staticColors } = useThemeColors();
+  const iconColor = useIconColor();
   const {
     control,
     handleSubmit,
@@ -53,7 +55,7 @@ export const LoginForm = () => {
   };
 
   return (
-    <ScrollView
+    <ThemedScrollView
       contentContainerClassName="flex-1 justify-center items-center p-6"
       keyboardShouldPersistTaps="handled"
     >
@@ -127,7 +129,7 @@ export const LoginForm = () => {
                     family="FontAwesome5"
                     name={showPassword ? "eye-slash" : "eye"}
                     size={22}
-                    color={placeholder}
+                    color={iconColor}
                   />
                 </InputSlot>
               </Input>
@@ -152,6 +154,6 @@ export const LoginForm = () => {
           )}
         </Button>
       </Box>
-    </ScrollView>
+    </ThemedScrollView>
   );
 };

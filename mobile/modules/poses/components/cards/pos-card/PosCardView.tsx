@@ -1,4 +1,4 @@
-import { Box, Card, HStack } from "@/components/ui";
+import { ThemedBox, ThemedCard, ThemedHStack } from "@/components/themed";
 import { ArtImageLink } from "@/components/shared/art-image-link";
 import type { IPos } from "@/modules/poses/api/types";
 import { View } from "react-native";
@@ -12,36 +12,36 @@ interface PosCardViewProps {
 
 export function PosCardView({ pos, skladName, menu }: PosCardViewProps) {
   return (
-    <Card variant="outlined" className="p-2 " >
+    <ThemedCard variant="outlined" className="p-2 " >
       {/* Header with image, title and menu */}
-      <HStack className="items-start justify-between mb-2">
-        <Box className="flex-1">
+      <ThemedHStack className="items-start justify-between mb-2">
+        <ThemedBox className="flex-1">
           <ArtImageLink artikul={pos.artikul} nameukr={pos.nameukr} link={`/(tabs)/arts/${pos.artikul}`} />
-        </Box>
+        </ThemedBox>
         {menu && <View>{menu}</View>}
-      </HStack>
+      </ThemedHStack>
 
       {/* Content with metrics */}
-      <Box className="flex-row gap-2">
-        <Box className="flex-1">
+      <ThemedBox className="flex-row gap-2">
+        <ThemedBox className="flex-1">
           <PosInfoItem icon="warehouse" value={skladName} />
-        </Box>
-        <Box className="flex-1">
+        </ThemedBox>
+        <ThemedBox className="flex-1">
           <PosInfoItem
             icon="box"
             iconFamily="Feather"
             value={pos.boxes || 0}
             isError={pos.boxes === 0}
           />
-        </Box>
-        <Box className="flex-1">
+        </ThemedBox>
+        <ThemedBox className="flex-1">
           <PosInfoItem
             icon="radio-button-unchecked"
             value={pos.quant || 0}
             isError={pos.quant === 0}
           />
-        </Box>
-      </Box>
-    </Card>
+        </ThemedBox>
+      </ThemedBox>
+    </ThemedCard>
   );
 }

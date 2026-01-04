@@ -1,5 +1,5 @@
 import { ThemedText } from "@/components/themed/themed-text";
-import { Box, HStack, Pressable } from "@/components/ui";
+import { ThemedBox, ThemedHStack, ThemedPressable } from "@/components/themed";
 import { View } from "react-native";
 
 interface BlockCardViewProps {
@@ -16,37 +16,37 @@ export function BlockCardView({
   onPress,
 }: BlockCardViewProps) {
   return (
-    <Pressable
+    <ThemedPressable
       onPress={onPress}
       className="p-4 rounded-lg border border-outline-100 bg-background-0"
     >
-      <Box className="gap-2">
-        <HStack className="items-center justify-between">
+      <ThemedBox className="gap-2">
+        <ThemedHStack className="items-center justify-between">
           <ThemedText type="title" className="text-lg flex-1">
             {title}
           </ThemedText>
-        </HStack>
-        <Box className="gap-1">
-          <HStack className="items-center justify-start gap-2">
+        </ThemedHStack>
+        <ThemedBox className="gap-1">
+          <ThemedHStack className="items-center justify-start gap-2">
             <ThemedText type="default" className="text-sm">
               Порядок:
             </ThemedText>
             <ThemedText type="default" className="text-sm">
               {order}
             </ThemedText>
-          </HStack>
+          </ThemedHStack>
        
-          <HStack className="items-center justify-start gap-2">
+          <ThemedHStack className="items-center justify-start gap-2">
             <ThemedText type="default" className="text-sm">
               Сегментів:
             </ThemedText>
             <ThemedText type="default" className="text-sm">
               {segmentsCount}
             </ThemedText>
-          </HStack>
-        </Box>
-      </Box>
-    </Pressable>
+          </ThemedHStack>
+        </ThemedBox>
+      </ThemedBox>
+    </ThemedPressable>
   );
 }
 

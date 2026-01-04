@@ -1,17 +1,17 @@
-import { Box } from "@/components/ui";
+import { ThemedBox } from "@/components/themed";
 
 export function BtradeArtDataSkeleton() {
   return (
-    <Box className="gap-2">
-      <Box className="flex-row items-center gap-2">
-        <Box className="rounded bg-secondary-300" style={{ height: 16, width: 16 }} />
-        <Box className="rounded bg-secondary-300" style={{ height: 16, width: 48 }} />
-      </Box>
-      <Box className="flex-row items-center gap-2">
-        <Box className="rounded bg-secondary-300" style={{ height: 16, width: 16 }} />
-        <Box className="rounded bg-secondary-300" style={{ height: 16, width: 48 }} />
-      </Box>
-    </Box>
+    <ThemedBox className="gap-2">
+      <ThemedBox className="flex-row items-center gap-2">
+        <ThemedBox className="rounded bg-secondary-300" style={{ height: 16, width: 16 }} />
+        <ThemedBox className="rounded bg-secondary-300" style={{ height: 16, width: 48 }} />
+      </ThemedBox>
+      <ThemedBox className="flex-row items-center gap-2">
+        <ThemedBox className="rounded bg-secondary-300" style={{ height: 16, width: 16 }} />
+        <ThemedBox className="rounded bg-secondary-300" style={{ height: 16, width: 48 }} />
+      </ThemedBox>
+    </ThemedBox>
   );
 }
 

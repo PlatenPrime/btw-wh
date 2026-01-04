@@ -1,7 +1,6 @@
 import { View } from "react-native";
 import { ThemedView } from "@/components/themed/themed-view";
-import { VStack } from "@/components/ui";
-import { Box } from "@/components/ui";
+import { ThemedVStack, ThemedBox } from "@/components/themed";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 
 export function AskEventsSkeleton() {
@@ -15,18 +14,18 @@ export function AskEventsSkeleton() {
         borderColor: card.border,
       }}
     >
-      <VStack className="gap-3">
-        <Box className="rounded bg-secondary-300" style={{ height: 16, width: 128 }} />
-        <VStack className="gap-2">
+      <ThemedVStack className="gap-3">
+        <ThemedBox className="rounded bg-secondary-300" style={{ height: 16, width: 128 }} />
+        <ThemedVStack className="gap-2">
           {Array.from({ length: 3 }).map((_, index) => (
-            <Box
+            <ThemedBox
               key={index}
               className="rounded-md border bg-secondary-300"
               style={{ height: 56, width: "100%" }}
             />
           ))}
-        </VStack>
-      </VStack>
+        </ThemedVStack>
+      </ThemedVStack>
     </ThemedView>
   );
 }

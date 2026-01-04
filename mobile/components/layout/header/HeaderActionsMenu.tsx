@@ -1,5 +1,4 @@
-import { Pressable } from "@/components/ui";
-import { Icon } from "@/components/ui/icon";
+import { ThemedIcon, ThemedPressable } from "@/components/themed";
 import { useIconColor } from "@/hooks/use-icon-color";
 import { useState } from "react";
 import { HeaderActionsModalContent } from "./components/modal-content/ModalContent";
@@ -32,7 +31,9 @@ export function HeaderActionsMenu({ trigger }: HeaderActionsMenuProps) {
   if (trigger) {
     return (
       <>
-        <Pressable onPress={() => setModalVisible(true)}>{trigger}</Pressable>
+        <ThemedPressable onPress={() => setModalVisible(true)}>
+          {trigger}
+        </ThemedPressable>
         <HeaderActionsModalContent
           defaultActions={defaultActions}
           destructiveActions={destructiveActions}
@@ -46,14 +47,14 @@ export function HeaderActionsMenu({ trigger }: HeaderActionsMenuProps) {
 
   return (
     <>
-      <Pressable onPress={() => setModalVisible(true)} className="p-2">
-        <Icon
+      <ThemedPressable onPress={() => setModalVisible(true)} className="p-2">
+        <ThemedIcon
           family="MaterialIcons"
           name="more-vert"
           size={24}
           color={defaultIconColor}
         />
-      </Pressable>
+      </ThemedPressable>
 
       <HeaderActionsModalContent
         defaultActions={defaultActions}

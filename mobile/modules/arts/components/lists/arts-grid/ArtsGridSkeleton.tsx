@@ -1,14 +1,14 @@
-import { FlatList, Box } from "@/components/ui";
+import { ThemedFlatList, ThemedBox } from "@/components/themed";
 import { ArtGridCardSkeleton } from "@/modules/arts/components/cards/arts-grid-card/ArtGridCardSkeleton";
 
 export function ArtsGridSkeleton() {
   return (
-    <FlatList
+    <ThemedFlatList
       data={Array.from({ length: 10 })}
       renderItem={() => (
-        <Box className="mb-2">
+        <ThemedBox className="mb-2">
           <ArtGridCardSkeleton />
-        </Box>
+        </ThemedBox>
       )}
       keyExtractor={(_, index) => `skeleton-${index}`}
       numColumns={1}

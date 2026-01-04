@@ -2,7 +2,9 @@ import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { ScrollView, Box, Text, Input, InputField, Button } from "@/components/ui";
+import { ScrollView } from "react-native";
+import { Input, InputField } from "@/components/ui/input";
+import { ThemedBox, ThemedText, ThemedButton, ThemedText as ThemedTextButton } from "@/components/themed";
 import { ActivityIndicator } from "react-native";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 import { RoleType } from "@/constants/roles";
@@ -72,25 +74,25 @@ export const RegisterForm = () => {
       contentContainerClassName="flex-1 justify-center items-center p-6"
       keyboardShouldPersistTaps="handled"
     >
-      <Box className="w-full max-w-sm bg-background-0 rounded-xl border border-outline-100 p-6 gap-4">
-        <Text className="text-2xl font-semibold text-typography-900">
+      <ThemedBox className="w-full max-w-sm bg-background-0 rounded-xl border border-outline-100 p-6 gap-4">
+        <ThemedText className="text-2xl font-semibold text-typography-900">
           Реєстрація
-        </Text>
+        </ThemedText>
 
         {errors.root && (
-          <Box className="bg-error-100 border border-error-300 rounded-lg p-3">
-            <Text className="text-error-700 text-sm">{errors.root.message}</Text>
-          </Box>
+          <ThemedBox className="bg-error-100 border border-error-300 rounded-lg p-3">
+            <ThemedText className="text-error-700 text-sm">{errors.root.message}</ThemedText>
+          </ThemedBox>
         )}
 
         {error && (
-          <Box className="bg-error-100 border border-error-300 rounded-lg p-3">
-            <Text className="text-error-700 text-sm">{error}</Text>
-          </Box>
+          <ThemedBox className="bg-error-100 border border-error-300 rounded-lg p-3">
+            <ThemedText className="text-error-700 text-sm">{error}</ThemedText>
+          </ThemedBox>
         )}
 
-        <Box className="gap-2">
-          <Text className="text-sm font-medium text-typography-700">Логін</Text>
+        <ThemedBox className="gap-2">
+          <ThemedText className="text-sm font-medium text-typography-700">Логін</ThemedText>
           <Controller
             control={control}
             name="username"
@@ -110,12 +112,12 @@ export const RegisterForm = () => {
             )}
           />
           {errors.username && (
-            <Text className="text-error-600 text-sm">{errors.username.message}</Text>
+            <ThemedText className="text-error-600 text-sm">{errors.username.message}</ThemedText>
           )}
-        </Box>
+        </ThemedBox>
 
-        <Box className="gap-2">
-          <Text className="text-sm font-medium text-typography-700">Пароль</Text>
+        <ThemedBox className="gap-2">
+          <ThemedText className="text-sm font-medium text-typography-700">Пароль</ThemedText>
           <Controller
             control={control}
             name="password"
@@ -135,12 +137,12 @@ export const RegisterForm = () => {
             )}
           />
           {errors.password && (
-            <Text className="text-error-600 text-sm">{errors.password.message}</Text>
+            <ThemedText className="text-error-600 text-sm">{errors.password.message}</ThemedText>
           )}
-        </Box>
+        </ThemedBox>
 
-        <Box className="gap-2">
-          <Text className="text-sm font-medium text-typography-700">Повне ім'я</Text>
+        <ThemedBox className="gap-2">
+          <ThemedText className="text-sm font-medium text-typography-700">Повне ім'я</ThemedText>
           <Controller
             control={control}
             name="fullname"
@@ -159,14 +161,14 @@ export const RegisterForm = () => {
             )}
           />
           {errors.fullname && (
-            <Text className="text-error-600 text-sm">{errors.fullname.message}</Text>
+            <ThemedText className="text-error-600 text-sm">{errors.fullname.message}</ThemedText>
           )}
-        </Box>
+        </ThemedBox>
 
-        <Box className="gap-2">
-          <Text className="text-sm font-medium text-typography-700">
+        <ThemedBox className="gap-2">
+          <ThemedText className="text-sm font-medium text-typography-700">
             Роль (необов'язково)
-          </Text>
+          </ThemedText>
           <Controller
             control={control}
             name="role"
@@ -184,12 +186,12 @@ export const RegisterForm = () => {
               </Input>
             )}
           />
-        </Box>
+        </ThemedBox>
 
-        <Box className="gap-2">
-          <Text className="text-sm font-medium text-typography-700">
+        <ThemedBox className="gap-2">
+          <ThemedText className="text-sm font-medium text-typography-700">
             Telegram (необов'язково)
-          </Text>
+          </ThemedText>
           <Controller
             control={control}
             name="telegram"
@@ -207,12 +209,12 @@ export const RegisterForm = () => {
               </Input>
             )}
           />
-        </Box>
+        </ThemedBox>
 
-        <Box className="gap-2">
-          <Text className="text-sm font-medium text-typography-700">
+        <ThemedBox className="gap-2">
+          <ThemedText className="text-sm font-medium text-typography-700">
             URL фото (необов'язково)
-          </Text>
+          </ThemedText>
           <Controller
             control={control}
             name="photo"
@@ -232,11 +234,11 @@ export const RegisterForm = () => {
             )}
           />
           {errors.photo && (
-            <Text className="text-error-600 text-sm">{errors.photo.message}</Text>
+            <ThemedText className="text-error-600 text-sm">{errors.photo.message}</ThemedText>
           )}
-        </Box>
+        </ThemedBox>
 
-        <Button
+        <ThemedButton
           className="w-full"
           onPress={handleSubmit(onSubmit)}
           disabled={isLoading}
@@ -244,12 +246,12 @@ export const RegisterForm = () => {
           {isLoading ? (
             <ActivityIndicator color={staticColors.white} />
           ) : (
-            <Text className="text-white font-semibold text-base">
+            <ThemedTextButton className="text-white font-semibold text-base">
               Зареєструватися
-            </Text>
+            </ThemedTextButton>
           )}
-        </Button>
-      </Box>
+        </ThemedButton>
+      </ThemedBox>
     </ScrollView>
   );
 };

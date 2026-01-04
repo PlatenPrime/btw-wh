@@ -1,7 +1,9 @@
 import { DialogActions } from "@/components/shared/dialog/dialog-actions/DialogActions";
+import { ThemedBox } from "@/components/themed";
 import { ThemedText } from "@/components/themed/themed-text";
 import { ThemedView } from "@/components/themed/themed-view";
-import { Box, Input, InputField, Switch } from "@/components/ui";
+import { Input, InputField } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import type { PalletFormValues } from "@/modules/pallets/components/forms/schema";
 import type { UseFormReturn } from "react-hook-form";
@@ -30,8 +32,8 @@ export function CreatePalletFormView({
   const { placeholder } = useThemeColors();
 
   return (
-    <Box className="gap-4">
-      <Box className="gap-2">
+    <ThemedBox className="gap-4">
+      <ThemedBox className="gap-2">
         <ThemedText type="defaultSemiBold" className="text-sm">
           Назва палети *
         </ThemedText>
@@ -62,9 +64,9 @@ export function CreatePalletFormView({
             {errors.title.message}
           </ThemedText>
         )}
-      </Box>
+      </ThemedBox>
 
-      <Box className="gap-2">
+      <ThemedBox className="gap-2">
         <ThemedText type="defaultSemiBold" className="text-sm">
           Сектор (опціонально)
         </ThemedText>
@@ -94,9 +96,9 @@ export function CreatePalletFormView({
             {errors.sector.message}
           </ThemedText>
         )}
-      </Box>
+      </ThemedBox>
 
-      <Box className="flex-row items-center justify-between">
+      <ThemedBox className="flex-row items-center justify-between">
         <ThemedText type="defaultSemiBold" className="text-sm">
           Аналіз
         </ThemedText>
@@ -111,7 +113,7 @@ export function CreatePalletFormView({
             />
           )}
         />
-      </Box>
+      </ThemedBox>
 
       {errors.root && (
         <ThemedView className="rounded-lg p-3 border border-error-500 bg-error-50">
@@ -131,6 +133,6 @@ export function CreatePalletFormView({
           variant="create"
         />
       )}
-    </Box>
+    </ThemedBox>
   );
 }

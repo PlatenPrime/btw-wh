@@ -1,6 +1,6 @@
 import { View } from "react-native";
 import { ThemedText } from "@/components/themed/themed-text";
-import { Box } from "@/components/ui";
+import { ThemedBox } from "@/components/themed";
 import type { AskDto } from "@/modules/asks/api/types/dto";
 import { AsksListCard } from "@/modules/asks/components/cards/asks-list-card/AsksListCard";
 
@@ -11,11 +11,11 @@ interface AsksListViewProps {
 export function AsksListView({ asks }: AsksListViewProps) {
   if (asks.length === 0) {
     return (
-      <Box className="py-8">
+      <ThemedBox className="py-8">
         <ThemedText type="default" className="text-center">
           Немає запитів для відображення
         </ThemedText>
-      </Box>
+      </ThemedBox>
     );
   }
 

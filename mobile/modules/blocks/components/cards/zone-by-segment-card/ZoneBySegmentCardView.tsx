@@ -1,5 +1,5 @@
 import { ThemedText } from "@/components/themed/themed-text";
-import { Box, HStack, Pressable, VStack } from "@/components/ui";
+import { ThemedBox, ThemedHStack, ThemedPressable, ThemedVStack } from "@/components/themed";
 import { ArtsByZoneFetcher } from "@/modules/arts/components/fetchers/arts-by-zone-fetcher/ArtsByZoneFetcher";
 import {
   ArtsByZoneContainer,
@@ -33,47 +33,47 @@ export function ZoneBySegmentCardView({
   };
 
   return (
-    <VStack className="gap-2">
-      <Pressable
+    <ThemedVStack className="gap-2">
+      <ThemedPressable
         onPress={handlePress}
         className="p-4 rounded-lg border border-outline-100 bg-background-0"
       >
-        <Box className="gap-2">
-          <HStack className="items-center justify-between">
+        <ThemedBox className="gap-2">
+          <ThemedHStack className="items-center justify-between">
             <ThemedText type="title" className="text-lg flex-1 text-center">
               Зона {zoneTitle}
             </ThemedText>
-          </HStack>
-          <Box className="gap-1">
-            <HStack className="items-center justify-start gap-2">
+          </ThemedHStack>
+          <ThemedBox className="gap-1">
+            <ThemedHStack className="items-center justify-start gap-2">
               <ThemedText type="default" className="text-sm">
                 Штрих-код:
               </ThemedText>
               <ThemedText type="default" className="text-sm">
                 {bar}
               </ThemedText>
-            </HStack>
-            <HStack className="items-center justify-start gap-2">
+            </ThemedHStack>
+            <ThemedHStack className="items-center justify-start gap-2">
               <ThemedText type="default" className="text-sm">
                 Сектор:
               </ThemedText>
               <ThemedText type="default" className="text-sm">
                 {sector}
               </ThemedText>
-            </HStack>
-          </Box>
-        </Box>
-      </Pressable>
+            </ThemedHStack>
+          </ThemedBox>
+        </ThemedBox>
+      </ThemedPressable>
       {zoneTitle && (
-        <Box className="pl-2">
+        <ThemedBox className="pl-2">
           <ArtsByZoneFetcher
             zone={zoneTitle.trim()}
             ContainerComponent={ArtsByZoneContainer}
             SkeletonComponent={ArtsByZoneContainerSkeleton}
           />
-        </Box>
+        </ThemedBox>
       )}
-    </VStack>
+    </ThemedVStack>
   );
 }
 

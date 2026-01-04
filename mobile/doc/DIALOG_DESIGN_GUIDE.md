@@ -235,8 +235,9 @@ export function CreateRowDialogView({
 **Пример**:
 ```tsx
 import { FormDialog } from "@/components/shared/form-dialog";
-import { Button, Text } from "@/components/ui";
+import { ThemedButton, ThemedText } from "@/components/themed";
 import { View, ActivityIndicator } from "react-native";
+import { useThemeColors } from "@/hooks/use-theme-colors";
 
 export function CompleteAskDialogView({
   artikul,
@@ -245,6 +246,8 @@ export function CompleteAskDialogView({
   onCancel,
   visible,
 }: CompleteAskDialogViewProps) {
+  const { static: staticColors } = useThemeColors();
+
   return (
     <FormDialog
       visible={visible}
@@ -252,16 +255,16 @@ export function CompleteAskDialogView({
       title={`Виконати запит "${artikul}"?`}
       footer={
         <View className="flex-row gap-2">
-          <Button onPress={onCancel} disabled={isCompleting} variant="outline" className="flex-1">
-            <Text className="font-semibold">Скасувати</Text>
-          </Button>
-          <Button onPress={onComplete} disabled={isCompleting} variant="confirm" className="flex-1">
+          <ThemedButton onPress={onCancel} disabled={isCompleting} variant="outline" className="flex-1">
+            <ThemedText className="font-semibold">Скасувати</ThemedText>
+          </ThemedButton>
+          <ThemedButton onPress={onComplete} disabled={isCompleting} variant="confirm" className="flex-1">
             {isCompleting ? (
               <ActivityIndicator color={staticColors.white} />
             ) : (
-              <Text className="text-white font-semibold">Виконати</Text>
+              <ThemedText className="text-white font-semibold">Виконати</ThemedText>
             )}
-          </Button>
+          </ThemedButton>
         </View>
       }
     >

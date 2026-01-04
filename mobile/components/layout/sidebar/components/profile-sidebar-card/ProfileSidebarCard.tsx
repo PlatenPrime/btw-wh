@@ -1,5 +1,5 @@
 import { ThemedText } from "@/components/themed/themed-text";
-import { Icon } from "@/components/ui/icon";
+import { ThemedIcon } from "@/components/themed";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 import React from "react";
@@ -52,7 +52,7 @@ export function ProfileSidebarCard({
             borderRadius: 8,
           }}
         >
-          <Icon
+          <ThemedIcon
             family="MaterialIcons"
             name="logout"
             size={20}

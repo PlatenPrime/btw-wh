@@ -1,7 +1,11 @@
-import { ThemedText } from "@/components/themed/themed-text";
-import { ThemedView } from "@/components/themed/themed-view";
-import { Pressable, VStack } from "@/components/ui";
-import { Icon, type IconFamily } from "@/components/ui/icon";
+import {
+  ThemedIcon,
+  ThemedPressable,
+  ThemedText,
+  ThemedVStack,
+  ThemedView,
+} from "@/components/themed";
+import type { IconFamily } from "@/components/types";
 import { SemanticColors } from "@/constants/theme";
 import { hexToRgba } from "@/utils/color-utils";
 import type { QuickAccessTrigger } from "./types";
@@ -17,18 +21,18 @@ export function QuickAccessPanelView({ triggers }: QuickAccessPanelViewProps) {
 
   return (
     <ThemedView className="p-4 rounded-lg border border-outline-100 bg-background-0">
-      <VStack className="gap-4">
+      <ThemedVStack className="gap-4">
         <ThemedText type="defaultSemiBold" className="text-lg text-center">
           Панель швидкого доступу
         </ThemedText>
-        <VStack className="gap-3">
+        <ThemedVStack className="gap-3">
           {triggers.map((trigger) => {
             const colorHex = SemanticColors.iconColors[trigger.color];
             const backgroundColor = hexToRgba(colorHex, 0.15);
             const borderColor = hexToRgba(colorHex, 0.9);
 
             return (
-              <Pressable
+              <ThemedPressable
                 key={trigger.id}
                 onPress={trigger.onPress}
                 className="flex-row items-center p-4 rounded-lg"
@@ -38,7 +42,7 @@ export function QuickAccessPanelView({ triggers }: QuickAccessPanelViewProps) {
                   borderColor,
                 }}
               >
-                <Icon
+                <ThemedIcon
                   family={(trigger.iconFamily || "MaterialIcons") as IconFamily}
                   name={trigger.icon as any}
                   size={24}
@@ -50,11 +54,11 @@ export function QuickAccessPanelView({ triggers }: QuickAccessPanelViewProps) {
                 >
                   {trigger.title}
                 </ThemedText>
-              </Pressable>
+              </ThemedPressable>
             );
           })}
-        </VStack>
-      </VStack>
+        </ThemedVStack>
+      </ThemedVStack>
     </ThemedView>
   );
 }

@@ -1,5 +1,5 @@
-import { HStack } from "@/components/ui";
-import { Icon } from "@/components/ui/icon";
+import { ThemedHStack } from "@/components/themed";
+import { ThemedIcon } from "@/components/themed";
 import { ThemedText } from "@/components/themed/themed-text";
 import { useIconColor } from "@/hooks/use-icon-color";
 
@@ -13,10 +13,10 @@ export function AskQuant({ quant }: AskQuantProps) {
   if (!quant) return null;
 
   return (
-    <HStack className="items-center gap-2">
-      <Icon family="MaterialIcons" name="circle" size={16} color={iconColor} />
+    <ThemedHStack className="items-center gap-2">
+      <ThemedIcon family="MaterialIcons" name="circle" size={16} color={iconColor} />
       <ThemedText className="text-sm">{quant}</ThemedText>
-    </HStack>
+    </ThemedHStack>
   );
 }
 

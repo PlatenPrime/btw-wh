@@ -205,4 +205,4 @@ InputIcon.displayName = "InputIcon";
 InputSlot.displayName = "InputSlot";
 InputField.displayName = "InputField";
 
-export { Input, InputField, InputIcon, InputSlot };
+export { Input, InputField, InputIcon, InputSlot, inputStyle };

@@ -1,5 +1,5 @@
+import { ThemedIcon, ThemedPressable } from "@/components/themed";
 import { ThemedText } from "@/components/themed/themed-text";
-import { Icon, Pressable } from "@/components/ui";
 import React from "react";
 import { HeaderAction } from "../../types";
 
@@ -17,13 +17,13 @@ export function RenderActionItemView({
   handlePress,
 }: RenderActionItemViewProps) {
   return (
-    <Pressable
+    <ThemedPressable
       key={action.id}
       onPress={handlePress}
       className="flex-row items-center p-3"
     >
       {action.icon && (
-        <Icon
+        <ThemedIcon
           family="MaterialIcons"
           name={action.icon}
           size={20}
@@ -34,6 +34,6 @@ export function RenderActionItemView({
       <ThemedText type="default" className={finalTextColorClass}>
         {action.label}
       </ThemedText>
-    </Pressable>
+    </ThemedPressable>
   );
 }

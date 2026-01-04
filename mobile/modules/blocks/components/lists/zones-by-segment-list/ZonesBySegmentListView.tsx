@@ -1,4 +1,4 @@
-import { FlatList, Box } from "@/components/ui";
+import { ThemedFlatList, ThemedBox } from "@/components/themed";
 import { RefreshControl } from "react-native";
 import type { ZoneWithSegmentDto } from "@/modules/blocks/api/types";
 import { ZoneBySegmentCard } from "@/modules/blocks/components/cards/zone-by-segment-card";
@@ -17,21 +17,21 @@ export function ZonesBySegmentListView({
 }: ZonesBySegmentListViewProps) {
   if (!zones || zones.length === 0) {
     return (
-      <Box className="flex-1 justify-center items-center py-8">
+      <ThemedBox className="flex-1 justify-center items-center py-8">
         <ThemedText type="default" className="text-center">
           Немає зон для відображення
         </ThemedText>
-      </Box>
+      </ThemedBox>
     );
   }
 
   return (
-    <FlatList
+    <ThemedFlatList
       data={zones}
       renderItem={({ item }) => (
-        <Box className="mb-2">
+        <ThemedBox className="mb-2">
           <ZoneBySegmentCard zone={item} />
-        </Box>
+        </ThemedBox>
       )}
       keyExtractor={(item) => item._id}
       className="flex-1"

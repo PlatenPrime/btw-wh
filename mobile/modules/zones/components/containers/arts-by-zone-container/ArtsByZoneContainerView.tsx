@@ -1,4 +1,4 @@
-import { VStack, Box } from "@/components/ui";
+import { ThemedVStack, ThemedBox } from "@/components/themed";
 import { ThemedText } from "@/components/themed/themed-text";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { ArtsGridCard } from "@/modules/arts/components/cards/arts-grid-card/ArtsGridCard";
@@ -13,26 +13,26 @@ export function ArtsByZoneContainerView({
   total,
 }: ArtsByZoneContainerViewProps) {
   return (
-    <VStack className="gap-2">
+    <ThemedVStack className="gap-2">
       <ThemedText type="defaultSemiBold" className="text-lg text-center">
         Артикули
       </ThemedText>
       {data.length === 0 ? (
-        <Box className="justify-center items-center py-8">
+        <ThemedBox className="justify-center items-center py-8">
           <ThemedText type="default" className="text-center opacity-70">
             Немає артикулів
           </ThemedText>
-        </Box>
+        </ThemedBox>
       ) : (
-        <VStack className="gap-2">
+        <ThemedVStack className="gap-2">
           {data.map((art) => (
-            <Box key={art.artikul} className="mb-2">
+            <ThemedBox key={art.artikul} className="mb-2">
               <ArtsGridCard art={art} />
-            </Box>
+            </ThemedBox>
           ))}
-        </VStack>
+        </ThemedVStack>
       )}
-    </VStack>
+    </ThemedVStack>
   );
 }
 

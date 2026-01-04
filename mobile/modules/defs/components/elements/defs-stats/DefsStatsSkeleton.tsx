@@ -1,6 +1,6 @@
 import { View } from "react-native";
 import { ThemedView } from "@/components/themed/themed-view";
-import { Box } from "@/components/ui";
+import { ThemedBox } from "@/components/themed";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 
 export function DefsStatsSkeleton() {
@@ -20,8 +20,8 @@ export function DefsStatsSkeleton() {
           }}
         >
           <View className="flex-row justify-between">
-            <Box className="rounded bg-secondary-300" style={{ width: 64, height: 16 }} />
-            <Box className="rounded bg-secondary-300" style={{ width: 32, height: 16 }} />
+            <ThemedBox className="rounded bg-secondary-300" style={{ width: 64, height: 16 }} />
+            <ThemedBox className="rounded bg-secondary-300" style={{ width: 32, height: 16 }} />
           </View>
         </ThemedView>
       ))}

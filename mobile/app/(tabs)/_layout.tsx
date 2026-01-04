@@ -1,6 +1,6 @@
 import { HapticTab } from "@/components/haptic-tab";
 import { useSidebar } from "@/components/layout/sidebar/SidebarProvider";
-import { Icon } from "@/components/ui/icon";
+import { ThemedIcon } from "@/components/themed";
 import { Colors, SemanticColors } from "@/constants/theme";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import { useThemeTokenHex } from "@/hooks/use-theme-token";
@@ -71,7 +71,7 @@ export default function TabLayout() {
             title: "Головна",
             tabBarLabel: "Головна",
             tabBarIcon: ({ color }) => (
-              <Icon
+              <ThemedIcon
                 family="MaterialIcons"
                 name="home"
                 size={28}
@@ -86,7 +86,7 @@ export default function TabLayout() {
             title: "Артикули",
             tabBarLabel: "Артикули",
             tabBarIcon: ({ color }) => (
-              <Icon
+              <ThemedIcon
                 family="MaterialIcons"
                 name="article"
                 size={28}
@@ -101,7 +101,7 @@ export default function TabLayout() {
             title: "Склад",
             tabBarLabel: "Склад",
             tabBarIcon: ({ color }) => (
-              <Icon
+              <ThemedIcon
                 family="MaterialIcons"
                 name="warehouse"
                 size={28}
@@ -116,7 +116,7 @@ export default function TabLayout() {
             title: "Поповнення",
             tabBarLabel: "Поповнення",
             tabBarIcon: ({ color }) => (
-              <Icon
+              <ThemedIcon
                 family="AntDesign"
                 name="down-square"
                 size={28}

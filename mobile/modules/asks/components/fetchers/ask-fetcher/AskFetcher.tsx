@@ -4,7 +4,7 @@ import { ThemedView } from "@/components/themed/themed-view";
 import { useAskQuery } from "@/modules/asks/api/hooks/queries/useAskQuery";
 import type { AskDto } from "@/modules/asks/api/types/dto";
 import type { ComponentType } from "react";
-import { Button, Text } from "@/components/ui";
+import { ThemedButton, ThemedText as ThemedTextButton } from "@/components/themed";
 import { TouchableOpacity } from "react-native";
 
 interface AskFetcherProps {
@@ -38,9 +38,9 @@ export function AskFetcher({
         <ThemedText type="default" className="text-center text-xs opacity-70 mb-4">
           Не вдалося завантажити запит
         </ThemedText>
-        <Button onPress={() => askQuery.refetch()} variant="outline">
-          <Text>Спробувати ще раз</Text>
-        </Button>
+        <ThemedButton onPress={() => askQuery.refetch()} variant="outline">
+          <ThemedTextButton>Спробувати ще раз</ThemedTextButton>
+        </ThemedButton>
       </ThemedView>
     );
   }
@@ -54,9 +54,9 @@ export function AskFetcher({
         <ThemedText type="default" className="text-center text-xs opacity-70 mb-4">
           Запит з таким ID не існує або був видалений
         </ThemedText>
-        <Button onPress={() => askQuery.refetch()} variant="outline">
-          <Text>Спробувати ще раз</Text>
-        </Button>
+        <ThemedButton onPress={() => askQuery.refetch()} variant="outline">
+          <ThemedTextButton>Спробувати ще раз</ThemedTextButton>
+        </ThemedButton>
       </ThemedView>
     );
   }

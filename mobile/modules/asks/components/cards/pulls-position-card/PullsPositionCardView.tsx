@@ -1,8 +1,7 @@
 import { ThemedText } from "@/components/themed/themed-text";
 import { ThemedView } from "@/components/themed/themed-view";
-import { Button, Text } from "@/components/ui";
-import { HStack, VStack } from "@/components/ui";
-import { Icon } from "@/components/ui/icon";
+import { ThemedButton, ThemedText as ThemedTextButton, ThemedHStack, ThemedVStack } from "@/components/themed";
+import { ThemedIcon } from "@/components/themed";
 import { ArtImageLink } from "@/components/shared/art-image-link";
 import type { IPositionForPullsPage } from "@/modules/asks/api/types/dto";
 import { AskPosEditDialog } from "@/modules/asks/components/dialogs/ask-pos-edit-dialog/AskPosEditDialog";
@@ -37,33 +36,33 @@ export function PullsPositionCardView({
           borderColor: borderColor,
         }}
       >
-        <VStack className="gap-2">
+        <ThemedVStack className="gap-2">
           <ArtImageLink artikul={position.artikul} nameukr={position.nameukr} link={`/(tabs)/arts/${position.artikul}`} />
 
-          <HStack className="items-center justify-between">
-            <VStack className="gap-2 flex-1">
+          <ThemedHStack className="items-center justify-between">
+            <ThemedVStack className="gap-2 flex-1">
               {position.askRemainingQuantity !== null && (
-                <HStack className="items-center gap-1">
-                  <Icon family="MaterialIcons" name="radio-button-unchecked" size={12} />
+                <ThemedHStack className="items-center gap-1">
+                  <ThemedIcon family="MaterialIcons" name="radio-button-unchecked" size={12} />
                   <ThemedText type="default" className="text-xs">
                     {position.askRemainingQuantity}
                   </ThemedText>
-                </HStack>
+                </ThemedHStack>
               )}
               <ThemedText type="defaultSemiBold" className="text-sm">
                 {position.palletTitle}
               </ThemedText>
-            </VStack>
+            </ThemedVStack>
 
-            <Button
+            <ThemedButton
               onPress={() => setOpen(true)}
               variant="outline"
               className="self-end"
             >
-              <Text className="font-semibold text-sm">Зняти товар</Text>
-            </Button>
-          </HStack>
-        </VStack>
+              <ThemedTextButton className="font-semibold text-sm">Зняти товар</ThemedTextButton>
+            </ThemedButton>
+          </ThemedHStack>
+        </ThemedVStack>
       </ThemedView>
 
       <AskPosEditDialog

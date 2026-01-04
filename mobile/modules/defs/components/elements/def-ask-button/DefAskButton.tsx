@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { CreateAskDialog } from "@/modules/asks/components/dialogs/create-ask-dialog/CreateAskDialog";
-import { Button, Text } from "@/components/ui";
+import { ThemedButton, ThemedText as ThemedTextButton } from "@/components/themed";
 
 interface DefAskButtonProps {
   artikul: string;
@@ -19,13 +19,13 @@ export function DefAskButton({ artikul }: DefAskButtonProps) {
 
   return (
     <>
-      <Button
+      <ThemedButton
         variant="outline"
         onPress={handlePress}
         className="w-full"
       >
-        <Text className="font-semibold">+ запит</Text>
-      </Button>
+        <ThemedTextButton className="font-semibold">+ запит</ThemedTextButton>
+      </ThemedButton>
 
       <CreateAskDialog
         open={dialogOpen}

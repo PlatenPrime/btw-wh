@@ -5,7 +5,7 @@ import { AskDetailsCard } from "@/modules/asks/components/cards/ask-details-card
 import { AskEvents } from "@/modules/asks/components/containers/ask-container/components/ask-events/AskEvents";
 import { AskPullPositionsContainer } from "@/modules/asks/components/containers/ask-pull-positions-container/AskPullPositionsContainer";
 import { AskPosesByArtikulContainer } from "@/modules/asks/components/containers/ask-poses-by-artikul-container/AskPosesByArtikulContainer";
-import { VStack } from "@/components/ui";
+import { ThemedVStack } from "@/components/themed";
 import { CompleteAskDialog } from "@/modules/asks/components/dialogs/complete-ask-dialog/CompleteAskDialog";
 import { RejectAskDialog } from "@/modules/asks/components/dialogs/reject-ask-dialog/RejectAskDialog";
 import { DeleteAskDialog } from "@/modules/asks/components/dialogs/delete-ask-dialog/DeleteAskDialog";
@@ -54,7 +54,7 @@ export function AskContainerView({
           ) : undefined
         }
       >
-        <VStack className="gap-4">
+        <ThemedVStack className="gap-4">
           {/* Детали ask */}
           <AskDetailsCard askData={askData} />
 
@@ -78,7 +78,7 @@ export function AskContainerView({
               askId={askData._id}
             />
           )}
-        </VStack>
+        </ThemedVStack>
       </ScrollView>
 
       {/* Диалоги */}

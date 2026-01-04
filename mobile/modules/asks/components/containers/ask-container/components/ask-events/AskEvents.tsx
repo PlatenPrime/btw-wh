@@ -3,7 +3,7 @@ import { ThemedView } from "@/components/themed/themed-view";
 import type { AskEvent } from "@/modules/asks/api/types/dto";
 import { AskEvent as AskEventComponent } from "./components/ask-event/AskEvent";
 import { AskEventsPullInfo } from "./components/ask-events-pull-info/AskEventsPullInfo";
-import { VStack } from "@/components/ui";
+import { ThemedVStack } from "@/components/themed";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 
 interface AskEventsProps {
@@ -31,10 +31,10 @@ export function AskEvents({
         borderColor: card.border,
       }}
     >
-      <VStack className="gap-3">
+      <ThemedVStack className="gap-3">
         <AskEventsPullInfo totalQuant={totalQuant} totalBoxes={totalBoxes} />
 
-        <VStack className="gap-2">
+        <ThemedVStack className="gap-2">
           {events.length === 0 && (
             <ThemedView className="rounded-md border border-dashed px-3 py-2">
               <ThemedText type="default" className="text-sm opacity-70">
@@ -52,8 +52,8 @@ export function AskEvents({
               />
             );
           })}
-        </VStack>
-      </VStack>
+        </ThemedVStack>
+      </ThemedVStack>
     </ThemedView>
   );
 }

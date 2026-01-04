@@ -4,7 +4,7 @@ import { ThemedView } from "@/components/themed/themed-view";
 import { useZoneByIdQuery } from "@/modules/zones/api/hooks/queries/useZoneByIdQuery";
 import type { ZoneDto } from "@/modules/zones/api/types/dto";
 import type { ComponentType } from "react";
-import { Button, Text } from "@/components/ui";
+import { ThemedButton, ThemedText as ThemedTextButton } from "@/components/themed";
 
 interface ZoneFetcherProps {
   id: string;
@@ -37,9 +37,9 @@ export function ZoneFetcher({
         <ThemedText type="default" className="text-center text-xs opacity-70 mb-4">
           Не вдалося завантажити зону
         </ThemedText>
-        <Button onPress={() => zoneQuery.refetch()} variant="outline">
-          <Text>Спробувати ще раз</Text>
-        </Button>
+        <ThemedButton onPress={() => zoneQuery.refetch()} variant="outline">
+          <ThemedTextButton>Спробувати ще раз</ThemedTextButton>
+        </ThemedButton>
       </ThemedView>
     );
   }
@@ -53,9 +53,9 @@ export function ZoneFetcher({
         <ThemedText type="default" className="text-center text-xs opacity-70 mb-4">
           Зону з таким ID не існує або була видалена
         </ThemedText>
-        <Button onPress={() => zoneQuery.refetch()} variant="outline">
-          <Text>Спробувати ще раз</Text>
-        </Button>
+        <ThemedButton onPress={() => zoneQuery.refetch()} variant="outline">
+          <ThemedTextButton>Спробувати ще раз</ThemedTextButton>
+        </ThemedButton>
       </ThemedView>
     );
   }

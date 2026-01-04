@@ -1,6 +1,6 @@
 import { View } from "react-native";
-import { Button, HStack, Text } from "@/components/ui";
-import { Icon } from "@/components/ui/icon";
+import { ThemedButton, ThemedHStack, ThemedText as ThemedTextButton } from "@/components/themed";
+import { ThemedIcon } from "@/components/themed";
 import { SemanticColors } from "@/constants/theme";
 
 interface DefControlsViewProps {
@@ -16,24 +16,24 @@ export function DefControlsView({
 }: DefControlsViewProps) {
   return (
     <View className="items-center justify-center">
-      <Button
+      <ThemedButton
         onPress={handleCalculate}
         disabled={isPending || isRecentlyStarted}
         variant={isRecentlyStarted ? "default" : "outline"}
         className="w-auto"
       >
         {isRecentlyStarted ? (
-          <HStack className="gap-2 items-center" >
-            <Icon family="MaterialIcons" name="check-circle" size={24} color={SemanticColors.info} />
-            <Text className="font-semibold">Запущено</Text>
-          </HStack>
+          <ThemedHStack className="gap-2 items-center" >
+            <ThemedIcon family="MaterialIcons" name="check-circle" size={24} color={SemanticColors.info} />
+            <ThemedTextButton className="font-semibold">Запущено</ThemedTextButton>
+          </ThemedHStack>
         ) : (
-          <HStack className="gap-2 items-center">
-            <Icon family="MaterialIcons" name="calculate" size={24} color={SemanticColors.info} />
-            <Text className="font-semibold">Розрахувати дефіцити</Text>
-          </HStack>
+          <ThemedHStack className="gap-2 items-center">
+            <ThemedIcon family="MaterialIcons" name="calculate" size={24} color={SemanticColors.info} />
+            <ThemedTextButton className="font-semibold">Розрахувати дефіцити</ThemedTextButton>
+          </ThemedHStack>
         )}
-      </Button>
+      </ThemedButton>
     </View>
   );
 }

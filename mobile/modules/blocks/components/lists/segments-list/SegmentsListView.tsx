@@ -1,4 +1,4 @@
-import { FlatList, Box, VStack } from "@/components/ui";
+import { ThemedFlatList, ThemedBox, ThemedVStack } from "@/components/themed";
 import { RefreshControl } from "react-native";
 import type { SegmentDto } from "@/modules/blocks/api/types";
 import { SegmentCard } from "@/modules/blocks/components/cards/segment-card";
@@ -22,37 +22,37 @@ export function SegmentsListView({
 }: SegmentsListViewProps) {
   if (!segments || segments.length === 0) {
     return (
-      <Box className="flex-1">
+      <ThemedBox className="flex-1">
         {headerComponent && (
-          <Box className="p-2">
+          <ThemedBox className="p-2">
             {headerComponent}
-          </Box>
+          </ThemedBox>
         )}
-        <Box className="flex-1 justify-center items-center py-8">
+        <ThemedBox className="flex-1 justify-center items-center py-8">
           <ThemedText type="default" className="text-center">
             Немає сегментів для відображення
           </ThemedText>
-        </Box>
-      </Box>
+        </ThemedBox>
+      </ThemedBox>
     );
   }
 
   return (
-    <FlatList
+    <ThemedFlatList
       data={segments}
       renderItem={({ item }) => (
-        <Box className="mb-2">
+        <ThemedBox className="mb-2">
           <SegmentCard segment={item} blockId={blockId} />
-        </Box>
+        </ThemedBox>
       )}
       keyExtractor={(item) => item._id}
       contentContainerClassName="p-2"
       showsVerticalScrollIndicator={false}
       ListHeaderComponent={
         headerComponent ? (
-          <Box className="mb-4">
+          <ThemedBox className="mb-4">
             {headerComponent}
-          </Box>
+          </ThemedBox>
         ) : undefined
       }
       refreshControl={

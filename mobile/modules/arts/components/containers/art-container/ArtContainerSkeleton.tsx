@@ -1,4 +1,4 @@
-import { ScrollView } from "@/components/ui";
+import { ScrollView } from "react-native";
 import { ArtDetailCardSkeleton } from "@/modules/arts/components/cards/art-detail-card/ArtDetailCardSkeleton";
 import { PosesByArtikulContainerSkeleton } from "@/modules/poses/components/containers/poses-by-artikul-container/PosesByArtikulContainerSkeleton";
 

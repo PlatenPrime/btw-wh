@@ -1,4 +1,4 @@
-import { Box, Button, HStack, Text } from "@/components/ui";
+import { ThemedBox, ThemedButton, ThemedHStack, ThemedText as ThemedTextButton } from "@/components/themed";
 import type { IPallet } from "@/modules/pallets/api/types";
 import { PalletInfo } from "@/modules/pallets/components/elements/pallet-info";
 import type { GetPosesByPalletIdParams } from "@/modules/poses/api/services/queries/getPosesByPalletId";
@@ -21,27 +21,27 @@ export function PalletContainerView({
   onCreatePosClick,
 }: PalletContainerViewProps) {
   return (
-    <Box className="flex-1">
-      <Box className="p-4 gap-4 ">
-        <HStack className="items-center justify-between gap-4 flex-wrap">
+    <ThemedBox className="flex-1">
+      <ThemedBox className="p-4 gap-4 ">
+        <ThemedHStack className="items-center justify-between gap-4 flex-wrap">
           <PalletSortControls
             sortParams={sortParams}
             onSortParamsChange={onSortParamsChange}
           />
-          <Button
+          <ThemedButton
             onPress={onCreatePosClick}
             className="rounded-lg"
             variant="create"
           >
-            <Text className="text-white font-semibold text-base">
+            <ThemedTextButton className="text-white font-semibold text-base">
               Додати позицію
-            </Text>
-          </Button>
+            </ThemedTextButton>
+          </ThemedButton>
           <PalletInfo pallet={pallet} />
-        </HStack>
-      </Box>
+        </ThemedHStack>
+      </ThemedBox>
 
       <PosesByPalletFetcher palletId={pallet._id} sortParams={sortParams} />
-    </Box>
+    </ThemedBox>
   );
 }

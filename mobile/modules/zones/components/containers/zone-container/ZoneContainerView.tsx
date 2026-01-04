@@ -1,6 +1,6 @@
 import { ScrollView, RefreshControl } from "react-native";
 import { ThemedView } from "@/components/themed/themed-view";
-import { VStack } from "@/components/ui";
+import { ThemedVStack } from "@/components/themed";
 import type { ZoneDto } from "@/modules/zones/api/types/dto";
 import { ZoneDetailsCard } from "@/modules/zones/components/cards/zone-details-card/ZoneDetailsCard";
 import { DeleteZoneDialog } from "@/modules/zones/components/dialogs/delete-zone-dialog/DeleteZoneDialog";
@@ -43,14 +43,14 @@ export function ZoneContainerView({
           ) : undefined
         }
       >
-        <VStack className="gap-4">
+        <ThemedVStack className="gap-4">
           <ZoneDetailsCard zone={zone} />
           <ArtsByZoneFetcher
             zone={zone.title}
             ContainerComponent={ArtsByZoneContainer}
             SkeletonComponent={ArtsByZoneContainerSkeleton}
           />
-        </VStack>
+        </ThemedVStack>
       </ScrollView>
 
       {/* Диалоги */}

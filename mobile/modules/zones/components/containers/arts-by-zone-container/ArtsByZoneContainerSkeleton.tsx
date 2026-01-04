@@ -1,21 +1,21 @@
-import { VStack, Box } from "@/components/ui";
+import { ThemedVStack, ThemedBox } from "@/components/themed";
 import { ThemedText } from "@/components/themed/themed-text";
 import { ArtGridCardSkeleton } from "@/modules/arts/components/cards/arts-grid-card/ArtGridCardSkeleton";
 
 export function ArtsByZoneContainerSkeleton() {
   return (
-    <VStack className="gap-4">
+    <ThemedVStack className="gap-4">
       <ThemedText type="defaultSemiBold" className="text-lg">
         Артикули
       </ThemedText>
-      <VStack className="gap-2">
+      <ThemedVStack className="gap-2">
         {Array.from({ length: 5 }).map((_, index) => (
-          <Box key={`skeleton-${index}`} className="mb-2">
+          <ThemedBox key={`skeleton-${index}`} className="mb-2">
             <ArtGridCardSkeleton />
-          </Box>
+          </ThemedBox>
         ))}
-      </VStack>
-    </VStack>
+      </ThemedVStack>
+    </ThemedVStack>
   );
 }
 

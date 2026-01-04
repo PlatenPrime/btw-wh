@@ -1,7 +1,7 @@
 import { ThemedText } from "@/components/themed/themed-text";
 import { ThemedView } from "@/components/themed/themed-view";
-import { HStack, VStack } from "@/components/ui";
-import { Icon } from "@/components/ui/icon";
+import { ThemedHStack, ThemedVStack } from "@/components/themed";
+import { ThemedIcon } from "@/components/themed";
 import { SemanticColors } from "@/constants/theme";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import { hexToRgba } from "@/utils/color-utils";
@@ -64,9 +64,9 @@ export function AskEvent({ event, index }: AskEventProps) {
         borderColor: accentBorderColor,
       }}
     >
-      <VStack className="gap-1">
-        <HStack className="items-center gap-2">
-          <Icon
+      <ThemedVStack className="gap-1">
+        <ThemedHStack className="items-center gap-2">
+          <ThemedIcon
             family="MaterialIcons"
             name={meta.iconName}
             size={16}
@@ -75,12 +75,12 @@ export function AskEvent({ event, index }: AskEventProps) {
           <ThemedText type="default" className="text-sm opacity-70">
             {formatDateTime(event.date)}
           </ThemedText>
-        </HStack>
+        </ThemedHStack>
         <ThemedText type="default" className="text-sm">
           {meta.buildDescription(event) ??
             `${event.userData?.fullname ?? "Користувач"} зафіксував подію.`}
         </ThemedText>
-      </VStack>
+      </ThemedVStack>
     </ThemedView>
   );
 }

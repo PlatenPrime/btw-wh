@@ -1,6 +1,6 @@
 import { FormDialog } from "@/components/shared/dialog/form-dialog";
 import { ThemedText } from "@/components/themed/themed-text";
-import { Button, Text } from "@/components/ui";
+import { ThemedButton, ThemedText as ThemedTextButton } from "@/components/themed";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import { ActivityIndicator, View } from "react-native";
 
@@ -28,15 +28,15 @@ export function CompleteAskDialogView({
       title={`Виконати запит "${artikul}"?`}
       footer={
         <View className="flex-row gap-2">
-          <Button
+          <ThemedButton
             onPress={onCancel}
             disabled={isCompleting}
             variant="outline"
             className="flex-1"
           >
-            <Text className="font-semibold">Скасувати</Text>
-          </Button>
-          <Button
+            <ThemedTextButton className="font-semibold">Скасувати</ThemedTextButton>
+          </ThemedButton>
+          <ThemedButton
             onPress={onComplete}
             disabled={isCompleting}
             variant="confirm"
@@ -45,9 +45,9 @@ export function CompleteAskDialogView({
             {isCompleting ? (
               <ActivityIndicator color={staticColors.white} />
             ) : (
-              <Text className="text-white font-semibold">Виконати</Text>
+              <ThemedTextButton className="text-white font-semibold">Виконати</ThemedTextButton>
             )}
-          </Button>
+          </ThemedButton>
         </View>
       }
     >

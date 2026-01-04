@@ -2,7 +2,7 @@
   "expo": {
     "name": "BTW App",
     "slug": "btw-mobile",
-    "version": "2.1.0",
+    "version": "2.1.1",
     "orientation": "portrait",
     "icon": "./assets/images/logo-btw.jpg",
     "scheme": "mobile",
@@ -19,7 +19,7 @@
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
       "package": "com.platenprime.btwmobile",
-      "versionCode": 210
+      "versionCode": 211
     },
     "web": {
       "output": "static",

@@ -1,5 +1,5 @@
-import { Box, HStack } from "@/components/ui";
-import { Icon } from "@/components/ui/icon";
+import { ThemedHStack } from "@/components/themed";
+import { ThemedIcon } from "@/components/themed";
 import { ThemedText } from "@/components/themed/themed-text";
 import { useIconColor } from "@/hooks/use-icon-color";
 
@@ -15,9 +15,9 @@ export function PalletInfoView({
   const iconColor = useIconColor();
   
   return (
-    <HStack className="items-center justify-center gap-4">
-      <HStack className="items-center gap-1">
-        <Icon 
+    <ThemedHStack className="items-center justify-center gap-4">
+      <ThemedHStack className="items-center gap-1">
+        <ThemedIcon 
           family="MaterialIcons" 
           name="description" 
           size={16} 
@@ -26,10 +26,10 @@ export function PalletInfoView({
         <ThemedText type="defaultSemiBold" className="text-base">
           {totalPositions}
         </ThemedText>
-      </HStack>
+      </ThemedHStack>
 
-      <HStack className="items-center gap-1">
-        <Icon 
+      <ThemedHStack className="items-center gap-1">
+        <ThemedIcon 
           family="Feather" 
           name="box" 
           size={16} 
@@ -38,8 +38,8 @@ export function PalletInfoView({
         <ThemedText type="defaultSemiBold" className="text-base">
           {totalBoxes}
         </ThemedText>
-      </HStack>
-    </HStack>
+      </ThemedHStack>
+    </ThemedHStack>
   );
 }
 

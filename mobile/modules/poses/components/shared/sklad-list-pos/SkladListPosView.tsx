@@ -1,4 +1,4 @@
-import { Box, HStack, Pressable } from "@/components/ui";
+import { ThemedBox, ThemedHStack, ThemedPressable } from "@/components/themed";
 import { ThemedText } from "@/components/themed/themed-text";
 import type { IPos } from "@/modules/poses/api/types";
 
@@ -12,36 +12,36 @@ export function SkladListPosView({ pos, onPress }: SkladListPosViewProps) {
   const isQuantEmpty = pos.quant === 0;
 
   return (
-    <Pressable onPress={onPress}>
-      <Box className="px-3 py-2 p-2 rounded-lg border border-outline-100 bg-background-0">
-        <HStack className="items-center">
+    <ThemedPressable onPress={onPress}>
+      <ThemedBox className="px-3 py-2 p-2 rounded-lg border border-outline-100 bg-background-0">
+        <ThemedHStack className="items-center">
           {/* Название паллеты слева */}
-          <Box className="flex-1 min-w-0">
+          <ThemedBox className="flex-1 min-w-0">
             <ThemedText type="defaultSemiBold" numberOfLines={1}>
               {pos.palletData?.title || "Невідома палета"}
             </ThemedText>
-          </Box>
+          </ThemedBox>
           {/* Количество коробок по центру */}
-          <Box className="flex-1 items-center">
+          <ThemedBox className="flex-1 items-center">
             <ThemedText
               type="default"
               className={isBoxesEmpty ? "text-error-600" : ""}
             >
               {pos.boxes || 0}
             </ThemedText>
-          </Box>
+          </ThemedBox>
           {/* Количество товара справа */}
-          <Box className="flex-1 items-end">
+          <ThemedBox className="flex-1 items-end">
             <ThemedText
               type="default"
               className={isQuantEmpty ? "text-error-600" : ""}
             >
               {pos.quant || 0}
             </ThemedText>
-          </Box>
-        </HStack>
-      </Box>
-    </Pressable>
+          </ThemedBox>
+        </ThemedHStack>
+      </ThemedBox>
+    </ThemedPressable>
   );
 }
 

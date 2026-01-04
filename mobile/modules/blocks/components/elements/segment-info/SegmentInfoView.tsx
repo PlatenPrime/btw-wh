@@ -1,5 +1,5 @@
 import { ThemedText } from "@/components/themed/themed-text";
-import { Box, HStack, VStack } from "@/components/ui";
+import { ThemedBox, ThemedHStack, ThemedVStack } from "@/components/themed";
 
 interface SegmentInfoViewProps {
   order: number;
@@ -15,50 +15,50 @@ export function SegmentInfoView({
   blockTitle,
 }: SegmentInfoViewProps) {
   return (
-    <Box className="p-4 rounded-lg border border-outline-100 bg-background-0">
-      <VStack className="gap-2">
+    <ThemedBox className="p-4 rounded-lg border border-outline-100 bg-background-0">
+      <ThemedVStack className="gap-2">
         <ThemedText type="title" className="text-lg text-center">
           Сегмент {order}
         </ThemedText>
-        <Box className="gap-1">
-          <HStack className="items-center justify-start gap-2">
+        <ThemedBox className="gap-1">
+          <ThemedHStack className="items-center justify-start gap-2">
             <ThemedText type="default" className="text-sm">
               Блок:
             </ThemedText>
             <ThemedText type="defaultSemiBold" className="text-sm">
               {blockTitle}
             </ThemedText>
-          </HStack>
+          </ThemedHStack>
 
-          <HStack className="items-center justify-start gap-2">
+          <ThemedHStack className="items-center justify-start gap-2">
             <ThemedText type="default" className="text-sm">
               Порядок:
             </ThemedText>
             <ThemedText type="defaultSemiBold" className="text-sm">
               {order}
             </ThemedText>
-          </HStack>
+          </ThemedHStack>
 
-          <HStack className="items-center justify-start gap-2">
+          <ThemedHStack className="items-center justify-start gap-2">
             <ThemedText type="default" className="text-sm">
               Сектор:
             </ThemedText>
             <ThemedText type="defaultSemiBold" className="text-sm">
               {sector}
             </ThemedText>
-          </HStack>
+          </ThemedHStack>
 
-          <HStack className="items-center justify-start gap-2">
+          <ThemedHStack className="items-center justify-start gap-2">
             <ThemedText type="default" className="text-sm">
               Зони:
             </ThemedText>
             <ThemedText type="defaultSemiBold" className="text-sm">
               {zonesCount}
             </ThemedText>
-          </HStack>
-        </Box>
-      </VStack>
-    </Box>
+          </ThemedHStack>
+        </ThemedBox>
+      </ThemedVStack>
+    </ThemedBox>
   );
 }
 

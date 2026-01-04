@@ -1,4 +1,4 @@
-import { FlatList, Box } from "@/components/ui";
+import { ThemedFlatList, ThemedBox } from "@/components/themed";
 import { RefreshControl } from "react-native";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { ArtsGridCard } from "@/modules/arts/components/cards/arts-grid-card/ArtsGridCard";
@@ -21,21 +21,21 @@ export function ArtsGridView({
 }: ViewProps) {
   if (!arts || arts.length === 0) {
     return (
-      <Box className="flex-1 justify-center items-center py-8">
+      <ThemedBox className="flex-1 justify-center items-center py-8">
         <ThemedText type="default" className="text-center">
           Немає даних для відображення
         </ThemedText>
-      </Box>
+      </ThemedBox>
     );
   }
 
   return (
-    <FlatList
+    <ThemedFlatList
       data={arts}
       renderItem={({ item }) => (
-        <Box className="mb-2">
+        <ThemedBox className="mb-2">
           <ArtsGridCard art={item} />
-        </Box>
+        </ThemedBox>
       )}
       keyExtractor={(item) => item.artikul}
       numColumns={1}

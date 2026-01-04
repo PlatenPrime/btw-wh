@@ -1,14 +1,14 @@
-import { Box } from "@/components/ui";
+import { ThemedBox } from "@/components/themed";
 
 export function RowCardSkeleton() {
   return (
-    <Box className="p-4 rounded-lg border border-outline-100 bg-background-0 items-center">
-      <Box className="items-center gap-2">
-        <Box
+    <ThemedBox className="p-4 rounded-lg border border-outline-100 bg-background-0 items-center">
+      <ThemedBox className="items-center gap-2">
+        <ThemedBox
           className="rounded bg-secondary-300"
           style={{ height: 24, width: 96 }}
         />
-      </Box>
-    </Box>
+      </ThemedBox>
+    </ThemedBox>
   );
 }

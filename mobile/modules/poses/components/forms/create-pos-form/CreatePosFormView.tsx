@@ -10,7 +10,7 @@ import {
 import { ActivityIndicator } from "react-native";
 import { ThemedText } from "@/components/themed/themed-text";
 import { ThemedView } from "@/components/themed/themed-view";
-import { Icon } from "@/components/ui/icon";
+import { ThemedIcon } from "@/components/themed";
 import type { CreatePosFormData } from "./schema";
 import type { UseFormReturn } from "react-hook-form";
 import { Controller } from "react-hook-form";
@@ -302,7 +302,7 @@ export function CreatePosFormView({
                     >
                       {label}
                     </ThemedText>
-                    <Icon
+                    <ThemedIcon
                       family="MaterialIcons"
                       name={isSelected ? "radio-button-checked" : "radio-button-unchecked"}
                       size={20}

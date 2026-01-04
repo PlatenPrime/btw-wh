@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import { ThemedView } from "@/components/themed/themed-view";
 import { useThemeColors } from "@/hooks/use-theme-colors";
-import { Box } from "@/components/ui";
+import { ThemedBox } from "@/components/themed";
 import { BtradeArtDataSkeleton } from "@/modules/arts/components/containers/btrade-art-data-container/BtradeArtDataSkeleton";
 
 export function AskDetailsCardSkeleton() {
@@ -20,22 +20,22 @@ export function AskDetailsCardSkeleton() {
       <View className="gap-3">
         <View className="flex-row items-start justify-between">
           <View className="flex-1 flex-row items-start gap-3">
-            <Box className="rounded-lg bg-secondary-300" style={{ height: 60, width: 60 }} />
+            <ThemedBox className="rounded-lg bg-secondary-300" style={{ height: 60, width: 60 }} />
             <View className="flex-1 gap-2">
-              <Box className="rounded bg-secondary-300" style={{ height: 16, width: 128 }} />
-              <Box className="rounded bg-secondary-300" style={{ height: 12, width: 192 }} />
+              <ThemedBox className="rounded bg-secondary-300" style={{ height: 16, width: 128 }} />
+              <ThemedBox className="rounded bg-secondary-300" style={{ height: 12, width: 192 }} />
             </View>
           </View>
-          <Box className="rounded-md bg-secondary-300" style={{ height: 24, width: 80 }} />
+          <ThemedBox className="rounded-md bg-secondary-300" style={{ height: 24, width: 80 }} />
         </View>
 
         <View className="gap-2">
-          <Box className="rounded bg-secondary-300" style={{ height: 16, width: 64 }} />
-          <Box className="rounded bg-secondary-300" style={{ height: 16, width: 128 }} />
-          <Box className="rounded bg-secondary-300" style={{ height: 16, width: 96 }} />
+          <ThemedBox className="rounded bg-secondary-300" style={{ height: 16, width: 64 }} />
+          <ThemedBox className="rounded bg-secondary-300" style={{ height: 16, width: 128 }} />
+          <ThemedBox className="rounded bg-secondary-300" style={{ height: 16, width: 96 }} />
           <BtradeArtDataSkeleton />
-          <Box className="rounded bg-secondary-300" style={{ height: 16, width: 112 }} />
-          <Box className="rounded bg-secondary-300" style={{ height: 12, width: 80 }} />
+          <ThemedBox className="rounded bg-secondary-300" style={{ height: 16, width: 112 }} />
+          <ThemedBox className="rounded bg-secondary-300" style={{ height: 12, width: 80 }} />
         </View>
       </View>
     </ThemedView>

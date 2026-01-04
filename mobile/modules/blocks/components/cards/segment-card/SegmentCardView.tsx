@@ -1,5 +1,5 @@
 import { ThemedText } from "@/components/themed/themed-text";
-import { Box, HStack, Pressable } from "@/components/ui";
+import { ThemedBox, ThemedHStack, ThemedPressable } from "@/components/themed";
 
 interface SegmentCardViewProps {
   title: string;
@@ -17,36 +17,36 @@ export function SegmentCardView({
   onPress,
 }: SegmentCardViewProps) {
   return (
-    <Pressable
+    <ThemedPressable
       onPress={onPress}
       className="p-4 rounded-lg border border-outline-100 bg-background-0"
     >
-      <Box className="gap-2">
-        <HStack className="items-center justify-between">
+      <ThemedBox className="gap-2">
+        <ThemedHStack className="items-center justify-between">
           <ThemedText type="title" className="text-lg flex-1">
             {title}
           </ThemedText>
-        </HStack>
-        <Box className="gap-1">
-          <HStack className="items-center justify-start gap-2">
+        </ThemedHStack>
+        <ThemedBox className="gap-1">
+          <ThemedHStack className="items-center justify-start gap-2">
             <ThemedText type="default" className="text-sm">
               Сегмент:
             </ThemedText>
             <ThemedText type="default" className="text-sm">
               {order}
             </ThemedText>
-          </HStack>
+          </ThemedHStack>
 
-          <HStack className="items-center justify-start gap-2">
+          <ThemedHStack className="items-center justify-start gap-2">
             <ThemedText type="default" className="text-sm">
               Сектор:
             </ThemedText>
             <ThemedText type="default" className="text-sm">
               {sector}
             </ThemedText>
-          </HStack>
-        </Box>
-      </Box>
-    </Pressable>
+          </ThemedHStack>
+        </ThemedBox>
+      </ThemedBox>
+    </ThemedPressable>
   );
 }

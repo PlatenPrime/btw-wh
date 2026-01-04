@@ -1,7 +1,7 @@
 import { ThemedText } from "@/components/themed/themed-text";
-import { Icon } from "@/components/ui/icon";
+import { ThemedIcon } from "@/components/themed";
 import type { AskPullStatusMessage } from "@/modules/asks/utils/get-ask-pull-status-message/getAskPullStatusMessage";
-import { HStack } from "@/components/ui";
+import { ThemedHStack } from "@/components/themed";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import { SemanticColors } from "@/constants/theme";
 import { hexToRgba } from "@/utils/color-utils";
@@ -48,8 +48,8 @@ export function AskPullStatusMessage({
         borderColor: variant.borderColor,
       }}
     >
-      <HStack className="items-center gap-3">
-        <Icon
+      <ThemedHStack className="items-center gap-3">
+        <ThemedIcon
           family="MaterialIcons"
           name={statusMessage.iconName}
           size={20}
@@ -58,7 +58,7 @@ export function AskPullStatusMessage({
         <ThemedText type="default" className="text-sm flex-1">
           {statusMessage.message}
         </ThemedText>
-      </HStack>
+      </ThemedHStack>
     </View>
   );
 }
