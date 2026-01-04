@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 import { useLatestDefsQuery } from "@/modules/defs/api/hooks/queries/useLatestDefsQuery";
 import { DefsContainer } from "@/modules/defs/components/containers/defs-container/DefsContainer";
 import { DefsContainerSkeleton } from "@/modules/defs/components/containers/defs-container/DefsContainerSkeleton";

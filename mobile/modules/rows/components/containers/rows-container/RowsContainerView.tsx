@@ -1,7 +1,7 @@
 import { Box } from "@/components/ui";
 import type { RowDto } from "@/modules/rows/api/types/dto";
 import { RowsList } from "@/modules/rows/components/lists/rows-list/RowsList";
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 import { CreateRowDialog } from "@/modules/rows/components/dialogs/create-row-dialog/CreateRowDialog";
 
 interface RowsContainerViewProps {

@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 import { Icon } from "@/components/ui/icon";
 import type { BtradeArtInfoDto } from "@/modules/arts/api/types/dto";
 import { SemanticColors } from "@/constants/theme";

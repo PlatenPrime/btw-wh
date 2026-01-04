@@ -1,5 +1,5 @@
-import { ThemedText } from "@/components/themed-text";
-import { ThemedView } from "@/components/themed-view";
+import { ThemedText } from "@/components/themed/themed-text";
+import { ThemedView } from "@/components/themed/themed-view";
 import type { GetPosesByPalletIdParams } from "@/modules/poses/api/services/queries/getPosesByPalletId";
 import { Modal, ModalBackdrop, ModalContent, ModalHeader, ModalCloseButton, Pressable, Box, HStack, VStack } from "@/components/ui";
 import { Icon } from "@/components/ui/icon";

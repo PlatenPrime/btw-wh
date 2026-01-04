@@ -1,4 +1,4 @@
-import { FormDialog } from "@/components/shared/form-dialog";
+import { FormDialog } from "@/components/shared/dialog/form-dialog";
 import { CreateAskForm } from "@/modules/asks/components/forms/create-ask-form/CreateAskForm";
 
 interface CreateAskDialogViewProps {
@@ -15,11 +15,7 @@ export function CreateAskDialogView({
   preFilledArtikul,
 }: CreateAskDialogViewProps) {
   return (
-    <FormDialog
-      visible={visible}
-      onClose={onClose}
-      title="Створити запит"
-    >
+    <FormDialog visible={visible} onClose={onClose} title="Створити запит">
       <CreateAskForm
         onSuccess={onSuccess}
         onCancel={onClose}
@@ -28,4 +24,3 @@ export function CreateAskDialogView({
     </FormDialog>
   );
 }
-

@@ -2,7 +2,7 @@ import { FlatList, Box } from "@/components/ui";
 import { RefreshControl } from "react-native";
 import type { RowDto } from "@/modules/rows/api/types/dto";
 import { RowCard } from "@/modules/rows/components/cards/row-card/RowCard";
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 
 interface RowsListViewProps {
   rows: RowDto[] | undefined;

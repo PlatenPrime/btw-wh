@@ -1,4 +1,4 @@
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 import { Box } from "@/components/ui";
 import { Icon, type IconFamily } from "@/components/ui/icon";
 import { SemanticColors } from "@/constants/theme";

@@ -2,7 +2,7 @@ import { FlatList, Box } from "@/components/ui";
 import { RefreshControl } from "react-native";
 import type { BlockDto } from "@/modules/blocks/api/types";
 import { BlockCard } from "@/modules/blocks/components/cards/block-card";
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 
 interface BlocksListViewProps {
   blocks: BlockDto[] | undefined;

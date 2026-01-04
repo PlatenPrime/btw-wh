@@ -2,7 +2,7 @@ import { FlatList, Box } from "@/components/ui";
 import { RefreshControl } from "react-native";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { ArtsGridCard } from "@/modules/arts/components/cards/arts-grid-card/ArtsGridCard";
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 
 interface ViewProps {
   arts: ArtDto[] | undefined;

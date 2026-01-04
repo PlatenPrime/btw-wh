@@ -1,5 +1,5 @@
 import { ArtImageModal } from "@/components/shared/art-image-modal/ArtImageModal";
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 import { Image } from "expo-image";
 import { TouchableOpacity, View } from "react-native";
 

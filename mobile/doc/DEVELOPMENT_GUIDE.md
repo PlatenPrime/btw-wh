@@ -617,8 +617,8 @@ function PosCardView() {
 - `Card` - карточка с поддержкой темы
 
 ```typescript
-import { ThemedView } from "@/components/themed-view";
-import { ThemedText } from "@/components/themed-text";
+import { ThemedView } from "@/components/themed/themed-view";
+import { ThemedText } from "@/components/themed/themed-text";
 import { Card } from "@/components/ui";
 
 <ThemedView className="flex-1">
@@ -649,7 +649,7 @@ import { Card } from "@/components/ui";
 ```typescript
 // ✅ ПРАВИЛЬНО
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
-import { ThemedView } from "@/components/themed-view";
+import { ThemedView } from "@/components/themed/themed-view";
 import { SERVER_URL } from "@/constants/server";
 
 // ❌ НЕПРАВИЛЬНО

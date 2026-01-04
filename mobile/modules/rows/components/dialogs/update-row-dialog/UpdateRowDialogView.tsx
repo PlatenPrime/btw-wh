@@ -1,6 +1,6 @@
-import { FormDialog } from "@/components/shared/form-dialog";
-import { UpdateRowForm } from "@/modules/rows/components/forms/update-row-form/UpdateRowForm";
+import { FormDialog } from "@/components/shared/dialog/form-dialog";
 import type { RowDto } from "@/modules/rows/api/types/dto";
+import { UpdateRowForm } from "@/modules/rows/components/forms/update-row-form/UpdateRowForm";
 
 interface UpdateRowDialogViewProps {
   row: RowDto;
@@ -16,13 +16,8 @@ export function UpdateRowDialogView({
   onSuccess,
 }: UpdateRowDialogViewProps) {
   return (
-    <FormDialog
-      visible={visible}
-      onClose={onClose}
-      title="Редагувати ряд"
-    >
+    <FormDialog visible={visible} onClose={onClose} title="Редагувати ряд">
       <UpdateRowForm row={row} onSuccess={onSuccess} onCancel={onClose} />
     </FormDialog>
   );
 }
-

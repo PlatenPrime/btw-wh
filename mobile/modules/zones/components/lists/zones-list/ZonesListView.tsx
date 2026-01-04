@@ -2,7 +2,7 @@ import { FlatList, Box } from "@/components/ui";
 import { RefreshControl } from "react-native";
 import type { ZoneDto } from "@/modules/zones/api/types/dto";
 import { ZoneCard } from "@/modules/zones/components/cards/zone-card/ZoneCard";
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 
 interface ZonesListViewProps {
   zones: ZoneDto[] | undefined;

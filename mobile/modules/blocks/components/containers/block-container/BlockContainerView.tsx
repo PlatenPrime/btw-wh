@@ -2,7 +2,7 @@ import { Box } from "@/components/ui";
 import type { BlockDto, SegmentDto } from "@/modules/blocks/api/types";
 import { BlockInfo } from "@/modules/blocks/components/elements/block-info";
 import { SegmentsList } from "@/modules/blocks/components/lists/segments-list";
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 
 interface BlockContainerViewProps {
   block: BlockDto;

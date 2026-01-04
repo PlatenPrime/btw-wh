@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 
 export function DefsGridEmpty() {
   return (

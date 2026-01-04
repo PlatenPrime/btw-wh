@@ -1,6 +1,6 @@
-import { FormDialog } from "@/components/shared/form-dialog";
+import { DialogActions } from "@/components/shared/dialog/dialog-actions/DialogActions";
+import { FormDialog } from "@/components/shared/dialog/form-dialog";
 import { CreatePalletFormView } from "@/modules/pallets/components/forms/create-pallet-form/CreatePalletFormView";
-import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
 import type { PalletFormValues } from "@/modules/pallets/components/forms/schema";
 import type { UseFormReturn } from "react-hook-form";
 

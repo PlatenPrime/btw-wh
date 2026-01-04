@@ -1,5 +1,5 @@
 import { Box } from "@/components/ui";
-import { ThemedView } from "@/components/themed-view";
+import { ThemedView } from "@/components/themed/themed-view";
 import { Header, HeaderActionsProvider } from "@/components/layout/header";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 

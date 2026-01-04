@@ -1,6 +1,6 @@
 import { View } from "react-native";
-import { ThemedView } from "@/components/themed-view";
-import { ThemedText } from "@/components/themed-text";
+import { ThemedView } from "@/components/themed/themed-view";
+import { ThemedText } from "@/components/themed/themed-text";
 import { useOneArtQuery } from "@/modules/arts/api/hooks/queries/useOneArtQuery";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import type { ComponentType } from "react";

@@ -1,4 +1,4 @@
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 import { Box } from "@/components/ui";
 import { View } from "react-native";
 import type { ZoneDto } from "@/modules/zones/api/types/dto";

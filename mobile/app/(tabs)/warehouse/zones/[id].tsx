@@ -1,7 +1,7 @@
 import { useLocalSearchParams } from "expo-router";
 import { PageLayout } from "@/components/layout/page-layout";
 import { View } from "react-native";
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 import { useZoneByIdQuery } from "@/modules/zones/api/hooks/queries/useZoneByIdQuery";
 import { ZoneFetcher } from "@/modules/zones/components/fetchers/zone-fetcher/ZoneFetcher";
 import {

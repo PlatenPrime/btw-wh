@@ -1,7 +1,7 @@
 import { Box } from "@/components/ui";
 import type { ZonesResponseDto } from "@/modules/zones/api/types/dto";
 import { ZonesList } from "@/modules/zones/components/lists/zones-list/ZonesList";
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 import { CreateZoneDialog } from "@/modules/zones/components/dialogs/create-zone-dialog/CreateZoneDialog";
 import { HStack, Button, Text } from "@/components/ui";
 import { ZonesControls } from "@/modules/zones/components/controls/zones-controls/ZonesControls";

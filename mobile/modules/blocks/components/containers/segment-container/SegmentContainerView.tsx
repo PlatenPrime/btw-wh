@@ -1,4 +1,4 @@
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 import { Box, VStack } from "@/components/ui";
 import type {
   SegmentDto,

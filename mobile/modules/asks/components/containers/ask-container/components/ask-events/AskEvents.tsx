@@ -1,5 +1,5 @@
-import { ThemedText } from "@/components/themed-text";
-import { ThemedView } from "@/components/themed-view";
+import { ThemedText } from "@/components/themed/themed-text";
+import { ThemedView } from "@/components/themed/themed-view";
 import type { AskEvent } from "@/modules/asks/api/types/dto";
 import { AskEvent as AskEventComponent } from "./components/ask-event/AskEvent";
 import { AskEventsPullInfo } from "./components/ask-events-pull-info/AskEventsPullInfo";

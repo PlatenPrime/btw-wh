@@ -1,6 +1,6 @@
-import { FormDialog } from "@/components/shared/form-dialog";
-import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
-import { DialogDescription } from "@/components/shared/dialog-description/DialogDescription";
+import { DialogActions } from "@/components/shared/dialog/dialog-actions/DialogActions";
+import { DialogDescription } from "@/components/shared/dialog/dialog-description/DialogDescription";
+import { FormDialog } from "@/components/shared/dialog/form-dialog";
 import type { IPallet } from "@/modules/pallets/api/types";
 
 interface ClearPalletDialogViewProps {
@@ -35,8 +35,8 @@ export function ClearPalletDialogView({
       }
     >
       <DialogDescription>
-        Ви впевнені, що хочете видалити всі позиції палети "{pallet.title}"? Цю дію
-        неможливо скасувати, вона також призведе до видалення всіх
+        Ви впевнені, що хочете видалити всі позиції палети "{pallet.title}"? Цю
+        дію неможливо скасувати, вона також призведе до видалення всіх
         пов'язаних позицій.
       </DialogDescription>
     </FormDialog>

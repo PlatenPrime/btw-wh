@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import { ThemedText } from '@/components/themed-text';
+import { ThemedText } from '@/components/themed/themed-text';
 import { PageLayout } from '@/components/layout/page-layout';
 
 export default function ArtsUpdateScreen() {

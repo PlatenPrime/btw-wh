@@ -1,18 +1,32 @@
-import { useState, useMemo } from "react";
-import { ThemedText } from "@/components/themed-text";
-import { ThemedView } from "@/components/themed-view";
-import { Box, VStack, HStack, Input, InputField, FlatList, Pressable, Button, Spinner, Icon, Text } from "@/components/ui";
-import { ActivityIndicator } from "react-native";
-import type { IPallet } from "@/modules/pallets/api/types";
-import { useEmptyPalletsQuery } from "@/modules/pallets/api/hooks/queries/useEmptyPalletsQuery";
+import { ThemedText } from "@/components/themed/themed-text";
+import { ThemedView } from "@/components/themed/themed-view";
+import {
+  Box,
+  Button,
+  FlatList,
+  HStack,
+  Icon,
+  Input,
+  InputField,
+  Pressable,
+  Spinner,
+  Text,
+  VStack,
+} from "@/components/ui";
 import { useIconColor } from "@/hooks/use-icon-color";
 import { useThemeColors } from "@/hooks/use-theme-colors";
+import { useEmptyPalletsQuery } from "@/modules/pallets/api/hooks/queries/useEmptyPalletsQuery";
+import type { IPallet } from "@/modules/pallets/api/types";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { ActivityIndicator } from "react-native";
 
 interface MovePalletPosesFormProps {
   fromPallet: IPallet;
   onSuccess: (toPalletId: string) => void;
-  onCancel: () => void;
+  onCancel?: () => void;
   isSubmitting?: boolean;
+  hideActions?: boolean;
+  onSubmitReady?: (submitFn: () => void, isDisabled: boolean) => void;
 }
 
 export function MovePalletPosesForm({
@@ -20,6 +34,8 @@ export function MovePalletPosesForm({
   onSuccess,
   onCancel,
   isSubmitting = false,
+  hideActions = false,
+  onSubmitReady,
 }: MovePalletPosesFormProps) {
   const [search, setSearch] = useState("");
   const [selectedPalletId, setSelectedPalletId] = useState<string>("");
@@ -36,12 +52,12 @@ export function MovePalletPosesForm({
     return pallets
       .filter((p) => p._id !== fromPallet._id)
       .filter((p) =>
-        normalized ? p.title.toLowerCase().includes(normalized) : true,
+        normalized ? p.title.toLowerCase().includes(normalized) : true
       )
       .sort((a, b) => a.title.localeCompare(b.title));
   }, [pallets, fromPallet._id, search]);
 
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(() => {
     if (!selectedPalletId) {
       return;
     }
@@ -56,7 +72,15 @@ export function MovePalletPosesForm({
       return;
     }
     onSuccess(selected._id);
-  };
+  }, [selectedPalletId, pallets, onSuccess]);
+
+  const isSubmitDisabled = !selectedPalletId || isSubmitting;
+
+  useEffect(() => {
+    if (onSubmitReady) {
+      onSubmitReady(handleSubmit, isSubmitDisabled);
+    }
+  }, [onSubmitReady, handleSubmit, isSubmitDisabled]);
 
   return (
     <VStack className="gap-4">
@@ -92,6 +116,8 @@ export function MovePalletPosesForm({
             data={filteredPallets}
             keyExtractor={(item) => item._id}
             keyboardShouldPersistTaps="handled"
+            scrollEnabled={false}
+            nestedScrollEnabled={true}
             renderItem={({ item }) => {
               const isEmpty = Array.isArray(item.poses)
                 ? item.poses.length === 0
@@ -111,7 +137,11 @@ export function MovePalletPosesForm({
                   <HStack className="items-center gap-3 flex-1">
                     <Icon
                       family="MaterialIcons"
-                      name={isSelected ? "radio-button-checked" : "radio-button-unchecked"}
+                      name={
+                        isSelected
+                          ? "radio-button-checked"
+                          : "radio-button-unchecked"
+                      }
                       size={20}
                       color={disabled ? staticColors.disabled : iconColor}
                     />
@@ -127,13 +157,19 @@ export function MovePalletPosesForm({
                   <Box>
                     {isEmpty ? (
                       <ThemedView className="px-2 py-1 rounded bg-success-500">
-                        <ThemedText type="default" className="text-xs text-white">
+                        <ThemedText
+                          type="default"
+                          className="text-xs text-white"
+                        >
                           Порожня
                         </ThemedText>
                       </ThemedView>
                     ) : (
                       <ThemedView className="px-2 py-1 rounded bg-error-500">
-                        <ThemedText type="default" className="text-xs text-white">
+                        <ThemedText
+                          type="default"
+                          className="text-xs text-white"
+                        >
                           Зайнята
                         </ThemedText>
                       </ThemedView>
@@ -146,30 +182,33 @@ export function MovePalletPosesForm({
         )}
       </Box>
 
-      <HStack className="gap-3">
-        <Button
-          variant="outline"
-          onPress={onCancel}
-          className="flex-1"
-          disabled={isSubmitting}
-        >
-          <Text className="font-semibold">Скасувати</Text>
-        </Button>
-
-        <Button
-          onPress={handleSubmit}
-          variant="confirm"
-          className="flex-1"
-          disabled={!selectedPalletId || isSubmitting}
-        >
-          {isSubmitting ? (
-            <ActivityIndicator color={staticColors.white} />
-          ) : (
-            <Text className="text-white font-semibold">Підтвердити</Text>
+      {!hideActions && (
+        <HStack className="gap-3">
+          {onCancel && (
+            <Button
+              variant="outline"
+              onPress={onCancel}
+              className="flex-1"
+              disabled={isSubmitting}
+            >
+              <Text className="font-semibold">Скасувати</Text>
+            </Button>
           )}
-        </Button>
-      </HStack>
+
+          <Button
+            onPress={handleSubmit}
+            variant="confirm"
+            className="flex-1"
+            disabled={isSubmitDisabled}
+          >
+            {isSubmitting ? (
+              <ActivityIndicator color={staticColors.white} />
+            ) : (
+              <Text className="text-white font-semibold">Підтвердити</Text>
+            )}
+          </Button>
+        </HStack>
+      )}
     </VStack>
   );
 }
-

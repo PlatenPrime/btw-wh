@@ -1,6 +1,6 @@
-import { FormDialog } from "@/components/shared/form-dialog";
-import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
-import { DialogDescription } from "@/components/shared/dialog-description/DialogDescription";
+import { DialogActions } from "@/components/shared/dialog/dialog-actions/DialogActions";
+import { DialogDescription } from "@/components/shared/dialog/dialog-description/DialogDescription";
+import { FormDialog } from "@/components/shared/dialog/form-dialog";
 import type { RowDto } from "@/modules/rows/api/types/dto";
 
 interface DeleteRowDialogViewProps {
@@ -35,11 +35,10 @@ export function DeleteRowDialogView({
       }
     >
       <DialogDescription>
-        Ви впевнені, що хочете видалити ряд "{row.title}"? Цю дію
-        неможливо скасувати, вона також призведе до видалення всіх
-        пов'язаних палет та позицій.
+        Ви впевнені, що хочете видалити ряд "{row.title}"? Цю дію неможливо
+        скасувати, вона також призведе до видалення всіх пов'язаних палет та
+        позицій.
       </DialogDescription>
     </FormDialog>
   );
 }
-

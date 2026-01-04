@@ -1,5 +1,5 @@
 import { Box, VStack, HStack } from "@/components/ui";
-import { ThemedView } from "@/components/themed-view";
+import { ThemedView } from "@/components/themed/themed-view";
 
 export function PosesByArtikulContainerSkeleton() {
   return (

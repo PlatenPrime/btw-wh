@@ -1,4 +1,4 @@
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 import { Icon, Pressable } from "@/components/ui";
 import React from "react";
 import { HeaderAction } from "../../types";

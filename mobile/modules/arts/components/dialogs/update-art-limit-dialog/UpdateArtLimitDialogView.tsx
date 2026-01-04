@@ -1,4 +1,4 @@
-import { FormDialog } from "@/components/shared/form-dialog";
+import { FormDialog } from "@/components/shared/dialog/form-dialog";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { UpdateArtLimitForm } from "@/modules/arts/components/forms/update-art-limit-form/UpdateArtLimitForm";
 
@@ -29,4 +29,3 @@ export function UpdateArtLimitDialogView({
     </FormDialog>
   );
 }
-

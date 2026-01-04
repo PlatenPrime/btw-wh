@@ -1,7 +1,7 @@
 import { Box, HStack, Pressable } from "@/components/ui";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Icon } from "@/components/ui/icon";
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 import { useSidebar } from "@/components/layout/sidebar/SidebarProvider";
 import { HeaderActionsMenu } from "./HeaderActionsMenu";
 import { useIconColor } from "@/hooks/use-icon-color";

@@ -1,4 +1,4 @@
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 import { PageLayout } from "@/components/layout/page-layout";
 import { useLocalSearchParams } from "expo-router";
 import {

@@ -2,7 +2,7 @@ import { useAsksPullsQuery } from "@/modules/asks/api/hooks/queries/useAsksPulls
 import { PullsContainer } from "@/modules/asks/components/containers/pulls-container/PullsContainer";
 import { PullsContainerSkeleton } from "@/modules/asks/components/containers/pulls-container/PullsContainerSkeleton";
 import { View } from "react-native";
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 
 export function PullsFetcher() {
   const pullsQuery = useAsksPullsQuery();

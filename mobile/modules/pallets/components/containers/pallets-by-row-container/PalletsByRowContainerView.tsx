@@ -1,7 +1,7 @@
 import { Box } from "@/components/ui";
 import type { PalletShortDto } from "@/modules/pallets/api/types";
 import { PalletsList } from "@/modules/pallets/components/lists/pallets-list/PalletsList";
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 
 interface PalletsByRowContainerViewProps {
   pallets: PalletShortDto[] | undefined;

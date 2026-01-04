@@ -1,6 +1,6 @@
 import { useEffect, useCallback } from "react";
 import { View } from "react-native";
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 import { useLatestDefsQuery } from "@/modules/defs/api/hooks/queries/useLatestDefsQuery";
 import { useDefsCalculationStatus } from "@/modules/defs/api/hooks/queries/useDefsCalculationStatus";
 import { DefsContainer } from "@/modules/defs/components/containers/defs-container/DefsContainer";

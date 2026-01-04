@@ -1,6 +1,6 @@
-import { FormDialog } from "@/components/shared/form-dialog";
-import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
-import { DialogDescription } from "@/components/shared/dialog-description/DialogDescription";
+import { DialogActions } from "@/components/shared/dialog/dialog-actions/DialogActions";
+import { DialogDescription } from "@/components/shared/dialog/dialog-description/DialogDescription";
+import { FormDialog } from "@/components/shared/dialog/form-dialog";
 import type { ZoneDto } from "@/modules/zones/api/types/dto";
 
 interface DeleteZoneDialogViewProps {
@@ -35,10 +35,9 @@ export function DeleteZoneDialogView({
       }
     >
       <DialogDescription>
-        Ви впевнені, що хочете видалити зону "{zone.title}"? Цю дію
-        неможливо скасувати.
+        Ви впевнені, що хочете видалити зону "{zone.title}"? Цю дію неможливо
+        скасувати.
       </DialogDescription>
     </FormDialog>
   );
 }
-

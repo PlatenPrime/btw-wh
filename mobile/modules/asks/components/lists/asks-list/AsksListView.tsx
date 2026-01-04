@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 import { Box } from "@/components/ui";
 import type { AskDto } from "@/modules/asks/api/types/dto";
 import { AsksListCard } from "@/modules/asks/components/cards/asks-list-card/AsksListCard";

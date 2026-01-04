@@ -1,6 +1,6 @@
-import { FormDialog } from "@/components/shared/form-dialog";
-import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
-import { DialogDescription } from "@/components/shared/dialog-description/DialogDescription";
+import { DialogActions } from "@/components/shared/dialog/dialog-actions/DialogActions";
+import { DialogDescription } from "@/components/shared/dialog/dialog-description/DialogDescription";
+import { FormDialog } from "@/components/shared/dialog/form-dialog";
 import type { IPos } from "@/modules/poses/api/types";
 
 interface DeletePosDialogViewProps {
@@ -41,4 +41,3 @@ export function DeletePosDialogView({
     </FormDialog>
   );
 }
-

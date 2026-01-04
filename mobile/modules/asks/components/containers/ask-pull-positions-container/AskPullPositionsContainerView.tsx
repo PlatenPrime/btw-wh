@@ -1,5 +1,5 @@
-import { ThemedText } from "@/components/themed-text";
-import { ThemedView } from "@/components/themed-view";
+import { ThemedText } from "@/components/themed/themed-text";
+import { ThemedView } from "@/components/themed/themed-view";
 import type { GetAskPullResponse } from "@/modules/asks/api/types/dto";
 import { getAskPullStatusMessage } from "@/modules/asks/utils/get-ask-pull-status-message/getAskPullStatusMessage";
 import { AskPullPositionCard } from "./components/ask-pull-position-card/AskPullPositionCard";

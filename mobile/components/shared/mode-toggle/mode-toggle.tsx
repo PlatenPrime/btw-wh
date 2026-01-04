@@ -1,4 +1,4 @@
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 import {
   HStack,
   Modal,
@@ -40,10 +40,13 @@ export const ModeToggle = React.memo(function ModeToggle() {
     return theme === "dark" ? "dark-mode" : "wb-sunny";
   }, [theme]);
 
-  const handleThemeSelect = useCallback((selectedTheme: "light" | "dark" | "system") => {
-    setTheme(selectedTheme);
-    setIsModalVisible(false);
-  }, [setTheme]);
+  const handleThemeSelect = useCallback(
+    (selectedTheme: "light" | "dark" | "system") => {
+      setTheme(selectedTheme);
+      setIsModalVisible(false);
+    },
+    [setTheme]
+  );
 
   const handleOpenModal = useCallback(() => {
     setIsModalVisible(true);
@@ -53,9 +56,12 @@ export const ModeToggle = React.memo(function ModeToggle() {
     setIsModalVisible(false);
   }, []);
 
-  const handleLayout = useCallback((e: { nativeEvent: { layout: { height: number } } }) => {
-    setContentHeight(e.nativeEvent.layout.height);
-  }, []);
+  const handleLayout = useCallback(
+    (e: { nativeEvent: { layout: { height: number } } }) => {
+      setContentHeight(e.nativeEvent.layout.height);
+    },
+    []
+  );
 
   return (
     <>
@@ -96,7 +102,7 @@ export const ModeToggle = React.memo(function ModeToggle() {
           }}
         >
           <ModalHeader>
-            <HStack className="items-center justify-between">
+            <HStack className="items-center justify-between w-full">
               <ThemedText type="subtitle" className="text-lg">
                 Виберіть тему
               </ThemedText>

@@ -1,6 +1,6 @@
-import { FormDialog } from "@/components/shared/form-dialog";
-import { UpdatePalletForm } from "@/modules/pallets/components/forms/update-pallet-form/UpdatePalletForm";
+import { FormDialog } from "@/components/shared/dialog/form-dialog";
 import type { PalletShortDto } from "@/modules/pallets/api/types";
+import { UpdatePalletForm } from "@/modules/pallets/components/forms/update-pallet-form/UpdatePalletForm";
 
 interface UpdatePalletDialogViewProps {
   pallet: PalletShortDto;
@@ -18,13 +18,13 @@ export function UpdatePalletDialogView({
   onSuccess,
 }: UpdatePalletDialogViewProps) {
   return (
-    <FormDialog
-      visible={visible}
-      onClose={onClose}
-      title="Редагувати палету"
-    >
-      <UpdatePalletForm pallet={pallet} rowId={rowId} onSuccess={onSuccess} onCancel={onClose} />
+    <FormDialog visible={visible} onClose={onClose} title="Редагувати палету">
+      <UpdatePalletForm
+        pallet={pallet}
+        rowId={rowId}
+        onSuccess={onSuccess}
+        onCancel={onClose}
+      />
     </FormDialog>
   );
 }
-

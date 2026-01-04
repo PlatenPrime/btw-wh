@@ -2,7 +2,7 @@ import { View } from "react-native";
 import { SearchPanel } from "@/modules/arts/components/shared/search-panel/SearchPanel";
 import { Box, Button, HStack, Text } from "@/components/ui";
 import { Icon } from "@/components/ui/icon";
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 import { useIconColor } from "@/hooks/use-icon-color";
 import { useState } from "react";
 import { Modal, TouchableWithoutFeedback, Pressable } from "react-native";

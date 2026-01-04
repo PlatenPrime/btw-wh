@@ -1,7 +1,7 @@
 import { Box } from "@/components/ui";
 import type { BlockDto } from "@/modules/blocks/api/types";
 import { BlocksList } from "@/modules/blocks/components/lists/blocks-list";
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 
 interface BlocksContainerViewProps {
   blocks: BlockDto[] | undefined;

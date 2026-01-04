@@ -1,5 +1,5 @@
-import { ThemedText } from "@/components/themed-text";
-import { ThemedView } from "@/components/themed-view";
+import { ThemedText } from "@/components/themed/themed-text";
+import { ThemedView } from "@/components/themed/themed-view";
 import { Spinner } from "@/components/ui";
 import { Icon } from "@/components/ui/icon";
 import { SemanticColors } from "@/constants/theme";

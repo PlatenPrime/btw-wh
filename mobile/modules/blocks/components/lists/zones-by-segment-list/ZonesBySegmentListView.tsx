@@ -2,7 +2,7 @@ import { FlatList, Box } from "@/components/ui";
 import { RefreshControl } from "react-native";
 import type { ZoneWithSegmentDto } from "@/modules/blocks/api/types";
 import { ZoneBySegmentCard } from "@/modules/blocks/components/cards/zone-by-segment-card";
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 
 interface ZonesBySegmentListViewProps {
   zones: ZoneWithSegmentDto[] | undefined;

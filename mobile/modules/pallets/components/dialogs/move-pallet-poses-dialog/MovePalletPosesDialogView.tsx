@@ -1,7 +1,9 @@
-import { FormDialog } from "@/components/shared/form-dialog";
+import { DialogActions } from "@/components/shared/dialog/dialog-actions/DialogActions";
+import { FormDialog } from "@/components/shared/dialog/form-dialog";
+import { ThemedText } from "@/components/themed/themed-text";
 import { Box } from "@/components/ui/box";
-import { ThemedText } from "@/components/themed-text";
 import type { IPallet } from "@/modules/pallets/api/types";
+import { useState } from "react";
 import { MovePalletPosesForm } from "../../dialogs/move-pallet-poses-form/MovePalletPosesForm";
 
 interface MovePalletPosesDialogViewProps {
@@ -23,11 +25,38 @@ export function MovePalletPosesDialogView({
   mutationError,
   isMoving,
 }: MovePalletPosesDialogViewProps) {
+  const [submitFn, setSubmitFn] = useState<(() => void) | null>(null);
+  const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
+
+  const handleSubmitReady = (fn: () => void, disabled: boolean) => {
+    setSubmitFn(() => fn);
+    setIsSubmitDisabled(disabled);
+  };
+
+  const handleDialogSubmit = () => {
+    if (submitFn && !isSubmitDisabled) {
+      submitFn();
+    }
+  };
+
   return (
     <FormDialog
       visible={visible}
       onClose={onClose}
       title="Перемістити позиції"
+      footer={
+        !isSourceEmpty ? (
+          <DialogActions
+            onCancel={onClose}
+            onSubmit={handleDialogSubmit}
+            cancelText="Скасувати"
+            submitText="Підтвердити"
+            isSubmitting={isMoving}
+            isDisabled={isSubmitDisabled}
+            variant="confirm"
+          />
+        ) : undefined
+      }
     >
       {mutationError && (
         <Box className="mb-4 p-3 rounded-lg border border-error-500 bg-error-50">
@@ -46,10 +75,10 @@ export function MovePalletPosesDialogView({
           fromPallet={pallet}
           onSuccess={onSubmit}
           isSubmitting={isMoving}
-          onCancel={onClose}
+          hideActions={true}
+          onSubmitReady={handleSubmitReady}
         />
       )}
     </FormDialog>
   );
 }
-

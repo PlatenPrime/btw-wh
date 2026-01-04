@@ -2,7 +2,7 @@ import { FlatList, Box } from "@/components/ui";
 import { RefreshControl } from "react-native";
 import type { PalletShortDto } from "@/modules/pallets/api/types";
 import { PalletCard } from "@/modules/pallets/components/cards/pallet-card/PalletCard";
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 
 interface PalletsListViewProps {
   pallets: PalletShortDto[] | undefined;

@@ -1,5 +1,5 @@
-import { ThemedView } from "@/components/themed-view";
-import { ThemedText } from "@/components/themed-text";
+import { ThemedView } from "@/components/themed/themed-view";
+import { ThemedText } from "@/components/themed/themed-text";
 import { usePosesByArtikulQuery } from "@/modules/poses/api/hooks/queries/usePosesByArtikulQuery";
 import type { GetPosesByArtikulResponse } from "@/modules/poses/api/types";
 import type { ComponentType } from "react";

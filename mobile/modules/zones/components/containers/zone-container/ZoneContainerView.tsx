@@ -1,5 +1,5 @@
 import { ScrollView, RefreshControl } from "react-native";
-import { ThemedView } from "@/components/themed-view";
+import { ThemedView } from "@/components/themed/themed-view";
 import { VStack } from "@/components/ui";
 import type { ZoneDto } from "@/modules/zones/api/types/dto";
 import { ZoneDetailsCard } from "@/modules/zones/components/cards/zone-details-card/ZoneDetailsCard";

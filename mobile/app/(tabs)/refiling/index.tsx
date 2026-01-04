@@ -1,5 +1,5 @@
 import { PageLayout } from "@/components/layout/page-layout";
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 import { Pressable, ScrollView, VStack } from "@/components/ui";
 import { Icon } from "@/components/ui/icon";
 import { SemanticColors } from "@/constants/theme";

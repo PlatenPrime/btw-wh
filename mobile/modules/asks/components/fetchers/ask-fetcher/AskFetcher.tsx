@@ -1,6 +1,6 @@
 import { View } from "react-native";
-import { ThemedText } from "@/components/themed-text";
-import { ThemedView } from "@/components/themed-view";
+import { ThemedText } from "@/components/themed/themed-text";
+import { ThemedView } from "@/components/themed/themed-view";
 import { useAskQuery } from "@/modules/asks/api/hooks/queries/useAskQuery";
 import type { AskDto } from "@/modules/asks/api/types/dto";
 import type { ComponentType } from "react";

@@ -1,6 +1,6 @@
 import { View } from "react-native";
-import { ThemedView } from "@/components/themed-view";
-import { ThemedText } from "@/components/themed-text";
+import { ThemedView } from "@/components/themed/themed-view";
+import { ThemedText } from "@/components/themed/themed-text";
 import type { AskDto } from "@/modules/asks/api/types/dto";
 import { ArtImageLink } from "@/components/shared/art-image-link";
 import { AskStatusBadge } from "@/modules/asks/components/elements/ask-status-badge/AskStatusBadge";

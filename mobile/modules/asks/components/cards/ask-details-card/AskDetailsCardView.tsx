@@ -1,6 +1,6 @@
 import { ArtImageLink } from "@/components/shared/art-image-link";
-import { ThemedText } from "@/components/themed-text";
-import { ThemedView } from "@/components/themed-view";
+import { ThemedText } from "@/components/themed/themed-text";
+import { ThemedView } from "@/components/themed/themed-view";
 import { BtradeArtDataFetcher } from "@/modules/arts/components/fetchers/btrade-art-data-fetcher/BtradeArtDataFetcher";
 import type { AskDto } from "@/modules/asks/api/types/dto";
 import { AskCom } from "@/modules/asks/components/elements/ask-com/AskCom";

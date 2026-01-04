@@ -1,4 +1,4 @@
-import { ModeToggle } from "@/components/shared/mode-toggle";
+import { ModeToggle } from "@/components/shared/mode-toggle/mode-toggle";
 import { Icon } from "@/components/ui/icon";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";

@@ -1,6 +1,6 @@
-import { FormDialog } from "@/components/shared/form-dialog";
-import { UpdateZoneForm } from "@/modules/zones/components/forms/update-zone-form/UpdateZoneForm";
+import { FormDialog } from "@/components/shared/dialog/form-dialog";
 import type { ZoneDto } from "@/modules/zones/api/types/dto";
+import { UpdateZoneForm } from "@/modules/zones/components/forms/update-zone-form/UpdateZoneForm";
 
 interface UpdateZoneDialogViewProps {
   zone: ZoneDto;
@@ -16,13 +16,8 @@ export function UpdateZoneDialogView({
   onSuccess,
 }: UpdateZoneDialogViewProps) {
   return (
-    <FormDialog
-      visible={visible}
-      onClose={onClose}
-      title="Редагувати зону"
-    >
+    <FormDialog visible={visible} onClose={onClose} title="Редагувати зону">
       <UpdateZoneForm zone={zone} onSuccess={onSuccess} onCancel={onClose} />
     </FormDialog>
   );
 }
-

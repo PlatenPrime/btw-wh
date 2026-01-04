@@ -1,5 +1,5 @@
 import { ScrollView, View, RefreshControl } from "react-native";
-import { ThemedView } from "@/components/themed-view";
+import { ThemedView } from "@/components/themed/themed-view";
 import type { AskDto } from "@/modules/asks/api/types/dto";
 import { AskDetailsCard } from "@/modules/asks/components/cards/ask-details-card/AskDetailsCard";
 import { AskEvents } from "@/modules/asks/components/containers/ask-container/components/ask-events/AskEvents";

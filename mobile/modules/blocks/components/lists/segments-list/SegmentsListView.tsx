@@ -2,7 +2,7 @@ import { FlatList, Box, VStack } from "@/components/ui";
 import { RefreshControl } from "react-native";
 import type { SegmentDto } from "@/modules/blocks/api/types";
 import { SegmentCard } from "@/modules/blocks/components/cards/segment-card";
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 import type { ReactNode } from "react";
 
 interface SegmentsListViewProps {

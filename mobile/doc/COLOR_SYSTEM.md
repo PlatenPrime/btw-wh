@@ -274,7 +274,7 @@ function ColoredButton({ color }: { color: keyof typeof SemanticColors.iconColor
 ### Пример 4: Использование Themed компонентов
 
 ```tsx
-import { ThemedView, ThemedText } from '@/components/themed-view';
+import { ThemedView, ThemedText } from '@/components/themed/themed-view';
 import { Card } from '@/components/ui';
 
 // ThemedView автоматически применяет bg-background-0

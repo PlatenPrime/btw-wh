@@ -1,4 +1,4 @@
-import { FormDialog } from "@/components/shared/form-dialog";
+import { FormDialog } from "@/components/shared/dialog/form-dialog";
 import { CreateRowForm } from "@/modules/rows/components/forms/create-row-form/CreateRowForm";
 
 interface CreateRowDialogViewProps {

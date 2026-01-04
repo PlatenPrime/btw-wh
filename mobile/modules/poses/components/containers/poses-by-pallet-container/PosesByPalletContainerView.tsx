@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import type { IPos } from "@/modules/poses/api/types";
 import { PosesList } from "@/modules/poses/components/lists/poses-list/PosesList";
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 
 interface PosesByPalletContainerViewProps {
   poses: IPos[] | undefined;

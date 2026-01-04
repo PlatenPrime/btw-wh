@@ -1,6 +1,6 @@
-import { FormDialog } from "@/components/shared/form-dialog";
-import { CreatePosForm } from "@/modules/poses/components/forms/create-pos-form/CreatePosForm";
+import { FormDialog } from "@/components/shared/dialog/form-dialog";
 import type { IPallet } from "@/modules/pallets/api/types";
+import { CreatePosForm } from "@/modules/poses/components/forms/create-pos-form/CreatePosForm";
 
 interface CreatePosDialogViewProps {
   visible: boolean;
@@ -25,4 +25,3 @@ export function CreatePosDialogView({
     </FormDialog>
   );
 }
-

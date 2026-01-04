@@ -1,17 +1,11 @@
-import { ThemedText } from "@/components/themed-text";
-import { ThemedView } from "@/components/themed-view";
-import {
-  Box,
-  Input,
-  InputField,
-  Switch,
-  HStack,
-} from "@/components/ui";
+import { DialogActions } from "@/components/shared/dialog/dialog-actions/DialogActions";
+import { ThemedText } from "@/components/themed/themed-text";
+import { ThemedView } from "@/components/themed/themed-view";
+import { Box, Input, InputField, Switch } from "@/components/ui";
+import { useThemeColors } from "@/hooks/use-theme-colors";
 import type { PalletFormValues } from "@/modules/pallets/components/forms/schema";
 import type { UseFormReturn } from "react-hook-form";
 import { Controller } from "react-hook-form";
-import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
-import { useThemeColors } from "@/hooks/use-theme-colors";
 
 interface CreatePalletFormViewProps {
   form: UseFormReturn<PalletFormValues>;
@@ -140,4 +134,3 @@ export function CreatePalletFormView({
     </Box>
   );
 }
-

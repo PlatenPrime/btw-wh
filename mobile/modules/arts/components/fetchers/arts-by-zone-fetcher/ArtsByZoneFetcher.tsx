@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 import { useArtsByZoneQuery } from "@/modules/arts/api/hooks/queries/useArtsByZoneQuery";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import type { ComponentType } from "react";

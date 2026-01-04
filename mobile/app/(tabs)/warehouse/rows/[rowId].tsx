@@ -2,7 +2,7 @@ import { useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import { PageLayout } from "@/components/layout/page-layout";
 import { View } from "react-native";
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 import { useRegisterHeaderActions } from "@/components/layout/header";
 import { useRowByIdQuery } from "@/modules/rows/api/hooks/queries/useRowByIdQuery";
 import { PalletsByRowFetcher } from "@/modules/pallets/components/fetchers/pallets-by-row-fetcher/PalletsByRowFetcher";

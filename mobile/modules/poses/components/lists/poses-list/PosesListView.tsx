@@ -2,7 +2,7 @@ import { FlatList, Box } from "@/components/ui";
 import { RefreshControl } from "react-native";
 import type { IPos } from "@/modules/poses/api/types";
 import { PosCard } from "@/modules/poses/components/cards/pos-card/PosCard";
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 
 interface PosesListViewProps {
   poses: IPos[] | undefined;

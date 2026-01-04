@@ -1,7 +1,7 @@
 import { Text, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
-import { ThemedView } from '@/components/themed-view';
-import { ThemedText } from '@/components/themed-text';
+import { ThemedView } from '@/components/themed/themed-view';
+import { ThemedText } from '@/components/themed/themed-text';
 
 export default function ForbiddenScreen() {
   const router = useRouter();

@@ -1,4 +1,4 @@
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 import { Box, HStack, Pressable, VStack } from "@/components/ui";
 import { ArtsByZoneFetcher } from "@/modules/arts/components/fetchers/arts-by-zone-fetcher/ArtsByZoneFetcher";
 import {

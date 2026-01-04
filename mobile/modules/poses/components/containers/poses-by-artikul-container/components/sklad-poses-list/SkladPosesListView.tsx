@@ -1,4 +1,4 @@
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 import { Box, HStack, VStack } from "@/components/ui";
 import { Icon } from "@/components/ui/icon";
 import { useIconColor } from "@/hooks/use-icon-color";

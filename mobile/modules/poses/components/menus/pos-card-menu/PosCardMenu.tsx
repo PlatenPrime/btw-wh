@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Modal, TouchableWithoutFeedback } from "react-native";
 import { Pressable, Box } from "@/components/ui";
 import { Icon } from "@/components/ui/icon";
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 import { useIconColor } from "@/hooks/use-icon-color";
 import type { IPos } from "@/modules/poses/api/types";
 import { UpdatePosDialog } from "@/modules/poses/components/dialogs/update-pos-dialog/UpdatePosDialog";

@@ -1,6 +1,6 @@
 import { HStack } from "@/components/ui";
 import { Icon } from "@/components/ui/icon";
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 import { sklads, type ISklads } from "@/constants/sklad";
 import { useIconColor } from "@/hooks/use-icon-color";
 

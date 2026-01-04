@@ -1,6 +1,6 @@
-import { FormDialog } from "@/components/shared/form-dialog";
-import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
-import { ThemedText } from "@/components/themed-text";
+import { DialogActions } from "@/components/shared/dialog/dialog-actions/DialogActions";
+import { FormDialog } from "@/components/shared/dialog/form-dialog";
+import { ThemedText } from "@/components/themed/themed-text";
 
 interface DeleteAskDialogViewProps {
   artikul: string;

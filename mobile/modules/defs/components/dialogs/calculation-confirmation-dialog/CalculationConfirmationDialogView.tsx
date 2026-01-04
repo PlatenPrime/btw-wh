@@ -1,9 +1,9 @@
-import { FormDialog } from "@/components/shared/form-dialog";
-import { Icon } from "@/components/ui/icon";
+import { FormDialog } from "@/components/shared/dialog/form-dialog";
+import { ThemedText } from "@/components/themed/themed-text";
 import { Button, Text } from "@/components/ui";
-import { ThemedText } from "@/components/themed-text";
-import { ActivityIndicator, View } from "react-native";
+import { Icon } from "@/components/ui/icon";
 import { useThemeColors } from "@/hooks/use-theme-colors";
+import { ActivityIndicator, View } from "react-native";
 
 interface CalculationConfirmationDialogViewProps {
   visible: boolean;
@@ -21,7 +21,7 @@ export function CalculationConfirmationDialogView({
   const { dialog, text, static: staticColors } = useThemeColors();
   const bgColor = dialog.bg;
   const textColor = text.primary;
-  
+
   return (
     <FormDialog
       visible={visible}
@@ -53,17 +53,28 @@ export function CalculationConfirmationDialogView({
       }
     >
       <View className="flex-row items-center gap-2 mb-3">
-        <Icon family="MaterialIcons" name="calculate" size={20} color={textColor} />
+        <Icon
+          family="MaterialIcons"
+          name="calculate"
+          size={20}
+          color={textColor}
+        />
         <ThemedText type="default" className="text-sm opacity-70 flex-1">
-          Розрахунок дефіцитів може зайняти кілька хвилин. Процес буде виконуватися у
-          фоновому режимі, і ви зможете відстежувати прогрес у реальному часі.
+          Розрахунок дефіцитів може зайняти кілька хвилин. Процес буде
+          виконуватися у фоновому режимі, і ви зможете відстежувати прогрес у
+          реальному часі.
         </ThemedText>
       </View>
       <View
         className="flex-row items-center gap-2 rounded-lg p-3"
         style={{ backgroundColor: bgColor }}
       >
-        <Icon family="MaterialIcons" name="access-time" size={16} color={textColor} />
+        <Icon
+          family="MaterialIcons"
+          name="access-time"
+          size={16}
+          color={textColor}
+        />
         <ThemedText type="default" className="text-sm opacity-70">
           Очікуваний час виконання: 6-8 хвилин
         </ThemedText>

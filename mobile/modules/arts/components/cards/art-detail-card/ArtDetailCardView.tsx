@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import { ThemedView } from "@/components/themed-view";
+import { ThemedView } from "@/components/themed/themed-view";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { ArtImageLink } from "@/components/shared/art-image-link";
 import { ArtZone } from "@/modules/arts/components/elements/art-zone/ArtZone";

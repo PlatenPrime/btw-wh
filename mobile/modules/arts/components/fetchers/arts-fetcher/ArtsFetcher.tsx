@@ -4,8 +4,8 @@ import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { useArtsInfiniteQuery } from "@/modules/arts/api/hooks/queries/useArtsInfiniteQuery";
 import { ArtsContainer } from "@/modules/arts/components/containers/arts-container/ArtsContainer";
 import { ArtsContainerSkeleton } from "@/modules/arts/components/containers/arts-container/ArtsContainerSkeleton";
-import { ThemedView } from "@/components/themed-view";
-import { ThemedText } from "@/components/themed-text";
+import { ThemedView } from "@/components/themed/themed-view";
+import { ThemedText } from "@/components/themed/themed-text";
 import { View } from "react-native";
 
 interface ArtsFetcherProps {

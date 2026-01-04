@@ -2,7 +2,7 @@ import { View } from "react-native";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { ArtsGrid } from "@/modules/arts/components/lists/arts-grid/ArtsGrid";
 import { SearchPanel } from "@/modules/arts/components/shared/search-panel/SearchPanel";
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 
 interface ArtsContainerViewProps {
   data: ArtDto[];

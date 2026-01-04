@@ -1,4 +1,4 @@
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 import { VStack, HStack } from "@/components/ui";
 import type { GetAsksPullsResponse } from "@/modules/asks/api/types/dto";
 import { PullsPositionCard } from "@/modules/asks/components/cards/pulls-position-card/PullsPositionCard";

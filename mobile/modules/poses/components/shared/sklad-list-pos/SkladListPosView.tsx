@@ -1,5 +1,5 @@
 import { Box, HStack, Pressable } from "@/components/ui";
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 import type { IPos } from "@/modules/poses/api/types";
 
 interface SkladListPosViewProps {

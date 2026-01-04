@@ -1,4 +1,4 @@
-import { FormDialog } from "@/components/shared/form-dialog";
+import { FormDialog } from "@/components/shared/dialog/form-dialog";
 import { AskPosEditForm } from "@/modules/asks/components/forms/ask-pos-edit-form/AskPosEditForm";
 import type { PosResponse } from "@/modules/poses/api/types";
 
@@ -39,4 +39,3 @@ export function AskPosEditDialogView({
     </FormDialog>
   );
 }
-

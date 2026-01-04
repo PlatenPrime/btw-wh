@@ -1,5 +1,5 @@
-import { ThemedText } from "@/components/themed-text";
-import { ThemedView } from "@/components/themed-view";
+import { ThemedText } from "@/components/themed/themed-text";
+import { ThemedView } from "@/components/themed/themed-view";
 import { Button, Text } from "@/components/ui";
 import { useAskPullQuery } from "@/modules/asks/api/hooks/queries/useAskPullQuery";
 import type { GetAskPullResponse } from "@/modules/asks/api/types/dto";

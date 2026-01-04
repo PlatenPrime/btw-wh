@@ -8,8 +8,8 @@ import {
   Text,
 } from "@/components/ui";
 import { ActivityIndicator } from "react-native";
-import { ThemedText } from "@/components/themed-text";
-import { ThemedView } from "@/components/themed-view";
+import { ThemedText } from "@/components/themed/themed-text";
+import { ThemedView } from "@/components/themed/themed-view";
 import { Icon } from "@/components/ui/icon";
 import type { CreatePosFormData } from "./schema";
 import type { UseFormReturn } from "react-hook-form";

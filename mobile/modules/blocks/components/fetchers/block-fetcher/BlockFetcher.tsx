@@ -3,7 +3,7 @@ import { useSegmentsByBlockQuery } from "@/modules/blocks/api/hooks/queries/useS
 import { BlockContainer } from "@/modules/blocks/components/containers/block-container";
 import { BlockContainerSkeleton } from "@/modules/blocks/components/containers/block-container";
 import { View } from "react-native";
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 
 interface BlockFetcherProps {
   blockId: string;

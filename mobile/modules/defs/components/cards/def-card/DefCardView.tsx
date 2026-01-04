@@ -1,5 +1,5 @@
 import { ArtImageLink } from "@/components/shared/art-image-link";
-import { ThemedView } from "@/components/themed-view";
+import { ThemedView } from "@/components/themed/themed-view";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import type { DeficitItem } from "@/modules/defs/api/types/dto";
 import { DefAskButton } from "@/modules/defs/components/elements/def-ask-button/DefAskButton";

@@ -3,7 +3,7 @@ import { useZonesBySegmentQuery } from "@/modules/blocks/api/hooks/queries/useZo
 import { SegmentContainer } from "@/modules/blocks/components/containers/segment-container";
 import { SegmentContainerSkeleton } from "@/modules/blocks/components/containers/segment-container";
 import { View } from "react-native";
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 
 interface SegmentFetcherProps {
   segId: string;

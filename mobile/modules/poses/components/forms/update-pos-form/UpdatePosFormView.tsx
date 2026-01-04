@@ -1,7 +1,7 @@
 import { Box, Input, InputField, HStack, Button, Pressable, Text } from "@/components/ui";
 import { ActivityIndicator } from "react-native";
-import { ThemedText } from "@/components/themed-text";
-import { ThemedView } from "@/components/themed-view";
+import { ThemedText } from "@/components/themed/themed-text";
+import { ThemedView } from "@/components/themed/themed-view";
 import { Icon } from "@/components/ui/icon";
 import type { UpdatePosFormData } from "./schema";
 import type { UseFormReturn } from "react-hook-form";

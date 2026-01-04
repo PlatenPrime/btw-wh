@@ -3,7 +3,7 @@ import { useAsksByDateQuery } from "@/modules/asks/api/hooks/queries/useAsksByDa
 import { AsksContainer } from "@/modules/asks/components/containers/asks-container/AsksContainer";
 import { AsksContainerSkeleton } from "@/modules/asks/components/containers/asks-container/AsksContainerSkeleton";
 import { View } from "react-native";
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 import { formatDateForAPI } from "@/modules/asks/utils/format-date";
 
 interface AsksFetcherProps {

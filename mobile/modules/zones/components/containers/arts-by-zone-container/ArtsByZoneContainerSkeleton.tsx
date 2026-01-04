@@ -1,5 +1,5 @@
 import { VStack, Box } from "@/components/ui";
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 import { ArtGridCardSkeleton } from "@/modules/arts/components/cards/arts-grid-card/ArtGridCardSkeleton";
 
 export function ArtsByZoneContainerSkeleton() {

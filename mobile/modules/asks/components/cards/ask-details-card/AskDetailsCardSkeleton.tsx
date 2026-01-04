@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import { ThemedView } from "@/components/themed-view";
+import { ThemedView } from "@/components/themed/themed-view";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import { Box } from "@/components/ui";
 import { BtradeArtDataSkeleton } from "@/modules/arts/components/containers/btrade-art-data-container/BtradeArtDataSkeleton";

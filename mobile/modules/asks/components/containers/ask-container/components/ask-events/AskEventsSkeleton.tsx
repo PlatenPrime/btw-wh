@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import { ThemedView } from "@/components/themed-view";
+import { ThemedView } from "@/components/themed/themed-view";
 import { VStack } from "@/components/ui";
 import { Box } from "@/components/ui";
 import { useThemeColors } from "@/hooks/use-theme-colors";

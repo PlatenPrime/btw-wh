@@ -1,5 +1,5 @@
 import { ScrollView, View } from "react-native";
-import { ThemedView } from "@/components/themed-view";
+import { ThemedView } from "@/components/themed/themed-view";
 import { VStack } from "@/components/ui";
 import { AskDetailsCardSkeleton } from "@/modules/asks/components/cards/ask-details-card/AskDetailsCardSkeleton";
 import { Box } from "@/components/ui";

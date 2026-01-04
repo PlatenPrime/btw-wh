@@ -1,8 +1,8 @@
-import { FormDialog } from "@/components/shared/form-dialog";
+import { FormDialog } from "@/components/shared/dialog/form-dialog";
+import { ThemedText } from "@/components/themed/themed-text";
 import { Button, Text } from "@/components/ui";
-import { ThemedText } from "@/components/themed-text";
-import { ActivityIndicator, View } from "react-native";
 import { useThemeColors } from "@/hooks/use-theme-colors";
+import { ActivityIndicator, View } from "react-native";
 
 interface CompleteAskDialogViewProps {
   artikul: string;
@@ -20,7 +20,7 @@ export function CompleteAskDialogView({
   visible,
 }: CompleteAskDialogViewProps) {
   const { static: staticColors } = useThemeColors();
-  
+
   return (
     <FormDialog
       visible={visible}
@@ -58,4 +58,3 @@ export function CompleteAskDialogView({
     </FormDialog>
   );
 }
-

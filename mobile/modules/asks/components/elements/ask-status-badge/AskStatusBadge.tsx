@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import { ThemedText } from "@/components/themed-text";
+import { ThemedText } from "@/components/themed/themed-text";
 import type { AskStatus } from "@/modules/asks/api/types/dto";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 

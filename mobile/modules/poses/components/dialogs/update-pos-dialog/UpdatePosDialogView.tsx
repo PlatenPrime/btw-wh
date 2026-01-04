@@ -1,6 +1,6 @@
-import { FormDialog } from "@/components/shared/form-dialog";
-import { UpdatePosForm } from "@/modules/poses/components/forms/update-pos-form/UpdatePosForm";
+import { FormDialog } from "@/components/shared/dialog/form-dialog";
 import type { IPos } from "@/modules/poses/api/types";
+import { UpdatePosForm } from "@/modules/poses/components/forms/update-pos-form/UpdatePosForm";
 
 interface UpdatePosDialogViewProps {
   pos: IPos;
@@ -16,13 +16,13 @@ export function UpdatePosDialogView({
   onSuccess,
 }: UpdatePosDialogViewProps) {
   return (
-    <FormDialog
-      visible={visible}
-      onClose={onClose}
-      title={pos.artikul}
-    >
-      <UpdatePosForm pos={pos} onSuccess={onSuccess} onCancel={onClose} isDialogOpen={visible} />
+    <FormDialog visible={visible} onClose={onClose} title={pos.artikul}>
+      <UpdatePosForm
+        pos={pos}
+        onSuccess={onSuccess}
+        onCancel={onClose}
+        isDialogOpen={visible}
+      />
     </FormDialog>
   );
 }
-
