@@ -1,14 +1,11 @@
-import { ThemedText } from "@/components/themed/themed-text";
-import { ThemedView } from "@/components/themed/themed-view";
 import {
-  Box,
-  Button,
-  HStack,
-  Input,
-  InputField,
-  Text,
-  VStack,
-} from "@/components/ui";
+  ThemedBox,
+  ThemedButton,
+  ThemedText,
+  ThemedView,
+} from "@/components/themed";
+
+import { HStack, Input, InputField, Text, VStack } from "@/components/ui";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import type { PosResponse } from "@/modules/poses/api/types";
 import { Controller, type UseFormReturn } from "react-hook-form";
@@ -94,7 +91,7 @@ export function AskPosEditFormView({
       </ThemedView>
 
       {/* Поле для ввода убранного количества товара */}
-      <Box className="gap-2">
+      <ThemedBox className="gap-2">
         <ThemedText type="defaultSemiBold" className="text-sm">
           Знято товару *
         </ThemedText>
@@ -148,10 +145,10 @@ export function AskPosEditFormView({
             {errors.removedQuant.message}
           </ThemedText>
         )}
-      </Box>
+      </ThemedBox>
 
       {/* Поле для ввода убранного количества коробок */}
-      <Box className="gap-2">
+      <ThemedBox className="gap-2">
         <ThemedText type="defaultSemiBold" className="text-sm">
           Знято коробок
         </ThemedText>
@@ -205,7 +202,7 @@ export function AskPosEditFormView({
             {errors.removedBoxes.message}
           </ThemedText>
         )}
-      </Box>
+      </ThemedBox>
 
       {/* Отображение остатков после операции */}
       <ThemedView
@@ -263,16 +260,16 @@ export function AskPosEditFormView({
       {/* Кнопки действий */}
       <HStack className="gap-2">
         {onCancel && (
-          <Button
+          <ThemedButton
             onPress={onCancel}
             disabled={isSubmitting}
             variant="outline"
             className="flex-1"
           >
             <Text className="font-semibold">Скасувати</Text>
-          </Button>
+          </ThemedButton>
         )}
-        <Button
+        <ThemedButton
           onPress={(e) => {
             console.log("Button pressed, isValid:", isValid, "errors:", errors);
             handleSubmit(onSubmit)(e);
@@ -285,7 +282,7 @@ export function AskPosEditFormView({
           ) : (
             <Text className="text-white font-semibold">Підтвердити</Text>
           )}
-        </Button>
+        </ThemedButton>
       </HStack>
     </VStack>
   );

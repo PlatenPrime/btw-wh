@@ -1,4 +1,4 @@
-import { Box } from "@/components/ui/box";
+import { ThemedBox } from "@/components/themed/themed-box";
 import React from "react";
 import { Modal, TouchableWithoutFeedback } from "react-native";
 import { type HeaderAction } from "../../types";
@@ -27,9 +27,9 @@ export function HeaderActionsModalContent({
       onRequestClose={() => setModalVisible(false)}
     >
       <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
-        <Box className="flex-1 bg-black/50 items-center justify-center">
+        <ThemedBox className="flex-1 bg-black/50 items-center justify-center">
           <TouchableWithoutFeedback>
-            <Box className="min-w-[200px] rounded-xl border border-outline-100 bg-background-0 p-2 shadow-lg">
+            <ThemedBox className="min-w-[200px] rounded-xl border border-outline-100 bg-background-0 p-2 shadow-lg">
               {defaultActions.map((action) => (
                 <RenderActionItem
                   key={action.id}
@@ -40,7 +40,7 @@ export function HeaderActionsModalContent({
               ))}
 
               {destructiveActions.length > 0 && defaultActions.length > 0 && (
-                <Box className="h-px bg-outline-200 my-1" />
+                <ThemedBox className="h-px bg-outline-200 my-1" />
               )}
 
               {destructiveActions.map((action) => (
@@ -55,7 +55,7 @@ export function HeaderActionsModalContent({
               {superDestructiveActions.length > 0 &&
                 (defaultActions.length > 0 ||
                   destructiveActions.length > 0) && (
-                  <Box className="h-px bg-outline-200 my-1" />
+                  <ThemedBox className="h-px bg-outline-200 my-1" />
                 )}
 
               {superDestructiveActions.map((action) => (
@@ -66,9 +66,9 @@ export function HeaderActionsModalContent({
                   setModalVisible={setModalVisible}
                 />
               ))}
-            </Box>
+            </ThemedBox>
           </TouchableWithoutFeedback>
-        </Box>
+        </ThemedBox>
       </TouchableWithoutFeedback>
     </Modal>
   );

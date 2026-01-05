@@ -1,7 +1,6 @@
 import { DialogActions } from "@/components/shared/dialog/dialog-actions/DialogActions";
 import { FormDialog } from "@/components/shared/dialog/form-dialog";
-import { ThemedText } from "@/components/themed/themed-text";
-import { Box } from "@/components/ui/box";
+import { ThemedBox, ThemedText } from "@/components/themed/";
 import type { IPallet } from "@/modules/pallets/api/types";
 import { useState } from "react";
 import { MovePalletPosesForm } from "../../dialogs/move-pallet-poses-form/MovePalletPosesForm";
@@ -59,11 +58,11 @@ export function MovePalletPosesDialogView({
       }
     >
       {mutationError && (
-        <Box className="mb-4 p-3 rounded-lg border border-error-500 bg-error-50">
+        <ThemedBox className="mb-4 p-3 rounded-lg border border-error-500 bg-error-50">
           <ThemedText type="default" className="text-error-700">
             {mutationError}
           </ThemedText>
-        </Box>
+        </ThemedBox>
       )}
 
       {isSourceEmpty ? (

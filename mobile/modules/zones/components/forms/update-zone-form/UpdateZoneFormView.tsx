@@ -1,18 +1,15 @@
-import { ThemedText } from "@/components/themed/themed-text";
-import { ThemedView } from "@/components/themed/themed-view";
 import {
-  Box,
-  Button,
-  HStack,
-  Input,
-  InputField,
-  Text,
-} from "@/components/ui";
-import { ActivityIndicator } from "react-native";
+  ThemedBox,
+  ThemedButton,
+  ThemedText,
+  ThemedView,
+} from "@/components/themed";
+import { HStack, Input, InputField, Text } from "@/components/ui";
+import { useThemeColors } from "@/hooks/use-theme-colors";
 import type { UpdateZoneFormValues } from "@/modules/zones/components/forms/schema";
 import type { UseFormReturn } from "react-hook-form";
 import { Controller } from "react-hook-form";
-import { useThemeColors } from "@/hooks/use-theme-colors";
+import { ActivityIndicator } from "react-native";
 
 interface UpdateZoneFormViewProps {
   form: UseFormReturn<UpdateZoneFormValues>;
@@ -35,8 +32,8 @@ export function UpdateZoneFormView({
   const { placeholder, static: staticColors } = useThemeColors();
 
   return (
-    <Box className="gap-4">
-      <Box className="gap-2">
+    <ThemedBox className="gap-4">
+      <ThemedBox className="gap-2">
         <ThemedText type="defaultSemiBold" className="text-sm">
           Назва зони
         </ThemedText>
@@ -67,9 +64,9 @@ export function UpdateZoneFormView({
             {errors.title.message}
           </ThemedText>
         )}
-      </Box>
+      </ThemedBox>
 
-      <Box className="gap-2">
+      <ThemedBox className="gap-2">
         <ThemedText type="defaultSemiBold" className="text-sm">
           Штрих-код
         </ThemedText>
@@ -103,9 +100,9 @@ export function UpdateZoneFormView({
             {errors.bar.message}
           </ThemedText>
         )}
-      </Box>
+      </ThemedBox>
 
-      <Box className="gap-2">
+      <ThemedBox className="gap-2">
         <ThemedText type="defaultSemiBold" className="text-sm">
           Сектор
         </ThemedText>
@@ -139,7 +136,7 @@ export function UpdateZoneFormView({
             {errors.sector.message}
           </ThemedText>
         )}
-      </Box>
+      </ThemedBox>
 
       {errors.root && (
         <ThemedView className="rounded-lg p-3 border border-error-500 bg-error-50">
@@ -150,15 +147,15 @@ export function UpdateZoneFormView({
       )}
 
       <HStack className="gap-2">
-        <Button
+        <ThemedButton
           onPress={onCancel}
           disabled={isSubmitting}
           variant="outline"
           className="flex-1"
         >
           <Text className="font-semibold">Скасувати</Text>
-        </Button>
-        <Button
+        </ThemedButton>
+        <ThemedButton
           onPress={handleSubmit(onSubmit)}
           disabled={isSubmitting}
           variant="confirm"
@@ -169,9 +166,8 @@ export function UpdateZoneFormView({
           ) : (
             <Text className="text-white font-semibold">Оновити</Text>
           )}
-        </Button>
+        </ThemedButton>
       </HStack>
-    </Box>
+    </ThemedBox>
   );
 }
-

@@ -1,12 +1,12 @@
 import {
+  ThemedBox,
+  ThemedButton,
   ThemedFlatList,
   ThemedIcon,
   ThemedText,
   ThemedView,
 } from "@/components/themed";
 import {
-  Box,
-  Button,
   HStack,
   Input,
   InputField,
@@ -102,17 +102,17 @@ export function MovePalletPosesForm({
         </Input>
       </VStack>
 
-      <Box className="max-h-64 rounded-lg border border-outline-100 overflow-hidden">
+      <ThemedBox className="max-h-64 rounded-lg border border-outline-100 overflow-hidden">
         {isLoading ? (
-          <Box className="p-4 items-center">
+          <ThemedBox className="p-4 items-center">
             <Spinner size="small" color={iconColor} />
-          </Box>
+          </ThemedBox>
         ) : filteredPallets.length === 0 ? (
-          <Box className="p-4">
+          <ThemedBox className="p-4">
             <ThemedText type="default" className="text-sm text-center">
               Нічого не знайдено
             </ThemedText>
-          </Box>
+          </ThemedBox>
         ) : (
           <ThemedFlatList
             data={filteredPallets}
@@ -147,16 +147,16 @@ export function MovePalletPosesForm({
                       size={20}
                       color={disabled ? staticColors.disabled : iconColor}
                     />
-                    <Box className="flex-1">
+                    <ThemedBox className="flex-1">
                       <ThemedText type="default" className="text-sm">
                         {item.title}
                       </ThemedText>
                       <ThemedText type="default" className="text-xs opacity-70">
                         Ряд: {item.rowData?.title}
                       </ThemedText>
-                    </Box>
+                    </ThemedBox>
                   </HStack>
-                  <Box>
+                  <ThemedBox>
                     {isEmpty ? (
                       <ThemedView className="px-2 py-1 rounded bg-success-500">
                         <ThemedText
@@ -176,28 +176,28 @@ export function MovePalletPosesForm({
                         </ThemedText>
                       </ThemedView>
                     )}
-                  </Box>
+                  </ThemedBox>
                 </Pressable>
               );
             }}
           />
         )}
-      </Box>
+      </ThemedBox>
 
       {!hideActions && (
         <HStack className="gap-3">
           {onCancel && (
-            <Button
+            <ThemedButton
               variant="outline"
               onPress={onCancel}
               className="flex-1"
               disabled={isSubmitting}
             >
               <Text className="font-semibold">Скасувати</Text>
-            </Button>
+            </ThemedButton>
           )}
 
-          <Button
+          <ThemedButton
             onPress={handleSubmit}
             variant="confirm"
             className="flex-1"
@@ -208,7 +208,7 @@ export function MovePalletPosesForm({
             ) : (
               <Text className="text-white font-semibold">Підтвердити</Text>
             )}
-          </Button>
+          </ThemedButton>
         </HStack>
       )}
     </VStack>

@@ -1,34 +1,31 @@
-import { type ViewProps } from 'react-native';
+import { isWeb, tva } from "@/lib/tv";
+import React from "react";
+import { View, ViewProps } from "react-native";
 
-import { Box } from '@/components/ui/box';
-import { useTheme } from '@/providers/theme-provider';
+import type { VariantProps } from "@/lib/tv";
 
-export type ThemedBoxProps = ViewProps & {
-  lightColor?: string;
-  darkColor?: string;
-  className?: string;
-};
+type IBoxProps = ViewProps &
+  VariantProps<typeof themedBoxStyle> & { className?: string };
 
-export function ThemedBox({ 
-  style, 
-  lightColor, 
-  darkColor, 
-  className,
-  ...otherProps 
-}: ThemedBoxProps) {
-  const { resolvedTheme } = useTheme();
-  
-  // Use custom colors if provided, otherwise use theme tokens via className
-  const customStyle = (lightColor || darkColor) 
-    ? { backgroundColor: resolvedTheme === 'dark' ? (darkColor || lightColor) : (lightColor || darkColor) }
-    : undefined;
+const ThemedBox = React.forwardRef<React.ComponentRef<typeof View>, IBoxProps>(
+  function Box({ className, ...props }, ref) {
+    return (
+      <View
+        ref={ref}
+        {...props}
+        className={themedBoxStyle({ class: className })}
+      />
+    );
+  }
+);
 
-  return (
-    <Box 
-      className={className}
-      style={customStyle ? [customStyle, style] : style} 
-      {...otherProps} 
-    />
-  );
-}
+ThemedBox.displayName = "ThemedBox";
+export { ThemedBox };
 
+const baseStyle = isWeb
+  ? "flex flex-col relative z-0 box-border border-0 list-none min-w-0 min-h-0 bg-transparent items-stretch m-0 p-0 text-decoration-none"
+  : "";
+
+export const themedBoxStyle = tva({
+  base: baseStyle,
+});

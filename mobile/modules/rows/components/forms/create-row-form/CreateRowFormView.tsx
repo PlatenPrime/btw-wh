@@ -1,18 +1,15 @@
-import { ThemedText } from "@/components/themed/themed-text";
-import { ThemedView } from "@/components/themed/themed-view";
 import {
-  Box,
-  Button,
-  HStack,
-  Input,
-  InputField,
-  Text,
-} from "@/components/ui";
-import { ActivityIndicator } from "react-native";
+  ThemedBox,
+  ThemedButton,
+  ThemedText,
+  ThemedView,
+} from "@/components/themed";
+import { HStack, Input, InputField, Text } from "@/components/ui";
+import { useThemeColors } from "@/hooks/use-theme-colors";
 import type { RowFormValues } from "@/modules/rows/components/forms/schema";
 import type { UseFormReturn } from "react-hook-form";
 import { Controller } from "react-hook-form";
-import { useThemeColors } from "@/hooks/use-theme-colors";
+import { ActivityIndicator } from "react-native";
 
 interface CreateRowFormViewProps {
   form: UseFormReturn<RowFormValues>;
@@ -35,8 +32,8 @@ export function CreateRowFormView({
   const { placeholder, static: staticColors } = useThemeColors();
 
   return (
-    <Box className="gap-4">
-      <Box className="gap-2">
+    <ThemedBox className="gap-4">
+      <ThemedBox className="gap-2">
         <ThemedText type="defaultSemiBold" className="text-sm">
           Назва ряду *
         </ThemedText>
@@ -67,7 +64,7 @@ export function CreateRowFormView({
             {errors.title.message}
           </ThemedText>
         )}
-      </Box>
+      </ThemedBox>
 
       {errors.root && (
         <ThemedView className="rounded-lg p-3 border border-error-500 bg-error-50">
@@ -79,16 +76,16 @@ export function CreateRowFormView({
 
       <HStack className="gap-2">
         {onCancel && (
-          <Button
+          <ThemedButton
             onPress={onCancel}
             disabled={isSubmitting}
             variant="outline"
             className="flex-1"
           >
             <Text className="font-semibold">Скасувати</Text>
-          </Button>
+          </ThemedButton>
         )}
-        <Button
+        <ThemedButton
           onPress={handleSubmit(onSubmit)}
           disabled={isSubmitting}
           variant="create"
@@ -99,8 +96,8 @@ export function CreateRowFormView({
           ) : (
             <Text className="text-white font-semibold">Створити</Text>
           )}
-        </Button>
+        </ThemedButton>
       </HStack>
-    </Box>
+    </ThemedBox>
   );
 }

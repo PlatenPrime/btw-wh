@@ -1,5 +1,3 @@
-// Box
-export * from './box';
 
 // Button
 export * from './button';

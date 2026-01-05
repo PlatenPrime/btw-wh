@@ -1,7 +1,6 @@
-import { ThemedScrollView } from "@/components/themed";
+import { ThemedScrollView, ThemedButton, ThemedBox
+ } from "@/components/themed";
 import {
-  Box,
-  Button,
   Input,
   InputField,
   InputIcon,
@@ -59,26 +58,26 @@ export const LoginForm = () => {
       contentContainerClassName="flex-1 justify-center items-center p-6"
       keyboardShouldPersistTaps="handled"
     >
-      <Box className="w-full max-w-sm bg-background-0 rounded-xl border border-outline-100 p-6 gap-4">
+      <ThemedBox className="w-full max-w-sm bg-background-0 rounded-xl border border-outline-100 p-6 gap-4">
         <Text className="text-2xl font-semibold text-center text-typography-900">
           Авторизація
         </Text>
 
         {errors.root && (
-          <Box className="bg-error-100 border border-error-300 rounded-lg p-3">
+          <ThemedBox className="bg-error-100 border border-error-300 rounded-lg p-3">
             <Text className="text-error-700 text-sm">
               {errors.root.message}
             </Text>
-          </Box>
+          </ThemedBox>
         )}
 
         {error && (
-          <Box className="bg-error-100 border border-error-300 rounded-lg p-3">
+          <ThemedBox className="bg-error-100 border border-error-300 rounded-lg p-3">
             <Text className="text-error-700 text-sm">{error}</Text>
-          </Box>
+          </ThemedBox>
         )}
 
-        <Box className="gap-2">
+        <ThemedBox className="gap-2">
           <Text className="text-sm font-medium text-typography-700">Логін</Text>
           <Controller
             control={control}
@@ -103,9 +102,9 @@ export const LoginForm = () => {
               {errors.username.message}
             </Text>
           )}
-        </Box>
+        </ThemedBox>
 
-        <Box className="gap-2">
+        <ThemedBox className="gap-2">
           <Text className="text-sm font-medium text-typography-700">
             Пароль
           </Text>
@@ -140,9 +139,9 @@ export const LoginForm = () => {
               {errors.password.message}
             </Text>
           )}
-        </Box>
+        </ThemedBox>
 
-        <Button
+        <ThemedButton
           className="w-full"
           onPress={handleSubmit(onSubmit)}
           disabled={isLoading}
@@ -152,8 +151,8 @@ export const LoginForm = () => {
           ) : (
             <Text className="text-white font-semibold text-base">Вхід</Text>
           )}
-        </Button>
-      </Box>
+        </ThemedButton>
+      </ThemedBox>
     </ThemedScrollView>
   );
 };

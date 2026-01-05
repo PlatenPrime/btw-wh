@@ -1,30 +1,30 @@
-import { type ViewProps } from 'react-native';
+import { type ViewProps } from "react-native";
 
-import { Box } from '@/components/ui/box';
+import { ThemedBox } from "./themed-box";
 
 export type ThemedViewProps = ViewProps & {
   lightColor?: string;
   darkColor?: string;
 };
 
-export function ThemedView({ 
-  style, 
-  lightColor, 
-  darkColor, 
-  className = 'bg-background-0',
-  ...otherProps 
+export function ThemedView({
+  style,
+  lightColor,
+  darkColor,
+  className = "bg-background-0",
+  ...otherProps
 }: ThemedViewProps) {
   // Use custom colors if provided, otherwise use theme tokens via className
-  const customStyle = (lightColor || darkColor) 
-    ? { backgroundColor: lightColor || darkColor }
-    : undefined;
+  const customStyle =
+    lightColor || darkColor
+      ? { backgroundColor: lightColor || darkColor }
+      : undefined;
 
   return (
-    <Box 
+    <ThemedBox
       className={customStyle ? undefined : className}
-      style={customStyle ? [customStyle, style] : style} 
-      {...otherProps} 
+      style={customStyle ? [customStyle, style] : style}
+      {...otherProps}
     />
   );
 }
-

@@ -1,15 +1,11 @@
-import { ThemedText } from "@/components/themed/themed-text";
-import { ThemedView } from "@/components/themed/themed-view";
 import {
-  Box,
-  Button,
-  HStack,
-  Input,
-  InputField,
-  Pressable,
-  Text,
-} from "@/components/ui";
-import { ThemedIcon } from "@/components/themed";
+  ThemedBox,
+  ThemedButton,
+  ThemedIcon,
+  ThemedText,
+  ThemedView,
+} from "@/components/themed";
+import { HStack, Input, InputField, Pressable, Text } from "@/components/ui";
 import { sklads } from "@/constants/sklad";
 import { SemanticColors } from "@/constants/theme";
 import { useIconColor } from "@/hooks/use-icon-color";
@@ -58,7 +54,7 @@ export function CreateAskFormView({
     const imageUrl = getSmallImageUrl(artikul);
 
     return (
-      <Box className="rounded-lg border border-outline-100 bg-background-50 p-3">
+      <ThemedBox className="rounded-lg border border-outline-100 bg-background-50 p-3">
         <HStack className="items-center gap-3">
           <Image
             source={{ uri: imageUrl }}
@@ -67,26 +63,26 @@ export function CreateAskFormView({
             placeholder={{ blurhash: "LGF5]+Yk^6#M@-5c,1J5@[or[Q6." }}
             transition={200}
           />
-          <Box className="flex-1">
+          <ThemedBox className="flex-1">
             <ThemedText type="defaultSemiBold" className="text-sm">
               {artData.nameukr}
             </ThemedText>
             <ThemedText type="default" className="text-xs opacity-70">
               {artikul}
             </ThemedText>
-          </Box>
+          </ThemedBox>
         </HStack>
-      </Box>
+      </ThemedBox>
     );
   };
 
   return (
-    <Box className="gap-4">
+    <ThemedBox className="gap-4">
       {/* Информация об артикуле */}
       {renderArtInfo()}
 
       {/* Поле артикула */}
-      <Box className="gap-2">
+      <ThemedBox className="gap-2">
         <ThemedText type="defaultSemiBold" className="text-sm">
           Артикул *
         </ThemedText>
@@ -138,10 +134,10 @@ export function CreateAskFormView({
             Пошук артикула...
           </ThemedText>
         )}
-      </Box>
+      </ThemedBox>
 
       {/* Поле количества */}
-      <Box className="gap-2">
+      <ThemedBox className="gap-2">
         <ThemedText type="defaultSemiBold" className="text-sm">
           Кількість
         </ThemedText>
@@ -172,10 +168,10 @@ export function CreateAskFormView({
             {errors.quant.message}
           </ThemedText>
         )}
-      </Box>
+      </ThemedBox>
 
       {/* Поле комментария */}
-      <Box className="gap-2">
+      <ThemedBox className="gap-2">
         <ThemedText type="defaultSemiBold" className="text-sm">
           Коментар
         </ThemedText>
@@ -208,10 +204,10 @@ export function CreateAskFormView({
             {errors.com.message}
           </ThemedText>
         )}
-      </Box>
+      </ThemedBox>
 
       {/* Поле склада */}
-      <Box className="gap-2">
+      <ThemedBox className="gap-2">
         <ThemedText type="defaultSemiBold" className="text-sm">
           Склад
         </ThemedText>
@@ -219,7 +215,7 @@ export function CreateAskFormView({
           control={control}
           name="sklad"
           render={({ field: { onChange, value } }) => (
-            <Box className="gap-2">
+            <ThemedBox className="gap-2">
               {Object.entries(sklads).map(([key, label]) => {
                 const isSelected = value === key;
                 return (
@@ -257,7 +253,7 @@ export function CreateAskFormView({
                   </Pressable>
                 );
               })}
-            </Box>
+            </ThemedBox>
           )}
         />
         {errors.sklad && (
@@ -265,7 +261,7 @@ export function CreateAskFormView({
             {errors.sklad.message}
           </ThemedText>
         )}
-      </Box>
+      </ThemedBox>
 
       {errors.root && (
         <ThemedView className="rounded-lg p-3 border border-error-500 bg-error-50">
@@ -277,16 +273,16 @@ export function CreateAskFormView({
 
       <HStack className="gap-2">
         {onCancel && (
-          <Button
+          <ThemedButton
             onPress={onCancel}
             disabled={isSubmitting}
             variant="outline"
             className="flex-1"
           >
             <Text className="font-semibold">Скасувати</Text>
-          </Button>
+          </ThemedButton>
         )}
-        <Button
+        <ThemedButton
           onPress={handleSubmit(onSubmit)}
           disabled={isSubmitting}
           variant="create"
@@ -297,8 +293,8 @@ export function CreateAskFormView({
           ) : (
             <Text className="text-white font-semibold">Створити</Text>
           )}
-        </Button>
+        </ThemedButton>
       </HStack>
-    </Box>
+    </ThemedBox>
   );
 }
