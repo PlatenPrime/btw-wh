@@ -1,7 +1,4 @@
 
-// Button
-export * from './button';
-
 // Card
 export * from './card';
 

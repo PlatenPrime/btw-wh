@@ -7,8 +7,8 @@ import { useThemeTokenHex } from "@/hooks/use-theme-token";
 import { ProtectedRoute } from "@/modules/auth/components/ProtectedRoute";
 import { useTheme } from "@/providers/theme-provider";
 import { getTokenColorWithOpacity } from "@/utils/color-tokens";
-import { Tabs } from "expo-router";
-import React from "react";
+import { Tabs, usePathname, useRouter } from "expo-router";
+import React, { useCallback } from "react";
 import { Platform } from "react-native";
 
 export default function TabLayout() {
@@ -16,6 +16,8 @@ export default function TabLayout() {
   const { isOpen } = useSidebar();
   const { resolvedTheme } = useTheme();
   const themeMode = resolvedTheme === "dark" ? "dark" : "light";
+  const pathname = usePathname();
+  const router = useRouter();
 
   // Получаем цвета текста из токенов с fallback на старые цвета
   const selectedToken = themeMode === "light" ? "primary-600" : "primary-500";
@@ -49,6 +51,51 @@ export default function TabLayout() {
   const tabBarStyle = isOpen
     ? { ...baseTabBarStyle, height: 0, overflow: "hidden" as const }
     : baseTabBarStyle;
+
+  // Обработчик для вкладки "Артикули"
+  const handleArtsTabPress = useCallback(
+    (e: any) => {
+      // Если уже на вкладке arts, но не на начальном экране
+      const isOnArtsTab = pathname.startsWith("/(tabs)/arts");
+      const isOnArtsIndex =
+        pathname === "/(tabs)/arts" || pathname === "/(tabs)/arts/";
+      if (isOnArtsTab && !isOnArtsIndex) {
+        e.preventDefault();
+        router.push("/(tabs)/arts" as any);
+      }
+    },
+    [pathname, router]
+  );
+
+  // Обработчик для вкладки "Склад"
+  const handleWarehouseTabPress = useCallback(
+    (e: any) => {
+      // Если уже на вкладке warehouse, но не на начальном экране
+      const isOnWarehouseTab = pathname.startsWith("/(tabs)/warehouse");
+      const isOnWarehouseIndex =
+        pathname === "/(tabs)/warehouse" || pathname === "/(tabs)/warehouse/";
+      if (isOnWarehouseTab && !isOnWarehouseIndex) {
+        e.preventDefault();
+        router.push("/(tabs)/warehouse" as any);
+      }
+    },
+    [pathname, router]
+  );
+
+  // Обработчик для вкладки "Поповнення"
+  const handleRefilingTabPress = useCallback(
+    (e: any) => {
+      // Если уже на вкладке refiling, но не на начальном экране
+      const isOnRefilingTab = pathname.startsWith("/(tabs)/refiling");
+      const isOnRefilingIndex =
+        pathname === "/(tabs)/refiling" || pathname === "/(tabs)/refiling/";
+      if (isOnRefilingTab && !isOnRefilingIndex) {
+        e.preventDefault();
+        router.push("/(tabs)/refiling" as any);
+      }
+    },
+    [pathname, router]
+  );
 
   return (
     <ProtectedRoute>
@@ -94,6 +141,9 @@ export default function TabLayout() {
               />
             ),
           }}
+          listeners={{
+            tabPress: handleArtsTabPress,
+          }}
         />
         <Tabs.Screen
           name="warehouse"
@@ -109,6 +159,9 @@ export default function TabLayout() {
               />
             ),
           }}
+          listeners={{
+            tabPress: handleWarehouseTabPress,
+          }}
         />
         <Tabs.Screen
           name="refiling"
@@ -123,6 +176,9 @@ export default function TabLayout() {
                 color={SemanticColors.iconColors.purple}
               />
             ),
+          }}
+          listeners={{
+            tabPress: handleRefilingTabPress,
           }}
         />
       </Tabs>
