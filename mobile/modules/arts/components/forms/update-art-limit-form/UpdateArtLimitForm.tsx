@@ -1,6 +1,6 @@
 import { ThemedText } from "@/components/themed/themed-text";
 import { ThemedView } from "@/components/themed/themed-view";
-import { Input, InputField } from "@/components/ui";
+import { ThemedInput, ThemedInputField } from "@/components/themed";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import { useUpdateArtLimitMutation } from "@/modules/arts/api/hooks/mutations/useUpdateArtLimitMutation";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
@@ -79,12 +79,12 @@ export function UpdateArtLimitForm({
           control={control}
           name="limit"
           render={({ field: { onChange, onBlur, value } }) => (
-            <Input
+            <ThemedInput
               className={`rounded-lg border bg-background-0 ${
                 errors.limit ? "border-error-500" : "border-outline-100"
               }`}
             >
-              <InputField
+              <ThemedInputField
                 placeholder="Введіть ліміт"
                 placeholderTextColor={placeholder}
                 keyboardType="numeric"
@@ -98,7 +98,7 @@ export function UpdateArtLimitForm({
                 editable={!isSubmitting}
                 className="text-typography-900"
               />
-            </Input>
+            </ThemedInput>
           )}
         />
         {errors.limit && (

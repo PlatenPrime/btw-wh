@@ -1,11 +1,13 @@
 import {
   ThemedBox,
   ThemedButton,
+  ThemedHStack,
+  ThemedInput,
+  ThemedInputField,
   ThemedText,
+  ThemedVStack,
   ThemedView,
 } from "@/components/themed";
-
-import { HStack, Input, InputField, Text, VStack } from "@/components/ui";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import type { PosResponse } from "@/modules/poses/api/types";
 import { Controller, type UseFormReturn } from "react-hook-form";
@@ -68,7 +70,7 @@ export function AskPosEditFormView({
   // #endregion
 
   return (
-    <VStack className="gap-4">
+    <ThemedVStack className="gap-4">
       {/* Информация о текущих остатках */}
       <ThemedView
         className="rounded-lg p-3 border"
@@ -77,7 +79,7 @@ export function AskPosEditFormView({
           borderColor: card.border,
         }}
       >
-        <VStack className="gap-2">
+        <ThemedVStack className="gap-2">
           <ThemedText type="defaultSemiBold" className="text-sm">
             Поточні залишки:
           </ThemedText>
@@ -87,7 +89,7 @@ export function AskPosEditFormView({
           <ThemedText type="default" className="text-sm">
             Коробки: {pos.data!.boxes} шт.
           </ThemedText>
-        </VStack>
+        </ThemedVStack>
       </ThemedView>
 
       {/* Поле для ввода убранного количества товара */}
@@ -99,12 +101,12 @@ export function AskPosEditFormView({
           control={form.control}
           name="removedQuant"
           render={({ field: { onChange, onBlur, value } }) => (
-            <Input
+            <ThemedInput
               className={`rounded-lg border bg-background-0 ${
                 errors.removedQuant ? "border-error-500" : "border-outline-100"
               }`}
             >
-              <InputField
+              <ThemedInputField
                 placeholder="Введіть кількість"
                 placeholderTextColor={placeholder}
                 value={value === "0" ? "" : value || ""}
@@ -137,7 +139,7 @@ export function AskPosEditFormView({
                 editable={!isSubmitting}
                 className="text-typography-900"
               />
-            </Input>
+            </ThemedInput>
           )}
         />
         {errors.removedQuant && (
@@ -156,16 +158,16 @@ export function AskPosEditFormView({
           control={form.control}
           name="removedBoxes"
           render={({ field: { onChange, onBlur, value } }) => (
-            <Input
+            <ThemedInput
               className={`rounded-lg border bg-background-0 ${
                 errors.removedBoxes ? "border-error-500" : "border-outline-100"
               }`}
             >
-              <InputField
+              <ThemedInputField
                 placeholder="Введіть кількість коробок"
                 placeholderTextColor={placeholder}
                 value={value === "0" ? "" : value || ""}
-                onChangeText={(text) => {
+                onChangeText={(text: string) => {
                   // Форматируем значение
                   const cleanValue = text.replace(/[^0-9-]/g, "");
                   const hasMinus = cleanValue.includes("-");
@@ -194,7 +196,7 @@ export function AskPosEditFormView({
                 editable={!isSubmitting}
                 className="text-typography-900"
               />
-            </Input>
+            </ThemedInput>
           )}
         />
         {errors.removedBoxes && (
@@ -212,7 +214,7 @@ export function AskPosEditFormView({
             : "border-success-500 bg-success-50/25"
         }`}
       >
-        <VStack className="gap-2">
+        <ThemedVStack className="gap-2">
           <ThemedText
             type="defaultSemiBold"
             className={`text-sm ${
@@ -246,7 +248,7 @@ export function AskPosEditFormView({
               Увага: Не можна зняти більше, ніж є в наявності!
             </ThemedText>
           )}
-        </VStack>
+        </ThemedVStack>
       </ThemedView>
 
       {errors.root && (
@@ -258,7 +260,7 @@ export function AskPosEditFormView({
       )}
 
       {/* Кнопки действий */}
-      <HStack className="gap-2">
+      <ThemedHStack className="gap-2">
         {onCancel && (
           <ThemedButton
             onPress={onCancel}
@@ -266,7 +268,7 @@ export function AskPosEditFormView({
             variant="outline"
             className="flex-1"
           >
-            <Text className="font-semibold">Скасувати</Text>
+            <ThemedText className="font-semibold">Скасувати</ThemedText>
           </ThemedButton>
         )}
         <ThemedButton
@@ -280,10 +282,10 @@ export function AskPosEditFormView({
           {isSubmitting ? (
             <ActivityIndicator color={staticColors.white} />
           ) : (
-            <Text className="text-white font-semibold">Підтвердити</Text>
+            <ThemedText className="text-white font-semibold">Підтвердити</ThemedText>
           )}
         </ThemedButton>
-      </HStack>
-    </VStack>
+      </ThemedHStack>
+    </ThemedVStack>
   );
 }

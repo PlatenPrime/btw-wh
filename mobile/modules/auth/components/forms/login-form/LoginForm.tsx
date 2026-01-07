@@ -1,12 +1,13 @@
-import { ThemedScrollView, ThemedButton, ThemedBox
- } from "@/components/themed";
 import {
-  Input,
-  InputField,
-  InputIcon,
-  InputSlot,
-  Text,
-} from "@/components/ui";
+  ThemedBox,
+  ThemedButton,
+  ThemedInput,
+  ThemedInputField,
+  ThemedInputIcon,
+  ThemedInputSlot,
+  ThemedScrollView,
+  ThemedText,
+} from "@/components/themed";
 import { useIconColor } from "@/hooks/use-icon-color";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
@@ -59,32 +60,32 @@ export const LoginForm = () => {
       keyboardShouldPersistTaps="handled"
     >
       <ThemedBox className="w-full max-w-sm bg-background-0 rounded-xl border border-outline-100 p-6 gap-4">
-        <Text className="text-2xl font-semibold text-center text-typography-900">
+        <ThemedText className="text-2xl font-semibold text-center text-typography-900">
           Авторизація
-        </Text>
+        </ThemedText>
 
         {errors.root && (
           <ThemedBox className="bg-error-100 border border-error-300 rounded-lg p-3">
-            <Text className="text-error-700 text-sm">
+            <ThemedText className="text-error-700 text-sm">
               {errors.root.message}
-            </Text>
+            </ThemedText>
           </ThemedBox>
         )}
 
         {error && (
           <ThemedBox className="bg-error-100 border border-error-300 rounded-lg p-3">
-            <Text className="text-error-700 text-sm">{error}</Text>
+            <ThemedText className="text-error-700 text-sm">{error}</ThemedText>
           </ThemedBox>
         )}
 
         <ThemedBox className="gap-2">
-          <Text className="text-sm font-medium text-typography-700">Логін</Text>
+          <ThemedText className="text-sm font-medium text-typography-700">Логін</ThemedText>
           <Controller
             control={control}
             name="username"
             render={({ field: { onChange, onBlur, value } }) => (
-              <Input className="bg-background-50 border border-outline-100 rounded-lg">
-                <InputField
+              <ThemedInput className="bg-background-50 border border-outline-100 rounded-lg">
+                <ThemedInputField
                   placeholder="Введіть логін"
                   placeholderTextColor={placeholder}
                   autoComplete="username"
@@ -94,26 +95,26 @@ export const LoginForm = () => {
                   onBlur={onBlur}
                   editable={!isLoading}
                 />
-              </Input>
+              </ThemedInput>
             )}
           />
           {errors.username && (
-            <Text className="text-error-600 text-sm">
+            <ThemedText className="text-error-600 text-sm">
               {errors.username.message}
-            </Text>
+            </ThemedText>
           )}
         </ThemedBox>
 
         <ThemedBox className="gap-2">
-          <Text className="text-sm font-medium text-typography-700">
+          <ThemedText className="text-sm font-medium text-typography-700">
             Пароль
-          </Text>
+          </ThemedText>
           <Controller
             control={control}
             name="password"
             render={({ field: { onChange, onBlur, value } }) => (
-              <Input className="bg-background-50 border border-outline-100 rounded-lg">
-                <InputField
+              <ThemedInput className="bg-background-50 border border-outline-100 rounded-lg">
+                <ThemedInputField
                   placeholder="Введіть пароль"
                   placeholderTextColor={placeholder}
                   autoComplete="current-password"
@@ -123,21 +124,21 @@ export const LoginForm = () => {
                   onBlur={onBlur}
                   editable={!isLoading}
                 />
-                <InputSlot onPress={() => setShowPassword(!showPassword)}>
-                  <InputIcon
+                <ThemedInputSlot onPress={() => setShowPassword(!showPassword)}>
+                  <ThemedInputIcon
                     family="FontAwesome5"
                     name={showPassword ? "eye-slash" : "eye"}
                     size={22}
                     color={iconColor}
                   />
-                </InputSlot>
-              </Input>
+                </ThemedInputSlot>
+              </ThemedInput>
             )}
           />
           {errors.password && (
-            <Text className="text-error-600 text-sm">
+            <ThemedText className="text-error-600 text-sm">
               {errors.password.message}
-            </Text>
+            </ThemedText>
           )}
         </ThemedBox>
 
@@ -149,7 +150,7 @@ export const LoginForm = () => {
           {isLoading ? (
             <ActivityIndicator color={staticColors.white} />
           ) : (
-            <Text className="text-white font-semibold text-base">Вхід</Text>
+            <ThemedText className="text-white font-semibold text-base">Вхід</ThemedText>
           )}
         </ThemedButton>
       </ThemedBox>

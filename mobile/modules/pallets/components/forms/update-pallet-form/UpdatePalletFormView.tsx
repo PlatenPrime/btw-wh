@@ -1,8 +1,7 @@
 import { DialogActions } from "@/components/shared/dialog/dialog-actions/DialogActions";
 import { ThemedText } from "@/components/themed/themed-text";
 import { ThemedView } from "@/components/themed/themed-view";
-import { Input, InputField } from "@/components/ui/input";
-import { Switch } from "@/components/ui/switch";
+import { ThemedInput, ThemedInputField, ThemedSwitch } from "@/components/themed";
 import { ThemedBox } from "@/components/themed";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import type { PalletFormValues } from "@/modules/pallets/components/forms/schema";
@@ -39,12 +38,12 @@ export function UpdatePalletFormView({
           control={control}
           name="title"
           render={({ field: { onChange, onBlur, value } }) => (
-            <Input
+            <ThemedInput
               className={`rounded-lg border bg-background-0 ${
                 errors.title ? "border-error-500" : "border-outline-100"
               }`}
             >
-              <InputField
+              <ThemedInputField
                 placeholder="Введіть назву"
                 placeholderTextColor={placeholder}
                 value={value}
@@ -54,7 +53,7 @@ export function UpdatePalletFormView({
                 editable={!isSubmitting}
                 className="text-typography-900"
               />
-            </Input>
+              </ThemedInput>
           )}
         />
         {errors.title && (
@@ -72,12 +71,12 @@ export function UpdatePalletFormView({
           control={control}
           name="sector"
           render={({ field: { onChange, onBlur, value } }) => (
-            <Input
+            <ThemedInput
               className={`rounded-lg border bg-background-0 ${
                 errors.sector ? "border-error-500" : "border-outline-100"
               }`}
             >
-              <InputField
+              <ThemedInputField
                 placeholder="Введіть сектор"
                 placeholderTextColor={placeholder}
                 value={value || ""}
@@ -86,7 +85,7 @@ export function UpdatePalletFormView({
                 editable={!isSubmitting}
                 className="text-typography-900"
               />
-            </Input>
+            </ThemedInput>
           )}
         />
         {errors.sector && (
@@ -104,7 +103,7 @@ export function UpdatePalletFormView({
           control={control}
           name="isDef"
           render={({ field: { onChange, value } }) => (
-            <Switch
+            <ThemedSwitch
               value={value}
               onValueChange={onChange}
               disabled={isSubmitting}

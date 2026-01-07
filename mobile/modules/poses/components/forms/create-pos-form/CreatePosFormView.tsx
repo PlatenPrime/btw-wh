@@ -1,11 +1,14 @@
 import {
   ThemedBox,
   ThemedButton,
+  ThemedHStack,
   ThemedIcon,
+  ThemedInput,
+  ThemedInputField,
+  ThemedPressable,
   ThemedText,
   ThemedView,
 } from "@/components/themed";
-import { HStack, Input, InputField, Pressable, Text } from "@/components/ui";
 import { sklads } from "@/constants/sklad";
 import { SemanticColors } from "@/constants/theme";
 import { useIconColor } from "@/hooks/use-icon-color";
@@ -107,7 +110,7 @@ export function CreatePosFormView({
 
     return (
       <ThemedBox className="rounded-lg border border-outline-100 bg-background-50 p-3">
-        <HStack className="items-center gap-3">
+        <ThemedHStack className="items-center gap-3">
           <Image
             source={{ uri: imageUrl }}
             style={{ width: 60, height: 60, borderRadius: 8 }}
@@ -123,7 +126,7 @@ export function CreatePosFormView({
               {artikul}
             </ThemedText>
           </ThemedBox>
-        </HStack>
+        </ThemedHStack>
       </ThemedBox>
     );
   };
@@ -156,12 +159,12 @@ export function CreatePosFormView({
             };
 
             return (
-              <Input
+              <ThemedInput
                 className={`rounded-lg border bg-background-0 ${
                   errors.artikul ? "border-error-500" : "border-outline-100"
                 }`}
               >
-                <InputField
+                <ThemedInputField
                   placeholder="1111-1111"
                   placeholderTextColor={placeholder}
                   value={value || ""}
@@ -171,7 +174,7 @@ export function CreatePosFormView({
                   editable={!isSubmitting}
                   className="text-typography-900"
                 />
-              </Input>
+              </ThemedInput>
             );
           }}
         />
@@ -251,12 +254,12 @@ export function CreatePosFormView({
             };
 
             return (
-              <Input
+              <ThemedInput
                 className={`rounded-lg border bg-background-0 ${
                   errors.quant ? "border-error-500" : "border-outline-100"
                 }`}
               >
-                <InputField
+                <ThemedInputField
                   placeholder="Введіть кількість"
                   placeholderTextColor={placeholder}
                   value={value === 0 ? "" : value.toString()}
@@ -266,7 +269,7 @@ export function CreatePosFormView({
                   editable={!isSubmitting}
                   className="text-typography-900"
                 />
-              </Input>
+              </ThemedInput>
             );
           }}
         />
@@ -305,12 +308,12 @@ export function CreatePosFormView({
             };
 
             return (
-              <Input
+              <ThemedInput
                 className={`rounded-lg border bg-background-0 ${
                   errors.boxes ? "border-error-500" : "border-outline-100"
                 }`}
               >
-                <InputField
+                <ThemedInputField
                   placeholder="Введіть кількість коробок"
                   placeholderTextColor={placeholder}
                   value={value === 0 ? "" : value.toString()}
@@ -320,7 +323,7 @@ export function CreatePosFormView({
                   editable={!isSubmitting}
                   className="text-typography-900"
                 />
-              </Input>
+              </ThemedInput>
             );
           }}
         />
@@ -344,7 +347,7 @@ export function CreatePosFormView({
               {Object.entries(sklads).map(([key, label]) => {
                 const isSelected = value === key;
                 return (
-                  <Pressable
+                  <ThemedPressable
                     key={key}
                     onPress={() => !isSubmitting && onChange(key)}
                     className={`flex-row items-center justify-between p-3 rounded-lg border ${
@@ -373,7 +376,7 @@ export function CreatePosFormView({
                       size={20}
                       color={isSelected ? SemanticColors.info : iconColor}
                     />
-                  </Pressable>
+                  </ThemedPressable>
                 );
               })}
             </ThemedBox>
@@ -407,7 +410,7 @@ export function CreatePosFormView({
 
       {/* Кнопки */}
       {!hideActions && (
-        <HStack className="gap-2">
+        <ThemedHStack className="gap-2">
           {onCancel && (
             <ThemedButton
               onPress={onCancel}
@@ -415,7 +418,7 @@ export function CreatePosFormView({
               variant="outline"
               className="flex-1"
             >
-              <Text className="font-semibold">Скасувати</Text>
+              <ThemedText className="font-semibold">Скасувати</ThemedText>
             </ThemedButton>
           )}
           <ThemedButton
@@ -427,10 +430,10 @@ export function CreatePosFormView({
             {isSubmitting ? (
               <ActivityIndicator color={SemanticColors.white} />
             ) : (
-              <Text className="text-white font-semibold">Створити</Text>
+              <ThemedText className="text-white font-semibold">Створити</ThemedText>
             )}
           </ThemedButton>
-        </HStack>
+        </ThemedHStack>
       )}
     </ThemedBox>
   );

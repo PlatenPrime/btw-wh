@@ -5,6 +5,7 @@ export * from './themed-card';
 export * from './themed-flat-list';
 export * from './themed-hstack';
 export * from './themed-icon';
+export * from './themed-icon-symbol';
 export * from './themed-input';
 export * from './themed-modal';
 export * from './themed-pressable';

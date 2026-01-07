@@ -1,10 +1,12 @@
 import {
   ThemedBox,
   ThemedButton,
+  ThemedHStack,
+  ThemedInput,
+  ThemedInputField,
   ThemedText,
   ThemedView,
 } from "@/components/themed";
-import { HStack, Input, InputField, Text } from "@/components/ui";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import type { CreateZoneFormValues } from "@/modules/zones/components/forms/schema";
 import type { UseFormReturn } from "react-hook-form";
@@ -41,12 +43,12 @@ export function CreateZoneFormView({
           control={control}
           name="title"
           render={({ field: { onChange, onBlur, value } }) => (
-            <Input
+            <ThemedInput
               className={`rounded-lg border bg-background-0 ${
                 errors.title ? "border-error-500" : "border-outline-100"
               }`}
             >
-              <InputField
+              <ThemedInputField
                 placeholder="42-5-2"
                 placeholderTextColor={placeholder}
                 value={value}
@@ -56,7 +58,7 @@ export function CreateZoneFormView({
                 editable={!isSubmitting}
                 className="text-typography-900"
               />
-            </Input>
+            </ThemedInput>
           )}
         />
         {errors.title && (
@@ -74,12 +76,12 @@ export function CreateZoneFormView({
           control={control}
           name="bar"
           render={({ field: { onChange, onBlur, value } }) => (
-            <Input
+            <ThemedInput
               className={`rounded-lg border bg-background-0 ${
                 errors.bar ? "border-error-500" : "border-outline-100"
               }`}
             >
-              <InputField
+              <ThemedInputField
                 placeholder="420502"
                 placeholderTextColor={placeholder}
                 value={value ? String(value) : ""}
@@ -92,7 +94,7 @@ export function CreateZoneFormView({
                 editable={!isSubmitting}
                 className="text-typography-900"
               />
-            </Input>
+            </ThemedInput>
           )}
         />
         {errors.bar && (
@@ -110,12 +112,12 @@ export function CreateZoneFormView({
           control={control}
           name="sector"
           render={({ field: { onChange, onBlur, value } }) => (
-            <Input
+            <ThemedInput
               className={`rounded-lg border bg-background-0 ${
                 errors.sector ? "border-error-500" : "border-outline-100"
               }`}
             >
-              <InputField
+              <ThemedInputField
                 placeholder="0"
                 placeholderTextColor={placeholder}
                 value={value ? String(value) : ""}
@@ -128,7 +130,7 @@ export function CreateZoneFormView({
                 editable={!isSubmitting}
                 className="text-typography-900"
               />
-            </Input>
+            </ThemedInput>
           )}
         />
         {errors.sector && (
@@ -146,7 +148,7 @@ export function CreateZoneFormView({
         </ThemedView>
       )}
 
-      <HStack className="gap-2">
+      <ThemedHStack className="gap-2">
         {onCancel && (
           <ThemedButton
             onPress={onCancel}
@@ -154,7 +156,7 @@ export function CreateZoneFormView({
             variant="outline"
             className="flex-1"
           >
-            <Text className="font-semibold">Скасувати</Text>
+            <ThemedText className="font-semibold">Скасувати</ThemedText>
           </ThemedButton>
         )}
         <ThemedButton
@@ -166,10 +168,10 @@ export function CreateZoneFormView({
           {isSubmitting ? (
             <ActivityIndicator color={staticColors.white} />
           ) : (
-            <Text className="text-white font-semibold">Створити</Text>
+            <ThemedText className="text-white font-semibold">Створити</ThemedText>
           )}
         </ThemedButton>
-      </HStack>
+      </ThemedHStack>
     </ThemedBox>
   );
 }

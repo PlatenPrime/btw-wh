@@ -1,4 +1,4 @@
-import { Input, InputField } from "@/components/ui/input";
+import { ThemedInput, ThemedInputField } from "@/components/themed";
 import { ThemedBox, ThemedButton, ThemedHStack, ThemedText as ThemedTextButton } from "@/components/themed";
 import { ActivityIndicator } from "react-native";
 import { ThemedText } from "@/components/themed/themed-text";
@@ -38,12 +38,12 @@ export function UpdateRowFormView({
           control={control}
           name="title"
           render={({ field: { onChange, onBlur, value } }) => (
-            <Input
+            <ThemedInput
               className={`rounded-lg border bg-background-0 ${
                 errors.title ? "border-error-500" : "border-outline-100"
               }`}
             >
-              <InputField
+              <ThemedInputField
                 placeholder="XX-XX"
                 placeholderTextColor={placeholder}
                 value={value}
@@ -53,7 +53,7 @@ export function UpdateRowFormView({
                 editable={!isSubmitting}
                 className="text-typography-900"
               />
-            </Input>
+            </ThemedInput>
           )}
         />
         {errors.title && (

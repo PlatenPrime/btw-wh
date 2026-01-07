@@ -3,7 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { ScrollView } from "react-native";
-import { Input, InputField } from "@/components/ui/input";
+import { ThemedInput, ThemedInputField } from "@/components/themed";
 import { ThemedBox, ThemedText, ThemedButton, ThemedText as ThemedTextButton } from "@/components/themed";
 import { ActivityIndicator } from "react-native";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
@@ -97,8 +97,8 @@ export const RegisterForm = () => {
             control={control}
             name="username"
             render={({ field: { onChange, onBlur, value } }) => (
-              <Input className="bg-background-50 border border-outline-100 rounded-lg">
-                <InputField
+              <ThemedInput className="bg-background-50 border border-outline-100 rounded-lg">
+                <ThemedInputField
                   placeholder="Введіть логін"
                   placeholderTextColor={placeholder}
                   autoComplete="username"
@@ -108,7 +108,7 @@ export const RegisterForm = () => {
                   onBlur={onBlur}
                   editable={!isLoading}
                 />
-              </Input>
+              </ThemedInput>
             )}
           />
           {errors.username && (
@@ -122,8 +122,8 @@ export const RegisterForm = () => {
             control={control}
             name="password"
             render={({ field: { onChange, onBlur, value } }) => (
-              <Input className="bg-background-50 border border-outline-100 rounded-lg">
-                <InputField
+              <ThemedInput className="bg-background-50 border border-outline-100 rounded-lg">
+                <ThemedInputField
                   placeholder="Введіть пароль"
                   placeholderTextColor={placeholder}
                   autoComplete="new-password"
@@ -133,7 +133,7 @@ export const RegisterForm = () => {
                   onBlur={onBlur}
                   editable={!isLoading}
                 />
-              </Input>
+              </ThemedInput>
             )}
           />
           {errors.password && (
@@ -147,8 +147,8 @@ export const RegisterForm = () => {
             control={control}
             name="fullname"
             render={({ field: { onChange, onBlur, value } }) => (
-              <Input className="bg-background-50 border border-outline-100 rounded-lg">
-                <InputField
+              <ThemedInput className="bg-background-50 border border-outline-100 rounded-lg">
+                <ThemedInputField
                   placeholder="Введіть повне ім'я"
                   placeholderTextColor={placeholder}
                   autoComplete="name"
@@ -157,7 +157,7 @@ export const RegisterForm = () => {
                   onBlur={onBlur}
                   editable={!isLoading}
                 />
-              </Input>
+              </ThemedInput>
             )}
           />
           {errors.fullname && (
@@ -173,8 +173,8 @@ export const RegisterForm = () => {
             control={control}
             name="role"
             render={({ field: { onChange, onBlur, value } }) => (
-              <Input className="bg-background-50 border border-outline-100 rounded-lg">
-                <InputField
+              <ThemedInput className="bg-background-50 border border-outline-100 rounded-lg">
+                <ThemedInputField
                   placeholder="USER, ADMIN, PRIME"
                   placeholderTextColor={placeholder}
                   autoCapitalize="characters"
@@ -183,7 +183,7 @@ export const RegisterForm = () => {
                   onBlur={onBlur}
                   editable={!isLoading}
                 />
-              </Input>
+              </ThemedInput>
             )}
           />
         </ThemedBox>
@@ -196,8 +196,8 @@ export const RegisterForm = () => {
             control={control}
             name="telegram"
             render={({ field: { onChange, onBlur, value } }) => (
-              <Input className="bg-background-50 border border-outline-100 rounded-lg">
-                <InputField
+              <ThemedInput className="bg-background-50 border border-outline-100 rounded-lg">
+                <ThemedInputField
                   placeholder="Введіть telegram"
                   placeholderTextColor={placeholder}
                   autoCapitalize="none"
@@ -206,7 +206,7 @@ export const RegisterForm = () => {
                   onBlur={onBlur}
                   editable={!isLoading}
                 />
-              </Input>
+              </ThemedInput>
             )}
           />
         </ThemedBox>
@@ -219,8 +219,8 @@ export const RegisterForm = () => {
             control={control}
             name="photo"
             render={({ field: { onChange, onBlur, value } }) => (
-              <Input className="bg-background-50 border border-outline-100 rounded-lg">
-                <InputField
+              <ThemedInput className="bg-background-50 border border-outline-100 rounded-lg">
+                <ThemedInputField
                   placeholder="https://example.com/photo.jpg"
                   placeholderTextColor={placeholder}
                   autoCapitalize="none"
@@ -230,7 +230,7 @@ export const RegisterForm = () => {
                   onBlur={onBlur}
                   editable={!isLoading}
                 />
-              </Input>
+              </ThemedInput>
             )}
           />
           {errors.photo && (

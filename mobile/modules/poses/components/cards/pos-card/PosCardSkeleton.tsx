@@ -1,9 +1,8 @@
-import { ThemedBox, ThemedHStack } from "@/components/themed";
-import { Card } from "@/components/ui/card";
+import { ThemedBox, ThemedHStack, ThemedCard } from "@/components/themed";
 
 export function PosCardSkeleton() {
   return (
-    <Card variant="outlined" className="p-2">
+    <ThemedCard variant="outlined" className="p-2">
       {/* Header with image, title and menu */}
       <ThemedHStack className="items-start justify-between mb-2">
         <ThemedBox className="flex-1">
@@ -71,6 +70,6 @@ export function PosCardSkeleton() {
           </ThemedBox>
         </ThemedBox>
       </ThemedBox>
-    </Card>
+    </ThemedCard>
   );
 }

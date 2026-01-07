@@ -22,7 +22,7 @@ const initialState: ThemeProviderState = {
   resolvedTheme: 'light',
 };
 
-const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
+export const ThemeProviderContext = createContext<ThemeProviderState | undefined>(undefined);
 
 export function ThemeProvider({
   children,

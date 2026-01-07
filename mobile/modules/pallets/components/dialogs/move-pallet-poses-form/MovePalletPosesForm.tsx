@@ -2,19 +2,16 @@ import {
   ThemedBox,
   ThemedButton,
   ThemedFlatList,
+  ThemedHStack,
   ThemedIcon,
+  ThemedInput,
+  ThemedInputField,
+  ThemedPressable,
+  ThemedSpinner,
   ThemedText,
+  ThemedVStack,
   ThemedView,
 } from "@/components/themed";
-import {
-  HStack,
-  Input,
-  InputField,
-  Pressable,
-  Spinner,
-  Text,
-  VStack,
-} from "@/components/ui";
 import { useIconColor } from "@/hooks/use-icon-color";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import { useEmptyPalletsQuery } from "@/modules/pallets/api/hooks/queries/useEmptyPalletsQuery";
@@ -85,27 +82,27 @@ export function MovePalletPosesForm({
   }, [onSubmitReady, handleSubmit, isSubmitDisabled]);
 
   return (
-    <VStack className="gap-4">
-      <VStack className="gap-2">
+    <ThemedVStack className="gap-4">
+      <ThemedVStack className="gap-2">
         <ThemedText type="default" className="text-sm">
           Цільова паллета
         </ThemedText>
 
-        <Input className="rounded-lg border border-outline-100 bg-background-50">
-          <InputField
+        <ThemedInput className="rounded-lg border border-outline-100 bg-background-50">
+          <ThemedInputField
             value={search}
             onChangeText={setSearch}
             placeholder="Пошук паллети за назвою"
             placeholderTextColor={placeholder}
             className="text-typography-900"
           />
-        </Input>
-      </VStack>
+        </ThemedInput>
+      </ThemedVStack>
 
       <ThemedBox className="max-h-64 rounded-lg border border-outline-100 overflow-hidden">
         {isLoading ? (
           <ThemedBox className="p-4 items-center">
-            <Spinner size="small" color={iconColor} />
+            <ThemedSpinner size="small" color={iconColor} />
           </ThemedBox>
         ) : filteredPallets.length === 0 ? (
           <ThemedBox className="p-4">
@@ -128,7 +125,7 @@ export function MovePalletPosesForm({
               const isSelected = selectedPalletId === item._id;
 
               return (
-                <Pressable
+                <ThemedPressable
                   onPress={() => !disabled && setSelectedPalletId(item._id)}
                   className={`flex-row items-center justify-between p-3 border-b border-outline-100 ${
                     isSelected ? "bg-background-200" : "bg-background-50"
@@ -136,7 +133,7 @@ export function MovePalletPosesForm({
                   disabled={disabled || isSubmitting}
                   style={{ opacity: disabled ? 0.5 : 1 }}
                 >
-                  <HStack className="items-center gap-3 flex-1">
+                  <ThemedHStack className="items-center gap-3 flex-1">
                     <ThemedIcon
                       family="MaterialIcons"
                       name={
@@ -155,7 +152,7 @@ export function MovePalletPosesForm({
                         Ряд: {item.rowData?.title}
                       </ThemedText>
                     </ThemedBox>
-                  </HStack>
+                  </ThemedHStack>
                   <ThemedBox>
                     {isEmpty ? (
                       <ThemedView className="px-2 py-1 rounded bg-success-500">
@@ -177,7 +174,7 @@ export function MovePalletPosesForm({
                       </ThemedView>
                     )}
                   </ThemedBox>
-                </Pressable>
+                </ThemedPressable>
               );
             }}
           />
@@ -185,7 +182,7 @@ export function MovePalletPosesForm({
       </ThemedBox>
 
       {!hideActions && (
-        <HStack className="gap-3">
+        <ThemedHStack className="gap-3">
           {onCancel && (
             <ThemedButton
               variant="outline"
@@ -193,7 +190,7 @@ export function MovePalletPosesForm({
               className="flex-1"
               disabled={isSubmitting}
             >
-              <Text className="font-semibold">Скасувати</Text>
+              <ThemedText className="font-semibold">Скасувати</ThemedText>
             </ThemedButton>
           )}
 
@@ -206,11 +203,11 @@ export function MovePalletPosesForm({
             {isSubmitting ? (
               <ActivityIndicator color={staticColors.white} />
             ) : (
-              <Text className="text-white font-semibold">Підтвердити</Text>
+              <ThemedText className="text-white font-semibold">Підтвердити</ThemedText>
             )}
           </ThemedButton>
-        </HStack>
+        </ThemedHStack>
       )}
-    </VStack>
+    </ThemedVStack>
   );
 }

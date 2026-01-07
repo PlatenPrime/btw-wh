@@ -1,7 +1,15 @@
-import { type ActivityIndicatorProps } from 'react-native';
-
-import { Spinner } from '@/components/ui/spinner';
+'use client';
+import { ActivityIndicator, type ActivityIndicatorProps } from 'react-native';
+import React from 'react';
+import { tva } from '@/lib/tv';
+import { cssInterop } from 'nativewind';
 import { useTheme } from '@/providers/theme-provider';
+
+cssInterop(ActivityIndicator, {
+  className: { target: 'style', nativeStyleToProp: { color: true } },
+});
+
+const spinnerStyle = tva({});
 
 export type ThemedSpinnerProps = ActivityIndicatorProps & {
   lightColor?: string;
@@ -10,13 +18,21 @@ export type ThemedSpinnerProps = ActivityIndicatorProps & {
   'aria-label'?: string;
 };
 
-export function ThemedSpinner({ 
-  color,
-  lightColor, 
-  darkColor, 
-  className,
-  ...otherProps 
-}: ThemedSpinnerProps) {
+const ThemedSpinner = React.forwardRef<
+  React.ComponentRef<typeof ActivityIndicator>,
+  ThemedSpinnerProps
+>(function ThemedSpinner(
+  {
+    className,
+    color,
+    lightColor,
+    darkColor,
+    focusable = false,
+    'aria-label': ariaLabel = 'loading',
+    ...props
+  },
+  ref
+) {
   const { resolvedTheme } = useTheme();
   
   // Use custom colors if provided, otherwise use default color
@@ -25,11 +41,18 @@ export function ThemedSpinner({
     : color;
 
   return (
-    <Spinner 
-      className={className}
+    <ActivityIndicator
+      ref={ref}
+      focusable={focusable}
+      aria-label={ariaLabel}
+      {...props}
       color={spinnerColor}
-      {...otherProps} 
+      className={spinnerStyle({ class: className })}
     />
   );
-}
+});
+
+ThemedSpinner.displayName = 'ThemedSpinner';
+
+export { ThemedSpinner, spinnerStyle };
 

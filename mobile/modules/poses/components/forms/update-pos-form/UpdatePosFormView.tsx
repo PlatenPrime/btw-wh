@@ -8,7 +8,7 @@ import {
 import { ThemedText } from "@/components/themed/themed-text";
 import { ThemedView } from "@/components/themed/themed-view";
 import { ThemedIcon } from "@/components/themed";
-import { Input, InputField } from "@/components/ui/input";
+import { ThemedInput, ThemedInputField } from "@/components/themed";
 import { sklads } from "@/constants/sklad";
 import { useIconColor } from "@/hooks/use-icon-color";
 import { useThemeColors } from "@/hooks/use-theme-colors";
@@ -67,12 +67,12 @@ export function UpdatePosFormView({
             };
 
             return (
-              <Input
+              <ThemedInput
                 className={`rounded-lg border bg-background-0 ${
                   errors.quant ? "border-error-500" : "border-outline-100"
                 }`}
               >
-                <InputField
+                <ThemedInputField
                   placeholder="Введіть кількість"
                   placeholderTextColor={placeholder}
                   value={value || ""}
@@ -82,7 +82,7 @@ export function UpdatePosFormView({
                   editable={!isSubmitting}
                   className="text-typography-900"
                 />
-              </Input>
+              </ThemedInput>
             );
           }}
         />
@@ -119,12 +119,12 @@ export function UpdatePosFormView({
             };
 
             return (
-              <Input
+              <ThemedInput
                 className={`rounded-lg border bg-background-0 ${
                   errors.boxes ? "border-error-500" : "border-outline-100"
                 }`}
               >
-                <InputField
+                <ThemedInputField
                   placeholder="Введіть кількість коробок"
                   placeholderTextColor={placeholder}
                   value={value || ""}
@@ -134,7 +134,7 @@ export function UpdatePosFormView({
                   editable={!isSubmitting}
                   className="text-typography-900"
                 />
-              </Input>
+              </ThemedInput>
             );
           }}
         />

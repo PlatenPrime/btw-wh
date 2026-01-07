@@ -1,4 +1,4 @@
-import { Colors } from "@/constants/theme";
+import { Colors, SemanticColors } from "@/constants/theme";
 import { useThemeColors } from "@/hooks/use-theme-colors";
 import { useTheme } from "@/providers/theme-provider";
 import React, { createContext, useContext } from "react";
@@ -86,6 +86,10 @@ export function ThemedInput({
         : lightColor || darkColor
       : background.secondary || dialog.bg;
 
+  // Определяем цвет границы с fallback на SemanticColors для гарантии видимости
+  const borderColor =
+    dialog.border || SemanticColors.dialog.border[resolvedTheme];
+
   const variantStyles = getVariantStyles(variant);
   const sizeStyle = sizeStyles[size];
 
@@ -98,7 +102,7 @@ export function ThemedInput({
             flexDirection: "row",
             alignItems: "center",
             backgroundColor: bgColor,
-            borderColor: dialog.border,
+            borderColor: borderColor,
             ...variantStyles,
             minHeight: sizeStyle.height,
           },
