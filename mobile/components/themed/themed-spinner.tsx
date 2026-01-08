@@ -34,10 +34,11 @@ const ThemedSpinner = React.forwardRef<
   ref
 ) {
   const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme === 'dark';
   
-  // Use custom colors if provided, otherwise use default color
+  // Используем кастомные цвета только если они предоставлены
   const spinnerColor = (lightColor || darkColor) 
-    ? (resolvedTheme === 'dark' ? (darkColor || lightColor) : (lightColor || darkColor))
+    ? (isDark ? (darkColor || lightColor) : (lightColor || darkColor))
     : color;
 
   return (

@@ -20,10 +20,11 @@ const ThemedPressable = React.forwardRef<
   ThemedPressableProps
 >(function ThemedPressable({ className, style, lightColor, darkColor, ...props }, ref) {
   const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme === 'dark';
   
-  // Use custom colors if provided, otherwise use theme tokens via className
+  // Используем кастомные цвета только если они предоставлены
   const customStyle = (lightColor || darkColor) 
-    ? { backgroundColor: resolvedTheme === 'dark' ? (darkColor || lightColor) : (lightColor || darkColor) }
+    ? { backgroundColor: isDark ? (darkColor || lightColor) : (lightColor || darkColor) }
     : undefined;
 
   return (

@@ -1,5 +1,4 @@
-import { Colors, SemanticColors } from "@/constants/theme";
-import { useThemeColors } from "@/hooks/use-theme-colors";
+import { Colors } from "@/constants/theme";
 import { useTheme } from "@/providers/theme-provider";
 import React, { createContext, useContext } from "react";
 import {
@@ -74,35 +73,34 @@ export function ThemedInput({
   ...props
 }: ThemedInputProps) {
   const { resolvedTheme } = useTheme();
-  const { dialog, background } = useThemeColors();
+  const isDark = resolvedTheme === "dark";
 
   const contextValue: InputContextType = { variant, size };
 
-  // Определяем цвет фона - используем background.secondary для инпутов (как в LoginForm)
-  const bgColor =
+  // Используем кастомные цвета только если они предоставлены
+  // Иначе используем Tailwind классы через className
+  const customBgColor =
     lightColor || darkColor
-      ? resolvedTheme === "dark"
+      ? isDark
         ? darkColor || lightColor
         : lightColor || darkColor
-      : background.secondary || dialog.bg;
-
-  // Определяем цвет границы с fallback на SemanticColors для гарантии видимости
-  const borderColor =
-    dialog.border || SemanticColors.dialog.border[resolvedTheme];
+      : undefined;
 
   const variantStyles = getVariantStyles(variant);
   const sizeStyle = sizeStyles[size];
 
+  // Базовые классы для инпута (используем outline-200 для лучшего контраста)
+  const baseClassName = className || "bg-background-50 border-outline-200";
+
   return (
     <InputContext.Provider value={contextValue}>
       <View
-        className={className}
+        className={customBgColor ? undefined : baseClassName}
         style={[
           {
             flexDirection: "row",
             alignItems: "center",
-            backgroundColor: bgColor,
-            borderColor: borderColor,
+            ...(customBgColor && { backgroundColor: customBgColor }),
             ...variantStyles,
             minHeight: sizeStyle.height,
           },
@@ -137,13 +135,11 @@ export const ThemedInputField = React.forwardRef<
   ref
 ) {
   const { resolvedTheme } = useTheme();
-  const { placeholder: placeholderColor } = useThemeColors();
   const context = useInputContext();
   const variant = context?.variant || "outline";
   const size = context?.size || "md";
 
-  // Определяем цвет текста - используем только Colors для гарантии контраста
-  // Не используем text.primary, так как он может возвращать неправильное значение
+  // Определяем цвет текста - используем Colors как fallback для обратной совместимости
   let textColor: string = Colors[resolvedTheme].text;
 
   if (lightTextColor || darkTextColor) {
@@ -158,9 +154,9 @@ export const ThemedInputField = React.forwardRef<
     textColor = resolvedTheme === "dark" ? "#E5E5E5" : "#11181C";
   }
 
-  // Определяем цвет placeholder
+  // Определяем цвет placeholder - используем стандартный цвет для placeholder
   const finalPlaceholderColor =
-    placeholderTextColor || placeholderColor || "#9ca3af";
+    placeholderTextColor || (resolvedTheme === "dark" ? "#6b7280" : "#9ca3af");
 
   const sizeStyle = sizeStyles[size];
   const variantPadding = {

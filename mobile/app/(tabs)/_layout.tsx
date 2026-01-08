@@ -2,48 +2,36 @@ import { HapticTab } from "@/components/haptic-tab";
 import { useSidebar } from "@/components/layout/sidebar/SidebarProvider";
 import { ThemedIcon } from "@/components/themed";
 import { Colors, SemanticColors } from "@/constants/theme";
-import { useThemeColors } from "@/hooks/use-theme-colors";
-import { useThemeTokenHex } from "@/hooks/use-theme-token";
+import { getThemeColorWithOpacity } from "@/hooks/use-theme-colors";
 import { ProtectedRoute } from "@/modules/auth/components/ProtectedRoute";
 import { useTheme } from "@/providers/theme-provider";
-import { getTokenColorWithOpacity } from "@/utils/color-tokens";
 import { Tabs, usePathname, useRouter } from "expo-router";
 import React, { useCallback } from "react";
 import { Platform } from "react-native";
 
 export default function TabLayout() {
-  const { background, theme } = useThemeColors();
   const { isOpen } = useSidebar();
   const { resolvedTheme } = useTheme();
   const themeMode = resolvedTheme === "dark" ? "dark" : "light";
   const pathname = usePathname();
   const router = useRouter();
 
-  // Получаем цвета текста из токенов с fallback на старые цвета
-  const selectedToken = themeMode === "light" ? "primary-600" : "primary-500";
-  const tabIconSelectedHex = useThemeTokenHex(selectedToken);
-  const tabIconDefaultHex = useThemeTokenHex("typography-500");
+  const tabBarActiveTintColor = Colors[themeMode].tabIconSelected;
+  const tabBarInactiveTintColor = Colors[themeMode].tabIconDefault;
 
-  const tabBarActiveTintColor =
-    tabIconSelectedHex || Colors[themeMode].tabIconSelected;
-  const tabBarInactiveTintColor =
-    tabIconDefaultHex || Colors[themeMode].tabIconDefault;
-
-  // Получаем цвет границы из токенов с opacity
-  const borderColor = getTokenColorWithOpacity(
-    "outline-200",
-    0.3,
-    theme as "light" | "dark"
-  );
+  // Получаем цвет границы с opacity
+  // outline-200: light: #DDDCDB (221, 220, 219), dark: #737474 (115, 116, 116)
+  const outline200Color = themeMode === "light" ? "#DDDCDB" : "#737474";
+  const borderColor = getThemeColorWithOpacity(outline200Color, 0.3);
 
   const baseTabBarStyle = Platform.select({
     ios: {
       position: "absolute" as const,
-      backgroundColor: background.primary,
+      backgroundColor: SemanticColors.card.bg[themeMode],
       borderTopColor: borderColor,
     },
     default: {
-      backgroundColor: background.primary,
+      backgroundColor: SemanticColors.card.bg[themeMode],
       borderTopColor: borderColor,
     },
   });

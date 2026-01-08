@@ -4,7 +4,6 @@ import { ThemedSpinner } from "@/components/themed";
 import { ThemedIcon } from "@/components/themed";
 import { SemanticColors } from "@/constants/theme";
 import { useThemeColors } from "@/hooks/use-theme-colors";
-import { useThemeTokenHex } from "@/hooks/use-theme-token";
 import { formatDateTime } from "@/modules/asks/utils/format-date";
 import type { DefsCalculationStatus } from "@/modules/defs/api/types/dto";
 import { View } from "react-native";
@@ -30,13 +29,13 @@ export function CalculationStatusView({
   status,
   isLoading,
 }: CalculationStatusViewProps) {
-  const { card, theme, text } = useThemeColors();
+  const { card, theme, info } = useThemeColors();
   const bgColor = card.bg;
   const borderColor = card.border;
-  // Получаем цвета для спиннера и прогресс-бара из токенов
-  const spinnerColor = useThemeTokenHex('info-500');
-  const progressBgColor = useThemeTokenHex(theme === 'dark' ? 'typography-700' : 'typography-300');
-  const progressFillColor = useThemeTokenHex('info-500');
+  // Получаем цвета для спиннера и прогресс-бара
+  const spinnerColor = info.border; // info-500
+  const progressBgColor = theme === 'dark' ? "#374151" : "#d1d5db"; // typography-700/300
+  const progressFillColor = info.border; // info-500
 
   if (isLoading) {
     return (

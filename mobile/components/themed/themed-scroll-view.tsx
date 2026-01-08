@@ -20,10 +20,11 @@ export function ThemedScrollView({
   ...otherProps 
 }: ThemedScrollViewProps) {
   const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme === 'dark';
   
-  // Use custom colors if provided
+  // Используем кастомные цвета только если они предоставлены
   const customStyle = (lightColor || darkColor) 
-    ? { backgroundColor: resolvedTheme === 'dark' ? (darkColor || lightColor) : (lightColor || darkColor) }
+    ? { backgroundColor: isDark ? (darkColor || lightColor) : (lightColor || darkColor) }
     : undefined;
 
   return (

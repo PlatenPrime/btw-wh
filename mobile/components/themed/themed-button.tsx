@@ -21,7 +21,8 @@ const buttonVariants = tva({
         "border border-outline-100 bg-transparent data-[hover=true]:bg-background-50 data-[active=true]:bg-background-100",
       secondary:
         "bg-secondary-500 text-typography-0 data-[hover=true]:bg-secondary-600 data-[active=true]:bg-secondary-700",
-      ghost: "bg-transparent data-[hover=true]:bg-background-50 data-[active=true]:bg-background-100",
+      ghost:
+        "bg-transparent data-[hover=true]:bg-background-50 data-[active=true]:bg-background-100",
       link: "text-primary-500 underline-offset-4 data-[hover=true]:underline",
       create:
         "bg-success-500 text-typography-0 data-[hover=true]:bg-success-600 data-[active=true]:bg-success-700",
@@ -78,15 +79,15 @@ export const ThemedButton = React.forwardRef<
     ref
   ) => {
     const { resolvedTheme } = useTheme();
+    const isDark = resolvedTheme === "dark";
 
-    // Use custom colors if provided
+    // Используем кастомные цвета только если они предоставлены
     const customStyle =
       lightColor || darkColor
         ? {
-            backgroundColor:
-              resolvedTheme === "dark"
-                ? darkColor || lightColor
-                : lightColor || darkColor,
+            backgroundColor: isDark
+              ? darkColor || lightColor
+              : lightColor || darkColor,
           }
         : undefined;
 

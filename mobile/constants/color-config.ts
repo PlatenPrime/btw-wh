@@ -268,7 +268,7 @@ export const config = {
     /* Outline */
     '--color-outline-0': '26 23 23',
     '--color-outline-50': '39 38 36',
-    '--color-outline-100': '65 65 65',
+    '--color-outline-100': '65 65 65', 
     '--color-outline-200': '115 116 116',
     '--color-outline-300': '140 141 141',
     '--color-outline-400': '165 163 163',

@@ -1,106 +1,93 @@
 import { SemanticColors } from "@/constants/theme";
 import { useTheme } from "@/providers/theme-provider";
-import { getTokenRgbFromPath, rgbToHex, rgbToRgba } from "@/utils/color-tokens";
 
 /**
- * Централизованный хук для получения цветов темы
- * Возвращает объект с цветами для текущей темы (light/dark)
- *
- * Цвета получаются из Tailwind токенов через config.ts, обеспечивая
- * единую систему управления цветами.
- *
+ * Упрощенный хук для получения цветов темы
+ * 
+ * ВАЖНО: Этот хук оставлен для обратной совместимости.
+ * Для новых компонентов используйте Tailwind классы напрямую.
+ * 
+ * Цвета берутся из SemanticColors (статические значения).
+ * 
+ * @deprecated Используйте Tailwind классы напрямую: className="bg-background-0 border-outline-200"
+ * 
  * @example
- * const { card, dialog, text } = useThemeColors();
- * <Box style={{ backgroundColor: card.bg, borderColor: card.border }} />
+ * // Старый способ (не рекомендуется):
+ * const { card } = useThemeColors();
+ * <Box style={{ backgroundColor: card.bg }} />
+ * 
+ * // Новый способ (рекомендуется):
+ * <Box className="bg-background-0" />
  */
 export function useThemeColors() {
   const { resolvedTheme } = useTheme();
   const theme = resolvedTheme === "dark" ? "dark" : "light";
 
-  // Получаем RGB значения из токенов и преобразуем в hex
-  const getColorFromToken = (tokenPath: string, fallback?: string): string => {
-    const rgb = getTokenRgbFromPath(tokenPath, theme);
-    if (rgb) {
-      return rgbToHex(rgb);
-    }
-    // Fallback на переданное значение или старые значения для обратной совместимости
-    if (fallback) {
-      return fallback;
-    }
-    return SemanticColors.card.bg[theme];
-  };
-
   return {
     theme,
-    // Цвета для карточек (из токенов: background-0, outline-100)
+    // Цвета для карточек
     card: {
-      bg: getColorFromToken("card.bg", SemanticColors.card.bg[theme]),
-      border: getColorFromToken(
-        "card.border",
-        SemanticColors.card.border[theme]
-      ),
+      bg: SemanticColors.card.bg[theme],
+      border: SemanticColors.card.border[theme],
     },
-    // Цвета для диалогов и модальных окон (из токенов: background-0, outline-200)
+    // Цвета для диалогов и модальных окон
     dialog: {
-      bg: getColorFromToken("dialog.bg", SemanticColors.dialog.bg[theme]),
-      border: getColorFromToken(
-        "dialog.border",
-        SemanticColors.dialog.border[theme]
-      ),
+      bg: SemanticColors.dialog.bg[theme],
+      border: SemanticColors.dialog.border[theme],
     },
-    // Цвета для ошибок (из токенов: error-500, error-100/error-900)
+    // Цвета для ошибок
     error: {
-      border: getColorFromToken("error.border"),
-      text: getColorFromToken("error.text"),
-      bg: getColorFromToken("error.bg"),
+      border: SemanticColors.error.border,
+      text: SemanticColors.error.text,
+      bg: SemanticColors.error.bg[theme],
     },
-    // Цвета для успеха (из токенов: success-500, success-100/success-900)
+    // Цвета для успеха
     success: {
-      border: getColorFromToken("success.border"),
-      text: getColorFromToken("success.text"),
-      bg: getColorFromToken("success.bg"),
+      border: "#10b981", // success-500
+      text: "#10b981",
+      bg: theme === "dark" ? "#064e3b" : "#d1fae5",
     },
-    // Цвета для предупреждений (из токенов: warning-500, warning-100/warning-900)
+    // Цвета для предупреждений
     warning: {
-      border: getColorFromToken("warning.border"),
-      text: getColorFromToken("warning.text"),
-      bg: getColorFromToken("warning.bg"),
+      border: "#f59e0b", // warning-500
+      text: "#f59e0b",
+      bg: theme === "dark" ? "#78350f" : "#fef3c7",
     },
-    // Цвета для информации (из токенов: info-500, info-100/info-900)
+    // Цвета для информации
     info: {
-      border: getColorFromToken("info.border"),
-      text: getColorFromToken("info.text"),
-      bg: getColorFromToken("info.bg"),
+      border: SemanticColors.info,
+      text: SemanticColors.info,
+      bg: theme === "dark" ? "#1e3a8a" : "#dbeafe",
     },
-    // Цвета для sidebar (из токенов: outline-200/outline-300)
+    // Цвета для sidebar
     sidebar: {
-      border: getColorFromToken("sidebar.border"),
+      border: SemanticColors.sidebar.border[theme],
     },
-    // Цвета для текста (из токенов: typography-900/typography-700, typography-500)
+    // Цвета для текста
     text: {
-      primary: getColorFromToken("text.primary"),
-      secondary: getColorFromToken("text.secondary"),
-      icon: getColorFromToken("text.icon"),
-      tabIconDefault: getColorFromToken("text.tabIconDefault"),
-      tabIconSelected: getColorFromToken("text.tabIconSelected"),
+      primary: theme === "dark" ? "#E5E5E5" : "#11181C",
+      secondary: theme === "dark" ? "#A3A3A3" : "#687076",
+      icon: theme === "dark" ? "#A3A3A3" : "#687076",
+      tabIconDefault: theme === "dark" ? "#A3A3A3" : "#687076",
+      tabIconSelected: theme === "dark" ? "#fff" : SemanticColors.primary,
     },
-    // Цвета для фона (из токенов: background-0, background-50)
+    // Цвета для фона
     background: {
-      primary: getColorFromToken("background.primary"),
-      secondary: getColorFromToken("background.secondary"),
-      muted: getColorFromToken("background.muted"),
+      primary: SemanticColors.card.bg[theme],
+      secondary: theme === "dark" ? "#27272a" : "#fafafa",
+      muted: theme === "dark" ? "#27272a" : "#f5f5f5",
     },
-    // Placeholder цвет (из токенов: typography-400/typography-500)
-    placeholder: getColorFromToken("placeholder"),
-    // Цвета для Switch компонента (из токенов: typography-300/typography-700, primary-500)
+    // Placeholder цвет
+    placeholder: SemanticColors.placeholder[theme],
+    // Цвета для Switch компонента
     switch: {
       track: {
-        false: getColorFromToken("switch.track.false"),
-        true: getColorFromToken("switch.track.true"),
+        false: SemanticColors.switch.track.false[theme],
+        true: SemanticColors.switch.track.true[theme],
       },
-      thumb: getColorFromToken("switch.thumb"),
+      thumb: SemanticColors.switch.thumb,
     },
-    // Статические цвета (не зависят от темы или из SemanticColors)
+    // Статические цвета
     static: {
       primary: SemanticColors.primary,
       info: SemanticColors.info,
@@ -129,5 +116,5 @@ export function getThemeColorWithOpacity(
   const r = parseInt(rgb.substring(0, 2), 16);
   const g = parseInt(rgb.substring(2, 4), 16);
   const b = parseInt(rgb.substring(4, 6), 16);
-  return rgbToRgba(`${r} ${g} ${b}`, opacity);
+  return `rgba(${r}, ${g}, ${b}, ${opacity})`;
 }

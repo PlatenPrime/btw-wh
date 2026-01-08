@@ -1,12 +1,15 @@
 // Fallback for using MaterialIcons on Android and web.
 
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { SymbolWeight, SymbolViewProps } from 'expo-symbols';
-import { ComponentProps } from 'react';
-import { OpaqueColorValue, type StyleProp, type TextStyle } from 'react-native';
-import { useTheme } from '@/providers/theme-provider';
+import { useTheme } from "@/providers/theme-provider";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { SymbolViewProps, SymbolWeight } from "expo-symbols";
+import { ComponentProps } from "react";
+import { type StyleProp, type TextStyle } from "react-native";
 
-type IconMapping = Record<SymbolViewProps['name'], ComponentProps<typeof MaterialIcons>['name']>;
+type IconMapping = Record<
+  SymbolViewProps["name"],
+  ComponentProps<typeof MaterialIcons>["name"]
+>;
 type IconSymbolName = keyof typeof MAPPING;
 
 /**
@@ -15,10 +18,10 @@ type IconSymbolName = keyof typeof MAPPING;
  * - see SF Symbols in the [SF Symbols](https://developer.apple.com/sf-symbols/) app.
  */
 const MAPPING = {
-  'house.fill': 'home',
-  'paperplane.fill': 'send',
-  'chevron.left.forwardslash.chevron.right': 'code',
-  'chevron.right': 'chevron-right',
+  "house.fill": "home",
+  "paperplane.fill": "send",
+  "chevron.left.forwardslash.chevron.right": "code",
+  "chevron.right": "chevron-right",
 } as IconMapping;
 
 export type ThemedIconSymbolProps = {
@@ -46,12 +49,22 @@ export function ThemedIconSymbol({
   weight,
 }: ThemedIconSymbolProps) {
   const { resolvedTheme } = useTheme();
-  
-  // Use custom colors if provided, otherwise use the color prop
-  const iconColor = (lightColor || darkColor) 
-    ? (resolvedTheme === 'dark' ? (darkColor || lightColor) : (lightColor || darkColor))
-    : color;
+  const isDark = resolvedTheme === "dark";
 
-  return <MaterialIcons color={iconColor} size={size} name={MAPPING[name]} style={style} />;
+  // Используем кастомные цвета только если они предоставлены
+  const iconColor =
+    lightColor || darkColor
+      ? isDark
+        ? darkColor || lightColor
+        : lightColor || darkColor
+      : color;
+
+  return (
+    <MaterialIcons
+      color={iconColor}
+      size={size}
+      name={MAPPING[name]}
+      style={style}
+    />
+  );
 }
-

@@ -1,6 +1,7 @@
 import { type ViewProps } from "react-native";
 
 import { ThemedBox } from "./themed-box";
+import { useTheme } from "@/providers/theme-provider";
 
 export type ThemedViewProps = ViewProps & {
   lightColor?: string;
@@ -14,10 +15,13 @@ export function ThemedView({
   className = "bg-background-0",
   ...otherProps
 }: ThemedViewProps) {
-  // Use custom colors if provided, otherwise use theme tokens via className
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme === "dark";
+
+  // Используем кастомные цвета только если они предоставлены
   const customStyle =
     lightColor || darkColor
-      ? { backgroundColor: lightColor || darkColor }
+      ? { backgroundColor: isDark ? darkColor || lightColor : lightColor || darkColor }
       : undefined;
 
   return (
