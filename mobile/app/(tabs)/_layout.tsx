@@ -43,13 +43,19 @@ export default function TabLayout() {
   // Обработчик для вкладки "Артикули"
   const handleArtsTabPress = useCallback(
     (e: any) => {
-      // Если уже на вкладке arts, но не на начальном экране
-      const isOnArtsTab = pathname.startsWith("/(tabs)/arts");
-      const isOnArtsIndex =
-        pathname === "/(tabs)/arts" || pathname === "/(tabs)/arts/";
+      // Проверяем pathname синхронно в момент вызова
+      const currentPath = pathname;
+      const isOnArtsTab = currentPath.startsWith("/(tabs)/arts");
+      // Нормализуем путь для проверки (убираем trailing slash)
+      const normalizedPath = currentPath.replace(/\/$/, "");
+      const isOnArtsIndex = normalizedPath === "/(tabs)/arts";
+
       if (isOnArtsTab && !isOnArtsIndex) {
         e.preventDefault();
-        router.push("/(tabs)/arts" as any);
+        // Используем setTimeout для асинхронной навигации после preventDefault
+        setTimeout(() => {
+          router.push("/(tabs)/arts" as any);
+        }, 0);
       }
     },
     [pathname, router]
@@ -58,13 +64,19 @@ export default function TabLayout() {
   // Обработчик для вкладки "Склад"
   const handleWarehouseTabPress = useCallback(
     (e: any) => {
-      // Если уже на вкладке warehouse, но не на начальном экране
-      const isOnWarehouseTab = pathname.startsWith("/(tabs)/warehouse");
-      const isOnWarehouseIndex =
-        pathname === "/(tabs)/warehouse" || pathname === "/(tabs)/warehouse/";
+      // Проверяем pathname синхронно в момент вызова
+      const currentPath = pathname;
+      const isOnWarehouseTab = currentPath.startsWith("/(tabs)/warehouse");
+      // Нормализуем путь для проверки (убираем trailing slash)
+      const normalizedPath = currentPath.replace(/\/$/, "");
+      const isOnWarehouseIndex = normalizedPath === "/(tabs)/warehouse";
+
       if (isOnWarehouseTab && !isOnWarehouseIndex) {
         e.preventDefault();
-        router.push("/(tabs)/warehouse" as any);
+        // Используем setTimeout для асинхронной навигации после preventDefault
+        setTimeout(() => {
+          router.push("/(tabs)/warehouse" as any);
+        }, 0);
       }
     },
     [pathname, router]
@@ -73,13 +85,19 @@ export default function TabLayout() {
   // Обработчик для вкладки "Поповнення"
   const handleRefilingTabPress = useCallback(
     (e: any) => {
-      // Если уже на вкладке refiling, но не на начальном экране
-      const isOnRefilingTab = pathname.startsWith("/(tabs)/refiling");
-      const isOnRefilingIndex =
-        pathname === "/(tabs)/refiling" || pathname === "/(tabs)/refiling/";
+      // Проверяем pathname синхронно в момент вызова
+      const currentPath = pathname;
+      const isOnRefilingTab = currentPath.startsWith("/(tabs)/refiling");
+      // Нормализуем путь для проверки (убираем trailing slash)
+      const normalizedPath = currentPath.replace(/\/$/, "");
+      const isOnRefilingIndex = normalizedPath === "/(tabs)/refiling";
+
       if (isOnRefilingTab && !isOnRefilingIndex) {
         e.preventDefault();
-        router.push("/(tabs)/refiling" as any);
+        // Используем setTimeout для асинхронной навигации после preventDefault
+        setTimeout(() => {
+          router.push("/(tabs)/refiling" as any);
+        }, 0);
       }
     },
     [pathname, router]
