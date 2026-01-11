@@ -2,19 +2,23 @@ import { HapticTab } from "@/components/haptic-tab";
 import { useSidebar } from "@/components/layout/sidebar/SidebarProvider";
 import { ThemedIcon } from "@/components/themed";
 import { Colors, SemanticColors } from "@/constants/theme";
+import { useTabPressHandler } from "@/hooks/use-tab-press-handler";
 import { getThemeColorWithOpacity } from "@/hooks/use-theme-colors";
 import { ProtectedRoute } from "@/modules/auth/components/ProtectedRoute";
 import { useTheme } from "@/providers/theme-provider";
-import { Tabs, usePathname, useRouter } from "expo-router";
-import React, { useCallback } from "react";
+import { Tabs } from "expo-router";
+import React from "react";
 import { Platform } from "react-native";
 
 export default function TabLayout() {
   const { isOpen } = useSidebar();
   const { resolvedTheme } = useTheme();
   const themeMode = resolvedTheme === "dark" ? "dark" : "light";
-  const pathname = usePathname();
-  const router = useRouter();
+
+  // Обработчики для вкладок
+  const handleArtsTabPress = useTabPressHandler("arts");
+  const handleWarehouseTabPress = useTabPressHandler("warehouse");
+  const handleRefilingTabPress = useTabPressHandler("refiling");
 
   const tabBarActiveTintColor = Colors[themeMode].tabIconSelected;
   const tabBarInactiveTintColor = Colors[themeMode].tabIconDefault;
@@ -39,69 +43,6 @@ export default function TabLayout() {
   const tabBarStyle = isOpen
     ? { ...baseTabBarStyle, height: 0, overflow: "hidden" as const }
     : baseTabBarStyle;
-
-  // Обработчик для вкладки "Артикули"
-  const handleArtsTabPress = useCallback(
-    (e: any) => {
-      // Проверяем pathname синхронно в момент вызова
-      const currentPath = pathname;
-      const isOnArtsTab = currentPath.startsWith("/(tabs)/arts");
-      // Нормализуем путь для проверки (убираем trailing slash)
-      const normalizedPath = currentPath.replace(/\/$/, "");
-      const isOnArtsIndex = normalizedPath === "/(tabs)/arts";
-
-      if (isOnArtsTab && !isOnArtsIndex) {
-        e.preventDefault();
-        // Используем setTimeout для асинхронной навигации после preventDefault
-        setTimeout(() => {
-          router.push("/(tabs)/arts" as any);
-        }, 0);
-      }
-    },
-    [pathname, router]
-  );
-
-  // Обработчик для вкладки "Склад"
-  const handleWarehouseTabPress = useCallback(
-    (e: any) => {
-      // Проверяем pathname синхронно в момент вызова
-      const currentPath = pathname;
-      const isOnWarehouseTab = currentPath.startsWith("/(tabs)/warehouse");
-      // Нормализуем путь для проверки (убираем trailing slash)
-      const normalizedPath = currentPath.replace(/\/$/, "");
-      const isOnWarehouseIndex = normalizedPath === "/(tabs)/warehouse";
-
-      if (isOnWarehouseTab && !isOnWarehouseIndex) {
-        e.preventDefault();
-        // Используем setTimeout для асинхронной навигации после preventDefault
-        setTimeout(() => {
-          router.push("/(tabs)/warehouse" as any);
-        }, 0);
-      }
-    },
-    [pathname, router]
-  );
-
-  // Обработчик для вкладки "Поповнення"
-  const handleRefilingTabPress = useCallback(
-    (e: any) => {
-      // Проверяем pathname синхронно в момент вызова
-      const currentPath = pathname;
-      const isOnRefilingTab = currentPath.startsWith("/(tabs)/refiling");
-      // Нормализуем путь для проверки (убираем trailing slash)
-      const normalizedPath = currentPath.replace(/\/$/, "");
-      const isOnRefilingIndex = normalizedPath === "/(tabs)/refiling";
-
-      if (isOnRefilingTab && !isOnRefilingIndex) {
-        e.preventDefault();
-        // Используем setTimeout для асинхронной навигации после preventDefault
-        setTimeout(() => {
-          router.push("/(tabs)/refiling" as any);
-        }, 0);
-      }
-    },
-    [pathname, router]
-  );
 
   return (
     <ProtectedRoute>
