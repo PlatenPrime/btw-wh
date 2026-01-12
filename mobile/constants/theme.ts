@@ -151,6 +151,10 @@ export const SemanticColors = {
       light: "#E6E6E6", // Tailwind: border-outline-100
       dark: "#414141", // Tailwind: border-outline-100
     },
+    text: {
+      light: "#11181C", // Tailwind: text-typography-900
+      dark: "#E5E5E5", // Tailwind: text-typography-700
+    },
   },
   
   // Цвета для sidebar

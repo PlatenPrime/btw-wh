@@ -20,7 +20,7 @@ export function SearchPanel({
   const iconColor = useIconColor();
 
   return (
-    <ThemedInput variant="outline" size="md" className="px-3">
+    <ThemedInput variant="underlined" size="md" className="px-3">
       <ThemedInputSlot>
         <ThemedInputIcon
           family="MaterialIcons"

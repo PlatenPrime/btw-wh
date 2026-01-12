@@ -1,11 +1,16 @@
-import { View } from "react-native";
+import {
+  ThemedBox,
+  ThemedButton,
+  ThemedHStack,
+  ThemedIcon,
+} from "@/components/themed";
 import { SearchPanel } from "@/modules/arts/components/shared/search-panel/SearchPanel";
-import { ThemedBox, ThemedButton, ThemedHStack } from "@/components/themed";
-import { ThemedIcon } from "@/components/themed";
+import { Modal, Pressable, TouchableWithoutFeedback, View } from "react-native";
+
 import { ThemedText } from "@/components/themed/themed-text";
 import { useIconColor } from "@/hooks/use-icon-color";
 import { useState } from "react";
-import { Modal, TouchableWithoutFeedback, Pressable } from "react-native";
+
 import { SemanticColors } from "@/constants/theme";
 
 interface ZonesControlsProps {
@@ -17,10 +22,10 @@ interface ZonesControlsProps {
   onSortOrderChange: (sortOrder: "asc" | "desc") => void;
 }
 
-const sortOptions: Array<{
+const sortOptions: {
   value: "title" | "bar" | "sector" | "createdAt";
   label: string;
-}> = [
+}[] = [
   { value: "title", label: "Назва" },
   { value: "bar", label: "Штрих-код" },
   { value: "sector", label: "Сектор" },
@@ -37,7 +42,8 @@ export function ZonesControls({
 }: ZonesControlsProps) {
   const [sortModalVisible, setSortModalVisible] = useState(false);
   const iconColor = useIconColor();
-  const currentSortLabel = sortOptions.find((opt) => opt.value === sortBy)?.label || "Сектор";
+  const currentSortLabel =
+    sortOptions.find((opt) => opt.value === sortBy)?.label || "Назва";
 
   return (
     <ThemedBox className="p-2 gap-2 border-b border-outline-100">
@@ -46,21 +52,33 @@ export function ZonesControls({
         onSearchChange={onSearchChange}
         placeholder="Пошук за назвою..."
       />
-      
+
       <ThemedHStack className="items-center justify-between gap-2">
         <Pressable
           onPress={() => setSortModalVisible(true)}
           className="flex-row items-center gap-2 flex-1 border border-outline-100 rounded-lg p-3"
         >
-          <ThemedIcon family="MaterialIcons" name="sort" size={20} color={iconColor} />
+          <ThemedIcon
+            family="MaterialIcons"
+            name="sort"
+            size={20}
+            color={iconColor}
+          />
           <ThemedText type="default" className="text-sm flex-1">
             Сортування: {currentSortLabel}
           </ThemedText>
-          <ThemedIcon family="MaterialIcons" name="arrow-drop-down" size={20} color={iconColor} />
+          <ThemedIcon
+            family="MaterialIcons"
+            name="arrow-drop-down"
+            size={20}
+            color={iconColor}
+          />
         </Pressable>
 
         <ThemedButton
-          onPress={() => onSortOrderChange(sortOrder === "asc" ? "desc" : "asc")}
+          onPress={() =>
+            onSortOrderChange(sortOrder === "asc" ? "desc" : "asc")
+          }
           variant="outline"
           className="px-3"
         >
@@ -83,7 +101,10 @@ export function ZonesControls({
           <View className="flex-1 bg-black/50 items-center justify-center">
             <TouchableWithoutFeedback>
               <ThemedBox className="min-w-[250px] rounded-xl border border-outline-100 bg-background-0 p-2 shadow-lg">
-                <ThemedText type="defaultSemiBold" className="text-sm p-3 border-b border-outline-100">
+                <ThemedText
+                  type="defaultSemiBold"
+                  className="text-sm p-3 border-b border-outline-100"
+                >
                   Виберіть поле для сортування
                 </ThemedText>
                 {sortOptions.map((option) => (
@@ -99,9 +120,17 @@ export function ZonesControls({
                   >
                     <ThemedIcon
                       family="MaterialIcons"
-                      name={sortBy === option.value ? "check" : "radio-button-unchecked"}
+                      name={
+                        sortBy === option.value
+                          ? "check"
+                          : "radio-button-unchecked"
+                      }
                       size={20}
-                      color={sortBy === option.value ? SemanticColors.primary : iconColor}
+                      color={
+                        sortBy === option.value
+                          ? SemanticColors.primary
+                          : iconColor
+                      }
                     />
                     <ThemedText
                       type="default"
@@ -121,4 +150,3 @@ export function ZonesControls({
     </ThemedBox>
   );
 }
-

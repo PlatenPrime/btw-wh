@@ -1,6 +1,5 @@
 import { ThemedText } from "@/components/themed/themed-text";
-import { ThemedBox, ThemedHStack, ThemedVStack } from "@/components/themed";
-import { ThemedIcon } from "@/components/themed";
+import { ThemedBox, ThemedHStack, ThemedVStack, ThemedIcon  } from "@/components/themed";
 import { useIconColor } from "@/hooks/use-icon-color";
 import type { WarehouseData } from "@/modules/poses/api/types";
 import type { ReactNode } from "react";

@@ -6,8 +6,9 @@ export interface PalletShortDto {
   _id: string;
   title: string;
   sector?: string;
-  isEmpty: boolean;
+  isEmpty?: boolean; // Может отсутствовать в ответе API для мобильной версии
   isDef: boolean;
+  poses?: string[]; // Присутствует в ответе API для мобильной версии (массив ID позиций)
 }
 
 export interface PalletRowData {
@@ -60,4 +61,3 @@ export interface DeletePalletResponse {
 export interface ClearPalletResponse {
   message: string;
 }
-

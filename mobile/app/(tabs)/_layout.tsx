@@ -1,9 +1,8 @@
 import { HapticTab } from "@/components/haptic-tab";
 import { useSidebar } from "@/components/layout/sidebar/SidebarProvider";
 import { ThemedIcon } from "@/components/themed";
-import { Colors, SemanticColors } from "@/constants/theme";
+import { SemanticColors } from "@/constants/theme";
 import { useTabPressHandler } from "@/hooks/use-tab-press-handler";
-import { getThemeColorWithOpacity } from "@/hooks/use-theme-colors";
 import { ProtectedRoute } from "@/modules/auth/components/ProtectedRoute";
 import { useTheme } from "@/providers/theme-provider";
 import { Tabs } from "expo-router";
@@ -20,23 +19,13 @@ export default function TabLayout() {
   const handleWarehouseTabPress = useTabPressHandler("warehouse");
   const handleRefilingTabPress = useTabPressHandler("refiling");
 
-  const tabBarActiveTintColor = Colors[themeMode].tabIconSelected;
-  const tabBarInactiveTintColor = Colors[themeMode].tabIconDefault;
-
-  // Получаем цвет границы с opacity
-  // outline-200: light: #DDDCDB (221, 220, 219), dark: #737474 (115, 116, 116)
-  const outline200Color = themeMode === "light" ? "#DDDCDB" : "#737474";
-  const borderColor = getThemeColorWithOpacity(outline200Color, 0.3);
-
   const baseTabBarStyle = Platform.select({
     ios: {
       position: "absolute" as const,
       backgroundColor: SemanticColors.card.bg[themeMode],
-      borderTopColor: borderColor,
     },
     default: {
       backgroundColor: SemanticColors.card.bg[themeMode],
-      borderTopColor: borderColor,
     },
   });
 
@@ -48,8 +37,7 @@ export default function TabLayout() {
     <ProtectedRoute>
       <Tabs
         screenOptions={{
-          tabBarActiveTintColor,
-          tabBarInactiveTintColor,
+          tabBarInactiveTintColor: SemanticColors.card.text[themeMode],
           tabBarShowLabel: true,
           headerShown: false,
           tabBarButton: HapticTab,
@@ -64,6 +52,7 @@ export default function TabLayout() {
           options={{
             title: "Головна",
             tabBarLabel: "Головна",
+            tabBarActiveTintColor: SemanticColors.iconColors.teal,
             tabBarIcon: ({ color }) => (
               <ThemedIcon
                 family="MaterialIcons"
@@ -79,6 +68,7 @@ export default function TabLayout() {
           options={{
             title: "Артикули",
             tabBarLabel: "Артикули",
+            tabBarActiveTintColor: SemanticColors.iconColors.sky,
             tabBarIcon: ({ color }) => (
               <ThemedIcon
                 family="MaterialIcons"
@@ -97,6 +87,7 @@ export default function TabLayout() {
           options={{
             title: "Склад",
             tabBarLabel: "Склад",
+            tabBarActiveTintColor: SemanticColors.iconColors.yellow,
             tabBarIcon: ({ color }) => (
               <ThemedIcon
                 family="MaterialIcons"
@@ -115,6 +106,7 @@ export default function TabLayout() {
           options={{
             title: "Поповнення",
             tabBarLabel: "Поповнення",
+            tabBarActiveTintColor: SemanticColors.iconColors.purple,
             tabBarIcon: ({ color }) => (
               <ThemedIcon
                 family="AntDesign"

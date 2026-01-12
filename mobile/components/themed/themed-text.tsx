@@ -1,5 +1,6 @@
 import type { VariantProps } from "@/lib/tv";
 import { isWeb, tva } from "@/lib/tv";
+import { cn } from "@/lib/utils";
 import { useTheme } from "@/providers/theme-provider";
 import React from "react";
 import type { TextProps as RNTextProps } from "react-native";
@@ -122,9 +123,7 @@ const ThemedText = React.forwardRef<
   let finalClassName = className;
   if (type) {
     const typeClassName = typeClasses[type] || typeClasses.default;
-    finalClassName = className
-      ? `${typeClassName} ${className}`
-      : typeClassName;
+    finalClassName = cn(typeClassName, className);
   } else {
     finalClassName = textStyle({
       isTruncated: isTruncated as boolean,

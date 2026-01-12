@@ -7,7 +7,7 @@ export function ZonesFetcher() {
   const [page, setPage] = useState(1);
   const [limit] = useState(20);
   const [search, setSearch] = useState("");
-  const [sortBy, setSortBy] = useState<"title" | "bar" | "sector" | "createdAt">("sector");
+  const [sortBy, setSortBy] = useState<"title" | "bar" | "sector" | "createdAt">("title");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
   const { data, isLoading, refetch, isRefetching } = useZonesQuery({

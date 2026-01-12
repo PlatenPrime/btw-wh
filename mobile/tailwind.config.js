@@ -1,3 +1,5 @@
+const colors = require('tailwindcss/colors');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: process.env.DARK_MODE ? process.env.DARK_MODE : 'class',
@@ -21,10 +23,18 @@ module.exports = {
       pattern:
         /(bg|border|text)-(background)-(error|warning|muted|success|info)/,
     },
+    {
+      // Стандартные цвета Tailwind
+      pattern:
+        /(bg|border|text|stroke|fill)-(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(50|100|200|300|400|500|600|700|800|900|950)/,
+    },
   ],
   theme: {
     extend: {
       colors: {
+        // Стандартная палитра Tailwind CSS
+        ...colors,
+        // Кастомные токены темы (имеют приоритет над стандартными, если есть конфликты)
         primary: {
           0: 'rgb(var(--color-primary-0)/<alpha-value>)',
           50: 'rgb(var(--color-primary-50)/<alpha-value>)',

@@ -15,7 +15,7 @@ export function useZonesQuery({
   page,
   limit,
   search = "",
-  sortBy = "sector",
+  sortBy = "title",
   sortOrder = "asc",
   enabled = true,
 }: UseZonesQueryParams) {
