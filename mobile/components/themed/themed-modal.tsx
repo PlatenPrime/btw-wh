@@ -9,6 +9,7 @@ import {
 import { ThemedView } from './themed-view';
 import { ThemedPressable } from './themed-pressable';
 import { ThemedScrollView } from './themed-scroll-view';
+import { cn } from '@/lib/utils';
 import type {
   ModalProps,
   ModalBackdropProps,
@@ -25,6 +26,7 @@ const ModalContext = React.createContext<ModalContextType | null>(null);
 export type ThemedModalProps = ModalProps & {
   lightColor?: string;
   darkColor?: string;
+  className?: string;
 };
 
 export function ThemedModal({ 
@@ -45,7 +47,7 @@ export function ThemedModal({
       <ModalContext.Provider value={{ onClose }}>
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          className={`flex-1 justify-center items-center ${className || ''}`}
+          className={cn("flex-1 justify-center items-center", className)}
         >
           {children}
         </KeyboardAvoidingView>
@@ -75,7 +77,7 @@ export function ThemedModalBackdrop({
       <ThemedView
         lightColor={lightColor}
         darkColor={darkColor}
-        className={`absolute left-0 top-0 right-0 bottom-0 ${className || ''}`}
+        className={cn("absolute left-0 top-0 right-0 bottom-0", className)}
         style={style}
       >
         {children}
@@ -102,7 +104,7 @@ export function ThemedModalContent({
       <ThemedView
         lightColor={lightColor}
         darkColor={darkColor}
-        className={`bg-background-0 rounded-md overflow-hidden border border-outline-100 shadow-hard-2 p-6 ${className || ''}`}
+        className={cn("bg-background-0 rounded-md overflow-hidden border border-outline-100 shadow-hard-2 p-6", className)}
         style={style}
         {...viewProps}
       >
@@ -127,7 +129,7 @@ export function ThemedModalHeader({
     <ThemedView 
       lightColor={lightColor}
       darkColor={darkColor}
-      className={`justify-between items-center flex-row ${className || ''}`}
+      className={cn("justify-between items-center flex-row", className)}
     >
       {children}
     </ThemedView>
@@ -151,7 +153,7 @@ export function ThemedModalBody({
       <ThemedView 
         lightColor={lightColor}
         darkColor={darkColor}
-        className={`mt-2 mb-6 ${className || ''}`}
+        className={cn("mt-2 mb-6", className)}
       >
         {children}
       </ThemedView>
@@ -164,7 +166,7 @@ export function ThemedModalBody({
       darkColor={darkColor}
       keyboardShouldPersistTaps="handled"
       showsVerticalScrollIndicator={true}
-      className={`mt-2 mb-6 ${className || ''}`}
+      className={cn("mt-2 mb-6", className)}
     >
       {children}
     </ThemedScrollView>
@@ -186,7 +188,7 @@ export function ThemedModalFooter({
     <ThemedView 
       lightColor={lightColor}
       darkColor={darkColor}
-      className={`flex-row justify-end items-center gap-2 ${className || ''}`}
+      className={cn("flex-row justify-end items-center gap-2", className)}
     >
       {children}
     </ThemedView>
@@ -213,7 +215,7 @@ export function ThemedModalCloseButton({
       lightColor={lightColor}
       darkColor={darkColor}
       onPress={handlePress}
-      className={`z-10 rounded ${className || ''}`}
+      className={cn("z-10 rounded", className)}
     >
       {children}
     </ThemedPressable>

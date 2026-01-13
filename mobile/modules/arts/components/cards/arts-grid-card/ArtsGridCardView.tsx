@@ -52,7 +52,7 @@ export function ArtsGridCardView({
           <ThemedText type="defaultSemiBold" className="text-base mb-1">
             {artikul}
           </ThemedText>
-          <ThemedText type="default" className="text-sm" numberOfLines={2}>
+          <ThemedText type="default" className="text-sm text-typography-700" numberOfLines={2}>
             {nameukr}
           </ThemedText>
         </TouchableOpacity>

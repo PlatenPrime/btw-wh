@@ -2,12 +2,20 @@ import { type FlatListProps } from 'react-native';
 import { FlatList } from 'react-native';
 
 import { useTheme } from '@/providers/theme-provider';
+import { tva, type VariantProps } from '@/lib/tv';
+import { cn } from '@/lib/utils';
 
-export type ThemedFlatListProps<ItemT> = FlatListProps<ItemT> & {
+const flatListStyle = tva({
+  base: '',
+});
+
+export type ThemedFlatListProps<ItemT> = FlatListProps<ItemT> & VariantProps<typeof flatListStyle> & {
   lightColor?: string;
   darkColor?: string;
   className?: string;
 };
+
+export { flatListStyle };
 
 export function ThemedFlatList<ItemT = any>({ 
   style, 
@@ -26,7 +34,7 @@ export function ThemedFlatList<ItemT = any>({
 
   return (
     <FlatList 
-      className={className}
+      className={cn(flatListStyle(), className)}
       style={customStyle ? [customStyle, style] : style} 
       {...otherProps} 
     />

@@ -2,13 +2,25 @@ import { type ScrollViewProps } from 'react-native';
 import { ScrollView } from 'react-native';
 
 import { useTheme } from '@/providers/theme-provider';
+import { tva, type VariantProps } from '@/lib/tv';
+import { cn } from '@/lib/utils';
 
-export type ThemedScrollViewProps = ScrollViewProps & {
+const scrollViewStyle = tva({
+  base: '',
+});
+
+const scrollViewContentStyle = tva({
+  base: '',
+});
+
+export type ThemedScrollViewProps = ScrollViewProps & VariantProps<typeof scrollViewStyle> & {
   lightColor?: string;
   darkColor?: string;
   className?: string;
   contentContainerClassName?: string;
 };
+
+export { scrollViewStyle, scrollViewContentStyle };
 
 export function ThemedScrollView({ 
   style, 
@@ -29,9 +41,9 @@ export function ThemedScrollView({
 
   return (
     <ScrollView 
-      className={className}
+      className={cn(scrollViewStyle(), className)}
       style={customStyle ? [customStyle, style] : style}
-      contentContainerClassName={contentContainerClassName}
+      contentContainerClassName={cn(scrollViewContentStyle(), contentContainerClassName)}
       contentContainerStyle={contentContainerStyle}
       {...otherProps} 
     />

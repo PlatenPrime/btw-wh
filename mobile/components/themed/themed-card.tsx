@@ -2,6 +2,7 @@ import React from 'react';
 import { View, ViewProps, ViewStyle } from 'react-native';
 import type { VariantProps } from '@/lib/tv';
 import { isWeb, tva } from "@/lib/tv";
+import { cn } from "@/lib/utils";
 
 const baseStyle = isWeb
   ? "flex flex-col relative z-0 box-border border-0 list-none min-w-0 min-h-0 items-stretch m-0 p-0 text-decoration-none"
@@ -33,17 +34,12 @@ export interface CardProps extends Omit<ViewProps, 'style'>, Omit<VariantProps<t
 
 const ThemedCard = React.forwardRef<React.ComponentRef<typeof View>, CardProps>(
   function Card({ className, variant = 'default', style, ...props }, ref) {
-    const baseClasses = cardStyle({ variant });
-    const finalClassName = className 
-      ? `${baseClasses} ${className}` 
-      : baseClasses;
-    
     return (
       <View
         ref={ref}
         {...props}
         style={style}
-        className={finalClassName}
+        className={cn(cardStyle({ variant }), className)}
       />
     );
   }

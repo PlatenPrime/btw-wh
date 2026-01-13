@@ -10,6 +10,8 @@ import {
   type ViewProps,
 } from "react-native";
 import { ThemedIcon, type ThemedIconProps } from "./themed-icon";
+import { tva, type VariantProps } from "@/lib/tv";
+import { cn } from "@/lib/utils";
 
 type InputVariant = "underlined" | "outline" | "rounded";
 type InputSize = "xl" | "lg" | "md" | "sm";
@@ -31,7 +33,21 @@ const sizeStyles = {
   xl: { height: 48, fontSize: 18, paddingHorizontal: 16 },
 };
 
-// Стили для вариантов границ
+const inputStyle = tva({
+  base: "flex-row items-center bg-background-50 border-outline-200",
+  variants: {
+    variant: {
+      underlined: "border-0 border-b",
+      outline: "border rounded-lg",
+      rounded: "border rounded-full",
+    },
+  },
+  defaultVariants: {
+    variant: "outline",
+  },
+});
+
+// Стили для вариантов границ (для inline стилей)
 const getVariantStyles = (variant: InputVariant = "outline") => {
   switch (variant) {
     case "underlined":
@@ -54,7 +70,7 @@ const getVariantStyles = (variant: InputVariant = "outline") => {
   }
 };
 
-export type ThemedInputProps = ViewProps & {
+export type ThemedInputProps = ViewProps & VariantProps<typeof inputStyle> & {
   className?: string;
   variant?: InputVariant;
   size?: InputSize;
@@ -89,13 +105,10 @@ export function ThemedInput({
   const variantStyles = getVariantStyles(variant);
   const sizeStyle = sizeStyles[size];
 
-  // Базовые классы для инпута (используем outline-200 для лучшего контраста)
-  const baseClassName = className || "bg-background-50 border-outline-200";
-
   return (
     <InputContext.Provider value={contextValue}>
       <View
-        className={customBgColor ? undefined : baseClassName}
+        className={customBgColor ? undefined : cn(inputStyle({ variant }), className)}
         style={[
           {
             flexDirection: "row",

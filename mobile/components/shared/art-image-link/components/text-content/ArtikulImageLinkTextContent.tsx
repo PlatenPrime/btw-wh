@@ -17,7 +17,7 @@ export function ArtikulImageLinkTextContent({
         {artikul}
       </ThemedText>
       {nameukr && (
-        <ThemedText type="default" className="text-sm ">
+        <ThemedText type="default" className="text-sm text-typography-700">
           {nameukr.slice(10)} 
         </ThemedText>
       )}
