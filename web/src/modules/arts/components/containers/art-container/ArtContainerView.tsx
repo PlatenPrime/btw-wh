@@ -4,6 +4,11 @@ import { ArtDetailCard } from "@/modules/arts/components/cards/art-detail-card/A
 import { PosesByArtikulContainer } from "@/modules/arts/components/containers/poses-by-artikul-container";
 import { UpdateArtLimitDialog } from "@/modules/arts/components/dialogs/update-art-limit-dialog/UpdateArtLimitDialog";
 import { CreateAskDialog } from "@/modules/asks/components/dialogs/create-ask-dialog/CreateAskDialog";
+import { AsksByArtikulFetcher } from "@/modules/asks/components/fetchers/asks-by-artikul-fetcher";
+import {
+  AsksByArtikulContainer,
+  AsksByArtikulContainerSkeleton,
+} from "@/modules/asks/components/containers/asks-by-artikul-container";
 
 interface ArtContainerViewProps {
   artData: ArtDto;
@@ -28,6 +33,13 @@ export function ArtContainerView({
         <ArtDetailCard artData={artData} />
       </Wrapper>
       <PosesByArtikulContainer artikul={artData.artikul} />
+      <Wrapper>
+      <AsksByArtikulFetcher
+        artikul={artData.artikul}
+        ContainerComponent={AsksByArtikulContainer}
+        SkeletonComponent={AsksByArtikulContainerSkeleton}
+      />
+     </Wrapper>
 
       {/* Диалоги вне dropdown для избежания конфликта фокуса */}
       <UpdateArtLimitDialog
