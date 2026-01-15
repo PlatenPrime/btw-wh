@@ -23,7 +23,7 @@ export function ProfileSidebarCard({
 
   return (
     <View
-      className="mt-auto border-t border-outline-100 p-4"
+      className="mt-auto border-t border-outline-50 p-4"
       style={{
         borderTopColor: staticColors.black[300],
       }}

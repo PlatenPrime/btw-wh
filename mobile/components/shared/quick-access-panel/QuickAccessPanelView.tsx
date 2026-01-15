@@ -20,7 +20,7 @@ export function QuickAccessPanelView({ triggers }: QuickAccessPanelViewProps) {
   }
 
   return (
-    <ThemedView className="p-4 rounded-lg border border-outline-100 bg-background-0">
+    <ThemedView className="p-4 rounded-lg border border-outline-50 bg-background-0">
       <ThemedVStack className="gap-4">
         <ThemedText type="defaultSemiBold" className="text-lg text-center">
           Панель швидкого доступу

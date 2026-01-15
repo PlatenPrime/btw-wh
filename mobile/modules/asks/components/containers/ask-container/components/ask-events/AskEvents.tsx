@@ -1,10 +1,9 @@
+import { ThemedVStack } from "@/components/themed";
 import { ThemedText } from "@/components/themed/themed-text";
 import { ThemedView } from "@/components/themed/themed-view";
 import type { AskEvent } from "@/modules/asks/api/types/dto";
 import { AskEvent as AskEventComponent } from "./components/ask-event/AskEvent";
 import { AskEventsPullInfo } from "./components/ask-events-pull-info/AskEventsPullInfo";
-import { ThemedVStack } from "@/components/themed";
-import { useThemeColors } from "@/hooks/use-theme-colors";
 
 interface AskEventsProps {
   events: AskEvent[];
@@ -21,16 +20,9 @@ export function AskEvents({
 }: AskEventsProps) {
   const totalQuant = pullQuant ?? 0;
   const totalBoxes = pullBox ?? pullBoxes ?? 0;
-  const { card } = useThemeColors();
 
   return (
-    <ThemedView
-      className="p-3 rounded-lg border"
-      style={{
-        backgroundColor: card.bg,
-        borderColor: card.border,
-      }}
-    >
+    <ThemedView className="p-3 rounded-lg border bg-background-0 border-outline-50">
       <ThemedVStack className="gap-3">
         <AskEventsPullInfo totalQuant={totalQuant} totalBoxes={totalBoxes} />
 
@@ -57,4 +49,3 @@ export function AskEvents({
     </ThemedView>
   );
 }
-

@@ -18,7 +18,7 @@ export function ZoneCardView({
   menu,
 }: ZoneCardViewProps) {
   return (
-    <View className="p-4 rounded-lg border border-outline-100 bg-background-0">
+    <View className="p-4 rounded-lg border border-outline-50 bg-background-0">
       <ThemedHStack className="items-center justify-between">
         <ThemedPressable onPress={onPress} className="flex-1">
           <ThemedBox className="flex-1 min-w-0 gap-2">

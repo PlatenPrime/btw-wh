@@ -67,7 +67,7 @@ export const ModeToggle = React.memo(function ModeToggle() {
     <>
       <ThemedPressable
         onPress={handleOpenModal}
-        className="flex-row items-center justify-between p-4 rounded-lg border border-outline-100 bg-background-0"
+        className="flex-row items-center justify-between p-4 rounded-lg border border-outline-50 bg-background-0"
       >
         <ThemedHStack className="items-center gap-3">
           <ThemedIcon
@@ -89,7 +89,7 @@ export const ModeToggle = React.memo(function ModeToggle() {
       <ThemedModal isOpen={isModalVisible} onClose={handleCloseModal}>
         <ThemedModalBackdrop />
         <ThemedModalContent
-          className="rounded-lg p-4 w-[280px] bg-background-0 border border-outline-100"
+          className="rounded-lg p-4 w-[280px] bg-background-0 border border-outline-50"
           onLayout={handleLayout}
           style={{
             position: "absolute",

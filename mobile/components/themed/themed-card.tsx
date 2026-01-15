@@ -13,7 +13,7 @@ const cardStyle = tva({
   variants: {
     variant: {
       default: "rounded-lg",
-      outlined: "rounded-lg border border-outline-100",
+      outlined: "rounded-lg border border-outline-50",
       elevated: "rounded-lg shadow-md",
     },
   },

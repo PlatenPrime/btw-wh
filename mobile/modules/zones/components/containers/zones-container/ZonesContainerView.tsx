@@ -65,7 +65,7 @@ export function ZonesContainerView({
         <ZonesList zones={zones} refreshing={refreshing} onRefresh={onRefresh} />
         
         {pagination && pagination.totalPages > 1 && (
-          <ThemedBox className="p-4 border-t border-outline-100">
+          <ThemedBox className="p-4 border-t border-outline-50">
             <ThemedHStack className="items-center justify-between gap-2">
               <ThemedButton
                 onPress={() => onPageChange?.(pagination.page - 1)}

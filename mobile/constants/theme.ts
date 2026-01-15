@@ -148,8 +148,8 @@ export const SemanticColors = {
       dark: "#121212", // Tailwind: bg-background-0
     },
     border: {
-      light: "#E6E6E6", // Tailwind: border-outline-100
-      dark: "#414141", // Tailwind: border-outline-100
+      light: "#E6E6E6", // Tailwind: border-outline-50
+      dark: "#414141", // Tailwind: border-outline-50
     },
     text: {
       light: "#11181C", // Tailwind: text-typography-900

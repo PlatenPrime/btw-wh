@@ -24,7 +24,7 @@ export function SkladPosesListView({
 
   if (!skladData.poses?.length) {
     return (
-      <ThemedBox className="p-4 rounded-lg border border-outline-100 bg-background-0">
+      <ThemedBox className="p-4 rounded-lg border border-outline-50 bg-background-0">
         <ThemedText type="default" className="text-center">
           На складі {title} немає позицій з цим артикулом
         </ThemedText>
@@ -33,7 +33,7 @@ export function SkladPosesListView({
   }
 
   return (
-    <ThemedBox className="p-4 rounded-lg border border-outline-100 bg-background-0">
+    <ThemedBox className="p-4 rounded-lg border border-outline-50 bg-background-0">
       <ThemedVStack className="gap-2">
         <ThemedHStack className="items-center">
           {/* Название склада слева */}

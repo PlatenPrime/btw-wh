@@ -1,12 +1,12 @@
+import { ThemedHStack, ThemedIcon, ThemedVStack } from "@/components/themed";
 import { ThemedText } from "@/components/themed/themed-text";
 import { ThemedView } from "@/components/themed/themed-view";
-import { ThemedHStack, ThemedVStack } from "@/components/themed";
-import { ThemedIcon } from "@/components/themed";
+
 import { SemanticColors } from "@/constants/theme";
-import { useThemeColors } from "@/hooks/use-theme-colors";
-import { hexToRgba } from "@/utils/color-utils";
 import type { AskEvent } from "@/modules/asks/api/types/dto";
 import { formatDateTime } from "@/modules/asks/utils/format-date";
+import { useTheme } from "@/providers/theme-provider";
+import { hexToRgba } from "@/utils/color-utils";
 import { ASK_EVENT_META } from "../../constants/askEventMeta";
 
 interface AskEventProps {
@@ -19,41 +19,49 @@ interface AskEventProps {
  * accentBgColor и accentBorderColor из meta не определены в нашей системе токенов,
  * поэтому используем соответствующие цвета из iconColors с opacity
  */
-const accentColorMap: Record<string, keyof typeof SemanticColors.iconColors> = {
+const accentColorMap: Record<
+  string,
+  keyof typeof SemanticColors.iconColors | undefined
+> = {
   "emerald-50": "emerald",
   "emerald-200": "emerald",
   "yellow-50": "yellow",
   "yellow-200": "yellow",
-  "gray-50": "typography" as any, // Используем typography как fallback
-  "gray-200": "typography" as any,
+  "blue-50": "blue",
+  "blue-200": "blue",
   "rose-50": "rose",
   "rose-200": "rose",
 };
 
 export function AskEvent({ event, index }: AskEventProps) {
   const meta = ASK_EVENT_META[event.eventName];
-  const { card, text } = useThemeColors();
+  const { resolvedTheme } = useTheme();
+  const theme = resolvedTheme === "dark" ? "dark" : "light";
 
   if (!meta) {
     return null;
   }
 
+  const cardBg = SemanticColors.card.bg[theme];
+  const cardBorder = SemanticColors.card.border[theme];
+  const textIcon = theme === "dark" ? "#A3A3A3" : "#687076";
+
   const iconColor =
     SemanticColors.iconColors[
       meta.iconColor as keyof typeof SemanticColors.iconColors
-    ] || text.icon;
+    ] || textIcon;
 
   // Получаем цвета для accentBg и accentBorder через iconColors с opacity
   const accentBgColorKey = accentColorMap[meta.accentBgColor];
   const accentBorderColorKey = accentColorMap[meta.accentBorderColor];
-  
-  const accentBgColor = accentBgColorKey && accentBgColorKey !== "typography"
+
+  const accentBgColor = accentBgColorKey
     ? hexToRgba(SemanticColors.iconColors[accentBgColorKey], 0.1)
-    : card.bg;
-    
-  const accentBorderColor = accentBorderColorKey && accentBorderColorKey !== "typography"
+    : cardBg;
+
+  const accentBorderColor = accentBorderColorKey
     ? hexToRgba(SemanticColors.iconColors[accentBorderColorKey], 0.3)
-    : card.border;
+    : cardBorder;
 
   return (
     <ThemedView

@@ -36,7 +36,7 @@ export function ZoneBySegmentCardView({
     <ThemedVStack className="gap-2">
       <ThemedPressable
         onPress={handlePress}
-        className="p-4 rounded-lg border border-outline-100 bg-background-0"
+        className="p-4 rounded-lg border border-outline-50 bg-background-0"
       >
         <ThemedBox className="gap-2">
           <ThemedHStack className="items-center justify-between">

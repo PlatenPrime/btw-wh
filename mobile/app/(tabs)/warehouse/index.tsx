@@ -40,7 +40,7 @@ export default function WarehouseList() {
             <ThemedPressable
               key={item.route}
               onPress={() => handleNavigation(item.route)}
-              className="flex-row items-center p-4 rounded-lg border border-outline-100 bg-background-0"
+              className="flex-row items-center p-4 rounded-lg border border-outline-50 bg-background-0"
             >
               <ThemedIcon
                 family="MaterialIcons"

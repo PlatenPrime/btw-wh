@@ -104,7 +104,7 @@ export function ThemedModalContent({
       <ThemedView
         lightColor={lightColor}
         darkColor={darkColor}
-        className={cn("bg-background-0 rounded-md overflow-hidden border border-outline-100 shadow-hard-2 p-6", className)}
+        className={cn("bg-background-0 rounded-md overflow-hidden border border-outline-50 shadow-hard-2 p-6", className)}
         style={style}
         {...viewProps}
       >

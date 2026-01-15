@@ -88,7 +88,7 @@ export function MovePalletPosesForm({
           Цільова паллета
         </ThemedText>
 
-        <ThemedInput className="rounded-lg border border-outline-100 bg-background-50">
+        <ThemedInput className="rounded-lg border border-outline-50 bg-background-50">
           <ThemedInputField
             value={search}
             onChangeText={setSearch}
@@ -99,7 +99,7 @@ export function MovePalletPosesForm({
         </ThemedInput>
       </ThemedVStack>
 
-      <ThemedBox className="max-h-64 rounded-lg border border-outline-100 overflow-hidden">
+      <ThemedBox className="max-h-64 rounded-lg border border-outline-50 overflow-hidden">
         {isLoading ? (
           <ThemedBox className="p-4 items-center">
             <ThemedSpinner size="small" color={iconColor} />
@@ -127,7 +127,7 @@ export function MovePalletPosesForm({
               return (
                 <ThemedPressable
                   onPress={() => !disabled && setSelectedPalletId(item._id)}
-                  className={`flex-row items-center justify-between p-3 border-b border-outline-100 ${
+                  className={`flex-row items-center justify-between p-3 border-b border-outline-50 ${
                     isSelected ? "bg-background-200" : "bg-background-50"
                   }`}
                   disabled={disabled || isSubmitting}

@@ -5,7 +5,7 @@ export function ArtsContainerSkeleton() {
   return (
     <ThemedBox className="flex-1">
       <ThemedBox className="p-2">
-        <ThemedBox className="flex-row items-center rounded-lg border border-outline-100 bg-background-0 px-3 gap-2">
+        <ThemedBox className="flex-row items-center rounded-lg border border-outline-50 bg-background-0 px-3 gap-2">
           <ThemedBox className="rounded bg-secondary-300" style={{ height: 20, width: 20 }} />
           <ThemedBox className="flex-1 rounded bg-secondary-300" style={{ height: 48 }} />
         </ThemedBox>

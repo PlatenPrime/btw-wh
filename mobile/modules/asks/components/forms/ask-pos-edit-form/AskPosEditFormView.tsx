@@ -103,7 +103,7 @@ export function AskPosEditFormView({
           render={({ field: { onChange, onBlur, value } }) => (
             <ThemedInput
               className={`rounded-lg border bg-background-0 ${
-                errors.removedQuant ? "border-error-500" : "border-outline-100"
+                errors.removedQuant ? "border-error-500" : "border-outline-50"
               }`}
             >
               <ThemedInputField
@@ -160,7 +160,7 @@ export function AskPosEditFormView({
           render={({ field: { onChange, onBlur, value } }) => (
             <ThemedInput
               className={`rounded-lg border bg-background-0 ${
-                errors.removedBoxes ? "border-error-500" : "border-outline-100"
+                errors.removedBoxes ? "border-error-500" : "border-outline-50"
               }`}
             >
               <ThemedInputField

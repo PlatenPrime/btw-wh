@@ -42,7 +42,7 @@ export function CreatePalletFormView({
           render={({ field: { onChange, onBlur, value } }) => (
             <ThemedInput
               className={`rounded-lg border bg-background-0 ${
-                errors.title ? "border-error-500" : "border-outline-100"
+                errors.title ? "border-error-500" : "border-outline-50"
               }`}
             >
               <ThemedInputField
@@ -75,7 +75,7 @@ export function CreatePalletFormView({
           render={({ field: { onChange, onBlur, value } }) => (
             <ThemedInput
               className={`rounded-lg border bg-background-0 ${
-                errors.sector ? "border-error-500" : "border-outline-100"
+                errors.sector ? "border-error-500" : "border-outline-50"
               }`}
             >
               <ThemedInputField

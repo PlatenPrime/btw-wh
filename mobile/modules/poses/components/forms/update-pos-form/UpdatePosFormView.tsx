@@ -69,7 +69,7 @@ export function UpdatePosFormView({
             return (
               <ThemedInput
                 className={`rounded-lg border bg-background-0 ${
-                  errors.quant ? "border-error-500" : "border-outline-100"
+                  errors.quant ? "border-error-500" : "border-outline-50"
                 }`}
               >
                 <ThemedInputField
@@ -121,7 +121,7 @@ export function UpdatePosFormView({
             return (
               <ThemedInput
                 className={`rounded-lg border bg-background-0 ${
-                  errors.boxes ? "border-error-500" : "border-outline-100"
+                  errors.boxes ? "border-error-500" : "border-outline-50"
                 }`}
               >
                 <ThemedInputField
@@ -163,7 +163,7 @@ export function UpdatePosFormView({
                     className={`flex-row items-center justify-between p-3 rounded-lg border ${
                       isSelected
                         ? "border-info-500 bg-info-50"
-                        : "border-outline-100 bg-background-0"
+                        : "border-outline-50 bg-background-0"
                     }`}
                     disabled={isSubmitting}
                     style={{ opacity: isSubmitting ? 0.5 : 1 }}

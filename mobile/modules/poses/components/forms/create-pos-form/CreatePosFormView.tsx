@@ -109,7 +109,7 @@ export function CreatePosFormView({
     const imageUrl = getSmallImageUrl(artikul);
 
     return (
-      <ThemedBox className="rounded-lg border border-outline-100 bg-background-50 p-3">
+      <ThemedBox className="rounded-lg border border-outline-50 bg-background-50 p-3">
         <ThemedHStack className="items-center gap-3">
           <Image
             source={{ uri: imageUrl }}
@@ -161,7 +161,7 @@ export function CreatePosFormView({
             return (
               <ThemedInput
                 className={`rounded-lg border bg-background-0 ${
-                  errors.artikul ? "border-error-500" : "border-outline-100"
+                  errors.artikul ? "border-error-500" : "border-outline-50"
                 }`}
               >
                 <ThemedInputField
@@ -256,7 +256,7 @@ export function CreatePosFormView({
             return (
               <ThemedInput
                 className={`rounded-lg border bg-background-0 ${
-                  errors.quant ? "border-error-500" : "border-outline-100"
+                  errors.quant ? "border-error-500" : "border-outline-50"
                 }`}
               >
                 <ThemedInputField
@@ -310,7 +310,7 @@ export function CreatePosFormView({
             return (
               <ThemedInput
                 className={`rounded-lg border bg-background-0 ${
-                  errors.boxes ? "border-error-500" : "border-outline-100"
+                  errors.boxes ? "border-error-500" : "border-outline-50"
                 }`}
               >
                 <ThemedInputField
@@ -353,7 +353,7 @@ export function CreatePosFormView({
                     className={`flex-row items-center justify-between p-3 rounded-lg border ${
                       isSelected
                         ? "border-info-500 bg-info-50/25"
-                        : "border-outline-100 bg-background-0"
+                        : "border-outline-50 bg-background-0"
                     }`}
                     disabled={isSubmitting}
                     style={{ opacity: isSubmitting ? 0.5 : 1 }}

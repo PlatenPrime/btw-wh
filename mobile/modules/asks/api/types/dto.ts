@@ -136,3 +136,13 @@ export interface GetAsksPullsResponse {
   };
 }
 
+export interface GetAsksByArtikulResponse {
+  message: string;
+  data: AskDto[];
+  artikul: string;
+  count: number;
+  newCount: number;
+  processingCount: number;
+  completedCount: number;
+  rejectedCount: number;
+}

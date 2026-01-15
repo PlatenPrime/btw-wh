@@ -19,8 +19,6 @@ interface AskDetailsCardViewProps {
   sklad?: "pogrebi" | "merezhi";
   askerData?: AskDto["askerData"];
   createdAt: string;
-  bgColor: string;
-  borderColor: string;
   formattedDate: string;
   imageUrl?: string;
   onImagePress?: () => void;
@@ -34,18 +32,10 @@ export function AskDetailsCardView({
   com,
   sklad,
   askerData,
-  bgColor,
-  borderColor,
   formattedDate,
 }: AskDetailsCardViewProps) {
   return (
-    <ThemedView
-      className="p-3 rounded-lg border"
-      style={{
-        backgroundColor: bgColor,
-        borderColor: borderColor,
-      }}
-    >
+    <ThemedView className="p-3 rounded-lg border bg-background-0 border-outline-50  ">
       <View className="gap-3">
         <View className="flex-row items-start justify-between">
           <View className="flex-1">

@@ -46,7 +46,7 @@ export function ZonesControls({
     sortOptions.find((opt) => opt.value === sortBy)?.label || "Назва";
 
   return (
-    <ThemedBox className="p-2 gap-2 border-b border-outline-100">
+    <ThemedBox className="p-2 gap-2 border-b border-outline-50">
       <SearchPanel
         search={search}
         onSearchChange={onSearchChange}
@@ -56,7 +56,7 @@ export function ZonesControls({
       <ThemedHStack className="items-center justify-between gap-2">
         <Pressable
           onPress={() => setSortModalVisible(true)}
-          className="flex-row items-center gap-2 flex-1 border border-outline-100 rounded-lg p-3"
+          className="flex-row items-center gap-2 flex-1 border border-outline-50 rounded-lg p-3"
         >
           <ThemedIcon
             family="MaterialIcons"
@@ -100,10 +100,10 @@ export function ZonesControls({
         <TouchableWithoutFeedback onPress={() => setSortModalVisible(false)}>
           <View className="flex-1 bg-black/50 items-center justify-center">
             <TouchableWithoutFeedback>
-              <ThemedBox className="min-w-[250px] rounded-xl border border-outline-100 bg-background-0 p-2 shadow-lg">
+              <ThemedBox className="min-w-[250px] rounded-xl border border-outline-50 bg-background-0 p-2 shadow-lg">
                 <ThemedText
                   type="defaultSemiBold"
-                  className="text-sm p-3 border-b border-outline-100"
+                  className="text-sm p-3 border-b border-outline-50"
                 >
                   Виберіть поле для сортування
                 </ThemedText>

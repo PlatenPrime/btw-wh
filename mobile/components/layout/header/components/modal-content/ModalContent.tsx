@@ -29,7 +29,7 @@ export function HeaderActionsModalContent({
       <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
         <ThemedBox className="flex-1 bg-black/50 items-center justify-center">
           <TouchableWithoutFeedback>
-            <ThemedBox className="min-w-[200px] rounded-xl border border-outline-100 bg-background-0 p-2 shadow-lg">
+            <ThemedBox className="min-w-[200px] rounded-xl border border-outline-50 bg-background-0 p-2 shadow-lg">
               {defaultActions.map((action) => (
                 <RenderActionItem
                   key={action.id}

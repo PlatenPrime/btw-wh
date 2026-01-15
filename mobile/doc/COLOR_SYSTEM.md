@@ -56,7 +56,7 @@ mobile/
 **Примеры**:
 ```tsx
 // ✅ Правильно - статический цвет
-<View className="bg-background-0 border border-outline-100" />
+<View className="bg-background-0 border border-outline-50" />
 <Text className="text-typography-900" />
 <View className="bg-primary-500" />
 ```
@@ -153,7 +153,7 @@ const bgColor = getTokenColorWithOpacity('primary-500', 0.15, 'light');
 
 ```tsx
 // ✅ Правильно
-<View className="bg-background-0 border border-outline-100" />
+<View className="bg-background-0 border border-outline-50" />
 
 // ❌ Неправильно - использование style для статического цвета
 const { card } = useThemeColors();
@@ -218,7 +218,7 @@ Tailwind не поддерживает динамическую генераци
 
 ```tsx
 // ✅ Используем Tailwind классы
-<View className="p-4 rounded-lg border border-outline-100 bg-background-0">
+<View className="p-4 rounded-lg border border-outline-50 bg-background-0">
   <Text className="text-typography-900">Заголовок</Text>
   <Text className="text-typography-600">Описание</Text>
 </View>
@@ -277,7 +277,7 @@ function ColoredButton({ color }: { color: keyof typeof SemanticColors.iconColor
 import { ThemedView, ThemedText, ThemedCard } from '@/components/themed';
 
 // ThemedView автоматически применяет bg-background-0
-<ThemedView className="p-4 rounded-lg border border-outline-100">
+<ThemedView className="p-4 rounded-lg border border-outline-50">
   <ThemedText type="defaultSemiBold">Заголовок</ThemedText>
 </ThemedView>
 
@@ -324,7 +324,7 @@ function NewComponent() {
   
   // Вариант 1: Используем Tailwind классы (для статических цветов)
   return (
-    <View className="bg-background-0 border border-outline-100">
+    <View className="bg-background-0 border border-outline-50">
       <Text className="text-error-500">Текст</Text>
     </View>
   );

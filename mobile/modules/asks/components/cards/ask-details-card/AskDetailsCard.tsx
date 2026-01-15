@@ -1,17 +1,12 @@
 import type { AskDto } from "@/modules/asks/api/types/dto";
-import { useThemeColors } from "@/hooks/use-theme-colors";
-import { AskDetailsCardView } from "./AskDetailsCardView";
 import { formatDateTime } from "@/modules/asks/utils/format-date";
+import { AskDetailsCardView } from "./AskDetailsCardView";
 
 interface AskDetailsCardProps {
   askData: AskDto;
 }
 
 export function AskDetailsCard({ askData }: AskDetailsCardProps) {
-  const { card } = useThemeColors();
-  const bgColor = card.bg;
-  const borderColor = card.border;
-
   const formattedDate = formatDateTime(askData.createdAt);
 
   return (
@@ -24,12 +19,9 @@ export function AskDetailsCard({ askData }: AskDetailsCardProps) {
       sklad={askData.sklad}
       askerData={askData.askerData}
       createdAt={askData.createdAt}
-      bgColor={bgColor}
-      borderColor={borderColor}
       formattedDate={formattedDate}
       imageUrl={""}
       onImagePress={() => {}}
     />
   );
 }
-

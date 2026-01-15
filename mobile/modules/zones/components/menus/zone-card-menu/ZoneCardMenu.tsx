@@ -64,7 +64,7 @@ export function ZoneCardMenu({ zone, onSuccess }: ZoneCardMenuProps) {
         <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
           <ThemedBox className="flex-1 bg-black/50 items-center justify-center">
             <TouchableWithoutFeedback>
-              <ThemedBox className="min-w-[200px] rounded-xl border border-outline-100 bg-background-0 p-2 shadow-lg">
+              <ThemedBox className="min-w-[200px] rounded-xl border border-outline-50 bg-background-0 p-2 shadow-lg">
                 <ThemedPressable
                   onPress={handleEdit}
                   className="flex-row items-center p-3"

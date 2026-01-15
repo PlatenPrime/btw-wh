@@ -8,23 +8,15 @@ import { BtradeArtDataFetcher } from "@/modules/arts/components/fetchers/btrade-
 
 interface ArtDetailCardViewProps {
   artData: ArtDto;
-  bgColor: string;
-  borderColor: string;
 }
 
 export function ArtDetailCardView({
   artData,
-  bgColor,
-  borderColor,
 }: ArtDetailCardViewProps) {
 
   return (
     <ThemedView
-      className="p-3 rounded-lg border "
-      style={{
-        backgroundColor: bgColor,
-        borderColor: borderColor,
-      }}
+      className="p-3 rounded-lg border bg-background-0 border-outline-50  "
     >
       <View className="gap-3">
         <ArtImageLink artikul={artData.artikul} nameukr={artData.nameukr}  />

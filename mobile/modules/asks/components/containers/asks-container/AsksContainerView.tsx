@@ -59,7 +59,7 @@ export function AsksContainerView({
               <ThemedIcon family="MaterialIcons" name="chevron-right" size={32} color={SemanticColors.iconColors.indigo} />
             </TouchableOpacity>
           </ThemedHStack>
-          <ThemedBox className="border-b border-outline-100" />
+          <ThemedBox className="border-b border-outline-50" />
 
          {data.count > 0 && <ThemedHStack className="items-center justify-center">
             <ThemedText type="default" className="text-lg font-semibold">

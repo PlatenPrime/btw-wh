@@ -22,7 +22,7 @@ export const ASK_EVENT_META: Record<
     accentBgColor: "emerald-50",
     accentBorderColor: "emerald-200",
     buildDescription: (event) =>
-      `Запит створив ${event.userData?.fullname ?? "користувач"}.`,
+      `${event.userData?.fullname ?? "користувач"} створив запит.`,
   },
   pull: {
     iconName: "download",
@@ -52,8 +52,8 @@ export const ASK_EVENT_META: Record<
   complete: {
     iconName: "check-circle",
     iconColor: "blue",
-    accentBgColor: "gray-50",
-    accentBorderColor: "gray-200",
+    accentBgColor: "blue-50",
+    accentBorderColor: "blue-200",
     buildDescription: (event) =>
       `${event.userData?.fullname ?? "користувач"} виконав запит.`,
   },

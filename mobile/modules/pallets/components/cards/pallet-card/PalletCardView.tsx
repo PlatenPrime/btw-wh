@@ -30,7 +30,7 @@ export function PalletCardView({
   const containerColor = isEmpty ? "bg-rose-500/10" : "bg-background-0";
   const containerBorderColor = isEmpty
     ? "border-rose-500/25"
-    : "border-outline-100";
+    : "border-outline-50";
   return (
     <ThemedPressable
       onPress={onPress}

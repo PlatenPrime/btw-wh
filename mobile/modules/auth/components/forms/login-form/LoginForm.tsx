@@ -59,7 +59,7 @@ export const LoginForm = () => {
       contentContainerClassName="flex-1 justify-center items-center p-6"
       keyboardShouldPersistTaps="handled"
     >
-      <ThemedBox className="w-full max-w-sm bg-background-0 rounded-xl border border-outline-100 p-6 gap-4">
+      <ThemedBox className="w-full max-w-sm bg-background-0 rounded-xl border border-outline-50 p-6 gap-4">
         <ThemedText className="text-2xl font-semibold text-center text-typography-900">
           Авторизація
         </ThemedText>
@@ -84,7 +84,7 @@ export const LoginForm = () => {
             control={control}
             name="username"
             render={({ field: { onChange, onBlur, value } }) => (
-              <ThemedInput className="bg-background-50 border border-outline-100 rounded-lg">
+              <ThemedInput className="bg-background-50 border border-outline-50 rounded-lg">
                 <ThemedInputField
                   placeholder="Введіть логін"
                   placeholderTextColor={placeholder}
@@ -113,7 +113,7 @@ export const LoginForm = () => {
             control={control}
             name="password"
             render={({ field: { onChange, onBlur, value } }) => (
-              <ThemedInput className="bg-background-50 border border-outline-100 rounded-lg">
+              <ThemedInput className="bg-background-50 border border-outline-50 rounded-lg">
                 <ThemedInputField
                   placeholder="Введіть пароль"
                   placeholderTextColor={placeholder}

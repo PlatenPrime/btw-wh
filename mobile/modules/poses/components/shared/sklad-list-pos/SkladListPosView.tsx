@@ -14,7 +14,7 @@ export function SkladListPosView({ pos, onPress }: SkladListPosViewProps) {
   const emptyBoxesColor = isBoxesEmpty ? "text-error-600" : "text-typography-900";
   const emptyQuantColor = isQuantEmpty ? "text-error-600" : "text-typography-900";
   const containerColor = isBoxesEmpty || isQuantEmpty ? "bg-error-50/25" : "bg-background-0";
-  const containerBorderColor = isBoxesEmpty || isQuantEmpty ? "border-error-500/25" : "border-outline-100";
+  const containerBorderColor = isBoxesEmpty || isQuantEmpty ? "border-error-500/25" : "border-outline-50";
 
   return (
     <ThemedPressable onPress={onPress}>

@@ -18,7 +18,7 @@ const buttonVariants = tva({
       destructive:
         "bg-error-500 text-typography-0 data-[hover=true]:bg-error-600 data-[active=true]:bg-error-700",
       outline:
-        "border border-outline-100 bg-transparent data-[hover=true]:bg-background-50 data-[active=true]:bg-background-100",
+        "border border-outline-50 bg-transparent data-[hover=true]:bg-background-50 data-[active=true]:bg-background-100",
       secondary:
         "bg-secondary-500 text-typography-0 data-[hover=true]:bg-secondary-600 data-[active=true]:bg-secondary-700",
       ghost:

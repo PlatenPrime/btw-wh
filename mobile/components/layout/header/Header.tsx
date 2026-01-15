@@ -23,7 +23,7 @@ export function Header({ title }: HeaderProps) {
 
   return (
     <ThemedBox
-      className="absolute top-0 left-0 right-0 z-[1000] bg-background-0 border-b border-outline-100 shadow-sm"
+      className="absolute top-0 left-0 right-0 z-[1000] bg-background-0 border-b border-outline-50 shadow-sm"
       style={{
         paddingTop: insets.top,
         height: headerHeight,

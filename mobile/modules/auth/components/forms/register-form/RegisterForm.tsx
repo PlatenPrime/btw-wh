@@ -74,7 +74,7 @@ export const RegisterForm = () => {
       contentContainerClassName="flex-1 justify-center items-center p-6"
       keyboardShouldPersistTaps="handled"
     >
-      <ThemedBox className="w-full max-w-sm bg-background-0 rounded-xl border border-outline-100 p-6 gap-4">
+      <ThemedBox className="w-full max-w-sm bg-background-0 rounded-xl border border-outline-50 p-6 gap-4">
         <ThemedText className="text-2xl font-semibold text-typography-900">
           Реєстрація
         </ThemedText>
@@ -97,7 +97,7 @@ export const RegisterForm = () => {
             control={control}
             name="username"
             render={({ field: { onChange, onBlur, value } }) => (
-              <ThemedInput className="bg-background-50 border border-outline-100 rounded-lg">
+              <ThemedInput className="bg-background-50 border border-outline-50 rounded-lg">
                 <ThemedInputField
                   placeholder="Введіть логін"
                   placeholderTextColor={placeholder}
@@ -122,7 +122,7 @@ export const RegisterForm = () => {
             control={control}
             name="password"
             render={({ field: { onChange, onBlur, value } }) => (
-              <ThemedInput className="bg-background-50 border border-outline-100 rounded-lg">
+              <ThemedInput className="bg-background-50 border border-outline-50 rounded-lg">
                 <ThemedInputField
                   placeholder="Введіть пароль"
                   placeholderTextColor={placeholder}
@@ -147,7 +147,7 @@ export const RegisterForm = () => {
             control={control}
             name="fullname"
             render={({ field: { onChange, onBlur, value } }) => (
-              <ThemedInput className="bg-background-50 border border-outline-100 rounded-lg">
+              <ThemedInput className="bg-background-50 border border-outline-50 rounded-lg">
                 <ThemedInputField
                   placeholder="Введіть повне ім'я"
                   placeholderTextColor={placeholder}
@@ -173,7 +173,7 @@ export const RegisterForm = () => {
             control={control}
             name="role"
             render={({ field: { onChange, onBlur, value } }) => (
-              <ThemedInput className="bg-background-50 border border-outline-100 rounded-lg">
+              <ThemedInput className="bg-background-50 border border-outline-50 rounded-lg">
                 <ThemedInputField
                   placeholder="USER, ADMIN, PRIME"
                   placeholderTextColor={placeholder}
@@ -196,7 +196,7 @@ export const RegisterForm = () => {
             control={control}
             name="telegram"
             render={({ field: { onChange, onBlur, value } }) => (
-              <ThemedInput className="bg-background-50 border border-outline-100 rounded-lg">
+              <ThemedInput className="bg-background-50 border border-outline-50 rounded-lg">
                 <ThemedInputField
                   placeholder="Введіть telegram"
                   placeholderTextColor={placeholder}
@@ -219,7 +219,7 @@ export const RegisterForm = () => {
             control={control}
             name="photo"
             render={({ field: { onChange, onBlur, value } }) => (
-              <ThemedInput className="bg-background-50 border border-outline-100 rounded-lg">
+              <ThemedInput className="bg-background-50 border border-outline-50 rounded-lg">
                 <ThemedInputField
                   placeholder="https://example.com/photo.jpg"
                   placeholderTextColor={placeholder}

@@ -81,7 +81,7 @@ export function UpdateArtLimitForm({
           render={({ field: { onChange, onBlur, value } }) => (
             <ThemedInput
               className={`rounded-lg border bg-background-0 ${
-                errors.limit ? "border-error-500" : "border-outline-100"
+                errors.limit ? "border-error-500" : "border-outline-50"
               }`}
             >
               <ThemedInputField
@@ -118,7 +118,7 @@ export function UpdateArtLimitForm({
 
       <View className="flex-row gap-2">
         <TouchableOpacity
-          className="flex-1 rounded-lg py-3 items-center justify-center border border-outline-100 bg-background-0"
+          className="flex-1 rounded-lg py-3 items-center justify-center border border-outline-50 bg-background-0"
           onPress={onCancel}
           disabled={isSubmitting}
         >

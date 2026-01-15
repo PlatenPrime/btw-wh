@@ -23,7 +23,7 @@ export function PosesByArtikulFetcher({
 
   if (posesQuery.error) {
     return (
-      <ThemedView className="p-4 rounded-lg border border-outline-100">
+      <ThemedView className="p-4 rounded-lg border border-outline-50">
         <ThemedText type="defaultSemiBold" className="text-center mb-2">
           Помилка завантаження позицій
         </ThemedText>
@@ -38,7 +38,7 @@ export function PosesByArtikulFetcher({
 
   if (!posesQuery.data) {
     return (
-      <ThemedView className="p-4 rounded-lg border border-outline-100">
+      <ThemedView className="p-4 rounded-lg border border-outline-50">
         <ThemedText type="default" className="text-center">
           Позиції не знайдено
         </ThemedText>
@@ -49,7 +49,7 @@ export function PosesByArtikulFetcher({
   // Дополнительная проверка структуры данных
   if (!posesQuery.data.pogrebi || !posesQuery.data.merezhi) {
     return (
-      <ThemedView className="p-4 rounded-lg border border-outline-100">
+      <ThemedView className="p-4 rounded-lg border border-outline-50">
         <ThemedText type="default" className="text-center text-xs opacity-70">
           Некоректна структура даних
         </ThemedText>
