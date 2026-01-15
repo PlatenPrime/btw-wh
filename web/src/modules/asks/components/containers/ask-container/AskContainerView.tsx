@@ -1,4 +1,3 @@
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
 import type { AskDto } from "@/modules/asks/api/types/dto";
 import { AskDetailsCard } from "@/modules/asks/components/cards/ask-details-card/AskDetailsCard";
 import { AskEvents } from "@/modules/asks/components/containers/ask-container/components/ask-events/AskEvents.tsx";
@@ -37,21 +36,17 @@ export function AskContainerView({
   handleDeleteAskSuccess,
 }: AskContainerViewProps) {
   return (
-    <section className="grid gap-2">
-      <Wrapper className="grid gap-2 lg:grid-cols-2">
-        <AskDetailsCard askData={askData} />
-        <AskEvents
-          events={askData.events ?? []}
-          pullQuant={askData.pullQuant}
-          pullBox={askData.pullBox}
-          pullBoxes={askData.pullBoxes}
-        />
-      </Wrapper>
+    <section className="grid gap-4">
+      <AskDetailsCard askData={askData} />
+      <AskEvents
+        events={askData.events ?? []}
+        pullQuant={askData.pullQuant}
+        pullBox={askData.pullBox}
+        pullBoxes={askData.pullBoxes}
+      />
 
       {/* Позиции для снятия */}
-      {askData.artikul && (
-        <AskPullPositionsContainer askId={askData._id} />
-      )}
+      {askData.artikul && <AskPullPositionsContainer askId={askData._id} />}
 
       {/* Позиции по артикулу */}
       {askData.artikul && (

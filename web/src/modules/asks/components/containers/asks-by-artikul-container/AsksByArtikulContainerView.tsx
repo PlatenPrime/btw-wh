@@ -11,23 +11,10 @@ export function AsksByArtikulContainerView({
   return (
     <main className="grid gap-2">
       {/* Статистика */}
-      <div className="text-foreground flex items-center gap-4 text-sm">
-        <span>
-          Всього: <strong>{data.count}</strong>
-        </span>
-        <span>
-          Нові: <strong>{data.newCount}</strong>
-        </span>
-        <span>
-          В процесі: <strong>{data.processingCount}</strong>
-        </span>
-        <span>
-          Завершено: <strong>{data.completedCount}</strong>
-        </span>
-        <span>
-          Відмовлено: <strong>{data.rejectedCount}</strong>
-        </span>
-      </div>
+
+      <h2 className="text-card-foreground text-center text-lg font-bold">
+        Запити
+      </h2>
 
       {/* Список карточек */}
       <div className="grid gap-2">

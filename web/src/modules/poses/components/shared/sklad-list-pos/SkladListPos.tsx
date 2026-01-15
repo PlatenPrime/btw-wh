@@ -13,7 +13,7 @@ export function SkladListPos({ pos, onClick }: SkladListPosProps) {
   return (
     <div
       className={cn(
-        "hover:bg-muted/25 block cursor-pointer rounded-md px-2 py-1 transition-colors",
+        "hover:bg-muted/25 block cursor-pointer rounded-md  p-2 transition-colors",
       )}
       onClick={onClick}
     >

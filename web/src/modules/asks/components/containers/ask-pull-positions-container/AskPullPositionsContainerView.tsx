@@ -1,8 +1,6 @@
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+import { Card, CardContent } from "@/components/ui";
 import { cn } from "@/lib/utils";
-import type {
-  GetAskPullResponse
-} from "@/modules/asks/api/types/dto";
+import type { GetAskPullResponse } from "@/modules/asks/api/types/dto";
 import { getAskPullStatusMessage } from "@/modules/asks/utils/get-ask-pull-status-message/getAskPullStatusMessage";
 import { Circle, LoaderPinwheel } from "lucide-react";
 import { AskPullPositionCard } from "./components/ask-pull-position-card/AskPullPositionCard";
@@ -22,26 +20,30 @@ export function AskPullPositionsContainerView({
   const statusMessage = getAskPullStatusMessage(data);
 
   return (
-    <Wrapper className="relative grid gap-4">
-      <div className="grid gap-2">
-        <h2 className="flex items-center gap-2 text-lg font-semibold">
-          Позиції для зняття
-          {isFetching && (
-            <LoaderPinwheel className="text-muted-foreground h-4 w-4 animate-spin" />
+    <Card className="bg-card/10 dark:bg-card/50 grid gap-4 p-2">
+      <CardContent className="p-0">
+        <div className="grid gap-2">
+          <h2 className="text-card-foreground text-center text-lg font-bold">
+            Позиції для зняття
+            {isFetching && (
+              <LoaderPinwheel className="text-muted-foreground h-4 w-4 animate-spin" />
+            )}
+          </h2>
+          {data.remainingQuantity !== null && data.remainingQuantity > 0 && (
+            <div className="text-muted-foreground flex items-center gap-1 text-sm">
+              <Circle className="h-4 w-4" />
+              <span>Залишилось зняти: {data.remainingQuantity}</span>
+            </div>
           )}
-        </h2>
-        {data.remainingQuantity !== null && data.remainingQuantity > 0 && (
-          <div className="text-muted-foreground flex items-center gap-1 text-sm">
-            <Circle className="h-4 w-4" />
-            <span>Залишилось зняти: {data.remainingQuantity}</span>
-          </div>
-        )}
-      </div>
+        </div>
+      </CardContent>
 
-      {statusMessage ? <AskPullStatusMessage statusMessage={statusMessage} /> : (
-        <div
+      {statusMessage ? (
+        <AskPullStatusMessage statusMessage={statusMessage} />
+      ) : (
+        <CardContent
           className={cn(
-            "grid lg:w-1/2 gap-4 transition-opacity duration-200",
+            "grid gap-4 transition-opacity duration-200 lg:w-1/2",
             isFetching && "opacity-60",
           )}
         >
@@ -52,8 +54,8 @@ export function AskPullPositionsContainerView({
               askId={askId}
             />
           ))}
-        </div>
+        </CardContent>
       )}
-    </Wrapper>
+    </Card>
   );
 }

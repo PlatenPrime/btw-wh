@@ -12,8 +12,8 @@ export function AskPullStatusMessage({
   const statusMessageVariants = {
     success: {
       border:
-        "border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-950/20",
-      icon: <CheckCircle2 className="h-5 w-5 shrink-0 text-green-600" />,
+        "border-emerald-200 bg-emerald-50 dark:border-emerald-500/60 dark:bg-emerald-900/40",
+      icon: <CheckCircle2 className="h-5 w-5 shrink-0 text-emerald-600" />,
     },
     warning: {
       border:

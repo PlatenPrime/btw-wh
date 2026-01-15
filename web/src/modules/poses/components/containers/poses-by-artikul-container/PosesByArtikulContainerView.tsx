@@ -1,3 +1,4 @@
+import { Card } from "@/components/ui";
 import { SkladPosesList } from "./components/sklad-poses-list/SkladPosesList";
 import type { PosesByArtikulContainerViewProps } from "./types";
 
@@ -9,7 +10,7 @@ export function PosesByArtikulContainerView({
   const { pogrebi, merezhi } = data;
 
   return (
-    <div className="grid gap-4">
+    <Card className="grid gap-4 p-2 bg-card/10 dark:bg-card/50">
       {/* Позиции по складам */}
       <div className="grid items-start gap-2 lg:grid-cols-2">
         <SkladPosesList
@@ -25,6 +26,6 @@ export function PosesByArtikulContainerView({
           additionalProps={additionalProps}
         />
       </div>
-    </div>
+    </Card>
   );
 }

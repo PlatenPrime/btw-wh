@@ -1,3 +1,4 @@
+import { Card, CardContent } from "@/components/ui";
 import { cn } from "@/lib/utils";
 
 export function Wrapper({
@@ -8,8 +9,10 @@ export function Wrapper({
   className?: string;
 }) {
   return (
-    <div className={cn("bg-accent/20 rounded-xl p-2", className)}>
-      {children}
-    </div>
+    <Card
+      className={cn("bg-card/10 dark:bg-card/50 rounded-xl p-2")}
+    >
+      <CardContent className={cn("p-0", className)}>{children}</CardContent>
+    </Card>
   );
 }

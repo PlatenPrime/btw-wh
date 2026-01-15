@@ -1,4 +1,3 @@
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
 import type { PosResponse, WarehouseData } from "@/modules/poses/api/types";
 import { Circle, Package } from "lucide-react";
 
@@ -20,15 +19,13 @@ export function SkladPosesList({
 }: SkladPosesListProps) {
   if (!skladData.poses?.length)
     return (
-      <Wrapper>
-        <p className="text-muted-foreground text-center font-semibold">
-          На складі {title} немає позицій з цим артикулом
-        </p>
-      </Wrapper>
+      <p className="text-muted-foreground text-center font-semibold">
+        На складі {title} немає позицій з цим артикулом
+      </p>
     );
 
   return (
-    <Wrapper className="grid gap-2">
+    <div className="grid gap-2">
       <div className="grid grid-cols-3">
         <h3 className="pl-4 font-semibold">{title}</h3>
         <div className="flex items-center justify-center gap-1 font-semibold">
@@ -53,6 +50,6 @@ export function SkladPosesList({
           ))}
         </div>
       )}
-    </Wrapper>
+    </div>
   );
 }

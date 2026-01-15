@@ -51,9 +51,9 @@ export const ASK_EVENT_META: Record<
   },
   complete: {
     icon: CheckCircle2,
-    iconClass: "text-gray-500 dark:text-gray-300",
+    iconClass: "text-blue-500 dark:text-blue-300",
     accentClass:
-      "border-gray-200 bg-gray-50 dark:border-gray-500/60 dark:bg-gray-900/40",
+      "border-blue-200 bg-blue-50 dark:border-blue-500/60 dark:bg-blue-900/40",
     buildDescription: (event) =>
       `${event.userData?.fullname ?? "користувач"} виконав запит.`,
   },
