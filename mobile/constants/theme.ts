@@ -1,96 +1,62 @@
 /**
  * Цветовая система приложения
- * 
+ *
  * ВАЖНО: Большинство цветов теперь определены через Tailwind токены в color-config.ts
  * и доступны через Tailwind классы напрямую.
- * 
+ *
  * Этот файл содержит только:
- * 1. Устаревшие цвета Colors (используются для обратной совместимости)
- * 2. Минимальные семантические цвета для специфичных компонентов (Switch, иконки)
- * 
+ * - Минимальные семантические цвета для специфичных компонентов (Switch, иконки)
+ *
  * Для новых компонентов используйте:
  * - Tailwind классы напрямую: className="bg-background-0 text-typography-900 border-outline-200"
  * - lightColor/darkColor props для кастомизации (редкие случаи)
- * 
+ *
  * @see constants/color-config.ts - единственный источник истины для цветов (CSS переменные)
  */
 
 import { Platform } from "react-native";
 
-const tintColorLight = "#3477eb";
-const tintColorDark = "#fff";
-
-/**
- * Устаревшие цвета (используются для обратной совместимости)
- * 
- * @deprecated Используйте Tailwind классы или useThemeColors()
- * - text -> text-typography-900 (light) / text-typography-700 (dark)
- * - background -> bg-background-0
- * - icon -> text-typography-500
- * - tabIconDefault -> text-typography-500
- * - tabIconSelected -> text-primary-600 (light) / text-primary-500 (dark)
- */
-export const Colors = {
-  light: {
-    text: "#11181C", // Tailwind: text-typography-900
-    background: "#ffffff", // Tailwind: bg-background-0
-    tint: tintColorLight,
-    icon: "#687076", // Tailwind: text-typography-500
-    tabIconDefault: "#687076", // Tailwind: text-typography-500
-    tabIconSelected: tintColorLight, // Tailwind: text-primary-600
-  },
-  dark: {
-    text: "#E5E5E5", // Tailwind: text-typography-700
-    background: "#121212", // Tailwind: bg-background-0
-    tint: tintColorDark,
-    icon: "#A3A3A3", // Tailwind: text-typography-500
-    tabIconDefault: "#A3A3A3", // Tailwind: text-typography-500
-    tabIconSelected: tintColorDark, // Tailwind: text-primary-500
-  },
-};
-
 /**
  * Семантические цвета для UI компонентов
- * 
+ *
  * ВАЖНО: Минимальный набор статических цветов, используемых только для:
  * 1. Switch компонента (требует специфичную структуру данных)
  * 2. Иконок (iconColors - специфичные hex значения)
- * 3. Обратной совместимости с useThemeColors()
- * 
+ *
  * Для всех остальных случаев используйте Tailwind классы напрямую.
  */
 export const SemanticColors = {
   // Положительные действия (создание, редактирование, подтверждение)
   // Tailwind токен: primary-500
   primary: "#3b82f6",
-  
+
   // Информационные действия (выбор, информация)
   // Tailwind токен: info-500
   info: "#0ea5e9",
-  
+
   // Деструктивные действия (удаление, очистка)
   // Tailwind токен: error-500
   destructive: "#ef4444",
-  
+
   // Disabled состояние
   // Tailwind токен: typography-400
   disabled: "#9ca3af",
-  
+
   // Placeholder текст
   // Tailwind токен: typography-400 (light) / typography-500 (dark)
   placeholder: {
     light: "#9ca3af", // Tailwind: text-typography-400
     dark: "#6b7280", // Tailwind: text-typography-500
   },
-  
+
   // Белый цвет (для текста на цветном фоне, иконок)
   // Tailwind токен: typography-0
   white: "#ffffff",
-  
+
   // Черный цвет (для теней)
   // Tailwind токен: typography-950
   black: "#000000",
-  
+
   // Цвета для диалогов и модальных окон
   // Tailwind токены: card.bg -> background-0, card.border -> outline-200
   dialog: {
@@ -103,7 +69,7 @@ export const SemanticColors = {
       dark: "#737474", // Tailwind: border-outline-200
     },
   },
-  
+
   // Цвета для ошибок
   // Tailwind токены: error.border -> error-500, error.bg -> error-100 (light) / error-900 (dark)
   error: {
@@ -114,7 +80,7 @@ export const SemanticColors = {
       dark: "#7f1d1d", // Tailwind: bg-error-900
     },
   },
-  
+
   // Цвета для иконок (специфичные цвета - не представлены в Tailwind токенах)
   // Используются как статические hex значения
   icon: {
@@ -122,7 +88,7 @@ export const SemanticColors = {
     money: "#10b981", // Приблизительно: success-500
     orange: "#f97316", // Приблизительно: warning-500
   },
-  
+
   // Цвета для Switch компонента
   // Tailwind токены: switch.track.false -> typography-300 (light) / typography-700 (dark)
   //                   switch.track.true -> primary-500
@@ -139,7 +105,7 @@ export const SemanticColors = {
     },
     thumb: "#ffffff", // Tailwind: bg-typography-0
   },
-  
+
   // Цвета для карточек
   // Tailwind токены: card.bg -> background-0, card.border -> outline-100
   card: {
@@ -156,7 +122,7 @@ export const SemanticColors = {
       dark: "#E5E5E5", // Tailwind: text-typography-700
     },
   },
-  
+
   // Цвета для sidebar
   // Tailwind токены: sidebar.border -> outline-200 (light) / outline-300 (dark)
   sidebar: {
@@ -165,20 +131,20 @@ export const SemanticColors = {
       dark: "#374151", // Tailwind: border-outline-300
     },
   },
-  
+
   // Цвета для теней и backdrop
   shadow: {
     color: "#000000", // Tailwind: typography-950
     backdrop: "rgba(0, 0, 0, 0.5)",
     backdropDark: "rgba(0, 0, 0, 0.8)",
   },
-  
+
   /**
    * Цвета для иконок в header actions menu
-   * 
+   *
    * Эти цвета используются как статические hex значения и не представлены
    * напрямую в Tailwind токенах. Они используются для цветных иконок.
-   * 
+   *
    * При необходимости работы с opacity используйте hexToRgba() из utils/color-utils.ts
    */
   iconColors: {

@@ -1,12 +1,17 @@
+import {
+  ThemedButton,
+  ThemedHStack,
+  ThemedIcon,
+  ThemedText as ThemedTextButton,
+  ThemedVStack,
+} from "@/components/themed";
 import { ThemedText } from "@/components/themed/themed-text";
 import { ThemedView } from "@/components/themed/themed-view";
-import { ThemedButton, ThemedText as ThemedTextButton, ThemedHStack, ThemedVStack } from "@/components/themed";
-import { ThemedIcon } from "@/components/themed";
+
 import { ArtImageLink } from "@/components/shared/art-image-link";
 import type { IPositionForPullsPage } from "@/modules/asks/api/types/dto";
 import { AskPosEditDialog } from "@/modules/asks/components/dialogs/ask-pos-edit-dialog/AskPosEditDialog";
 import type { PosResponse } from "@/modules/poses/api/types";
-import { useThemeColors } from "@/hooks/use-theme-colors";
 
 interface PullsPositionCardViewProps {
   position: IPositionForPullsPage;
@@ -37,13 +42,21 @@ export function PullsPositionCardView({
         }}
       >
         <ThemedVStack className="gap-2">
-          <ArtImageLink artikul={position.artikul} nameukr={position.nameukr} link={`/(tabs)/arts/${position.artikul}`} />
+          <ArtImageLink
+            artikul={position.artikul}
+            nameukr={position.nameukr}
+            link={`/(tabs)/arts/${position.artikul}`}
+          />
 
           <ThemedHStack className="items-center justify-between">
             <ThemedVStack className="gap-2 flex-1">
               {position.askRemainingQuantity !== null && (
                 <ThemedHStack className="items-center gap-1">
-                  <ThemedIcon family="MaterialIcons" name="radio-button-unchecked" size={12} />
+                  <ThemedIcon
+                    family="MaterialIcons"
+                    name="radio-button-unchecked"
+                    size={12}
+                  />
                   <ThemedText type="default" className="text-xs">
                     {position.askRemainingQuantity}
                   </ThemedText>
@@ -59,7 +72,9 @@ export function PullsPositionCardView({
               variant="outline"
               className="self-end"
             >
-              <ThemedTextButton className="font-semibold text-sm">Зняти товар</ThemedTextButton>
+              <ThemedTextButton className="font-semibold text-sm">
+                Зняти товар
+              </ThemedTextButton>
             </ThemedButton>
           </ThemedHStack>
         </ThemedVStack>
@@ -76,4 +91,3 @@ export function PullsPositionCardView({
     </>
   );
 }
-

@@ -1,9 +1,9 @@
-import { ThemedText } from "@/components/themed/themed-text";
 import { ThemedIcon } from "@/components/themed";
+import { ThemedText } from "@/components/themed/themed-text";
 import { SemanticColors } from "@/constants/theme";
-import { useThemeColors } from "@/hooks/use-theme-colors";
 import { formatDateTime } from "@/modules/asks/utils/format-date";
 import type { ExistingAsk } from "@/modules/defs/api/types/dto";
+import { useTheme } from "@/providers/theme-provider";
 import { View } from "react-native";
 
 interface DefCardAskBidProps {
@@ -11,7 +11,8 @@ interface DefCardAskBidProps {
 }
 
 export function DefCardAskBid({ ask }: DefCardAskBidProps) {
-  const { theme } = useThemeColors();
+  const { resolvedTheme } = useTheme();
+  const theme = resolvedTheme === "dark" ? "dark" : "light";
 
   return (
     <View
@@ -23,12 +24,24 @@ export function DefCardAskBid({ ask }: DefCardAskBidProps) {
       }}
     >
       <View className="flex-row items-center gap-2">
-        <ThemedIcon family="MaterialIcons" name="person" size={16} color={SemanticColors.iconColors.indigo} />
+        <ThemedIcon
+          family="MaterialIcons"
+          name="person"
+          size={16}
+          color={SemanticColors.iconColors.indigo}
+        />
         <ThemedText className="text-sm">{ask.askerName}</ThemedText>
       </View>
       <View className="flex-row items-center gap-2">
-        <ThemedIcon family="MaterialIcons" name="calendar-month" size={16} color={SemanticColors.iconColors.indigo} />
-        <ThemedText className="text-sm">{formatDateTime(ask.createdAt)}</ThemedText>
+        <ThemedIcon
+          family="MaterialIcons"
+          name="calendar-month"
+          size={16}
+          color={SemanticColors.iconColors.indigo}
+        />
+        <ThemedText className="text-sm">
+          {formatDateTime(ask.createdAt)}
+        </ThemedText>
       </View>
     </View>
   );

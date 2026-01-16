@@ -1,11 +1,10 @@
+import { ThemedIcon, ThemedSpinner } from "@/components/themed";
 import { ThemedText } from "@/components/themed/themed-text";
 import { ThemedView } from "@/components/themed/themed-view";
-import { ThemedSpinner } from "@/components/themed";
-import { ThemedIcon } from "@/components/themed";
 import { SemanticColors } from "@/constants/theme";
-import { useThemeColors } from "@/hooks/use-theme-colors";
 import { formatDateTime } from "@/modules/asks/utils/format-date";
 import type { DefsCalculationStatus } from "@/modules/defs/api/types/dto";
+import { useTheme } from "@/providers/theme-provider";
 import { View } from "react-native";
 
 interface CalculationStatusViewProps {
@@ -29,36 +28,23 @@ export function CalculationStatusView({
   status,
   isLoading,
 }: CalculationStatusViewProps) {
-  const { card, theme, info } = useThemeColors();
-  const bgColor = card.bg;
-  const borderColor = card.border;
+  const { resolvedTheme } = useTheme();
+  const theme = resolvedTheme === "dark" ? "dark" : "light";
   // Получаем цвета для спиннера и прогресс-бара
-  const spinnerColor = info.border; // info-500
-  const progressBgColor = theme === 'dark' ? "#374151" : "#d1d5db"; // typography-700/300
-  const progressFillColor = info.border; // info-500
+  const spinnerColor = SemanticColors.info; // info-500
+  const progressBgColor = theme === "dark" ? "#374151" : "#d1d5db"; // typography-700/300
+  const progressFillColor = SemanticColors.info; // info-500
 
   if (isLoading) {
     return (
-      <ThemedView
-        className="p-4 rounded-lg border"
-        style={{
-          backgroundColor: bgColor,
-          borderColor: borderColor,
-        }}
-      >
+      <ThemedView className="p-4 rounded-lg border bg-background-0 border-outline-100">
         <View className="flex-row items-center gap-2">
-          <ThemedSpinner
-            size="small"
-            color={spinnerColor || "#2563eb"}
-          />
+          <ThemedSpinner size="small" color={spinnerColor || "#2563eb"} />
           <ThemedText type="title" className="text-lg">
             Розрахунок дефіцитів виконується
           </ThemedText>
         </View>
-        <View
-          className="mt-3 p-3 rounded-lg"
-          style={{ backgroundColor: bgColor }}
-        >
+        <View className="mt-3 p-3 rounded-lg bg-background-0">
           <ThemedText className="text-sm font-medium">
             Ініціалізація процесу розрахунку
           </ThemedText>
@@ -72,18 +58,9 @@ export function CalculationStatusView({
 
   if (status.isRunning) {
     return (
-      <ThemedView
-        className="p-4 rounded-lg border"
-        style={{
-          backgroundColor: bgColor,
-          borderColor: borderColor,
-        }}
-      >
+      <ThemedView className="p-4 rounded-lg border bg-background-0 border-outline-100">
         <View className="flex-row items-center gap-2">
-          <ThemedSpinner
-            size="small"
-            color={spinnerColor || "#2563eb"}
-          />
+          <ThemedSpinner size="small" color={spinnerColor || "#2563eb"} />
           <ThemedText type="title" className="text-lg">
             Розрахунок дефіцитів виконується
           </ThemedText>
@@ -116,10 +93,7 @@ export function CalculationStatusView({
         )}
 
         {status.currentStep && (
-          <View
-            className="mt-3 p-3 rounded-lg"
-            style={{ backgroundColor: bgColor }}
-          >
+          <View className="mt-3 p-3 rounded-lg bg-background-0">
             <ThemedText className="text-sm font-medium">
               {status.currentStep}
             </ThemedText>
@@ -135,7 +109,12 @@ export function CalculationStatusView({
         <View className="mt-3 gap-3">
           {status.startedAt && (
             <View className="flex-row items-center gap-2">
-              <ThemedIcon family="MaterialIcons" name="access-time" size={16} color={SemanticColors.iconColors.fuchsia} />
+              <ThemedIcon
+                family="MaterialIcons"
+                name="access-time"
+                size={16}
+                color={SemanticColors.iconColors.fuchsia}
+              />
               <View>
                 <ThemedText className="text-sm font-medium">
                   Розпочато
@@ -150,7 +129,12 @@ export function CalculationStatusView({
           {status.estimatedTimeRemaining !== undefined &&
             status.estimatedTimeRemaining > 0 && (
               <View className="flex-row items-center gap-2">
-                <ThemedIcon family="MaterialIcons" name="schedule" size={16} color={SemanticColors.iconColors.fuchsia} />
+                <ThemedIcon
+                  family="MaterialIcons"
+                  name="schedule"
+                  size={16}
+                  color={SemanticColors.iconColors.fuchsia}
+                />
                 <View>
                   <ThemedText className="text-sm font-medium">
                     Залишилось часу
@@ -167,13 +151,7 @@ export function CalculationStatusView({
   }
 
   return (
-    <ThemedView
-      className="p-4 rounded-lg border"
-      style={{
-        backgroundColor: bgColor,
-        borderColor: borderColor,
-      }}
-    >
+    <ThemedView className="p-4 rounded-lg border bg-background-0 border-outline-100">
       <View className="flex-row items-center gap-2">
         <ThemedIcon
           family="MaterialIcons"
@@ -188,10 +166,7 @@ export function CalculationStatusView({
 
       {status.processedItems !== undefined &&
         status.totalItems !== undefined && (
-          <View
-            className="mt-3 p-3 rounded-lg"
-            style={{ backgroundColor: bgColor }}
-          >
+          <View className="mt-3 p-3 rounded-lg bg-background-0">
             <ThemedText className="text-sm font-medium">
               Оброблено елементів: {status.processedItems} з {status.totalItems}
             </ThemedText>
@@ -201,7 +176,12 @@ export function CalculationStatusView({
       <View className="mt-3 gap-2">
         {status.startedAt && (
           <View className="flex-row items-center gap-2">
-            <ThemedIcon family="MaterialIcons" name="access-time" size={16} color={SemanticColors.iconColors.fuchsia} />
+            <ThemedIcon
+              family="MaterialIcons"
+              name="access-time"
+              size={16}
+              color={SemanticColors.iconColors.fuchsia}
+            />
             <View>
               <ThemedText className="text-sm font-medium">Розпочато</ThemedText>
               <ThemedText className="text-xs opacity-70">
@@ -213,7 +193,12 @@ export function CalculationStatusView({
 
         {status.lastUpdate && (
           <View className="flex-row items-center gap-2">
-            <ThemedIcon family="MaterialIcons" name="check-circle" size={16} color={SemanticColors.iconColors.fuchsia} />
+            <ThemedIcon
+              family="MaterialIcons"
+              name="check-circle"
+              size={16}
+              color={SemanticColors.iconColors.fuchsia}
+            />
             <View>
               <ThemedText className="text-sm font-medium">Завершено</ThemedText>
               <ThemedText className="text-xs opacity-70">

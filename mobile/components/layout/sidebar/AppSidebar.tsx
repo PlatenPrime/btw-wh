@@ -1,6 +1,5 @@
 import { ModeToggle } from "@/components/shared/mode-toggle/mode-toggle";
 import { ThemedIcon } from "@/components/themed";
-import { useThemeColors } from "@/hooks/use-theme-colors";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 import { useRouter } from "expo-router";
 import React from "react";
@@ -14,7 +13,6 @@ export function AppSidebar() {
   const { isOpen, setIsOpen } = useSidebar();
   const insets = useSafeAreaInsets();
   const { logout, isLoading } = useAuth();
-  const { background, text } = useThemeColors();
 
   const handleLogout = () => {
     logout();
@@ -26,9 +24,6 @@ export function AppSidebar() {
     return null;
   }
 
-  const bgColor = background.primary;
-  const textColor = text.primary;
-
   return (
     <>
       <Pressable
@@ -36,9 +31,8 @@ export function AppSidebar() {
         onPress={() => setIsOpen(false)}
       />
       <View
-        className="absolute left-0 bottom-0 w-[280px] z-[999] shadow-lg"
+        className="absolute left-0 bottom-0 w-[280px] z-[999] shadow-lg bg-background-0"
         style={{
-          backgroundColor: bgColor,
           paddingTop: insets.top,
           paddingBottom: insets.bottom,
           paddingLeft: insets.left,
@@ -55,7 +49,8 @@ export function AppSidebar() {
               family="MaterialIcons"
               name="close"
               size={24}
-              color={textColor}
+              lightColor="#11181C"
+              darkColor="#E5E5E5"
             />
           </TouchableOpacity>
         </View>

@@ -12,10 +12,10 @@ import {
 import { sklads } from "@/constants/sklad";
 import { SemanticColors } from "@/constants/theme";
 import { useIconColor } from "@/hooks/use-icon-color";
-import { useThemeColors } from "@/hooks/use-theme-colors";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { getSmallImageUrl } from "@/modules/arts/constants/art-image-url";
 import type { IPos } from "@/modules/poses/api/types";
+import { useTheme } from "@/providers/theme-provider";
 import { Image } from "expo-image";
 import type { UseFormReturn } from "react-hook-form";
 import { Controller } from "react-hook-form";
@@ -59,7 +59,9 @@ export function CreatePosFormView({
   } = form;
 
   const iconColor = useIconColor();
-  const { placeholder } = useThemeColors();
+  const { resolvedTheme } = useTheme();
+  const theme = resolvedTheme === "dark" ? "dark" : "light";
+  const placeholder = SemanticColors.placeholder[theme];
   const watchedValues = watch();
 
   // Проверка валидности формы для активации кнопки
@@ -430,7 +432,9 @@ export function CreatePosFormView({
             {isSubmitting ? (
               <ActivityIndicator color={SemanticColors.white} />
             ) : (
-              <ThemedText className="text-white font-semibold">Створити</ThemedText>
+              <ThemedText className="text-white font-semibold">
+                Створити
+              </ThemedText>
             )}
           </ThemedButton>
         </ThemedHStack>

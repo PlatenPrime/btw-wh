@@ -1,12 +1,19 @@
-import { ThemedInput, ThemedInputField } from "@/components/themed";
-import { ThemedBox, ThemedButton, ThemedHStack, ThemedText as ThemedTextButton } from "@/components/themed";
-import { ActivityIndicator } from "react-native";
+import {
+  ThemedBox,
+  ThemedButton,
+  ThemedHStack,
+  ThemedInput,
+  ThemedInputField,
+  ThemedText as ThemedTextButton,
+} from "@/components/themed";
 import { ThemedText } from "@/components/themed/themed-text";
 import { ThemedView } from "@/components/themed/themed-view";
+import { SemanticColors } from "@/constants/theme";
 import type { RowFormValues } from "@/modules/rows/components/forms/schema";
+import { useTheme } from "@/providers/theme-provider";
 import type { UseFormReturn } from "react-hook-form";
 import { Controller } from "react-hook-form";
-import { useThemeColors } from "@/hooks/use-theme-colors";
+import { ActivityIndicator } from "react-native";
 
 interface UpdateRowFormViewProps {
   form: UseFormReturn<RowFormValues>;
@@ -26,7 +33,9 @@ export function UpdateRowFormView({
     handleSubmit,
     formState: { errors },
   } = form;
-  const { placeholder, static: staticColors } = useThemeColors();
+  const { resolvedTheme } = useTheme();
+  const theme = resolvedTheme === "dark" ? "dark" : "light";
+  const placeholder = SemanticColors.placeholder[theme];
 
   return (
     <ThemedBox className="gap-4">
@@ -78,7 +87,9 @@ export function UpdateRowFormView({
           variant="outline"
           className="flex-1"
         >
-          <ThemedTextButton className="font-semibold">Скасувати</ThemedTextButton>
+          <ThemedTextButton className="font-semibold">
+            Скасувати
+          </ThemedTextButton>
         </ThemedButton>
         <ThemedButton
           onPress={handleSubmit(onSubmit)}
@@ -87,13 +98,14 @@ export function UpdateRowFormView({
           className="flex-1"
         >
           {isSubmitting ? (
-            <ActivityIndicator color={staticColors.white} />
+            <ActivityIndicator color={SemanticColors.white} />
           ) : (
-            <ThemedTextButton className="text-white font-semibold">Оновити</ThemedTextButton>
+            <ThemedTextButton className="text-white font-semibold">
+              Оновити
+            </ThemedTextButton>
           )}
         </ThemedButton>
       </ThemedHStack>
     </ThemedBox>
   );
 }
-

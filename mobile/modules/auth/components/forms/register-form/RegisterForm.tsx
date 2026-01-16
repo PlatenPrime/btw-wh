@@ -1,15 +1,21 @@
-import React from "react";
-import { useForm, Controller } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { ScrollView } from "react-native";
-import { ThemedInput, ThemedInputField } from "@/components/themed";
-import { ThemedBox, ThemedText, ThemedButton, ThemedText as ThemedTextButton } from "@/components/themed";
-import { ActivityIndicator } from "react-native";
-import { useAuth } from "@/modules/auth/api/hooks/useAuth";
+import {
+  ThemedBox,
+  ThemedButton,
+  ThemedInput,
+  ThemedInputField,
+  ThemedText,
+  ThemedText as ThemedTextButton,
+} from "@/components/themed";
 import { RoleType } from "@/constants/roles";
+import { SemanticColors } from "@/constants/theme";
+import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 import type { RegisterData } from "@/modules/auth/api/types";
-import { useThemeColors } from "@/hooks/use-theme-colors";
+import { useTheme } from "@/providers/theme-provider";
+import { zodResolver } from "@hookform/resolvers/zod";
+import React from "react";
+import { Controller, useForm } from "react-hook-form";
+import { ActivityIndicator, ScrollView } from "react-native";
+import { z } from "zod";
 
 // Zod schema for register form
 const registerSchema = z.object({
@@ -29,7 +35,9 @@ type RegisterFormValues = z.infer<typeof registerSchema>;
 
 export const RegisterForm = () => {
   const { register: registerUser, isLoading, error } = useAuth();
-  const { placeholder, static: staticColors } = useThemeColors();
+  const { resolvedTheme } = useTheme();
+  const theme = resolvedTheme === "dark" ? "dark" : "light";
+  const placeholder = SemanticColors.placeholder[theme];
   const {
     control,
     handleSubmit,
@@ -81,7 +89,9 @@ export const RegisterForm = () => {
 
         {errors.root && (
           <ThemedBox className="bg-error-100 border border-error-300 rounded-lg p-3">
-            <ThemedText className="text-error-700 text-sm">{errors.root.message}</ThemedText>
+            <ThemedText className="text-error-700 text-sm">
+              {errors.root.message}
+            </ThemedText>
           </ThemedBox>
         )}
 
@@ -92,7 +102,9 @@ export const RegisterForm = () => {
         )}
 
         <ThemedBox className="gap-2">
-          <ThemedText className="text-sm font-medium text-typography-700">Логін</ThemedText>
+          <ThemedText className="text-sm font-medium text-typography-700">
+            Логін
+          </ThemedText>
           <Controller
             control={control}
             name="username"
@@ -112,12 +124,16 @@ export const RegisterForm = () => {
             )}
           />
           {errors.username && (
-            <ThemedText className="text-error-600 text-sm">{errors.username.message}</ThemedText>
+            <ThemedText className="text-error-600 text-sm">
+              {errors.username.message}
+            </ThemedText>
           )}
         </ThemedBox>
 
         <ThemedBox className="gap-2">
-          <ThemedText className="text-sm font-medium text-typography-700">Пароль</ThemedText>
+          <ThemedText className="text-sm font-medium text-typography-700">
+            Пароль
+          </ThemedText>
           <Controller
             control={control}
             name="password"
@@ -137,12 +153,16 @@ export const RegisterForm = () => {
             )}
           />
           {errors.password && (
-            <ThemedText className="text-error-600 text-sm">{errors.password.message}</ThemedText>
+            <ThemedText className="text-error-600 text-sm">
+              {errors.password.message}
+            </ThemedText>
           )}
         </ThemedBox>
 
         <ThemedBox className="gap-2">
-          <ThemedText className="text-sm font-medium text-typography-700">Повне ім'я</ThemedText>
+          <ThemedText className="text-sm font-medium text-typography-700">
+            Повне ім&apos;я
+          </ThemedText>
           <Controller
             control={control}
             name="fullname"
@@ -161,13 +181,15 @@ export const RegisterForm = () => {
             )}
           />
           {errors.fullname && (
-            <ThemedText className="text-error-600 text-sm">{errors.fullname.message}</ThemedText>
+            <ThemedText className="text-error-600 text-sm">
+              {errors.fullname.message}
+            </ThemedText>
           )}
         </ThemedBox>
 
         <ThemedBox className="gap-2">
           <ThemedText className="text-sm font-medium text-typography-700">
-            Роль (необов'язково)
+            Роль (необов&apos;язково)
           </ThemedText>
           <Controller
             control={control}
@@ -190,7 +212,7 @@ export const RegisterForm = () => {
 
         <ThemedBox className="gap-2">
           <ThemedText className="text-sm font-medium text-typography-700">
-            Telegram (необов'язково)
+            Telegram (необов&apos;язково)
           </ThemedText>
           <Controller
             control={control}
@@ -213,7 +235,7 @@ export const RegisterForm = () => {
 
         <ThemedBox className="gap-2">
           <ThemedText className="text-sm font-medium text-typography-700">
-            URL фото (необов'язково)
+            URL фото (необов&apos;язково)
           </ThemedText>
           <Controller
             control={control}
@@ -234,7 +256,9 @@ export const RegisterForm = () => {
             )}
           />
           {errors.photo && (
-            <ThemedText className="text-error-600 text-sm">{errors.photo.message}</ThemedText>
+            <ThemedText className="text-error-600 text-sm">
+              {errors.photo.message}
+            </ThemedText>
           )}
         </ThemedBox>
 
@@ -244,7 +268,7 @@ export const RegisterForm = () => {
           disabled={isLoading}
         >
           {isLoading ? (
-            <ActivityIndicator color={staticColors.white} />
+            <ActivityIndicator color={SemanticColors.white} />
           ) : (
             <ThemedTextButton className="text-white font-semibold text-base">
               Зареєструватися
@@ -255,4 +279,3 @@ export const RegisterForm = () => {
     </ScrollView>
   );
 };
-

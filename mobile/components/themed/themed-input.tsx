@@ -1,4 +1,5 @@
-import { Colors } from "@/constants/theme";
+import { tva, type VariantProps } from "@/lib/tv";
+import { cn } from "@/lib/utils";
 import { useTheme } from "@/providers/theme-provider";
 import React, { createContext, useContext } from "react";
 import {
@@ -10,8 +11,6 @@ import {
   type ViewProps,
 } from "react-native";
 import { ThemedIcon, type ThemedIconProps } from "./themed-icon";
-import { tva, type VariantProps } from "@/lib/tv";
-import { cn } from "@/lib/utils";
 
 type InputVariant = "underlined" | "outline" | "rounded";
 type InputSize = "xl" | "lg" | "md" | "sm";
@@ -70,13 +69,14 @@ const getVariantStyles = (variant: InputVariant = "outline") => {
   }
 };
 
-export type ThemedInputProps = ViewProps & VariantProps<typeof inputStyle> & {
-  className?: string;
-  variant?: InputVariant;
-  size?: InputSize;
-  lightColor?: string;
-  darkColor?: string;
-};
+export type ThemedInputProps = ViewProps &
+  VariantProps<typeof inputStyle> & {
+    className?: string;
+    variant?: InputVariant;
+    size?: InputSize;
+    lightColor?: string;
+    darkColor?: string;
+  };
 
 export function ThemedInput({
   className,
@@ -108,7 +108,9 @@ export function ThemedInput({
   return (
     <InputContext.Provider value={contextValue}>
       <View
-        className={customBgColor ? undefined : cn(inputStyle({ variant }), className)}
+        className={
+          customBgColor ? undefined : cn(inputStyle({ variant }), className)
+        }
         style={[
           {
             flexDirection: "row",
@@ -152,19 +154,20 @@ export const ThemedInputField = React.forwardRef<
   const variant = context?.variant || "outline";
   const size = context?.size || "md";
 
-  // Определяем цвет текста - используем Colors как fallback для обратной совместимости
-  let textColor: string = Colors[resolvedTheme].text;
+  // Определяем цвет текста (соответствует Tailwind классу text-typography-900 для light и text-typography-700 для dark)
+  const defaultTextColor = resolvedTheme === "dark" ? "#E5E5E5" : "#11181C";
+  let textColor: string = defaultTextColor;
 
   if (lightTextColor || darkTextColor) {
     textColor =
       resolvedTheme === "dark"
-        ? darkTextColor || lightTextColor || Colors.dark.text
-        : lightTextColor || darkTextColor || Colors.light.text;
+        ? darkTextColor || lightTextColor || defaultTextColor
+        : lightTextColor || darkTextColor || defaultTextColor;
   }
 
   // Финальная гарантия контрастного цвета
   if (!textColor || textColor.trim() === "") {
-    textColor = resolvedTheme === "dark" ? "#E5E5E5" : "#11181C";
+    textColor = defaultTextColor;
   }
 
   // Определяем цвет placeholder - используем стандартный цвет для placeholder

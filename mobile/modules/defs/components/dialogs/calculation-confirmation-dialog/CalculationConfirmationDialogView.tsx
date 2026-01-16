@@ -1,8 +1,12 @@
 import { FormDialog } from "@/components/shared/dialog/form-dialog";
+import {
+  ThemedButton,
+  ThemedIcon,
+  ThemedText as ThemedTextButton,
+} from "@/components/themed";
 import { ThemedText } from "@/components/themed/themed-text";
-import { ThemedButton, ThemedText as ThemedTextButton } from "@/components/themed";
-import { ThemedIcon } from "@/components/themed";
-import { useThemeColors } from "@/hooks/use-theme-colors";
+import { SemanticColors } from "@/constants/theme";
+import { useTheme } from "@/providers/theme-provider";
 import { ActivityIndicator, View } from "react-native";
 
 interface CalculationConfirmationDialogViewProps {
@@ -18,9 +22,9 @@ export function CalculationConfirmationDialogView({
   onConfirm,
   isPending,
 }: CalculationConfirmationDialogViewProps) {
-  const { dialog, text, static: staticColors } = useThemeColors();
-  const bgColor = dialog.bg;
-  const textColor = text.primary;
+  const { resolvedTheme } = useTheme();
+  const theme = resolvedTheme === "dark" ? "dark" : "light";
+  const textColor = SemanticColors.card.text[theme];
 
   return (
     <FormDialog
@@ -35,7 +39,9 @@ export function CalculationConfirmationDialogView({
             variant="outline"
             className="flex-1"
           >
-            <ThemedTextButton className="font-semibold">Скасувати</ThemedTextButton>
+            <ThemedTextButton className="font-semibold">
+              Скасувати
+            </ThemedTextButton>
           </ThemedButton>
           <ThemedButton
             onPress={onConfirm}
@@ -44,9 +50,11 @@ export function CalculationConfirmationDialogView({
             className="flex-1"
           >
             {isPending ? (
-              <ActivityIndicator color={staticColors.white} />
+              <ActivityIndicator color={SemanticColors.white} />
             ) : (
-              <ThemedTextButton className="text-white font-semibold">Запустити</ThemedTextButton>
+              <ThemedTextButton className="text-white font-semibold">
+                Запустити
+              </ThemedTextButton>
             )}
           </ThemedButton>
         </View>
@@ -65,10 +73,7 @@ export function CalculationConfirmationDialogView({
           реальному часі.
         </ThemedText>
       </View>
-      <View
-        className="flex-row items-center gap-2 rounded-lg p-3"
-        style={{ backgroundColor: bgColor }}
-      >
+      <View className="flex-row items-center gap-2 rounded-lg p-3 bg-background-0">
         <ThemedIcon
           family="MaterialIcons"
           name="access-time"

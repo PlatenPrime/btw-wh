@@ -12,10 +12,11 @@ import {
   ThemedVStack,
   ThemedView,
 } from "@/components/themed";
+import { SemanticColors } from "@/constants/theme";
 import { useIconColor } from "@/hooks/use-icon-color";
-import { useThemeColors } from "@/hooks/use-theme-colors";
 import { useEmptyPalletsQuery } from "@/modules/pallets/api/hooks/queries/useEmptyPalletsQuery";
 import type { IPallet } from "@/modules/pallets/api/types";
+import { useTheme } from "@/providers/theme-provider";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { ActivityIndicator } from "react-native";
 
@@ -39,7 +40,9 @@ export function MovePalletPosesForm({
   const [search, setSearch] = useState("");
   const [selectedPalletId, setSelectedPalletId] = useState<string>("");
   const iconColor = useIconColor();
-  const { placeholder, static: staticColors } = useThemeColors();
+  const { resolvedTheme } = useTheme();
+  const theme = resolvedTheme === "dark" ? "dark" : "light";
+  const placeholder = SemanticColors.placeholder[theme];
 
   const palletsQuery = useEmptyPalletsQuery();
   const pallets = palletsQuery.data;
@@ -142,7 +145,7 @@ export function MovePalletPosesForm({
                           : "radio-button-unchecked"
                       }
                       size={20}
-                      color={disabled ? staticColors.disabled : iconColor}
+                      color={disabled ? SemanticColors.disabled : iconColor}
                     />
                     <ThemedBox className="flex-1">
                       <ThemedText type="default" className="text-sm">
@@ -201,9 +204,11 @@ export function MovePalletPosesForm({
             disabled={isSubmitDisabled}
           >
             {isSubmitting ? (
-              <ActivityIndicator color={staticColors.white} />
+              <ActivityIndicator color={SemanticColors.white} />
             ) : (
-              <ThemedText className="text-white font-semibold">Підтвердити</ThemedText>
+              <ThemedText className="text-white font-semibold">
+                Підтвердити
+              </ThemedText>
             )}
           </ThemedButton>
         </ThemedHStack>

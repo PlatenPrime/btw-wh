@@ -1,15 +1,15 @@
-import { ThemedText } from "@/components/themed/themed-text";
 import {
+  ThemedIcon,
   ThemedModal,
   ThemedModalBackdrop,
-  ThemedModalContent,
-  ThemedModalHeader,
   ThemedModalBody,
+  ThemedModalContent,
   ThemedModalFooter,
-  ThemedIcon,
+  ThemedModalHeader,
 } from "@/components/themed";
+import { ThemedText } from "@/components/themed/themed-text";
+import { SemanticColors } from "@/constants/theme";
 import { Platform, ScrollView, TouchableOpacity, View } from "react-native";
-import { useThemeColors } from "@/hooks/use-theme-colors";
 
 interface FormDialogViewProps {
   visible: boolean;
@@ -32,13 +32,15 @@ export function FormDialogView({
   textColor,
   borderColor,
 }: FormDialogViewProps) {
-  const { static: staticColors } = useThemeColors();
-  
   return (
-    <ThemedModal isOpen={visible} onClose={onClose} className="items-center justify-center">
+    <ThemedModal
+      isOpen={visible}
+      onClose={onClose}
+      className="items-center justify-center"
+    >
       <ThemedModalBackdrop
         className="flex-1 justify-center items-center"
-        style={{ backgroundColor: staticColors.shadow.backdrop }}
+        style={{ backgroundColor: SemanticColors.shadow.backdrop }}
       />
       <ThemedModalContent
         className="w-full max-w-md mx-4 rounded-lg p-6 border gap-4"
@@ -48,7 +50,7 @@ export function FormDialogView({
           maxHeight: "90%",
           ...Platform.select({
             ios: {
-              shadowColor: staticColors.shadow.color,
+              shadowColor: SemanticColors.shadow.color,
               shadowOffset: { width: 0, height: 4 },
               shadowOpacity: 0.3,
               shadowRadius: 8,
@@ -61,7 +63,10 @@ export function FormDialogView({
       >
         <ThemedModalHeader className="flex-col gap-2">
           <View className="flex-row items-center justify-between relative">
-            <ThemedText type="defaultSemiBold" className="text-lg text-center flex-1">
+            <ThemedText
+              type="defaultSemiBold"
+              className="text-lg text-center flex-1"
+            >
               {title}
             </ThemedText>
             <TouchableOpacity
@@ -70,22 +75,26 @@ export function FormDialogView({
               activeOpacity={0.7}
               style={{ opacity: 0.7 }}
             >
-              <ThemedIcon family="MaterialIcons" name="close" size={16} color={textColor} />
+              <ThemedIcon
+                family="MaterialIcons"
+                name="close"
+                size={16}
+                lightColor={textColor}
+                darkColor={textColor}
+              />
             </TouchableOpacity>
           </View>
         </ThemedModalHeader>
         <ThemedModalBody>
-          <ScrollView keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={true}>
+          <ScrollView
+            keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator={true}
+          >
             {children}
           </ScrollView>
         </ThemedModalBody>
-        {footer && (
-          <ThemedModalFooter>
-            {footer}
-          </ThemedModalFooter>
-        )}
+        {footer && <ThemedModalFooter>{footer}</ThemedModalFooter>}
       </ThemedModalContent>
     </ThemedModal>
   );
 }
-

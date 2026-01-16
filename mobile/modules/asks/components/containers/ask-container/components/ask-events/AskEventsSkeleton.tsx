@@ -1,21 +1,14 @@
-import { View } from "react-native";
+import { ThemedBox, ThemedVStack } from "@/components/themed";
 import { ThemedView } from "@/components/themed/themed-view";
-import { ThemedVStack, ThemedBox } from "@/components/themed";
-import { useThemeColors } from "@/hooks/use-theme-colors";
 
 export function AskEventsSkeleton() {
-  const { card } = useThemeColors();
-
   return (
-    <ThemedView
-      className="p-3 rounded-lg border"
-      style={{
-        backgroundColor: card.bg,
-        borderColor: card.border,
-      }}
-    >
+    <ThemedView className="p-3 rounded-lg border bg-background-0 border-outline-100">
       <ThemedVStack className="gap-3">
-        <ThemedBox className="rounded bg-secondary-300" style={{ height: 16, width: 128 }} />
+        <ThemedBox
+          className="rounded bg-secondary-300"
+          style={{ height: 16, width: 128 }}
+        />
         <ThemedVStack className="gap-2">
           {Array.from({ length: 3 }).map((_, index) => (
             <ThemedBox
@@ -29,4 +22,3 @@ export function AskEventsSkeleton() {
     </ThemedView>
   );
 }
-

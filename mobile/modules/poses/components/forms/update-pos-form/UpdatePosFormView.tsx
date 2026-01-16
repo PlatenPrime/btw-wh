@@ -2,16 +2,18 @@ import {
   ThemedBox,
   ThemedButton,
   ThemedHStack,
+  ThemedIcon,
+  ThemedInput,
+  ThemedInputField,
   ThemedPressable,
   ThemedText as ThemedTextButton,
 } from "@/components/themed";
 import { ThemedText } from "@/components/themed/themed-text";
 import { ThemedView } from "@/components/themed/themed-view";
-import { ThemedIcon } from "@/components/themed";
-import { ThemedInput, ThemedInputField } from "@/components/themed";
 import { sklads } from "@/constants/sklad";
+import { SemanticColors } from "@/constants/theme";
 import { useIconColor } from "@/hooks/use-icon-color";
-import { useThemeColors } from "@/hooks/use-theme-colors";
+import { useTheme } from "@/providers/theme-provider";
 import type { UseFormReturn } from "react-hook-form";
 import { Controller } from "react-hook-form";
 import { ActivityIndicator } from "react-native";
@@ -37,7 +39,9 @@ export function UpdatePosFormView({
   } = form;
 
   const iconColor = useIconColor();
-  const { placeholder, static: staticColors } = useThemeColors();
+  const { resolvedTheme } = useTheme();
+  const theme = resolvedTheme === "dark" ? "dark" : "light";
+  const placeholder = SemanticColors.placeholder[theme];
 
   return (
     <ThemedBox className="gap-4">
@@ -184,7 +188,7 @@ export function UpdatePosFormView({
                           : "radio-button-unchecked"
                       }
                       size={20}
-                      color={isSelected ? staticColors.info : iconColor}
+                      color={isSelected ? SemanticColors.info : iconColor}
                     />
                   </ThemedPressable>
                 );
@@ -225,7 +229,7 @@ export function UpdatePosFormView({
           className="flex-1"
         >
           {isSubmitting ? (
-            <ActivityIndicator color={staticColors.white} />
+            <ActivityIndicator color={SemanticColors.white} />
           ) : (
             <ThemedTextButton className="text-white font-semibold">
               Оновити

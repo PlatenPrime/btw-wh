@@ -1,8 +1,13 @@
-import { Modal, View, TouchableOpacity, TouchableWithoutFeedback } from "react-native";
-import { Image } from "expo-image";
 import { ThemedIcon } from "@/components/themed";
+import { SemanticColors } from "@/constants/theme";
 import { getBigImageUrl } from "@/modules/arts/constants/art-image-url";
-import { useThemeColors } from "@/hooks/use-theme-colors";
+import { Image } from "expo-image";
+import {
+  Modal,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 
 interface ArtImageModalProps {
   artikul: string;
@@ -19,7 +24,6 @@ export function ArtImageModal({
   visible,
   onClose,
 }: ArtImageModalProps) {
-  const { static: staticColors } = useThemeColors();
   const imageUrl = getBigImageUrl(artikul);
 
   return (
@@ -32,17 +36,23 @@ export function ArtImageModal({
       <TouchableWithoutFeedback onPress={onClose}>
         <View
           className="flex-1 justify-center items-center"
-          style={{ backgroundColor: staticColors.shadow.backdropDark }}
+          style={{ backgroundColor: SemanticColors.shadow.backdropDark }}
         >
           <TouchableWithoutFeedback>
             <View className="relative w-full max-w-md p-4">
               <TouchableOpacity
                 onPress={onClose}
                 className="absolute top-2 right-2 z-10 p-2 rounded-full"
-                style={{ backgroundColor: staticColors.shadow.backdrop }}
+                style={{ backgroundColor: SemanticColors.shadow.backdrop }}
                 activeOpacity={0.7}
               >
-                <ThemedIcon family="MaterialIcons" name="close" size={24} color={staticColors.white} />
+                <ThemedIcon
+                  family="MaterialIcons"
+                  name="close"
+                  size={24}
+                  lightColor={SemanticColors.white}
+                  darkColor={SemanticColors.white}
+                />
               </TouchableOpacity>
 
               <Image
@@ -59,4 +69,3 @@ export function ArtImageModal({
     </Modal>
   );
 }
-

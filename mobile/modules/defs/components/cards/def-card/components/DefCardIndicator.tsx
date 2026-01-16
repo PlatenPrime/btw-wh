@@ -1,13 +1,11 @@
-import { View } from "react-native";
 import type { DeficitItem } from "@/modules/defs/api/types/dto";
-import { useThemeColors } from "@/hooks/use-theme-colors";
+import { View } from "react-native";
 
 interface DefCardIndicatorProps {
   defItem: DeficitItem;
 }
 
 export function DefCardIndicator({ defItem }: DefCardIndicatorProps) {
-  const { theme } = useThemeColors();
   const isCritical = defItem.status === "critical";
   const indicatorColor = isCritical
     ? "#ef4444" // red-500

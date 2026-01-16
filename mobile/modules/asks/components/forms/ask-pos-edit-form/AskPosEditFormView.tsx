@@ -8,8 +8,9 @@ import {
   ThemedVStack,
   ThemedView,
 } from "@/components/themed";
-import { useThemeColors } from "@/hooks/use-theme-colors";
+import { SemanticColors } from "@/constants/theme";
 import type { PosResponse } from "@/modules/poses/api/types";
+import { useTheme } from "@/providers/theme-provider";
 import { Controller, type UseFormReturn } from "react-hook-form";
 import { ActivityIndicator } from "react-native";
 import type { AskPosEditFormData } from "./schema";
@@ -44,7 +45,9 @@ export function AskPosEditFormView({
   } = form;
 
   const removedQuantValue = watch("removedQuant");
-  const { card, placeholder, static: staticColors } = useThemeColors();
+  const { resolvedTheme } = useTheme();
+  const theme = resolvedTheme === "dark" ? "dark" : "light";
+  const placeholder = SemanticColors.placeholder[theme];
 
   // #region agent log
   const logData = {
@@ -72,13 +75,7 @@ export function AskPosEditFormView({
   return (
     <ThemedVStack className="gap-4">
       {/* Информация о текущих остатках */}
-      <ThemedView
-        className="rounded-lg p-3 border"
-        style={{
-          backgroundColor: card.bg,
-          borderColor: card.border,
-        }}
-      >
+      <ThemedView className="rounded-lg p-3 border bg-background-0 border-outline-100">
         <ThemedVStack className="gap-2">
           <ThemedText type="defaultSemiBold" className="text-sm">
             Поточні залишки:
@@ -280,9 +277,11 @@ export function AskPosEditFormView({
           className="flex-1"
         >
           {isSubmitting ? (
-            <ActivityIndicator color={staticColors.white} />
+            <ActivityIndicator color={SemanticColors.white} />
           ) : (
-            <ThemedText className="text-white font-semibold">Підтвердити</ThemedText>
+            <ThemedText className="text-white font-semibold">
+              Підтвердити
+            </ThemedText>
           )}
         </ThemedButton>
       </ThemedHStack>

@@ -1,9 +1,10 @@
-import { useState } from "react";
-import { useRouter } from "expo-router";
+import { SemanticColors } from "@/constants/theme";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { getSmallImageUrl } from "@/modules/arts/constants/art-image-url";
+import { useTheme } from "@/providers/theme-provider";
+import { useRouter } from "expo-router";
+import { useState } from "react";
 import { ArtsGridCardView } from "./ArtsGridCardView";
-import { useThemeColors } from "@/hooks/use-theme-colors";
 
 interface GridCardProps {
   art: ArtDto;
@@ -12,13 +13,16 @@ interface GridCardProps {
 export function ArtsGridCard({ art }: GridCardProps) {
   const router = useRouter();
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const { card } = useThemeColors();
+  const { resolvedTheme } = useTheme();
+  const theme = resolvedTheme === "dark" ? "dark" : "light";
   const imageUrl = getSmallImageUrl(art.artikul);
-  const bgColor = card.bg;
-  const borderColor = card.border;
+  const bgColor = SemanticColors.card.bg[theme];
+  const borderColor = SemanticColors.card.border[theme];
 
   const nameukr =
-    art.nameukr.length > 50 ? art.nameukr.slice(10, 47) + "..." : art.nameukr.slice(10);
+    art.nameukr.length > 50
+      ? art.nameukr.slice(10, 47) + "..."
+      : art.nameukr.slice(10);
 
   const handlePress = () => {
     router.push(`/(tabs)/arts/${art.artikul}` as any);

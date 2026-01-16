@@ -1,9 +1,9 @@
-import { ThemedText } from "@/components/themed/themed-text";
 import { ThemedIcon } from "@/components/themed";
-import { useThemeColors } from "@/hooks/use-theme-colors";
+import { ThemedText } from "@/components/themed/themed-text";
+import { SemanticColors } from "@/constants/theme";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 import React from "react";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import { Image, TouchableOpacity, View } from "react-native";
 
 interface ProfileSidebarCardProps {
   handleLogout: () => void;
@@ -15,19 +15,13 @@ export function ProfileSidebarCard({
   isLoading,
 }: ProfileSidebarCardProps) {
   const { user } = useAuth();
-  const {  static: staticColors } = useThemeColors();
 
   if (isLoading || !user) {
     return null;
   }
 
   return (
-    <View
-      className="mt-auto border-t border-outline-50 p-4"
-      style={{
-        borderTopColor: staticColors.black[300],
-      }}
-    >
+    <View className="mt-auto border-t border-outline-50 p-4">
       <View className="flex-col items-center gap-2 ">
         {user.photo && (
           <Image
@@ -44,26 +38,22 @@ export function ProfileSidebarCard({
         </ThemedText>
         <TouchableOpacity
           onPress={handleLogout}
-          className="w-full p-3 flex-row items-center justify-center mt-2"
-          style={{
-            backgroundColor: staticColors.destructive,
-            borderWidth: 1,
-            borderColor: staticColors.destructive,
-            borderRadius: 8,
-          }}
+          className="w-full p-3 flex-row items-center justify-center mt-2 bg-error-500 border border-error-500 rounded-lg"
         >
           <ThemedIcon
             family="MaterialIcons"
             name="logout"
             size={20}
-            color={staticColors.white}
+            lightColor={SemanticColors.white}
+            darkColor={SemanticColors.white}
           />
-          <Text
+          <ThemedText
             className="ml-2 font-semibold"
-            style={{ color: staticColors.white }}
+            lightColor={SemanticColors.white}
+            darkColor={SemanticColors.white}
           >
             Вийти
-          </Text>
+          </ThemedText>
         </TouchableOpacity>
       </View>
     </View>

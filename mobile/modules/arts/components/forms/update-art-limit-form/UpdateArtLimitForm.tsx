@@ -1,9 +1,10 @@
+import { ThemedInput, ThemedInputField } from "@/components/themed";
 import { ThemedText } from "@/components/themed/themed-text";
 import { ThemedView } from "@/components/themed/themed-view";
-import { ThemedInput, ThemedInputField } from "@/components/themed";
-import { useThemeColors } from "@/hooks/use-theme-colors";
+import { SemanticColors } from "@/constants/theme";
 import { useUpdateArtLimitMutation } from "@/modules/arts/api/hooks/mutations/useUpdateArtLimitMutation";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
+import { useTheme } from "@/providers/theme-provider";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { ActivityIndicator, TouchableOpacity, View } from "react-native";
@@ -20,7 +21,9 @@ export function UpdateArtLimitForm({
   onSuccess,
   onCancel,
 }: UpdateArtLimitFormProps) {
-  const { placeholder, static: staticColors } = useThemeColors();
+  const { resolvedTheme } = useTheme();
+  const theme = resolvedTheme === "dark" ? "dark" : "light";
+  const placeholder = SemanticColors.placeholder[theme];
 
   const form = useForm<UpdateArtLimitFormData>({
     resolver: zodResolver(updateArtLimitSchema),
@@ -128,19 +131,19 @@ export function UpdateArtLimitForm({
           className="flex-1 rounded-lg py-3 items-center justify-center"
           style={{
             backgroundColor: isSubmitting
-              ? staticColors.disabled
-              : staticColors.primary,
+              ? SemanticColors.disabled
+              : SemanticColors.primary,
             opacity: isSubmitting ? 0.5 : 1,
           }}
           onPress={handleSubmit(onSubmit)}
           disabled={isSubmitting}
         >
           {isSubmitting ? (
-            <ActivityIndicator color={staticColors.white} />
+            <ActivityIndicator color={SemanticColors.white} />
           ) : (
             <ThemedText
               type="defaultSemiBold"
-              style={{ color: staticColors.white }}
+              style={{ color: SemanticColors.white }}
             >
               Зберегти
             </ThemedText>

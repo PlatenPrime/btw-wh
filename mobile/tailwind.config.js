@@ -1,8 +1,14 @@
 const colors = require("tailwindcss/colors");
 
 // Удаляем устаревшие цвета, чтобы убрать предупреждения
-const { ...modernColors } =
-  colors;
+const {
+  lightBlue,
+  warmGray,
+  trueGray,
+  coolGray,
+  blueGray,
+  ...modernColors
+} = colors;
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {

@@ -1,30 +1,22 @@
-import { ScrollView, View } from "react-native";
+import { ThemedBox, ThemedVStack } from "@/components/themed";
 import { ThemedView } from "@/components/themed/themed-view";
-import { ThemedVStack, ThemedBox } from "@/components/themed";
 import { AskDetailsCardSkeleton } from "@/modules/asks/components/cards/ask-details-card/AskDetailsCardSkeleton";
-import { useThemeColors } from "@/hooks/use-theme-colors";
+import { ScrollView, View } from "react-native";
 
 export function AskContainerSkeleton() {
-  const { card } = useThemeColors();
-  const bgColor = card.bg;
-  const borderColor = card.border;
-
   return (
     <ThemedView className="flex-1">
       <ScrollView className="flex-1" contentContainerClassName="gap-4 p-4">
         <ThemedVStack className="gap-4">
           <AskDetailsCardSkeleton />
-          
+
           {/* Skeleton для событий */}
-          <ThemedView
-            className="p-3 rounded-lg border"
-            style={{
-              backgroundColor: bgColor,
-              borderColor: borderColor,
-            }}
-          >
+          <ThemedView className="p-3 rounded-lg border bg-background-0 border-outline-100">
             <View className="gap-3">
-              <ThemedBox className="rounded bg-secondary-300" style={{ height: 16, width: 128 }} />
+              <ThemedBox
+                className="rounded bg-secondary-300"
+                style={{ height: 16, width: 128 }}
+              />
               <View className="gap-2">
                 {Array.from({ length: 3 }).map((_, index) => (
                   <ThemedBox
@@ -39,7 +31,10 @@ export function AskContainerSkeleton() {
 
           {/* Skeleton для позиций */}
           <View className="gap-2">
-            <ThemedBox className="rounded bg-secondary-300" style={{ height: 20, width: 160 }} />
+            <ThemedBox
+              className="rounded bg-secondary-300"
+              style={{ height: 20, width: 160 }}
+            />
             {Array.from({ length: 2 }).map((_, index) => (
               <ThemedBox
                 key={index}
@@ -53,4 +48,3 @@ export function AskContainerSkeleton() {
     </ThemedView>
   );
 }
-

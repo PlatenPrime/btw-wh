@@ -1,4 +1,5 @@
-import { useThemeColors } from "@/hooks/use-theme-colors";
+import { SemanticColors } from "@/constants/theme";
+import { useTheme } from "@/providers/theme-provider";
 import { FormDialogView } from "./FormDialogView";
 
 interface FormDialogProps {
@@ -16,10 +17,11 @@ export function FormDialog({
   children,
   footer,
 }: FormDialogProps) {
-  const { dialog, text } = useThemeColors();
-  const bgColor = dialog.bg;
-  const textColor = text.primary;
-  const borderColor = dialog.border;
+  const { resolvedTheme } = useTheme();
+  const theme = resolvedTheme === "dark" ? "dark" : "light";
+  const bgColor = SemanticColors.dialog.bg[theme];
+  const textColor = theme === "dark" ? "#E5E5E5" : "#11181C";
+  const borderColor = SemanticColors.dialog.border[theme];
 
   return (
     <FormDialogView
@@ -35,4 +37,3 @@ export function FormDialog({
     </FormDialogView>
   );
 }
-

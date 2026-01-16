@@ -7,8 +7,9 @@ import {
   ThemedText,
   ThemedView,
 } from "@/components/themed";
-import { useThemeColors } from "@/hooks/use-theme-colors";
+import { SemanticColors } from "@/constants/theme";
 import type { RowFormValues } from "@/modules/rows/components/forms/schema";
+import { useTheme } from "@/providers/theme-provider";
 import type { UseFormReturn } from "react-hook-form";
 import { Controller } from "react-hook-form";
 import { ActivityIndicator } from "react-native";
@@ -31,7 +32,9 @@ export function CreateRowFormView({
     handleSubmit,
     formState: { errors },
   } = form;
-  const { placeholder, static: staticColors } = useThemeColors();
+  const { resolvedTheme } = useTheme();
+  const theme = resolvedTheme === "dark" ? "dark" : "light";
+  const placeholder = SemanticColors.placeholder[theme];
 
   return (
     <ThemedBox className="gap-4">
@@ -94,9 +97,11 @@ export function CreateRowFormView({
           className="flex-1"
         >
           {isSubmitting ? (
-            <ActivityIndicator color={staticColors.white} />
+            <ActivityIndicator color={SemanticColors.white} />
           ) : (
-            <ThemedText className="text-white font-semibold">Створити</ThemedText>
+            <ThemedText className="text-white font-semibold">
+              Створити
+            </ThemedText>
           )}
         </ThemedButton>
       </ThemedHStack>

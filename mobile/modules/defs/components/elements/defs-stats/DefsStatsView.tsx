@@ -1,7 +1,7 @@
-import { TouchableOpacity, View } from "react-native";
 import { ThemedText } from "@/components/themed/themed-text";
 import { ThemedView } from "@/components/themed/themed-view";
-import { useThemeColors } from "@/hooks/use-theme-colors";
+import { useTheme } from "@/providers/theme-provider";
+import { TouchableOpacity, View } from "react-native";
 
 export type DeficitFilter = "all" | "critical" | "limited";
 
@@ -20,35 +20,37 @@ export function DefsStatsView({
   activeFilter,
   onFilterChange,
 }: DefsStatsViewProps) {
-  const { card, theme } = useThemeColors();
-  const bgColor = card.bg;
-  const borderColor = card.border;
+  const { resolvedTheme } = useTheme();
+  const theme = resolvedTheme === "dark" ? "dark" : "light";
 
   const getCardStyle = (filter: DeficitFilter) => {
     const isActive = activeFilter === filter;
     if (!isActive) {
       return {
-        backgroundColor: bgColor,
-        borderColor: borderColor,
+        backgroundColor: undefined,
+        borderColor: undefined,
       };
     }
 
     switch (filter) {
       case "all":
         return {
-          backgroundColor: theme === "dark" ? "rgba(251, 146, 60, 0.2)" : "#fff7ed",
+          backgroundColor:
+            theme === "dark" ? "rgba(251, 146, 60, 0.2)" : "#fff7ed",
           borderColor: theme === "dark" ? "#f97316" : "#fdba74",
           borderWidth: 2,
         };
       case "critical":
         return {
-          backgroundColor: theme === "dark" ? "rgba(239, 68, 68, 0.2)" : "#fef2f2",
+          backgroundColor:
+            theme === "dark" ? "rgba(239, 68, 68, 0.2)" : "#fef2f2",
           borderColor: theme === "dark" ? "#ef4444" : "#fca5a5",
           borderWidth: 2,
         };
       case "limited":
         return {
-          backgroundColor: theme === "dark" ? "rgba(245, 158, 11, 0.2)" : "#fffbeb",
+          backgroundColor:
+            theme === "dark" ? "rgba(245, 158, 11, 0.2)" : "#fffbeb",
           borderColor: theme === "dark" ? "#f59e0b" : "#fcd34d",
           borderWidth: 2,
         };
@@ -66,61 +68,41 @@ export function DefsStatsView({
     }
   };
 
+  const renderCard = (filter: DeficitFilter, label: string, value: number) => {
+    const isActive = activeFilter === filter;
+    const cardStyle = getCardStyle(filter);
+    const textColor = getTextColor(filter);
+
+    return (
+      <TouchableOpacity
+        key={filter}
+        activeOpacity={0.7}
+        onPress={() => onFilterChange(filter)}
+        className="flex-1"
+      >
+        <ThemedView
+          className={`flex-row justify-between p-2 rounded-lg border ${
+            !isActive ? "bg-background-0 border-outline-100" : ""
+          }`}
+          style={cardStyle}
+        >
+          <ThemedText className="text-sm">{label}</ThemedText>
+          <ThemedText
+            className="text-sm font-bold"
+            style={{ color: textColor }}
+          >
+            {value}
+          </ThemedText>
+        </ThemedView>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <View className="flex-row gap-2">
-      <TouchableOpacity
-        activeOpacity={0.7}
-        onPress={() => onFilterChange("all")}
-        className="flex-1"
-      >
-        <ThemedView
-          className="flex-row justify-between p-2 rounded-lg border"
-          style={getCardStyle("all")}
-        >
-          <ThemedText className="text-sm">Дефіцитів:</ThemedText>
-          <ThemedText className="text-sm font-bold" style={{ color: getTextColor("all") }}>
-            {stats.deficits}
-          </ThemedText>
-        </ThemedView>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        activeOpacity={0.7}
-        onPress={() => onFilterChange("critical")}
-        className="flex-1"
-      >
-        <ThemedView
-          className="flex-row justify-between p-2 rounded-lg border"
-          style={getCardStyle("critical")}
-        >
-          <ThemedText className="text-sm">Критичних:</ThemedText>
-          <ThemedText
-            className="text-sm font-bold"
-            style={{ color: getTextColor("critical") }}
-          >
-            {stats.critical}
-          </ThemedText>
-        </ThemedView>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        activeOpacity={0.7}
-        onPress={() => onFilterChange("limited")}
-        className="flex-1"
-      >
-        <ThemedView
-          className="flex-row justify-between p-2 rounded-lg border"
-          style={getCardStyle("limited")}
-        >
-          <ThemedText className="text-sm">В ліміті:</ThemedText>
-          <ThemedText
-            className="text-sm font-bold"
-            style={{ color: getTextColor("limited") }}
-          >
-            {stats.nearLimit}
-          </ThemedText>
-        </ThemedView>
-      </TouchableOpacity>
+      {renderCard("all", "Дефіцитів:", stats.deficits)}
+      {renderCard("critical", "Критичних:", stats.critical)}
+      {renderCard("limited", "В ліміті:", stats.nearLimit)}
     </View>
   );
 }

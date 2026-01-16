@@ -8,9 +8,10 @@ import {
   ThemedScrollView,
   ThemedText,
 } from "@/components/themed";
+import { SemanticColors } from "@/constants/theme";
 import { useIconColor } from "@/hooks/use-icon-color";
-import { useThemeColors } from "@/hooks/use-theme-colors";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
+import { useTheme } from "@/providers/theme-provider";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -28,7 +29,9 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 export const LoginForm = () => {
   const { login, isLoading, error } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
-  const { placeholder, static: staticColors } = useThemeColors();
+  const { resolvedTheme } = useTheme();
+  const theme = resolvedTheme === "dark" ? "dark" : "light";
+  const placeholder = SemanticColors.placeholder[theme];
   const iconColor = useIconColor();
   const {
     control,
@@ -79,7 +82,9 @@ export const LoginForm = () => {
         )}
 
         <ThemedBox className="gap-2">
-          <ThemedText className="text-sm font-medium text-typography-700">Логін</ThemedText>
+          <ThemedText className="text-sm font-medium text-typography-700">
+            Логін
+          </ThemedText>
           <Controller
             control={control}
             name="username"
@@ -148,9 +153,11 @@ export const LoginForm = () => {
           disabled={isLoading}
         >
           {isLoading ? (
-            <ActivityIndicator color={staticColors.white} />
+            <ActivityIndicator color={SemanticColors.white} />
           ) : (
-            <ThemedText className="text-white font-semibold text-base">Вхід</ThemedText>
+            <ThemedText className="text-white font-semibold text-base">
+              Вхід
+            </ThemedText>
           )}
         </ThemedButton>
       </ThemedBox>

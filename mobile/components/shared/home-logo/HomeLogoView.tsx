@@ -1,20 +1,11 @@
 import { ThemedText } from "@/components/themed/themed-text";
 import { ThemedView } from "@/components/themed/themed-view";
-import { useThemeColors } from "@/hooks/use-theme-colors";
 import { Image } from "expo-image";
 import { View } from "react-native";
 
 export function HomeLogoView() {
-  const { card } = useThemeColors();
-
   return (
-    <ThemedView
-      className="p-4 rounded-lg border items-center"
-      style={{
-        backgroundColor: card.bg,
-        borderColor: card.border,
-      }}
-    >
+    <ThemedView className="p-4 rounded-lg border border-outline-50 items-center bg-background-0">
       <View className="rounded-lg p-2">
         <Image
           source={require("@/assets/images/logo-btw.jpg")}

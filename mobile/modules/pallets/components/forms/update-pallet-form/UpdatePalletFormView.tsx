@@ -1,10 +1,15 @@
 import { DialogActions } from "@/components/shared/dialog/dialog-actions/DialogActions";
+import {
+  ThemedBox,
+  ThemedInput,
+  ThemedInputField,
+  ThemedSwitch,
+} from "@/components/themed";
 import { ThemedText } from "@/components/themed/themed-text";
 import { ThemedView } from "@/components/themed/themed-view";
-import { ThemedInput, ThemedInputField, ThemedSwitch } from "@/components/themed";
-import { ThemedBox } from "@/components/themed";
-import { useThemeColors } from "@/hooks/use-theme-colors";
+import { SemanticColors } from "@/constants/theme";
 import type { PalletFormValues } from "@/modules/pallets/components/forms/schema";
+import { useTheme } from "@/providers/theme-provider";
 import type { UseFormReturn } from "react-hook-form";
 import { Controller } from "react-hook-form";
 
@@ -26,7 +31,9 @@ export function UpdatePalletFormView({
     handleSubmit,
     formState: { errors },
   } = form;
-  const { placeholder } = useThemeColors();
+  const { resolvedTheme } = useTheme();
+  const theme = resolvedTheme === "dark" ? "dark" : "light";
+  const placeholder = SemanticColors.placeholder[theme];
 
   return (
     <ThemedBox className="gap-4">
@@ -53,7 +60,7 @@ export function UpdatePalletFormView({
                 editable={!isSubmitting}
                 className="text-typography-900"
               />
-              </ThemedInput>
+            </ThemedInput>
           )}
         />
         {errors.title && (

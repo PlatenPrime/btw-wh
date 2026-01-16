@@ -1,7 +1,10 @@
 import { FormDialog } from "@/components/shared/dialog/form-dialog";
+import {
+  ThemedButton,
+  ThemedText as ThemedTextButton,
+} from "@/components/themed";
 import { ThemedText } from "@/components/themed/themed-text";
-import { ThemedButton, ThemedText as ThemedTextButton } from "@/components/themed";
-import { useThemeColors } from "@/hooks/use-theme-colors";
+import { SemanticColors } from "@/constants/theme";
 import { ActivityIndicator, View } from "react-native";
 
 interface CompleteAskDialogViewProps {
@@ -19,8 +22,6 @@ export function CompleteAskDialogView({
   onCancel,
   visible,
 }: CompleteAskDialogViewProps) {
-  const { static: staticColors } = useThemeColors();
-
   return (
     <FormDialog
       visible={visible}
@@ -34,7 +35,9 @@ export function CompleteAskDialogView({
             variant="outline"
             className="flex-1"
           >
-            <ThemedTextButton className="font-semibold">Скасувати</ThemedTextButton>
+            <ThemedTextButton className="font-semibold">
+              Скасувати
+            </ThemedTextButton>
           </ThemedButton>
           <ThemedButton
             onPress={onComplete}
@@ -43,17 +46,19 @@ export function CompleteAskDialogView({
             className="flex-1"
           >
             {isCompleting ? (
-              <ActivityIndicator color={staticColors.white} />
+              <ActivityIndicator color={SemanticColors.white} />
             ) : (
-              <ThemedTextButton className="text-white font-semibold">Виконати</ThemedTextButton>
+              <ThemedTextButton className="text-white font-semibold">
+                Виконати
+              </ThemedTextButton>
             )}
           </ThemedButton>
         </View>
       }
     >
       <ThemedText type="default" className="text-sm opacity-70">
-        Ви впевнені, що хочете виконати запит "{artikul}"? Ця дія змінить статус
-        запиту на "виконано".
+        Ви впевнені, що хочете виконати запит &quot;{artikul}&quot;? Ця дія
+        змінить статус запиту на &quot;виконано&quot;.
       </ThemedText>
     </FormDialog>
   );

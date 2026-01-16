@@ -1,21 +1,14 @@
-import { View } from "react-native";
+import { ThemedBox, ThemedVStack } from "@/components/themed";
 import { ThemedView } from "@/components/themed/themed-view";
-import { ThemedVStack, ThemedBox } from "@/components/themed";
-import { useThemeColors } from "@/hooks/use-theme-colors";
 
 export function AskPullPositionsContainerSkeleton() {
-  const { card } = useThemeColors();
-
   return (
-    <ThemedView
-      className="p-4 rounded-lg border"
-      style={{
-        backgroundColor: card.bg,
-        borderColor: card.border,
-      }}
-    >
+    <ThemedView className="p-4 rounded-lg border bg-background-0 border-outline-100">
       <ThemedVStack className="gap-4">
-        <ThemedBox className="rounded bg-secondary-300" style={{ height: 20, width: 160 }} />
+        <ThemedBox
+          className="rounded bg-secondary-300"
+          style={{ height: 20, width: 160 }}
+        />
         <ThemedVStack className="gap-2">
           {Array.from({ length: 2 }).map((_, index) => (
             <ThemedBox
@@ -29,4 +22,3 @@ export function AskPullPositionsContainerSkeleton() {
     </ThemedView>
   );
 }
-
