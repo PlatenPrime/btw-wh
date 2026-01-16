@@ -1,3 +1,5 @@
+import { memo } from "react";
+import { Virtuoso } from "react-virtuoso";
 import type { PosResponse, WarehouseData } from "@/modules/poses/api/types";
 import { Circle, Package } from "lucide-react";
 
@@ -11,7 +13,7 @@ interface SkladPosesListProps {
   additionalProps?: Record<string, unknown>;
 }
 
-export function SkladPosesList({
+export const SkladPosesList = memo(function SkladPosesList({
   skladData,
   title,
   renderPos,
@@ -23,6 +25,8 @@ export function SkladPosesList({
         На складі {title} немає позицій з цим артикулом
       </p>
     );
+
+  const shouldVirtualize = skladData.poses.length >= 50;
 
   return (
     <div className="grid gap-2">
@@ -39,17 +43,34 @@ export function SkladPosesList({
       </div>
 
       {skladData.poses?.length > 0 && (
-        <div className="grid gap-4">
-          {skladData.poses?.map((pos) => (
-            <div key={pos._id}>
-              {renderPos(
-                { exists: true, message: "", data: pos },
-                additionalProps,
+        <>
+          {shouldVirtualize ? (
+            <Virtuoso
+              data={skladData.poses}
+              itemContent={(_index, pos) => (
+                <div className="mb-4">
+                  {renderPos(
+                    { exists: true, message: "", data: pos },
+                    additionalProps,
+                  )}
+                </div>
               )}
+              style={{ height: "400px" }}
+            />
+          ) : (
+            <div className="grid gap-4">
+              {skladData.poses?.map((pos) => (
+                <div key={pos._id}>
+                  {renderPos(
+                    { exists: true, message: "", data: pos },
+                    additionalProps,
+                  )}
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          )}
+        </>
       )}
     </div>
   );
-}
+});

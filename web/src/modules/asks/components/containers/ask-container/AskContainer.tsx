@@ -2,7 +2,7 @@ import { useRegisterHeaderActions } from "@/components/layout/header-actions";
 import type { AskDto } from "@/modules/asks/api/types/dto";
 import { AskContainerView } from "@/modules/asks/components/containers/ask-container/AskContainerView";
 import { Ban, SquareCheckBig, Trash } from "lucide-react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 
@@ -18,20 +18,31 @@ export function AskContainer({ askData }: AskContainerProps) {
   const [rejectDialogOpen, setRejectDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
-
   // Обработчики успеха
-  const handleCompleteAskSuccess = () => {
+  const handleCompleteAskSuccess = useCallback(() => {
     toast.success("Запит успішно виконано");
-  };
+  }, []);
 
-  const handleRejectAskSuccess = () => {
+  const handleRejectAskSuccess = useCallback(() => {
     toast.success("На запит відмовлено");
-  };
+  }, []);
 
-  const handleDeleteAskSuccess = () => {
+  const handleDeleteAskSuccess = useCallback(() => {
     navigate("/refiling/asks");
     toast.success("Запит успішно видалений");
-  };
+  }, [navigate]);
+
+  const handleCompleteClick = useCallback(() => {
+    setCompleteDialogOpen(true);
+  }, []);
+
+  const handleRejectClick = useCallback(() => {
+    setRejectDialogOpen(true);
+  }, []);
+
+  const handleDeleteClick = useCallback(() => {
+    setDeleteDialogOpen(true);
+  }, []);
 
   // Регистрируем действия в header меню
   useRegisterHeaderActions([
@@ -41,7 +52,7 @@ export function AskContainer({ askData }: AskContainerProps) {
       icon: SquareCheckBig,
       iconColor: "emerald",
       variant: "default",
-      onClick: () => setCompleteDialogOpen(true),
+      onClick: handleCompleteClick,
     },
     {
       id: "reject-ask",
@@ -49,7 +60,7 @@ export function AskContainer({ askData }: AskContainerProps) {
       icon: Ban,
       iconColor: "rose",
       variant: "destructive",
-      onClick: () => setRejectDialogOpen(true),
+      onClick: handleRejectClick,
     },
     {
       id: "delete-ask",
@@ -57,7 +68,7 @@ export function AskContainer({ askData }: AskContainerProps) {
       icon: Trash,
       iconColor: "red",
       variant: "destructive",
-      onClick: () => setDeleteDialogOpen(true),
+      onClick: handleDeleteClick,
     },
   ]);
 

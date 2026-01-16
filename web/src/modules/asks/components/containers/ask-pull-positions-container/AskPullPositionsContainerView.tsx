@@ -1,3 +1,5 @@
+import { memo } from "react";
+import { Virtuoso } from "react-virtuoso";
 import { Card, CardContent } from "@/components/ui";
 import { cn } from "@/lib/utils";
 import type { GetAskPullResponse } from "@/modules/asks/api/types/dto";
@@ -12,12 +14,13 @@ interface AskPullPositionsContainerViewProps {
   isFetching: boolean;
 }
 
-export function AskPullPositionsContainerView({
+export const AskPullPositionsContainerView = memo(function AskPullPositionsContainerView({
   data,
   askId,
   isFetching,
 }: AskPullPositionsContainerViewProps) {
   const statusMessage = getAskPullStatusMessage(data);
+  const shouldVirtualize = data.positions.length >= 50;
 
   return (
     <Card className="bg-card/10 dark:bg-card/50 grid gap-4 p-2">
@@ -43,19 +46,33 @@ export function AskPullPositionsContainerView({
       ) : (
         <CardContent
           className={cn(
-            "grid gap-4 transition-opacity duration-200 lg:w-1/2",
+            "transition-opacity duration-200 lg:w-1/2",
             isFetching && "opacity-60",
           )}
         >
-          {data.positions.map((position) => (
-            <AskPullPositionCard
-              key={position._id}
-              position={position}
-              askId={askId}
+          {shouldVirtualize ? (
+            <Virtuoso
+              data={data.positions}
+              itemContent={(_index, position) => (
+                <div className="mb-4">
+                  <AskPullPositionCard position={position} askId={askId} />
+                </div>
+              )}
+              style={{ height: "400px" }}
             />
-          ))}
+          ) : (
+            <div className="grid gap-4">
+              {data.positions.map((position) => (
+                <AskPullPositionCard
+                  key={position._id}
+                  position={position}
+                  askId={askId}
+                />
+              ))}
+            </div>
+          )}
         </CardContent>
       )}
     </Card>
   );
-}
+});

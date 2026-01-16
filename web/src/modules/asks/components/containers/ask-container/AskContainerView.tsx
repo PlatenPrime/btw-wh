@@ -1,3 +1,4 @@
+import { memo } from "react";
 import type { AskDto } from "@/modules/asks/api/types/dto";
 import { AskDetailsCard } from "@/modules/asks/components/cards/ask-details-card/AskDetailsCard";
 import { AskEvents } from "@/modules/asks/components/containers/ask-container/components/ask-events/AskEvents.tsx";
@@ -23,7 +24,7 @@ interface AskContainerViewProps {
   handleDeleteAskSuccess: () => void;
 }
 
-export function AskContainerView({
+export const AskContainerView = memo(function AskContainerView({
   askData,
   completeDialogOpen,
   setCompleteDialogOpen,
@@ -80,4 +81,4 @@ export function AskContainerView({
       />
     </section>
   );
-}
+});

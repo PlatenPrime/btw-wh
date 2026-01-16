@@ -1,8 +1,9 @@
+import { memo } from "react";
 import { Card } from "@/components/ui";
 import { SkladPosesList } from "./components/sklad-poses-list/SkladPosesList";
 import type { PosesByArtikulContainerViewProps } from "./types";
 
-export function PosesByArtikulContainerView({
+export const PosesByArtikulContainerView = memo(function PosesByArtikulContainerView({
   data,
   renderPos,
   additionalProps,
@@ -28,4 +29,4 @@ export function PosesByArtikulContainerView({
       </div>
     </Card>
   );
-}
+});

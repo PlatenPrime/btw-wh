@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { CalendarDate } from "@/components/shared/date/CalendarDate";
 import { UserAvatarName } from "@/components/shared/user/UserAvatarName";
 import { Card } from "@/components/ui/card";
@@ -9,7 +10,7 @@ interface AsksByArtikulCardViewProps {
   ask: AskDto;
 }
 
-export function AsksByArtikulCardView({ ask }: AsksByArtikulCardViewProps) {
+export const AsksByArtikulCardView = memo(function AsksByArtikulCardView({ ask }: AsksByArtikulCardViewProps) {
   return (
     <Link to={`/refiling/asks/${ask._id}`} className="block ">
       <Card className=" grid gap-2 p-2 transition-colors hover:bg-card/50 dark:hover:bg-card/80">
@@ -39,4 +40,4 @@ export function AsksByArtikulCardView({ ask }: AsksByArtikulCardViewProps) {
       </Card>
     </Link>
   );
-}
+});

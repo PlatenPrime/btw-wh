@@ -1,3 +1,4 @@
+import { memo } from "react";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { ArtDetailCard } from "@/modules/arts/components/cards/art-detail-card/ArtDetailCard";
 import { PosesByArtikulContainer } from "@/modules/arts/components/containers/poses-by-artikul-container";
@@ -19,7 +20,7 @@ interface ArtContainerViewProps {
   setCreateAskDialogOpen: (open: boolean) => void;
 }
 
-export function ArtContainerView({
+export const ArtContainerView = memo(function ArtContainerView({
   artData,
   updateLimitDialogOpen,
   setUpdateLimitDialogOpen,
@@ -52,4 +53,4 @@ export function ArtContainerView({
       />
     </section>
   );
-}
+});

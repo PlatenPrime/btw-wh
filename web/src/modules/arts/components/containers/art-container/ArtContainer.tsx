@@ -3,7 +3,7 @@ import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { useUpdateBtradeStockMutation } from "@/modules/arts/api/hooks/mutations/useUpdateBtradeStockMutation";
 import { ArtContainerView } from "@/modules/arts/components/containers/art-container/ArtContainerView.tsx";
 import { Edit, MessageSquarePlus, RefreshCw } from "lucide-react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 interface ArtContainerProps {
   artData: ArtDto;
@@ -19,13 +19,21 @@ export function ArtContainer({ artData }: ArtContainerProps) {
     artikul: artData.artikul as unknown as Pick<ArtDto, "artikul">,
   });
 
-  const handleUpdateBtradeStock = async () => {
+  const handleUpdateBtradeStock = useCallback(async () => {
     try {
       await updateBtradeStockMutation.mutateAsync(artData.artikul);
     } catch (error) {
       console.error("Ошибка обновления BtradeStock:", error);
     }
-  };
+  }, [artData.artikul, updateBtradeStockMutation]);
+
+  const handleUpdateLimitClick = useCallback(() => {
+    setUpdateLimitDialogOpen(true);
+  }, []);
+
+  const handleCreateAskClick = useCallback(() => {
+    setCreateAskDialogOpen(true);
+  }, []);
 
   // Регистрируем действия в header меню
   useRegisterHeaderActions([
@@ -42,7 +50,7 @@ export function ArtContainer({ artData }: ArtContainerProps) {
       label: "Змінити ліміт",
       icon: Edit,
       variant: "default",
-      onClick: () => setUpdateLimitDialogOpen(true),
+      onClick: handleUpdateLimitClick,
     },
     {
       id: "create-ask",
@@ -50,7 +58,7 @@ export function ArtContainer({ artData }: ArtContainerProps) {
       icon: MessageSquarePlus,
       iconColor: "emerald",
       variant: "default",
-      onClick: () => setCreateAskDialogOpen(true),
+      onClick: handleCreateAskClick,
     },
   ]);
 
