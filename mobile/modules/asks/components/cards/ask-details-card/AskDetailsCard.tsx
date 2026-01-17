@@ -17,6 +17,7 @@ export function AskDetailsCard({ askData }: AskDetailsCardProps) {
       quant={askData.quant}
       com={askData.com}
       sklad={askData.sklad}
+      zone={askData.zone}
       askerData={askData.askerData}
       createdAt={askData.createdAt}
       formattedDate={formattedDate}

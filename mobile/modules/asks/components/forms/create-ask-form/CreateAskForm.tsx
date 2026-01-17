@@ -99,6 +99,7 @@ export function CreateAskForm({
         quant: data.quant && data.quant.trim() ? Number(data.quant) : undefined,
         com: data.com && data.com.trim() ? data.com.trim() : undefined,
         sklad: data.sklad,
+        zone: currentArtData?.zone,
         askerId: user._id,
       };
 

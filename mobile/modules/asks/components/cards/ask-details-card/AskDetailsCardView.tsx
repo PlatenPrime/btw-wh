@@ -7,6 +7,7 @@ import { AskCom } from "@/modules/asks/components/elements/ask-com/AskCom";
 import { AskQuant } from "@/modules/asks/components/elements/ask-quant/AskQuant";
 import { AskSklad } from "@/modules/asks/components/elements/ask-sklad/AskSklad";
 import { AskStatusBadge } from "@/modules/asks/components/elements/ask-status-badge/AskStatusBadge";
+import { AskZone } from "@/modules/asks/components/elements/ask-zone/AskZone";
 import { Image } from "expo-image";
 import { View } from "react-native";
 
@@ -17,6 +18,7 @@ interface AskDetailsCardViewProps {
   quant?: number;
   com?: string;
   sklad?: "pogrebi" | "merezhi";
+  zone?: string;
   askerData?: AskDto["askerData"];
   createdAt: string;
   formattedDate: string;
@@ -31,6 +33,7 @@ export function AskDetailsCardView({
   quant,
   com,
   sklad,
+  zone,
   askerData,
   formattedDate,
 }: AskDetailsCardViewProps) {
@@ -54,6 +57,7 @@ export function AskDetailsCardView({
           <AskQuant quant={quant} />
           <AskCom com={com} />
           <AskSklad sklad={sklad} />
+          <AskZone zone={zone} />
           <BtradeArtDataFetcher artikul={artikul} />
 
           {askerData && (
