@@ -7,6 +7,7 @@ export interface CreateAskRequest {
   quant?: number;
   com?: string;
   sklad?: "pogrebi" | "merezhi";
+  zone?: string;
   askerId: string;
 }
 

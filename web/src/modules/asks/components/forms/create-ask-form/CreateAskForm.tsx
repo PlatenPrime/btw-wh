@@ -94,6 +94,7 @@ export function CreateAskForm({
           : {}),
         com: data.com,
         sklad: data.sklad || "pogrebi",
+        zone: currentArtData?.data?.zone,
         askerId: user._id,
       });
       onSuccess?.();
