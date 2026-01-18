@@ -1,5 +1,8 @@
 import { ThemedText } from "@/components/themed/themed-text";
 import { ThemedBox, ThemedHStack, ThemedPressable } from "@/components/themed";
+import { ThemedView } from "@/components/themed/themed-view";
+import { useThemeValue } from "@/hooks/use-theme-value";
+import { cn } from "@/lib/utils";
 import { View } from "react-native";
 
 interface ZoneCardViewProps {
@@ -17,8 +20,15 @@ export function ZoneCardView({
   onPress,
   menu,
 }: ZoneCardViewProps) {
+  const theme = useThemeValue();
+
   return (
-    <View className="p-4 rounded-lg border border-outline-50 bg-background-0">
+    <ThemedView
+      className={cn(
+        "p-4 rounded-lg border bg-background-0",
+        theme === "dark" ? "border-outline-50" : "border-outline-100"
+      )}
+    >
       <ThemedHStack className="items-center justify-between">
         <ThemedPressable onPress={onPress} className="flex-1">
           <ThemedBox className="flex-1 min-w-0 gap-2">
@@ -37,7 +47,7 @@ export function ZoneCardView({
         </ThemedPressable>
         {menu && <View>{menu}</View>}
       </ThemedHStack>
-    </View>
+    </ThemedView>
   );
 }
 

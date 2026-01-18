@@ -1,17 +1,14 @@
-const colors = require("tailwindcss/colors");
+import nativewindPreset from "nativewind/preset";
+import colors from "tailwindcss/colors";
 
 // Удаляем устаревшие цвета, чтобы убрать предупреждения
-const {
-  lightBlue,
-  warmGray,
-  trueGray,
-  coolGray,
-  blueGray,
-  ...modernColors
-} = colors;
+const deprecatedColors = ['lightBlue', 'warmGray', 'trueGray', 'coolGray', 'blueGray'];
+const modernColors = Object.fromEntries(
+  Object.entries(colors).filter(([key]) => !deprecatedColors.includes(key))
+);
 
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   darkMode: process.env.DARK_MODE ? process.env.DARK_MODE : "class",
   content: [
     "./app/**/*.{html,js,jsx,ts,tsx,mdx}",
@@ -20,7 +17,7 @@ module.exports = {
     "./*.{html,js,jsx,ts,tsx,mdx}",
     "./src/**/*.{html,js,jsx,ts,tsx,mdx}",
   ],
-  presets: [require("nativewind/preset")],
+  presets: [nativewindPreset],
   important: "html",
   safelist: [
     {

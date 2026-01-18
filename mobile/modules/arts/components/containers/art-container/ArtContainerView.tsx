@@ -1,12 +1,12 @@
-import { View, ScrollView, RefreshControl } from "react-native";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { ArtDetailCard } from "@/modules/arts/components/cards/art-detail-card/ArtDetailCard";
-import { UpdateArtLimitDialog } from "@/modules/arts/components/dialogs/update-art-limit-dialog/UpdateArtLimitDialog";
 import { ArtPosesByArtikulContainer } from "@/modules/arts/components/containers/poses-by-artikul-container/ArtPosesByArtikulContainer";
-import { CreateAskDialog } from "@/modules/asks/components/dialogs/create-ask-dialog/CreateAskDialog";
-import { AsksByArtikulFetcher } from "@/modules/asks/components/fetchers/asks-by-artikul-fetcher/AsksByArtikulFetcher";
+import { UpdateArtLimitDialog } from "@/modules/arts/components/dialogs/update-art-limit-dialog/UpdateArtLimitDialog";
 import { AsksByArtikulContainer } from "@/modules/asks/components/containers/asks-by-artikul-container/AsksByArtikulContainer";
 import { AsksByArtikulContainerSkeleton } from "@/modules/asks/components/containers/asks-by-artikul-container/AsksByArtikulContainerSkeleton";
+import { CreateAskDialog } from "@/modules/asks/components/dialogs/create-ask-dialog/CreateAskDialog";
+import { AsksByArtikulFetcher } from "@/modules/asks/components/fetchers/asks-by-artikul-fetcher/AsksByArtikulFetcher";
+import { RefreshControl, ScrollView } from "react-native";
 
 interface ArtContainerViewProps {
   artData: ArtDto;

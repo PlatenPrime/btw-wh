@@ -1,5 +1,5 @@
-import { ThemedView } from "@/components/themed/themed-view";
 import { ThemedText } from "@/components/themed/themed-text";
+import { ThemedView } from "@/components/themed/themed-view";
 import { useAsksByArtikulQuery } from "@/modules/asks/api/hooks/queries/useAsksByArtikulQuery";
 import type { GetAsksByArtikulResponse } from "@/modules/asks/api/types/dto";
 import type { ComponentType } from "react";
@@ -43,6 +43,16 @@ export function AsksByArtikulFetcher({
       <ThemedView className="p-4 rounded-lg border border-outline-50">
         <ThemedText type="default" className="text-center">
           Немає даних для відображення
+        </ThemedText>
+      </ThemedView>
+    );
+  }
+
+  if (asksQuery.data.data.length === 0) {
+    return (
+      <ThemedView className="p-4 rounded-lg border border-outline-50">
+        <ThemedText type="default" className="text-center">
+          Для цього артикулу немає запитів
         </ThemedText>
       </ThemedView>
     );

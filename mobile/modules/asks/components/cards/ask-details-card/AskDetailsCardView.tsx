@@ -1,6 +1,8 @@
 import { ArtImageLink } from "@/components/shared/art-image-link";
 import { ThemedText } from "@/components/themed/themed-text";
 import { ThemedView } from "@/components/themed/themed-view";
+import { useThemeValue } from "@/hooks/use-theme-value";
+import { cn } from "@/lib/utils";
 import { BtradeArtDataFetcher } from "@/modules/arts/components/fetchers/btrade-art-data-fetcher/BtradeArtDataFetcher";
 import type { AskDto } from "@/modules/asks/api/types/dto";
 import { AskCom } from "@/modules/asks/components/elements/ask-com/AskCom";
@@ -37,8 +39,15 @@ export function AskDetailsCardView({
   askerData,
   formattedDate,
 }: AskDetailsCardViewProps) {
+  const theme = useThemeValue();
+
   return (
-    <ThemedView className="p-3 rounded-lg border bg-background-0 border-outline-50  ">
+    <ThemedView
+      className={cn(
+        "p-3 rounded-lg border bg-background-0",
+        theme === "dark" ? "border-outline-50" : "border-outline-100"
+      )}
+    >
       <View className="gap-3">
         <View className="flex-row items-start justify-between">
           <View className="flex-1">
