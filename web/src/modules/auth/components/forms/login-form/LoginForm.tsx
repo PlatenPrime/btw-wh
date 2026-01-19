@@ -3,12 +3,13 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import { useAuth } from "@/modules/auth/api/hooks/useAuth.ts";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Eye, EyeOff } from "lucide-react";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { z } from "zod";
-import { useAuth } from "@/modules/auth/api/hooks/useAuth.ts";
 
 // Zod schema for login form
 const loginSchema = z.object({
@@ -21,6 +22,7 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 export const LoginForm = () => {
   const { login, isLoading, error } = useAuth();
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = React.useState(false);
   const {
     register,
     handleSubmit,
@@ -74,15 +76,31 @@ export const LoginForm = () => {
             {errors.username.message}
           </span>
         )}
-        <Input
-          type="password"
-          placeholder="Пароль"
-          autoComplete="current-password"
-          aria-invalid={!!errors.password}
-          aria-describedby="password-error"
-          {...register("password")}
-          disabled={isLoading}
-        />
+        <div className="relative">
+          <Input
+            type={showPassword ? "text" : "password"}
+            placeholder="Пароль"
+            autoComplete="current-password"
+            aria-invalid={!!errors.password}
+            aria-describedby="password-error"
+            {...register("password")}
+            disabled={isLoading}
+            className="pr-10"
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            disabled={isLoading}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            aria-label={showPassword ? "Скрыть пароль" : "Показать пароль"}
+          >
+            {showPassword ? (
+              <Eye className="h-4 w-4" />
+            ) : (
+              <EyeOff className="h-4 w-4" />
+            )}
+          </button>
+        </div>
         {errors.password && (
           <span id="password-error" className="block text-sm text-red-600">
             {errors.password.message}

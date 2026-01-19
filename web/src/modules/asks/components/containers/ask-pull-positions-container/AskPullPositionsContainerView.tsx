@@ -26,7 +26,7 @@ export const AskPullPositionsContainerView = memo(function AskPullPositionsConta
     <Card className="bg-card/10 dark:bg-card/50 grid gap-4 p-2">
       <CardContent className="p-0">
         <div className="grid gap-2">
-          <h2 className="text-card-foreground text-center text-lg font-bold">
+          <h2 className="text-card-foreground text-center text-base font-bold">
             Позиції для зняття
             {isFetching && (
               <LoaderPinwheel className="text-muted-foreground h-4 w-4 animate-spin" />

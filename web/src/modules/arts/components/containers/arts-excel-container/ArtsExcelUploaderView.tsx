@@ -1,4 +1,5 @@
 import { UploadProgressBar } from "@/components/shared/progress/UploadProgressBar";
+import { Wrapper } from "@/components/shared/wrappers/Wrapper";
 import { Button } from "@/components/ui/button";
 import type { UploadingArt } from "@/modules/arts/api/types/arts";
 import { InputUploader } from "@/modules/arts/components/containers/arts-excel-container/components/input-uploader";
@@ -24,9 +25,9 @@ export function ArtsExcelUploaderView({
   isUploading,
 }: ViewProps) {
   return (
-    <div className="bg-card-background grid w-full gap-6 rounded-2xl border p-6 shadow-lg">
+    <Wrapper className="grid w-full gap-6">
       <header className="space-y-2">
-        <h2 className="text-2xl font-bold">Імпорт з Excel</h2>
+        <h2 className="text-xl font-bold">Імпорт з Excel</h2>
         <p className="text-muted-foreground text-sm">
           Завантажте файл <code className="rounded px-1">.xlsx</code> з полями{" "}
           <span className="font-bold">artikul, zone, namerus, nameukr</span>
@@ -55,6 +56,6 @@ export function ArtsExcelUploaderView({
         uploadProgress={uploadProgress}
         isUploading={isUploading}
       />
-    </div>
+    </Wrapper>
   );
 }

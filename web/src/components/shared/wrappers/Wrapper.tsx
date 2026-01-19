@@ -1,18 +1,14 @@
-import { Card, CardContent } from "@/components/ui";
 import { cn } from "@/lib/utils";
 
-export function Wrapper({
-  children,
-  className,
-}: {
+interface WrapperProps {
   children: React.ReactNode;
   className?: string;
-}) {
+}
+
+export function Wrapper({ children, className }: WrapperProps) {
   return (
-    <Card
-      className={cn("bg-card/10 dark:bg-card/50 rounded-xl p-2")}
-    >
-      <CardContent className={cn("p-0", className)}>{children}</CardContent>
-    </Card>
+
+      <div className={cn("bg-card/50 dark:bg-card/50 rounded-xl p-2 shadow-2xl shadow-red-500 dark:shadow-red-300 border border-black/10 dark:border-white/5 ", className)}>{children}</div>
+
   );
 }

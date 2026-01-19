@@ -8,7 +8,7 @@ export function useZonesParams() {
   const page = Number(getParam(params, "page", "1"));
   const search = getParam(params, "search", "");
   const limit = Number(getParam(params, "limit", "20"));
-  const sortBy = getParam(params, "sortBy", "sector") as "title" | "bar" | "sector" | "createdAt";
+  const sortBy = getParam(params, "sortBy", "title") as "title" | "bar" | "sector" | "createdAt";
   const sortOrder = getParam(params, "sortOrder", "asc") as "asc" | "desc";
 
   const setPage = (newPage: number) =>

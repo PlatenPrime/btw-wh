@@ -20,13 +20,13 @@ export function ArtsContainerView({
 }: ArtsContainerViewProps) {
   return (
     <main className="grid max-w-screen grid-cols-1 gap-2 p-2">
-      <div className="flex flex-col items-center gap-2 xl:flex-row">
+      <Wrapper className="flex flex-col items-center gap-2 xl:flex-row">
         <SearchPanel
           search={search}
           onSearchChange={(e) => onSearchChange(e.target.value)}
           placeholder="Пошук артикулів..."
         />
-      </div>
+      </Wrapper>
       <Wrapper>
         <ArtsGrid arts={data} />
       </Wrapper>

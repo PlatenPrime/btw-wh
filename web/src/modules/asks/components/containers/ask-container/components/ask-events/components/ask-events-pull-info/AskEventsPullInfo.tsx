@@ -9,8 +9,8 @@ export function AskEventsPullInfo({
   totalBoxes,
 }: AskEventsPullInfoProps) {
   return (
-    <div className="flex items-center gap-2">
-      <h3 className="text-sm font-semibold">
+    <div className="flex items-center justify-center gap-2">
+      <h3 className="text-base font-semibold text-center">
         Знято: {totalQuant} шт. / {totalBoxes} кор.
       </h3>
     </div>
