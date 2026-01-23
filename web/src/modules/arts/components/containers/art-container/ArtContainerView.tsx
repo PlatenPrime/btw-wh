@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { Wrapper } from "@/components/shared/wrappers/Wrapper";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { ArtDetailCard } from "@/modules/arts/components/cards/art-detail-card/ArtDetailCard";
 import { PosesByArtikulContainer } from "@/modules/arts/components/containers/poses-by-artikul-container";
@@ -9,6 +9,7 @@ import {
 } from "@/modules/asks/components/containers/asks-by-artikul-container";
 import { CreateAskDialog } from "@/modules/asks/components/dialogs/create-ask-dialog/CreateAskDialog";
 import { AsksByArtikulFetcher } from "@/modules/asks/components/fetchers/asks-by-artikul-fetcher";
+import { memo } from "react";
 
 interface ArtContainerViewProps {
   artData: ArtDto;
@@ -29,15 +30,21 @@ export const ArtContainerView = memo(function ArtContainerView({
 }: ArtContainerViewProps) {
   return (
     <section className="grid gap-2">
-      <ArtDetailCard artData={artData} />
+      <Wrapper>
+        <ArtDetailCard artData={artData} />
+      </Wrapper>
 
-      <PosesByArtikulContainer artikul={artData.artikul} />
+      <Wrapper>
+        <PosesByArtikulContainer artikul={artData.artikul} />
+      </Wrapper>
 
-      <AsksByArtikulFetcher
+      <Wrapper>
+        <AsksByArtikulFetcher
         artikul={artData.artikul}
-        ContainerComponent={AsksByArtikulContainer}
-        SkeletonComponent={AsksByArtikulContainerSkeleton}
-      />
+          ContainerComponent={AsksByArtikulContainer}
+          SkeletonComponent={AsksByArtikulContainerSkeleton}
+        />
+      </Wrapper>
 
       {/* Диалоги вне dropdown для избежания конфликта фокуса */}
       <UpdateArtLimitDialog

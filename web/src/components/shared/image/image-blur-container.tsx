@@ -16,7 +16,7 @@ export function ImageBlurContainer({
   const { theme } = useTheme();
   const imageUrl = getSmallImageUrl(artikul);
 
-  if (theme === "dark") {
+  if (theme !== "light") {
     return (
       <div
         className={cn("relative isolate overflow-hidden", className)}

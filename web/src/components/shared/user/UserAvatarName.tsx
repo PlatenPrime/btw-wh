@@ -26,7 +26,7 @@ export function UserAvatarName({
         <AvatarImage src={photoUrl} alt={fullname} />
         <AvatarFallback>{fullname.charAt(0)}</AvatarFallback>
       </Avatar>
-      <p className="text-xs" >{fullname}</p>
+      <p className="text-sm" >{fullname}</p>
     </div>
   );
 }

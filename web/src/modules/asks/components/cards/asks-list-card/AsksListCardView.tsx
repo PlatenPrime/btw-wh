@@ -19,7 +19,7 @@ export function AsksListCardView({
   statusText,
 }: AsksListCardViewProps) {
   return (
-    <Card className="grid gap-2 p-2">
+    <Card className="grid gap-2 p-2 shadow-none ring-1 ring-gray-200 transition-all duration-500 ease-out hover:shadow-lg hover:bg-muted-foreground/5 dark:ring-gray-700">
       <ArtikulImageLink
         artikul={ask.artikul}
         nameukr={ask.nameukr}

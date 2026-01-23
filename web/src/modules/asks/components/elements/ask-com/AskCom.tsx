@@ -7,7 +7,7 @@ interface AskComProps {
 export function AskCom({ com }: AskComProps) {
   if (!com) return null;
   return (
-    <div className="text-foreground flex items-center gap-2 text-xs">
+    <div className="text-foreground flex items-center gap-2 text-sm">
       <MessageSquareMore className="h-4 w-4" />
       <span className="italic">{com}</span>
     </div>

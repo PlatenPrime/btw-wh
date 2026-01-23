@@ -1,3 +1,4 @@
+import { Card } from "@/components/ui";
 import { cn } from "@/lib/utils";
 import type { PosResponse } from "@/modules/poses/api/types";
 
@@ -11,15 +12,15 @@ export function SkladListPos({ pos, onClick }: SkladListPosProps) {
   const isQuantEmpty = pos.data!.quant === 0;
 
   return (
-    <div
+    <Card
       className={cn(
-        "hover:bg-muted/25 block cursor-pointer rounded-md  p-2 transition-colors",
+        "hover:bg-foreground/5 block cursor-pointer rounded-md  p-2 transition-colors shadow-none ring-1 ring-gray-200 dark:ring-gray-700",
       )}
       onClick={onClick}
     >
       <div className="grid grid-cols-3 text-sm">
         <div className="min-w-0 flex-1">
-          <h4 className="truncate font-bold">
+          <h4 className="truncate font-bold text-base">
             {pos.data?.palletData?.title || "Невідома палета"}
           </h4>
         </div>
@@ -41,6 +42,6 @@ export function SkladListPos({ pos, onClick }: SkladListPosProps) {
           {pos.data?.quant || 0}
         </span>
       </div>
-    </div>
+    </Card>
   );
 }

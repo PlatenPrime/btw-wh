@@ -9,7 +9,7 @@ export function BtradeArtDataContainerView({
   data,
 }: BtradeArtDataContainerViewProps) {
   return (
-    <div className="text-foreground grid gap-2 text-xs">
+    <div className="text-foreground grid gap-2 text-sm">
       <p className="flex items-center gap-2 text-nowrap">
         <Warehouse className="h-4 w-4 text-sky-500" />
         <span>{data.quantity}</span>

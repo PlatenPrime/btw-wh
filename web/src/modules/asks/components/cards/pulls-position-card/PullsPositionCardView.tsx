@@ -24,6 +24,8 @@ export function PullsPositionCardView({
   return (
     <Card className="p-0">
       <CardContent className="grid gap-2 p-2">
+        <h4 className="text-base font-semibold text-center">{position.palletTitle}</h4>
+        <hr/>
         <ArtikulImageLink
           artikul={position.artikul}
           nameukr={position.nameukr}
@@ -31,23 +33,21 @@ export function PullsPositionCardView({
           link={`/arts/${position.artikul}`}
         />
         <div className="grid grid-cols-2 gap-2">
-          <div className=" flex flex-col justify-end gap-2 text-sm">
+          <div className="flex flex-col justify-end gap-2 text-sm">
             {position.askRemainingQuantity !== null && (
-              <div className="text-foreground flex items-center gap-1 text-xs">
+              <div className="text-foreground flex items-center gap-1 text-sm">
                 <Circle className="h-3 w-3" /> {position.askRemainingQuantity}
               </div>
             )}
-            <span className="font-semibold">{position.palletTitle}</span>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setOpen(true)}
+              className="w-fit "
+            >
+              Зняти товар
+            </Button>
           </div>
-
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setOpen(true)}
-            className="self-end justify-self-end w-fit"
-          >
-            Зняти товар
-          </Button>
         </div>
         <AskPosEditDialog
           pos={posResponse}

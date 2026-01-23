@@ -21,7 +21,7 @@ export function BtradeArtDataContainer({
   }
 
   if (!data) {
-    return <p className="text-muted-foreground text-xs">Дані тимчасово недоступні</p>;
+    return <p className="text-muted-foreground text-sm">Дані тимчасово недоступні</p>;
   }
 
   return <BtradeArtDataContainerView data={data} />;

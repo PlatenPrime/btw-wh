@@ -8,7 +8,7 @@ interface AskSkladProps {
 export function AskSklad({ sklad }: AskSkladProps) {
   if (!sklad) return null;
   return (
-    <div className="text-foreground flex items-center gap-2 text-xs">
+    <div className="text-foreground flex items-center gap-2 text-sm">
       <Warehouse className="h-4 w-4" />
       <span>{sklads[sklad as keyof ISklads] || sklad}</span>
     </div>

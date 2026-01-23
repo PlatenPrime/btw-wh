@@ -33,7 +33,7 @@ export  function ArtikulImageLink({
           {bage && bage}
         </div>
 
-        <span className={cn("text-muted-foreground text-xs font-normal")}>
+        <span className={cn("text-muted-foreground text-sm font-normal")}>
           {nameukr ? nameukr.slice(10) : artikul}
         </span>
       </Link>

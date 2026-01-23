@@ -38,25 +38,35 @@ export const AskContainerView = memo(function AskContainerView({
   handleDeleteAskSuccess,
 }: AskContainerViewProps) {
   return (
-    <section className="grid gap-4">
-      <Wrapper> <AskDetailsCard askData={askData} /></Wrapper>
-     
-      <Wrapper> <AskEvents
-        events={askData.events ?? []}
-        pullQuant={askData.pullQuant}
-        pullBox={askData.pullBox}
-        pullBoxes={askData.pullBoxes}
-      /></Wrapper>
+    <section className="grid gap-2">
+      <Wrapper className="grid gap-2 lg:grid-cols-2">
+        {" "}
+        <AskDetailsCard askData={askData} />
+        <AskEvents
+          events={askData.events ?? []}
+          pullQuant={askData.pullQuant}
+          pullBox={askData.pullBox}
+          pullBoxes={askData.pullBoxes}
+        />
+      </Wrapper>
 
       {/* Позиции для снятия */}
-      {askData.artikul && <Wrapper> <AskPullPositionsContainer askId={askData._id} /></Wrapper>}
+      {askData.artikul && (
+        <Wrapper>
+          {" "}
+          <AskPullPositionsContainer askId={askData._id} />
+        </Wrapper>
+      )}
 
       {/* Позиции по артикулу */}
       {askData.artikul && (
-        <Wrapper> <AskPosesByArtikulContainer
-          artikul={askData.artikul}
-          askId={askData._id}
-        /></Wrapper>
+        <Wrapper>
+          {" "}
+          <AskPosesByArtikulContainer
+            artikul={askData.artikul}
+            askId={askData._id}
+          />
+        </Wrapper>
       )}
 
       {/* Диалоги вне dropdown для избежания конфликта фокуса */}

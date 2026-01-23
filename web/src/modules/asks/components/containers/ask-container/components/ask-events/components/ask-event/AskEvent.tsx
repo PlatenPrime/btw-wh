@@ -25,11 +25,11 @@ export function AskEventComponent({ event, index }: AskEventProps) {
         <div className="flex items-center gap-2">
           <IconComponent className={cn("h-4 w-4", meta?.iconClass)} />
         </div>
-        <span className="text-muted-foreground text-xs">
+        <span className="text-muted-foreground text-sm">
           {formatDate(event.date)}
         </span>
       </div>
-      <p className="text-foreground text-xs">
+      <p className="text-foreground text-sm">
         {meta?.buildDescription(event) ??
           `${event.userData?.fullname ?? "Користувач"} зафіксував подію.`}
       </p>
