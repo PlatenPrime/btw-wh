@@ -52,6 +52,7 @@ export function DialogActions({
         disabled={isDisabledState}
         variant={variants[variant] || "default"}
         className="flex-1"
+        key={`submit-${isDisabledState}`}
       >
         {isSubmitting ? (
           <ActivityIndicator color={SemanticColors.white} />

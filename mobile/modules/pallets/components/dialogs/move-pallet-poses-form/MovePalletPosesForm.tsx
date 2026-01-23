@@ -82,7 +82,7 @@ export function MovePalletPosesForm({
     if (onSubmitReady) {
       onSubmitReady(handleSubmit, isSubmitDisabled);
     }
-  }, [onSubmitReady, handleSubmit, isSubmitDisabled]);
+  }, [onSubmitReady, handleSubmit, isSubmitDisabled, selectedPalletId]);
 
   return (
     <ThemedVStack className="gap-4">
@@ -129,7 +129,11 @@ export function MovePalletPosesForm({
 
               return (
                 <ThemedPressable
-                  onPress={() => !disabled && setSelectedPalletId(item._id)}
+                  onPress={() => {
+                    if (!disabled) {
+                      setSelectedPalletId(item._id);
+                    }
+                  }}
                   className={`flex-row items-center justify-between p-3 border-b border-outline-50 ${
                     isSelected ? "bg-background-200" : "bg-background-50"
                   }`}

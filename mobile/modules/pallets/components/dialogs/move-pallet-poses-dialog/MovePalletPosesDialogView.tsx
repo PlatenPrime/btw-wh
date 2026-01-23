@@ -2,7 +2,7 @@ import { DialogActions } from "@/components/shared/dialog/dialog-actions/DialogA
 import { FormDialog } from "@/components/shared/dialog/form-dialog";
 import { ThemedBox, ThemedText } from "@/components/themed/";
 import type { IPallet } from "@/modules/pallets/api/types";
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { MovePalletPosesForm } from "../../dialogs/move-pallet-poses-form/MovePalletPosesForm";
 
 interface MovePalletPosesDialogViewProps {
@@ -24,19 +24,31 @@ export function MovePalletPosesDialogView({
   mutationError,
   isMoving,
 }: MovePalletPosesDialogViewProps) {
-  const [submitFn, setSubmitFn] = useState<(() => void) | null>(null);
+  const submitFnRef = useRef<(() => void) | null>(null);
+  const isSubmitDisabledRef = useRef(true);
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
 
-  const handleSubmitReady = (fn: () => void, disabled: boolean) => {
-    setSubmitFn(() => fn);
-    setIsSubmitDisabled(disabled);
-  };
-
-  const handleDialogSubmit = () => {
-    if (submitFn && !isSubmitDisabled) {
-      submitFn();
+  useEffect(() => {
+    if (!visible) {
+      // Сбрасываем только при закрытии диалога
+      submitFnRef.current = null;
+      isSubmitDisabledRef.current = true;
+      setIsSubmitDisabled(true);
     }
-  };
+  }, [visible]);
+
+  const handleSubmitReady = useCallback((fn: () => void, disabled: boolean) => {
+    submitFnRef.current = fn;
+    isSubmitDisabledRef.current = disabled;
+    setIsSubmitDisabled(disabled);
+  }, []);
+
+  const handleDialogSubmit = useCallback(() => {
+    const fn = submitFnRef.current;
+    if (fn) {
+      fn();
+    }
+  }, []);
 
   return (
     <FormDialog
