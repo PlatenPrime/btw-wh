@@ -4,22 +4,22 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export function DefsStatsSkeleton() {
   return (
-    <Wrapper className="flex gap-2">
+    <Wrapper className="flex flex-col gap-2 sm:flex-row">
       {/* Дефіцитів skeleton */}
-      <Card className="flex flex-row gap-2 p-2 text-sm">
-        <Skeleton className="h-4 w-16" />
+      <Card className="flex flex-row justify-between gap-2 p-2 py-1 text-sm">
+        <Skeleton className="h-4 w-20" />
         <Skeleton className="h-4 w-8" />
       </Card>
 
       {/* Критичних skeleton */}
-      <Card className="flex flex-row gap-2 p-2 text-sm">
-        <Skeleton className="h-4 w-16" />
+      <Card className="flex flex-row justify-between gap-2 p-2 py-1 text-sm">
+        <Skeleton className="h-4 w-20" />
         <Skeleton className="h-4 w-8" />
       </Card>
 
       {/* В ліміті skeleton */}
-      <Card className="flex flex-row gap-2 p-2 text-sm">
-        <Skeleton className="h-4 w-16" />
+      <Card className="flex flex-row justify-between gap-2 p-2 py-1 text-sm">
+        <Skeleton className="h-4 w-20" />
         <Skeleton className="h-4 w-8" />
       </Card>
     </Wrapper>

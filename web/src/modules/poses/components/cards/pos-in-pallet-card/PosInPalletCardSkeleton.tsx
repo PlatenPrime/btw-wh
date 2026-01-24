@@ -5,7 +5,7 @@ export function PosInPalletCardSkeleton() {
   return (
     <Card className="group relative flex h-32 flex-col justify-between gap-2 overflow-hidden p-2 transition-all duration-200">
       {/* Header with image, title and actions */}
-      <CardHeader className="flex min-h-0 flex-shrink-0 items-start gap-3 p-0 pb-2">
+      <CardHeader className="flex min-h-0 flex-shrink-0 items-start gap-3 p-0">
         {/* Image and title section */}
         <div className="flex min-h-0 flex-1 items-start gap-3">
           {/* Art image skeleton */}

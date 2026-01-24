@@ -5,24 +5,21 @@ import { BtradeArtDataSkeleton } from "@/modules/arts/components/containers/btra
 export function ArtDetailCardSkeleton() {
   return (
     <Card className="p-0">
-      <CardContent className="flex items-start gap-2 p-1 text-sm">
+      <CardContent className="grid gap-2 p-2 text-sm">
         {/* Скелетон для изображения товара */}
         <Skeleton className="h-10 w-10 rounded-md" />
 
-        <div className="grid gap-1">
-          {/* Скелетон для названия товара */}
-          <Skeleton className="h-4 w-64" />
+        <div className="grid gap-2">
+          {/* Скелетон для зоны */}
+          <div className="flex items-center gap-2">
+            <Skeleton className="h-4 w-4" />
+            <Skeleton className="h-4 w-16" />
+          </div>
 
-          {/* Скелетон для зоны и лимита */}
-          <div className="grid gap-1">
-            <div className="flex items-center gap-1">
-              <Skeleton className="h-3 w-3 rounded" />
-              <Skeleton className="h-4 w-12" />
-            </div>
-            <div className="flex items-center gap-1">
-              <Skeleton className="h-3 w-3 rounded" />
-              <Skeleton className="h-4 w-12" />
-            </div>
+          {/* Скелетон для лимита */}
+          <div className="flex items-center gap-2">
+            <Skeleton className="h-4 w-4" />
+            <Skeleton className="h-4 w-12" />
           </div>
 
           {/* Используем существующий скелетон для данных Btrade */}

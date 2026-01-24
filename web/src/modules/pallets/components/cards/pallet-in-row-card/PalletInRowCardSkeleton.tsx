@@ -19,16 +19,17 @@ export function PalletInRowCardSkeleton() {
         {/* Edit button skeleton */}
         <Skeleton className="h-8 w-8 rounded-md" />
       </CardHeader>
-      <CardContent className="flex items-start justify-between gap-2 p-0 px-2">
+      <CardContent className="grid gap-2 p-0">
         {/* Sector skeleton */}
-        <div className="flex items-center gap-2">
-          <Skeleton className="h-3 w-3" />
+        <div className="border-border flex items-center justify-between gap-2 border-b">
+          <Skeleton className="h-3 w-16" />
           <Skeleton className="h-3 w-16" />
         </div>
 
         {/* Def status skeleton */}
-        <div className="flex items-center gap-2">
-          <Skeleton className="h-3 w-3" />
+        <div className="border-border flex items-center justify-between gap-2 border-b">
+          <Skeleton className="h-3 w-12" />
+          <Skeleton className="h-3 w-8" />
         </div>
       </CardContent>
     </Card>

@@ -19,13 +19,6 @@ export function AsksByArtikulCardSkeleton() {
               <Skeleton className="h-4 w-24" />
             </div>
           </div>
-
-          {/* Дополнительная информация */}
-          <div className="grid gap-1">
-            <Skeleton className="h-4 w-16" />
-            <Skeleton className="h-4 w-32" />
-            <Skeleton className="h-4 w-20" />
-          </div>
         </div>
 
         {/* Статус */}

@@ -2,7 +2,6 @@ import * as React from "react";
 
 import { ModeToggle } from "@/components/shared/mode-toggle.tsx";
 import { ProfileSidebarCard } from "@/components/layout/sidebar/profile-sidebar-card/ProfileSidebarCard";
-import { Separator } from "@/components/ui/separator";
 import {
   Sidebar,
   SidebarContent,
@@ -43,14 +42,26 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
   return (
     <Sidebar {...props}>
-      <SidebarHeader className="flex flex-row items-center justify-between">
-        <Link to="/" className="p-2 text-2xl font-bold hover:text-sky-500">
-          BTW
+      <SidebarHeader className="relative flex flex-row items-center justify-between gap-3 border-b border-sidebar-border/50 bg-sidebar/50 px-3 py-3 shadow-sm backdrop-blur-sm supports-[backdrop-filter]:bg-sidebar/80">
+        <Link
+          to="/"
+          className="group relative flex items-center transition-all duration-300 hover:scale-105 active:scale-100"
+        >
+          <span className="relative z-10 font-serif text-2xl font-bold tracking-tight transition-all duration-300">
+            <span className="bg-gradient-to-r from-primary from-0% via-chart-1 via-[48%] via-[52%] to-primary to-100% bg-clip-text text-transparent [filter:contrast(1.25)_brightness(1.1)] group-hover:[filter:contrast(1.35)_brightness(1.15)]">
+              BTW
+            </span>
+          </span>
+          <span className="absolute inset-0 -z-0 rounded-lg bg-primary/0 blur-xl transition-all duration-300 group-hover:bg-primary/20" />
         </Link>
-        <Separator orientation="vertical" className="mr-2 h-4" />
-        <ModeToggle />
-        <Separator orientation="vertical" className="mr-2 h-4 md:hidden" />
-        <SidebarTrigger className="-ml-1 md:hidden" />
+        <div className="flex items-center gap-2">
+          <div className="transition-transform duration-300 hover:scale-110 active:scale-95">
+            <ModeToggle />
+          </div>
+          <div className="transition-transform duration-300 hover:scale-110 active:scale-95 md:hidden">
+            <SidebarTrigger />
+          </div>
+        </div>
       </SidebarHeader>
       <SidebarContent>
         {/* We create a SidebarGroup for each parent. */}

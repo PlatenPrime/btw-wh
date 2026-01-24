@@ -12,8 +12,12 @@ export function AskContainerSkeleton() {
         <AskEventsSkeleton />
       </Wrapper>
 
-      <AskPullPositionsContainerSkeleton />
-      <PosesByArtikulContainerSkeleton />
+      <Wrapper>
+        <AskPullPositionsContainerSkeleton />
+      </Wrapper>
+      <Wrapper>
+        <PosesByArtikulContainerSkeleton />
+      </Wrapper>
     </section>
   );
 }

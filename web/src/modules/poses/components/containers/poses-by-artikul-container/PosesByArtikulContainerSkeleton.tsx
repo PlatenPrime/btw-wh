@@ -3,9 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export function PosesByArtikulContainerSkeleton() {
   return (
-    <div className="grid gap-4">
-      {/* Позиции по складам */}
-      <div className="grid items-start gap-4 lg:grid-cols-2">
+    <div className="grid items-start gap-2 lg:grid-cols-2">
         {/* Погреби */}
         <Wrapper className="grid gap-2">
           <div className="grid grid-cols-3">
@@ -45,7 +43,6 @@ export function PosesByArtikulContainerSkeleton() {
             ))}
           </div>
         </Wrapper>
-      </div>
     </div>
   );
 }

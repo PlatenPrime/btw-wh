@@ -1,13 +1,11 @@
+import { Skeleton } from "@/components/ui/skeleton";
 import { ZonesGridSkeleton } from "@/modules/zones/components/lists/zones-grid";
 
 export function ZonesContainerSkeleton() {
   return (
-    <div className="space-y-4">
-        <div className="flex justify-center">
-        <div className="h-10 w-64 bg-muted animate-pulse rounded" />
-      </div>
+    <div className="grid gap-2">
+      <Skeleton className="h-12" />
       <ZonesGridSkeleton count={20} />
-    
     </div>
   );
 }

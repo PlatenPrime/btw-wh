@@ -7,18 +7,27 @@ export function AskDetailsCardSkeleton() {
   return (
     <Card className="w-full p-0">
       <CardContent className="flex flex-row items-start gap-2 p-2">
-        {/* Скелетон для AskImageStatus */}
-        <Skeleton className="h-16 w-16 rounded-md" />
-
         <div className="grid gap-2 text-sm">
-          {/* Скелетон для ArtNameukr */}
-          <Skeleton className="h-4 w-48" />
+          {/* Скелетон для ArtikulImageLink (изображение + статус вместе) */}
+          <div className="flex items-center gap-2">
+            <Skeleton className="h-16 w-16 rounded-md" />
+            <div className="grid gap-1">
+              <Skeleton className="h-4 w-48" />
+              <Skeleton className="h-5 w-20 rounded-md" />
+            </div>
+          </div>
 
           {/* Скелетон для AskQuant */}
           <Skeleton className="h-4 w-20" />
 
           {/* Скелетон для AskCom */}
           <Skeleton className="h-4 w-32" />
+
+          {/* Скелетон для AskSklad */}
+          <Skeleton className="h-4 w-24" />
+
+          {/* Скелетон для AskZone */}
+          <ArtZoneSkeleton />
 
           {/* Скелетон для UserAvatarName */}
           <div className="flex items-center gap-2">
@@ -31,9 +40,6 @@ export function AskDetailsCardSkeleton() {
 
           {/* Скелетон для BtradeArtDataFetcher */}
           <BtradeArtDataSkeleton />
-
-          {/* Скелетон для ArtFetcher */}
-          <ArtZoneSkeleton />
         </div>
       </CardContent>
     </Card>

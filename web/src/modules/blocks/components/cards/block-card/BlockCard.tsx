@@ -23,7 +23,7 @@ export function BlockCard({ block, onDelete }: BlockCardProps) {
   ].filter(() => true);
 
   return (
-    <Card className="gap-0 p-2 transition-shadow hover:bg-pink-500/10">
+    <Card className="gap-0 p-2 transition-shadow ">
       <CardHeader className="p-0 ">
         <div className="flex items-center justify-between">
           <CardTitle className="flex flex-row items-center justify-start gap-2">

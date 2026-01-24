@@ -1,29 +1,23 @@
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
-import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export function AskPullPositionsContainerSkeleton() {
   return (
-    <Wrapper className="grid gap-4">
-      <div className="flex items-center justify-between">
-        <Skeleton className="h-6 w-48" />
-        <Skeleton className="h-5 w-32" />
+    <div className="grid gap-4 p-2">
+      <div className="p-0">
+        <div className="grid gap-2">
+          <Skeleton className="h-6 w-48 mx-auto" />
+          {/* Условный счетчик remainingQuantity */}
+          <div className="flex items-center gap-1">
+            <Skeleton className="h-4 w-4 rounded-full" />
+            <Skeleton className="h-4 w-32" />
+          </div>
+        </div>
       </div>
-      <div className="grid max-w-xl gap-2">
+      <div className="grid gap-4 lg:w-1/2">
         {Array.from({ length: 3 }).map((_, index) => (
-          <Card key={index} className="p-0">
-            <CardContent className="p-0">
-              <div className="rounded-md px-2 py-1">
-                <div className="grid grid-cols-3 gap-2">
-                  <Skeleton className="h-5 w-full" />
-                  <Skeleton className="h-5 w-8" />
-                  <Skeleton className="h-5 w-8" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+          <Skeleton key={index} className="h-32 w-full" />
         ))}
       </div>
-    </Wrapper>
+    </div>
   );
 }

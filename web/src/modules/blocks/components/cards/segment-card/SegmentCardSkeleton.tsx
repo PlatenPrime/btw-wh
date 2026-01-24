@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export function SegmentCardSkeleton() {
   return (
-    <Card className="gap-0 p-2">
+    <Card className="gap-0 p-2 transition-shadow hover:shadow-md">
       <CardHeader className="p-0">
         <div className="flex items-center justify-between">
           <CardTitle className="flex flex-row items-center justify-start gap-2">
