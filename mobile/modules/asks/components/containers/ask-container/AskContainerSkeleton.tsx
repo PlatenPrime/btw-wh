@@ -1,7 +1,10 @@
 import { ThemedBox, ThemedVStack } from "@/components/themed";
 import { ThemedView } from "@/components/themed/themed-view";
 import { AskDetailsCardSkeleton } from "@/modules/asks/components/cards/ask-details-card/AskDetailsCardSkeleton";
-import { ScrollView, View } from "react-native";
+import { AskEventsSkeleton } from "@/modules/asks/components/containers/ask-container/components/ask-events/AskEventsSkeleton";
+import { AskPullPositionsContainerSkeleton } from "@/modules/asks/components/containers/ask-pull-positions-container/AskPullPositionsContainerSkeleton";
+import { PosesByArtikulContainerSkeleton } from "@/modules/poses/components/containers/poses-by-artikul-container/PosesByArtikulContainerSkeleton";
+import { ScrollView } from "react-native";
 
 export function AskContainerSkeleton() {
   return (
@@ -9,40 +12,9 @@ export function AskContainerSkeleton() {
       <ScrollView className="flex-1" contentContainerClassName="gap-4 p-4">
         <ThemedVStack className="gap-4">
           <AskDetailsCardSkeleton />
-
-          {/* Skeleton для событий */}
-          <ThemedView className="p-3 rounded-lg border bg-background-0 border-outline-100">
-            <View className="gap-3">
-              <ThemedBox
-                className="rounded bg-secondary-300"
-                style={{ height: 16, width: 128 }}
-              />
-              <View className="gap-2">
-                {Array.from({ length: 3 }).map((_, index) => (
-                  <ThemedBox
-                    key={index}
-                    className="rounded bg-secondary-300"
-                    style={{ height: 48, width: "100%" }}
-                  />
-                ))}
-              </View>
-            </View>
-          </ThemedView>
-
-          {/* Skeleton для позиций */}
-          <View className="gap-2">
-            <ThemedBox
-              className="rounded bg-secondary-300"
-              style={{ height: 20, width: 160 }}
-            />
-            {Array.from({ length: 2 }).map((_, index) => (
-              <ThemedBox
-                key={index}
-                className="rounded-lg border bg-secondary-300"
-                style={{ height: 80, width: "100%" }}
-              />
-            ))}
-          </View>
+          <AskEventsSkeleton />
+          <AskPullPositionsContainerSkeleton />
+          <PosesByArtikulContainerSkeleton />
         </ThemedVStack>
       </ScrollView>
     </ThemedView>

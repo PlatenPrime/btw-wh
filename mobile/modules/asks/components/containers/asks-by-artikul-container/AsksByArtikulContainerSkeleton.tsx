@@ -1,5 +1,4 @@
-import { ThemedVStack, ThemedBox } from "@/components/themed";
-import { ThemedText } from "@/components/themed/themed-text";
+import { ThemedBox, ThemedVStack } from "@/components/themed";
 
 export function AsksByArtikulContainerSkeleton() {
   return (
@@ -9,7 +8,7 @@ export function AsksByArtikulContainerSkeleton() {
         {Array.from({ length: 3 }).map((_, index) => (
           <ThemedBox
             key={index}
-            className="rounded-lg border bg-secondary-300"
+            className="rounded-lg  bg-secondary-300"
             style={{ height: 100, width: "100%" }}
           />
         ))}

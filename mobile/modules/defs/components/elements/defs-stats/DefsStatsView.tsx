@@ -28,7 +28,7 @@ export function DefsStatsView({
     if (!isActive) {
       return {
         backgroundColor: undefined,
-        borderColor: undefined,
+        borderColor: theme === "dark" ? "#555" : "#aaa",
       };
     }
 
@@ -81,8 +81,8 @@ export function DefsStatsView({
         className="flex-1"
       >
         <ThemedView
-          className={`flex-row justify-between p-2 rounded-lg border ${
-            !isActive ? "bg-background-0 border-outline-100" : ""
+          className={`flex-row justify-between p-2 rounded-lg border  ${
+            !isActive ? "bg-background-0 border-outline-400" : ""
           }`}
           style={cardStyle}
         >

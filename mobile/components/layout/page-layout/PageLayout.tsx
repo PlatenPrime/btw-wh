@@ -17,7 +17,7 @@ export function PageLayout({ title, children }: PageLayoutProps) {
 
   return (
     <HeaderActionsProvider>
-      <ThemedView className={cn("flex-1", theme === "dark" ? "bg-slate-950" : "bg-slate-100")}>
+      <ThemedView className={cn("flex-1", theme === "dark" ? "bg-neutral-950" : "bg-neutral-100")}>
         <Header title={title} />
         <ThemedBox className="flex-1" style={{ paddingTop: headerHeight }}>
           {children}

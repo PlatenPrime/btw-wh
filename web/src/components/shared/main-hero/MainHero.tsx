@@ -14,7 +14,7 @@ export function MainHero() {
           background:
             "linear-gradient(135deg, var(--primary) 0%, var(--accent) 50%, var(--chart-2) 100%)",
           backgroundSize: "400% 400%",
-          animation: "aurora 60s linear infinite",
+          animation: "aurora 30s linear infinite",
         }}
       />
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />

@@ -1,21 +1,21 @@
+import { getIcon } from "@/components/layout/sidebar/data/app-sidebar-data";
 import {
   Card,
   CardContent,
   CardDescription,
   CardTitle,
 } from "@/components/ui/card";
-import { getIcon } from "@/components/layout/sidebar/data/app-sidebar-data";
+import { cn } from "@/lib/utils";
 import { Link } from "react-router";
 import { quickLinksData } from "./quick-links-data";
-import { cn } from "@/lib/utils";
 
 /**
  * Сітка карток-посилань «Швидкий доступ» на ключові розділи додатку.
  */
 export function MainQuickLinks() {
   return (
-    <section className="flex flex-col gap-6">
-      <h2 className="text-xl font-semibold md:text-2xl">Швидкий доступ</h2>
+    <section className="flex flex-col gap-4">
+      <h2 className="text-xl font-semibold md:text-2xl text-center">Швидкий доступ</h2>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {quickLinksData.map((item) => (
           <Link
@@ -30,10 +30,13 @@ export function MainQuickLinks() {
               )}
             >
               <CardContent className="flex flex-col gap-3">
+                <div className="flex items-center justify-start gap-2">
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary [&_svg]:h-5 [&_svg]:w-5">
                   {getIcon(item.iconName)}
                 </div>
                 <CardTitle className="text-base">{item.title}</CardTitle>
+                </div>
+          
                 <CardDescription>{item.description}</CardDescription>
               </CardContent>
             </Card>

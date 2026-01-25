@@ -1,5 +1,4 @@
-import { ThemedBox, ThemedVStack, ThemedHStack } from "@/components/themed";
-import { ThemedView } from "@/components/themed/themed-view";
+import { ThemedBox, ThemedHStack, ThemedVStack } from "@/components/themed";
 
 export function PosesByArtikulContainerSkeleton() {
   return (
@@ -7,36 +6,74 @@ export function PosesByArtikulContainerSkeleton() {
       {/* Позиции по складам */}
       <ThemedVStack className="gap-4">
         {/* Погреби */}
-        <ThemedView className="p-4 rounded-lg border border-outline-50">
+        <ThemedBox className="p-4 rounded-lg border border-outline-50 bg-background-0">
           <ThemedVStack className="gap-2">
-            <ThemedHStack className="items-center justify-between">
-              <ThemedBox className="h-5 w-16 bg-background-200 rounded" />
-              <ThemedBox className="h-5 w-8 bg-background-200 rounded" />
-              <ThemedBox className="h-5 w-8 bg-background-200 rounded" />
+            <ThemedHStack className="items-center">
+              <ThemedBox className="flex-1">
+                <ThemedBox
+                  className="rounded bg-secondary-300"
+                  style={{ height: 16, width: 72 }}
+                />
+              </ThemedBox>
+              <ThemedBox className="flex-1 items-center">
+                <ThemedBox
+                  className="rounded bg-secondary-300"
+                  style={{ height: 16, width: 32 }}
+                />
+              </ThemedBox>
+              <ThemedBox className="flex-1 items-end">
+                <ThemedBox
+                  className="rounded bg-secondary-300"
+                  style={{ height: 16, width: 32 }}
+                />
+              </ThemedBox>
             </ThemedHStack>
             <ThemedVStack className="gap-2">
               {[1, 2, 3].map((i) => (
-                <ThemedBox key={i} className="h-8 w-full bg-background-200 rounded-md" />
+                <ThemedBox
+                  key={i}
+                  className="rounded-md border border-outline-50 bg-secondary-300"
+                  style={{ height: 40, width: "100%" }}
+                />
               ))}
             </ThemedVStack>
           </ThemedVStack>
-        </ThemedView>
+        </ThemedBox>
 
         {/* Мережі */}
-        <ThemedView className="p-4 rounded-lg border border-outline-50">
+        <ThemedBox className="p-4 rounded-lg border border-outline-50 bg-background-0">
           <ThemedVStack className="gap-2">
-            <ThemedHStack className="items-center justify-between">
-              <ThemedBox className="h-5 w-16 bg-background-200 rounded" />
-              <ThemedBox className="h-5 w-8 bg-background-200 rounded" />
-              <ThemedBox className="h-5 w-8 bg-background-200 rounded" />
+            <ThemedHStack className="items-center">
+              <ThemedBox className="flex-1">
+                <ThemedBox
+                  className="rounded bg-secondary-300"
+                  style={{ height: 16, width: 72 }}
+                />
+              </ThemedBox>
+              <ThemedBox className="flex-1 items-center">
+                <ThemedBox
+                  className="rounded bg-secondary-300"
+                  style={{ height: 16, width: 32 }}
+                />
+              </ThemedBox>
+              <ThemedBox className="flex-1 items-end">
+                <ThemedBox
+                  className="rounded bg-secondary-300"
+                  style={{ height: 16, width: 32 }}
+                />
+              </ThemedBox>
             </ThemedHStack>
             <ThemedVStack className="gap-2">
               {[1, 2].map((i) => (
-                <ThemedBox key={i} className="h-8 w-full bg-background-200 rounded-md" />
+                <ThemedBox
+                  key={i}
+                  className="rounded-md border border-outline-50 bg-secondary-300"
+                  style={{ height: 40, width: "100%" }}
+                />
               ))}
             </ThemedVStack>
           </ThemedVStack>
-        </ThemedView>
+        </ThemedBox>
       </ThemedVStack>
     </ThemedVStack>
   );

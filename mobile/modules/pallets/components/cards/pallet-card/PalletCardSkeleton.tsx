@@ -7,10 +7,6 @@ export function PalletCardSkeleton() {
         <ThemedBox className="rounded bg-secondary-300" style={{ height: 20, width: 96 }} />
         <ThemedBox className="rounded bg-secondary-300" style={{ height: 16, width: 64 }} />
       </ThemedBox>
-      <ThemedBox className="gap-1">
-        <ThemedBox className="rounded bg-secondary-300" style={{ height: 12, width: '100%' }} />
-        <ThemedBox className="rounded bg-secondary-300" style={{ height: 12, width: '75%' }} />
-      </ThemedBox>
     </ThemedBox>
   );
 }

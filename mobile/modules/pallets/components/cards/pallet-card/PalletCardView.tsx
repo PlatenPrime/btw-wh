@@ -56,31 +56,7 @@ export function PalletCardView({
             {menu && <View>{menu}</View>}
           </ThemedHStack>
         </ThemedHStack>
-        <ThemedBox className="gap-1">
-          <ThemedHStack className="items-center justify-start gap-2">
-            <ThemedIcon
-              family="Feather"
-              name="map-pin"
-              size={14}
-              color={iconColor}
-            />
-            <ThemedText type="default" className="text-sm text-typography-700">
-              {sector ?? "Немає"}
-            </ThemedText>
-          </ThemedHStack>
 
-          <ThemedHStack className="items-center justify-start gap-2">
-            <ThemedIcon
-              family="Feather"
-              name="bar-chart"
-              size={14}
-              color={iconColor}
-            />
-            <ThemedText type="default" className="text-sm text-typography-700">
-              {isDef ? "Так" : "Ні"}
-            </ThemedText>
-          </ThemedHStack>
-        </ThemedBox>
       </ThemedBox>
     </ThemedPressable>
   );

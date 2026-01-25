@@ -21,7 +21,7 @@ export function DefCardView({ artikul, defItem }: DefCardViewProps) {
   return (
     <Card
       className={cn(
-        "bg-background h-full grid p-2 shadow-none ring-1 ring-gray-200 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:shadow-md dark:ring-gray-700",
+        " h-full grid p-2 shadow-none ring-1 ring-gray-200 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:shadow-md dark:ring-gray-700",
         "gap-2 text-sm",
         shadowClasses,
       )}
