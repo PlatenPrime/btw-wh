@@ -1,7 +1,5 @@
-import { useState } from "react";
-import { useRegisterHeaderActions } from "@/components/layout/header";
 import type { ZonesResponseDto } from "@/modules/zones/api/types/dto";
-import type { ZoneDto } from "@/modules/zones/api/types/dto";
+import { ZonesHeaderActions } from "@/modules/zones/components/actions/zones-header-actions";
 import { ZonesContainerView } from "./ZonesContainerView";
 
 interface ZonesContainerProps {
@@ -31,41 +29,23 @@ export function ZonesContainer({
   sortOrder,
   onSortOrderChange,
 }: ZonesContainerProps) {
-  const [createDialogOpen, setCreateDialogOpen] = useState(false);
-
-  useRegisterHeaderActions([
-    {
-      id: "create-zone",
-      label: "Створити зону",
-      icon: "add",
-      iconColor: "emerald",
-      textColor: "emerald",
-      variant: "default",
-      onClick: () => setCreateDialogOpen(true),
-    },
-  ]);
-
-  const handleCreateSuccess = () => {
-    setCreateDialogOpen(false);
-  };
-
   return (
-    <ZonesContainerView
-      data={data}
-      isLoading={isLoading}
-      createDialogOpen={createDialogOpen}
-      setCreateDialogOpen={setCreateDialogOpen}
-      onCreateSuccess={handleCreateSuccess}
-      refreshing={refreshing}
-      onRefresh={onRefresh}
-      onPageChange={onPageChange}
-      search={search}
-      onSearchChange={onSearchChange}
-      sortBy={sortBy}
-      onSortByChange={onSortByChange}
-      sortOrder={sortOrder}
-      onSortOrderChange={onSortOrderChange}
-    />
+    <>
+      <ZonesHeaderActions />
+      <ZonesContainerView
+        data={data}
+        isLoading={isLoading}
+        refreshing={refreshing}
+        onRefresh={onRefresh}
+        onPageChange={onPageChange}
+        search={search}
+        onSearchChange={onSearchChange}
+        sortBy={sortBy}
+        onSortByChange={onSortByChange}
+        sortOrder={sortOrder}
+        onSortOrderChange={onSortOrderChange}
+      />
+    </>
   );
 }
 

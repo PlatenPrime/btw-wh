@@ -2,15 +2,11 @@ import { ThemedBox, ThemedHStack, ThemedButton } from "@/components/themed";
 import type { ZonesResponseDto } from "@/modules/zones/api/types/dto";
 import { ZonesList } from "@/modules/zones/components/lists/zones-list/ZonesList";
 import { ThemedText } from "@/components/themed/themed-text";
-import { CreateZoneDialog } from "@/modules/zones/components/dialogs/create-zone-dialog/CreateZoneDialog";
 import { ZonesControls } from "@/modules/zones/components/controls/zones-controls/ZonesControls";
 
 interface ZonesContainerViewProps {
   data: ZonesResponseDto | undefined;
   isLoading: boolean;
-  createDialogOpen: boolean;
-  setCreateDialogOpen: (open: boolean) => void;
-  onCreateSuccess: () => void;
   refreshing?: boolean;
   onRefresh?: () => void;
   onPageChange?: (page: number) => void;
@@ -25,9 +21,6 @@ interface ZonesContainerViewProps {
 export function ZonesContainerView({
   data,
   isLoading,
-  createDialogOpen,
-  setCreateDialogOpen,
-  onCreateSuccess,
   refreshing,
   onRefresh,
   onPageChange,
@@ -90,12 +83,6 @@ export function ZonesContainerView({
           </ThemedBox>
         )}
       </ThemedBox>
-      
-      <CreateZoneDialog
-        open={createDialogOpen}
-        onOpenChange={setCreateDialogOpen}
-        onSuccess={onCreateSuccess}
-      />
     </>
   );
 }

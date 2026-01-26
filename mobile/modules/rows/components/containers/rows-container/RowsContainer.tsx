@@ -1,6 +1,5 @@
-import { useState } from "react";
 import type { RowDto } from "@/modules/rows/api/types/dto";
-import { useRegisterHeaderActions } from "@/components/layout/header";
+import { RowsHeaderActions } from "@/modules/rows/components/actions/rows-header-actions";
 import { RowsContainerView } from "./RowsContainerView";
 
 interface RowsContainerProps {
@@ -16,34 +15,16 @@ export function RowsContainer({
   refreshing,
   onRefresh,
 }: RowsContainerProps) {
-  const [createDialogOpen, setCreateDialogOpen] = useState(false);
-
-  useRegisterHeaderActions([
-    {
-      id: "create-row",
-      label: "Створити ряд",
-      icon: "add",
-      iconColor: "emerald",
-      textColor: "emerald",
-      variant: "default",
-      onClick: () => setCreateDialogOpen(true),
-    },
-  ]);
-
-  const handleCreateSuccess = () => {
-    setCreateDialogOpen(false);
-  };
-
   return (
-    <RowsContainerView
-      data={data}
-      isLoading={isLoading}
-      createDialogOpen={createDialogOpen}
-      setCreateDialogOpen={setCreateDialogOpen}
-      onCreateSuccess={handleCreateSuccess}
-      refreshing={refreshing}
-      onRefresh={onRefresh}
-    />
+    <>
+      <RowsHeaderActions />
+      <RowsContainerView
+        data={data}
+        isLoading={isLoading}
+        refreshing={refreshing}
+        onRefresh={onRefresh}
+      />
+    </>
   );
 }
 

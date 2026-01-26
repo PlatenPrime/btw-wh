@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { ArtContainerView } from "./ArtContainerView";
-import { useRegisterHeaderActions } from "@/components/layout/header";
+import { ArtHeaderActions } from "@/modules/arts/components/actions/art-header-actions";
 
 interface ArtContainerProps {
   artData: ArtDto;
@@ -14,40 +14,10 @@ export function ArtContainer({
   refreshing,
   onRefresh,
 }: ArtContainerProps) {
-  const [updateLimitDialogOpen, setUpdateLimitDialogOpen] = useState(false);
-  const [createAskDialogOpen, setCreateAskDialogOpen] = useState(false);
-
-  // Регистрируем действия в header меню
-  useRegisterHeaderActions([
-    {
-      id: "update-art-limit",
-      label: "Змінити ліміт",
-      icon: "edit",
-      iconColor: "blue",
-      textColor: "blue",
-      variant: "default",
-      onClick: () => setUpdateLimitDialogOpen(true),
-    },
-    {
-      id: "create-ask",
-      label: "Створити запит",
-      icon: "add",
-      iconColor: "emerald",
-      textColor: "emerald",
-      variant: "default",
-      onClick: () => setCreateAskDialogOpen(true),
-    },
-  ]);
-
   return (
-    <ArtContainerView
-      artData={artData}
-      updateLimitDialogOpen={updateLimitDialogOpen}
-      setUpdateLimitDialogOpen={setUpdateLimitDialogOpen}
-      createAskDialogOpen={createAskDialogOpen}
-      setCreateAskDialogOpen={setCreateAskDialogOpen}
-      refreshing={refreshing}
-      onRefresh={onRefresh}
-    />
+    <>
+      <ArtHeaderActions artData={artData} />
+      <ArtContainerView artData={artData} refreshing={refreshing} onRefresh={onRefresh} />
+    </>
   );
 }

@@ -1,7 +1,6 @@
-import { useRegisterHeaderActions } from "@/components/layout/header";
 import type { GetAsksByDateResponse } from "@/modules/asks/api/types/dto";
+import { AsksHeaderActions } from "@/modules/asks/components/actions/asks-header-actions";
 import { addDays, subDays } from "@/modules/asks/utils/format-date";
-import { useState } from "react";
 import { AsksContainerView } from "./AsksContainerView";
 
 interface AsksContainerProps {
@@ -21,21 +20,6 @@ export function AsksContainer({
   refreshing,
   onRefresh,
 }: AsksContainerProps) {
-  const [createAskDialogOpen, setCreateAskDialogOpen] = useState(false);
-
-  // Регистрируем действия в header меню
-  useRegisterHeaderActions([
-    {
-      id: "create-ask",
-      label: "Створити запит",
-      icon: "add",
-      iconColor: "emerald",
-      textColor: "emerald",
-      variant: "default",
-      onClick: () => setCreateAskDialogOpen(true),
-    },
-  ]);
-
   const handlePreviousDay = () => {
     setSelectedDate((prev) => subDays(prev, 1));
   };
@@ -50,23 +34,19 @@ export function AsksContainer({
     }
   };
 
-  const handleCreateAskSuccess = () => {
-    setCreateAskDialogOpen(false);
-  };
-
   return (
-    <AsksContainerView
-      selectedDate={selectedDate}
-      data={data}
-      isFetching={isFetching}
-      onPreviousDay={handlePreviousDay}
-      onNextDay={handleNextDay}
-      onDateSelect={handleDateSelect}
-      createAskDialogOpen={createAskDialogOpen}
-      setCreateAskDialogOpen={setCreateAskDialogOpen}
-      onCreateAskSuccess={handleCreateAskSuccess}
-      refreshing={refreshing}
-      onRefresh={onRefresh}
-    />
+    <>
+      <AsksHeaderActions />
+      <AsksContainerView
+        selectedDate={selectedDate}
+        data={data}
+        isFetching={isFetching}
+        onPreviousDay={handlePreviousDay}
+        onNextDay={handleNextDay}
+        onDateSelect={handleDateSelect}
+        refreshing={refreshing}
+        onRefresh={onRefresh}
+      />
+    </>
   );
 }

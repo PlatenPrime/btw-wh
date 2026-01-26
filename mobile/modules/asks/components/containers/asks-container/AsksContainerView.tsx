@@ -3,7 +3,6 @@ import { ThemedBox, ThemedHStack } from "@/components/themed";
 import { ThemedIcon } from "@/components/themed";
 import { SemanticColors } from "@/constants/theme";
 import type { GetAsksByDateResponse } from "@/modules/asks/api/types/dto";
-import { CreateAskDialog } from "@/modules/asks/components/dialogs/create-ask-dialog/CreateAskDialog";
 import { AsksList } from "@/modules/asks/components/lists/asks-list/AsksList";
 import { formatDate } from "@/modules/asks/utils/format-date";
 import { ScrollView, TouchableOpacity, View, RefreshControl } from "react-native";
@@ -15,9 +14,6 @@ interface AsksContainerViewProps {
   onPreviousDay: () => void;
   onNextDay: () => void;
   onDateSelect: (date: Date | undefined) => void;
-  createAskDialogOpen: boolean;
-  setCreateAskDialogOpen: (open: boolean) => void;
-  onCreateAskSuccess: () => void;
   refreshing?: boolean;
   onRefresh?: () => void;
 }
@@ -28,9 +24,6 @@ export function AsksContainerView({
   isFetching,
   onPreviousDay,
   onNextDay,
-  createAskDialogOpen,
-  setCreateAskDialogOpen,
-  onCreateAskSuccess,
   refreshing = false,
   onRefresh,
 }: AsksContainerViewProps) {
@@ -72,12 +65,6 @@ export function AsksContainerView({
           <AsksList asks={data.data} />
         </View>
       </ScrollView>
-
-      <CreateAskDialog
-        open={createAskDialogOpen}
-        onOpenChange={setCreateAskDialogOpen}
-        onSuccess={onCreateAskSuccess}
-      />
     </>
   );
 }

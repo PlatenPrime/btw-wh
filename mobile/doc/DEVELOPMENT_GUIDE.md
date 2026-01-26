@@ -72,6 +72,7 @@ modules/
       types/
         dto.ts        # TypeScript типы для API
     components/
+      actions/        # Header actions (регистрация экшенов хедера + связанные диалоги)
       cards/          # Карточки для отображения данных
       containers/     # Контейнеры с логикой
       dialogs/        # Модальные окна
@@ -151,9 +152,19 @@ export function ArtFetcher({
 
 - Содержит всю логику компонента (хуки, вычисления, обработчики)
 - Управляет локальным состоянием (`useState`, `useEffect`)
-- Регистрирует действия в header через `useRegisterHeaderActions`
 - Вызывает мутации и обрабатывает их результаты
 - Передает данные и колбэки в View компонент
+
+#### Actions (Header Actions)
+
+**Назначение**: Регистрация действий хедера (`useRegisterHeaderActions`) и связанные с ними диалоги/side-effects, чтобы не смешивать это с контентом экрана.
+
+**Правила**:
+- `useRegisterHeaderActions` должен жить только в `modules/*/components/actions/*`.
+- Actions-компонент может быть Container/View:
+  - `*HeaderActions.tsx` — логика, state, side-effects
+  - `*HeaderActionsView.tsx` — только рендер (без хуков)
+- На экран/контейнер подключается одним компонентом: `<XxxHeaderActions />`.
 
 **Пример**:
 
@@ -162,21 +173,11 @@ export function ArtFetcher({
 export function ArtContainer({ artData }: ArtContainerProps) {
   const [updateLimitDialogOpen, setUpdateLimitDialogOpen] = useState(false);
 
-  useRegisterHeaderActions([
-    {
-      id: "update-art-limit",
-      label: "Змінити ліміт",
-      icon: "edit",
-      onClick: () => setUpdateLimitDialogOpen(true),
-    },
-  ]);
-
   return (
-    <ArtContainerView
-      artData={artData}
-      updateLimitDialogOpen={updateLimitDialogOpen}
-      setUpdateLimitDialogOpen={setUpdateLimitDialogOpen}
-    />
+    <>
+      <ArtHeaderActions artData={artData} />
+      <ArtContainerView artData={artData} />
+    </>
   );
 }
 ```

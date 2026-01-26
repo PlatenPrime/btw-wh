@@ -3,8 +3,6 @@ import { ThemedView } from "@/components/themed/themed-view";
 import { ThemedVStack } from "@/components/themed";
 import type { ZoneDto } from "@/modules/zones/api/types/dto";
 import { ZoneDetailsCard } from "@/modules/zones/components/cards/zone-details-card/ZoneDetailsCard";
-import { DeleteZoneDialog } from "@/modules/zones/components/dialogs/delete-zone-dialog/DeleteZoneDialog";
-import { UpdateZoneDialog } from "@/modules/zones/components/dialogs/update-zone-dialog/UpdateZoneDialog";
 import { ArtsByZoneFetcher } from "@/modules/arts/components/fetchers/arts-by-zone-fetcher";
 import {
   ArtsByZoneContainer,
@@ -13,22 +11,12 @@ import {
 
 interface ZoneContainerViewProps {
   zone: ZoneDto;
-  updateDialogOpen: boolean;
-  setUpdateDialogOpen: (open: boolean) => void;
-  deleteDialogOpen: boolean;
-  setDeleteDialogOpen: (open: boolean) => void;
-  onDeleteSuccess?: () => void;
   refreshing?: boolean;
   onRefresh?: () => void;
 }
 
 export function ZoneContainerView({
   zone,
-  updateDialogOpen,
-  setUpdateDialogOpen,
-  deleteDialogOpen,
-  setDeleteDialogOpen,
-  onDeleteSuccess,
   refreshing = false,
   onRefresh,
 }: ZoneContainerViewProps) {
@@ -52,19 +40,6 @@ export function ZoneContainerView({
           />
         </ThemedVStack>
       </ScrollView>
-
-      {/* Диалоги */}
-      <UpdateZoneDialog
-        zone={zone}
-        open={updateDialogOpen}
-        onOpenChange={setUpdateDialogOpen}
-      />
-      <DeleteZoneDialog
-        zone={zone}
-        open={deleteDialogOpen}
-        onOpenChange={setDeleteDialogOpen}
-        onSuccess={onDeleteSuccess}
-      />
     </ThemedView>
   );
 }

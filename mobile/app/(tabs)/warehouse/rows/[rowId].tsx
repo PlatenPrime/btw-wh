@@ -1,12 +1,10 @@
 import { useLocalSearchParams } from "expo-router";
-import { useState } from "react";
 import { PageLayout } from "@/components/layout/page-layout";
 import { View } from "react-native";
 import { ThemedText } from "@/components/themed/themed-text";
-import { useRegisterHeaderActions } from "@/components/layout/header";
 import { useRowByIdQuery } from "@/modules/rows/api/hooks/queries/useRowByIdQuery";
+import { RowDetailHeaderActions } from "@/modules/rows/components/actions/row-detail-header-actions";
 import { PalletsByRowFetcher } from "@/modules/pallets/components/fetchers/pallets-by-row-fetcher/PalletsByRowFetcher";
-import { CreatePalletDialog } from "@/modules/pallets/components/dialogs/create-pallet-dialog/CreatePalletDialog";
 import type { RowDto } from "@/modules/rows/api/types/dto";
 
 interface RowDetailContentProps {
@@ -15,34 +13,10 @@ interface RowDetailContentProps {
 }
 
 function RowDetailContent({ row, rowId }: RowDetailContentProps) {
-  const [createDialogOpen, setCreateDialogOpen] = useState(false);
-
-  useRegisterHeaderActions([
-    {
-      id: "create-pallet",
-      label: "Створити палету",
-      icon: "add",
-      iconColor: "emerald",
-      textColor: "emerald",
-      variant: "default",
-      onClick: () => setCreateDialogOpen(true),
-    },
-  ]);
-
-  const handleCreateSuccess = () => {
-    setCreateDialogOpen(false);
-  };
-
   return (
     <View className="flex-1 p-4">
-
+      <RowDetailHeaderActions row={row} />
       <PalletsByRowFetcher rowId={rowId} />
-      <CreatePalletDialog
-        row={row}
-        open={createDialogOpen}
-        onOpenChange={setCreateDialogOpen}
-        onSuccess={handleCreateSuccess}
-      />
     </View>
   );
 }
