@@ -23,16 +23,16 @@ export function BtradeArtDataFetcher({
   ContainerComponent,
   SkeletonComponent,
 }: BtradeArtDataFetcherProps) {
-  if (!artikul) {
-    return <LoadingNoData description="Артикул не передан для завантаження даних" />;
-  }
-
   const {
     data: btradeArtResponse,
     isLoading,
     error,
     refetch,
   } = useBtradeArtDataQuery(artikul);
+
+  if (!artikul) {
+    return <LoadingNoData description="Артикул не передан для завантаження даних" />;
+  }
 
   if (isLoading) return <SkeletonComponent />;
 

@@ -24,7 +24,7 @@ const getDeficitStatus = (item: DeficitItem): "limited" | "critical" => {
 
 export function DefsGridView({ defsData, filter }: DefsGridViewProps) {
   const filteredDeficits = Object.entries(defsData.result).filter(
-    ([_, defItem]) => {
+    ([, defItem]) => {
       if (filter === "all") return true;
       const status = getDeficitStatus(defItem);
       return status === filter;

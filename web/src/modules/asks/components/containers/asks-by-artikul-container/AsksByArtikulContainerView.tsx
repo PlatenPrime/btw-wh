@@ -1,5 +1,6 @@
 import { memo } from "react";
 import { Virtuoso } from "react-virtuoso";
+import { LoadingNoData } from "@/components/shared/loading-states/loading-nodata";
 import type { GetAsksByArtikulResponse } from "@/modules/asks/api/types/dto";
 import { AsksByArtikulCard } from "@/modules/asks/components/cards/asks-by-artikul-card";
 
@@ -10,7 +11,15 @@ interface AsksByArtikulContainerViewProps {
 export const AsksByArtikulContainerView = memo(function AsksByArtikulContainerView({
   data,
 }: AsksByArtikulContainerViewProps) {
-  const shouldVirtualize = data.data.length >= 50;
+  const asks = data.data;
+
+  if (asks.length === 0) {
+    return (
+      <LoadingNoData description="Запитів не знайдено" />
+    );
+  }
+
+  const shouldVirtualize = asks.length >= 50;
 
   return (
     <main className="grid gap-2">
@@ -23,9 +32,9 @@ export const AsksByArtikulContainerView = memo(function AsksByArtikulContainerVi
       {/* Список карточек */}
       {shouldVirtualize ? (
         <Virtuoso
-          data={data.data}
+          data={asks}
           itemContent={(_index, ask) => (
-            <div className="mb-2">
+            <div className="pb-2">
               <AsksByArtikulCard ask={ask} />
             </div>
           )}
@@ -33,7 +42,7 @@ export const AsksByArtikulContainerView = memo(function AsksByArtikulContainerVi
         />
       ) : (
         <div className="grid gap-2">
-          {data.data.map((ask) => (
+          {asks.map((ask) => (
             <AsksByArtikulCard key={ask._id} ask={ask} />
           ))}
         </div>

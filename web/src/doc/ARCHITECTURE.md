@@ -52,6 +52,7 @@ modules/{module-name}/
 │   │   └── mutations/ # Функции мутаций
 │   └── types/         # Типы модуля (DTO, интерфейсы)
 ├── components/        # UI компоненты модуля
+│   ├── actions/      # Header actions (регистрация экшенов хедера + связанные диалоги)
 │   ├── cards/        # Карточки отображения данных
 │   ├── containers/    # Контейнеры (логика + представление)
 │   ├── dialogs/       # Диалоговые окна
@@ -236,12 +237,31 @@ export function useArtsQuery({ page, limit, search, ... }: UseArtsQueryParams) {
 ### Категории компонентов
 
 1. **Cards** - карточки для отображения данных
-2. **Containers** - контейнеры с логикой (Container/View)
-3. **Dialogs** - диалоговые окна
-4. **Elements** - мелкие переиспользуемые элементы
-5. **Fetchers** - компоненты загрузки данных
-6. **Forms** - формы с валидацией
-7. **Lists** - списки и гриды
+2. **Actions** - компоненты для регистрации header actions и связанных диалогов/побочных эффектов
+3. **Containers** - контейнеры с логикой (Container/View)
+4. **Dialogs** - диалоговые окна
+5. **Elements** - мелкие переиспользуемые элементы
+6. **Fetchers** - компоненты загрузки данных
+7. **Forms** - формы с валидацией
+8. **Lists** - списки и гриды
+
+### Header Actions паттерн (`components/actions`)
+
+**Задача**: спрятать всю логику регистрации действий хедера (через `useRegisterHeaderActions`) и связанные с ними диалоги/навигацию/тосты так, чтобы страницы и контейнеры не содержали логики хедера.
+
+**Структура**:
+
+```
+modules/<module>/components/actions/<kebab>-header-actions/
+├── <Pascal>HeaderActions.tsx      # логика + useRegisterHeaderActions
+├── <Pascal>HeaderActionsView.tsx  # только рендер диалогов/компонентов
+└── index.ts                       # реэкспорт
+```
+
+**Правила**:
+- `*HeaderActions.tsx` может содержать хуки, состояния, side-effects, React Query и т.д.
+- `*HeaderActionsView.tsx` — только рендер (без хуков), получает данные/колбэки через props.
+- На странице/в контейнере должен быть максимум один вызов actions-компонента (например: `<DefsHeaderActions />`, `<RowsHeaderActions />`). Вызовы `useRegisterHeaderActions` вне `components/actions` запрещены.
 
 ### Именование
 

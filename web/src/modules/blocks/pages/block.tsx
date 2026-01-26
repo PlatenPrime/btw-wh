@@ -1,6 +1,6 @@
 import { SidebarInsetLayout } from "@/components/layout/SidebarInsetLayout";
 import { useBlockQuery } from "@/modules/blocks/api/hooks/queries/useBlockQuery";
-import { BlockHeaderActions } from "@/modules/blocks/components/actions/BlockHeaderActions";
+import { BlockHeaderActions } from "@/modules/blocks/components/actions/block-header-actions";
 import {
   SegmentsContainer,
   SegmentsContainerSkeleton,
