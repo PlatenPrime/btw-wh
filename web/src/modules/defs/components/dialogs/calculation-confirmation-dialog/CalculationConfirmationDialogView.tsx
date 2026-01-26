@@ -14,6 +14,7 @@ interface CalculationConfirmationDialogViewProps {
   onClose: () => void;
   onConfirm: () => void;
   isPending: boolean;
+  isDisabled?: boolean;
 }
 
 export function CalculationConfirmationDialogView({
@@ -21,6 +22,7 @@ export function CalculationConfirmationDialogView({
   onClose,
   onConfirm,
   isPending,
+  isDisabled,
 }: CalculationConfirmationDialogViewProps) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -51,6 +53,7 @@ export function CalculationConfirmationDialogView({
             cancelText="Скасувати"
             submitText="Запустити"
             isSubmitting={isPending}
+            isDisabled={isDisabled}
             className="w-full"
           />
         </DialogFooter>

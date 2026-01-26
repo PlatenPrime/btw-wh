@@ -1,4 +1,5 @@
 import { SidebarInsetLayout } from "@/components/layout/SidebarInsetLayout";
+import { DefsHeaderActions } from "@/modules/defs/components/actions/defs-header-actions";
 import {
   CalculationStatusContainer,
   CalculationStatusSkeleton,
@@ -7,26 +8,16 @@ import {
   DefsContainer,
   DefsContainerSkeleton,
 } from "@/modules/defs/components/containers/defs-container";
-import { DefControls } from "@/modules/defs/components/controls/def-controls/DefControls";
 import { CalculationStatusFetcher } from "@/modules/defs/components/fetchers/calc-defs-status-fetcher";
 import { LatestDefsFetcher } from "@/modules/defs/components/fetchers/latest-defs-fetcher";
-import { useState } from "react";
 
 export function Defs() {
-  const [, setIsCalculationRunning] = useState(false);
-
-  const handleStatusChange = (isRunning: boolean) => {
-    setIsCalculationRunning(isRunning);
-  };
-
   return (
     <SidebarInsetLayout headerText="Дефіцити">
+      <DefsHeaderActions />
       <main className="grid gap-2 p-2">
-        <DefControls />
-
         <CalculationStatusFetcher
           enabled={true}
-          onStatusChange={handleStatusChange}
           ContainerComponent={CalculationStatusContainer}
           SkeletonComponent={CalculationStatusSkeleton}
         />

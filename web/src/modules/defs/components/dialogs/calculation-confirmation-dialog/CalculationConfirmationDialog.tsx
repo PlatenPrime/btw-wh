@@ -5,6 +5,7 @@ interface CalculationConfirmationDialogProps {
   onClose: () => void;
   onConfirm: () => void;
   isPending: boolean;
+  isDisabled?: boolean;
 }
 
 export function CalculationConfirmationDialog({
@@ -12,6 +13,7 @@ export function CalculationConfirmationDialog({
   onClose,
   onConfirm,
   isPending,
+  isDisabled,
 }: CalculationConfirmationDialogProps) {
   return (
     <CalculationConfirmationDialogView
@@ -19,6 +21,7 @@ export function CalculationConfirmationDialog({
       onClose={onClose}
       onConfirm={onConfirm}
       isPending={isPending}
+      isDisabled={isDisabled}
     />
   );
 }
