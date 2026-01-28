@@ -67,6 +67,11 @@ export const appSidebarData = {
           url: "/wh/blocks",
           iconName: "Route",
         },
+        {
+          title: "Групи палет",
+          url: "/wh/pallet-groups",
+          iconName: "Route",
+        },
       ],
     },
     {

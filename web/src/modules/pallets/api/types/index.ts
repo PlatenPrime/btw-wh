@@ -24,6 +24,8 @@ export interface IPallet {
   poses: IPos[];
   sector?: string;
   isDef: boolean;
+  /** Приходить з API для коротких списків (наприклад pallet-groups); у повному GET /pallets може бути відсутнє */
+  isEmpty?: boolean;
   createdAt?: string;
   updatedAt?: string;
 }

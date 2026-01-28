@@ -26,7 +26,9 @@ const ArtsUpdate = lazy(() =>
   })),
 );
 const ArtsUtils = lazy(() =>
-  import("./modules/arts/pages/artsUtils").then((module) => ({ default: module.ArtsUtils })),
+  import("./modules/arts/pages/artsUtils").then((module) => ({
+    default: module.ArtsUtils,
+  })),
 );
 
 const Ask = lazy(() =>
@@ -66,14 +68,20 @@ const Rows = lazy(() =>
 );
 
 const Stock = lazy(() =>
-  import("./modules/stocks/pages/stock").then((module) => ({ default: module.Stock })),
+  import("./modules/stocks/pages/stock").then((module) => ({
+    default: module.Stock,
+  })),
 );
 const Stocks = lazy(() =>
-  import("./modules/stocks/pages/stocks").then((module) => ({ default: module.Stocks })),
+  import("./modules/stocks/pages/stocks").then((module) => ({
+    default: module.Stocks,
+  })),
 );
 
 const WhUtils = lazy(() =>
-  import("./modules/wh/pages/whUtils").then((module) => ({ default: module.WhUtils })),
+  import("./modules/wh/pages/whUtils").then((module) => ({
+    default: module.WhUtils,
+  })),
 );
 const Zones = lazy(() =>
   import("./modules/zones/pages/zones").then((module) => ({
@@ -104,6 +112,16 @@ const BlockPage = lazy(() =>
 const SegPage = lazy(() =>
   import("./modules/blocks/pages/seg").then((module) => ({
     default: module.SegPage,
+  })),
+);
+const PalletGroupsPage = lazy(() =>
+  import("./modules/pallet-groups/pages/pallet-groups").then((module) => ({
+    default: module.PalletGroupsPage,
+  })),
+);
+const PalletGroupPage = lazy(() =>
+  import("./modules/pallet-groups/pages/pallet-group").then((module) => ({
+    default: module.PalletGroupPage,
   })),
 );
 
@@ -251,6 +269,24 @@ export const router = createHashRouter([
             element: (
               <ProtectedRoute allowedRoles={[RoleType.ADMIN]}>
                 <SegPage />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "pallet-groups",
+            element: (
+              <ProtectedRoute allowedRoles={[RoleType.ADMIN]}>
+                <PalletGroupsPage />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "pallet-groups/:id",
+            element: (
+              <ProtectedRoute allowedRoles={[RoleType.ADMIN]}>
+                <PalletGroupPage />
               </ProtectedRoute>
             ),
             errorElement: <RouteErrorBoundary />,
