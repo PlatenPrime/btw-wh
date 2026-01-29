@@ -34,7 +34,6 @@ interface PalletGroupContainerViewProps {
 }
 
 export function PalletGroupContainerView({
-  group,
   pallets,
   isEditMode,
   isSaving,
@@ -67,10 +66,7 @@ export function PalletGroupContainerView({
 
   return (
     <div className="grid gap-2">
-      <div className="flex items-center justify-between">
-        <div className="text-muted-foreground text-sm">
-          ID групи: <span className="font-mono text-xs">{group.id}</span>
-        </div>
+      <div className="flex items-center justify-start">
         <div className="flex gap-2">
           {isEditMode ? (
             <>
