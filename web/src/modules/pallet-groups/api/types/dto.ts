@@ -27,6 +27,12 @@ export interface PalletGroupResponseDto {
   data: PalletGroupDto;
 }
 
+/** Ответ API: свободные паллеты (free-pallets). */
+export interface FreePalletsResponseDto {
+  message: string;
+  data: PalletShortDto[];
+}
+
 /** Создание группы. */
 export interface CreatePalletGroupDto {
   title: string;
@@ -65,5 +71,24 @@ export interface ResetPalletsSectorsResponseDto {
   data: {
     matchedCount: number;
     modifiedCount: number;
+  };
+}
+
+/** Элемент массива запроса перестановки порядка групп (reorder). */
+export interface ReorderPalletGroupItemDto {
+  id: string;
+  order: number;
+}
+
+/** Тело запроса перестановки порядка групп. */
+export interface ReorderPalletGroupsDto {
+  orders: ReorderPalletGroupItemDto[];
+}
+
+/** Ответ API: перестановка порядка групп. */
+export interface ReorderPalletGroupsResponseDto {
+  message: string;
+  data: {
+    updatedCount: number;
   };
 }

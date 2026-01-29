@@ -1,4 +1,4 @@
-import { useUpdatePalletGroupMutation } from "@/modules/pallet-groups/api/hooks/mutations/useUpdatePalletGroupMutation";
+import { useReorderPalletGroupsMutation } from "@/modules/pallet-groups/api/hooks/mutations/useReorderPalletGroupsMutation";
 import type { PalletGroupDto } from "@/modules/pallet-groups/api/types";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -17,27 +17,13 @@ interface UsePalletGroupsContainerReturn {
   handleDragEnd: (newGroups: PalletGroupDto[]) => void;
 }
 
-const buildGroupsPayload = (
+function isOrderChanged(
   groups: PalletGroupDto[],
   originalGroups: PalletGroupDto[],
-) => {
-  return groups.reduce<
-    {
-      id: string;
-      order: number;
-    }[]
-  >((acc, group, index) => {
-    const original = originalGroups.find((item) => item.id === group.id);
-    const nextOrder = index + 1;
-    if (!original || original.order !== nextOrder) {
-      acc.push({
-        id: group.id,
-        order: nextOrder,
-      });
-    }
-    return acc;
-  }, []);
-};
+): boolean {
+  if (groups.length !== originalGroups.length) return true;
+  return groups.some((g, i) => originalGroups[i]?.id !== g.id);
+}
 
 export function usePalletGroupsContainer({
   initialData,
@@ -47,7 +33,7 @@ export function usePalletGroupsContainer({
     useState<PalletGroupDto[]>(initialData);
   const [isEditMode, setIsEditMode] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
-  const updateMutation = useUpdatePalletGroupMutation();
+  const reorderMutation = useReorderPalletGroupsMutation();
 
   useEffect(() => {
     setGroups(initialData);
@@ -68,22 +54,13 @@ export function usePalletGroupsContainer({
     setIsSaving(true);
 
     try {
-      const payload = buildGroupsPayload(groups, originalGroups);
-
-      if (payload.length === 0) {
+      if (!isOrderChanged(groups, originalGroups) || groups.length === 0) {
         setIsEditMode(false);
         return;
       }
 
-      // Простая последовательная отправка; при необходимости можно оптимизировать
-      await Promise.all(
-        payload.map((item) =>
-          updateMutation.mutateAsync({
-            id: item.id,
-            data: { order: item.order },
-          }),
-        ),
-      );
+      const orders = groups.map((g, i) => ({ id: g.id, order: i + 1 }));
+      await reorderMutation.mutateAsync({ orders });
 
       setIsEditMode(false);
 
@@ -96,7 +73,7 @@ export function usePalletGroupsContainer({
     } finally {
       setIsSaving(false);
     }
-  }, [groups, originalGroups, updateMutation]);
+  }, [groups, originalGroups, reorderMutation]);
 
   const handleDragEnd = (newGroups: PalletGroupDto[]) => {
     setGroups(newGroups);

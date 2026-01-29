@@ -23,7 +23,6 @@ interface PalletGroupsContainerViewProps {
   isEditMode: boolean;
   isSaving: boolean;
   onDragEnd: (newGroups: PalletGroupDto[]) => void;
-  onCreate: () => void;
   onEdit: () => void;
   onCancel: () => void;
   onSave: () => void;
@@ -34,7 +33,6 @@ export function PalletGroupsContainerView({
   isEditMode,
   isSaving,
   onDragEnd,
-  onCreate,
   onEdit,
   onCancel,
   onSave,
@@ -65,7 +63,6 @@ export function PalletGroupsContainerView({
       <PalletGroupsControlPanel
         isEditMode={isEditMode}
         hasGroups={hasGroups}
-        onCreate={onCreate}
         onEdit={onEdit}
         onCancel={onCancel}
         onSave={onSave}

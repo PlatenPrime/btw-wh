@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import type { PalletGroupDto } from "@/modules/pallet-groups/api/types";
 import { Link } from "react-router";
 
@@ -7,8 +7,6 @@ interface PalletGroupCardProps {
 }
 
 export function PalletGroupCard({ group }: PalletGroupCardProps) {
-  const palletsCount = group.pallets?.length ?? 0;
-
   return (
     <Card className="p-2 transition-shadow">
       <CardHeader className="p-0">
@@ -26,9 +24,6 @@ export function PalletGroupCard({ group }: PalletGroupCardProps) {
           </CardTitle>
         </div>
       </CardHeader>
-      <CardContent className="text-muted-foreground grid gap-1 p-0 pt-2 text-xs">
-        <span>Кількість палет: {palletsCount}</span>
-      </CardContent>
     </Card>
   );
 }

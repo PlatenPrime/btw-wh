@@ -2,10 +2,9 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { useSetPalletsForGroupMutation } from "@/modules/pallet-groups/api/hooks/mutations/useSetPalletsForGroupMutation";
+import { useFreePalletsQuery } from "@/modules/pallet-groups/api/hooks/queries/useFreePalletsQuery";
 import { usePalletGroupQuery } from "@/modules/pallet-groups/api/hooks/queries/usePalletGroupQuery";
-import type { PalletShortDto as GroupPalletShortDto } from "@/modules/pallet-groups/api/types";
-import { usePalletsWithoutGroupQuery } from "@/modules/pallets/api/hooks/queries/usePalletsWithoutGroupQuery";
-import type { PalletListResponse } from "@/modules/pallets/api/types";
+import type { PalletShortDto } from "@/modules/pallet-groups/api/types";
 import { useMemo, useState } from "react";
 
 interface AddPalletsToGroupFormProps {
@@ -23,10 +22,10 @@ export function AddPalletsToGroupForm({
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
   const groupQuery = usePalletGroupQuery({ id: groupId, enabled });
-  const palletsQuery = usePalletsWithoutGroupQuery(enabled);
+  const palletsQuery = useFreePalletsQuery({ enabled });
   const setPalletsMutation = useSetPalletsForGroupMutation();
 
-  const ungroupedPallets: PalletListResponse = palletsQuery.data ?? [];
+  const ungroupedPallets: PalletShortDto[] = palletsQuery.data?.data ?? [];
 
   const filteredPallets = useMemo(() => {
     const term = search.trim().toLowerCase();
@@ -41,7 +40,7 @@ export function AddPalletsToGroupForm({
   };
 
   const handleSelectAll = () => {
-    setSelectedIds(filteredPallets.map((p) => p._id));
+    setSelectedIds(filteredPallets.map((p) => p.id));
   };
 
   const handleClearSelection = () => {
@@ -55,7 +54,7 @@ export function AddPalletsToGroupForm({
     }
 
     const current = groupQuery.data.data.pallets ?? [];
-    const currentIds = current.map((p: GroupPalletShortDto) => p.id);
+    const currentIds = current.map((p: PalletShortDto) => p.id);
 
     const combined = [...currentIds];
     for (const id of selectedIds) {
@@ -117,21 +116,21 @@ export function AddPalletsToGroupForm({
         ) : (
           <ul className="grid gap-1 p-2">
             {filteredPallets.map((pallet) => {
-              const checked = selectedIds.includes(pallet._id);
+              const checked = selectedIds.includes(pallet.id);
               return (
                 <li
-                  key={pallet._id}
+                  key={pallet.id}
                   className="flex items-center justify-between gap-2 rounded-md border px-2 py-1 text-xs"
                 >
                   <div className="flex items-center gap-2">
                     <Checkbox
                       checked={checked}
-                      onCheckedChange={() => toggleSelection(pallet._id)}
+                      onCheckedChange={() => toggleSelection(pallet.id)}
                     />
                     <div className="flex flex-col">
                       <span className="font-medium">{pallet.title}</span>
                       <span className="text-muted-foreground text-[10px]">
-                        {pallet.sector ?? "sector: 0"}
+                        {pallet.sector}
                       </span>
                     </div>
                   </div>
