@@ -2,3 +2,8 @@ export { getMe } from "./getMe";
 export { login } from "./login";
 export { register } from "./register";
 export { updateUser } from "./updateUser";
+export { getUsers } from "./queries/getUsers";
+export { getUserById } from "./queries/getUserById";
+export { getRoles } from "./queries/getRoles";
+export { createUser } from "./mutations/createUser";
+export { updateUserAdmin } from "./mutations/updateUserAdmin";

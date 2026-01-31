@@ -12,8 +12,9 @@ export interface User {
   updatedAt: string;
 }
 
-// Role type based on API
+// Role type based on API (GET /api/auth/roles)
 export interface Role {
+  _id?: string;
   value: RoleType;
   name?: string;
 }
@@ -55,6 +56,16 @@ export interface RegisterData {
 export interface UpdateUserData {
   fullname?: string;
   password?: string;
+  telegram?: string;
+  photo?: string;
+}
+
+/** Данные для PUT /api/auth/users/:userId (тільки PRIME) */
+export interface AdminUpdateUserData {
+  username?: string;
+  password?: string;
+  fullname?: string;
+  role?: RoleType;
   telegram?: string;
   photo?: string;
 }

@@ -145,6 +145,16 @@ const Forbidden = lazy(() =>
     default: module.Forbidden,
   })),
 );
+const UsersPage = lazy(() =>
+  import("./modules/auth/pages/users").then((module) => ({
+    default: module.UsersPage,
+  })),
+);
+const UserPage = lazy(() =>
+  import("./modules/auth/pages/user").then((module) => ({
+    default: module.UserPage,
+  })),
+);
 
 export const router = createHashRouter([
   {
@@ -320,6 +330,24 @@ export const router = createHashRouter([
             errorElement: <RouteErrorBoundary />,
           },
         ],
+      },
+      {
+        path: "users",
+        element: (
+          <ProtectedRoute allowedRoles={[RoleType.ADMIN]}>
+            <UsersPage />
+          </ProtectedRoute>
+        ),
+        errorElement: <RouteErrorBoundary />,
+      },
+      {
+        path: "users/:id",
+        element: (
+          <ProtectedRoute>
+            <UserPage />
+          </ProtectedRoute>
+        ),
+        errorElement: <RouteErrorBoundary />,
       },
       {
         path: "refiling",

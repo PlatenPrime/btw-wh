@@ -8,6 +8,7 @@ import {
   Rows4,
   Settings,
   StickyNote,
+  Users,
   Warehouse,
 } from "lucide-react";
 
@@ -23,6 +24,7 @@ const getIcon = (iconName: string) => {
     AlertTriangle: AlertTriangle,
     Route: Route,
     PackageSearch: PackageSearch,
+    Users: Users,
   };
 
   const IconComponent = icons[iconName as keyof typeof icons];
@@ -74,6 +76,7 @@ export const appSidebarData = {
         },
       ],
     },
+    
     {
       title: "Поповнення",
       url: "/refiling",
@@ -92,6 +95,17 @@ export const appSidebarData = {
           title: "Зняття",
           url: "/refiling/pulls",
           iconName: "PackageSearch",
+        },
+      ],
+    },
+    {
+      title: "Адмін",
+      url: "/users",
+      items: [
+        {
+          title: "Користувачі",
+          url: "/users",
+          iconName: "Users",
         },
       ],
     },
