@@ -1,6 +1,7 @@
 import {
   AlertTriangle,
   FileQuestion,
+  LayoutTemplate,
   MapPin,
   PackageSearch,
   RefreshCcwDot,
@@ -23,6 +24,7 @@ const getIcon = (iconName: string) => {
     FileQuestion: FileQuestion,
     AlertTriangle: AlertTriangle,
     Route: Route,
+    LayoutTemplate: LayoutTemplate,
     PackageSearch: PackageSearch,
     Users: Users,
   };
@@ -67,7 +69,7 @@ export const appSidebarData = {
         {
           title: "Блоки",
           url: "/wh/blocks",
-          iconName: "Route",
+          iconName: "LayoutTemplate",
         },
         {
           title: "Групи палет",

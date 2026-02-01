@@ -1,9 +1,8 @@
-import { Button } from "@/components/ui/button";
+import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -33,18 +32,13 @@ export function ResetPalletsSectorsConfirmDialog({
             зв&apos;язок з групами? Дію не можна скасувати.
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter className="gap-2">
-          <Button variant="outline" onClick={onCancel} disabled={isPending}>
-            Скасувати
-          </Button>
-          <Button
-            variant="destructive"
-            onClick={onConfirm}
-            disabled={isPending}
-          >
-            {isPending ? "Скидання..." : "Скинути сектора"}
-          </Button>
-        </DialogFooter>
+        <DialogActions
+          onCancel={onCancel}
+          onSubmit={onConfirm}
+          submitText="Скинути сектора"
+          isSubmitting={isPending}
+          variant="destructive"
+        />
       </DialogContent>
     </Dialog>
   );

@@ -1,29 +1,25 @@
-import { Button } from "@/components/ui/button";
+import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
 import {
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useDeletePalletGroupMutation } from "@/modules/pallet-groups/api/hooks/mutations/useDeletePalletGroupMutation";
 import type { PalletGroupDto } from "@/modules/pallet-groups/api/types";
 
 interface DeletePalletGroupDialogViewProps {
   group: PalletGroupDto;
-  onClose: () => void;
+  isDeleting: boolean;
+  onDelete: () => void;
+  onCancel: () => void;
 }
 
 export function DeletePalletGroupDialogView({
   group,
-  onClose,
+  isDeleting,
+  onDelete,
+  onCancel,
 }: DeletePalletGroupDialogViewProps) {
-  const deleteMutation = useDeletePalletGroupMutation();
-
-  const handleDelete = async () => {
-    await deleteMutation.mutateAsync(group.id);
-    onClose();
-  };
-
   return (
     <DialogContent>
       <DialogHeader>
@@ -34,23 +30,15 @@ export function DeletePalletGroupDialogView({
           групи.
         </DialogDescription>
       </DialogHeader>
-      <div className="flex justify-end gap-2 pt-4">
-        <Button
-          type="button"
-          variant="outline"
-          onClick={onClose}
-          disabled={deleteMutation.isPending}
-        >
-          Скасувати
-        </Button>
-        <Button
-          type="button"
+      <div className="pt-4">
+        <DialogActions
+          onCancel={onCancel}
+          onSubmit={onDelete}
+          cancelText="Скасувати"
+          submitText="Видалити"
+          isSubmitting={isDeleting}
           variant="destructive"
-          onClick={handleDelete}
-          disabled={deleteMutation.isPending}
-        >
-          {deleteMutation.isPending ? "Видалення..." : "Видалити"}
-        </Button>
+        />
       </div>
     </DialogContent>
   );

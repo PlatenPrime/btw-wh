@@ -1,5 +1,5 @@
+import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
 import { Alert } from "@/components/ui/alert";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -9,8 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { getRoleLabel } from "@/constants/roles";
-import { RoleType } from "@/constants/roles";
+import { getRoleLabel, RoleType } from "@/constants/roles";
 import type { CreateUserFormValues } from "@/modules/auth/components/forms/schema";
 import type { UseFormReturn } from "react-hook-form";
 
@@ -93,7 +92,9 @@ export function CreateUserFormView({
         <Label>Роль</Label>
         <Select
           value={roleValue || ""}
-          onValueChange={(v) => setValue("role", v as CreateUserFormValues["role"])}
+          onValueChange={(v) =>
+            setValue("role", v as CreateUserFormValues["role"])
+          }
           disabled={isLoading}
         >
           <SelectTrigger className="w-full">
@@ -134,16 +135,14 @@ export function CreateUserFormView({
         )}
       </div>
 
-      <div className="flex gap-2">
-        {onCancel && (
-          <Button type="button" variant="outline" onClick={onCancel} className="flex-1">
-            Скасувати
-          </Button>
-        )}
-        <Button type="submit" disabled={isLoading} className={onCancel ? "flex-1" : "w-full"}>
-          {isLoading ? "Створення..." : "Створити"}
-        </Button>
-      </div>
+      <DialogActions
+        onCancel={onCancel}
+        onSubmit={handleSubmit(onSubmit)}
+        cancelText="Скасувати"
+        submitText="Створити"
+        isSubmitting={isLoading}
+        variant="success"
+      />
     </form>
   );
 }

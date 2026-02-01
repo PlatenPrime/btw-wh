@@ -1,35 +1,25 @@
-import { Button } from "@/components/ui/button";
+import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
 import {
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useDeletePalletGroupMutation } from "@/modules/pallet-groups/api/hooks/mutations/useDeletePalletGroupMutation";
 import type { PalletGroupDto } from "@/modules/pallet-groups/api/types";
-import { useNavigate } from "react-router";
 
 interface DeletePalletGroupHeaderDialogViewProps {
   group: PalletGroupDto;
-  onClose: () => void;
-  onDeleted?: () => void;
+  isDeleting: boolean;
+  onDelete: () => void;
+  onCancel: () => void;
 }
 
 export function DeletePalletGroupHeaderDialogView({
   group,
-  onClose,
-  onDeleted,
+  isDeleting,
+  onDelete,
+  onCancel,
 }: DeletePalletGroupHeaderDialogViewProps) {
-  const deleteMutation = useDeletePalletGroupMutation();
-  const navigate = useNavigate();
-
-  const handleDelete = async () => {
-    await deleteMutation.mutateAsync(group.id);
-    onClose();
-    onDeleted?.();
-    navigate("/wh/pallet-groups");
-  };
-
   return (
     <DialogContent>
       <DialogHeader>
@@ -40,23 +30,15 @@ export function DeletePalletGroupHeaderDialogView({
           групи.
         </DialogDescription>
       </DialogHeader>
-      <div className="flex justify-end gap-2 pt-4">
-        <Button
-          type="button"
-          variant="outline"
-          onClick={onClose}
-          disabled={deleteMutation.isPending}
-        >
-          Скасувати
-        </Button>
-        <Button
-          type="button"
+      <div className="pt-4">
+        <DialogActions
+          onCancel={onCancel}
+          onSubmit={onDelete}
+          cancelText="Скасувати"
+          submitText="Видалити"
+          isSubmitting={isDeleting}
           variant="destructive"
-          onClick={handleDelete}
-          disabled={deleteMutation.isPending}
-        >
-          {deleteMutation.isPending ? "Видалення..." : "Видалити"}
-        </Button>
+        />
       </div>
     </DialogContent>
   );

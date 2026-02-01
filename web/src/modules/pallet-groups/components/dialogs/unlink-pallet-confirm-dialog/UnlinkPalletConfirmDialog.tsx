@@ -1,9 +1,8 @@
-import { Button } from "@/components/ui/button";
+import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -44,18 +43,13 @@ export function UnlinkPalletConfirmDialog({
             )}
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter className="gap-2">
-          <Button variant="outline" onClick={onCancel} disabled={isPending}>
-            Скасувати
-          </Button>
-          <Button
-            variant="destructive"
-            onClick={onConfirm}
-            disabled={isPending}
-          >
-            {isPending ? "Відв'язування..." : "Відв'язати від групи"}
-          </Button>
-        </DialogFooter>
+        <DialogActions
+          onCancel={onCancel}
+          onSubmit={onConfirm}
+          submitText="Відв'язати від групи"
+          isSubmitting={isPending}
+          variant="destructive"
+        />
       </DialogContent>
     </Dialog>
   );

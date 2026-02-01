@@ -1,5 +1,6 @@
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import type { VariantProps } from "class-variance-authority";
 
 interface DialogActionsProps {
   onCancel?: () => void;
@@ -8,7 +9,7 @@ interface DialogActionsProps {
   submitText?: string;
   isSubmitting?: boolean;
   isDisabled?: boolean;
-  variant?: "default" | "destructive";
+  variant?: VariantProps<typeof buttonVariants>["variant"];
   className?: string;
 }
 

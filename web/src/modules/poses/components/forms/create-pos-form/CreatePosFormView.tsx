@@ -175,6 +175,7 @@ export function CreatePosFormView({
                 watchedValues.boxes <= 0
               }
               className="w-full"
+              variant="success"
             />
           ) : (
             <Button
