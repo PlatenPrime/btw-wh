@@ -1,6 +1,5 @@
-import { ThemedIcon, ThemedSpinner } from "@/components/themed";
-import { ThemedText } from "@/components/themed/themed-text";
-import { ThemedView } from "@/components/themed/themed-view";
+import { GlassCard } from "@/components/shared/glass-card";
+import { ThemedIcon, ThemedSpinner, ThemedText } from "@/components/themed";
 import { SemanticColors } from "@/constants/theme";
 import { formatDateTime } from "@/modules/asks/utils/format-date";
 import type { DefsCalculationStatus } from "@/modules/defs/api/types/dto";
@@ -37,7 +36,7 @@ export function CalculationStatusView({
 
   if (isLoading) {
     return (
-      <ThemedView className="p-4 rounded-lg border bg-background-0 border-outline-100">
+      <GlassCard className="p-4">
         <View className="flex-row items-center gap-2">
           <ThemedSpinner size="small" color={spinnerColor || "#2563eb"} />
           <ThemedText type="title" className="text-lg">
@@ -52,13 +51,13 @@ export function CalculationStatusView({
             Отримання даних про статус...
           </ThemedText>
         </View>
-      </ThemedView>
+      </GlassCard>
     );
   }
 
   if (status.isRunning) {
     return (
-      <ThemedView className="p-4 rounded-lg border bg-background-0 border-outline-100">
+      <GlassCard className="p-4">
         <View className="flex-row items-center gap-2">
           <ThemedSpinner size="small" color={spinnerColor || "#2563eb"} />
           <ThemedText type="title" className="text-lg">
@@ -146,12 +145,12 @@ export function CalculationStatusView({
               </View>
             )}
         </View>
-      </ThemedView>
+      </GlassCard>
     );
   }
 
   return (
-    <ThemedView className="p-4 rounded-lg border bg-background-0 border-outline-100">
+    <GlassCard className="p-4">
       <View className="flex-row items-center gap-2">
         <ThemedIcon
           family="MaterialIcons"
@@ -208,6 +207,6 @@ export function CalculationStatusView({
           </View>
         )}
       </View>
-    </ThemedView>
+    </GlassCard>
   );
 }

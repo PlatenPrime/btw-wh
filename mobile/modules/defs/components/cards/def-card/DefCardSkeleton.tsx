@@ -4,7 +4,7 @@ import { View } from "react-native";
 
 export function DefCardSkeleton() {
   return (
-    <ThemedView className="p-2 rounded-lg border bg-background-0 border-outline-100">
+    <ThemedView className="p-2 rounded-2xl border border-outline-100 bg-background-0 shadow-hard-2">
       <View className="gap-2">
         <View className="flex-row items-start justify-between">
           <View className="flex-1 gap-2">

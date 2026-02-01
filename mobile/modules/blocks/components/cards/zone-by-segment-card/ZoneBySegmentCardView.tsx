@@ -1,5 +1,5 @@
-import { ThemedText } from "@/components/themed/themed-text";
-import { ThemedBox, ThemedHStack, ThemedPressable, ThemedVStack } from "@/components/themed";
+import { GlassCard } from "@/components/shared/glass-card";
+import { ThemedBox, ThemedHStack, ThemedPressable, ThemedText, ThemedVStack } from "@/components/themed";
 import { ArtsByZoneFetcher } from "@/modules/arts/components/fetchers/arts-by-zone-fetcher/ArtsByZoneFetcher";
 import {
   ArtsByZoneContainer,
@@ -34,10 +34,8 @@ export function ZoneBySegmentCardView({
 
   return (
     <ThemedVStack className="gap-2">
-      <ThemedPressable
-        onPress={handlePress}
-        className="p-4 rounded-lg border border-outline-50 bg-background-0"
-      >
+      <GlassCard className="p-4">
+        <ThemedPressable onPress={handlePress}>
         <ThemedBox className="gap-2">
           <ThemedHStack className="items-center justify-between">
             <ThemedText type="title" className="text-lg flex-1 text-center">
@@ -63,7 +61,8 @@ export function ZoneBySegmentCardView({
             </ThemedHStack>
           </ThemedBox>
         </ThemedBox>
-      </ThemedPressable>
+        </ThemedPressable>
+      </GlassCard>
       {zoneTitle && (
         <ThemedBox className="pl-2">
           <ArtsByZoneFetcher

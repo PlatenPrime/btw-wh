@@ -3,7 +3,7 @@ import { View } from "react-native";
 
 export function ZoneDetailsCardSkeleton() {
   return (
-    <View className="p-4 rounded-lg border border-outline-50 bg-background-0">
+    <View className="p-4 rounded-2xl border border-outline-100 bg-background-0 shadow-hard-2">
       <ThemedBox className="gap-2">
         <ThemedBox className="gap-1">
           <ThemedBox

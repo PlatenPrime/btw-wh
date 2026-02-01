@@ -5,7 +5,7 @@ import { View } from "react-native";
 
 export function AskDetailsCardSkeleton() {
   return (
-    <ThemedView className="p-3 rounded-lg border border-outline-50 bg-background-0">
+    <ThemedView className="p-3 rounded-2xl border border-outline-100 bg-background-0 shadow-hard-2">
       <View className="gap-3">
         <View className="flex-row items-start justify-between">
           <View className="flex-1 flex-row items-start gap-3">

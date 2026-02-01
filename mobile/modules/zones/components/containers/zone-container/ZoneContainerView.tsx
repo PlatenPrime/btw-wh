@@ -1,5 +1,4 @@
-import { ScrollView, RefreshControl } from "react-native";
-import { ThemedView } from "@/components/themed/themed-view";
+import { ScrollView, RefreshControl, View } from "react-native";
 import { ThemedVStack } from "@/components/themed";
 import type { ZoneDto } from "@/modules/zones/api/types/dto";
 import { ZoneDetailsCard } from "@/modules/zones/components/cards/zone-details-card/ZoneDetailsCard";
@@ -21,7 +20,7 @@ export function ZoneContainerView({
   onRefresh,
 }: ZoneContainerViewProps) {
   return (
-    <ThemedView className="flex-1">
+    <View className="flex-1">
       <ScrollView
         className="flex-1"
         contentContainerClassName="gap-4 p-4"
@@ -40,7 +39,7 @@ export function ZoneContainerView({
           />
         </ThemedVStack>
       </ScrollView>
-    </ThemedView>
+    </View>
   );
 }
 

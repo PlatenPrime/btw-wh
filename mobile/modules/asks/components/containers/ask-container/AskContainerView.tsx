@@ -1,5 +1,4 @@
 import { ScrollView, View, RefreshControl } from "react-native";
-import { ThemedView } from "@/components/themed/themed-view";
 import type { AskDto } from "@/modules/asks/api/types/dto";
 import { AskDetailsCard } from "@/modules/asks/components/cards/ask-details-card/AskDetailsCard";
 import { AskEvents } from "@/modules/asks/components/containers/ask-container/components/ask-events/AskEvents";
@@ -20,7 +19,7 @@ export function AskContainerView({
   onRefresh,
 }: AskContainerViewProps) {
   return (
-    <ThemedView className="flex-1">
+    <View className="flex-1">
       <ScrollView
         className="flex-1"
         contentContainerClassName="gap-4 p-4"
@@ -56,7 +55,7 @@ export function AskContainerView({
           ) : null}
         </ThemedVStack>
       </ScrollView>
-    </ThemedView>
+    </View>
   );
 }
 

@@ -1,6 +1,11 @@
 'use client';
 import React from 'react';
-import { Pressable as RNPressable, type PressableProps as RNPressableProps } from 'react-native';
+import {
+  Pressable as RNPressable,
+  type PressableProps as RNPressableProps,
+  type PressableStateCallbackType,
+  StyleSheet,
+} from 'react-native';
 import { tva, type VariantProps } from '@/lib/tv';
 import { useTheme } from '@/providers/theme-provider';
 
@@ -27,6 +32,14 @@ const ThemedPressable = React.forwardRef<
     ? { backgroundColor: isDark ? (darkColor || lightColor) : (lightColor || darkColor) }
     : undefined;
 
+  const resolvedStyle =
+    customStyle && style
+      ? typeof style === 'function'
+        ? (state: PressableStateCallbackType) =>
+            StyleSheet.flatten([customStyle, style(state)])
+        : [customStyle, style]
+      : customStyle ?? style;
+
   return (
     <RNPressable
       {...props}
@@ -34,7 +47,7 @@ const ThemedPressable = React.forwardRef<
       className={pressableStyle({
         class: className,
       })}
-      style={customStyle ? [customStyle, style] : style}
+      style={resolvedStyle}
     />
   );
 });

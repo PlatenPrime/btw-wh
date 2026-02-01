@@ -1,5 +1,5 @@
-import { ThemedText } from "@/components/themed/themed-text";
-import { ThemedBox, ThemedHStack, ThemedVStack } from "@/components/themed";
+import { GlassCard } from "@/components/shared/glass-card";
+import { ThemedBox, ThemedHStack, ThemedText, ThemedVStack } from "@/components/themed";
 
 interface SegmentInfoViewProps {
   order: number;
@@ -15,7 +15,7 @@ export function SegmentInfoView({
   blockTitle,
 }: SegmentInfoViewProps) {
   return (
-    <ThemedBox className="p-4 rounded-lg border border-outline-50 bg-background-0">
+    <GlassCard className="p-4">
       <ThemedVStack className="gap-2">
         <ThemedText type="title" className="text-lg text-center">
           Сегмент {order}
@@ -58,7 +58,7 @@ export function SegmentInfoView({
           </ThemedHStack>
         </ThemedBox>
       </ThemedVStack>
-    </ThemedBox>
+    </GlassCard>
   );
 }
 

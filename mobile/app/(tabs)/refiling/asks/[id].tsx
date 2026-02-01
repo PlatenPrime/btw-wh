@@ -12,7 +12,7 @@ export default function AskScreen() {
 
   if (!id) {
     return (
-      <PageLayout title="Запит">
+      <PageLayout title="Запит" useHeroGradient>
         <ThemedText type="default" className="text-center p-4">
           ID запиту не знайдено
         </ThemedText>
@@ -21,7 +21,7 @@ export default function AskScreen() {
   }
 
   return (
-    <PageLayout title="Запит">
+    <PageLayout title="Запит" useHeroGradient>
       <AskFetcher
         id={id}
         ContainerComponent={AskContainer}

@@ -73,6 +73,7 @@ export interface GetAsksByDateResponse {
 import type { IPos } from "@/modules/poses/api/types";
 
 export interface AskResponse {
+  exists?: boolean;
   data: AskDto;
 }
 

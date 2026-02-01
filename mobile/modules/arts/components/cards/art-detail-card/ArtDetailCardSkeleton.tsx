@@ -3,7 +3,7 @@ import { BtradeArtDataSkeleton } from "@/modules/arts/components/containers/btra
 
 export function ArtDetailCardSkeleton() {
   return (
-    <ThemedBox className="p-3 rounded-lg border border-outline-50 bg-background-0">
+    <ThemedBox className="p-3 rounded-2xl border border-outline-100 bg-background-0 shadow-hard-2">
       <ThemedBox className="gap-3">
         {/* Скелетон для изображения и названия */}
         <ThemedBox className="flex-row items-start gap-3">

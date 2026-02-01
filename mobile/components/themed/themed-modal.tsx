@@ -4,11 +4,14 @@ import {
   Modal as RNModal,
   KeyboardAvoidingView,
   Platform,
+  StyleSheet,
   TouchableWithoutFeedback,
 } from 'react-native';
+import { BlurView } from 'expo-blur';
 import { ThemedView } from './themed-view';
 import { ThemedPressable } from './themed-pressable';
 import { ThemedScrollView } from './themed-scroll-view';
+import { useTheme } from '@/providers/theme-provider';
 import { cn } from '@/lib/utils';
 import type {
   ModalProps,
@@ -89,22 +92,66 @@ export function ThemedModalBackdrop({
 export type ThemedModalContentProps = ModalContentProps & {
   lightColor?: string;
   darkColor?: string;
+  glass?: boolean;
 };
 
-export function ThemedModalContent({ 
-  className, 
-  style, 
-  children, 
+export function ThemedModalContent({
+  className,
+  style,
+  children,
   lightColor,
   darkColor,
-  ...viewProps 
+  glass = false,
+  ...viewProps
 }: ThemedModalContentProps) {
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme === "dark";
+  const tint = isDark ? "dark" : "light";
+
+  const baseClassName = cn(
+    "rounded-2xl overflow-hidden border border-outline-100/80 shadow-hard-2 p-6",
+    className
+  );
+
+  if (glass && Platform.OS !== "web") {
+    return (
+      <TouchableWithoutFeedback>
+        <ThemedView
+          className={cn("flex flex-col max-w-md w-full mx-4 min-w-[280px]", baseClassName)}
+          style={[{ maxHeight: "90%" }, style]}
+          {...viewProps}
+        >
+          <BlurView intensity={50} tint={tint} style={StyleSheet.absoluteFill} />
+          <ThemedView className="z-10 flex-1 flex flex-col gap-4">
+            {children}
+          </ThemedView>
+        </ThemedView>
+      </TouchableWithoutFeedback>
+    );
+  }
+
+  if (glass && Platform.OS === "web") {
+    return (
+      <TouchableWithoutFeedback>
+        <ThemedView
+          lightColor={lightColor}
+          darkColor={darkColor}
+          className={cn("flex flex-col gap-4 min-w-[280px]", baseClassName, "bg-background-0/90")}
+          style={[{ maxHeight: "90%", backgroundColor: isDark ? "rgba(18, 18, 18, 0.9)" : "rgba(255, 255, 255, 0.9)" }, style]}
+          {...viewProps}
+        >
+          {children}
+        </ThemedView>
+      </TouchableWithoutFeedback>
+    );
+  }
+
   return (
     <TouchableWithoutFeedback>
       <ThemedView
         lightColor={lightColor}
         darkColor={darkColor}
-        className={cn("bg-background-0 rounded-md overflow-hidden border border-outline-50 shadow-hard-2 p-6", className)}
+        className={cn("flex flex-col bg-background-0 rounded-md overflow-hidden border border-outline-50 shadow-hard-2 p-6", className)}
         style={style}
         {...viewProps}
       >
@@ -166,7 +213,7 @@ export function ThemedModalBody({
       darkColor={darkColor}
       keyboardShouldPersistTaps="handled"
       showsVerticalScrollIndicator={true}
-      className={cn("mt-2 mb-6", className)}
+      className={cn("flex-1 min-h-0 mt-2 mb-6", className)}
     >
       {children}
     </ThemedScrollView>
@@ -188,7 +235,7 @@ export function ThemedModalFooter({
     <ThemedView 
       lightColor={lightColor}
       darkColor={darkColor}
-      className={cn("flex-row justify-end items-center gap-2", className)}
+      className={cn("flex-row justify-end items-center gap-2 shrink-0", className)}
     >
       {children}
     </ThemedView>

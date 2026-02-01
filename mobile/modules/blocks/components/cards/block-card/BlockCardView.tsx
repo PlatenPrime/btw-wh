@@ -1,6 +1,5 @@
-import { ThemedText } from "@/components/themed/themed-text";
-import { ThemedBox, ThemedHStack, ThemedPressable } from "@/components/themed";
-import { View } from "react-native";
+import { GlassCard } from "@/components/shared/glass-card";
+import { ThemedBox, ThemedHStack, ThemedPressable, ThemedText } from "@/components/themed";
 
 interface BlockCardViewProps {
   title: string;
@@ -16,10 +15,8 @@ export function BlockCardView({
   onPress,
 }: BlockCardViewProps) {
   return (
-    <ThemedPressable
-      onPress={onPress}
-      className="p-4 rounded-lg border border-outline-50 bg-background-0"
-    >
+    <GlassCard className="p-4">
+      <ThemedPressable onPress={onPress}>
       <ThemedBox className="gap-2">
         <ThemedHStack className="items-center justify-between">
           <ThemedText type="title" className="text-lg flex-1">
@@ -46,7 +43,8 @@ export function BlockCardView({
           </ThemedHStack>
         </ThemedBox>
       </ThemedBox>
-    </ThemedPressable>
+      </ThemedPressable>
+    </GlassCard>
   );
 }
 

@@ -38,8 +38,6 @@ export function AskPullPositionCard({
 
   // Преобразуем в PosResponse формат
   const posResponse: PosResponse = {
-    exists: true,
-    message: "",
     data: posData,
   };
 

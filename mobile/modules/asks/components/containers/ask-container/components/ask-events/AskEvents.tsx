@@ -1,5 +1,5 @@
-import { ThemedVStack } from "@/components/themed";
-import { ThemedText } from "@/components/themed/themed-text";
+import { GlassCard } from "@/components/shared/glass-card";
+import { ThemedText, ThemedVStack } from "@/components/themed";
 import { ThemedView } from "@/components/themed/themed-view";
 import type { AskEvent } from "@/modules/asks/api/types/dto";
 import { AskEvent as AskEventComponent } from "./components/ask-event/AskEvent";
@@ -22,7 +22,7 @@ export function AskEvents({
   const totalBoxes = pullBox ?? pullBoxes ?? 0;
 
   return (
-    <ThemedView className="p-3 rounded-lg border bg-background-0 border-outline-50">
+    <GlassCard className="p-4">
       <ThemedVStack className="gap-3">
         <AskEventsPullInfo totalQuant={totalQuant} totalBoxes={totalBoxes} />
 
@@ -46,6 +46,6 @@ export function AskEvents({
           })}
         </ThemedVStack>
       </ThemedVStack>
-    </ThemedView>
+    </GlassCard>
   );
 }

@@ -73,7 +73,7 @@ export function CalculationConfirmationDialogView({
           реальному часі.
         </ThemedText>
       </View>
-      <View className="flex-row items-center gap-2 rounded-lg p-3 bg-background-0">
+      <View className="flex-row items-center gap-2 rounded-2xl border border-outline-100/80 p-3 shadow-hard-2 bg-background-0">
         <ThemedIcon
           family="MaterialIcons"
           name="access-time"

@@ -3,7 +3,7 @@ import { ThemedHStack } from "@/components/themed";
 
 export function RowCardSkeleton() {
   return (
-    <ThemedBox className="p-2 rounded-lg border border-outline-50 bg-background-0">
+    <ThemedBox className="p-2 rounded-2xl border border-outline-100 bg-background-0 shadow-hard-2">
       <ThemedHStack className="items-center justify-between">
         <ThemedBox className="flex-1 min-w-0 items-center justify-center">
           <ThemedBox

@@ -1,23 +1,18 @@
-import { View, TouchableOpacity } from "react-native";
-import { useRouter } from "expo-router";
-import { ThemedView } from "@/components/themed/themed-view";
+import { GlassCard } from "@/components/shared/glass-card";
 import { ThemedText } from "@/components/themed/themed-text";
-import { useThemeValue } from "@/hooks/use-theme-value";
-import { cn } from "@/lib/utils";
 import type { AskDto } from "@/modules/asks/api/types/dto";
 import { AskStatusBadge } from "@/modules/asks/components/elements/ask-status-badge/AskStatusBadge";
-import { Image } from "expo-image";
 import { formatDateTime } from "@/modules/asks/utils/format-date";
+import { useRouter } from "expo-router";
+import { Image } from "expo-image";
+import { TouchableOpacity, View } from "react-native";
 
 interface AsksByArtikulCardViewProps {
   ask: AskDto;
 }
 
-export function AsksByArtikulCardView({
-  ask,
-}: AsksByArtikulCardViewProps) {
+export function AsksByArtikulCardView({ ask }: AsksByArtikulCardViewProps) {
   const router = useRouter();
-  const theme = useThemeValue();
   const formattedDate = formatDateTime(ask.createdAt);
 
   const handlePress = () => {
@@ -26,12 +21,7 @@ export function AsksByArtikulCardView({
 
   return (
     <TouchableOpacity onPress={handlePress} activeOpacity={0.7}>
-      <ThemedView
-        className={cn(
-          "p-3 rounded-lg border bg-background-0",
-          theme === "dark" ? "border-outline-50" : "border-outline-100"
-        )}
-      >
+      <GlassCard className="p-4">
         <View className="flex-row items-start justify-between gap-2">
           <View className="flex-1 gap-2">
             <ThemedText className="text-sm opacity-70">
@@ -56,7 +46,7 @@ export function AsksByArtikulCardView({
             <AskStatusBadge status={ask.status} />
           </View>
         </View>
-      </ThemedView>
+      </GlassCard>
     </TouchableOpacity>
   );
 }

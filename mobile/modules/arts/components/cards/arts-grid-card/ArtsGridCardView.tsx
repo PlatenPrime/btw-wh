@@ -1,8 +1,6 @@
 import { ArtImageModal } from "@/components/shared/art-image-modal/ArtImageModal";
-import { ThemedView } from "@/components/themed";
+import { GlassCard } from "@/components/shared/glass-card";
 import { ThemedText } from "@/components/themed/themed-text";
-import { useThemeValue } from "@/hooks/use-theme-value";
-import { cn } from "@/lib/utils";
 import { Image } from "expo-image";
 import { TouchableOpacity } from "react-native";
 
@@ -25,13 +23,9 @@ export function ArtsGridCardView({
   onImagePress,
   onCloseModal,
 }: ArtsGridCardViewProps) {
-  const theme = useThemeValue();
   return (
     <>
-      <ThemedView
-        className={cn("flex-row items-center p-2 rounded-lg border bg-background-0", theme === "dark" ? "border-outline-50" : "border-outline-100 ")}
-
-      >
+      <GlassCard className="flex-row items-center p-3">
         <TouchableOpacity onPress={onImagePress} activeOpacity={0.7}>
           <Image
             source={{ uri: imageUrl }}
@@ -53,7 +47,7 @@ export function ArtsGridCardView({
             {nameukr}
           </ThemedText>
         </TouchableOpacity>
-      </ThemedView>
+      </GlassCard>
 
       <ArtImageModal
         artikul={artikul}

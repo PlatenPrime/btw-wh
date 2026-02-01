@@ -25,7 +25,7 @@ export { ThemedBox };
 
 const baseStyle = isWeb
   ? "flex flex-col relative z-0 box-border list-none min-w-0 min-h-0 bg-transparent items-stretch m-0 p-0 text-decoration-none"
-  : "";
+  : "flex flex-col";
 
 export const themedBoxStyle = tva({
   base: baseStyle,

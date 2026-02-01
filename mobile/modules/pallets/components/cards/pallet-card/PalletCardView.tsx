@@ -1,12 +1,8 @@
-import {
-  ThemedBox,
-  ThemedHStack,
-  ThemedIcon,
-  ThemedPressable,
-} from "@/components/themed";
+import { ThemedBox, ThemedHStack } from "@/components/themed";
 import { ThemedText } from "@/components/themed/themed-text";
+import { GlassCard } from "@/components/shared/glass-card";
 import { cn } from "@/lib/utils";
-import { View } from "react-native";
+import { Pressable, View } from "react-native";
 
 interface PalletCardViewProps {
   title: string;
@@ -27,37 +23,29 @@ export function PalletCardView({
   menu,
   iconColor,
 }: PalletCardViewProps) {
-  const containerColor = isEmpty ? "bg-rose-500/10" : "bg-background-0";
-  const containerBorderColor = isEmpty
-    ? "border-rose-500/25"
-    : "border-outline-50";
   return (
-    <ThemedPressable
-      onPress={onPress}
-      className={cn(
-        "p-4 rounded-lg border",
-        containerColor,
-        containerBorderColor
-      )}
-    >
-      <ThemedBox className="gap-2">
-        <ThemedHStack className="items-center justify-between">
-          <ThemedText type="title" className="text-lg flex-1">
-            {title}
-          </ThemedText>
-          <ThemedHStack className="items-center gap-2">
-            {isEmpty && (
-              <ThemedBox className="rounded-md px-2 py-1 bg-background-100">
-                <ThemedText type="default" className="text-sm">
-                  порожня
-                </ThemedText>
-              </ThemedBox>
-            )}
-            {menu && <View>{menu}</View>}
+    <Pressable onPress={onPress}>
+      <GlassCard
+        className={cn("p-4", isEmpty && "border-rose-500/25")}
+      >
+        <ThemedBox className="gap-2">
+          <ThemedHStack className="items-center justify-between">
+            <ThemedText type="title" className="text-lg flex-1">
+              {title}
+            </ThemedText>
+            <ThemedHStack className="items-center gap-2">
+              {isEmpty && (
+                <ThemedBox className="rounded-md px-2 py-1 bg-background-100">
+                  <ThemedText type="default" className="text-sm">
+                    порожня
+                  </ThemedText>
+                </ThemedBox>
+              )}
+              {menu && <View>{menu}</View>}
+            </ThemedHStack>
           </ThemedHStack>
-        </ThemedHStack>
-
-      </ThemedBox>
-    </ThemedPressable>
+        </ThemedBox>
+      </GlassCard>
+    </Pressable>
   );
 }

@@ -1,6 +1,5 @@
-import { ThemedText } from "@/components/themed/themed-text";
-import { ThemedBox } from "@/components/themed";
-import { View } from "react-native";
+import { GlassCard } from "@/components/shared/glass-card";
+import { ThemedBox, ThemedText } from "@/components/themed";
 import type { ZoneDto } from "@/modules/zones/api/types/dto";
 
 interface ZoneDetailsCardProps {
@@ -9,7 +8,7 @@ interface ZoneDetailsCardProps {
 
 export function ZoneDetailsCard({ zone }: ZoneDetailsCardProps) {
   return (
-    <View className="p-4 rounded-lg border border-outline-50 bg-background-0">
+    <GlassCard className="p-4">
       <ThemedBox className="gap-2">
         <ThemedBox className="gap-1">
           <ThemedText type="default" className="text-sm text-typography-900">
@@ -20,7 +19,7 @@ export function ZoneDetailsCard({ zone }: ZoneDetailsCardProps) {
           </ThemedText>
         </ThemedBox>
       </ThemedBox>
-    </View>
+    </GlassCard>
   );
 }
 

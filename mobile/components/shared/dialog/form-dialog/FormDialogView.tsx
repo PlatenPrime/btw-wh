@@ -9,7 +9,7 @@ import {
 } from "@/components/themed";
 import { ThemedText } from "@/components/themed/themed-text";
 import { SemanticColors } from "@/constants/theme";
-import { Platform, ScrollView, TouchableOpacity, View } from "react-native";
+import { Platform, TouchableOpacity, View } from "react-native";
 
 interface FormDialogViewProps {
   visible: boolean;
@@ -47,7 +47,9 @@ export function FormDialogView({
         style={{
           backgroundColor: bgColor,
           borderColor: borderColor,
+          height: "90%",
           maxHeight: "90%",
+          minWidth: 280,
           ...Platform.select({
             ios: {
               shadowColor: SemanticColors.shadow.color,
@@ -61,7 +63,7 @@ export function FormDialogView({
           }),
         }}
       >
-        <ThemedModalHeader className="flex-col gap-2">
+        <ThemedModalHeader className="flex-col gap-2 shrink-0">
           <View className="flex-row items-center justify-between relative">
             <ThemedText
               type="defaultSemiBold"
@@ -85,13 +87,8 @@ export function FormDialogView({
             </TouchableOpacity>
           </View>
         </ThemedModalHeader>
-        <ThemedModalBody>
-          <ScrollView
-            keyboardShouldPersistTaps="handled"
-            showsVerticalScrollIndicator={true}
-          >
-            {children}
-          </ScrollView>
+        <ThemedModalBody className="flex-1 min-h-0">
+          {children}
         </ThemedModalBody>
         {footer && <ThemedModalFooter>{footer}</ThemedModalFooter>}
       </ThemedModalContent>

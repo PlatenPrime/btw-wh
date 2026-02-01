@@ -1,3 +1,4 @@
+import { GlassCard } from "@/components/shared/glass-card";
 import {
   ThemedBox,
   ThemedButton,
@@ -62,7 +63,7 @@ export const LoginForm = () => {
       contentContainerClassName="flex-1 justify-center items-center p-6"
       keyboardShouldPersistTaps="handled"
     >
-      <ThemedBox className="w-full max-w-sm bg-background-0 rounded-xl border border-outline-50 p-6 gap-4">
+      <GlassCard className="w-full max-w-sm p-6 gap-4">
         <ThemedText className="text-2xl font-semibold text-center text-typography-900">
           Авторизація
         </ThemedText>
@@ -160,7 +161,7 @@ export const LoginForm = () => {
             </ThemedText>
           )}
         </ThemedButton>
-      </ThemedBox>
+      </GlassCard>
     </ThemedScrollView>
   );
 };

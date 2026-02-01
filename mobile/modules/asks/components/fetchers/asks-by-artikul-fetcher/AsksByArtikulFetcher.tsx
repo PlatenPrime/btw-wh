@@ -1,3 +1,4 @@
+import { GlassCard } from "@/components/shared/glass-card";
 import { ThemedText } from "@/components/themed/themed-text";
 import { ThemedView } from "@/components/themed/themed-view";
 import { useAsksByArtikulQuery } from "@/modules/asks/api/hooks/queries/useAsksByArtikulQuery";
@@ -50,11 +51,11 @@ export function AsksByArtikulFetcher({
 
   if (asksQuery.data.data.length === 0) {
     return (
-      <ThemedView className="p-4 rounded-lg border border-outline-50">
+      <GlassCard className="p-4">
         <ThemedText type="default" className="text-center">
           Для цього артикулу немає запитів
         </ThemedText>
-      </ThemedView>
+      </GlassCard>
     );
   }
 

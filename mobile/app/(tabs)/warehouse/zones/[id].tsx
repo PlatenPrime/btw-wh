@@ -15,7 +15,7 @@ export default function ZoneDetailScreen() {
 
   if (!id) {
     return (
-      <PageLayout title="Зона не знайдена">
+      <PageLayout title="Зона не знайдена" useHeroGradient>
         <View className="flex-1 justify-center items-center">
           <ThemedText type="default">ID зони не знайдено</ThemedText>
         </View>
@@ -25,7 +25,7 @@ export default function ZoneDetailScreen() {
 
   if (isLoading) {
     return (
-      <PageLayout title="Завантаження...">
+      <PageLayout title="Завантаження..." useHeroGradient>
         <View className="flex-1 justify-center items-center">
           <ThemedText type="default">Завантаження...</ThemedText>
         </View>
@@ -35,7 +35,7 @@ export default function ZoneDetailScreen() {
 
   if (!data?.data) {
     return (
-      <PageLayout title="Зона не знайдена">
+      <PageLayout title="Зона не знайдена" useHeroGradient>
         <View className="flex-1 justify-center items-center">
           <ThemedText type="default">Зону не знайдено</ThemedText>
         </View>
@@ -46,7 +46,7 @@ export default function ZoneDetailScreen() {
   const zone = data.data;
 
   return (
-    <PageLayout title={`Зона: ${zone.title}`}>
+    <PageLayout title={`Зона: ${zone.title}`} useHeroGradient>
       <ZoneFetcher
         id={id}
         ContainerComponent={ZoneContainer}

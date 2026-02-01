@@ -1,4 +1,5 @@
-import { ThemedBox, ThemedCard, ThemedHStack } from "@/components/themed";
+import { GlassCard } from "@/components/shared/glass-card";
+import { ThemedBox, ThemedHStack } from "@/components/themed";
 import { ArtImageLink } from "@/components/shared/art-image-link";
 import type { IPos } from "@/modules/poses/api/types";
 import { View } from "react-native";
@@ -12,7 +13,7 @@ interface PosCardViewProps {
 
 export function PosCardView({ pos, skladName, menu }: PosCardViewProps) {
   return (
-    <ThemedCard variant="outlined" className="p-2 " >
+    <GlassCard className="p-2">
       {/* Header with image, title and menu */}
       <ThemedHStack className="items-start justify-between mb-2">
         <ThemedBox className="flex-1">
@@ -42,6 +43,6 @@ export function PosCardView({ pos, skladName, menu }: PosCardViewProps) {
           />
         </ThemedBox>
       </ThemedBox>
-    </ThemedCard>
+    </GlassCard>
   );
 }

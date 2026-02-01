@@ -1,5 +1,6 @@
 import { ThemedText } from "@/components/themed/themed-text";
-import { ThemedBox, ThemedHStack, ThemedVStack, ThemedIcon  } from "@/components/themed";
+import { ThemedBox, ThemedHStack, ThemedVStack, ThemedIcon } from "@/components/themed";
+import { GlassCard } from "@/components/shared/glass-card";
 import { useIconColor } from "@/hooks/use-icon-color";
 import type { WarehouseData } from "@/modules/poses/api/types";
 import type { ReactNode } from "react";
@@ -24,16 +25,16 @@ export function SkladPosesListView({
 
   if (!skladData.poses?.length) {
     return (
-      <ThemedBox className="p-4 rounded-lg border border-outline-50 bg-background-0">
+      <GlassCard className="p-4">
         <ThemedText type="default" className="text-center">
           На складі {title} немає позицій з цим артикулом
         </ThemedText>
-      </ThemedBox>
+      </GlassCard>
     );
   }
 
   return (
-    <ThemedBox className="p-4 rounded-lg border border-outline-50 bg-background-0">
+    <GlassCard className="p-4">
       <ThemedVStack className="gap-2">
         <ThemedHStack className="items-center">
           {/* Название склада слева */}
@@ -78,6 +79,6 @@ export function SkladPosesListView({
           </ThemedVStack>
         )}
       </ThemedVStack>
-    </ThemedBox>
+    </GlassCard>
   );
 }

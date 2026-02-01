@@ -28,11 +28,14 @@ const hstackStyle = tva({
   },
 });
 
-export type ThemedHStackProps = ViewProps & VariantProps<typeof hstackStyle> & {
-  lightColor?: string;
-  darkColor?: string;
-  className?: string;
-};
+export type ThemedHStackProps = ViewProps &
+  VariantProps<typeof hstackStyle> & {
+    lightColor?: string;
+    darkColor?: string;
+    className?: string;
+    space?: keyof (typeof hstackStyle)['variants']['space'];
+    reversed?: boolean;
+  };
 
 const ThemedHStack = React.forwardRef<React.ComponentRef<typeof View>, ThemedHStackProps>(
   function ThemedHStack({ 

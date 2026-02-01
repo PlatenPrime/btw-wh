@@ -152,7 +152,7 @@ export function CreatePosForm({
       onBoxesChange={handleBoxesChange}
       isSubmitting={isFormSubmitting}
       isArtLoading={isArtLoading}
-      artData={artData}
+      artData={artData ?? undefined}
       existingPos={existingPos}
       onSubmit={onSubmit}
       onCancel={onCancel}

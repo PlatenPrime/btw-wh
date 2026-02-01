@@ -1,7 +1,5 @@
-import { SemanticColors } from "@/constants/theme";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { getSmallImageUrl } from "@/modules/arts/constants/art-image-url";
-import { useTheme } from "@/providers/theme-provider";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { ArtsGridCardView } from "./ArtsGridCardView";
@@ -13,11 +11,7 @@ interface GridCardProps {
 export function ArtsGridCard({ art }: GridCardProps) {
   const router = useRouter();
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const { resolvedTheme } = useTheme();
-  const theme = resolvedTheme === "dark" ? "dark" : "light";
   const imageUrl = getSmallImageUrl(art.artikul);
-  const bgColor = SemanticColors.card.bg[theme];
-  const borderColor = SemanticColors.card.border[theme];
 
   const nameukr =
     art.nameukr.length > 50
@@ -42,8 +36,6 @@ export function ArtsGridCard({ art }: GridCardProps) {
       nameukr={nameukr}
       onPress={handlePress}
       imageUrl={imageUrl}
-      bgColor={bgColor}
-      borderColor={borderColor}
       isModalVisible={isModalVisible}
       onImagePress={handleImagePress}
       onCloseModal={handleCloseModal}

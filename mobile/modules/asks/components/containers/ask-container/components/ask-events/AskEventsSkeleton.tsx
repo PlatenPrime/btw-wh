@@ -3,7 +3,7 @@ import { ThemedView } from "@/components/themed/themed-view";
 
 export function AskEventsSkeleton() {
   return (
-    <ThemedView className="p-3 rounded-lg border bg-background-0 border-outline-100">
+    <ThemedView className="p-3 rounded-2xl border border-outline-100 bg-background-0 shadow-hard-2">
       <ThemedVStack className="gap-3">
         <ThemedBox
           className="rounded bg-secondary-300"

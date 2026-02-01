@@ -1,6 +1,5 @@
-import { ThemedHStack, ThemedIcon, ThemedVStack } from "@/components/themed";
-import { ThemedText } from "@/components/themed/themed-text";
-import { ThemedView } from "@/components/themed/themed-view";
+import { GlassCard } from "@/components/shared/glass-card";
+import { ThemedHStack, ThemedIcon, ThemedText, ThemedVStack } from "@/components/themed";
 import type { GetAskPullResponse } from "@/modules/asks/api/types/dto";
 import { getAskPullStatusMessage } from "@/modules/asks/utils/get-ask-pull-status-message/getAskPullStatusMessage";
 import { ActivityIndicator } from "react-native";
@@ -21,7 +20,7 @@ export function AskPullPositionsContainerView({
   const statusMessage = getAskPullStatusMessage(data);
 
   return (
-    <ThemedView className="p-4 rounded-lg border bg-background-0 border-outline-100">
+    <GlassCard className="p-4">
       <ThemedVStack className="gap-4">
         <ThemedVStack className="gap-2">
           <ThemedHStack className="items-center justify-center gap-2">
@@ -64,6 +63,6 @@ export function AskPullPositionsContainerView({
           </ThemedVStack>
         )}
       </ThemedVStack>
-    </ThemedView>
+    </GlassCard>
   );
 }

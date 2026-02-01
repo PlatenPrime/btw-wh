@@ -5,7 +5,7 @@ import { View } from "react-native";
 
 export function CalculationStatusSkeleton() {
   return (
-    <ThemedView className="p-4 rounded-lg border bg-background-0 border-outline-100">
+    <ThemedView className="p-4 rounded-2xl border border-outline-100 bg-background-0 shadow-hard-2">
       <View className="flex-row items-center gap-2">
         <ThemedSpinner size="small" color={SemanticColors.info} />
         <ThemedBox
