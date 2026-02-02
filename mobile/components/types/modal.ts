@@ -1,4 +1,4 @@
-import type { ViewStyle, ViewProps } from "react-native";
+import type { ViewProps, ViewStyle } from "react-native";
 
 export interface ModalContextType {
   onClose: () => void;
@@ -32,6 +32,7 @@ export interface ModalBodyProps {
   className?: string;
   children: React.ReactNode;
   scrollable?: boolean;
+  style?: ViewStyle;
 }
 
 export interface ModalFooterProps {
@@ -44,4 +45,3 @@ export interface ModalCloseButtonProps {
   className?: string;
   children?: React.ReactNode;
 }
-

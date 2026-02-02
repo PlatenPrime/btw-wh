@@ -9,7 +9,7 @@ import {
 } from "@/components/themed";
 import { ThemedText } from "@/components/themed/themed-text";
 import { SemanticColors } from "@/constants/theme";
-import { Platform, TouchableOpacity, View } from "react-native";
+import { Dimensions, Platform, TouchableOpacity, View } from "react-native";
 
 interface FormDialogViewProps {
   visible: boolean;
@@ -47,7 +47,6 @@ export function FormDialogView({
         style={{
           backgroundColor: bgColor,
           borderColor: borderColor,
-          height: "90%",
           maxHeight: "90%",
           minWidth: 280,
           ...Platform.select({
@@ -87,7 +86,13 @@ export function FormDialogView({
             </TouchableOpacity>
           </View>
         </ThemedModalHeader>
-        <ThemedModalBody className="flex-1 min-h-0">
+        <ThemedModalBody
+          className="flex-none min-h-0"
+          scrollable
+          style={{
+            maxHeight: Dimensions.get("window").height * 0.7,
+          }}
+        >
           {children}
         </ThemedModalBody>
         {footer && <ThemedModalFooter>{footer}</ThemedModalFooter>}

@@ -1,11 +1,12 @@
-import { View } from "react-native";
+import {
+  ThemedButton,
+  ThemedText as ThemedTextButton,
+} from "@/components/themed";
 import { ThemedText } from "@/components/themed/themed-text";
 import { ThemedView } from "@/components/themed/themed-view";
 import { useAskQuery } from "@/modules/asks/api/hooks/queries/useAskQuery";
 import type { AskDto } from "@/modules/asks/api/types/dto";
 import type { ComponentType } from "react";
-import { ThemedButton, ThemedText as ThemedTextButton } from "@/components/themed";
-import { TouchableOpacity } from "react-native";
 
 interface AskFetcherProps {
   id: string;
@@ -35,7 +36,10 @@ export function AskFetcher({
         <ThemedText type="default" className="text-center mb-4">
           Помилка завантаження запиту
         </ThemedText>
-        <ThemedText type="default" className="text-center text-xs opacity-70 mb-4">
+        <ThemedText
+          type="default"
+          className="text-center text-xs opacity-70 mb-4"
+        >
           Не вдалося завантажити запит
         </ThemedText>
         <ThemedButton onPress={() => askQuery.refetch()} variant="outline">
@@ -51,7 +55,10 @@ export function AskFetcher({
         <ThemedText type="default" className="text-center mb-4">
           Запит не знайдено
         </ThemedText>
-        <ThemedText type="default" className="text-center text-xs opacity-70 mb-4">
+        <ThemedText
+          type="default"
+          className="text-center text-xs opacity-70 mb-4"
+        >
           Запит з таким ID не існує або був видалений
         </ThemedText>
         <ThemedButton onPress={() => askQuery.refetch()} variant="outline">
@@ -69,4 +76,3 @@ export function AskFetcher({
     />
   );
 }
-

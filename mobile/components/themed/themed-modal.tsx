@@ -1,28 +1,28 @@
-'use client';
-import React from 'react';
+"use client";
+import type {
+  ModalBackdropProps,
+  ModalBodyProps,
+  ModalCloseButtonProps,
+  ModalContentProps,
+  ModalContextType,
+  ModalFooterProps,
+  ModalHeaderProps,
+  ModalProps,
+} from "@/components/types/modal";
+import { cn } from "@/lib/utils";
+import { useTheme } from "@/providers/theme-provider";
+import { BlurView } from "expo-blur";
+import React from "react";
 import {
-  Modal as RNModal,
   KeyboardAvoidingView,
   Platform,
+  Modal as RNModal,
   StyleSheet,
   TouchableWithoutFeedback,
-} from 'react-native';
-import { BlurView } from 'expo-blur';
-import { ThemedView } from './themed-view';
-import { ThemedPressable } from './themed-pressable';
-import { ThemedScrollView } from './themed-scroll-view';
-import { useTheme } from '@/providers/theme-provider';
-import { cn } from '@/lib/utils';
-import type {
-  ModalProps,
-  ModalBackdropProps,
-  ModalContentProps,
-  ModalHeaderProps,
-  ModalBodyProps,
-  ModalFooterProps,
-  ModalCloseButtonProps,
-  ModalContextType,
-} from '@/components/types/modal';
+} from "react-native";
+import { ThemedPressable } from "./themed-pressable";
+import { ThemedScrollView } from "./themed-scroll-view";
+import { ThemedView } from "./themed-view";
 
 const ModalContext = React.createContext<ModalContextType | null>(null);
 
@@ -32,10 +32,10 @@ export type ThemedModalProps = ModalProps & {
   className?: string;
 };
 
-export function ThemedModal({ 
-  isOpen, 
-  onClose, 
-  children, 
+export function ThemedModal({
+  isOpen,
+  onClose,
+  children,
   className,
   lightColor,
   darkColor,
@@ -49,7 +49,7 @@ export function ThemedModal({
     >
       <ModalContext.Provider value={{ onClose }}>
         <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
           className={cn("flex-1 justify-center items-center", className)}
         >
           {children}
@@ -64,10 +64,10 @@ export type ThemedModalBackdropProps = ModalBackdropProps & {
   darkColor?: string;
 };
 
-export function ThemedModalBackdrop({ 
-  onPress, 
-  className, 
-  style, 
+export function ThemedModalBackdrop({
+  onPress,
+  className,
+  style,
   children,
   lightColor,
   darkColor,
@@ -117,11 +117,18 @@ export function ThemedModalContent({
     return (
       <TouchableWithoutFeedback>
         <ThemedView
-          className={cn("flex flex-col max-w-md w-full mx-4 min-w-[280px]", baseClassName)}
+          className={cn(
+            "flex flex-col max-w-md w-full mx-4 min-w-[280px]",
+            baseClassName
+          )}
           style={[{ maxHeight: "90%" }, style]}
           {...viewProps}
         >
-          <BlurView intensity={50} tint={tint} style={StyleSheet.absoluteFill} />
+          <BlurView
+            intensity={50}
+            tint={tint}
+            style={StyleSheet.absoluteFill}
+          />
           <ThemedView className="z-10 flex-1 flex flex-col gap-4">
             {children}
           </ThemedView>
@@ -136,8 +143,20 @@ export function ThemedModalContent({
         <ThemedView
           lightColor={lightColor}
           darkColor={darkColor}
-          className={cn("flex flex-col gap-4 min-w-[280px]", baseClassName, "bg-background-0/90")}
-          style={[{ maxHeight: "90%", backgroundColor: isDark ? "rgba(18, 18, 18, 0.9)" : "rgba(255, 255, 255, 0.9)" }, style]}
+          className={cn(
+            "flex flex-col gap-4 min-w-[280px]",
+            baseClassName,
+            "bg-background-0/90"
+          )}
+          style={[
+            {
+              maxHeight: "90%",
+              backgroundColor: isDark
+                ? "rgba(18, 18, 18, 0.9)"
+                : "rgba(255, 255, 255, 0.9)",
+            },
+            style,
+          ]}
           {...viewProps}
         >
           {children}
@@ -151,7 +170,10 @@ export function ThemedModalContent({
       <ThemedView
         lightColor={lightColor}
         darkColor={darkColor}
-        className={cn("flex flex-col bg-background-0 rounded-md overflow-hidden border border-outline-50 shadow-hard-2 p-6", className)}
+        className={cn(
+          "flex flex-col bg-background-0 rounded-md overflow-hidden border border-outline-50 shadow-hard-2 p-6",
+          className
+        )}
         style={style}
         {...viewProps}
       >
@@ -166,14 +188,14 @@ export type ThemedModalHeaderProps = ModalHeaderProps & {
   darkColor?: string;
 };
 
-export function ThemedModalHeader({ 
-  className, 
+export function ThemedModalHeader({
+  className,
   children,
   lightColor,
   darkColor,
 }: ThemedModalHeaderProps) {
   return (
-    <ThemedView 
+    <ThemedView
       lightColor={lightColor}
       darkColor={darkColor}
       className={cn("justify-between items-center flex-row", className)}
@@ -188,19 +210,21 @@ export type ThemedModalBodyProps = ModalBodyProps & {
   darkColor?: string;
 };
 
-export function ThemedModalBody({ 
-  className, 
-  children, 
+export function ThemedModalBody({
+  className,
+  children,
   scrollable = true,
+  style,
   lightColor,
   darkColor,
 }: ThemedModalBodyProps) {
   if (!scrollable) {
     return (
-      <ThemedView 
+      <ThemedView
         lightColor={lightColor}
         darkColor={darkColor}
         className={cn("mt-2 mb-6", className)}
+        style={style}
       >
         {children}
       </ThemedView>
@@ -214,6 +238,7 @@ export function ThemedModalBody({
       keyboardShouldPersistTaps="handled"
       showsVerticalScrollIndicator={true}
       className={cn("flex-1 min-h-0 mt-2 mb-6", className)}
+      style={style}
     >
       {children}
     </ThemedScrollView>
@@ -225,17 +250,20 @@ export type ThemedModalFooterProps = ModalFooterProps & {
   darkColor?: string;
 };
 
-export function ThemedModalFooter({ 
-  className, 
+export function ThemedModalFooter({
+  className,
   children,
   lightColor,
   darkColor,
 }: ThemedModalFooterProps) {
   return (
-    <ThemedView 
+    <ThemedView
       lightColor={lightColor}
       darkColor={darkColor}
-      className={cn("flex-row justify-end items-center gap-2 shrink-0", className)}
+      className={cn(
+        "flex-row justify-end items-center gap-2 shrink-0",
+        className
+      )}
     >
       {children}
     </ThemedView>
@@ -247,9 +275,9 @@ export type ThemedModalCloseButtonProps = ModalCloseButtonProps & {
   darkColor?: string;
 };
 
-export function ThemedModalCloseButton({ 
-  onPress, 
-  className, 
+export function ThemedModalCloseButton({
+  onPress,
+  className,
   children,
   lightColor,
   darkColor,
@@ -269,11 +297,10 @@ export function ThemedModalCloseButton({
   );
 }
 
-ThemedModal.displayName = 'ThemedModal';
-ThemedModalBackdrop.displayName = 'ThemedModalBackdrop';
-ThemedModalContent.displayName = 'ThemedModalContent';
-ThemedModalHeader.displayName = 'ThemedModalHeader';
-ThemedModalBody.displayName = 'ThemedModalBody';
-ThemedModalFooter.displayName = 'ThemedModalFooter';
-ThemedModalCloseButton.displayName = 'ThemedModalCloseButton';
-
+ThemedModal.displayName = "ThemedModal";
+ThemedModalBackdrop.displayName = "ThemedModalBackdrop";
+ThemedModalContent.displayName = "ThemedModalContent";
+ThemedModalHeader.displayName = "ThemedModalHeader";
+ThemedModalBody.displayName = "ThemedModalBody";
+ThemedModalFooter.displayName = "ThemedModalFooter";
+ThemedModalCloseButton.displayName = "ThemedModalCloseButton";

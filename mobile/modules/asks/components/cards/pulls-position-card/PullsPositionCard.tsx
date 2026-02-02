@@ -1,7 +1,5 @@
-import { SemanticColors } from "@/constants/theme";
 import type { IPositionForPullsPage } from "@/modules/asks/api/types/dto";
 import type { PosResponse } from "@/modules/poses/api/types";
-import { useTheme } from "@/providers/theme-provider";
 import { useState } from "react";
 import { PullsPositionCardView } from "./PullsPositionCardView";
 
@@ -11,10 +9,6 @@ interface PullsPositionCardProps {
 
 export function PullsPositionCard({ position }: PullsPositionCardProps) {
   const [open, setOpen] = useState(false);
-  const { resolvedTheme } = useTheme();
-  const theme = resolvedTheme === "dark" ? "dark" : "light";
-  const bgColor = SemanticColors.card.bg[theme];
-  const borderColor = SemanticColors.card.border[theme];
 
   // Преобразуем IPositionForPullsPage в IPos для совместимости с AskPosEditDialog
   const posData = {
@@ -56,8 +50,6 @@ export function PullsPositionCard({ position }: PullsPositionCardProps) {
       open={open}
       setOpen={setOpen}
       onSuccess={handleSuccess}
-      bgColor={bgColor}
-      borderColor={borderColor}
     />
   );
 }

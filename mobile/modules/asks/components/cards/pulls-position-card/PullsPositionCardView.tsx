@@ -6,9 +6,9 @@ import {
   ThemedVStack,
 } from "@/components/themed";
 import { ThemedText } from "@/components/themed/themed-text";
-import { ThemedView } from "@/components/themed/themed-view";
 
 import { ArtImageLink } from "@/components/shared/art-image-link";
+import { GlassCard } from "@/components/shared/glass-card";
 import type { IPositionForPullsPage } from "@/modules/asks/api/types/dto";
 import { AskPosEditDialog } from "@/modules/asks/components/dialogs/ask-pos-edit-dialog/AskPosEditDialog";
 import type { PosResponse } from "@/modules/poses/api/types";
@@ -19,8 +19,6 @@ interface PullsPositionCardViewProps {
   open: boolean;
   setOpen: (open: boolean) => void;
   onSuccess: () => void;
-  bgColor: string;
-  borderColor: string;
 }
 
 export function PullsPositionCardView({
@@ -29,56 +27,51 @@ export function PullsPositionCardView({
   open,
   setOpen,
   onSuccess,
-  bgColor,
-  borderColor,
 }: PullsPositionCardViewProps) {
   return (
     <>
-      <ThemedView
-        className="p-2 rounded-lg border"
-        style={{
-          backgroundColor: bgColor,
-          borderColor: borderColor,
-        }}
-      >
+      <GlassCard className="p-2">
         <ThemedVStack className="gap-2">
-          <ArtImageLink
-            artikul={position.artikul}
-            nameukr={position.nameukr}
-            link={`/(tabs)/arts/${position.artikul}`}
-          />
-
-          <ThemedHStack className="items-center justify-between">
-            <ThemedVStack className="gap-2 flex-1">
-              {position.askRemainingQuantity !== null && (
-                <ThemedHStack className="items-center gap-1">
-                  <ThemedIcon
-                    family="MaterialIcons"
-                    name="radio-button-unchecked"
-                    size={12}
-                  />
-                  <ThemedText type="default" className="text-xs">
-                    {position.askRemainingQuantity}
-                  </ThemedText>
-                </ThemedHStack>
-              )}
-              <ThemedText type="defaultSemiBold" className="text-sm">
-                {position.palletTitle}
-              </ThemedText>
-            </ThemedVStack>
-
+          <ThemedHStack className="items-center justify-between gap-2">
+            <ThemedText
+              type="defaultSemiBold"
+              className="text-lg flex-1"
+              numberOfLines={1}
+              ellipsizeMode="tail"
+            >
+              {position.palletTitle}
+            </ThemedText>
             <ThemedButton
               onPress={() => setOpen(true)}
               variant="outline"
-              className="self-end"
+              size="sm"
             >
               <ThemedTextButton className="font-semibold text-sm">
                 Зняти товар
               </ThemedTextButton>
             </ThemedButton>
           </ThemedHStack>
+
+          <ArtImageLink
+            artikul={position.artikul}
+            nameukr={position.nameukr}
+            link={`/(tabs)/arts/${position.artikul}`}
+          />
+
+          {position.askRemainingQuantity !== null && (
+            <ThemedHStack className="items-center gap-1">
+              <ThemedIcon
+                family="MaterialIcons"
+                name="radio-button-unchecked"
+                size={12}
+              />
+              <ThemedText type="default" className="text-xs">
+                {position.askRemainingQuantity}
+              </ThemedText>
+            </ThemedHStack>
+          )}
         </ThemedVStack>
-      </ThemedView>
+      </GlassCard>
 
       <AskPosEditDialog
         pos={posResponse}
