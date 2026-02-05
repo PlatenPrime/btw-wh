@@ -17,7 +17,14 @@ export function MainHero() {
           animation: "aurora 30s linear infinite",
         }}
       />
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
+      {/* Мягкий многослойный градиент: радиальные блики + диагональ primary → accent (color-mix для oklch-темы) */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 80% 60% at 20% 30%, color-mix(in oklch, var(--primary) 12%, transparent) 0%, transparent 50%), radial-gradient(ellipse 70% 50% at 85% 70%, color-mix(in oklch, var(--accent) 10%, transparent) 0%, transparent 48%), linear-gradient(145deg, color-mix(in oklch, var(--primary) 7%, transparent) 0%, transparent 40%, transparent 60%, color-mix(in oklch, var(--accent) 9%, transparent) 100%)",
+        }}
+      />
 
       {/* Декоративна сітка «зони/ряди» — точки */}
       <div

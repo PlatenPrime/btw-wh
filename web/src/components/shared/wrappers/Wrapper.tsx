@@ -10,9 +10,16 @@ export function Wrapper({ children, className, ...rest }: WrapperProps) {
     <div
       {...rest}
       className={cn(
-        "rounded-xl border border-border/50 p-2 backdrop-blur-sm dark:border-border/40",
-        "bg-gradient-to-br from-sky-500/5 via-transparent to-primary/5 dark:from-sky-400/5 dark:via-transparent dark:to-primary/5",
-        "shadow-[0_1px_3px_rgba(0,0,0,0.04),0_4px_12px_-2px_rgba(14,165,233,0.06)] dark:shadow-[0_1px_3px_rgba(0,0,0,0.1),0_4px_12px_-2px_rgba(56,189,248,0.1)]",
+        "relative overflow-hidden rounded-xl border border-border/60 p-3 backdrop-blur-md dark:border-border/50",
+        // базовый цветной градиент, чтобы фон не был просто белым
+        "bg-gradient-to-br from-primary/10 via-background/95 to-sky-500/10 dark:from-primary/18 dark:via-background/85 dark:to-sky-400/16",
+        // органические пятна света/цвета через псевдо-элементы
+        "before:pointer-events-none before:absolute before:-top-32 before:-left-16 before:h-64 before:w-64 before:rounded-full",
+        "before:bg-[radial-gradient(circle_at_10%_0%,hsl(var(--primary)/0.35),transparent_60%)] before:opacity-85 before:blur-3xl before:mix-blend-normal before:animate-blob-slow",
+        "after:pointer-events-none after:absolute after:-bottom-40 after:-right-20 after:h-72 after:w-72 after:rounded-full",
+        "after:bg-[radial-gradient(circle_at_100%_100%,hsl(var(--accent)/0.30),transparent_60%)] after:opacity-80 after:blur-3xl after:mix-blend-normal after:animate-blob-slow",
+        // лёгкая глубокая тень для объёма
+        "shadow-[0_18px_45px_-22px_rgba(15,23,42,0.8)] dark:shadow-[0_20px_55px_-24px_rgba(0,0,0,0.95)]",
         className,
       )}
     >

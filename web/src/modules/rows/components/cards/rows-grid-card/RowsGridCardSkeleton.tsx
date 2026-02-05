@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export function RowsGridCardSkeleton() {
   return (
-    <Card className="shadow-muted-foreground group/row bg-card h-full w-full p-0 shadow-xs transition-all duration-500 ease-out hover:shadow-xl hover:shadow-orange-500">
+    <Card className="group/row h-full w-full p-0">
       <CardHeader className="flex items-center justify-between p-0">
         <div className="flex-1 rounded-lg p-2">
           <Skeleton className="mx-auto h-6 w-24" />

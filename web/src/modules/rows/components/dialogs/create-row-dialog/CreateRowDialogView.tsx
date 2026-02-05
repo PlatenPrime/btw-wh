@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -16,8 +15,6 @@ interface CreateRowDialogViewProps {
   onCancel: () => void;
 }
 
-const defaultTrigger = <Button variant="default">Створити</Button>;
-
 export function CreateRowDialogView({
   open,
   setOpen,
@@ -25,15 +22,25 @@ export function CreateRowDialogView({
   onSuccess,
   onCancel,
 }: CreateRowDialogViewProps) {
+  const content = (
+    <DialogContent className="sm:max-w-md">
+      <DialogHeader>
+        <DialogTitle>Створити ряд</DialogTitle>
+      </DialogHeader>
+      <CreateRowForm onSuccess={onSuccess} onCancel={onCancel} />
+    </DialogContent>
+  );
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>{trigger || defaultTrigger}</DialogTrigger>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>Створити</DialogTitle>
-        </DialogHeader>
-        <CreateRowForm onSuccess={onSuccess} onCancel={onCancel} />
-      </DialogContent>
+      {trigger !== undefined ? (
+        <>
+          <DialogTrigger asChild>{trigger}</DialogTrigger>
+          {content}
+        </>
+      ) : (
+        content
+      )}
     </Dialog>
   );
 }

@@ -4,15 +4,23 @@ import { CreateRowDialogView } from "@/modules/rows/components/dialogs/create-ro
 
 interface CreateRowDialogProps {
   trigger?: React.ReactNode;
-
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
-export function CreateRowDialog({ trigger}: CreateRowDialogProps) {
-  const [open, setOpen] = useState(false);
+export function CreateRowDialog({
+  trigger,
+  open: openProp,
+  onOpenChange: onOpenChangeProp,
+}: CreateRowDialogProps) {
+  const [openInternal, setOpenInternal] = useState(false);
+
+  const isControlled = openProp !== undefined && onOpenChangeProp !== undefined;
+  const open = isControlled ? openProp : openInternal;
+  const setOpen = isControlled ? onOpenChangeProp : setOpenInternal;
 
   const handleSuccess = () => {
     setOpen(false);
-
   };
 
   const handleCancel = () => {
@@ -23,7 +31,7 @@ export function CreateRowDialog({ trigger}: CreateRowDialogProps) {
     <CreateRowDialogView
       open={open}
       setOpen={setOpen}
-      trigger={trigger}
+      trigger={isControlled ? undefined : trigger}
       onSuccess={handleSuccess}
       onCancel={handleCancel}
     />

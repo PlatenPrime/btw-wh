@@ -9,7 +9,7 @@ interface RowsGridCardViewProps {
 
 export function RowsGridCardView({ row }: RowsGridCardViewProps) {
   return (
-    <Card className="shadow-muted-foreground group/row bg-card h-full w-full p-0 shadow transition-all duration-500 ease-out  ">
+    <Card className="group/row h-full w-full p-0">
       <CardHeader className="flex items-center justify-between p-0">
         <RowLink row={row} />
         <RowCardActions row={row} />
