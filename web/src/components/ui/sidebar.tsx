@@ -171,7 +171,9 @@ function Sidebar({
       <div
         data-slot="sidebar"
         className={cn(
-          "bg-sidebar text-sidebar-foreground flex h-full w-(--sidebar-width) flex-col",
+          "text-sidebar-foreground flex h-full w-(--sidebar-width) flex-col overflow-hidden",
+          "bg-gradient-to-br from-primary/10 via-background/95 to-sky-500/10 dark:from-primary/18 dark:via-background/85 dark:to-sky-400/16",
+          "border-r border-border/60 dark:border-border/50",
           className
         )}
         {...props}
@@ -188,7 +190,11 @@ function Sidebar({
           data-sidebar="sidebar"
           data-slot="sidebar"
           data-mobile="true"
-          className="bg-sidebar text-sidebar-foreground w-(--sidebar-width) p-0 [&>button]:hidden"
+          className={cn(
+            "text-sidebar-foreground w-(--sidebar-width) p-0 [&>button]:hidden",
+            "bg-gradient-to-br from-primary/10 via-background/95 to-sky-500/10 dark:from-primary/18 dark:via-background/85 dark:to-sky-400/16",
+            "border-border/60 dark:border-border/50"
+          )}
           style={
             {
               "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
@@ -245,7 +251,12 @@ function Sidebar({
         <div
           data-sidebar="sidebar"
           data-slot="sidebar-inner"
-          className="bg-sidebar group-data-[variant=floating]:border-sidebar-border flex h-full w-full flex-col group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:shadow-sm"
+          className={cn(
+            "relative flex h-full w-full flex-col overflow-hidden",
+            "bg-gradient-to-br from-primary/10 via-background/95 to-sky-500/10 dark:from-primary/18 dark:via-background/85 dark:to-sky-400/16",
+            "group-data-[side=left]:border-r group-data-[side=right]:border-l border-border/60 dark:border-border/50",
+            "group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:border-sidebar-border group-data-[variant=floating]:shadow-sm"
+          )}
         >
           {children}
         </div>

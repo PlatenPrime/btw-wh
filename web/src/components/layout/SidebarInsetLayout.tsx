@@ -11,12 +11,14 @@ interface SidebarInsetLayoutProps {
   headerText?: string;
   children: React.ReactNode;
   burger?: React.ReactNode;
+  headerExtra?: React.ReactNode;
 }
 
 export function SidebarInsetLayout({
   headerText,
   children,
   burger,
+  headerExtra,
 }: SidebarInsetLayoutProps) {
   return (
     <HeaderActionsProvider>
@@ -27,7 +29,8 @@ export function SidebarInsetLayout({
             <Separator orientation="vertical" className="h-4" />
             <h1 className="text-lg font-semibold">{headerText ?? ""}</h1>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-1 items-center justify-end gap-2">
+            {headerExtra}
             {burger}
             <HeaderActionsMenu />
           </div>

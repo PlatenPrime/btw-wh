@@ -24,7 +24,7 @@ export function ProfileSidebarCard({
             />
           )}
           <div className="text-sm font-semibold">{user?.fullname}</div>
-          <div className="text-xs text-gray-500">@{user?.username}</div>
+          <div className="text-xs text-muted-foreground">@{user?.username}</div>
           <Button
             size="sm"
             variant="outline"

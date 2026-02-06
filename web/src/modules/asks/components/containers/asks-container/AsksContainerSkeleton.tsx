@@ -8,11 +8,8 @@ export function AsksContainerSkeleton() {
     <main className="grid gap-2">
       <Wrapper className="grid gap-2 lg:grid-cols-2">
         <DateNavigationSkeleton />
-        <div className="flex w-full items-center justify-between gap-2">
-          {/* Counter skeleton */}
+        <div className="flex w-full items-center justify-end gap-2">
           <Skeleton className="h-5 w-20" />
-          {/* Button skeleton */}
-          <Skeleton className="h-10 w-32" />
         </div>
       </Wrapper>
       <Wrapper>

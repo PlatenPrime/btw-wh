@@ -42,7 +42,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
   return (
     <Sidebar {...props}>
-      <SidebarHeader className="relative flex flex-row items-center justify-between gap-3 border-b border-sidebar-border/50 bg-sidebar/50 px-3 py-3 shadow-sm backdrop-blur-sm supports-[backdrop-filter]:bg-sidebar/80">
+      <SidebarHeader className="relative flex flex-row items-center justify-between gap-3 border-b border-border/60 dark:border-border/50 bg-background/80 px-3 py-3 shadow-sm backdrop-blur-sm supports-[backdrop-filter]:bg-background/70">
         <Link
           to="/"
           className="group relative flex items-center transition-all duration-300 hover:scale-105 active:scale-100"

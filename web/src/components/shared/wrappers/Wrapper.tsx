@@ -19,7 +19,7 @@ export function Wrapper({ children, className, ...rest }: WrapperProps) {
         "after:pointer-events-none after:absolute after:-bottom-40 after:-right-20 after:h-72 after:w-72 after:rounded-full",
         "after:bg-[radial-gradient(circle_at_100%_100%,hsl(var(--accent)/0.30),transparent_60%)] after:opacity-80 after:blur-3xl after:mix-blend-normal after:animate-blob-slow",
         // лёгкая глубокая тень для объёма
-        "shadow-[0_18px_45px_-22px_rgba(15,23,42,0.8)] dark:shadow-[0_20px_55px_-24px_rgba(0,0,0,0.95)]",
+        "shadow-[0_14px_38px_-18px_rgba(15,23,42,0.45)] dark:shadow-[0_16px_42px_-20px_rgba(0,0,0,0.5)]",
         className,
       )}
     >
