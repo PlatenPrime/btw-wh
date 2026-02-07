@@ -24,21 +24,23 @@ export function UserCard({ user, onEdit }: UserCardProps) {
             </AvatarFallback>
           </Avatar>
           <div className="flex min-w-0 flex-1 flex-col gap-1">
-            <Link
-              to={`/users/${user._id}`}
-              className="truncate font-medium hover:underline"
-            >
-              {user.fullname}
-            </Link>
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-0">
+              <Link
+                to={`/users/${user._id}`}
+                className="truncate font-medium hover:underline"
+              >
+                {user.fullname}
+              </Link>
+              <span className="text-muted-foreground shrink-0 text-xs">
+                {user.role ? getRoleLabel(user.role) : "—"}
+              </span>
+            </div>
             <span className="text-muted-foreground truncate text-sm">
-             @{user.username}
+              @{user.username}
             </span>
           </div>
         </div>
-        <div className="flex shrink-0 items-center gap-2">
-          <span className="text-muted-foreground text-xs">
-            {user.role ? getRoleLabel(user.role) : "—"}
-          </span>
+        <div className="flex shrink-0 items-center">
           <RoleGuard allowedRoles={[RoleType.PRIME]}>
             <Button
               type="button"

@@ -1,7 +1,6 @@
-import { useState } from "react";
 import type { SegmentDto, ZoneWithSegmentDto } from "@/modules/blocks/api/types";
+import { SegmentHeaderActions } from "@/modules/blocks/components/actions/segment-header-actions";
 import { SegmentContainerView } from "./SegmentContainerView";
-import { AddZonesToSegmentDialog } from "@/modules/blocks/components/dialogs/add-zones-to-segment-dialog";
 
 interface SegmentContainerProps {
   segment: SegmentDto;
@@ -16,21 +15,14 @@ export function SegmentContainer({
   isLoadingZones,
   zonesError,
 }: SegmentContainerProps) {
-  const [isAddZonesDialogOpen, setIsAddZonesDialogOpen] = useState(false);
-
   return (
     <>
+      <SegmentHeaderActions segment={segment} />
       <SegmentContainerView
         segment={segment}
         zones={zones}
         isLoadingZones={isLoadingZones}
         zonesError={zonesError}
-        onAddZones={() => setIsAddZonesDialogOpen(true)}
-      />
-      <AddZonesToSegmentDialog
-        open={isAddZonesDialogOpen}
-        onOpenChange={setIsAddZonesDialogOpen}
-        segment={segment}
       />
     </>
   );

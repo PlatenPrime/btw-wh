@@ -1,5 +1,6 @@
-import { UserCard } from "@/modules/auth/components/cards/user-card";
+import { Wrapper } from "@/components/shared/wrappers/Wrapper";
 import type { User } from "@/modules/auth/api/types";
+import { UserCard } from "@/modules/auth/components/cards/user-card";
 
 interface UsersListProps {
   users: User[];
@@ -8,10 +9,10 @@ interface UsersListProps {
 
 export function UsersList({ users, onEdit }: UsersListProps) {
   return (
-    <div className="grid gap-2">
+    <Wrapper className="grid gap-2">
       {users.map((user) => (
         <UserCard key={user._id} user={user} onEdit={onEdit} />
       ))}
-    </div>
+    </Wrapper>
   );
 }

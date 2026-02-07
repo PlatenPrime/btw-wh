@@ -1,11 +1,11 @@
 import { ErrorDisplay } from "@/components/shared/error-components";
 import { Wrapper } from "@/components/shared/wrappers/Wrapper";
-import { Skeleton } from "@/components/ui/skeleton";
 import type {
   SegmentDto,
   ZoneWithSegmentDto,
 } from "@/modules/blocks/api/types";
 import { SegmentInfoCard } from "@/modules/blocks/components/cards/segment-info-card";
+import { ZoneBySegmentCardSkeleton } from "@/modules/blocks/components/cards/zone-by-segment-card";
 import { ZonesBySegmentList } from "@/modules/blocks/components/lists/zones-by-segment-list";
 
 interface SegmentContainerViewProps {
@@ -13,7 +13,6 @@ interface SegmentContainerViewProps {
   zones: ZoneWithSegmentDto[];
   isLoadingZones: boolean;
   zonesError: Error | null;
-  onAddZones: () => void;
 }
 
 export function SegmentContainerView({
@@ -21,21 +20,19 @@ export function SegmentContainerView({
   zones,
   isLoadingZones,
   zonesError,
-  onAddZones,
 }: SegmentContainerViewProps) {
   return (
     <div className="flex flex-col gap-2">
       <Wrapper>
-        <SegmentInfoCard
-          segment={segment}
-          zonesCount={zones.length}
-          onAddZones={onAddZones}
-        />
+        <SegmentInfoCard segment={segment} zonesCount={zones.length} />
       </Wrapper>
 
       {isLoadingZones ? (
         <Wrapper>
-          <Skeleton className="h-24 w-full" />
+          <div className="flex flex-col gap-2">
+            <ZoneBySegmentCardSkeleton />
+            <ZoneBySegmentCardSkeleton />
+          </div>
         </Wrapper>
       ) : zonesError ? (
         <Wrapper>
@@ -46,11 +43,7 @@ export function SegmentContainerView({
           />
         </Wrapper>
       ) : (
-        <ZonesBySegmentList
-          segment={segment}
-          zones={zones}
-          onAddZones={onAddZones}
-        />
+        <ZonesBySegmentList segment={segment} zones={zones} />
       )}
     </div>
   );

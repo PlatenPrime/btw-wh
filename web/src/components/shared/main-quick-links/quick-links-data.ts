@@ -64,4 +64,10 @@ export const quickLinksData: QuickLinkItem[] = [
     iconName: "PackageSearch",
     description: "Зняття зі складу",
   },
+  {
+    url: "/users",
+    title: "Користувачі",
+    iconName: "Users",
+    description: "Керування користувачами та доступами",
+  },
 ];

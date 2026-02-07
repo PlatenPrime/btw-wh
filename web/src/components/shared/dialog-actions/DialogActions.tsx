@@ -20,7 +20,7 @@ export function DialogActions({
   submitText = "Підтвердити",
   isSubmitting = false,
   isDisabled = false,
-  variant = "default",
+  variant = "success",
   className,
 }: DialogActionsProps) {
   const isDisabledState = isDisabled || isSubmitting;

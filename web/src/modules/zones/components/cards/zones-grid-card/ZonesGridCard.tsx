@@ -6,7 +6,7 @@ import type { ZoneDto } from "@/modules/zones/api/types";
 import { ZoneBarcode } from "@/modules/zones/components/elements/zone-barcode";
 import { ZoneLink } from "@/modules/zones/components/elements/zone-link";
 import { ZoneSector } from "@/modules/zones/components/elements/zone-sector";
-import { Edit, Trash } from "lucide-react";
+import { Barcode, Edit, LayoutGrid, Trash } from "lucide-react";
 
 interface ZonesGridCardProps {
   zone: ZoneDto;
@@ -51,12 +51,12 @@ export function ZonesGridCard({ zone, onEdit, onDelete }: ZonesGridCardProps) {
         </div>
       </CardHeader>
       <CardContent className="grid gap-2 p-0">
-        <div className="flex items-center justify-between">
-          <span className="text-muted-foreground text-xs">Штрих-код:</span>
+        <div className="flex items-center gap-2">
+          <Barcode className="text-muted-foreground size-3.5 shrink-0" aria-hidden />
           <ZoneBarcode zone={zone} className="text-muted-foreground text-xs" />
         </div>
-        <div className="flex items-center justify-between">
-          <span className="text-muted-foreground text-xs">Сектор:</span>
+        <div className="flex items-center gap-2">
+          <LayoutGrid className="text-muted-foreground size-3.5 shrink-0" aria-hidden />
           <ZoneSector zone={zone} className="text-muted-foreground text-xs" />
         </div>
       </CardContent>

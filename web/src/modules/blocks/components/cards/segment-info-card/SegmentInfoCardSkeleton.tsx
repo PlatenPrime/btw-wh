@@ -1,7 +1,5 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Plus } from "lucide-react";
 
 export function SegmentInfoCardSkeleton() {
   return (
@@ -24,12 +22,6 @@ export function SegmentInfoCardSkeleton() {
           <Skeleton className="h-4 w-8" />
         </div>
       </CardContent>
-      <CardFooter className="p-0">
-        <Button disabled>
-          <Plus className="size-4" />
-          Додати зони
-        </Button>
-      </CardFooter>
     </Card>
   );
 }

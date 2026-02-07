@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import type { PalletShortDto } from "@/modules/pallet-groups/api/types";
+import { ListOrdered } from "lucide-react";
 import { Link } from "react-router";
 import { PalletCardActions } from "./components/pallet-card-actions/PalletCardActions";
 
@@ -27,8 +28,8 @@ export function PalletCard({ pallet, onUnlink }: PalletCardProps) {
         <PalletCardActions pallet={pallet} onUnlink={onUnlink} />
       </CardHeader>
       <CardContent className="text-muted-foreground p-0 pt-2 text-xs">
-        <div className="flex justify-between gap-2">
-          <span>Сектор:</span>
+        <div className="flex items-center gap-2">
+          <ListOrdered className="size-4 shrink-0" aria-label="Сектор" />
           <span className="font-mono">{pallet.sector}</span>
         </div>
       </CardContent>

@@ -9,9 +9,9 @@ export function PalletCardSkeleton() {
         <Skeleton className="h-6 w-6 shrink-0 rounded-md" />
       </CardHeader>
       <CardContent className="p-0 pt-2">
-        <div className="flex justify-between gap-2">
-          <Skeleton className="h-3 w-12" />
-          <Skeleton className="h-3 w-8" />
+        <div className="flex items-center gap-2">
+          <Skeleton className="size-4 shrink-0" />
+          <Skeleton className="h-3 w-10" />
         </div>
       </CardContent>
     </Card>
