@@ -34,12 +34,18 @@ export function DefCardView({ artikul, defItem }: DefCardViewProps) {
         />
       </div>
 
-      <DefCardQuants defItem={defItem} />
-      {defItem.existingAsk ? (
-        <DefCardAskBid ask={defItem.existingAsk} />
-      ) : (
-        <DefAskButton artikul={artikul} existingAsk={defItem.existingAsk} />
-      )}
+      <div className="flex min-h-0 flex-row items-stretch gap-2">
+        <div className="min-w-0 flex-1">
+          <DefCardQuants defItem={defItem} />
+        </div>
+        <div className="grid shrink-0 place-items-center rounded-md">
+          {defItem.existingAsk ? (
+            <DefCardAskBid ask={defItem.existingAsk} />
+          ) : (
+            <DefAskButton artikul={artikul} existingAsk={defItem.existingAsk} />
+          )}
+        </div>
+      </div>
     </Card>
   );
 }

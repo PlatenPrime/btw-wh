@@ -11,7 +11,7 @@ const trigger = (
   <Button
     variant="outline"
     size="sm"
-    className="text-violet-950 hover:bg-violet-500/10 dark:bg-violet-800/20 dark:text-violet-100 dark:hover:bg-violet-300/10 dark:hover:text-violet-400"
+    className="text-violet-950 hover:bg-violet-500/10 dark:bg-violet-800/5 dark:text-violet-100 dark:hover:bg-violet-300/10 dark:hover:text-violet-400"
   >
     + запит
   </Button>

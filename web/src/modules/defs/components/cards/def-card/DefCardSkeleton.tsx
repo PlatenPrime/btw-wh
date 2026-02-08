@@ -18,25 +18,25 @@ export function DefCardSkeleton() {
         </div>
       </div>
 
-      {/* DefCardQuants skeleton */}
-      <div className="grid gap-1 px-2 pb-2">
-        <div className="flex justify-between border-b border-border text-xs">
-          <Skeleton className="h-3 w-16" />
-          <Skeleton className="h-3 w-8" />
+      {/* DefCardQuants + DefCardAskBid/DefAskButton skeleton (horizontal row) */}
+      <div className="flex min-h-0 flex-row items-stretch gap-2">
+        <div className="min-w-0 flex-1 grid gap-1 px-2 pb-2">
+          <div className="flex items-center justify-between gap-2 border-b border-border text-xs">
+            <Skeleton className="size-4 shrink-0" />
+            <Skeleton className="h-3 w-8" />
+          </div>
+          <div className="flex items-center justify-between gap-2 border-b border-border text-xs">
+            <Skeleton className="size-4 shrink-0" />
+            <Skeleton className="h-3 w-8" />
+          </div>
+          <div className="flex items-center justify-between gap-2 border-b border-border text-xs">
+            <Skeleton className="size-4 shrink-0" />
+            <Skeleton className="h-3 w-8" />
+          </div>
         </div>
-        <div className="flex justify-between border-b border-border text-xs">
-          <Skeleton className="h-3 w-12" />
-          <Skeleton className="h-3 w-8" />
+        <div className="grid shrink-0 place-items-center rounded-md">
+          <Skeleton className="h-8 w-20 rounded-md" />
         </div>
-        <div className="flex justify-between border-b border-border text-xs">
-          <Skeleton className="h-3 w-16" />
-          <Skeleton className="h-3 w-8" />
-        </div>
-      </div>
-
-      {/* DefCardAskBid/DefAskButton skeleton */}
-      <div className="grid place-items-center rounded-md">
-        <Skeleton className="h-8 w-20 rounded-md" />
       </div>
     </Card>
   );

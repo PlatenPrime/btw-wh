@@ -1,16 +1,21 @@
 import { cn } from "@/lib/utils";
 import type { DeficitItem } from "@/modules/defs/api/types/dto";
+import { Globe, Store, Warehouse } from "lucide-react";
 
 interface DefCardQuantsProps {
   defItem: DeficitItem;
 }
 
+const iconClassName = "size-4 shrink-0 text-muted-foreground";
 
 export function DefCardQuants({ defItem }: DefCardQuantsProps) {
   return (
     <div className="space-y-1 px-2 pb-2">
-      <div className="flex justify-between text-xs border-b border-border ">
-        <span className="text-foreground">Запаси:</span>
+      <div
+        className="flex items-center justify-start gap-2  text-xs"
+        title="Запаси"
+      >
+        <Warehouse className={iconClassName} aria-hidden />
         <span
           className={cn(
             "font-medium",
@@ -20,12 +25,18 @@ export function DefCardQuants({ defItem }: DefCardQuantsProps) {
           {defItem.quant}
         </span>
       </div>
-      <div className="flex justify-between text-xs border-b border-border">
-        <span className="text-foreground">Сайт:</span>
+      <div
+        className="flex items-center justify-start gap-2  text-xs"
+        title="Сайт"
+      >
+        <Globe className={iconClassName} aria-hidden />
         <span className="font-medium">{defItem.sharikQuant}</span>
       </div>
-      <div className="flex justify-between text-xs border-b border-border">
-        <span className="text-foreground">Вітрина:</span>
+      <div
+        className="flex items-center justify-start gap-2  text-xs"
+        title="Вітрина"
+      >
+        <Store className={iconClassName} aria-hidden />
         <span
           className={cn(
             "font-medium",
