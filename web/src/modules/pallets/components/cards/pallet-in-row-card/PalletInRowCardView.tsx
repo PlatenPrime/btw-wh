@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import type { PalletShortDto } from "@/modules/pallets/api/types";
+import {  Calculator, LayoutGrid } from "lucide-react";
 import { Link } from "react-router";
 import { PalletCardActions } from "./PalletCardActions";
 
@@ -31,14 +32,13 @@ export function PalletInRowCardView({ pallet, rowId }: PalletInRowCardProps) {
       </CardHeader>
 
       <CardContent className="grid gap-2 p-0">
-        <div className="border-border flex items-center justify-between gap-2 border-b">
-          <span className="flex items-center gap-2 text-xs">Сектор:</span>
+        <div className="border-border flex items-center justify-start gap-2 ">
+          <LayoutGrid className="text-muted-foreground size-3.5 shrink-0" aria-hidden />
           <span className="text-xs">{pallet.sector ?? "Немає"}</span>
         </div>
 
-        <div className="border-border flex items-center justify-between gap-2 border-b">
-          {" "}
-          <span className="flex items-center gap-2 text-xs">Аналіз:</span>
+        <div className="border-border flex items-center justify-start gap-2 ">
+          <Calculator className="text-muted-foreground size-3.5 shrink-0" aria-hidden />
           <span className="text-xs">{pallet.isDef ? "Так" : "Ні"}</span>
         </div>
       </CardContent>

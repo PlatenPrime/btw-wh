@@ -61,9 +61,9 @@ export function CreatePosFormView({
     <Card className="w-full max-w-md">
       <CardContent>
         <form onSubmit={handleFormSubmit} className="space-y-4">
-          {/* Информация об артикуле */}
-          {artData && (
-            <div className="bg-muted/50 rounded-lg border p-3">
+          {/* Информация об артикуле — место резервируется всегда, чтобы разметка не дергалась */}
+          <div className="bg-muted/50 min-h-[7.5rem] rounded-lg border p-3">
+            {artData ? (
               <div className="flex items-center gap-3">
                 <ArtImage artikul={artikul} />
                 <div className="flex-1">
@@ -71,8 +71,14 @@ export function CreatePosFormView({
                   <p className="text-muted-foreground text-xs">{artikul}</p>
                 </div>
               </div>
-            </div>
-          )}
+            ) : (
+              <div className="flex h-full min-h-[6rem] items-center justify-center">
+                <p className="text-muted-foreground text-sm">
+                  Введіть артикул для перегляду
+                </p>
+              </div>
+            )}
+          </div>
 
           {/* Поле артикула */}
           <div className="space-y-2">

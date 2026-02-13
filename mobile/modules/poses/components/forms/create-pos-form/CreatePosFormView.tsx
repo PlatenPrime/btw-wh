@@ -104,31 +104,43 @@ export function CreatePosFormView({
   }).catch(() => {});
   // #endregion
 
-  // Информация об артикуле
+  // Информация об артикуле — место резервируется всегда, чтобы разметка не дергалась
   const renderArtInfo = () => {
-    if (!artData) return null;
-
     const imageUrl = getSmallImageUrl(artikul);
 
     return (
-      <ThemedBox className="rounded-lg border border-outline-50 bg-background-50 p-3">
-        <ThemedHStack className="items-center gap-3">
-          <Image
-            source={{ uri: imageUrl }}
-            style={{ width: 60, height: 60, borderRadius: 8 }}
-            contentFit="cover"
-            placeholder={{ blurhash: "LGF5]+Yk^6#M@-5c,1J5@[or[Q6." }}
-            transition={200}
-          />
-          <ThemedBox className="flex-1">
-            <ThemedText type="defaultSemiBold" className="text-sm">
-              {artData.nameukr}
-            </ThemedText>
-            <ThemedText type="default" className="text-xs opacity-70">
-              {artikul}
+      <ThemedBox
+        className="rounded-lg border border-outline-50 bg-background-50 p-3"
+        style={{ minHeight: 120 }}
+      >
+        {artData ? (
+          <ThemedHStack className="items-center gap-3">
+            <Image
+              source={{ uri: imageUrl }}
+              style={{ width: 60, height: 60, borderRadius: 8 }}
+              contentFit="cover"
+              placeholder={{ blurhash: "LGF5]+Yk^6#M@-5c,1J5@[or[Q6." }}
+              transition={200}
+            />
+            <ThemedBox className="flex-1">
+              <ThemedText type="defaultSemiBold" className="text-sm">
+                {artData.nameukr}
+              </ThemedText>
+              <ThemedText type="default" className="text-xs opacity-70">
+                {artikul}
+              </ThemedText>
+            </ThemedBox>
+          </ThemedHStack>
+        ) : (
+          <ThemedBox className="flex-1 items-center justify-center">
+            <ThemedText
+              type="default"
+              className="text-center text-sm opacity-70"
+            >
+              Введіть артикул для перегляду
             </ThemedText>
           </ThemedBox>
-        </ThemedHStack>
+        )}
       </ThemedBox>
     );
   };
