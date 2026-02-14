@@ -124,10 +124,10 @@ export function CreatePosFormView({
             />
             <ThemedBox className="flex-1">
               <ThemedText type="defaultSemiBold" className="text-sm">
-                {artData.nameukr}
+                {artData.artikul}
               </ThemedText>
               <ThemedText type="default" className="text-xs opacity-70">
-                {artikul}
+                {artData.nameukr?.slice(10) ?? artikul}
               </ThemedText>
             </ThemedBox>
           </ThemedHStack>
