@@ -9,6 +9,7 @@ import {
   Rows4,
   Settings,
   StickyNote,
+  Truck,
   Users,
   Warehouse,
 } from "lucide-react";
@@ -26,6 +27,7 @@ const getIcon = (iconName: string) => {
     Route: Route,
     LayoutTemplate: LayoutTemplate,
     PackageSearch: PackageSearch,
+    Truck: Truck,
     Users: Users,
   };
 
@@ -65,6 +67,11 @@ export const appSidebarData = {
           title: "Зони",
           url: "/wh/zones",
           iconName: "MapPin",
+        },
+        {
+          title: "Поставки",
+          url: "/wh/dels",
+          iconName: "Truck",
         },
         {
           title: "Блоки",

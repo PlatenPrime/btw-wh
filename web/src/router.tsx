@@ -99,6 +99,17 @@ const Zone = lazy(() =>
   })),
 );
 
+const Dels = lazy(() =>
+  import("./modules/dels/pages/dels").then((module) => ({
+    default: module.Dels,
+  })),
+);
+const Del = lazy(() =>
+  import("./modules/dels/pages/del").then((module) => ({
+    default: module.Del,
+  })),
+);
+
 const BlocksPage = lazy(() =>
   import("./modules/blocks/pages/blocks").then((module) => ({
     default: module.BlocksPage,
@@ -252,6 +263,24 @@ export const router = createHashRouter([
             element: (
               <ProtectedRoute allowedRoles={[RoleType.ADMIN]}>
                 <Zones />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "dels",
+            element: (
+              <ProtectedRoute allowedRoles={[RoleType.ADMIN]}>
+                <Dels />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "dels/:id",
+            element: (
+              <ProtectedRoute allowedRoles={[RoleType.ADMIN]}>
+                <Del />
               </ProtectedRoute>
             ),
             errorElement: <RouteErrorBoundary />,

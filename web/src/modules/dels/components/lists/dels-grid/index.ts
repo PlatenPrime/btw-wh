@@ -1,0 +1,1 @@
+export { DelsGrid } from "./DelsGrid";
