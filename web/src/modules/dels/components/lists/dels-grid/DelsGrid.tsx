@@ -8,7 +8,7 @@ interface DelsGridProps {
 
 export function DelsGrid({ dels }: DelsGridProps) {
   return (
-    <Wrapper className="grid grid-cols-1 gap-2 p-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <Wrapper className="grid grid-cols-1 gap-2 p-2 ">
       {dels.map((del) => (
         <DelCard key={del._id} del={del} />
       ))}
