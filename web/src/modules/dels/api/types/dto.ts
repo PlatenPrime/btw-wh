@@ -22,6 +22,7 @@ export interface DelListItemDto {
 
 export interface CreateDelDto {
   title: string;
+  prodName: string;
   artikuls?: Record<string, number>;
 }
 

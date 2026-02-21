@@ -6,6 +6,7 @@ import {
 } from "@/modules/dels/components/forms/schema";
 import { isExcelFile } from "@/modules/dels/utils/parse-excel-arts";
 import { parseExcelArts } from "@/modules/dels/utils/parse-excel-arts";
+import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -29,6 +30,7 @@ export function CreateDelForm({ onSuccess, onCancel }: CreateDelFormProps) {
   });
 
   const mutation = useCreateDelMutation();
+  const { data: prods, isLoading: isProdsLoading } = useProdsQuery();
 
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -58,7 +60,11 @@ export function CreateDelForm({ onSuccess, onCancel }: CreateDelFormProps) {
 
     try {
       const artikuls = await parseExcelArts(selectedFile);
-      await mutation.mutateAsync({ title: data.title, artikuls });
+      await mutation.mutateAsync({
+        title: data.title,
+        prodName: data.prodName,
+        artikuls,
+      });
       onSuccess?.();
       form.reset(createDelDefaultValues);
       setSelectedFile(null);
@@ -82,6 +88,8 @@ export function CreateDelForm({ onSuccess, onCancel }: CreateDelFormProps) {
       fileRef={fileRef}
       onFileChange={onFileChange}
       fileName={fileName}
+      prods={prods?.data ?? []}
+      isProdsLoading={isProdsLoading}
     />
   );
 }
