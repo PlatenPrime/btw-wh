@@ -110,6 +110,17 @@ const Del = lazy(() =>
   })),
 );
 
+const Prods = lazy(() =>
+  import("./modules/prods/pages/prods").then((module) => ({
+    default: module.Prods,
+  })),
+);
+const Prod = lazy(() =>
+  import("./modules/prods/pages/prod").then((module) => ({
+    default: module.Prod,
+  })),
+);
+
 const BlocksPage = lazy(() =>
   import("./modules/blocks/pages/blocks").then((module) => ({
     default: module.BlocksPage,
@@ -281,6 +292,24 @@ export const router = createHashRouter([
             element: (
               <ProtectedRoute allowedRoles={[RoleType.ADMIN]}>
                 <Del />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "prods",
+            element: (
+              <ProtectedRoute>
+                <Prods />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "prods/:id",
+            element: (
+              <ProtectedRoute>
+                <Prod />
               </ProtectedRoute>
             ),
             errorElement: <RouteErrorBoundary />,

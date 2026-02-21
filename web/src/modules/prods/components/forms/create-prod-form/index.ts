@@ -1,0 +1,1 @@
+export { CreateProdForm } from "./CreateProdForm";

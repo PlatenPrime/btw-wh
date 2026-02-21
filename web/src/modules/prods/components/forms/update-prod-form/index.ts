@@ -1,0 +1,1 @@
+export { UpdateProdForm } from "./UpdateProdForm";

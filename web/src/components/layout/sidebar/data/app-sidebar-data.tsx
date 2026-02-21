@@ -1,5 +1,6 @@
 import {
   AlertTriangle,
+  Factory,
   FileQuestion,
   LayoutTemplate,
   MapPin,
@@ -28,6 +29,7 @@ const getIcon = (iconName: string) => {
     LayoutTemplate: LayoutTemplate,
     PackageSearch: PackageSearch,
     Truck: Truck,
+    Factory: Factory,
     Users: Users,
   };
 
@@ -85,7 +87,7 @@ export const appSidebarData = {
         },
       ],
     },
-    
+
     {
       title: "Поповнення",
       url: "/refiling",
@@ -115,6 +117,11 @@ export const appSidebarData = {
           title: "Користувачі",
           url: "/users",
           iconName: "Users",
+        },
+        {
+          title: "Виробники",
+          url: "/wh/prods",
+          iconName: "Factory",
         },
       ],
     },

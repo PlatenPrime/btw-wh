@@ -1,0 +1,1 @@
+export { ProdDetailHeaderActions } from "./ProdDetailHeaderActions";

@@ -1,0 +1,84 @@
+import { CardActionsMenu } from "@/components/shared/card-actions";
+import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import { Image } from "@/components/shared/image/image";
+import { RoleType } from "@/constants/roles";
+import { useAuth } from "@/modules/auth/api/hooks/useAuth";
+import type { ProdDto } from "@/modules/prods/api/types";
+import { DeleteProdDialog } from "@/modules/prods/components/dialogs/delete-prod-dialog/DeleteProdDialog";
+import { Link } from "react-router";
+import { Trash } from "lucide-react";
+import { useState } from "react";
+
+const FALLBACK_IMAGE = "https://placehold.co/80x80?text=Лого&font=roboto";
+
+interface ProdCardProps {
+  prod: ProdDto;
+}
+
+export function ProdCard({ prod }: ProdCardProps) {
+  const { hasRole } = useAuth();
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const canDelete = hasRole(RoleType.PRIME);
+
+  const handleDeleteSuccess = () => {
+    setIsDeleteOpen(false);
+  };
+
+  const actions = [
+    ...(canDelete
+      ? [
+          {
+            id: "delete",
+            label: "Видалити виробника",
+            icon: Trash,
+            variant: "destructive" as const,
+            onClick: () => setIsDeleteOpen(true),
+          },
+        ]
+      : []),
+  ];
+
+  return (
+    <>
+      <Card className="gap-0 p-2 transition-shadow hover:shadow-md">
+        <CardContent className="flex items-center gap-2 p-0">
+          <div className="size-12 shrink-0 overflow-hidden rounded border bg-muted">
+            <Image
+              src={prod.imageUrl}
+              alt={prod.title}
+              className="size-full object-contain"
+              fallbackSrc={FALLBACK_IMAGE}
+            />
+          </div>
+          <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+            <CardTitle className="p-0">
+              <Link
+                to={`/wh/prods/${prod._id}`}
+                className="block truncate hover:underline"
+              >
+                {prod.title}
+              </Link>
+            </CardTitle>
+            <span className="text-muted-foreground truncate text-xs">
+              {prod.name}
+            </span>
+          </div>
+          {actions.length > 0 && (
+            <CardActionsMenu
+              actions={actions}
+              orientation="vertical"
+              size="sm"
+              align="end"
+            />
+          )}
+        </CardContent>
+      </Card>
+      <DeleteProdDialog
+        prod={prod}
+        open={isDeleteOpen}
+        onOpenChange={setIsDeleteOpen}
+        onSuccess={handleDeleteSuccess}
+      />
+    </>
+  );
+}
