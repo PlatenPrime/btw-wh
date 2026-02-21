@@ -1,11 +1,10 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useQueryClient } from "@tanstack/react-query";
 import { patchDelArtikul } from "@/modules/dels/api/services/mutations/patchDelArtikul";
 import { useDelByIdQuery } from "@/modules/dels/api/hooks/queries/useDelByIdQuery";
 import { useUpdateAllDelArtikulsMutation } from "@/modules/dels/api/hooks/mutations/useUpdateAllDelArtikulsMutation";
 import type { DelDto } from "@/modules/dels/api/types";
-import { DelArtikulsList } from "@/modules/dels/components/containers/del-container/DelArtikulsList";
-import { Loader2, RefreshCw } from "lucide-react";
+import { DelHeaderActions } from "@/modules/dels/components/actions/del-header-actions";
+import { DelContainerView } from "@/modules/dels/components/containers/del-container/DelContainerView";
 import { useCallback, useState } from "react";
 
 export type ChainStepStatus = "pending" | "running" | "success" | "error";
@@ -21,6 +20,7 @@ interface DelContainerProps {
 }
 
 export function DelContainer({ del }: DelContainerProps) {
+  const queryClient = useQueryClient();
   const { refetch } = useDelByIdQuery({ id: del._id });
   const updateAllMutation = useUpdateAllDelArtikulsMutation({ delId: del._id });
 
@@ -48,7 +48,8 @@ export function DelContainer({ del }: DelContainerProps) {
         ),
       );
       try {
-        await patchDelArtikul({ id: del._id, artikul });
+        const response = await patchDelArtikul({ id: del._id, artikul });
+        queryClient.setQueryData(["dels", del._id], response);
         setChainSteps((prev) =>
           prev.map((s) =>
             s.artikul === artikul ? { ...s, status: "success" } : s,
@@ -68,56 +69,28 @@ export function DelContainer({ del }: DelContainerProps) {
 
     setIsChainRunning(false);
     refetch();
-  }, [del._id, del.artikuls]);
+  }, [del._id, del.artikuls, queryClient, refetch]);
 
-  const hasArtikuls =
-    Object.keys(del.artikuls ?? {}).length > 0;
+  const hasArtikuls = Object.keys(del.artikuls ?? {}).length > 0;
 
   return (
-    <div className="grid gap-4 p-4">
-      <Card>
-        <CardHeader className="flex flex-row flex-wrap items-center justify-between gap-2">
-          <CardTitle>{del.title}</CardTitle>
-          <div className="flex flex-wrap gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              disabled={updateAllMutation.isPending}
-              onClick={() => {
-                updateAllMutation.mutate(undefined, {
-                  onSettled: () => refetch(),
-                });
-              }}
-            >
-              {updateAllMutation.isPending ? (
-                <Loader2 className="size-4 animate-spin" aria-hidden />
-              ) : (
-                <RefreshCw className="size-4" aria-hidden />
-              )}
-              <span className="ml-2">Оновити всі</span>
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              disabled={isChainRunning || !hasArtikuls}
-              onClick={runChain}
-            >
-              {isChainRunning ? (
-                <Loader2 className="size-4 animate-spin" aria-hidden />
-              ) : null}
-              <span className="ml-2">Ланцюгове оновлення</span>
-            </Button>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <DelArtikulsList
-            del={del}
-            onRefetch={refetch}
-            chainRunning={isChainRunning}
-            chainSteps={chainSteps}
-          />
-        </CardContent>
-      </Card>
-    </div>
+    <>
+      <DelHeaderActions
+        refetch={refetch}
+        updateAllMutation={{
+          isPending: updateAllMutation.isPending,
+          mutate: updateAllMutation.mutate,
+        }}
+        onRunChain={runChain}
+        hasArtikuls={hasArtikuls}
+        isChainRunning={isChainRunning}
+      />
+      <DelContainerView
+        del={del}
+        refetch={refetch}
+        isChainRunning={isChainRunning}
+        chainSteps={chainSteps}
+      />
+    </>
   );
 }

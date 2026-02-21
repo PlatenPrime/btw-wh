@@ -5,12 +5,18 @@ export interface DelArtikulItem {
   nameukr?: string;
 }
 
+export interface DelProdInfo {
+  title: string;
+  imageUrl: string;
+}
+
 export interface DelDto {
   _id: string;
   title: string;
   artikuls: Record<string, DelArtikulItem>;
   createdAt: string;
   updatedAt: string;
+  prod?: DelProdInfo;
 }
 
 export interface DelListItemDto {
@@ -18,6 +24,7 @@ export interface DelListItemDto {
   title: string;
   createdAt: string;
   updatedAt: string;
+  prod?: DelProdInfo;
 }
 
 export interface CreateDelDto {
