@@ -22,7 +22,8 @@ interface DelArtikulCardProps {
 function getVariant(item: DelArtikulItem): DelArtikulCardVariant {
   const isZeroQuantity = item.quantity === 0;
   const hasNoNameUkr = !item.nameukr;
-  return isZeroQuantity ? "zeroQuantity" : hasNoNameUkr ? "noNameUkr" : "normal";
+  // return isZeroQuantity ? "zeroQuantity" : hasNoNameUkr ? "noNameUkr" : "normal";
+  return hasNoNameUkr ? "noNameUkr" : isZeroQuantity ? "zeroQuantity" : "normal";
 }
 
 export function DelArtikulCard({
