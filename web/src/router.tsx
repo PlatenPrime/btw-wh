@@ -121,6 +121,17 @@ const Prod = lazy(() =>
   })),
 );
 
+const Konks = lazy(() =>
+  import("./modules/konks/pages/konks").then((module) => ({
+    default: module.Konks,
+  })),
+);
+const Konk = lazy(() =>
+  import("./modules/konks/pages/konk").then((module) => ({
+    default: module.Konk,
+  })),
+);
+
 const BlocksPage = lazy(() =>
   import("./modules/blocks/pages/blocks").then((module) => ({
     default: module.BlocksPage,
@@ -310,6 +321,24 @@ export const router = createHashRouter([
             element: (
               <ProtectedRoute>
                 <Prod />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "konks",
+            element: (
+              <ProtectedRoute>
+                <Konks />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "konks/:id",
+            element: (
+              <ProtectedRoute>
+                <Konk />
               </ProtectedRoute>
             ),
             errorElement: <RouteErrorBoundary />,

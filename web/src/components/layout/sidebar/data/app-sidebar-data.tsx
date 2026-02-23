@@ -1,5 +1,6 @@
 import {
   AlertTriangle,
+  Building2,
   Factory,
   FileQuestion,
   LayoutTemplate,
@@ -31,6 +32,7 @@ const getIcon = (iconName: string) => {
     Truck: Truck,
     Factory: Factory,
     Users: Users,
+    Building2: Building2,
   };
 
   const IconComponent = icons[iconName as keyof typeof icons];
@@ -122,6 +124,11 @@ export const appSidebarData = {
           title: "Виробники",
           url: "/wh/prods",
           iconName: "Factory",
+        },
+        {
+          title: "Конкуренти",
+          url: "/wh/konks",
+          iconName: "Building2",
         },
       ],
     },
