@@ -132,6 +132,17 @@ const Konk = lazy(() =>
   })),
 );
 
+const Constants = lazy(() =>
+  import("./modules/constants/pages/constants").then((module) => ({
+    default: module.Constants,
+  })),
+);
+const Constant = lazy(() =>
+  import("./modules/constants/pages/constant").then((module) => ({
+    default: module.Constant,
+  })),
+);
+
 const BlocksPage = lazy(() =>
   import("./modules/blocks/pages/blocks").then((module) => ({
     default: module.BlocksPage,
@@ -339,6 +350,24 @@ export const router = createHashRouter([
             element: (
               <ProtectedRoute>
                 <Konk />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "constants",
+            element: (
+              <ProtectedRoute>
+                <Constants />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "constants/:id",
+            element: (
+              <ProtectedRoute>
+                <Constant />
               </ProtectedRoute>
             ),
             errorElement: <RouteErrorBoundary />,

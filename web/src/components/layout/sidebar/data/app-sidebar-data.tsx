@@ -1,5 +1,6 @@
 import {
   AlertTriangle,
+  Bookmark,
   Building2,
   Factory,
   FileQuestion,
@@ -33,6 +34,7 @@ const getIcon = (iconName: string) => {
     Factory: Factory,
     Users: Users,
     Building2: Building2,
+    Bookmark: Bookmark,
   };
 
   const IconComponent = icons[iconName as keyof typeof icons];
@@ -129,6 +131,11 @@ export const appSidebarData = {
           title: "Конкуренти",
           url: "/wh/konks",
           iconName: "Building2",
+        },
+        {
+          title: "Константи",
+          url: "/wh/constants",
+          iconName: "Bookmark",
         },
       ],
     },
