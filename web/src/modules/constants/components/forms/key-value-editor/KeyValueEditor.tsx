@@ -2,7 +2,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Plus, Trash2 } from "lucide-react";
-import type { Control, FieldArray, FieldPath, FieldValues } from "react-hook-form";
+import type {
+  Control,
+  FieldArray,
+  FieldPath,
+  FieldValues,
+} from "react-hook-form";
 import { useFieldArray } from "react-hook-form";
 
 export interface KeyValueEntry {
@@ -27,7 +32,7 @@ export function KeyValueEditor<T extends FieldValues>({
   keyLabel = "Ключ",
   valueLabel = "Значення",
 }: KeyValueEditorProps<T>) {
-  const { fields, append, remove } = useFieldArray({
+  const { fields, prepend, remove } = useFieldArray({
     control,
     name: name as never,
   });
@@ -35,12 +40,16 @@ export function KeyValueEditor<T extends FieldValues>({
   return (
     <div className="grid gap-2">
       <div className="flex items-center justify-between gap-2">
-        <Label className="text-muted-foreground text-xs">Дані (ключ–значення)</Label>
+        <Label className="text-muted-foreground text-xs">
+          Дані (ключ–значення)
+        </Label>
         <Button
           type="button"
           variant="outline"
           size="sm"
-          onClick={() => append({ key: "", value: "" } as FieldArray<T, never>)}
+          onClick={() =>
+            prepend({ key: "", value: "" } as FieldArray<T, never>)
+          }
           disabled={disabled}
           className="shrink-0"
         >
@@ -48,14 +57,14 @@ export function KeyValueEditor<T extends FieldValues>({
           {addButtonLabel}
         </Button>
       </div>
-      <div className="grid gap-2">
+      <div className="grid max-h-[320px] min-h-0 gap-2 overflow-y-auto">
         {fields.length === 0 && (
           <p className="text-muted-foreground text-sm">Пар ще немає</p>
         )}
         {fields.map((field, index) => (
           <div
             key={field.id}
-            className="grid grid-cols-[1fr_1fr_auto] gap-2 items-end"
+            className="grid grid-cols-[1fr_1fr_auto] items-end gap-2"
           >
             <div className="grid gap-1">
               <Label htmlFor={`${name}-${index}-key`} className="sr-only">
@@ -87,7 +96,7 @@ export function KeyValueEditor<T extends FieldValues>({
               disabled={disabled}
               aria-label="Видалити пару"
             >
-              <Trash2 className="h-4 w-4 text-destructive" />
+              <Trash2 className="text-destructive h-4 w-4" />
             </Button>
           </div>
         ))}
