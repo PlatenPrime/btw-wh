@@ -7,14 +7,22 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { CardActionsMenu, type CardAction } from "@/components/shared/card-actions";
 import type { ConstantDto } from "@/modules/constants/api/types";
+import type { ConstantEntry } from "@/modules/constants/components/dialogs/edit-constant-entry-dialog";
 
 interface ConstantDetailsCardViewProps {
   constant: ConstantDto;
+  canEdit: boolean;
+  onEditEntry: (entry: ConstantEntry) => void;
+  onDeleteEntry: (entry: ConstantEntry) => void;
 }
 
 export function ConstantDetailsCardView({
   constant,
+  canEdit,
+  onEditEntry,
+  onDeleteEntry,
 }: ConstantDetailsCardViewProps) {
   const entries = Object.entries(constant.data ?? {});
 
@@ -34,19 +42,54 @@ export function ConstantDetailsCardView({
                     Ключ
                   </TableHead>
                   <TableHead>Значення</TableHead>
+                  {canEdit && (
+                    <TableHead className="w-[1%] whitespace-nowrap text-right">
+                      Дії
+                    </TableHead>
+                  )}
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {entries.map(([key, value]) => (
-                  <TableRow key={key}>
-                    <TableCell className="font-mono text-sm whitespace-nowrap">
-                      {key}
-                    </TableCell>
-                    <TableCell className="text-sm break-all whitespace-normal">
-                      {value}
-                    </TableCell>
-                  </TableRow>
-                ))}
+                {entries.map(([key, value]) => {
+                  const entry: ConstantEntry = {
+                    key,
+                    value,
+                  };
+
+                  const actions: CardAction[] = canEdit
+                    ? [
+                        {
+                          id: "edit",
+                          label: "Редагувати",
+                          variant: "default",
+                          onClick: () => onEditEntry(entry),
+                        },
+                        {
+                          id: "delete",
+                          label: "Видалити",
+                          variant: "destructive",
+                          iconColor: "red",
+                          onClick: () => onDeleteEntry(entry),
+                        },
+                      ]
+                    : [];
+
+                  return (
+                    <TableRow key={key}>
+                      <TableCell className="font-mono text-sm whitespace-nowrap">
+                        {key}
+                      </TableCell>
+                      <TableCell className="text-sm break-all whitespace-normal">
+                        {value}
+                      </TableCell>
+                      {canEdit && (
+                        <TableCell className="w-[1%] whitespace-nowrap text-right">
+                          <CardActionsMenu actions={actions} />
+                        </TableCell>
+                      )}
+                    </TableRow>
+                  );
+                })}
               </TableBody>
             </Table>
           </div>

@@ -50,3 +50,11 @@ export function recordToDataEntries(
 ): Array<{ key: string; value: string }> {
   return Object.entries(data).map(([key, value]) => ({ key, value }));
 }
+
+/** Схема для додавання однієї пари ключ–значення (унікальний ключ у межах constant.data). */
+export const addConstantEntrySchema = z.object({
+  key: z.string().min(1, "Ключ обовʼязковий"),
+  value: z.string().min(1, "Значення обовʼязкове"),
+});
+
+export type AddConstantEntryFormValues = z.infer<typeof addConstantEntrySchema>;

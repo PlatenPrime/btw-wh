@@ -3,14 +3,17 @@ import { ConstantDetailsCard } from "@/modules/constants/components/cards/consta
 
 interface ConstantContainerViewProps {
   constant: ConstantDto;
+  canEdit: boolean;
 }
 
 export function ConstantContainerView({
   constant,
+  canEdit,
 }: ConstantContainerViewProps) {
   return (
     <div className="grid gap-2">
-      <ConstantDetailsCard constant={constant} />
+      <ConstantDetailsCard constant={constant} canEdit={canEdit} />
     </div>
   );
 }
+

@@ -1,11 +1,11 @@
 import type { ConstantDto } from "@/modules/constants/api/types";
 import { DeleteConstantDialog } from "@/modules/constants/components/dialogs/delete-constant-dialog/DeleteConstantDialog";
-import { UpdateConstantDialog } from "@/modules/constants/components/dialogs/update-constant-dialog/UpdateConstantDialog";
+import { AddConstantEntryDialog } from "@/modules/constants/components/dialogs/add-constant-entry-dialog";
 
 interface ConstantDetailHeaderActionsViewProps {
   constant: ConstantDto;
-  updateDialogOpen: boolean;
-  onUpdateDialogOpenChange: (open: boolean) => void;
+  addEntryDialogOpen: boolean;
+  onAddEntryDialogOpenChange: (open: boolean) => void;
   deleteDialogOpen: boolean;
   onDeleteDialogOpenChange: (open: boolean) => void;
   onDeleteSuccess: () => void;
@@ -13,18 +13,18 @@ interface ConstantDetailHeaderActionsViewProps {
 
 export function ConstantDetailHeaderActionsView({
   constant,
-  updateDialogOpen,
-  onUpdateDialogOpenChange,
+  addEntryDialogOpen,
+  onAddEntryDialogOpenChange,
   deleteDialogOpen,
   onDeleteDialogOpenChange,
   onDeleteSuccess,
 }: ConstantDetailHeaderActionsViewProps) {
   return (
     <>
-      <UpdateConstantDialog
+      <AddConstantEntryDialog
         constant={constant}
-        open={updateDialogOpen}
-        onOpenChange={onUpdateDialogOpenChange}
+        open={addEntryDialogOpen}
+        onOpenChange={onAddEntryDialogOpenChange}
       />
 
       <DeleteConstantDialog
@@ -36,3 +36,4 @@ export function ConstantDetailHeaderActionsView({
     </>
   );
 }
+

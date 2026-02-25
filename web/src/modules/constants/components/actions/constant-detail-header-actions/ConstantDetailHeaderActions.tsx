@@ -4,7 +4,7 @@ import { RoleType } from "@/constants/roles";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 import type { ConstantDto } from "@/modules/constants/api/types";
 import { ConstantDetailHeaderActionsView } from "@/modules/constants/components/actions/constant-detail-header-actions/ConstantDetailHeaderActionsView";
-import { Edit, Trash } from "lucide-react";
+import { Plus, Trash } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 
@@ -17,14 +17,14 @@ export function ConstantDetailHeaderActions({
 }: ConstantDetailHeaderActionsProps) {
   const navigate = useNavigate();
   const { hasRole } = useAuth();
-  const [updateDialogOpen, setUpdateDialogOpen] = useState(false);
+  const [addEntryDialogOpen, setAddEntryDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
   const canEdit = hasRole(RoleType.ADMIN);
   const canDelete = hasRole(RoleType.PRIME);
 
-  const openUpdateDialog = useCallback(() => {
-    setUpdateDialogOpen(true);
+  const openAddEntryDialog = useCallback(() => {
+    setAddEntryDialogOpen(true);
   }, []);
 
   const openDeleteDialog = useCallback(() => {
@@ -39,12 +39,12 @@ export function ConstantDetailHeaderActions({
     const actions: HeaderAction[] = [];
     if (canEdit) {
       actions.push({
-        id: "edit-constant",
-        label: "Редагувати константу",
-        icon: Edit,
+        id: "add-constant-entry",
+        label: "Додати пару",
+        icon: Plus,
         iconColor: "blue",
         variant: "default",
-        onClick: openUpdateDialog,
+        onClick: openAddEntryDialog,
       });
     }
     if (canDelete) {
@@ -58,15 +58,15 @@ export function ConstantDetailHeaderActions({
       });
     }
     return actions;
-  }, [canEdit, canDelete, openUpdateDialog, openDeleteDialog]);
+  }, [canEdit, canDelete, openAddEntryDialog, openDeleteDialog]);
 
   useRegisterHeaderActions(headerActions);
 
   return (
     <ConstantDetailHeaderActionsView
       constant={constant}
-      updateDialogOpen={updateDialogOpen}
-      onUpdateDialogOpenChange={setUpdateDialogOpen}
+      addEntryDialogOpen={addEntryDialogOpen}
+      onAddEntryDialogOpenChange={setAddEntryDialogOpen}
       deleteDialogOpen={deleteDialogOpen}
       onDeleteDialogOpenChange={setDeleteDialogOpen}
       onDeleteSuccess={handleDeleteSuccess}
