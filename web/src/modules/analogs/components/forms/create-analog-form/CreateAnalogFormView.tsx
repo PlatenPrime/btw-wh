@@ -11,7 +11,10 @@ import {
 } from "@/components/ui/select";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { ArtImage } from "@/modules/arts/components/elements/art-image/ArtImage";
+import type { KonkDto } from "@/modules/konks/api/types";
+import type { ProdDto } from "@/modules/prods/api/types";
 import type { UseFormReturn } from "react-hook-form";
+import { EntityLabel } from "../../entity-label";
 import type { CreateAnalogFormData } from "./schema";
 
 interface CreateAnalogFormViewProps {
@@ -21,8 +24,8 @@ interface CreateAnalogFormViewProps {
   isSubmitting: boolean;
   isArtLoading: boolean;
   artData?: ArtDto;
-  prods: { _id: string; name: string }[];
-  konks: { _id: string; name: string }[];
+  prods: ProdDto[];
+  konks: KonkDto[];
   onSubmit: (data: CreateAnalogFormData) => void;
   onCancel?: () => void;
 }
@@ -56,7 +59,9 @@ export function CreateAnalogFormView({
             <Label htmlFor="konkName">Конкурент *</Label>
             <Select
               value={watchedValues.konkName || ""}
-              onValueChange={(v) => setValue("konkName", v, { shouldValidate: true })}
+              onValueChange={(v) =>
+                setValue("konkName", v, { shouldValidate: true })
+              }
               disabled={isSubmitting}
             >
               <SelectTrigger
@@ -68,7 +73,11 @@ export function CreateAnalogFormView({
               <SelectContent>
                 {konks.map((k) => (
                   <SelectItem key={k._id} value={k.name}>
-                    {k.name}
+                    <EntityLabel
+                      imageUrl={k.imageUrl}
+                      title={k.title}
+                      fallbackLabel={k.name}
+                    />
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -84,7 +93,9 @@ export function CreateAnalogFormView({
             <Label htmlFor="prodName">Виробник *</Label>
             <Select
               value={watchedValues.prodName || ""}
-              onValueChange={(v) => setValue("prodName", v, { shouldValidate: true })}
+              onValueChange={(v) =>
+                setValue("prodName", v, { shouldValidate: true })
+              }
               disabled={isSubmitting}
             >
               <SelectTrigger
@@ -96,7 +107,11 @@ export function CreateAnalogFormView({
               <SelectContent>
                 {prods.map((p) => (
                   <SelectItem key={p._id} value={p.name}>
-                    {p.name}
+                    <EntityLabel
+                      imageUrl={p.imageUrl}
+                      title={p.title}
+                      fallbackLabel={p.name}
+                    />
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -193,7 +208,9 @@ export function CreateAnalogFormView({
           {artikul.length === 9 && !isArtLoading && !artData && (
             <>
               <div className="grid gap-2">
-                <Label htmlFor="title">Назва (обовʼязково, артикул не знайдено)</Label>
+                <Label htmlFor="title">
+                  Назва (обовʼязково, артикул не знайдено)
+                </Label>
                 <Input
                   id="title"
                   {...register("title")}

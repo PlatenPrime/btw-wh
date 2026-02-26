@@ -137,6 +137,11 @@ const Analogs = lazy(() =>
     default: module.Analogs,
   })),
 );
+const Analog = lazy(() =>
+  import("./modules/analogs/pages/analog").then((module) => ({
+    default: module.Analog,
+  })),
+);
 
 const Constants = lazy(() =>
   import("./modules/constants/pages/constants").then((module) => ({
@@ -257,6 +262,24 @@ export const router = createHashRouter([
             errorElement: <RouteErrorBoundary />,
           },
           {
+            path: "analogs",
+            element: (
+              <ProtectedRoute>
+                <Analogs />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "analogs/:id",
+            element: (
+              <ProtectedRoute>
+                <Analog />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
             path: "utils",
             element: <ArtsUtils />,
             errorElement: <RouteErrorBoundary />,
@@ -360,15 +383,7 @@ export const router = createHashRouter([
             ),
             errorElement: <RouteErrorBoundary />,
           },
-          {
-            path: "analogs",
-            element: (
-              <ProtectedRoute>
-                <Analogs />
-              </ProtectedRoute>
-            ),
-            errorElement: <RouteErrorBoundary />,
-          },
+          
           {
             path: "constants",
             element: (

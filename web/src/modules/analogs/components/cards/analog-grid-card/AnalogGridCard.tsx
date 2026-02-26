@@ -1,27 +1,39 @@
-import { CardActionsMenu } from "@/components/shared/card-actions/CardActionsMenu";
-import { AnalogImageLink } from "@/components/shared/analog-image-link/AnalogImageLink";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RoleType } from "@/constants/roles";
-import { RoleGuard } from "@/modules/auth/components/RoleGuard";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 import type { AnalogDto } from "@/modules/analogs/api/types";
+import type { KonkDto } from "@/modules/konks/api/types";
+import type { ProdDto } from "@/modules/prods/api/types";
 import { Edit, Trash } from "lucide-react";
 import { useMemo } from "react";
+import { AnalogGridCardView } from "./AnalogGridCardView";
 
 interface AnalogGridCardProps {
   analog: AnalogDto;
+  konks: KonkDto[];
+  prods: ProdDto[];
   onEdit?: (analog: AnalogDto) => void;
   onDelete?: (analog: AnalogDto) => void;
 }
 
 export function AnalogGridCard({
   analog,
+  konks,
+  prods,
   onEdit,
   onDelete,
 }: AnalogGridCardProps) {
   const { hasAnyRole } = useAuth();
   const canEdit = hasAnyRole([RoleType.ADMIN, RoleType.PRIME]);
   const canDelete = hasAnyRole([RoleType.PRIME]);
+
+  const konk = useMemo(
+    () => konks.find((k) => k.name === analog.konkName),
+    [konks, analog.konkName],
+  );
+  const prod = useMemo(
+    () => prods.find((p) => p.name === analog.prodName),
+    [prods, analog.prodName],
+  );
 
   const actions = useMemo(
     () => [
@@ -51,34 +63,11 @@ export function AnalogGridCard({
   );
 
   return (
-    <Card className="gap-0 p-2 transition-shadow hover:shadow-md">
-      <CardHeader className="p-0">
-        <div className="flex items-center justify-between gap-2">
-          <CardTitle className="text-muted-foreground truncate text-xs">
-            {analog.konkName} / {analog.prodName}
-          </CardTitle>
-          <RoleGuard
-            allowedRoles={[RoleType.ADMIN, RoleType.PRIME]}
-            fallback={null}
-          >
-            <CardActionsMenu
-              actions={actions}
-              orientation="horizontal"
-              size="sm"
-              align="end"
-            />
-          </RoleGuard>
-        </div>
-      </CardHeader>
-      <CardContent className="grid gap-2 p-0 pt-2">
-        <AnalogImageLink
-          url={analog.url}
-          title={analog.title}
-          nameukr={analog.nameukr}
-          artikul={analog.artikul || undefined}
-          imageUrl={analog.imageUrl}
-        />
-      </CardContent>
-    </Card>
+    <AnalogGridCardView
+      analog={analog}
+      konk={konk}
+      prod={prod}
+      actions={actions}
+    />
   );
 }

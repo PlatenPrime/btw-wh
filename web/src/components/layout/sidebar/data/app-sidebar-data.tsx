@@ -55,6 +55,11 @@ export const appSidebarData = {
           iconName: "StickyNote",
         },
         {
+          title: "Аналоги",
+          url: "/arts/analogs",
+          iconName: "Link2",
+        },
+        {
           title: "Оновити артикули",
           url: "/arts/update",
           iconName: "RefreshCcwDot",
@@ -133,11 +138,6 @@ export const appSidebarData = {
           title: "Конкуренти",
           url: "/wh/konks",
           iconName: "Building2",
-        },
-        {
-          title: "Аналоги",
-          url: "/wh/analogs",
-          iconName: "Link2",
         },
         {
           title: "Константи",

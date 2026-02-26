@@ -4,9 +4,13 @@ import type {
   AnalogsResponseDto,
 } from "@/modules/analogs/api/types";
 import { AnalogsGrid } from "@/modules/analogs/components/lists/analogs-grid";
+import type { KonkDto } from "@/modules/konks/api/types";
+import type { ProdDto } from "@/modules/prods/api/types";
 
 interface AnalogsContainerProps {
   data: AnalogsResponseDto;
+  konks: KonkDto[];
+  prods: ProdDto[];
   onEdit?: (analog: AnalogDto) => void;
   onDelete?: (analog: AnalogDto) => void;
   onPageChange?: (page: number) => void;
@@ -14,6 +18,8 @@ interface AnalogsContainerProps {
 
 export function AnalogsContainer({
   data,
+  konks,
+  prods,
   onEdit,
   onDelete,
   onPageChange,
@@ -27,6 +33,8 @@ export function AnalogsContainer({
       />
       <AnalogsGrid
         analogs={data.data}
+        konks={konks}
+        prods={prods}
         onEdit={onEdit}
         onDelete={onDelete}
       />

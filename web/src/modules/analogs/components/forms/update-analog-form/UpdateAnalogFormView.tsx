@@ -11,7 +11,10 @@ import {
 } from "@/components/ui/select";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { ArtImage } from "@/modules/arts/components/elements/art-image/ArtImage";
+import type { KonkDto } from "@/modules/konks/api/types";
+import type { ProdDto } from "@/modules/prods/api/types";
 import { useFormContext } from "react-hook-form";
+import { EntityLabel } from "../../entity-label";
 import type { UpdateAnalogFormData } from "./schema";
 
 interface UpdateAnalogFormViewProps {
@@ -21,8 +24,8 @@ interface UpdateAnalogFormViewProps {
   isSubmitting: boolean;
   isArtLoading: boolean;
   artData?: ArtDto;
-  prods: { _id: string; name: string }[];
-  konks: { _id: string; name: string }[];
+  prods: ProdDto[];
+  konks: KonkDto[];
   onSubmit: (data: UpdateAnalogFormData) => void;
   onCancel?: () => void;
 }
@@ -70,7 +73,11 @@ export function UpdateAnalogFormView({
               <SelectContent>
                 {konks.map((k) => (
                   <SelectItem key={k._id} value={k.name}>
-                    {k.name}
+                    <EntityLabel
+                      imageUrl={k.imageUrl}
+                      title={k.title}
+                      fallbackLabel={k.name}
+                    />
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -100,7 +107,11 @@ export function UpdateAnalogFormView({
               <SelectContent>
                 {prods.map((p) => (
                   <SelectItem key={p._id} value={p.name}>
-                    {p.name}
+                    <EntityLabel
+                      imageUrl={p.imageUrl}
+                      title={p.title}
+                      fallbackLabel={p.name}
+                    />
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -166,9 +177,7 @@ export function UpdateAnalogFormView({
               className={errors.title ? "border-destructive" : ""}
             />
             {errors.title && (
-              <p className="text-destructive text-xs">
-                {errors.title.message}
-              </p>
+              <p className="text-destructive text-xs">{errors.title.message}</p>
             )}
           </div>
 

@@ -11,16 +11,16 @@ export interface QuickLinkItem {
 
 export const quickLinksData: QuickLinkItem[] = [
   {
+    url: "/arts/analogs",
+    title: "Аналоги",
+    iconName: "Link2",
+    description: "Аналоги артикулів",
+  },
+  {
     url: "/arts/dashboard",
     title: "Артикули",
     iconName: "StickyNote",
     description: "Каталог та перегляд артикулів",
-  },
-  {
-    url: "/arts/update",
-    title: "Оновити артикули",
-    iconName: "RefreshCcwDot",
-    description: "Імпорт та синхронізація",
   },
   {
     url: "/wh/rows",

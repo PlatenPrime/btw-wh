@@ -1,5 +1,6 @@
 import { SelectLimit } from "@/components/shared/select-limit";
 import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -7,10 +8,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Label } from "@/components/ui/label";
 import { useAnalogsParams } from "@/modules/analogs/hooks/useAnalogsParams";
 import { useKonksQuery } from "@/modules/konks/api/hooks/queries/useKonksQuery";
 import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
+import { EntityLabel } from "../../entity-label";
 
 export function AnalogsControls() {
   const { limit, setLimit, konkName, setKonkName, prodName, setProdName } =
@@ -36,7 +37,11 @@ export function AnalogsControls() {
               <SelectItem value="all">Усі</SelectItem>
               {konks.map((k) => (
                 <SelectItem key={k._id} value={k.name}>
-                  {k.name}
+                  <EntityLabel
+                    imageUrl={k.imageUrl}
+                    title={k.title}
+                    fallbackLabel={k.name}
+                  />
                 </SelectItem>
               ))}
             </SelectContent>
@@ -55,7 +60,11 @@ export function AnalogsControls() {
               <SelectItem value="all">Усі</SelectItem>
               {prods.map((p) => (
                 <SelectItem key={p._id} value={p.name}>
-                  {p.name}
+                  <EntityLabel
+                    imageUrl={p.imageUrl}
+                    title={p.title}
+                    fallbackLabel={p.name}
+                  />
                 </SelectItem>
               ))}
             </SelectContent>

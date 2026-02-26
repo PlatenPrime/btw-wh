@@ -1,15 +1,21 @@
 import { Wrapper } from "@/components/shared/wrappers/Wrapper";
 import type { AnalogDto } from "@/modules/analogs/api/types";
 import { AnalogGridCard } from "@/modules/analogs/components/cards/analog-grid-card";
+import type { KonkDto } from "@/modules/konks/api/types";
+import type { ProdDto } from "@/modules/prods/api/types";
 
 interface AnalogsGridProps {
   analogs: AnalogDto[];
+  konks: KonkDto[];
+  prods: ProdDto[];
   onEdit?: (analog: AnalogDto) => void;
   onDelete?: (analog: AnalogDto) => void;
 }
 
 export function AnalogsGrid({
   analogs,
+  konks,
+  prods,
   onEdit,
   onDelete,
 }: AnalogsGridProps) {
@@ -19,6 +25,8 @@ export function AnalogsGrid({
         <AnalogGridCard
           key={analog._id}
           analog={analog}
+          konks={konks}
+          prods={prods}
           onEdit={onEdit}
           onDelete={onDelete}
         />
