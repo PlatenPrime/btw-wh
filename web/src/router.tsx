@@ -132,6 +132,12 @@ const Konk = lazy(() =>
   })),
 );
 
+const Analogs = lazy(() =>
+  import("./modules/analogs/pages/analogs").then((module) => ({
+    default: module.Analogs,
+  })),
+);
+
 const Constants = lazy(() =>
   import("./modules/constants/pages/constants").then((module) => ({
     default: module.Constants,
@@ -350,6 +356,15 @@ export const router = createHashRouter([
             element: (
               <ProtectedRoute>
                 <Konk />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "analogs",
+            element: (
+              <ProtectedRoute>
+                <Analogs />
               </ProtectedRoute>
             ),
             errorElement: <RouteErrorBoundary />,

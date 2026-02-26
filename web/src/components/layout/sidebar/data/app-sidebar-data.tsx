@@ -5,6 +5,7 @@ import {
   Factory,
   FileQuestion,
   LayoutTemplate,
+  Link2,
   MapPin,
   PackageSearch,
   RefreshCcwDot,
@@ -35,6 +36,7 @@ const getIcon = (iconName: string) => {
     Users: Users,
     Building2: Building2,
     Bookmark: Bookmark,
+    Link2: Link2,
   };
 
   const IconComponent = icons[iconName as keyof typeof icons];
@@ -131,6 +133,11 @@ export const appSidebarData = {
           title: "Конкуренти",
           url: "/wh/konks",
           iconName: "Building2",
+        },
+        {
+          title: "Аналоги",
+          url: "/wh/analogs",
+          iconName: "Link2",
         },
         {
           title: "Константи",
