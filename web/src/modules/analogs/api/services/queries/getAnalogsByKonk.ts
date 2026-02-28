@@ -1,27 +1,21 @@
 import { apiClient } from "@/lib/apiClient";
 import type {
   AnalogsResponseDto,
-  GetAnalogsParams,
+  GetAnalogsByKonkParams,
 } from "@/modules/analogs/api/types";
 
-export const getAnalogs = async ({
-  page,
-  limit,
-  konkName = "",
-  prodName = "",
-  search = "",
-  signal,
-}: GetAnalogsParams): Promise<AnalogsResponseDto> => {
+export const getAnalogsByKonk = async (
+  konkName: string,
+  { page, limit, search = "", signal }: GetAnalogsByKonkParams,
+): Promise<AnalogsResponseDto> => {
   const params = new URLSearchParams({
     page: String(page),
     limit: String(limit),
   });
-  if (konkName) params.set("konkName", konkName);
-  if (prodName) params.set("prodName", prodName);
   if (search.trim()) params.set("search", search.trim());
 
   const res = await apiClient.get<AnalogsResponseDto>(
-    `/analogs?${params.toString()}`,
+    `/analogs/konk/${encodeURIComponent(konkName)}?${params.toString()}`,
     { signal },
   );
   return res.data;

@@ -1,3 +1,4 @@
+import { SearchPanel } from "@/components/shared/search-components/search-panel/SearchPanel";
 import { SelectLimit } from "@/components/shared/select-limit";
 import { Wrapper } from "@/components/shared/wrappers/Wrapper";
 import { Label } from "@/components/ui/label";
@@ -14,7 +15,7 @@ import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
 import { EntityLabel } from "../../entity-label";
 
 export function AnalogsControls() {
-  const { limit, setLimit, konkName, setKonkName, prodName, setProdName } =
+  const { limit, setLimit, konkName, setKonkName, prodName, setProdName, search, setSearch } =
     useAnalogsParams();
   const prodsQuery = useProdsQuery();
   const konksQuery = useKonksQuery();
@@ -24,6 +25,13 @@ export function AnalogsControls() {
   return (
     <Wrapper className="grid grid-cols-1 gap-2 lg:grid-cols-2">
       <div className="flex flex-wrap items-end gap-2">
+        <div className="grid min-w-0 flex-1 gap-1">
+          <SearchPanel
+            search={search}
+            onSearchChange={(e) => setSearch(e.target.value)}
+            placeholder="Пошук за назвою..."
+          />
+        </div>
         <div className="grid gap-1">
           <Label className="text-xs">Конкурент</Label>
           <Select

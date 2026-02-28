@@ -1,3 +1,4 @@
+import { useDebounce } from "@/hooks/useDebounce";
 import { getAnalogs } from "@/modules/analogs/api/services/queries/getAnalogs";
 import type { GetAnalogsParams } from "@/modules/analogs/api/types";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
@@ -11,17 +12,21 @@ export function useAnalogsQuery({
   limit,
   konkName = "",
   prodName = "",
+  search = "",
   signal,
   enabled = true,
 }: UseAnalogsQueryParams) {
+  const debouncedSearch = useDebounce(search, 500);
+
   return useQuery({
-    queryKey: ["analogs", { page, limit, konkName, prodName }],
+    queryKey: ["analogs", { page, limit, konkName, prodName, search: debouncedSearch }],
     queryFn: ({ signal: querySignal }) =>
       getAnalogs({
         page,
         limit,
         konkName,
         prodName,
+        search: debouncedSearch,
         signal: signal ?? querySignal,
       }),
     placeholderData: keepPreviousData,

@@ -43,6 +43,21 @@ export interface GetAnalogsParams {
   limit: number;
   konkName?: string;
   prodName?: string;
+  search?: string;
+  signal?: AbortSignal;
+}
+
+export interface GetAnalogsByProdParams {
+  page: number;
+  limit: number;
+  search?: string;
+  signal?: AbortSignal;
+}
+
+export interface GetAnalogsByKonkParams {
+  page: number;
+  limit: number;
+  search?: string;
   signal?: AbortSignal;
 }
 
@@ -68,6 +83,11 @@ export interface UpdateAnalogDto {
 export interface AnalogResponseDto {
   message: string;
   data: AnalogDto;
+}
+
+export interface AnalogsByArtikulResponseDto {
+  message: string;
+  data: AnalogDto[];
 }
 
 export interface EnrichedAnalogResponseDto {

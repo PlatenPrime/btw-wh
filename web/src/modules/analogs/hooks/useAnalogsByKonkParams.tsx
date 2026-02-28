@@ -2,13 +2,11 @@ import { getParam } from "@/utils/getParam";
 import { updateSearchParams } from "@/utils/updateSearchParams";
 import { useSearchParams } from "react-router";
 
-export function useAnalogsParams() {
+export function useAnalogsByKonkParams() {
   const [params, setParams] = useSearchParams();
 
   const page = Number(getParam(params, "page", "1"));
   const limit = Number(getParam(params, "limit", "10"));
-  const konkName = getParam(params, "konkName", "");
-  const prodName = getParam(params, "prodName", "");
   const search = getParam(params, "search", "");
 
   const setPage = (newPage: number) =>
@@ -20,22 +18,12 @@ export function useAnalogsParams() {
   const setSearch = (newSearch: string) =>
     updateSearchParams(params, { search: newSearch, page: "1" }, setParams);
 
-  const setKonkName = (value: string) =>
-    updateSearchParams(params, { konkName: value, page: "1" }, setParams);
-
-  const setProdName = (value: string) =>
-    updateSearchParams(params, { prodName: value, page: "1" }, setParams);
-
   return {
     page,
     limit,
-    konkName,
-    prodName,
     search,
     setPage,
     setLimit,
     setSearch,
-    setKonkName,
-    setProdName,
   };
 }

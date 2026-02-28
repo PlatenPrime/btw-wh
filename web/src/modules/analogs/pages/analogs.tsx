@@ -16,7 +16,7 @@ import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
 import { useState } from "react";
 
 export function Analogs() {
-  const { page, limit, konkName, prodName, setPage } = useAnalogsParams();
+  const { page, limit, konkName, prodName, search, setPage } = useAnalogsParams();
   const konksQuery = useKonksQuery();
   const prodsQuery = useProdsQuery();
   const konks = konksQuery.data?.data ?? [];
@@ -44,7 +44,7 @@ export function Analogs() {
 
 
         <AnalogsFetcher
-          params={{ page, limit, konkName: konkName || undefined, prodName: prodName || undefined }}
+          params={{ page, limit, konkName: konkName || undefined, prodName: prodName || undefined, search: search || undefined }}
           ContainerComponent={({ data }) => (
             <AnalogsContainer
               data={data}
