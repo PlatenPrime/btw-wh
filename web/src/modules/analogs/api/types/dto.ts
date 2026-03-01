@@ -94,3 +94,13 @@ export interface EnrichedAnalogResponseDto {
   message: string;
   data: EnrichedAnalogDto;
 }
+
+export interface AnalogStockDto {
+  stock: number;
+  price: number;
+}
+
+export interface AnalogStockResponseDto {
+  message: string;
+  data: AnalogStockDto;
+}

@@ -6,6 +6,11 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import type { EnrichedAnalogDto } from "@/modules/analogs/api/types";
+import {
+  AnalogStockContainer,
+  AnalogStockSkeleton,
+} from "@/modules/analogs/components/containers/analog-stock-container";
+import { AnalogStockFetcher } from "@/modules/analogs/components/fetchers/analog-stock-fetcher";
 import { EntityLabel } from "@/modules/analogs/components/entity-label";
 import { ArtDialogImage } from "@/modules/arts/components/dialogs/art-dialog-image/ArtDialogImage";
 import { ExternalLink } from "lucide-react";
@@ -63,6 +68,13 @@ export function AnalogDetailsCardView({ analog }: AnalogDetailsCardViewProps) {
             </a>
           </MetadataItem>
         )}
+        <MetadataItem label="Залишок та ціна">
+          <AnalogStockFetcher
+            analogId={analog._id}
+            ContainerComponent={AnalogStockContainer}
+            SkeletonComponent={AnalogStockSkeleton}
+          />
+        </MetadataItem>
       </CardContent>
 
       <>
