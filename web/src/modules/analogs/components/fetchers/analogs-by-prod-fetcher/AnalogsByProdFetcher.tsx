@@ -20,23 +20,39 @@ export function AnalogsByProdFetcher({
   SkeletonComponent,
 }: AnalogsByProdFetcherProps) {
   const analogsQuery = useAnalogsByProdQuery(prodName, params);
+  const { data, isLoading, error } = analogsQuery;
 
-  // При refetch (смена страницы/поиска) показываем старые данные, скелетон только при полном отсутствии данных
-  if (analogsQuery.data) {
-    if (analogsQuery.error) {
+  // Сначала проверяем data: при смене страницы keepPreviousData подставляет старые данные,
+  // контейнер и кнопки остаются видимыми (как на странице аналогов/зон)
+  if (data) {
+    if (error) {
       return (
         <ErrorDisplay
-          error={analogsQuery.error}
+          error={error}
           title="Помилка завантаження аналогів виробника"
           description="Не вдалося завантажити список аналогів"
         />
       );
     }
-    if (!analogsQuery.data.data?.length) {
+    if (!data.data?.length && !analogsQuery.isFetching) {
       return <LoadingNoData description="Аналоги виробника не знайдено" />;
     }
-    return <ContainerComponent data={analogsQuery.data} />;
+    return <ContainerComponent data={data} />;
   }
 
-  return <SkeletonComponent />;
+  if (isLoading) {
+    return <SkeletonComponent />;
+  }
+
+  if (error) {
+    return (
+      <ErrorDisplay
+        error={error}
+        title="Помилка завантаження аналогів виробника"
+        description="Не вдалося завантажити список аналогів"
+      />
+    );
+  }
+
+  return <LoadingNoData description="Аналоги виробника не знайдено" />;
 }

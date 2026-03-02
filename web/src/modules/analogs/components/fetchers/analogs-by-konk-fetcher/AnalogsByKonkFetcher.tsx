@@ -20,23 +20,39 @@ export function AnalogsByKonkFetcher({
   SkeletonComponent,
 }: AnalogsByKonkFetcherProps) {
   const analogsQuery = useAnalogsByKonkQuery(konkName, params);
+  const { data, isLoading, error } = analogsQuery;
 
-  // При refetch (смена страницы/поиска) показываем старые данные, скелетон только при полном отсутствии данных
-  if (analogsQuery.data) {
-    if (analogsQuery.error) {
+  // Сначала проверяем data: при смене страницы keepPreviousData подставляет старые данные,
+  // контейнер и кнопки остаются видимыми (как на странице аналогов/зон)
+  if (data) {
+    if (error) {
       return (
         <ErrorDisplay
-          error={analogsQuery.error}
+          error={error}
           title="Помилка завантаження аналогів конкурента"
           description="Не вдалося завантажити список аналогів"
         />
       );
     }
-    if (!analogsQuery.data.data?.length) {
+    if (!data.data?.length && !analogsQuery.isFetching) {
       return <LoadingNoData description="Аналоги конкурента не знайдено" />;
     }
-    return <ContainerComponent data={analogsQuery.data} />;
+    return <ContainerComponent data={data} />;
   }
 
-  return <SkeletonComponent />;
+  if (isLoading) {
+    return <SkeletonComponent />;
+  }
+
+  if (error) {
+    return (
+      <ErrorDisplay
+        error={error}
+        title="Помилка завантаження аналогів конкурента"
+        description="Не вдалося завантажити список аналогів"
+      />
+    );
+  }
+
+  return <LoadingNoData description="Аналоги конкурента не знайдено" />;
 }

@@ -1,7 +1,6 @@
 import { SearchPanel } from "@/components/shared/search-components/search-panel/SearchPanel";
 import { SelectLimit } from "@/components/shared/select-limit";
 import { Wrapper } from "@/components/shared/wrappers/Wrapper";
-import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -23,26 +22,28 @@ export function AnalogsControls() {
   const konks = konksQuery.data?.data ?? [];
 
   return (
-    <Wrapper className="grid grid-cols-1 gap-2 lg:grid-cols-2">
-      <div className="flex flex-wrap items-end gap-2">
-        <div className="grid min-w-0 flex-1 gap-1">
+    <Wrapper className="grid grid-cols-1 gap-3 lg:grid-cols-2">
+      <div className="flex min-w-0 flex-1 flex-wrap items-center gap-3">
+        <div className="min-w-0 flex-1 basis-full sm:basis-0">
           <SearchPanel
             search={search}
             onSearchChange={(e) => setSearch(e.target.value)}
             placeholder="Пошук за назвою..."
           />
         </div>
-        <div className="grid gap-1">
-          <Label className="text-xs">Конкурент</Label>
+        <div className="flex min-w-0 flex-wrap items-center gap-3">
           <Select
             value={konkName || "all"}
             onValueChange={(v) => setKonkName(v === "all" ? "" : v)}
           >
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Усі" />
+            <SelectTrigger
+              aria-label="Конкурент"
+              className="min-w-[140px] sm:min-w-[160px]"
+            >
+              <SelectValue placeholder="Усі конкуренти" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">Усі</SelectItem>
+              <SelectItem value="all">Усі конкуренти</SelectItem>
               {konks.map((k) => (
                 <SelectItem key={k._id} value={k.name}>
                   <EntityLabel
@@ -54,18 +55,18 @@ export function AnalogsControls() {
               ))}
             </SelectContent>
           </Select>
-        </div>
-        <div className="grid gap-1">
-          <Label className="text-xs">Виробник</Label>
           <Select
             value={prodName || "all"}
             onValueChange={(v) => setProdName(v === "all" ? "" : v)}
           >
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Усі" />
+            <SelectTrigger
+              aria-label="Виробник"
+              className="min-w-[140px] sm:min-w-[160px]"
+            >
+              <SelectValue placeholder="Усі виробники" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">Усі</SelectItem>
+              <SelectItem value="all">Усі виробники</SelectItem>
               {prods.map((p) => (
                 <SelectItem key={p._id} value={p.name}>
                   <EntityLabel
@@ -79,7 +80,7 @@ export function AnalogsControls() {
           </Select>
         </div>
       </div>
-      <div className="flex flex-wrap items-center gap-2 lg:justify-end">
+      <div className="flex flex-wrap items-center gap-3 lg:justify-end">
         <SelectLimit
           limitOptions={[10, 20, 50, 100]}
           limit={limit}

@@ -8,7 +8,7 @@ export interface EntityLabelProps {
 }
 
 const imageSizeMap = {
-  sm: { size: 20, gap: "gap-1.5" },
+  sm: { size: 32, gap: "gap-1.5" },
   md: { size: 32, gap: "gap-1" },
 } as const;
 
