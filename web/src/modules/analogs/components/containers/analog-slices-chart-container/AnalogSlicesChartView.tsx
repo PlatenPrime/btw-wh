@@ -65,6 +65,7 @@ export function AnalogSlicesChartView({
   chartType = "line",
 }: AnalogSlicesChartViewProps) {
   const [colors, setColors] = useState(getChartColors);
+  const uid = useId().replace(/:/g, "");
 
   useLayoutEffect(() => {
     setColors(getChartColors());
@@ -84,7 +85,6 @@ export function AnalogSlicesChartView({
 
   const isArea = chartType === "area";
   const LineOrArea = isArea ? Area : Line;
-  const uid = useId().replace(/:/g, "");
   const gradientIdStock = `analog-area-stock-${uid}`;
   const gradientIdPrice = `analog-area-price-${uid}`;
 
