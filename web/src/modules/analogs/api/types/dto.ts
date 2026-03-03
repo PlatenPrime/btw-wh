@@ -98,3 +98,14 @@ export interface AnalogStockResponseDto {
   message: string;
   data: AnalogStockDto;
 }
+
+export interface AnalogSliceRangeItem {
+  date: string;
+  stock: number;
+  price: number;
+}
+
+export interface AnalogSliceRangeResponseDto {
+  message: string;
+  data: AnalogSliceRangeItem[];
+}

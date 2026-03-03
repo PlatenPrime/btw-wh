@@ -247,3 +247,8 @@
   scrollbar-width: thin;
   scrollbar-color: var(--muted) var(--background);
 }
+
+/* График динаміки аналога: адаптивність */
+.analog-slices-chart {
+  aspect-ratio: auto !important;
+}
