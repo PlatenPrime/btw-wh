@@ -5,8 +5,6 @@ export interface AnalogDto {
   artikul: string;
   nameukr?: string;
   url: string;
-  title?: string;
-  imageUrl?: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -65,9 +63,7 @@ export interface CreateAnalogDto {
   konkName: string;
   prodName: string;
   url: string;
-  artikul?: string;
-  title?: string;
-  imageUrl?: string;
+  artikul: string;
 }
 
 export interface UpdateAnalogDto {
@@ -76,8 +72,6 @@ export interface UpdateAnalogDto {
   artikul?: string;
   nameukr?: string;
   url?: string;
-  title?: string;
-  imageUrl?: string;
 }
 
 export interface AnalogResponseDto {

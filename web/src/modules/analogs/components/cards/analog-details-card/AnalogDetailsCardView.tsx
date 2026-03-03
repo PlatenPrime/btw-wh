@@ -35,7 +35,7 @@ function MetadataItem({
 }
 
 export function AnalogDetailsCardView({ analog }: AnalogDetailsCardViewProps) {
-  const displayName = analog.nameukr ?? analog.title;
+  const displayName = analog.nameukr ?? analog.artikul ?? analog.url;
 
   return (
     <Card className="border-l-primary gap-0 overflow-hidden border-l-4 p-0 shadow-md">

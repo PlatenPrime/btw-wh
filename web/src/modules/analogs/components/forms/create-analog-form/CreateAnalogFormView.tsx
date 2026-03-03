@@ -139,7 +139,7 @@ export function CreateAnalogFormView({
           </div>
 
           <div className="grid gap-2">
-            <Label htmlFor="artikul">Артикул (необовʼязково)</Label>
+            <Label htmlFor="artikul">Артикул Бтрейд</Label>
             <Input
               id="artikul"
               type="text"
@@ -165,84 +165,6 @@ export function CreateAnalogFormView({
                 </div>
               </div>
             </div>
-          )}
-
-          {!artData && artikul.length !== 9 && (
-            <>
-              <div className="grid gap-2">
-                <Label htmlFor="title">Назва (обовʼязково без артикула)</Label>
-                <Input
-                  id="title"
-                  {...register("title")}
-                  placeholder="Назва товару у конкурента"
-                  disabled={isSubmitting}
-                  className={errors.title ? "border-destructive" : ""}
-                />
-                {errors.title && (
-                  <p className="text-destructive text-xs">
-                    {errors.title.message}
-                  </p>
-                )}
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="imageUrl">
-                  Посилання на зображення (обовʼязково без артикула)
-                </Label>
-                <Input
-                  id="imageUrl"
-                  type="url"
-                  {...register("imageUrl")}
-                  placeholder="https://..."
-                  disabled={isSubmitting}
-                  className={errors.imageUrl ? "border-destructive" : ""}
-                />
-                {errors.imageUrl && (
-                  <p className="text-destructive text-xs">
-                    {errors.imageUrl.message}
-                  </p>
-                )}
-              </div>
-            </>
-          )}
-
-          {artikul.length === 9 && !isArtLoading && !artData && (
-            <>
-              <div className="grid gap-2">
-                <Label htmlFor="title">
-                  Назва (обовʼязково, артикул не знайдено)
-                </Label>
-                <Input
-                  id="title"
-                  {...register("title")}
-                  placeholder="Назва товару у конкурента"
-                  disabled={isSubmitting}
-                  className={errors.title ? "border-destructive" : ""}
-                />
-                {errors.title && (
-                  <p className="text-destructive text-xs">
-                    {errors.title.message}
-                  </p>
-                )}
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="imageUrl">
-                  Посилання на зображення (обовʼязково)
-                </Label>
-                <Input
-                  id="imageUrl"
-                  type="url"
-                  {...register("imageUrl")}
-                  placeholder="https://..."
-                  disabled={isSubmitting}
-                  className={errors.imageUrl ? "border-destructive" : ""}
-                />
-                {errors.imageUrl && (
-                  <p className="text-destructive text-xs">
-                    {errors.imageUrl.message}
-                  </p>
-                )}
-              </div>
-            </>
           )}
 
           <DialogActions

@@ -1,17 +1,13 @@
-import type { ReactNode } from "react";
-import { Image } from "@/components/shared/image/image";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { ArtDialogImage } from "@/modules/arts/components/dialogs/art-dialog-image/ArtDialogImage";
+import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 
 /** Минимальный набор полей аналога для отображения ссылки и картинки (без зависимости от modules/analogs). */
 interface AnalogImageLinkAnalog {
   url: string;
-  title?: string;
   nameukr?: string;
   artikul?: string;
-  imageUrl?: string;
 }
 
 interface AnalogImageLinkProps {
@@ -23,18 +19,22 @@ interface AnalogImageLinkProps {
 const linkClassName =
   "flex h-full w-full flex-col justify-start hover:underline";
 
-export function AnalogImageLink({ analog, to, className }: AnalogImageLinkProps) {
-  const { url, title, nameukr, imageUrl } = analog;
+export function AnalogImageLink({
+  analog,
+  to,
+  className,
+}: AnalogImageLinkProps) {
+  const { url, nameukr } = analog;
   const artikul = analog.artikul || undefined;
 
   let subtitle: string;
   if (nameukr != null) {
     subtitle = nameukr.slice(10);
   } else {
-    subtitle = String(title ?? artikul ?? url).slice(0, 50) || url;
+    subtitle = String(artikul ?? url).slice(0, 50) || url;
   }
 
-  const titleText = artikul || title?.slice(0, 20) || "Посилання";
+  const titleText = artikul || "Посилання";
   const linkInner = (
     <>
       <span className="text-sm font-semibold">{titleText}</span>
@@ -47,34 +47,19 @@ export function AnalogImageLink({ analog, to, className }: AnalogImageLinkProps)
   let imageBlock: ReactNode;
   if (artikul) {
     imageBlock = <ArtDialogImage artikul={artikul} />;
-  } else if (imageUrl) {
-    imageBlock = (
-      <Dialog>
-        <DialogTrigger asChild>
-          <Image
-            src={imageUrl}
-            alt={title ?? "Аналог"}
-            className="aspect-square w-full max-w-[6rem] cursor-pointer rounded-lg object-cover shadow-md"
-          />
-        </DialogTrigger>
-        <DialogContent className="flex min-h-40 justify-center rounded-xl border bg-white p-0 shadow-none">
-          <Image
-            src={imageUrl}
-            alt={title ?? "Аналог"}
-            className="max-h-[80vh] rounded-xl object-contain"
-          />
-        </DialogContent>
-      </Dialog>
-    );
   } else {
     imageBlock = (
-      <div className="aspect-square w-full max-w-[6rem] rounded-lg bg-muted" />
+      <div className="bg-muted aspect-square w-full max-w-[6rem] rounded-lg" />
     );
   }
 
   let linkBlock: ReactNode;
   if (to) {
-    linkBlock = <Link to={to} className={linkClassName}>{linkInner}</Link>;
+    linkBlock = (
+      <Link to={to} className={linkClassName}>
+        {linkInner}
+      </Link>
+    );
   } else {
     linkBlock = (
       <a

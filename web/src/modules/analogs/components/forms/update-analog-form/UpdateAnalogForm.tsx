@@ -30,8 +30,6 @@ export function UpdateAnalogForm({
       prodName: analog.prodName,
       url: analog.url,
       artikul: analog.artikul ?? "",
-      title: analog.title ?? "",
-      imageUrl: analog.imageUrl ?? "",
     },
     mode: "onChange",
   });
@@ -53,8 +51,6 @@ export function UpdateAnalogForm({
       prodName: analog.prodName,
       url: analog.url,
       artikul: analog.artikul ?? "",
-      title: analog.title ?? "",
-      imageUrl: analog.imageUrl ?? "",
     });
   }, [analog, reset]);
 
@@ -72,9 +68,6 @@ export function UpdateAnalogForm({
     if (data.prodName !== analog.prodName) payload.prodName = data.prodName;
     if (data.url !== analog.url) payload.url = data.url;
     if (data.artikul !== analog.artikul) payload.artikul = data.artikul?.trim();
-    if (data.title !== analog.title) payload.title = data.title?.trim();
-    if (data.imageUrl !== analog.imageUrl)
-      payload.imageUrl = data.imageUrl?.trim();
     if (Object.keys(payload).length === 0) {
       onSuccess?.();
       return;

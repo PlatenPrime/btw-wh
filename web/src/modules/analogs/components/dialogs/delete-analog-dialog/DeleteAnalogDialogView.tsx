@@ -20,7 +20,7 @@ export function DeleteAnalogDialogView({
   onCancel,
 }: DeleteAnalogDialogViewProps) {
   const label =
-    analog.title || analog.nameukr || analog.artikul || analog.url || analog._id;
+    analog.nameukr || analog.artikul || analog.url || analog._id;
 
   return (
     <DialogContent className="sm:max-w-[425px]">

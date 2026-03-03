@@ -49,9 +49,7 @@ export function CreateAnalogForm({ onSuccess, onCancel }: CreateAnalogFormProps)
         konkName: data.konkName,
         prodName: data.prodName,
         url: data.url,
-        artikul: data.artikul?.trim() || undefined,
-        title: data.title?.trim() || undefined,
-        imageUrl: data.imageUrl?.trim() || undefined,
+        artikul: data.artikul.trim(),
       });
       form.reset(createAnalogFormDefaultValues);
       onSuccess?.();

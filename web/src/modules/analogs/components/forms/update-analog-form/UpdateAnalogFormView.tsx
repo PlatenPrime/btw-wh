@@ -167,37 +167,6 @@ export function UpdateAnalogFormView({
             </div>
           )}
 
-          <div className="grid gap-2">
-            <Label htmlFor="title">Назва</Label>
-            <Input
-              id="title"
-              {...register("title")}
-              placeholder="Назва товару у конкурента"
-              disabled={isSubmitting}
-              className={errors.title ? "border-destructive" : ""}
-            />
-            {errors.title && (
-              <p className="text-destructive text-xs">{errors.title.message}</p>
-            )}
-          </div>
-
-          <div className="grid gap-2">
-            <Label htmlFor="imageUrl">Посилання на зображення</Label>
-            <Input
-              id="imageUrl"
-              type="url"
-              {...register("imageUrl")}
-              placeholder="https://..."
-              disabled={isSubmitting}
-              className={errors.imageUrl ? "border-destructive" : ""}
-            />
-            {errors.imageUrl && (
-              <p className="text-destructive text-xs">
-                {errors.imageUrl.message}
-              </p>
-            )}
-          </div>
-
           <DialogActions
             onCancel={onCancel}
             onSubmit={handleSubmit(onSubmit)}
