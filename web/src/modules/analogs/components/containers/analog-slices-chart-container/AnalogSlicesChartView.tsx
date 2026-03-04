@@ -6,15 +6,8 @@ import {
 } from "@/components/ui/chart";
 import type { AnalogSliceRangeItem } from "@/modules/analogs/api/types";
 import { format, parseISO } from "date-fns";
-import { useId, useLayoutEffect, useState } from "react";
-import {
-  Area,
-  CartesianGrid,
-  ComposedChart,
-  Line,
-  XAxis,
-  YAxis,
-} from "recharts";
+import { useLayoutEffect, useState } from "react";
+import { CartesianGrid, ComposedChart, Line, XAxis, YAxis } from "recharts";
 
 const chartConfig = {
   stock: {
@@ -27,13 +20,10 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export type ChartType = "line" | "area";
-
 export interface AnalogSlicesChartViewProps {
   data: AnalogSliceRangeItem[];
   showStock?: boolean;
   showPrice?: boolean;
-  chartType?: ChartType;
 }
 
 function formatDateTick(value: string): string {
@@ -62,14 +52,12 @@ export function AnalogSlicesChartView({
   data,
   showStock = true,
   showPrice = true,
-  chartType = "line",
 }: AnalogSlicesChartViewProps) {
   const [colors, setColors] = useState(getChartColors);
-  const uid = useId().replace(/:/g, "");
 
   useLayoutEffect(() => {
     setColors(getChartColors());
-  }, [chartType]);
+  }, []);
 
   if (!data.length) {
     return null;
@@ -83,11 +71,6 @@ export function AnalogSlicesChartView({
     return null;
   }
 
-  const isArea = chartType === "area";
-  const LineOrArea = isArea ? Area : Line;
-  const gradientIdStock = `analog-area-stock-${uid}`;
-  const gradientIdPrice = `analog-area-price-${uid}`;
-
   return (
     <ChartContainer
       config={chartConfig}
@@ -97,16 +80,6 @@ export function AnalogSlicesChartView({
         data={data}
         margin={{ top: 8, right: 8, bottom: 8, left: 8 }}
       >
-        <defs>
-          <linearGradient id={gradientIdStock} x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor={colors.chart1} stopOpacity={0.5} />
-            <stop offset="100%" stopColor={colors.chart1} stopOpacity={0} />
-          </linearGradient>
-          <linearGradient id={gradientIdPrice} x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor={colors.chart2} stopOpacity={0.5} />
-            <stop offset="100%" stopColor={colors.chart2} stopOpacity={0} />
-          </linearGradient>
-        </defs>
         <CartesianGrid strokeDasharray="3 3" vertical={false} />
         <XAxis
           dataKey="date"
@@ -151,31 +124,23 @@ export function AnalogSlicesChartView({
           }
         />
         {hasStock && (
-          <LineOrArea
+          <Line
             yAxisId="left"
             type="monotone"
             dataKey="stock"
             stroke={colors.chart1}
             strokeWidth={2}
             dot={false}
-            {...(isArea && {
-              fill: `url(#${gradientIdStock})`,
-              baseValue: 0,
-            })}
           />
         )}
         {hasPrice && (
-          <LineOrArea
+          <Line
             yAxisId="right"
             type="monotone"
             dataKey="price"
             stroke={colors.chart2}
             strokeWidth={2}
             dot={false}
-            {...(isArea && {
-              fill: `url(#${gradientIdPrice})`,
-              baseValue: 0,
-            })}
           />
         )}
       </ComposedChart>

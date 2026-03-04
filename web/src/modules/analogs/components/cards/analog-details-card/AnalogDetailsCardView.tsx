@@ -6,7 +6,6 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import type { EnrichedAnalogDto } from "@/modules/analogs/api/types";
-import { AnalogSlicesChartContainer } from "@/modules/analogs/components/containers/analog-slices-chart-container";
 import {
   AnalogStockContainer,
   AnalogStockSkeleton,
@@ -75,9 +74,6 @@ export function AnalogDetailsCardView({ analog }: AnalogDetailsCardViewProps) {
             ContainerComponent={AnalogStockContainer}
             SkeletonComponent={AnalogStockSkeleton}
           />
-        </MetadataItem>
-        <MetadataItem label="Динаміка залишків та ціни">
-          <AnalogSlicesChartContainer analogId={analog._id} />
         </MetadataItem>
       </CardContent>
 

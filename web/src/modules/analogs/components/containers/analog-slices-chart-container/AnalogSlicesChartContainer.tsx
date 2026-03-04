@@ -12,7 +12,6 @@ import { Switch } from "@/components/ui/switch";
 import { useAnalogSlicesRangeQuery } from "@/modules/analogs/api/hooks/queries/useAnalogSlicesRangeQuery";
 import { format, subDays } from "date-fns";
 import { useMemo, useState } from "react";
-import type { ChartType } from "./AnalogSlicesChartView";
 import { AnalogSlicesChartView } from "./AnalogSlicesChartView";
 import { AnalogSlicesChartSkeleton } from "./AnalogSlicesChartSkeleton";
 
@@ -21,11 +20,6 @@ const PERIOD_OPTIONS = [
   { value: "30", label: "30 днів" },
   { value: "90", label: "90 днів" },
 ] as const;
-
-const CHART_TYPE_OPTIONS: { value: ChartType; label: string }[] = [
-  { value: "line", label: "Лінії" },
-  { value: "area", label: "Заливка" },
-];
 
 interface AnalogSlicesChartContainerProps {
   analogId: string | undefined;
@@ -46,7 +40,6 @@ export function AnalogSlicesChartContainer({
   const [periodDays, setPeriodDays] = useState<number>(30);
   const [showStock, setShowStock] = useState(true);
   const [showPrice, setShowPrice] = useState(true);
-  const [chartType, setChartType] = useState<ChartType>("line");
 
   const { dateFrom, dateTo } = useMemo(
     () => getPeriod(periodDays),
@@ -119,32 +112,13 @@ export function AnalogSlicesChartContainer({
             </SelectContent>
           </Select>
         </div>
-        <div className="flex items-center gap-2">
-          <Label htmlFor="chart-type" className="text-muted-foreground text-sm">
-            Тип графіка
-          </Label>
-          <Select
-            value={chartType}
-            onValueChange={(v) => setChartType(v as ChartType)}
-          >
-            <SelectTrigger id="chart-type" className="w-[110px]" size="sm">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {CHART_TYPE_OPTIONS.map((opt) => (
-                <SelectItem key={opt.value} value={opt.value}>
-                  {opt.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
         <div className="flex flex-wrap items-center gap-4">
           <div className="flex items-center gap-2">
             <Switch
               id="chart-show-stock"
               checked={showStock}
               onCheckedChange={setShowStock}
+              className="data-[state=checked]:bg-[color:var(--chart-1)]"
             />
             <Label
               htmlFor="chart-show-stock"
@@ -158,6 +132,7 @@ export function AnalogSlicesChartContainer({
               id="chart-show-price"
               checked={showPrice}
               onCheckedChange={setShowPrice}
+              className="data-[state=checked]:bg-[color:var(--chart-2)]"
             />
             <Label
               htmlFor="chart-show-price"
@@ -172,7 +147,6 @@ export function AnalogSlicesChartContainer({
         data={items}
         showStock={showStock}
         showPrice={showPrice}
-        chartType={chartType}
       />
     </div>
   );

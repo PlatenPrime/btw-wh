@@ -22,9 +22,9 @@ export function AnalogsControls() {
   const konks = konksQuery.data?.data ?? [];
 
   return (
-    <Wrapper className="grid grid-cols-1 gap-3 lg:grid-cols-2">
+    <Wrapper className="grid grid-cols-1 gap-3 ">
       <div className="flex min-w-0 flex-1 flex-wrap items-center gap-3">
-        <div className="min-w-0 flex-1 basis-full sm:basis-0">
+        <div className="min-w-0 flex-1 basis-full ">
           <SearchPanel
             search={search}
             onSearchChange={(e) => setSearch(e.target.value)}
@@ -78,15 +78,14 @@ export function AnalogsControls() {
               ))}
             </SelectContent>
           </Select>
-        </div>
-      </div>
-      <div className="flex flex-wrap items-center gap-3 lg:justify-end">
-        <SelectLimit
+          <SelectLimit
           limitOptions={[10, 20, 50, 100]}
           limit={limit}
           setLimit={setLimit}
         />
+        </div>
       </div>
+
     </Wrapper>
   );
 }
