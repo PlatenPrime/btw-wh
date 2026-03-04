@@ -7,6 +7,7 @@ interface DialogActionsProps {
   onSubmit: () => void;
   cancelText?: string;
   submitText?: string;
+  submitLoadingText?: string;
   isSubmitting?: boolean;
   isDisabled?: boolean;
   variant?: VariantProps<typeof buttonVariants>["variant"];
@@ -18,6 +19,7 @@ export function DialogActions({
   onSubmit,
   cancelText = "Скасувати",
   submitText = "Підтвердити",
+  submitLoadingText = "Обробка...",
   isSubmitting = false,
   isDisabled = false,
   variant = "success",
@@ -45,7 +47,7 @@ export function DialogActions({
         disabled={isDisabledState}
         className={onCancel ? "flex-1" : "w-full"}
       >
-        {isSubmitting ? "Обробка..." : submitText}
+        {isSubmitting ? submitLoadingText : submitText}
       </Button>
     </div>
   );
