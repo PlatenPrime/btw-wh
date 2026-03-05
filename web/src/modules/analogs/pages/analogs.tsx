@@ -9,6 +9,7 @@ import { AnalogsFetcher } from "@/modules/analogs/components/fetchers/analogs-fe
 import { CreateAnalogDialog } from "@/modules/analogs/components/dialogs/create-analog-dialog";
 import { UpdateAnalogDialog } from "@/modules/analogs/components/dialogs/update-analog-dialog";
 import { DeleteAnalogDialog } from "@/modules/analogs/components/dialogs/delete-analog-dialog";
+import { KonkBtradeComparisonExcelDialog } from "@/modules/analogs/components/dialogs/konk-btrade-comparison-excel-dialog/KonkBtradeComparisonExcelDialog";
 import { AnalogsControls } from "@/modules/analogs/components/controls/analogs-controls";
 import { useAnalogsParams } from "@/modules/analogs/hooks/useAnalogsParams";
 import { useKonksQuery } from "@/modules/konks/api/hooks/queries/useKonksQuery";
@@ -24,6 +25,7 @@ export function Analogs() {
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const [updateDialogOpen, setUpdateDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [groupExcelDialogOpen, setGroupExcelDialogOpen] = useState(false);
   const [selectedAnalog, setSelectedAnalog] = useState<AnalogDto | null>(null);
 
   const handleEdit = (analog: AnalogDto) => {
@@ -39,7 +41,10 @@ export function Analogs() {
   return (
     <SidebarInsetLayout headerText="Аналоги">
       <div className="grid gap-2 p-2">
-        <AnalogsHeaderActions onCreateDialogOpenChange={setCreateDialogOpen} />
+        <AnalogsHeaderActions
+          onCreateDialogOpenChange={setCreateDialogOpen}
+          onGroupExcelDialogOpenChange={setGroupExcelDialogOpen}
+        />
         <AnalogsControls />
 
 
@@ -61,6 +66,11 @@ export function Analogs() {
         <CreateAnalogDialog
           open={createDialogOpen}
           onOpenChange={setCreateDialogOpen}
+        />
+
+        <KonkBtradeComparisonExcelDialog
+          open={groupExcelDialogOpen}
+          onOpenChange={setGroupExcelDialogOpen}
         />
 
         {selectedAnalog && (
