@@ -8,7 +8,7 @@ import {
   Link2,
   MapPin,
   PackageSearch,
-  RefreshCcwDot,
+  Projector,
   Route,
   Rows4,
   Settings,
@@ -21,7 +21,6 @@ import {
 const getIcon = (iconName: string) => {
   const icons = {
     StickyNote: StickyNote,
-    RefreshCcwDot: RefreshCcwDot,
     Settings: Settings,
     Warehouse: Warehouse,
     Rows4: Rows4,
@@ -37,6 +36,7 @@ const getIcon = (iconName: string) => {
     Building2: Building2,
     Bookmark: Bookmark,
     Link2: Link2,
+    Projector: Projector,
   };
 
   const IconComponent = icons[iconName as keyof typeof icons];
@@ -60,9 +60,9 @@ export const appSidebarData = {
           iconName: "Link2",
         },
         {
-          title: "Оновити артикули",
-          url: "/arts/update",
-          iconName: "RefreshCcwDot",
+          title: "Зрізи",
+          url: "/arts/analog-slices",
+          iconName: "Projector",
         },
       ],
     },

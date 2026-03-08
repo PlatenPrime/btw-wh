@@ -4,10 +4,12 @@ import { useRole } from "@/modules/auth/hooks/useRole";
 import { ArtsHeaderActionsView } from "@/modules/arts/components/actions/arts-header-actions/ArtsHeaderActionsView";
 import { handleExportArtsWithStocks } from "@/modules/arts/utils/handle-export-arts-with-stocks/handleExportArtsWithStocks";
 import { handleExportArts } from "@/modules/arts/utils/handle-export-arts/handleExportArts";
-import { FileSpreadsheet, RefreshCw, Trash2 } from "lucide-react";
+import { FileSpreadsheet, RefreshCcwDot, RefreshCw, Trash2 } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
+import { useNavigate } from "react-router";
 
 export function ArtsHeaderActions() {
+  const navigate = useNavigate();
   const { isPrime, isAdmin } = useRole();
   const canDelete = isPrime();
   const canUpdateBtradeStocks = isAdmin();
@@ -34,6 +36,14 @@ export function ArtsHeaderActions() {
 
   const headerActions = useMemo<HeaderAction[]>(() => {
     const actions: HeaderAction[] = [
+      {
+        id: "update-arts",
+        label: "Оновити артикули",
+        icon: RefreshCcwDot,
+        iconColor: "blue",
+        variant: "default",
+        onClick: () => navigate("/arts/update"),
+      },
       {
         id: "export-arts",
         label: "Експорт артикулів",
@@ -80,6 +90,7 @@ export function ArtsHeaderActions() {
     canUpdateBtradeStocks,
     handleExport,
     handleExportWithStocks,
+    navigate,
     openDeleteDialog,
     openUpdateBtradeStocksDialog,
   ]);

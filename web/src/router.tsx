@@ -142,6 +142,11 @@ const Analog = lazy(() =>
     default: module.Analog,
   })),
 );
+const AnalogSlices = lazy(() =>
+  import("./modules/analog-slices/pages/analog-slices").then((module) => ({
+    default: module.AnalogSlices,
+  })),
+);
 
 const Constants = lazy(() =>
   import("./modules/constants/pages/constants").then((module) => ({
@@ -275,6 +280,15 @@ export const router = createHashRouter([
             element: (
               <ProtectedRoute>
                 <Analog />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "analog-slices",
+            element: (
+              <ProtectedRoute>
+                <AnalogSlices />
               </ProtectedRoute>
             ),
             errorElement: <RouteErrorBoundary />,
