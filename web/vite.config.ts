@@ -20,6 +20,33 @@ export default defineConfig({
           if (id.includes("xlsx")) return "xlsx";
           if (!id.includes("node_modules")) return;
 
+          // React core — одна копия, база для остальных чанков
+          if (
+            /node_modules[\\/](react|react-dom|scheduler)([\\/]|$)/.test(id)
+          ) {
+            return "react";
+          }
+          if (id.includes("react-router") || id.includes("react-router-dom")) {
+            return "router";
+          }
+          if (id.includes("@radix-ui/")) {
+            return "radix";
+          }
+          if (
+            id.includes("@tanstack/react-query") &&
+            !id.includes("react-query-devtools")
+          ) {
+            return "query";
+          }
+          if (id.includes("recharts")) return "recharts";
+          if (
+            id.includes("react-hook-form") ||
+            id.includes("@hookform/resolvers") ||
+            id.includes("zod")
+          ) {
+            return "forms";
+          }
+          if (id.includes("@dnd-kit/")) return "dnd";
           if (
             id.includes("axios") ||
             id.includes("sonner") ||
@@ -28,8 +55,6 @@ export default defineConfig({
             return "utils";
           }
 
-          // Все зависимости из node_modules, включая react, react-dom и @radix-ui,
-          // попадают в один общий vendor-чанк
           return "vendor";
         },
       },
