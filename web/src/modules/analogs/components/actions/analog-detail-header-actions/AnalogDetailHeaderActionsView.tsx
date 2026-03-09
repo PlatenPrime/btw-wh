@@ -1,5 +1,6 @@
 import type { EnrichedAnalogDto } from "@/modules/analogs/api/types";
 import { ComparisonExcelDialog } from "@/modules/analogs/components/dialogs/comparison-excel-dialog";
+import { SalesComparisonExcelDialog } from "@/modules/analogs/components/dialogs/sales-comparison-excel-dialog";
 import { DeleteAnalogDialog } from "@/modules/analogs/components/dialogs/delete-analog-dialog";
 import { UpdateAnalogDialog } from "@/modules/analogs/components/dialogs/update-analog-dialog";
 
@@ -11,6 +12,8 @@ interface AnalogDetailHeaderActionsViewProps {
   onDeleteDialogOpenChange: (open: boolean) => void;
   comparisonExcelDialogOpen: boolean;
   onComparisonExcelDialogOpenChange: (open: boolean) => void;
+  salesComparisonExcelDialogOpen: boolean;
+  onSalesComparisonExcelDialogOpenChange: (open: boolean) => void;
   onDeleteSuccess: () => void;
 }
 
@@ -22,6 +25,8 @@ export function AnalogDetailHeaderActionsView({
   onDeleteDialogOpenChange,
   comparisonExcelDialogOpen,
   onComparisonExcelDialogOpenChange,
+  salesComparisonExcelDialogOpen,
+  onSalesComparisonExcelDialogOpenChange,
   onDeleteSuccess,
 }: AnalogDetailHeaderActionsViewProps) {
   return (
@@ -30,6 +35,12 @@ export function AnalogDetailHeaderActionsView({
         analog={analog}
         open={comparisonExcelDialogOpen}
         onOpenChange={onComparisonExcelDialogOpenChange}
+      />
+
+      <SalesComparisonExcelDialog
+        analog={analog}
+        open={salesComparisonExcelDialogOpen}
+        onOpenChange={onSalesComparisonExcelDialogOpenChange}
       />
 
       <UpdateAnalogDialog
