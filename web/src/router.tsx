@@ -46,6 +46,11 @@ const Pulls = lazy(() =>
     default: module.Pulls,
   })),
 );
+const KasksPage = lazy(() =>
+  import("./modules/kasks/pages/kasks").then((module) => ({
+    default: module.KasksPage,
+  })),
+);
 
 const Defs = lazy(() =>
   import("./modules/defs/pages/defs").then((module) => ({
@@ -536,6 +541,11 @@ export const router = createHashRouter([
           {
             path: "pulls",
             element: <Pulls />,
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "kasks",
+            element: <KasksPage />,
             errorElement: <RouteErrorBoundary />,
           },
         ],

@@ -227,14 +227,16 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--background); /* фон совпадает с темой */
+  /* лёгкий оттенок от border — трек читается, но не кричит */
+  background: color-mix(in oklch, var(--border) 32%, var(--background));
   border-radius: var(--radius);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--muted);
+  /* border заметнее muted в светлой/тёмной теме */
+  background: color-mix(in oklch, var(--border) 72%, var(--muted));
   border-radius: var(--radius);
-  border: 2px solid var(--background); /* небольшой "отступ" вокруг */
+  border: 2px solid var(--background);
   transition: background 0.2s ease;
 }
 
@@ -242,10 +244,11 @@
   background: var(--accent);
 }
 
-/* Firefox */
+/* Firefox: thumb | track */
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--muted) var(--background);
+  scrollbar-color: color-mix(in oklch, var(--border) 72%, var(--muted))
+    color-mix(in oklch, var(--border) 32%, var(--background));
 }
 
 /* График динаміки аналога: адаптивність */

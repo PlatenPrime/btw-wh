@@ -81,11 +81,7 @@ export const appSidebarData = {
           url: "/wh/zones",
           iconName: "MapPin",
         },
-        {
-          title: "Поставки",
-          url: "/wh/dels",
-          iconName: "Truck",
-        },
+
         {
           title: "Блоки",
           url: "/wh/blocks",
@@ -95,6 +91,11 @@ export const appSidebarData = {
           title: "Групи палет",
           url: "/wh/pallet-groups",
           iconName: "Route",
+        },
+        {
+          title: "Поставки",
+          url: "/wh/dels",
+          iconName: "Truck",
         },
       ],
     },
@@ -108,6 +109,7 @@ export const appSidebarData = {
           url: "/refiling/asks",
           iconName: "FileQuestion",
         },
+ 
         {
           title: "Дефіцити",
           url: "/refiling/defs",
@@ -117,6 +119,11 @@ export const appSidebarData = {
           title: "Зняття",
           url: "/refiling/pulls",
           iconName: "PackageSearch",
+        },
+        {
+          title: "Каса",
+          url: "/refiling/kasks",
+          iconName: "StickyNote",
         },
       ],
     },
