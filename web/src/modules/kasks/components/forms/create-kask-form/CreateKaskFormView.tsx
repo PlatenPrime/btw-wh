@@ -4,7 +4,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
+import { BtradeArtDataContainer } from "@/modules/arts/components/containers/btrade-art-data-container/BtradeArtDataContainer";
+import { BtradeArtDataSkeleton } from "@/modules/arts/components/containers/btrade-art-data-container/BtradeArtDataSkeleton";
 import { ArtImage } from "@/modules/arts/components/elements/art-image/ArtImage";
+import { BtradeArtDataFetcher } from "@/modules/arts/components/fetchers/btrade-art-data-fetcher/BtradeArtDataFetcher";
 import type { CreateKaskFormData } from "@/modules/kasks/components/forms/create-kask-form/schema";
 import type { UseFormReturn } from "react-hook-form";
 
@@ -48,7 +51,7 @@ export function CreateKaskFormView({
             {/* Ліва колонка — карточка артикула + зона під нею */}
             <div className="flex flex-col items-center gap-3">
               <div className="flex min-h-[11rem] w-full flex-col items-center justify-center gap-2 rounded-lg border bg-muted/30 p-3">
-                {isArtLoading && (
+                {isArtLoading && artikul.length === 9 && (
                   <>
                     <Skeleton className="h-24 w-24 max-w-[6rem] shrink-0 rounded-md" />
                     <Skeleton className="h-4 w-20" />
@@ -81,7 +84,7 @@ export function CreateKaskFormView({
 
               {/* Зона під карточкою — фіксована висота, скелетон / текст / пусто */}
               <div className="flex min-h-[2.25rem] items-center justify-center">
-                {isArtLoading && (
+                {isArtLoading && artikul.length === 9 && (
                   <Skeleton className="h-8 w-32" />
                 )}
                 {!isArtLoading && artData && zoneValue && (
@@ -90,7 +93,16 @@ export function CreateKaskFormView({
                   </p>
                 )}
               </div>
-              
+
+              {artikul.length === 9 && (
+                <div className="w-full">
+                  <BtradeArtDataFetcher
+                    artikul={artikul}
+                    ContainerComponent={BtradeArtDataContainer}
+                    SkeletonComponent={BtradeArtDataSkeleton}
+                  />
+                </div>
+              )}
             </div>
 
             {/* Права колонка — артикул, кількість, коментар (без nameukr і без зони) */}
