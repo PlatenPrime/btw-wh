@@ -109,3 +109,16 @@ export interface AnalogSliceRangeResponseDto {
   message: string;
   data: AnalogSliceRangeItem[];
 }
+
+export interface AnalogSalesRangeItem {
+  date: string;
+  sales: number;
+  revenue: number;
+  price: number;
+  isDeliveryDay: boolean;
+}
+
+export interface AnalogSalesRangeResponseDto {
+  message: string;
+  data: AnalogSalesRangeItem[];
+}

@@ -2,26 +2,26 @@ import { ErrorDisplay } from "@/components/shared/error-components";
 import { LoadingNoData } from "@/components/shared/loading-states/loading-nodata";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { useAnalogSlicesRangeQuery } from "@/modules/analogs/api/hooks/queries/useAnalogSlicesRangeQuery";
+import { useAnalogSalesRangeQuery } from "@/modules/analogs/api/hooks/queries/useAnalogSalesRangeQuery";
 import { useState } from "react";
-import { AnalogSlicesChartView } from "./AnalogSlicesChartView";
-import { AnalogSlicesChartSkeleton } from "./AnalogSlicesChartSkeleton";
+import { AnalogSalesChartView } from "./AnalogSalesChartView";
+import { AnalogSalesChartSkeleton } from "./AnalogSalesChartSkeleton";
 
-interface AnalogSlicesChartContainerProps {
+interface AnalogSalesChartContainerProps {
   analogId: string | undefined;
   dateFrom: string;
   dateTo: string;
 }
 
-export function AnalogSlicesChartContainer({
+export function AnalogSalesChartContainer({
   analogId,
   dateFrom,
   dateTo,
-}: AnalogSlicesChartContainerProps) {
-  const [showStock, setShowStock] = useState(true);
-  const [showPrice, setShowPrice] = useState(true);
+}: AnalogSalesChartContainerProps) {
+  const [showSales, setShowSales] = useState(true);
+  const [showRevenue, setShowRevenue] = useState(true);
 
-  const { data, isLoading, error, refetch } = useAnalogSlicesRangeQuery({
+  const { data, isLoading, error, refetch } = useAnalogSalesRangeQuery({
     analogId,
     dateFrom,
     dateTo,
@@ -29,19 +29,19 @@ export function AnalogSlicesChartContainer({
 
   if (!analogId) {
     return (
-      <LoadingNoData description="Ідентифікатор аналога не передано для завантаження історії залишків та цін" />
+      <LoadingNoData description="Ідентифікатор аналога не передано для завантаження історії продаж" />
     );
   }
 
   if (isLoading) {
-    return <AnalogSlicesChartSkeleton />;
+    return <AnalogSalesChartSkeleton />;
   }
 
   if (error) {
     return (
       <ErrorDisplay
         error={error}
-        title="Помилка завантаження історії залишків та цін"
+        title="Помилка завантаження історії продаж"
         description="Не вдалося завантажити дані для побудови графіка"
         onRetry={() => void refetch()}
         variant="compact"
@@ -52,53 +52,53 @@ export function AnalogSlicesChartContainer({
   const items = data?.data ?? [];
   if (!items.length) {
     return (
-      <LoadingNoData description="Немає даних про залишки та ціни за обраний період" />
+      <LoadingNoData description="Немає даних про продажі за обраний період" />
     );
   }
 
-  const showChart = showStock || showPrice;
+  const showChart = showSales || showRevenue;
 
   return (
     <div className="grid gap-3">
       <div className="flex flex-wrap items-center gap-4">
         <div className="flex items-center gap-2">
           <Switch
-            id="chart-show-stock"
-            checked={showStock}
-            onCheckedChange={setShowStock}
+            id="sales-chart-show-sales"
+            checked={showSales}
+            onCheckedChange={setShowSales}
             className="data-[state=checked]:bg-[color:var(--chart-1)]"
           />
           <Label
-            htmlFor="chart-show-stock"
+            htmlFor="sales-chart-show-sales"
             className="text-muted-foreground cursor-pointer text-sm"
           >
-            Залишок
+            Продажі (шт)
           </Label>
         </div>
         <div className="flex items-center gap-2">
           <Switch
-            id="chart-show-price"
-            checked={showPrice}
-            onCheckedChange={setShowPrice}
+            id="sales-chart-show-revenue"
+            checked={showRevenue}
+            onCheckedChange={setShowRevenue}
             className="data-[state=checked]:bg-[color:var(--chart-2)]"
           />
           <Label
-            htmlFor="chart-show-price"
+            htmlFor="sales-chart-show-revenue"
             className="text-muted-foreground cursor-pointer text-sm"
           >
-            Ціна
+            Виручка (грн)
           </Label>
         </div>
       </div>
       {showChart ? (
-        <AnalogSlicesChartView
+        <AnalogSalesChartView
           data={items}
-          showStock={showStock}
-          showPrice={showPrice}
+          showSales={showSales}
+          showRevenue={showRevenue}
         />
       ) : (
         <div className="text-muted-foreground rounded-md border border-dashed p-4 text-center text-sm">
-          Увімкніть хоча б одну серію: Залишок або Ціна.
+          Увімкніть хоча б одну серію: Продажі або Виручка.
         </div>
       )}
     </div>
