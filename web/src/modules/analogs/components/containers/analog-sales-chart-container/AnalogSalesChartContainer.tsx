@@ -66,7 +66,7 @@ export function AnalogSalesChartContainer({
             id="sales-chart-show-sales"
             checked={showSales}
             onCheckedChange={setShowSales}
-            className="data-[state=checked]:bg-[color:var(--chart-1)]"
+            className="data-[state=checked]:bg-[color:var(--chart-6)]"
           />
           <Label
             htmlFor="sales-chart-show-sales"
@@ -80,7 +80,7 @@ export function AnalogSalesChartContainer({
             id="sales-chart-show-revenue"
             checked={showRevenue}
             onCheckedChange={setShowRevenue}
-            className="data-[state=checked]:bg-[color:var(--chart-2)]"
+            className="data-[state=checked]:bg-[color:var(--chart-7)]"
           />
           <Label
             htmlFor="sales-chart-show-revenue"

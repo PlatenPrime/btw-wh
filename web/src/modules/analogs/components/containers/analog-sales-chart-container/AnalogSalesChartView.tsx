@@ -12,11 +12,11 @@ import { CartesianGrid, ComposedChart, Line, XAxis, YAxis } from "recharts";
 const chartConfig = {
   sales: {
     label: "Продажі (шт)",
-    color: "var(--chart-1)",
+    color: "var(--chart-6)",
   },
   revenue: {
     label: "Виручка (грн)",
-    color: "var(--chart-2)",
+    color: "var(--chart-7)",
   },
 } satisfies ChartConfig;
 
@@ -36,15 +36,15 @@ function formatDateTick(value: string): string {
 
 function getChartColors(): { chart1: string; chart2: string } {
   if (typeof document === "undefined") {
-    return { chart1: "oklch(0.58 0.17 277)", chart2: "oklch(0.51 0.2 277)" };
+    return { chart1: "oklch(0.62 0.17 350)", chart2: "oklch(0.58 0.14 195)" };
   }
   const root = document.documentElement;
   const chart1 =
-    getComputedStyle(root).getPropertyValue("--chart-1").trim() ||
-    "oklch(0.58 0.17 277)";
+    getComputedStyle(root).getPropertyValue("--chart-6").trim() ||
+    "oklch(0.62 0.17 350)";
   const chart2 =
-    getComputedStyle(root).getPropertyValue("--chart-2").trim() ||
-    "oklch(0.51 0.2 277)";
+    getComputedStyle(root).getPropertyValue("--chart-7").trim() ||
+    "oklch(0.58 0.14 195)";
   return { chart1, chart2 };
 }
 

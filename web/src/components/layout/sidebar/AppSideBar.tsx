@@ -48,7 +48,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           className="group relative flex items-center transition-all duration-300 hover:scale-105 active:scale-100"
         >
           <span className="relative z-10 font-serif text-2xl font-bold tracking-tight transition-all duration-300">
-            <span className="bg-gradient-to-r from-primary from-0% via-chart-1 via-[48%] via-[52%] to-primary to-100% bg-clip-text text-transparent [filter:contrast(1.25)_brightness(1.1)] group-hover:[filter:contrast(1.35)_brightness(1.15)]">
+            <span className="bg-gradient-to-r from-primary from-0%  to-primary to-100% bg-clip-text text-transparent [filter:contrast(1.25)_brightness(1.1)] group-hover:[filter:contrast(1.35)_brightness(1.15)]">
               BTW
             </span>
           </span>
