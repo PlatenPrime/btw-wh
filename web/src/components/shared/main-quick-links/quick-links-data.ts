@@ -11,16 +11,22 @@ export interface QuickLinkItem {
 
 export const quickLinksData: QuickLinkItem[] = [
   {
+    url: "/arts/dashboard",
+    title: "Артикули",
+    iconName: "StickyNote",
+    description: "Каталог та перегляд артикулів",
+  },
+  {
     url: "/arts/analogs",
     title: "Аналоги",
     iconName: "Link2",
     description: "Аналоги артикулів",
   },
   {
-    url: "/arts/dashboard",
-    title: "Артикули",
-    iconName: "StickyNote",
-    description: "Каталог та перегляд артикулів",
+    url: "/arts/analog-slices",
+    title: "Зрізи",
+    iconName: "Projector",
+    description: "Зрізи аналогів",
   },
   {
     url: "/wh/rows",
@@ -37,7 +43,7 @@ export const quickLinksData: QuickLinkItem[] = [
   {
     url: "/wh/blocks",
     title: "Блоки",
-    iconName: "Route",
+    iconName: "LayoutTemplate",
     description: "Блоки та сегменти",
   },
   {
@@ -45,6 +51,12 @@ export const quickLinksData: QuickLinkItem[] = [
     title: "Групи палет",
     iconName: "Route",
     description: "Логічні групи палет та порядок",
+  },
+  {
+    url: "/wh/dels",
+    title: "Поставки",
+    iconName: "Truck",
+    description: "Поставки на склад",
   },
   {
     url: "/refiling/asks",
@@ -65,9 +77,33 @@ export const quickLinksData: QuickLinkItem[] = [
     description: "Зняття зі складу",
   },
   {
+    url: "/refiling/kasks",
+    title: "Каса",
+    iconName: "ShoppingCart",
+    description: "Каса поповнення",
+  },
+  {
     url: "/users",
     title: "Користувачі",
     iconName: "Users",
     description: "Керування користувачами та доступами",
+  },
+  {
+    url: "/wh/prods",
+    title: "Виробники",
+    iconName: "Factory",
+    description: "Виробники",
+  },
+  {
+    url: "/wh/konks",
+    title: "Конкуренти",
+    iconName: "Building2",
+    description: "Конкуренти",
+  },
+  {
+    url: "/wh/constants",
+    title: "Константи",
+    iconName: "Bookmark",
+    description: "Довідкові константи",
   },
 ];

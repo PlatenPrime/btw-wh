@@ -16,7 +16,7 @@ export function ProdCardView({ prod, actions }: ProdCardViewProps) {
   return (
     <Card className="gap-0 p-2 transition-shadow hover:shadow-md">
       <CardContent className="flex items-center gap-2 p-0">
-        <div className="size-12 shrink-0 overflow-hidden rounded border bg-muted">
+        <div className="size-12 shrink-0 overflow-hidden rounded border bg-neutral-50">
           <Image
             src={prod.imageUrl}
             alt={prod.title}

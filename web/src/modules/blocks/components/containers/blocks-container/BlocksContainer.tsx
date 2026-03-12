@@ -1,4 +1,5 @@
 import type { BlockDto } from "@/modules/blocks/api/types";
+import { BlocksHeaderActions } from "@/modules/blocks/components/actions/blocks-header-actions";
 import { BlocksContainerView } from "@/modules/blocks/components/containers/blocks-container/BlocksContainerView";
 import { useBlocksContainer } from "@/modules/blocks/components/containers/blocks-container/useBlocksContainer";
 import { CreateBlockDialog } from "@/modules/blocks/components/dialogs/create-block-dialog/CreateBlockDialog";
@@ -26,6 +27,7 @@ export function BlocksContainer({ data }: BlocksContainerProps) {
 
   return (
     <>
+      <BlocksHeaderActions />
       <BlocksContainerView
         blocks={blocks}
         isEditMode={isEditMode}

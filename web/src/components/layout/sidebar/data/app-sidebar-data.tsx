@@ -12,6 +12,7 @@ import {
   Route,
   Rows4,
   Settings,
+  ShoppingCart,
   StickyNote,
   Truck,
   Users,
@@ -37,6 +38,7 @@ const getIcon = (iconName: string) => {
     Bookmark: Bookmark,
     Link2: Link2,
     Projector: Projector,
+    ShoppingCart: ShoppingCart,
   };
 
   const IconComponent = icons[iconName as keyof typeof icons];
@@ -109,7 +111,7 @@ export const appSidebarData = {
           url: "/refiling/asks",
           iconName: "FileQuestion",
         },
- 
+
         {
           title: "Дефіцити",
           url: "/refiling/defs",
@@ -123,7 +125,7 @@ export const appSidebarData = {
         {
           title: "Каса",
           url: "/refiling/kasks",
-          iconName: "StickyNote",
+          iconName: "ShoppingCart",
         },
       ],
     },

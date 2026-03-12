@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Edit, Plus, RefreshCw, Save, X } from "lucide-react";
-import { useRecalculateZonesSectorsMutation } from "@/modules/blocks/api/hooks/mutations/useRecalculateZonesSectorsMutation";
+import { Edit, Plus, Save, X } from "lucide-react";
 
 interface BlockControlPanelProps {
   isEditMode: boolean;
@@ -19,12 +18,6 @@ export function BlockControlPanel({
   onSave,
   isSaving = false,
 }: BlockControlPanelProps) {
-  const recalculateMutation = useRecalculateZonesSectorsMutation();
-
-  const handleRecalculate = () => {
-    recalculateMutation.mutate();
-  };
-
   if (isEditMode) {
     return (
       <div className="flex gap-2">
@@ -35,16 +28,6 @@ export function BlockControlPanel({
         <Button onClick={onSave} disabled={isSaving}>
           <Save className="mr-2 size-4" />
           {isSaving ? "Збереження..." : "Зберегти"}
-        </Button>
-        <Button
-          onClick={handleRecalculate}
-          variant="outline"
-          disabled={recalculateMutation.isPending || isSaving}
-        >
-          <RefreshCw
-            className={`mr-2 size-4 ${recalculateMutation.isPending ? "animate-spin" : ""}`}
-          />
-          {recalculateMutation.isPending ? "Перерахунок..." : "Перерахувати сектори"}
         </Button>
       </div>
     );
@@ -59,16 +42,6 @@ export function BlockControlPanel({
       <Button onClick={onEdit} variant="outline">
         <Edit className=" size-4" />
         Редагувати
-      </Button>
-      <Button
-        onClick={handleRecalculate}
-        variant="outline"
-        disabled={recalculateMutation.isPending}
-      >
-        <RefreshCw
-          className={` size-4 ${recalculateMutation.isPending ? "animate-spin" : ""}`}
-        />
-        {recalculateMutation.isPending ? "Перерахунок..." : "Перерахувати сектори"}
       </Button>
     </div>
   );

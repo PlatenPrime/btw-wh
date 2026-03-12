@@ -6,7 +6,7 @@ export function useAnalogsParams() {
   const [params, setParams] = useSearchParams();
 
   const page = Number(getParam(params, "page", "1"));
-  const limit = Number(getParam(params, "limit", "10"));
+  const limit = Number(getParam(params, "limit", "20"));
   const konkName = getParam(params, "konkName", "");
   const prodName = getParam(params, "prodName", "");
   const search = getParam(params, "search", "");

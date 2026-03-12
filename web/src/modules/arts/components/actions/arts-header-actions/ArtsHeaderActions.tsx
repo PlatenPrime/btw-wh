@@ -1,10 +1,10 @@
 import type { HeaderAction } from "@/components/layout/header-actions";
 import { useRegisterHeaderActions } from "@/components/layout/header-actions";
-import { useRole } from "@/modules/auth/hooks/useRole";
 import { ArtsHeaderActionsView } from "@/modules/arts/components/actions/arts-header-actions/ArtsHeaderActionsView";
 import { handleExportArtsWithStocks } from "@/modules/arts/utils/handle-export-arts-with-stocks/handleExportArtsWithStocks";
 import { handleExportArts } from "@/modules/arts/utils/handle-export-arts/handleExportArts";
-import { FileSpreadsheet, RefreshCcwDot, RefreshCw, Trash2 } from "lucide-react";
+import { useRole } from "@/modules/auth/hooks/useRole";
+import { ArrowDown, FileSpreadsheet, Play, Trash2 } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 
@@ -38,8 +38,8 @@ export function ArtsHeaderActions() {
     const actions: HeaderAction[] = [
       {
         id: "update-arts",
-        label: "Оновити артикули",
-        icon: RefreshCcwDot,
+        label: "Імпорт артикулів",
+        icon: ArrowDown,
         iconColor: "blue",
         variant: "default",
         onClick: () => navigate("/arts/update"),
@@ -65,8 +65,8 @@ export function ArtsHeaderActions() {
     if (canUpdateBtradeStocks) {
       actions.push({
         id: "update-all-btrade-stocks",
-        label: "Оновити залишки Btrade",
-        icon: RefreshCw,
+        label: "Запустити фонове оновлення залишків",
+        icon: Play,
         iconColor: "blue",
         variant: "default",
         onClick: openUpdateBtradeStocksDialog,
@@ -108,4 +108,3 @@ export function ArtsHeaderActions() {
     />
   );
 }
-
