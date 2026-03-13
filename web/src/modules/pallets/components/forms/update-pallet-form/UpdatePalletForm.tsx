@@ -30,7 +30,6 @@ export function UpdatePalletForm({
     reValidateMode: "onChange",
     defaultValues: {
       title: pallet.title,
-      sector: pallet.sector || "",
       isDef: pallet.isDef,
     },
   });
@@ -42,7 +41,6 @@ export function UpdatePalletForm({
     try {
       const updateData: UpdatePalletDto = {
         title: data.title.trim(),
-        sector: data.sector?.trim() || undefined,
         isDef: data.isDef,
       };
       await updateMutation.mutateAsync({ id: pallet._id, data: updateData });

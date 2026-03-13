@@ -31,7 +31,6 @@ export function useCreatePalletDialog({
     reValidateMode: "onChange",
     defaultValues: {
       title: "",
-      sector: "",
       isDef: false,
     },
   });
@@ -43,7 +42,6 @@ export function useCreatePalletDialog({
       await createPalletMutation.mutateAsync({
         title: data.title.trim(),
         rowData: { _id: row._id, title: row.title },
-        sector: data.sector?.trim() || undefined,
         isDef: data.isDef,
       });
       form.reset();

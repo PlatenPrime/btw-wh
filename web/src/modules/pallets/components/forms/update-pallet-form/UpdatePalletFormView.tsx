@@ -55,16 +55,6 @@ export function UpdatePalletFormView({
             )}
           </div>
 
-          <div className="grid gap-2">
-            <Label htmlFor="sector">Сектор</Label>
-            <Input
-              id="sector"
-              placeholder="Введіть сектор (необов'язково)"
-              {...register("sector")}
-              disabled={isSubmitting}
-            />
-          </div>
-
           <div className="flex items-center justify-between">
             <Label htmlFor="isDef">Аналіз</Label>
             <Switch
