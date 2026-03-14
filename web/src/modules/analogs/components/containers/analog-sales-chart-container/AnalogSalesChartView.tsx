@@ -11,11 +11,11 @@ import { CartesianGrid, ComposedChart, Line, XAxis, YAxis } from "recharts";
 
 const chartConfig = {
   sales: {
-    label: "Продажі (шт)",
+    label: "Продажі ",
     color: "var(--chart-6)",
   },
   revenue: {
-    label: "Виручка (грн)",
+    label: "Виручка ",
     color: "var(--chart-7)",
   },
 } satisfies ChartConfig;
@@ -74,7 +74,7 @@ export function AnalogSalesChartView({
   return (
     <ChartContainer
       config={chartConfig}
-      className="analog-sales-chart w-full max-w-full sm:max-w-xl lg:max-w-2xl aspect-auto min-h-[160px] h-[clamp(160px,32vh,260px)] sm:min-h-[180px] sm:h-[clamp(180px,35vh,280px)] [&_.recharts-wrapper]:!block [&_.recharts-wrapper]:h-full"
+      className="analog-sales-chart aspect-auto h-[clamp(160px,32vh,260px)] min-h-[160px] w-full max-w-full sm:h-[clamp(180px,35vh,280px)] sm:min-h-[180px] sm:max-w-xl lg:max-w-2xl [&_.recharts-wrapper]:!block [&_.recharts-wrapper]:h-full"
     >
       <ComposedChart
         data={data}
@@ -114,15 +114,13 @@ export function AnalogSalesChartView({
                   | undefined;
                 if (!p) return "";
                 const dateStr = format(parseISO(p.date), "dd.MM.yyyy");
-                return p.isDeliveryDay
-                  ? `${dateStr} • День поставки`
-                  : dateStr;
+                return p.isDeliveryDay ? `${dateStr} • День поставки` : dateStr;
               }}
               formatter={(value, name) => [
-                name === "sales" ? value : `${value} грн`,
                 name === "sales"
                   ? chartConfig.sales.label
                   : chartConfig.revenue.label,
+                name === "sales" ? `${value} шт` : `${value} грн`,
               ]}
             />
           }

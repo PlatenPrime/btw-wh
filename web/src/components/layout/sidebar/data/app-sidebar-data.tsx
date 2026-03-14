@@ -73,6 +73,11 @@ export const appSidebarData = {
           url: "/arts/sales",
           iconName: "TrendingUp",
         },
+        {
+          title: "Залишки",
+          url: "/arts/stock-comparison",
+          iconName: "Warehouse",
+        },
       ],
     },
     {

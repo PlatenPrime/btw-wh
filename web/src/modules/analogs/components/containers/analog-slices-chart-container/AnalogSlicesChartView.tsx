@@ -11,11 +11,11 @@ import { CartesianGrid, ComposedChart, Line, XAxis, YAxis } from "recharts";
 
 const chartConfig = {
   stock: {
-    label: "Залишок",
+    label: "Залишок ",
     color: "var(--chart-1)",
   },
   price: {
-    label: "Ціна (грн)",
+    label: "Ціна ",
     color: "var(--chart-2)",
   },
 } satisfies ChartConfig;
@@ -115,10 +115,11 @@ export function AnalogSlicesChartView({
                 return p ? format(parseISO(p.date), "dd.MM.yyyy") : "";
               }}
               formatter={(value, name) => [
-                name === "stock" ? value : `${value} грн`,
+              
                 name === "stock"
                   ? chartConfig.stock.label
                   : chartConfig.price.label,
+                  name === "stock" ? `${value} шт` : `${value} грн`,
               ]}
             />
           }

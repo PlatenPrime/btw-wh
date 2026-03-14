@@ -157,6 +157,11 @@ const SalesPage = lazy(() =>
     default: module.Sales,
   })),
 );
+const StockComparisonPage = lazy(() =>
+  import("./modules/stock-comparison/pages/stock-comparison").then((module) => ({
+    default: module.StockComparison,
+  })),
+);
 
 const Constants = lazy(() =>
   import("./modules/constants/pages/constants").then((module) => ({
@@ -308,6 +313,15 @@ export const router = createHashRouter([
             element: (
               <ProtectedRoute>
                 <SalesPage />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "stock-comparison",
+            element: (
+              <ProtectedRoute>
+                <StockComparisonPage />
               </ProtectedRoute>
             ),
             errorElement: <RouteErrorBoundary />,
