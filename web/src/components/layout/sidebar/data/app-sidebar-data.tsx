@@ -14,6 +14,7 @@ import {
   Settings,
   ShoppingCart,
   StickyNote,
+  TrendingUp,
   Truck,
   Users,
   Warehouse,
@@ -39,6 +40,7 @@ const getIcon = (iconName: string) => {
     Link2: Link2,
     Projector: Projector,
     ShoppingCart: ShoppingCart,
+    TrendingUp: TrendingUp,
   };
 
   const IconComponent = icons[iconName as keyof typeof icons];
@@ -65,6 +67,11 @@ export const appSidebarData = {
           title: "Зрізи",
           url: "/arts/analog-slices",
           iconName: "Projector",
+        },
+        {
+          title: "Продажі",
+          url: "/arts/sales",
+          iconName: "TrendingUp",
         },
       ],
     },
