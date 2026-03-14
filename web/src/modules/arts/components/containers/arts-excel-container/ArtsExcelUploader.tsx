@@ -75,6 +75,11 @@ const ArtsExcelUploader = () => {
                 baseData.marker = markerValue;
               }
 
+              const abcValue = row.abc?.toString().trim();
+              if (abcValue) {
+                baseData.abc = abcValue;
+              }
+
               return baseData;
             })
             .filter((row) => row.artikul);

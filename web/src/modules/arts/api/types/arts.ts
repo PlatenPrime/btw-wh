@@ -5,4 +5,5 @@ export interface UploadingArt {
   nameukr: string;
   limit?: number;
   marker?: string;
+  abc?: string;
 }

@@ -14,6 +14,7 @@ export interface ArtDto {
   zone: string;
   limit?: number;
   marker?: string;
+  abc?: string;
   __v: number;
   btradeStock: BtradeStockDto;
 }

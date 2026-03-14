@@ -5,6 +5,7 @@ import { BtradeArtDataContainer } from "@/modules/arts/components/containers/btr
 import { BtradeArtDataSkeleton } from "@/modules/arts/components/containers/btrade-art-data-container/BtradeArtDataSkeleton";
 import { ArtZone } from "@/modules/arts/components/elements/art-zone/ArtZone";
 import { BtradeArtDataFetcher } from "@/modules/arts/components/fetchers/btrade-art-data-fetcher/BtradeArtDataFetcher";
+import { ArtAbc } from "@/modules/arts/components/elements/art-abc/ArtAbc";
 import { ArtLimit } from "../../elements/art-limit/ArtLimit";
 
 interface ArtDetailCardProps {
@@ -25,6 +26,7 @@ export function ArtDetailCard({ artData }: ArtDetailCardProps) {
         <div className="grid gap-2">
           <ArtZone artData={artData} />
           <ArtLimit limit={artData.limit} />
+          <ArtAbc abc={artData.abc} />
           <BtradeArtDataFetcher
             artikul={artData.artikul}
             ContainerComponent={BtradeArtDataContainer}
