@@ -23,14 +23,24 @@ import { CalendarIcon } from "lucide-react";
 import { useState } from "react";
 import type { DateRange } from "react-day-picker";
 
+const ABC_OPTIONS = [
+  { value: "all", label: "ABC" },
+  { value: "A", label: "A" },
+  { value: "B", label: "B" },
+  { value: "C", label: "C" },
+  { value: "D", label: "D" },
+] as const;
+
 interface SalesControlsProps {
   konk: string;
   prod: string;
   dateFrom: string;
   dateTo: string;
+  abc: string;
   onKonkChange: (value: string) => void;
   onProdChange: (value: string) => void;
   onDateRangeChange: (from: string, to: string) => void;
+  onAbcChange: (value: string) => void;
 }
 
 export function SalesControls({
@@ -38,9 +48,11 @@ export function SalesControls({
   prod,
   dateFrom,
   dateTo,
+  abc,
   onKonkChange,
   onProdChange,
   onDateRangeChange,
+  onAbcChange,
 }: SalesControlsProps) {
   const konksQuery = useKonksQuery();
   const prodsQuery = useProdsQuery();
@@ -127,6 +139,25 @@ export function SalesControls({
                   title={p.title}
                   fallbackLabel={p.name}
                 />
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+
+        <Select
+          value={abc || "all"}
+          onValueChange={(v) => onAbcChange(v === "all" ? "" : v)}
+        >
+          <SelectTrigger
+            aria-label="ABC"
+            className="min-w-[100px] sm:min-w-[120px]"
+          >
+            <SelectValue placeholder="ABC" />
+          </SelectTrigger>
+          <SelectContent>
+            {ABC_OPTIONS.map((opt) => (
+              <SelectItem key={opt.value} value={opt.value}>
+                {opt.label}
               </SelectItem>
             ))}
           </SelectContent>

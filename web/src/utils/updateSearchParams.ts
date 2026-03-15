@@ -5,7 +5,11 @@ export function updateSearchParams(
 ) {
   const newParams = new URLSearchParams(params.toString());
   Object.entries(updates).forEach(([key, value]) => {
-    newParams.set(key, value);
+    if (value === "") {
+      newParams.delete(key);
+    } else {
+      newParams.set(key, value);
+    }
   });
   setParams(newParams);
 }

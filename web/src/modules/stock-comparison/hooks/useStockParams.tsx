@@ -9,6 +9,7 @@ export function useStockParams() {
   const prod = getParam(params, "prod", "");
   const dateFrom = getParam(params, "dateFrom", "");
   const dateTo = getParam(params, "dateTo", "");
+  const abc = getParam(params, "abc", "");
 
   const setKonk = (value: string) =>
     updateSearchParams(params, { konk: value }, setParams);
@@ -19,13 +20,18 @@ export function useStockParams() {
   const setDateRange = (from: string, to: string) =>
     updateSearchParams(params, { dateFrom: from, dateTo: to }, setParams);
 
+  const setAbc = (value: string) =>
+    updateSearchParams(params, { abc: value }, setParams);
+
   return {
     konk,
     prod,
     dateFrom,
     dateTo,
+    abc,
     setKonk,
     setProd,
     setDateRange,
+    setAbc,
   };
 }

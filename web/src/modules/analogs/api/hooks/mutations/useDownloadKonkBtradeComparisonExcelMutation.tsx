@@ -39,17 +39,23 @@ export function useDownloadKonkBtradeComparisonExcelMutation() {
       prod,
       dateFrom,
       dateTo,
+      abc,
+      sortBy,
     }: {
       konk: string;
       prod: string;
       dateFrom: string;
       dateTo: string;
+      abc?: string;
+      sortBy?: "abc";
     }) =>
       downloadKonkBtradeComparisonExcel({
         konk,
         prod,
         dateFrom,
         dateTo,
+        abc,
+        sortBy,
       }),
     onSuccess: ({ blob, filename }) => {
       triggerBlobDownload(blob, filename);

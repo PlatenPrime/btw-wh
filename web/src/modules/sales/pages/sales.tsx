@@ -13,7 +13,7 @@ import { isAxiosError } from "axios";
 import { useState } from "react";
 
 export function Sales() {
-  const { konk, prod, dateFrom, dateTo, setKonk, setProd, setDateRange } =
+  const { konk, prod, dateFrom, dateTo, abc, setKonk, setProd, setDateRange, setAbc } =
     useSalesParams();
   const [excelDialogOpen, setExcelDialogOpen] = useState(false);
 
@@ -24,6 +24,7 @@ export function Sales() {
     prod,
     dateFrom,
     dateTo,
+    abc,
   });
 
   const days = salesQuery.data?.data?.days ?? [];
@@ -38,9 +39,11 @@ export function Sales() {
           prod={prod}
           dateFrom={dateFrom}
           dateTo={dateTo}
+          abc={abc}
           onKonkChange={setKonk}
           onProdChange={setProd}
           onDateRangeChange={setDateRange}
+          onAbcChange={setAbc}
         />
 
         {!isFiltersReady && (

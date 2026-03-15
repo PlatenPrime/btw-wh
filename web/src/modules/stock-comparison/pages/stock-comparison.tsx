@@ -13,7 +13,7 @@ import { isAxiosError } from "axios";
 import { useState } from "react";
 
 export function StockComparison() {
-  const { konk, prod, dateFrom, dateTo, setKonk, setProd, setDateRange } =
+  const { konk, prod, dateFrom, dateTo, abc, setKonk, setProd, setDateRange, setAbc } =
     useStockParams();
   const [excelDialogOpen, setExcelDialogOpen] = useState(false);
 
@@ -24,6 +24,7 @@ export function StockComparison() {
     prod,
     dateFrom,
     dateTo,
+    abc,
   });
 
   const days = stockQuery.data?.data?.days ?? [];
@@ -38,9 +39,11 @@ export function StockComparison() {
           prod={prod}
           dateFrom={dateFrom}
           dateTo={dateTo}
+          abc={abc}
           onKonkChange={setKonk}
           onProdChange={setProd}
           onDateRangeChange={setDateRange}
+          onAbcChange={setAbc}
         />
 
         {!isFiltersReady && (

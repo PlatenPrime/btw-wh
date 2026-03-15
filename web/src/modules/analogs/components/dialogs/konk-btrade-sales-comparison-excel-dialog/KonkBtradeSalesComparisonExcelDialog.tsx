@@ -29,6 +29,8 @@ export function KonkBtradeSalesComparisonExcelDialog({
   );
   const [selectedKonk, setSelectedKonk] = useState("");
   const [selectedProd, setSelectedProd] = useState("");
+  const [selectedAbc, setSelectedAbc] = useState("");
+  const [sortByAbc, setSortByAbc] = useState(false);
 
   const isControlled = controlledOpen !== undefined;
   const open = isControlled ? controlledOpen : internalOpen;
@@ -59,6 +61,8 @@ export function KonkBtradeSalesComparisonExcelDialog({
         prod: selectedProd,
         dateFrom,
         dateTo,
+        ...(selectedAbc && { abc: selectedAbc }),
+        ...(sortByAbc && selectedAbc && { sortBy: "abc" as const }),
       });
       handleOpenChange(false);
     } catch {
@@ -69,6 +73,8 @@ export function KonkBtradeSalesComparisonExcelDialog({
     mutation,
     selectedKonk,
     selectedProd,
+    selectedAbc,
+    sortByAbc,
     handleOpenChange,
   ]);
 
@@ -81,6 +87,8 @@ export function KonkBtradeSalesComparisonExcelDialog({
       setDateRange(getDefaultDateRange());
       setSelectedKonk("");
       setSelectedProd("");
+      setSelectedAbc("");
+      setSortByAbc(false);
     }
   }, [open]);
 
@@ -95,6 +103,10 @@ export function KonkBtradeSalesComparisonExcelDialog({
         onSelectedKonkChange={setSelectedKonk}
         selectedProd={selectedProd}
         onSelectedProdChange={setSelectedProd}
+        selectedAbc={selectedAbc}
+        onSelectedAbcChange={setSelectedAbc}
+        sortByAbc={sortByAbc}
+        onSortByAbcChange={setSortByAbc}
         isDownloading={isDownloading}
         onDownload={handleDownload}
         onCancel={handleCancel}

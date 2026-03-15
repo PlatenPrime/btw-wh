@@ -6,6 +6,8 @@ export interface DownloadKonkSalesComparisonExcelParams {
   prod: string;
   dateFrom: string;
   dateTo: string;
+  abc?: string;
+  sortBy?: "abc";
   signal?: AbortSignal;
 }
 
@@ -19,6 +21,8 @@ export const downloadKonkSalesComparisonExcel = async ({
   prod,
   dateFrom,
   dateTo,
+  abc,
+  sortBy,
   signal,
 }: DownloadKonkSalesComparisonExcelParams): Promise<DownloadKonkSalesComparisonExcelResult> => {
   const params = new URLSearchParams({
@@ -27,6 +31,12 @@ export const downloadKonkSalesComparisonExcel = async ({
     dateFrom,
     dateTo,
   });
+  if (abc) {
+    params.set("abc", abc);
+  }
+  if (sortBy === "abc") {
+    params.set("sortBy", sortBy);
+  }
 
   const res = await apiClient.get<Blob>(
     `analog-slices/konk-btrade/sales-comparison-excel?${params.toString()}`,
