@@ -12,7 +12,7 @@ import { CartesianGrid, ComposedChart, Line, XAxis, YAxis } from "recharts";
 const salesChartConfig = {
   competitorSales: {
     label: "Конкурент",
-    color: "var(--chart-1)",
+    color: "var(--chart-6)",
   },
   btradeSales: {
     label: "Btrade",
@@ -23,7 +23,7 @@ const salesChartConfig = {
 const revenueChartConfig = {
   competitorRevenue: {
     label: "Конкурент",
-    color: "var(--chart-1)",
+    color: "var(--chart-6)",
   },
   btradeRevenue: {
     label: "Btrade",
@@ -41,16 +41,12 @@ function formatDateTick(value: string): string {
 
 function getChartColors() {
   if (typeof document === "undefined") {
-    return {
-      chart1: "oklch(0.65 0.20 25)",
-      chart2: "oklch(0.55 0.20 250)",
-    };
+    return { chart2: "oklch(0.55 0.20 250)" };
   }
   const root = document.documentElement;
   const get = (v: string, fb: string) =>
     getComputedStyle(root).getPropertyValue(v).trim() || fb;
   return {
-    chart1: get("--chart-1", "oklch(0.65 0.20 25)"),
     chart2: get("--chart-2", "oklch(0.55 0.20 250)"),
   };
 }
@@ -118,7 +114,7 @@ export function SalesChartSalesView({
           <Line
             type="monotone"
             dataKey="competitorSales"
-            stroke={colors.chart1}
+            stroke="var(--chart-6)"
             strokeWidth={2}
             dot={false}
           />
@@ -191,7 +187,7 @@ export function SalesChartRevenueView({
           <Line
             type="monotone"
             dataKey="competitorRevenue"
-            stroke={colors.chart1}
+            stroke="var(--chart-6)"
             strokeWidth={2}
             dot={false}
           />

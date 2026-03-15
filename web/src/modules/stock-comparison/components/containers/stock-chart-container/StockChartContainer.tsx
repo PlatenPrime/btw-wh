@@ -23,7 +23,7 @@ export function StockChartContainer({ days }: StockChartContainerProps) {
             id="stock-show-competitor"
             checked={showCompetitor}
             onCheckedChange={setShowCompetitor}
-            className="data-[state=checked]:bg-[color:var(--chart-1)]"
+            className="data-[state=checked]:bg-[color:var(--chart-6)]"
           />
           <Label
             htmlFor="stock-show-competitor"

@@ -26,7 +26,7 @@ export function SalesChartContainer({ days }: SalesChartContainerProps) {
             id="sales-show-competitor"
             checked={showCompetitor}
             onCheckedChange={setShowCompetitor}
-            className="data-[state=checked]:bg-[color:var(--chart-1)]"
+            className="data-[state=checked]:bg-[color:var(--chart-6)]"
           />
           <Label
             htmlFor="sales-show-competitor"
