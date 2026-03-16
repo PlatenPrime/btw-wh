@@ -12,7 +12,14 @@ interface PalletInRowCardProps {
 
 export function PalletInRowCardView({ pallet, rowId }: PalletInRowCardProps) {
   return (
-    <Card className={cn("gap-2 p-2")}>
+    <Card
+      className={cn(
+        "gap-2 p-2",
+        pallet.isEmpty
+          ? "bg-rose-500/15 dark:bg-rose-200/5 border-rose-500/20 dark:border-rose-500/40 "
+          : "bg-yellow-500/15 dark:bg-yellow-200/5 border-yellow-500/20 dark:border-yellow-500/40 ",
+      )}
+    >
       <CardHeader className="flex items-start p-0">
         <Link
           to={`/wh/pallets/${pallet.title}`}
