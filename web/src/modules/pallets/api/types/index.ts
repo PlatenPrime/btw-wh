@@ -9,6 +9,10 @@ export interface PalletShortDto {
   sector?: string;
   isEmpty: boolean;
   isDef: boolean;
+  /** id группы паллет (если паллета в группе) */
+  palgrId?: string;
+  /** название группы паллет */
+  palgrTitle?: string;
 }
 
 export interface PalletRowData {

@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import type { PalletShortDto } from "@/modules/pallets/api/types";
-import {  Calculator, LayoutGrid } from "lucide-react";
+import { Calculator, Layers, LayoutGrid } from "lucide-react";
 import { Link } from "react-router";
 import { PalletCardActions } from "./PalletCardActions";
 
@@ -41,6 +41,18 @@ export function PalletInRowCardView({ pallet, rowId }: PalletInRowCardProps) {
           <Calculator className="text-muted-foreground size-3.5 shrink-0" aria-hidden />
           <span className="text-xs">{pallet.isDef ? "Так" : "Ні"}</span>
         </div>
+
+        {pallet.palgrId && pallet.palgrTitle && (
+          <div className="border-border flex items-center justify-start gap-2 ">
+            <Layers className="text-muted-foreground size-3.5 shrink-0" aria-hidden />
+            <Link
+              to={`/wh/pallet-groups/${pallet.palgrId}`}
+              className="text-xs hover:underline"
+            >
+              {pallet.palgrTitle}
+            </Link>
+          </div>
+        )}
       </CardContent>
     </Card>
   );
