@@ -62,7 +62,7 @@ export function KonkBtradeSalesComparisonExcelDialog({
         dateFrom,
         dateTo,
         ...(selectedAbc && { abc: selectedAbc }),
-        ...(sortByAbc && selectedAbc && { sortBy: "abc" as const }),
+        ...(sortByAbc && { sortBy: "abc" as const }),
       });
       handleOpenChange(false);
     } catch {

@@ -74,7 +74,6 @@ export function KonkBtradeExcelDialogLayout({
     from !== undefined && to !== undefined && from <= to;
   const isFormValid =
     selectedKonk !== "" && selectedProd !== "" && isRangeValid;
-  const hasAbcSelected = Boolean(selectedAbc);
 
   return (
     <DialogContent className="sm:max-w-lg">
@@ -157,7 +156,6 @@ export function KonkBtradeExcelDialogLayout({
                 id={sortByAbcSwitchId}
                 checked={sortByAbc}
                 onCheckedChange={onSortByAbcChange}
-                disabled={!hasAbcSelected}
               />
               <Label
                 htmlFor={sortByAbcSwitchId}
