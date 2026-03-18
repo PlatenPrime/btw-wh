@@ -22,7 +22,7 @@ import { Link, useLocation, useNavigate } from "react-router";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = useLocation().pathname;
-  const { user, logout, isLoading } = useAuth();
+  const { user, logout, isLoading, hasAnyRole } = useAuth();
   const navigate = useNavigate();
   const { isMobile, setOpenMobile } = useSidebar();
 
@@ -70,26 +70,31 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
-                {item.items.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton
-                      asChild
-                      isActive={
-                        pathname === item.url ||
-                        pathname.startsWith(item.url + "/")
-                      }
-                      className="hover:cursor-pointer"
-                    >
-                      <button
-                        onClick={() => handleNavigation(item.url)}
-                        className="flex w-full items-center gap-2 text-left"
+                {item.items
+                  .filter(
+                    (navItem) =>
+                      !navItem.allowedRoles || hasAnyRole(navItem.allowedRoles),
+                  )
+                  .map((navItem) => (
+                    <SidebarMenuItem key={navItem.title}>
+                      <SidebarMenuButton
+                        asChild
+                        isActive={
+                          pathname === navItem.url ||
+                          pathname.startsWith(navItem.url + "/")
+                        }
+                        className="hover:cursor-pointer"
                       >
-                        {getIcon(item.iconName)}
-                        {item.title}
-                      </button>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
+                        <button
+                          onClick={() => handleNavigation(navItem.url)}
+                          className="flex w-full items-center gap-2 text-left"
+                        >
+                          {getIcon(navItem.iconName)}
+                          {navItem.title}
+                        </button>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  ))}
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>

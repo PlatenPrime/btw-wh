@@ -13,12 +13,15 @@ import {
   Rows4,
   Settings,
   ShoppingCart,
+  Unlink2,
   StickyNote,
   TrendingUp,
   Truck,
   Users,
   Warehouse,
 } from "lucide-react";
+
+import { RoleType } from "@/constants/roles";
 
 const icons = {
   StickyNote,
@@ -39,6 +42,7 @@ const icons = {
   Link2,
   Projector,
   ShoppingCart,
+  Unlink2,
   TrendingUp,
 } as const;
 
@@ -86,10 +90,25 @@ const iconColorClasses: Record<SidebarIconName, string> = {
     "text-[oklch(0.58_0.16_325)] dark:text-[oklch(0.72_0.18_325)]",
   ShoppingCart:
     "text-[oklch(0.6_0.15_145)] dark:text-[oklch(0.74_0.16_145)]",
+  Unlink2:
+    "text-[oklch(0.7_0.18_70)] dark:text-[oklch(0.84_0.22_70)]",
   // Продажі — зелёный
   TrendingUp:
     "text-[oklch(0.62_0.18_145)] dark:text-[oklch(0.76_0.2_145)]",
 };
+
+export interface AppSidebarNavItem {
+  title: string;
+  url: string;
+  iconName: string;
+  allowedRoles?: RoleType[];
+}
+
+export interface AppSidebarNavGroup {
+  title: string;
+  url: string;
+  items: AppSidebarNavItem[];
+}
 
 const getIcon = (iconName: string) => {
   if (!iconName || !(iconName in icons)) {
@@ -106,7 +125,7 @@ const getIcon = (iconName: string) => {
   );
 };
 
-export const appSidebarData = {
+export const appSidebarData: { navMain: AppSidebarNavGroup[] } = {
   navMain: [
     {
       title: "Артикули",
@@ -121,6 +140,12 @@ export const appSidebarData = {
           title: "Аналоги",
           url: "/arts/analogs",
           iconName: "Link2",
+        },
+        {
+          title: "Варіанти",
+          url: "/arts/variants",
+          iconName: "Unlink2",
+          allowedRoles: [RoleType.PRIME],
         },
         {
           title: "Зрізи",

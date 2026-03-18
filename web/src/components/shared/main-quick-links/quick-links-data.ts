@@ -2,11 +2,14 @@
  * Дані для блоків «Швидкий доступ» на головній.
  * Синхронізовано з app-sidebar-data (url, title, iconName).
  */
+import { RoleType } from "@/constants/roles";
+
 export interface QuickLinkItem {
   url: string;
   title: string;
   iconName: string;
   description: string;
+  allowedRoles?: RoleType[];
 }
 
 export const quickLinksData: QuickLinkItem[] = [
@@ -21,6 +24,13 @@ export const quickLinksData: QuickLinkItem[] = [
     title: "Аналоги",
     iconName: "Link2",
     description: "Аналоги артикулів",
+  },
+  {
+    url: "/arts/variants",
+    title: "Варіанти",
+    iconName: "Link2",
+    description: "Варіанти товарів",
+    allowedRoles: [RoleType.PRIME],
   },
   {
     url: "/arts/analog-slices",

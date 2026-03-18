@@ -1,0 +1,2 @@
+export { VariantDetailsCard } from "./VariantDetailsCard";
+

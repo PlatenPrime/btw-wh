@@ -1,0 +1,2 @@
+export { UpdateVariantDialog } from "./UpdateVariantDialog";
+

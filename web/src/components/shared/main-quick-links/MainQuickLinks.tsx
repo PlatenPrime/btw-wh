@@ -8,18 +8,36 @@ import {
 import { cn } from "@/lib/utils";
 import { Link } from "react-router";
 import { quickLinksData } from "./quick-links-data";
+import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 
 /**
  * Сітка карток-посилань «Швидкий доступ» на ключові розділи додатку.
  */
 export function MainQuickLinks() {
+  const { hasAnyRole, isLoading, user } = useAuth();
+
   return (
     <section className="flex flex-col gap-4">
       <h2 className="text-center text-xl font-semibold md:text-2xl">
         Швидкий доступ
       </h2>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {quickLinksData.map((item) => (
+        {quickLinksData.map((item) => {
+          if (isLoading) {
+            return null;
+          }
+
+          if (item.allowedRoles && !hasAnyRole(item.allowedRoles)) {
+            return null;
+          }
+
+          // Небольшая защита: на случай если карточка требует конкретную роль,
+          // но `user` еще не подгружен.
+          if (item.allowedRoles && !user) {
+            return null;
+          }
+
+          return (
           <Link
             key={item.url}
             to={item.url}
@@ -43,7 +61,8 @@ export function MainQuickLinks() {
               </CardContent>
             </Card>
           </Link>
-        ))}
+          );
+        })}
       </div>
     </section>
   );

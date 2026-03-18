@@ -152,6 +152,16 @@ const AnalogSlices = lazy(() =>
     default: module.AnalogSlices,
   })),
 );
+const Variants = lazy(() =>
+  import("./modules/variants/pages/variants").then((module) => ({
+    default: module.Variants,
+  })),
+);
+const Variant = lazy(() =>
+  import("./modules/variants/pages/variant").then((module) => ({
+    default: module.Variant,
+  })),
+);
 const SalesPage = lazy(() =>
   import("./modules/sales/pages/sales").then((module) => ({
     default: module.Sales,
@@ -304,6 +314,24 @@ export const router = createHashRouter([
             element: (
               <ProtectedRoute>
                 <AnalogSlices />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "variants",
+            element: (
+              <ProtectedRoute allowedRoles={[RoleType.PRIME]}>
+                <Variants />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "variants/:id",
+            element: (
+              <ProtectedRoute allowedRoles={[RoleType.PRIME]}>
+                <Variant />
               </ProtectedRoute>
             ),
             errorElement: <RouteErrorBoundary />,

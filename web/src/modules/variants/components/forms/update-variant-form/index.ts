@@ -1,0 +1,2 @@
+export { UpdateVariantForm } from "./UpdateVariantForm";
+

@@ -1,0 +1,2 @@
+export { VariantDetailHeaderActions } from "./VariantDetailHeaderActions";
+
