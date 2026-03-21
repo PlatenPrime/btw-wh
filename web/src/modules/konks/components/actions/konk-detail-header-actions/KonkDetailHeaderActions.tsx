@@ -30,7 +30,7 @@ export function KonkDetailHeaderActions({ konk }: KonkDetailHeaderActionsProps) 
   }, []);
 
   const handleDeleteSuccess = useCallback(() => {
-    navigate("/wh/konks");
+    navigate("/sku/konks");
   }, [navigate]);
 
   const headerActions = useMemo<HeaderAction[]>(() => {

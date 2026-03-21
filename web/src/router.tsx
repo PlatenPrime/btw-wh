@@ -3,7 +3,13 @@ import { RouteErrorBoundary } from "@/components/shared/error-components/route-e
 import { RoleType } from "@/constants/roles";
 import { ProtectedRoute } from "@/modules/auth/components/index.ts";
 import { lazy } from "react";
-import { createHashRouter, Outlet } from "react-router";
+import { createHashRouter, Navigate, Outlet, useParams } from "react-router";
+
+function RedirectWhKonkDetailToSku() {
+  const { id } = useParams<{ id: string }>();
+  if (!id) return <Navigate to="/sku/konks" replace />;
+  return <Navigate to={`/sku/konks/${id}`} replace />;
+}
 
 const App = lazy(() => import("./App"));
 
@@ -134,6 +140,16 @@ const Konks = lazy(() =>
 const Konk = lazy(() =>
   import("./modules/konks/pages/konk").then((module) => ({
     default: module.Konk,
+  })),
+);
+const Skugrs = lazy(() =>
+  import("./modules/skugrs/pages/skugrs").then((module) => ({
+    default: module.Skugrs,
+  })),
+);
+const Skugr = lazy(() =>
+  import("./modules/skugrs/pages/skugr").then((module) => ({
+    default: module.Skugr,
   })),
 );
 
@@ -367,6 +383,53 @@ export const router = createHashRouter([
         ],
       },
       {
+        path: "sku",
+        element: (
+          <ProtectedRoute>
+            <Outlet />
+          </ProtectedRoute>
+        ),
+        errorElement: <RouteErrorBoundary />,
+        children: [
+          {
+            path: "konks",
+            element: (
+              <ProtectedRoute>
+                <Konks />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "konks/:id",
+            element: (
+              <ProtectedRoute>
+                <Konk />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "skugrs",
+            element: (
+              <ProtectedRoute>
+                <Skugrs />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "skugrs/:id",
+            element: (
+              <ProtectedRoute>
+                <Skugr />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+        ],
+      },
+      {
         path: "wh",
         element: (
           <ProtectedRoute>
@@ -442,23 +505,14 @@ export const router = createHashRouter([
           },
           {
             path: "konks",
-            element: (
-              <ProtectedRoute>
-                <Konks />
-              </ProtectedRoute>
-            ),
+            element: <Navigate to="/sku/konks" replace />,
             errorElement: <RouteErrorBoundary />,
           },
           {
             path: "konks/:id",
-            element: (
-              <ProtectedRoute>
-                <Konk />
-              </ProtectedRoute>
-            ),
+            element: <RedirectWhKonkDetailToSku />,
             errorElement: <RouteErrorBoundary />,
           },
-          
           {
             path: "constants",
             element: (

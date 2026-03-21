@@ -27,7 +27,7 @@ export function KonkCardView({ konk, actions }: KonkCardViewProps) {
         <div className="flex min-w-0 flex-1 flex-col gap-0.5">
           <CardTitle className="p-0">
             <Link
-              to={`/wh/konks/${konk._id}`}
+              to={`/sku/konks/${konk._id}`}
               className="block truncate hover:underline"
             >
               {konk.title}

@@ -105,7 +105,7 @@ export const quickLinksData: QuickLinkItem[] = [
     description: "Виробники",
   },
   {
-    url: "/wh/konks",
+    url: "/sku/konks",
     title: "Конкуренти",
     iconName: "Building2",
     description: "Конкуренти",

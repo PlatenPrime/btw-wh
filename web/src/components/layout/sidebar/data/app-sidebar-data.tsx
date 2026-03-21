@@ -165,6 +165,22 @@ export const appSidebarData: { navMain: AppSidebarNavGroup[] } = {
       ],
     },
     {
+      title: "Товари конкурентів",
+      url: "/sku/konks",
+      items: [
+        {
+          title: "Конкуренти",
+          url: "/sku/konks",
+          iconName: "Building2",
+        },
+        {
+          title: "Товарні групи",
+          url: "/sku/skugrs",
+          iconName: "PackageSearch",
+        },
+      ],
+    },
+    {
       title: "Склад",
       url: "/wh",
       items: [
@@ -238,11 +254,6 @@ export const appSidebarData: { navMain: AppSidebarNavGroup[] } = {
           title: "Виробники",
           url: "/wh/prods",
           iconName: "Factory",
-        },
-        {
-          title: "Конкуренти",
-          url: "/wh/konks",
-          iconName: "Building2",
         },
         {
           title: "Константи",
