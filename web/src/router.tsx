@@ -152,6 +152,11 @@ const Skugr = lazy(() =>
     default: module.Skugr,
   })),
 );
+const Sku = lazy(() =>
+  import("./modules/skus/pages/sku").then((module) => ({
+    default: module.Sku,
+  })),
+);
 
 const Analogs = lazy(() =>
   import("./modules/analogs/pages/analogs").then((module) => ({
@@ -423,6 +428,15 @@ export const router = createHashRouter([
             element: (
               <ProtectedRoute>
                 <Skugr />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "skus/:id",
+            element: (
+              <ProtectedRoute>
+                <Sku />
               </ProtectedRoute>
             ),
             errorElement: <RouteErrorBoundary />,

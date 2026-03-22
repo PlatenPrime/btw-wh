@@ -48,6 +48,13 @@ export interface CreateSkugrDto {
   skus?: string[];
 }
 
+export interface UpdateSkugrDto {
+  konkName?: string;
+  prodName?: string;
+  title?: string;
+  url?: string;
+}
+
 export interface SkugrResponseDto {
   message: string;
   data: SkugrDto;

@@ -22,6 +22,7 @@ interface CreateSkugrFormViewProps {
   konks: KonkDto[];
   onSubmit: (data: CreateSkugrFormData) => void;
   onCancel?: () => void;
+  submitText?: string;
 }
 
 export function CreateSkugrFormView({
@@ -31,6 +32,7 @@ export function CreateSkugrFormView({
   konks,
   onSubmit,
   onCancel,
+  submitText = "Створити",
 }: CreateSkugrFormViewProps) {
   const {
     register,
@@ -146,7 +148,7 @@ export function CreateSkugrFormView({
             onCancel={onCancel}
             onSubmit={handleSubmit(onSubmit)}
             cancelText="Скасувати"
-            submitText="Створити"
+            submitText={submitText}
             isSubmitting={isSubmitting}
             className="w-full"
           />

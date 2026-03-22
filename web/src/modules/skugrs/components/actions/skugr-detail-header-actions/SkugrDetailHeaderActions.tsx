@@ -4,7 +4,7 @@ import { RoleType } from "@/constants/roles";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 import type { SkugrPageDto } from "@/modules/skugrs/api/types";
 import { SkugrDetailHeaderActionsView } from "@/modules/skugrs/components/actions/skugr-detail-header-actions/SkugrDetailHeaderActionsView";
-import { RefreshCw } from "lucide-react";
+import { Pencil, RefreshCw } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 
 interface SkugrDetailHeaderActionsProps {
@@ -13,16 +13,29 @@ interface SkugrDetailHeaderActionsProps {
 
 export function SkugrDetailHeaderActions({ skugr }: SkugrDetailHeaderActionsProps) {
   const { hasRole } = useAuth();
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [fillDialogOpen, setFillDialogOpen] = useState(false);
-  const canFill = hasRole(RoleType.ADMIN);
+  const canAdmin = hasRole(RoleType.ADMIN);
+
+  const openEditDialog = useCallback(() => {
+    setEditDialogOpen(true);
+  }, []);
 
   const openFillDialog = useCallback(() => {
     setFillDialogOpen(true);
   }, []);
 
   const headerActions = useMemo<HeaderAction[]>(() => {
-    if (!canFill) return [];
+    if (!canAdmin) return [];
     return [
+      {
+        id: "edit-skugr",
+        label: "Редагувати",
+        icon: Pencil,
+        iconColor: "sky",
+        variant: "default",
+        onClick: openEditDialog,
+      },
       {
         id: "fill-skugr-skus",
         label: "Заповнити товарами",
@@ -32,13 +45,15 @@ export function SkugrDetailHeaderActions({ skugr }: SkugrDetailHeaderActionsProp
         onClick: openFillDialog,
       },
     ];
-  }, [canFill, openFillDialog]);
+  }, [canAdmin, openEditDialog, openFillDialog]);
 
   useRegisterHeaderActions(headerActions);
 
   return (
     <SkugrDetailHeaderActionsView
       skugr={skugr}
+      editDialogOpen={editDialogOpen}
+      onEditDialogOpenChange={setEditDialogOpen}
       fillDialogOpen={fillDialogOpen}
       onFillDialogOpenChange={setFillDialogOpen}
     />

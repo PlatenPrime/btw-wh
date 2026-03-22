@@ -33,3 +33,8 @@ export interface GetSkusParams {
   prodName?: string;
   signal?: AbortSignal;
 }
+
+export interface SkuByIdResponseDto {
+  message: string;
+  data: SkuDto;
+}
