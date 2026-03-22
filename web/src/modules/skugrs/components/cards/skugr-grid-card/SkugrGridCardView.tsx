@@ -28,7 +28,7 @@ export function SkugrGridCardView({
   return (
     <Card
       className={cn(
-        "flex h-full flex-col overflow-hidden p-0 transition-shadow",
+        "flex h-full flex-col overflow-hidden p-0 gap-2 transition-shadow",
         theme.shadow,
       )}
     >

@@ -38,3 +38,27 @@ export interface SkuByIdResponseDto {
   message: string;
   data: SkuDto;
 }
+
+export interface SkuSliceRangeItem {
+  date: string;
+  stock: number;
+  price: number;
+}
+
+export interface SkuSliceRangeResponseDto {
+  message: string;
+  data: SkuSliceRangeItem[];
+}
+
+export interface SkuSalesRangeItem {
+  date: string;
+  sales: number;
+  revenue: number;
+  price: number;
+  isDeliveryDay: boolean;
+}
+
+export interface SkuSalesRangeResponseDto {
+  message: string;
+  data: SkuSalesRangeItem[];
+}

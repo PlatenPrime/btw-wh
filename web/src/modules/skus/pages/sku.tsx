@@ -11,7 +11,7 @@ export function Sku() {
 
   if (!id) {
     return (
-      <SidebarInsetLayout headerText="Товар конкурента (SKU)">
+      <SidebarInsetLayout headerText="Товар конкурента">
         <main className="p-4">
           <p className="text-muted-foreground text-center">
             Ідентифікатор товару не вказано
@@ -22,7 +22,7 @@ export function Sku() {
   }
 
   return (
-    <SidebarInsetLayout headerText="Товар конкурента (SKU)">
+    <SidebarInsetLayout headerText="Товар конкурента">
       <main className="p-4">
         <SkuFetcher
           id={id}

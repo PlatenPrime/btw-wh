@@ -1,6 +1,7 @@
 import { useKonksQuery } from "@/modules/konks/api/hooks/queries/useKonksQuery";
 import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
 import type { SkuDto } from "@/modules/skus/api/types";
+import { SkuDetailHeaderActions } from "@/modules/skus/components/actions/sku-detail-header-actions";
 import { SkuContainerView } from "@/modules/skus/components/containers/sku-container/SkuContainerView";
 import { useMemo } from "react";
 
@@ -22,5 +23,10 @@ export function SkuContainer({ sku }: SkuContainerProps) {
     return prods.find((p) => p.name === sku.prodName);
   }, [prodsQuery.data?.data, sku.prodName]);
 
-  return <SkuContainerView sku={sku} konk={konk} prod={prod} />;
+  return (
+    <>
+      <SkuDetailHeaderActions sku={sku} />
+      <SkuContainerView sku={sku} konk={konk} prod={prod} />
+    </>
+  );
 }
