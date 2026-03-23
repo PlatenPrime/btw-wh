@@ -65,6 +65,10 @@ export interface SkugrPageResponseDto {
   data: SkugrPageDto;
 }
 
+export interface DeleteSkugrResponse {
+  message: string;
+}
+
 export interface FillSkugrSkusStats {
   fetched: number;
   dedupedByUrl: number;

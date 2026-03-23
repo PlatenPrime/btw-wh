@@ -1,4 +1,5 @@
 import type { SkugrPageDto } from "@/modules/skugrs/api/types";
+import { DeleteSkugrDialog } from "@/modules/skugrs/components/dialogs/delete-skugr-dialog/DeleteSkugrDialog";
 import { FillSkugrSkusDialog } from "@/modules/skugrs/components/dialogs/fill-skugr-skus-dialog/FillSkugrSkusDialog";
 import { UpdateSkugrDialog } from "@/modules/skugrs/components/dialogs/update-skugr-dialog/UpdateSkugrDialog";
 
@@ -8,6 +9,9 @@ interface SkugrDetailHeaderActionsViewProps {
   onEditDialogOpenChange: (open: boolean) => void;
   fillDialogOpen: boolean;
   onFillDialogOpenChange: (open: boolean) => void;
+  deleteDialogOpen: boolean;
+  onDeleteDialogOpenChange: (open: boolean) => void;
+  onDeleteSuccess: () => void;
 }
 
 export function SkugrDetailHeaderActionsView({
@@ -16,6 +20,9 @@ export function SkugrDetailHeaderActionsView({
   onEditDialogOpenChange,
   fillDialogOpen,
   onFillDialogOpenChange,
+  deleteDialogOpen,
+  onDeleteDialogOpenChange,
+  onDeleteSuccess,
 }: SkugrDetailHeaderActionsViewProps) {
   return (
     <>
@@ -29,6 +36,12 @@ export function SkugrDetailHeaderActionsView({
         konkName={skugr.konkName}
         open={fillDialogOpen}
         onOpenChange={onFillDialogOpenChange}
+      />
+      <DeleteSkugrDialog
+        skugr={skugr}
+        open={deleteDialogOpen}
+        onOpenChange={onDeleteDialogOpenChange}
+        onSuccess={onDeleteSuccess}
       />
     </>
   );
