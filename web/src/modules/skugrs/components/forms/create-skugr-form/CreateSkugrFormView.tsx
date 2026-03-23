@@ -69,6 +69,7 @@ export function CreateSkugrFormView({
                       imageUrl={k.imageUrl}
                       title={k.title}
                       fallbackLabel={k.name}
+                      imageSize="xs"
                     />
                   </SelectItem>
                 ))}
@@ -103,6 +104,7 @@ export function CreateSkugrFormView({
                       imageUrl={p.imageUrl}
                       title={p.title}
                       fallbackLabel={p.name}
+                      imageSize="xs"
                     />
                   </SelectItem>
                 ))}

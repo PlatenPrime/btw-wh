@@ -7,6 +7,7 @@ interface SkusByKonkFetcherParams {
   page: number;
   limit: number;
   prodName?: string;
+  search?: string;
 }
 
 interface SkusByKonkFetcherProps {
@@ -26,6 +27,7 @@ export function SkusByKonkFetcher({
     page: params.page,
     limit: params.limit,
     prodName: params.prodName || undefined,
+    search: params.search,
   });
   const { data, isLoading, error } = skusQuery;
 

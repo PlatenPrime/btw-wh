@@ -6,6 +6,7 @@ export const getSkus = async ({
   limit,
   konkName,
   prodName,
+  search,
   signal,
 }: GetSkusParams): Promise<SkusResponseDto> => {
   const params = new URLSearchParams({
@@ -14,6 +15,7 @@ export const getSkus = async ({
     konkName,
   });
   if (prodName?.trim()) params.set("prodName", prodName.trim());
+  if (search?.trim()) params.set("search", search.trim());
 
   const res = await apiClient.get<SkusResponseDto>(
     `/skus?${params.toString()}`,

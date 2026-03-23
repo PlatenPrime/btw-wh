@@ -14,6 +14,7 @@ export function useSkusByKonkQuery(
     page,
     limit,
     prodName,
+    search,
     signal,
     enabled = true,
   }: UseSkusByKonkQueryParams,
@@ -22,7 +23,13 @@ export function useSkusByKonkQuery(
 
   const queryKey = [
     "skusByKonk",
-    { konkName, page, limit, prodName: prodName ?? "" },
+    {
+      konkName,
+      page,
+      limit,
+      prodName: prodName ?? "",
+      search: search ?? "",
+    },
   ] as const;
 
   return useQuery<SkusResponseDto, Error, SkusResponseDto, typeof queryKey>({
@@ -33,6 +40,7 @@ export function useSkusByKonkQuery(
         limit,
         konkName,
         prodName,
+        search,
         signal: signal ?? querySignal,
       }),
     placeholderData: (): SkusResponseDto | undefined => {
@@ -44,6 +52,7 @@ export function useSkusByKonkQuery(
           page: page - 1,
           limit,
           prodName: prodName ?? "",
+          search: search ?? "",
         },
       ]);
     },

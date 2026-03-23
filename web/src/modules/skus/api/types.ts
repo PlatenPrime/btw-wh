@@ -31,6 +31,7 @@ export interface GetSkusParams {
   limit: number;
   konkName: string;
   prodName?: string;
+  search?: string;
   signal?: AbortSignal;
 }
 

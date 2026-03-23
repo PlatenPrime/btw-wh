@@ -1,3 +1,4 @@
+import { SearchPanel } from "@/components/shared/search-components/search-panel/SearchPanel";
 import { SelectLimit } from "@/components/shared/select-limit";
 import { Wrapper } from "@/components/shared/wrappers/Wrapper";
 import {
@@ -9,12 +10,7 @@ import {
 } from "@/components/ui/select";
 import { useDebounce } from "@/hooks/useDebounce";
 import { EntityLabel } from "@/modules/analogs/components/entity-label";
-import { AnalogsByKonkContainer } from "@/modules/analogs/components/containers/analogs-by-konk-container";
-import { AnalogsContainerSkeleton } from "@/modules/analogs/components/containers/analogs-container";
-import { AnalogsByKonkFetcher } from "@/modules/analogs/components/fetchers/analogs-by-konk-fetcher";
-import { useAnalogsByKonkParams } from "@/modules/analogs/hooks/useAnalogsByKonkParams";
 import type { KonkDto } from "@/modules/konks/api/types";
-import { useKonksQuery } from "@/modules/konks/api/hooks/queries/useKonksQuery";
 import { KonkDetailHeaderActions } from "@/modules/konks/components/actions/konk-detail-header-actions";
 import { KonkContainerView } from "@/modules/konks/components/containers/konk-container/KonkContainerView";
 import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
@@ -31,15 +27,15 @@ interface KonkContainerProps {
 }
 
 export function KonkContainer({ konk }: KonkContainerProps) {
-  const { page, limit, search, setPage, setLimit, setSearch } =
-    useAnalogsByKonkParams();
   const {
     page: skuPage,
     limit: skuLimit,
     prodName: skuProdName,
+    search,
     setPage: setSkuPage,
     setLimit: setSkuLimit,
     setProdName: setSkuProdName,
+    setSearch,
   } = useSkusByKonkParams();
   const [localSearch, setLocalSearch] = useState(search);
   const debouncedSearch = useDebounce(localSearch, 500);
@@ -54,68 +50,56 @@ export function KonkContainer({ konk }: KonkContainerProps) {
     setLocalSearch(search);
   }, [search]);
 
-  const konksQuery = useKonksQuery();
   const prodsQuery = useProdsQuery();
-  const konks = konksQuery.data?.data ?? [];
   const prods = prodsQuery.data?.data ?? [];
 
   return (
     <>
       <KonkDetailHeaderActions konk={konk} />
       <div className="grid gap-2">
-        <KonkContainerView
-          konk={konk}
-          search={localSearch}
-          onSearchChange={(e) => setLocalSearch(e.target.value)}
-          limit={limit}
-          setLimit={setLimit}
-        >
-          <AnalogsByKonkFetcher
-            konkName={konk.name}
-            params={{ page, limit, search: debouncedSearch || undefined }}
-            ContainerComponent={({ data }) => (
-              <AnalogsByKonkContainer
-                data={data}
-                konks={konks}
-                prods={prods}
-                onPageChange={setPage}
-              />
-            )}
-            SkeletonComponent={AnalogsContainerSkeleton}
-          />
-        </KonkContainerView>
+        <KonkContainerView konk={konk} />
 
         <Wrapper className="grid gap-2">
           <h2 className="text-lg font-semibold">Товари конкурента</h2>
-          <div className="flex flex-wrap items-center gap-2 lg:justify-end">
-            <Select
-              value={skuProdName || "all"}
-              onValueChange={(v) => setSkuProdName(v === "all" ? "" : v)}
-            >
-              <SelectTrigger
-                aria-label="Виробник"
-                className="min-w-[140px] sm:min-w-[160px]"
+          <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
+            <div className="grid min-w-0 flex-1 gap-1">
+              <SearchPanel
+                search={localSearch}
+                onSearchChange={(e) => setLocalSearch(e.target.value)}
+                placeholder="Пошук за назвою товару..."
+              />
+            </div>
+            <div className="flex flex-wrap items-center gap-2 lg:justify-end">
+              <Select
+                value={skuProdName || "all"}
+                onValueChange={(v) => setSkuProdName(v === "all" ? "" : v)}
               >
-                <SelectValue placeholder="Усі виробники" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Усі виробники</SelectItem>
-                {prods.map((p) => (
-                  <SelectItem key={p._id} value={p.name}>
-                    <EntityLabel
-                      imageUrl={p.imageUrl}
-                      title={p.title}
-                      fallbackLabel={p.name}
-                    />
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <SelectLimit
-              limitOptions={[10, 20, 50, 100]}
-              limit={skuLimit}
-              setLimit={setSkuLimit}
-            />
+                <SelectTrigger
+                  aria-label="Виробник"
+                  className="min-w-[140px] sm:min-w-[160px]"
+                >
+                  <SelectValue placeholder="Усі виробники" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Усі виробники</SelectItem>
+                  {prods.map((p) => (
+                    <SelectItem key={p._id} value={p.name}>
+                      <EntityLabel
+                        imageUrl={p.imageUrl}
+                        title={p.title}
+                        fallbackLabel={p.name}
+                        imageSize="xs"
+                      />
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <SelectLimit
+                limitOptions={[10, 20, 50, 100]}
+                limit={skuLimit}
+                setLimit={setSkuLimit}
+              />
+            </div>
           </div>
           <SkusByKonkFetcher
             konkName={konk.name}
@@ -123,6 +107,7 @@ export function KonkContainer({ konk }: KonkContainerProps) {
               page: skuPage,
               limit: skuLimit,
               prodName: skuProdName || undefined,
+              search: debouncedSearch || undefined,
             }}
             ContainerComponent={({ data }) => (
               <SkusByKonkContainer

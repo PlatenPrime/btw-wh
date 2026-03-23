@@ -50,6 +50,7 @@ export function SkugrsControls() {
                     imageUrl={k.imageUrl}
                     title={k.title}
                     fallbackLabel={k.name}
+                    imageSize="xs"
                   />
                 </SelectItem>
               ))}
@@ -73,6 +74,7 @@ export function SkugrsControls() {
                     imageUrl={p.imageUrl}
                     title={p.title}
                     fallbackLabel={p.name}
+                    imageSize="xs"
                   />
                 </SelectItem>
               ))}

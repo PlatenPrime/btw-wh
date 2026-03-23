@@ -22,7 +22,7 @@ export function KonkDetailsCardView({ konk }: KonkDetailsCardViewProps) {
         </div>
         <div className="flex min-w-0 flex-1 flex-col gap-2">
           <CardTitle className="p-0">{konk.title}</CardTitle>
-          <span className="text-muted-foreground truncate text-xs">
+          <span className="text-muted-foreground truncate text-sm">
             {konk.name}
           </span>
           {konk.url && (

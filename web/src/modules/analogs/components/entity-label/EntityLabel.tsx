@@ -5,11 +5,12 @@ export interface EntityLabelProps {
   imageUrl?: string | null;
   title?: string | null;
   fallbackLabel: string;
-  imageSize?: "sm" | "md";
+  imageSize?: "xs" | "sm" | "md";
   className?: string;
 }
 
 const imageSizeMap = {
+  xs: { size: 24, gap: "gap-1" },
   sm: { size: 32, gap: "gap-1.5" },
   md: { size: 64, gap: "gap-1" },
 } as const;

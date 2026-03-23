@@ -66,8 +66,7 @@ export function FillSkugrSkusDialog({
             <DialogTitle>Заповнити групу товарами</DialogTitle>
             <DialogDescription>
               Запит до парсера браузера для конкурента{" "}
-              <span className="font-medium">{konkName}</span>. Підтримка залежить від
-              бекенда (наприклад Yumi). URL групи має вказувати на першу сторінку
+              <span className="font-medium">{konkName}.</span> URL групи має вказувати на першу сторінку
               категорії.
             </DialogDescription>
           </DialogHeader>
@@ -78,9 +77,9 @@ export function FillSkugrSkusDialog({
               id="fill-max-pages"
               type="number"
               min={1}
-              max={200}
+              max={20}
               inputMode="numeric"
-              placeholder="1–200, порожньо = за замовчуванням"
+              placeholder="1–20, порожньо = за замовчуванням"
               value={maxPagesInput}
               onChange={(e) => setMaxPagesInput(e.target.value)}
               disabled={fillMutation.isPending}

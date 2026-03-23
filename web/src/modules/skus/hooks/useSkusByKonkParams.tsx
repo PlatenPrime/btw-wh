@@ -8,6 +8,7 @@ export function useSkusByKonkParams() {
   const page = Number(getParam(params, "skuPage", "1"));
   const limit = Number(getParam(params, "skuLimit", "10"));
   const prodName = getParam(params, "skuProd", "");
+  const search = getParam(params, "search", "");
 
   const setPage = (newPage: number) =>
     updateSearchParams(params, { skuPage: String(newPage) }, setParams);
@@ -26,12 +27,21 @@ export function useSkusByKonkParams() {
       setParams,
     );
 
+  const setSearch = (newSearch: string) =>
+    updateSearchParams(
+      params,
+      { search: newSearch, skuPage: "1" },
+      setParams,
+    );
+
   return {
     page,
     limit,
     prodName,
+    search,
     setPage,
     setLimit,
     setProdName,
+    setSearch,
   };
 }
