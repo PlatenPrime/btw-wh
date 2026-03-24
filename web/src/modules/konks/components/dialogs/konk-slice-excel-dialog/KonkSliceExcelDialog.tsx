@@ -1,10 +1,11 @@
 import { Dialog } from "@/components/ui/dialog";
-import { useExportSkuSalesExcelMutation } from "@/modules/skus/api/hooks/mutations/useExportSkuSalesExcelMutation";
-import type { SkuDto } from "@/modules/skus/api/types";
+import { useDownloadKonkSliceExcelMutation } from "@/modules/konks/api/hooks/mutations/useDownloadKonkSliceExcelMutation";
+import type { KonkDto } from "@/modules/konks/api/types";
+import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
 import { format } from "date-fns";
 import type { DateRange } from "react-day-picker";
 import { useCallback, useEffect, useState } from "react";
-import { SkuSalesExcelDialogView } from "./SkuSalesExcelDialogView";
+import { KonkSliceExcelDialogView } from "./KonkSliceExcelDialogView";
 
 function getDefaultDateRange(): DateRange {
   const now = new Date();
@@ -13,39 +14,44 @@ function getDefaultDateRange(): DateRange {
   return { from, to };
 }
 
-interface SkuSalesExcelDialogProps {
-  sku: SkuDto;
+interface KonkSliceExcelDialogProps {
+  konk: KonkDto;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
 }
 
-export function SkuSalesExcelDialog({
-  sku,
+export function KonkSliceExcelDialog({
+  konk,
   open: controlledOpen,
   onOpenChange,
-}: SkuSalesExcelDialogProps) {
+}: KonkSliceExcelDialogProps) {
   const [internalOpen, setInternalOpen] = useState(false);
   const [dateRange, setDateRange] = useState<DateRange | undefined>(
     getDefaultDateRange,
   );
+  const [selectedProd, setSelectedProd] = useState("");
 
   const isControlled = controlledOpen !== undefined;
   const open = isControlled ? controlledOpen : internalOpen;
   const handleOpenChange: (open: boolean) => void =
     isControlled && onOpenChange ? onOpenChange : setInternalOpen;
 
-  const mutation = useExportSkuSalesExcelMutation();
-  const isExporting = mutation.isPending;
+  const mutation = useDownloadKonkSliceExcelMutation();
+  const prodsQuery = useProdsQuery();
+  const prods = prodsQuery.data?.data ?? [];
+  const isDownloading = mutation.isPending;
 
   const handleDownload = useCallback(async () => {
     const from = dateRange?.from;
     const to = dateRange?.to;
-    if (!from || !to || from > to) return;
+    if (!from || !to || from > to || !selectedProd) return;
+
     const dateFrom = format(from, "yyyy-MM-dd");
     const dateTo = format(to, "yyyy-MM-dd");
     try {
       await mutation.mutateAsync({
-        skuId: sku._id,
+        konk: konk.name,
+        prod: selectedProd,
         dateFrom,
         dateTo,
       });
@@ -53,7 +59,7 @@ export function SkuSalesExcelDialog({
     } catch {
       // toast handled in mutation onError
     }
-  }, [sku._id, dateRange, mutation, handleOpenChange]);
+  }, [dateRange, selectedProd, mutation, konk.name, handleOpenChange]);
 
   const handleCancel = useCallback(() => {
     handleOpenChange(false);
@@ -62,15 +68,19 @@ export function SkuSalesExcelDialog({
   useEffect(() => {
     if (open) {
       setDateRange(getDefaultDateRange());
+      setSelectedProd("");
     }
   }, [open]);
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <SkuSalesExcelDialogView
+      <KonkSliceExcelDialogView
         dateRange={dateRange}
         onDateRangeChange={setDateRange}
-        isExporting={isExporting}
+        selectedProd={selectedProd}
+        onSelectedProdChange={setSelectedProd}
+        prods={prods}
+        isDownloading={isDownloading}
         onDownload={handleDownload}
         onCancel={handleCancel}
       />

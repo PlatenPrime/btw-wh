@@ -1,4 +1,4 @@
-import { downloadSkuSalesExcel } from "@/modules/skus/api/services/queries/downloadSkuSalesExcel";
+import { downloadKonkSalesExcel } from "@/modules/konks/api/services/queries/downloadKonkSalesExcel";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "sonner";
@@ -29,17 +29,19 @@ async function getErrorMessageFromBlobError(error: unknown): Promise<string> {
   return error instanceof Error ? error.message : "Невідома помилка";
 }
 
-export function useExportSkuSalesExcelMutation() {
+export function useDownloadKonkSalesExcelMutation() {
   return useMutation({
-    mutationFn: async ({
-      skuId,
+    mutationFn: ({
+      konk,
+      prod,
       dateFrom,
       dateTo,
     }: {
-      skuId: string;
+      konk: string;
+      prod: string;
       dateFrom: string;
       dateTo: string;
-    }) => downloadSkuSalesExcel(skuId, dateFrom, dateTo),
+    }) => downloadKonkSalesExcel(konk, prod, dateFrom, dateTo),
     onSuccess: ({ blob, filename }) => {
       triggerBlobDownload(blob, filename);
       toast.success("Файл успішно завантажено");

@@ -34,8 +34,8 @@ export function SkuSalesExcelDialogView({
       </DialogHeader>
       <div className="flex flex-col gap-4">
         <p className="text-muted-foreground text-sm">
-          Файл формується на основі даних API за обраний період: дата, продажі
-          (шт), виручка, ціна, ознака дня постачання.
+          Файл формується на backend та завантажується готовим Excel за обраний
+          період.
         </p>
         <Calendar
           mode="range"
