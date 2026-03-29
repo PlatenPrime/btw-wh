@@ -35,6 +35,14 @@ export interface GetSkusParams {
   signal?: AbortSignal;
 }
 
+export interface GetSkusBySkugrParams {
+  skugrId: string;
+  page: number;
+  limit: number;
+  search?: string;
+  signal?: AbortSignal;
+}
+
 export interface SkuByIdResponseDto {
   message: string;
   data: SkuDto;

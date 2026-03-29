@@ -29,7 +29,7 @@ export function PaginationControls({
       </Button>
 
       {totalPages <= 1 ? (
-        <span className="text-muted-foreground text-sm">0</span>
+        <span className="text-muted-foreground text-sm">1</span>
       ) : (
         <span className="text-muted-foreground flex items-center text-sm text-nowrap">
           {currentPage} / {totalPages}

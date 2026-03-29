@@ -17,6 +17,7 @@ export function useFillSkugrSkusMutation() {
     onSuccess: (res, { id }) => {
       queryClient.invalidateQueries({ queryKey: ["skugrs"] });
       queryClient.invalidateQueries({ queryKey: ["skugrs", "id", id] });
+      queryClient.invalidateQueries({ queryKey: ["skusBySkugr"] });
       const s = res.stats;
       toast.success("Групу заповнено з браузера", {
         description: `Отримано: ${s.fetched}, створено: ${s.created}, додано існуючих: ${s.linkedExisting}, пропущено в групі: ${s.skippedAlreadyInGroup}`,

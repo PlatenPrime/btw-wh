@@ -1,5 +1,3 @@
-import type { SkuDto } from "@/modules/skus/api/types";
-
 export interface SkugrDto {
   _id: string;
   konkName: string;
@@ -11,10 +9,8 @@ export interface SkugrDto {
   updatedAt: string;
 }
 
-/** Відповідь GET /skugrs/id/:id — skus як повні документи SKU */
-export interface SkugrPageDto extends Omit<SkugrDto, "skus"> {
-  skus: SkuDto[];
-}
+/** Відповідь GET /skugrs/id/:id — без поля skus (список SKU окремо GET /skus/by-skugr/:id) */
+export type SkugrPageDto = Omit<SkugrDto, "skus">;
 
 export interface SkugrsPagination {
   page: number;

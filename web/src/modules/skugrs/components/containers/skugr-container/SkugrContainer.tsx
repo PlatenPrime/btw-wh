@@ -2,6 +2,7 @@ import { useKonksQuery } from "@/modules/konks/api/hooks/queries/useKonksQuery";
 import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
 import type { SkugrPageDto } from "@/modules/skugrs/api/types";
 import { SkugrContainerView } from "@/modules/skugrs/components/containers/skugr-container/SkugrContainerView";
+import { SkusBySkugrFetcher } from "@/modules/skus/components/fetchers/skus-by-skugr-fetcher";
 import { useMemo } from "react";
 
 interface SkugrContainerProps {
@@ -11,19 +12,20 @@ interface SkugrContainerProps {
 export function SkugrContainer({ skugr }: SkugrContainerProps) {
   const konksQuery = useKonksQuery();
   const prodsQuery = useProdsQuery();
-  const konks = konksQuery.data?.data ?? [];
-  const prods = prodsQuery.data?.data ?? [];
 
-  const konk = useMemo(
-    () => konks.find((k) => k.name === skugr.konkName),
-    [konks, skugr.konkName],
-  );
-  const prod = useMemo(
-    () => prods.find((p) => p.name === skugr.prodName),
-    [prods, skugr.prodName],
-  );
+  const konk = useMemo(() => {
+    const konks = konksQuery.data?.data ?? [];
+    return konks.find((k) => k.name === skugr.konkName);
+  }, [konksQuery.data, skugr.konkName]);
+  const prod = useMemo(() => {
+    const prods = prodsQuery.data?.data ?? [];
+    return prods.find((p) => p.name === skugr.prodName);
+  }, [prodsQuery.data, skugr.prodName]);
 
   return (
-    <SkugrContainerView skugr={skugr} konk={konk} prod={prod} prods={prods} />
+    <div className="grid gap-4">
+      <SkugrContainerView skugr={skugr} konk={konk} prod={prod} />
+      <SkusBySkugrFetcher skugrId={skugr._id} />
+    </div>
   );
 }
