@@ -13,6 +13,7 @@ export function useSkugrsQuery({
   konkName = "",
   prodName = "",
   search = "",
+  isSliced,
   signal,
   enabled = true,
 }: UseSkugrsQueryParams) {
@@ -21,7 +22,7 @@ export function useSkugrsQuery({
   return useQuery({
     queryKey: [
       "skugrs",
-      { page, limit, konkName, prodName, search: debouncedSearch },
+      { page, limit, konkName, prodName, search: debouncedSearch, isSliced },
     ],
     queryFn: ({ signal: querySignal }) =>
       getSkugrs({
@@ -30,6 +31,7 @@ export function useSkugrsQuery({
         konkName,
         prodName,
         search: debouncedSearch,
+        isSliced,
         signal: signal ?? querySignal,
       }),
     placeholderData: keepPreviousData,

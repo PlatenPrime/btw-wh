@@ -14,12 +14,36 @@ import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
 import { useSkugrsParams } from "@/modules/skugrs/hooks/useSkugrsParams";
 
 export function SkugrsControls() {
-  const { limit, setLimit, konkName, setKonkName, prodName, setProdName, search, setSearch } =
-    useSkugrsParams();
+  const {
+    limit,
+    setLimit,
+    konkName,
+    setKonkName,
+    prodName,
+    setProdName,
+    search,
+    setSearch,
+    isSliced,
+    setIsSliced,
+  } = useSkugrsParams();
   const prodsQuery = useProdsQuery();
   const konksQuery = useKonksQuery();
   const prods = prodsQuery.data?.data ?? [];
   const konks = konksQuery.data?.data ?? [];
+  const slicedFilterValue =
+    isSliced === true ? "sliced" : isSliced === false ? "unsliced" : "all";
+
+  const handleSlicedFilterChange = (value: string) => {
+    if (value === "sliced") {
+      setIsSliced(true);
+      return;
+    }
+    if (value === "unsliced") {
+      setIsSliced(false);
+      return;
+    }
+    setIsSliced(undefined);
+  };
 
   return (
     <Wrapper className="grid grid-cols-1 gap-3">
@@ -85,6 +109,16 @@ export function SkugrsControls() {
             limit={limit}
             setLimit={setLimit}
           />
+          <Select value={slicedFilterValue} onValueChange={handleSlicedFilterChange}>
+            <SelectTrigger aria-label="Фільтр по срезах">
+              <SelectValue placeholder="Срези" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Усі</SelectItem>
+              <SelectItem value="sliced">Зрізи</SelectItem>
+              <SelectItem value="unsliced">Без зрізів</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
       </div>
     </Wrapper>

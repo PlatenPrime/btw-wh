@@ -4,6 +4,7 @@ export interface SkugrDto {
   prodName: string;
   title: string;
   url: string;
+  isSliced: boolean;
   skus: string[];
   createdAt: string;
   updatedAt: string;
@@ -33,6 +34,7 @@ export interface GetSkugrsParams {
   konkName?: string;
   prodName?: string;
   search?: string;
+  isSliced?: boolean;
   signal?: AbortSignal;
 }
 
@@ -41,6 +43,7 @@ export interface CreateSkugrDto {
   prodName: string;
   title: string;
   url: string;
+  isSliced?: boolean;
   skus?: string[];
 }
 
@@ -49,6 +52,7 @@ export interface UpdateSkugrDto {
   prodName?: string;
   title?: string;
   url?: string;
+  isSliced?: boolean;
 }
 
 export interface SkugrResponseDto {

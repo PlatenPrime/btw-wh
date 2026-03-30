@@ -35,6 +35,7 @@ export function CreateSkugrForm({ onSuccess, onCancel }: CreateSkugrFormProps) {
         prodName: data.prodName,
         title: data.title.trim(),
         url: data.url.trim(),
+        isSliced: data.isSliced,
         skus: [],
       });
       form.reset(createSkugrFormDefaultValues);
@@ -52,6 +53,10 @@ export function CreateSkugrForm({ onSuccess, onCancel }: CreateSkugrFormProps) {
       konks={konks}
       onSubmit={onSubmit}
       onCancel={onCancel}
+      isSliced={form.watch("isSliced")}
+      onIsSlicedChange={(checked) =>
+        form.setValue("isSliced", checked, { shouldDirty: true })
+      }
     />
   );
 }

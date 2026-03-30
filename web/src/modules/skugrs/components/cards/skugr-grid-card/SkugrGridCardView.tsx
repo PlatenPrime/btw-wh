@@ -1,3 +1,5 @@
+import { CardActionsMenu } from "@/components/shared/card-actions/CardActionsMenu";
+import type { CardAction } from "@/components/shared/card-actions/types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import {
@@ -15,12 +17,14 @@ interface SkugrGridCardViewProps {
   skugr: SkugrDto;
   konk: KonkDto | undefined;
   prod: ProdDto | undefined;
+  actions: CardAction[];
 }
 
 export function SkugrGridCardView({
   skugr,
   konk,
   prod,
+  actions,
 }: SkugrGridCardViewProps) {
   const theme = getKonkTheme(skugr.konkName);
   const skuCount = skugr.skus?.length ?? 0;
@@ -38,6 +42,9 @@ export function SkugrGridCardView({
         title={konk?.title}
       />
       <CardHeader className="grid gap-2 p-2">
+        <div className="flex justify-end">
+          <CardActionsMenu actions={actions} orientation="horizontal" size="sm" align="end" />
+        </div>
         <CardTitle className="line-clamp-2 text-center text-base leading-tight">
           <Link
             to={`/sku/skugrs/${skugr._id}`}

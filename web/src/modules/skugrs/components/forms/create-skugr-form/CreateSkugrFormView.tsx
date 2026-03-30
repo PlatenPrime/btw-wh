@@ -9,23 +9,32 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
 import { EntityLabel } from "@/modules/analogs/components/entity-label";
 import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
-import type { UseFormReturn } from "react-hook-form";
-import type { CreateSkugrFormData } from "./schema";
+import type { FieldValues, Path, PathValue, UseFormReturn } from "react-hook-form";
 
-interface CreateSkugrFormViewProps {
-  form: UseFormReturn<CreateSkugrFormData>;
+type BaseSkugrFormData = FieldValues & {
+  konkName: string;
+  prodName: string;
+  title: string;
+  url: string;
+};
+
+interface CreateSkugrFormViewProps<TFormData extends BaseSkugrFormData> {
+  form: UseFormReturn<TFormData>;
   isSubmitting: boolean;
   prods: ProdDto[];
   konks: KonkDto[];
-  onSubmit: (data: CreateSkugrFormData) => void;
+  onSubmit: (data: TFormData) => void;
   onCancel?: () => void;
   submitText?: string;
+  isSliced: boolean;
+  onIsSlicedChange: (checked: boolean) => void;
 }
 
-export function CreateSkugrFormView({
+export function CreateSkugrFormView<TFormData extends BaseSkugrFormData>({
   form,
   isSubmitting,
   prods,
@@ -33,7 +42,9 @@ export function CreateSkugrFormView({
   onSubmit,
   onCancel,
   submitText = "Створити",
-}: CreateSkugrFormViewProps) {
+  isSliced,
+  onIsSlicedChange,
+}: CreateSkugrFormViewProps<TFormData>) {
   const {
     register,
     handleSubmit,
@@ -42,6 +53,10 @@ export function CreateSkugrFormView({
     formState: { errors },
   } = form;
   const watchedValues = watch();
+  const konkNameError = errors.konkName?.message as string | undefined;
+  const prodNameError = errors.prodName?.message as string | undefined;
+  const titleError = errors.title?.message as string | undefined;
+  const urlError = errors.url?.message as string | undefined;
 
   return (
     <Card className="w-full max-w-md border-0 bg-transparent shadow-none">
@@ -52,7 +67,11 @@ export function CreateSkugrFormView({
             <Select
               value={watchedValues.konkName || ""}
               onValueChange={(v) =>
-                setValue("konkName", v, { shouldValidate: true })
+                setValue(
+                  "konkName" as Path<TFormData>,
+                  v as PathValue<TFormData, Path<TFormData>>,
+                  { shouldValidate: true },
+                )
               }
               disabled={isSubmitting}
             >
@@ -75,11 +94,7 @@ export function CreateSkugrFormView({
                 ))}
               </SelectContent>
             </Select>
-            {errors.konkName && (
-              <p className="text-destructive text-xs">
-                {errors.konkName.message}
-              </p>
-            )}
+            {konkNameError && <p className="text-destructive text-xs">{konkNameError}</p>}
           </div>
 
           <div className="grid gap-2">
@@ -87,7 +102,11 @@ export function CreateSkugrFormView({
             <Select
               value={watchedValues.prodName || ""}
               onValueChange={(v) =>
-                setValue("prodName", v, { shouldValidate: true })
+                setValue(
+                  "prodName" as Path<TFormData>,
+                  v as PathValue<TFormData, Path<TFormData>>,
+                  { shouldValidate: true },
+                )
               }
               disabled={isSubmitting}
             >
@@ -110,25 +129,19 @@ export function CreateSkugrFormView({
                 ))}
               </SelectContent>
             </Select>
-            {errors.prodName && (
-              <p className="text-destructive text-xs">
-                {errors.prodName.message}
-              </p>
-            )}
+            {prodNameError && <p className="text-destructive text-xs">{prodNameError}</p>}
           </div>
 
           <div className="grid gap-2">
             <Label htmlFor="skugr-title">Назва групи *</Label>
             <Input
               id="skugr-title"
-              {...register("title")}
+              {...register("title" as Path<TFormData>)}
               disabled={isSubmitting}
               className={errors.title ? "border-destructive" : ""}
               placeholder="Наприклад, Категорія на сайті конкурента"
             />
-            {errors.title && (
-              <p className="text-destructive text-xs">{errors.title.message}</p>
-            )}
+            {titleError && <p className="text-destructive text-xs">{titleError}</p>}
           </div>
 
           <div className="grid gap-2">
@@ -136,14 +149,22 @@ export function CreateSkugrFormView({
             <Input
               id="skugr-url"
               type="url"
-              {...register("url")}
+              {...register("url" as Path<TFormData>)}
               disabled={isSubmitting}
               className={errors.url ? "border-destructive" : ""}
               placeholder="https://..."
             />
-            {errors.url && (
-              <p className="text-destructive text-xs">{errors.url.message}</p>
-            )}
+            {urlError && <p className="text-destructive text-xs">{urlError}</p>}
+          </div>
+
+          <div className="flex items-center justify-between gap-2">
+            <Label htmlFor="skugr-is-sliced">Зрізи</Label>
+            <Switch
+              id="skugr-is-sliced"
+              checked={isSliced}
+              onCheckedChange={onIsSlicedChange}
+              disabled={isSubmitting}
+            />
           </div>
 
           <DialogActions

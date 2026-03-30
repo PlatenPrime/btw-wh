@@ -10,6 +10,13 @@ export function useSkugrsParams() {
   const konkName = getParam(params, "konkName", "");
   const prodName = getParam(params, "prodName", "");
   const search = getParam(params, "search", "");
+  const isSlicedParam = getParam(params, "isSliced", "");
+  const isSliced =
+    isSlicedParam === "true"
+      ? true
+      : isSlicedParam === "false"
+        ? false
+        : undefined;
 
   const setPage = (newPage: number) =>
     updateSearchParams(params, { page: String(newPage) }, setParams);
@@ -26,16 +33,25 @@ export function useSkugrsParams() {
   const setProdName = (value: string) =>
     updateSearchParams(params, { prodName: value, page: "1" }, setParams);
 
+  const setIsSliced = (value: boolean | undefined) =>
+    updateSearchParams(
+      params,
+      { isSliced: value === undefined ? "" : String(value), page: "1" },
+      setParams,
+    );
+
   return {
     page,
     limit,
     konkName,
     prodName,
     search,
+    isSliced,
     setPage,
     setLimit,
     setSearch,
     setKonkName,
     setProdName,
+    setIsSliced,
   };
 }
