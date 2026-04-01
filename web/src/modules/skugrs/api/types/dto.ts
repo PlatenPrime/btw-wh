@@ -86,3 +86,15 @@ export interface FillSkugrSkusResponseDto {
   data: SkugrDto;
   stats: FillSkugrSkusStats;
 }
+
+export interface SkugrDailySummaryItem {
+  date: string;
+  stock: number;
+  sales: number;
+  revenue: number;
+}
+
+export interface SkugrDailySummaryResponseDto {
+  message: string;
+  data: SkugrDailySummaryItem[];
+}
