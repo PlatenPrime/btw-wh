@@ -9,6 +9,7 @@ export interface BtradeStockDto {
 export interface ArtDto {
   _id: string;
   artikul: string;
+  prodName?: string;
   nameukr: string;
   namerus: string;
   zone: string;

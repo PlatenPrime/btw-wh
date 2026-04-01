@@ -162,6 +162,11 @@ export function UpdateAnalogFormView({
                 <div className="flex-1">
                   <p className="text-sm font-medium">{artData.nameukr}</p>
                   <p className="text-muted-foreground text-xs">{artikul}</p>
+                  {artData.prodName ? (
+                    <p className="text-muted-foreground text-xs">
+                      Виробник (ключ): {artData.prodName}
+                    </p>
+                  ) : null}
                 </div>
               </div>
             </div>

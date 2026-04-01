@@ -31,6 +31,8 @@ export function ArtsExcelUploaderView({
         <p className="text-muted-foreground text-sm">
           Завантажте файл <code className="rounded px-1">.xlsx</code> з полями{" "}
           <span className="font-bold">artikul, zone, namerus, nameukr</span>
+          ; опціонально — <span className="font-bold">prodName</span> (ключ
+          виробника)
         </p>
       </header>
 

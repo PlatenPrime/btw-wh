@@ -24,7 +24,7 @@ export function ArtsContainerView({
         <SearchPanel
           search={search}
           onSearchChange={(e) => onSearchChange(e.target.value)}
-          placeholder="Пошук артикулів..."
+          placeholder="Пошук: артикул, prodName (ключ виробника), назви..."
         />
       </Wrapper>
       <Wrapper>

@@ -23,6 +23,12 @@ export function ArtDetailCard({ artData }: ArtDetailCardProps) {
           link="#"
         />
 
+        {artData.prodName ? (
+          <p className="text-muted-foreground text-sm">
+            Виробник (ключ): {artData.prodName}
+          </p>
+        ) : null}
+
         <div className="grid gap-2">
           <ArtZone artData={artData} />
           <ArtLimit limit={artData.limit} />

@@ -71,6 +71,11 @@ export function CreateKaskFormView({
                         {artData.nameukr}
                       </span>
                     )}
+                    {artData.prodName ? (
+                      <span className="text-muted-foreground text-center text-xs">
+                        Виробник (ключ): {artData.prodName}
+                      </span>
+                    ) : null}
                   </>
                 )}
                 {!isArtLoading && (!artData || artikul.length !== 9) && (

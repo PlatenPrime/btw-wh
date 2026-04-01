@@ -80,6 +80,11 @@ const ArtsExcelUploader = () => {
                 baseData.abc = abcValue;
               }
 
+              const prodNameValue = row.prodName?.toString().trim();
+              if (prodNameValue) {
+                baseData.prodName = prodNameValue;
+              }
+
               return baseData;
             })
             .filter((row) => row.artikul);
