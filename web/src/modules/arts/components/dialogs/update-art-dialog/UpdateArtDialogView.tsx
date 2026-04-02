@@ -4,25 +4,27 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
-import { UpdateArtLimitForm } from "@/modules/arts/components/forms/update-art-limit-form/UpdateArtLimitForm";
+import { UpdateArtForm } from "@/modules/arts/components/forms/update-art-form/UpdateArtForm";
 
-interface UpdateArtLimitDialogViewProps {
+interface UpdateArtDialogViewProps {
   artData: ArtDto;
   onSuccess: () => void;
   onCancel: () => void;
 }
 
-export function UpdateArtLimitDialogView({
+export function UpdateArtDialogView({
   artData,
   onSuccess,
   onCancel,
-}: UpdateArtLimitDialogViewProps) {
+}: UpdateArtDialogViewProps) {
   return (
     <DialogContent className="sm:max-w-md">
       <DialogHeader>
-        <DialogTitle className="text-center">Артикул: {artData.artikul}</DialogTitle>
+        <DialogTitle className="text-center">
+          Редагування: {artData.artikul}
+        </DialogTitle>
       </DialogHeader>
-      <UpdateArtLimitForm
+      <UpdateArtForm
         artData={artData}
         onSuccess={onSuccess}
         onCancel={onCancel}

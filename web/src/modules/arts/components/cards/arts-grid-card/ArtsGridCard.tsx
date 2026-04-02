@@ -11,10 +11,6 @@ export function ArtsGridCard({ art }: GridCardProps) {
     rawNameukr.length > 50 ? rawNameukr.slice(0, 47) + "..." : rawNameukr;
 
   return (
-    <ArtsGridCardView
-      artikul={art.artikul}
-      nameukr={nameukr}
-      prodName={art.prodName}
-    />
+    <ArtsGridCardView artikul={art.artikul} nameukr={nameukr} />
   );
 }

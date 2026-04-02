@@ -1,6 +1,7 @@
 import { ArtikulImageLink } from "@/components/shared/artikul-image-link/ArtikulImageLink";
 import { Card, CardContent } from "@/components/ui";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
+import { ArtProdPreview } from "@/modules/arts/components/elements/art-prod-preview";
 import { BtradeArtDataContainer } from "@/modules/arts/components/containers/btrade-art-data-container/BtradeArtDataContainer";
 import { BtradeArtDataSkeleton } from "@/modules/arts/components/containers/btrade-art-data-container/BtradeArtDataSkeleton";
 import { ArtZone } from "@/modules/arts/components/elements/art-zone/ArtZone";
@@ -23,11 +24,12 @@ export function ArtDetailCard({ artData }: ArtDetailCardProps) {
           link="#"
         />
 
-        {artData.prodName ? (
-          <p className="text-muted-foreground text-sm">
-            Виробник (ключ): {artData.prodName}
-          </p>
-        ) : null}
+        <ArtProdPreview
+          art={artData}
+          imageSize="md"
+          className="text-sm"
+          fallbackKeyClassName="text-muted-foreground text-sm"
+        />
 
         <div className="grid gap-2">
           <ArtZone artData={artData} />

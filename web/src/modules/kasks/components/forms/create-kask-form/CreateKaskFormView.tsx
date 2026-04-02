@@ -7,6 +7,7 @@ import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { BtradeArtDataContainer } from "@/modules/arts/components/containers/btrade-art-data-container/BtradeArtDataContainer";
 import { BtradeArtDataSkeleton } from "@/modules/arts/components/containers/btrade-art-data-container/BtradeArtDataSkeleton";
 import { ArtImage } from "@/modules/arts/components/elements/art-image/ArtImage";
+import { ArtProdPreview } from "@/modules/arts/components/elements/art-prod-preview";
 import { BtradeArtDataFetcher } from "@/modules/arts/components/fetchers/btrade-art-data-fetcher/BtradeArtDataFetcher";
 import type { CreateKaskFormData } from "@/modules/kasks/components/forms/create-kask-form/schema";
 import type { UseFormReturn } from "react-hook-form";
@@ -71,11 +72,12 @@ export function CreateKaskFormView({
                         {artData.nameukr}
                       </span>
                     )}
-                    {artData.prodName ? (
-                      <span className="text-muted-foreground text-center text-xs">
-                        Виробник (ключ): {artData.prodName}
-                      </span>
-                    ) : null}
+                    <div className="flex w-full justify-center">
+                      <ArtProdPreview
+                        art={artData}
+                        className="max-w-full justify-center text-center text-xs"
+                      />
+                    </div>
                   </>
                 )}
                 {!isArtLoading && (!artData || artikul.length !== 9) && (

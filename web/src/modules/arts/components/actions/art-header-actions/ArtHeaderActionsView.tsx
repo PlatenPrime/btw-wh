@@ -1,29 +1,33 @@
 import type { ArtDto } from "@/modules/arts/api/types/dto";
-import { UpdateArtLimitDialog } from "@/modules/arts/components/dialogs/update-art-limit-dialog/UpdateArtLimitDialog";
+import { UpdateArtDialog } from "@/modules/arts/components/dialogs/update-art-dialog/UpdateArtDialog";
 import { CreateAskDialog } from "@/modules/asks/components/dialogs/create-ask-dialog/CreateAskDialog";
 
 interface ArtHeaderActionsViewProps {
   artData: ArtDto;
-  updateLimitDialogOpen: boolean;
-  onUpdateLimitDialogOpenChange: (open: boolean) => void;
+  canEditArt: boolean;
+  updateArtDialogOpen: boolean;
+  onUpdateArtDialogOpenChange: (open: boolean) => void;
   createAskDialogOpen: boolean;
   onCreateAskDialogOpenChange: (open: boolean) => void;
 }
 
 export function ArtHeaderActionsView({
   artData,
-  updateLimitDialogOpen,
-  onUpdateLimitDialogOpenChange,
+  canEditArt,
+  updateArtDialogOpen,
+  onUpdateArtDialogOpenChange,
   createAskDialogOpen,
   onCreateAskDialogOpenChange,
 }: ArtHeaderActionsViewProps) {
   return (
     <>
-      <UpdateArtLimitDialog
-        artData={artData}
-        open={updateLimitDialogOpen}
-        onOpenChange={onUpdateLimitDialogOpenChange}
-      />
+      {canEditArt && (
+        <UpdateArtDialog
+          artData={artData}
+          open={updateArtDialogOpen}
+          onOpenChange={onUpdateArtDialogOpenChange}
+        />
+      )}
       <CreateAskDialog
         preFilledArtikul={artData.artikul}
         open={createAskDialogOpen}

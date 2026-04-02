@@ -1,17 +1,17 @@
-interface UseUpdateArtLimitDialogProps {
+interface UseUpdateArtDialogProps {
   onOpenChange?: (open: boolean) => void;
   onSuccess?: () => void;
 }
 
-interface UseUpdateArtLimitDialogReturn {
+interface UseUpdateArtDialogReturn {
   handleSuccess: () => void;
   handleCancel: () => void;
 }
 
-export function useUpdateArtLimitDialog({
+export function useUpdateArtDialog({
   onOpenChange,
   onSuccess,
-}: UseUpdateArtLimitDialogProps): UseUpdateArtLimitDialogReturn {
+}: UseUpdateArtDialogProps): UseUpdateArtDialogReturn {
   const handleSuccess = () => {
     onOpenChange?.(false);
     onSuccess?.();
@@ -26,4 +26,3 @@ export function useUpdateArtLimitDialog({
     handleCancel,
   };
 }
-

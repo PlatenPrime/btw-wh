@@ -178,6 +178,11 @@ export const appSidebarData: { navMain: AppSidebarNavGroup[] } = {
           url: "/sku/skugrs",
           iconName: "PackageSearch",
         },
+        {
+          title: "Зрізи конкурентів",
+          url: "/sku/sku-slices",
+          iconName: "Projector",
+        },
       ],
     },
     {

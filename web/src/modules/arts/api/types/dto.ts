@@ -6,10 +6,18 @@ export interface BtradeStockDto {
   _id: string;
 }
 
+/** Виробник з довідника prods (GET /arts/artikul/:artikul при exists: true) */
+export interface ArtProdDto {
+  name: string;
+  title: string;
+  imageUrl: string;
+}
+
 export interface ArtDto {
   _id: string;
   artikul: string;
   prodName?: string;
+  prod?: ArtProdDto | null;
   nameukr: string;
   namerus: string;
   zone: string;

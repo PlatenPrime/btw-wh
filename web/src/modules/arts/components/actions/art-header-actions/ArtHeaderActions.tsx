@@ -3,7 +3,8 @@ import { useRegisterHeaderActions } from "@/components/layout/header-actions";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { useUpdateBtradeStockMutation } from "@/modules/arts/api/hooks/mutations/useUpdateBtradeStockMutation";
 import { ArtHeaderActionsView } from "@/modules/arts/components/actions/art-header-actions/ArtHeaderActionsView";
-import { Edit, MessageSquarePlus, RefreshCw } from "lucide-react";
+import { useRole } from "@/modules/auth/hooks/useRole";
+import { MessageSquarePlus, RefreshCw, SquarePen } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 
 interface ArtHeaderActionsProps {
@@ -11,7 +12,9 @@ interface ArtHeaderActionsProps {
 }
 
 export function ArtHeaderActions({ artData }: ArtHeaderActionsProps) {
-  const [updateLimitDialogOpen, setUpdateLimitDialogOpen] = useState(false);
+  const { isAdmin } = useRole();
+  const canEditArt = isAdmin();
+  const [updateArtDialogOpen, setUpdateArtDialogOpen] = useState(false);
   const [createAskDialogOpen, setCreateAskDialogOpen] = useState(false);
 
   const updateBtradeStockMutation = useUpdateBtradeStockMutation({
@@ -26,16 +29,16 @@ export function ArtHeaderActions({ artData }: ArtHeaderActionsProps) {
     }
   }, [artData.artikul, updateBtradeStockMutation]);
 
-  const openUpdateLimitDialog = useCallback(() => {
-    setUpdateLimitDialogOpen(true);
+  const openUpdateArtDialog = useCallback(() => {
+    setUpdateArtDialogOpen(true);
   }, []);
 
   const openCreateAskDialog = useCallback(() => {
     setCreateAskDialogOpen(true);
   }, []);
 
-  const headerActions = useMemo<HeaderAction[]>(
-    () => [
+  const headerActions = useMemo<HeaderAction[]>(() => {
+    const actions: HeaderAction[] = [
       {
         id: "update-btrade-stock",
         label: "Оновити Btrade Stock",
@@ -44,32 +47,43 @@ export function ArtHeaderActions({ artData }: ArtHeaderActionsProps) {
         variant: "default",
         onClick: handleUpdateBtradeStock,
       },
-      {
-        id: "update-art-limit",
-        label: "Змінити ліміт",
-        icon: Edit,
+    ];
+
+    if (canEditArt) {
+      actions.push({
+        id: "update-art",
+        label: "Редагувати артикул",
+        icon: SquarePen,
         variant: "default",
-        onClick: openUpdateLimitDialog,
-      },
-      {
-        id: "create-ask",
-        label: "Створити запит",
-        icon: MessageSquarePlus,
-        iconColor: "emerald",
-        variant: "default",
-        onClick: openCreateAskDialog,
-      },
-    ],
-    [handleUpdateBtradeStock, openCreateAskDialog, openUpdateLimitDialog],
-  );
+        onClick: openUpdateArtDialog,
+      });
+    }
+
+    actions.push({
+      id: "create-ask",
+      label: "Створити запит",
+      icon: MessageSquarePlus,
+      iconColor: "emerald",
+      variant: "default",
+      onClick: openCreateAskDialog,
+    });
+
+    return actions;
+  }, [
+    canEditArt,
+    handleUpdateBtradeStock,
+    openCreateAskDialog,
+    openUpdateArtDialog,
+  ]);
 
   useRegisterHeaderActions(headerActions);
 
   return (
     <ArtHeaderActionsView
       artData={artData}
-      updateLimitDialogOpen={updateLimitDialogOpen}
-      onUpdateLimitDialogOpenChange={setUpdateLimitDialogOpen}
+      canEditArt={canEditArt}
+      updateArtDialogOpen={updateArtDialogOpen}
+      onUpdateArtDialogOpenChange={setUpdateArtDialogOpen}
       createAskDialogOpen={createAskDialogOpen}
       onCreateAskDialogOpenChange={setCreateAskDialogOpen}
     />

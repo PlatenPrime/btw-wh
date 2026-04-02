@@ -157,6 +157,11 @@ const Sku = lazy(() =>
     default: module.Sku,
   })),
 );
+const SkuSlices = lazy(() =>
+  import("./modules/sku-slices/pages/sku-slices").then((module) => ({
+    default: module.SkuSlices,
+  })),
+);
 
 const Analogs = lazy(() =>
   import("./modules/analogs/pages/analogs").then((module) => ({
@@ -410,6 +415,15 @@ export const router = createHashRouter([
             element: (
               <ProtectedRoute>
                 <Konk />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "sku-slices",
+            element: (
+              <ProtectedRoute>
+                <SkuSlices />
               </ProtectedRoute>
             ),
             errorElement: <RouteErrorBoundary />,

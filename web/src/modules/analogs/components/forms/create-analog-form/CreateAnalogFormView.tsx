@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/select";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { ArtImage } from "@/modules/arts/components/elements/art-image/ArtImage";
+import { ArtProdPreview } from "@/modules/arts/components/elements/art-prod-preview";
 import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
 import type { UseFormReturn } from "react-hook-form";
@@ -162,11 +163,7 @@ export function CreateAnalogFormView({
                 <div className="flex-1">
                   <p className="text-sm font-medium">{artData.nameukr}</p>
                   <p className="text-muted-foreground text-xs">{artikul}</p>
-                  {artData.prodName ? (
-                    <p className="text-muted-foreground text-xs">
-                      Виробник (ключ): {artData.prodName}
-                    </p>
-                  ) : null}
+                  <ArtProdPreview art={artData} />
                 </div>
               </div>
             </div>
