@@ -24,5 +24,7 @@ export interface GetSkuSlicePageParams {
   date: string;
   page: number;
   limit: number;
+  /** Якщо true — у запит додається isInvalid=true (лише проблемні позиції зрізу). */
+  showInvalidOnly?: boolean;
   signal?: AbortSignal;
 }

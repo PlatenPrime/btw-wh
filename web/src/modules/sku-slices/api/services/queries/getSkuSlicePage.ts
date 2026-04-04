@@ -9,6 +9,7 @@ export const getSkuSlicePage = async ({
   date,
   page,
   limit,
+  showInvalidOnly,
   signal,
 }: GetSkuSlicePageParams): Promise<SkuSlicePageResponseDto> => {
   const params = new URLSearchParams({
@@ -17,6 +18,9 @@ export const getSkuSlicePage = async ({
     page: String(page),
     limit: String(limit),
   });
+  if (showInvalidOnly) {
+    params.set("isInvalid", "true");
+  }
   const res = await apiClient.get<SkuSlicePageResponseDto>(
     `sku-slices?${params.toString()}`,
     { signal },

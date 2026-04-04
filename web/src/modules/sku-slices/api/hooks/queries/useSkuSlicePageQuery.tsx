@@ -6,6 +6,7 @@ export interface UseSkuSlicePageQueryParams {
   date: string;
   page: number;
   limit: number;
+  showInvalidOnly?: boolean;
 }
 
 export function useSkuSlicePageQuery({
@@ -13,11 +14,27 @@ export function useSkuSlicePageQuery({
   date,
   page,
   limit,
+  showInvalidOnly,
 }: UseSkuSlicePageQueryParams) {
   return useQuery({
-    queryKey: ["sku-slices", "list", konkName, date, page, limit],
+    queryKey: [
+      "sku-slices",
+      "list",
+      konkName,
+      date,
+      page,
+      limit,
+      Boolean(showInvalidOnly),
+    ],
     queryFn: ({ signal }) =>
-      getSkuSlicePage({ konkName, date, page, limit, signal }),
+      getSkuSlicePage({
+        konkName,
+        date,
+        page,
+        limit,
+        showInvalidOnly,
+        signal,
+      }),
     enabled: Boolean(konkName && date),
     staleTime: 2 * 60 * 1000,
     placeholderData: keepPreviousData,

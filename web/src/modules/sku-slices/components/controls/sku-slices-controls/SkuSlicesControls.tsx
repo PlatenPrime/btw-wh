@@ -17,6 +17,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import { useKonksQuery } from "@/modules/konks/api/hooks/queries/useKonksQuery";
 import { EntityLabel } from "@/modules/analogs/components/entity-label";
 import { cn } from "@/lib/utils";
@@ -28,6 +29,8 @@ interface SkuSlicesControlsProps {
   onKonkNameChange: (value: string) => void;
   date: string;
   onDateChange: (value: string) => void;
+  showInvalidOnly: boolean;
+  onShowInvalidOnlyChange: (value: boolean) => void;
 }
 
 function parseDate(value: string): Date | undefined {
@@ -44,6 +47,8 @@ export function SkuSlicesControls({
   onKonkNameChange,
   date,
   onDateChange,
+  showInvalidOnly,
+  onShowInvalidOnlyChange,
 }: SkuSlicesControlsProps) {
   const konksQuery = useKonksQuery();
   const konks = konksQuery.data?.data ?? [];
@@ -76,6 +81,7 @@ export function SkuSlicesControls({
                   imageUrl={k.imageUrl}
                   title={k.title}
                   fallbackLabel={k.name}
+                  imageSize="xs"
                 />
               </SelectItem>
             ))}
@@ -114,6 +120,19 @@ export function SkuSlicesControls({
             />
           </PopoverContent>
         </Popover>
+      </div>
+      <div className="flex items-center gap-2 pb-0.5">
+        <Switch
+          id="sku-slices-invalid-only"
+          checked={showInvalidOnly}
+          onCheckedChange={onShowInvalidOnlyChange}
+        />
+        <Label
+          htmlFor="sku-slices-invalid-only"
+          className="text-muted-foreground cursor-pointer text-sm font-normal"
+        >
+          Лише невалідні
+        </Label>
       </div>
     </Wrapper>
   );

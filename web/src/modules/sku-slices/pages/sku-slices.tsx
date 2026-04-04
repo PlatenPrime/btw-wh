@@ -18,6 +18,7 @@ export function SkuSlices() {
   const [konkName, setKonkName] = useState("");
   const [date, setDate] = useState("");
   const [page, setPage] = useState(1);
+  const [showInvalidOnly, setShowInvalidOnly] = useState(false);
 
   const handleKonkNameChange = useCallback((value: string) => {
     setKonkName(value);
@@ -29,11 +30,17 @@ export function SkuSlices() {
     setPage(1);
   }, []);
 
+  const handleShowInvalidOnlyChange = useCallback((value: boolean) => {
+    setShowInvalidOnly(value);
+    setPage(1);
+  }, []);
+
   const sliceQuery = useSkuSlicePageQuery({
     konkName,
     date,
     page,
     limit: PAGE_LIMIT,
+    showInvalidOnly,
   });
 
   const showForm = Boolean(konkName && date);
@@ -46,6 +53,8 @@ export function SkuSlices() {
           onKonkNameChange={handleKonkNameChange}
           date={date}
           onDateChange={handleDateChange}
+          showInvalidOnly={showInvalidOnly}
+          onShowInvalidOnlyChange={handleShowInvalidOnlyChange}
         />
 
         {!showForm && (
