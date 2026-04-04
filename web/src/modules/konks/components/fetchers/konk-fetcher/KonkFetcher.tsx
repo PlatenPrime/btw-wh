@@ -1,3 +1,4 @@
+import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
 import { EntityNotFound } from "@/components/shared/entity-not-found";
 import { ErrorDisplay } from "@/components/shared/error-components";
 import { useKonkByIdQuery } from "@/modules/konks/api/hooks/queries/useKonkByIdQuery";
@@ -14,7 +15,8 @@ export function KonkFetcher({
   ContainerComponent,
   SkeletonComponent,
 }: KonkFetcherProps) {
-  const { data, isLoading, error, refetch } = useKonkByIdQuery({ id });
+  const konkQuery = useKonkByIdQuery({ id });
+  const { data, isLoading, error, refetch, isFetching } = konkQuery;
 
   if (isLoading) {
     return <SkeletonComponent />;
@@ -40,5 +42,9 @@ export function KonkFetcher({
     );
   }
 
-  return <ContainerComponent konk={data.data} />;
+  return (
+    <DataRefetchOverlay isFetching={isFetching} isLoading={isLoading}>
+      <ContainerComponent konk={data.data} />
+    </DataRefetchOverlay>
+  );
 }

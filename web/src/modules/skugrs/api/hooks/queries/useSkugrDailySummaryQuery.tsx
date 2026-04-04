@@ -1,5 +1,5 @@
 import { getSkugrDailySummary } from "@/modules/skugrs/api/services/queries/getSkugrDailySummary";
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 export interface UseSkugrDailySummaryQueryParams {
   skugrId: string | undefined;
@@ -20,5 +20,6 @@ export function useSkugrDailySummaryQuery({
       getSkugrDailySummary(skugrId!, dateFrom, dateTo, signal),
     enabled: Boolean(skugrId && dateFrom && dateTo && enabled),
     staleTime: 5 * 60 * 1000,
+    placeholderData: keepPreviousData,
   });
 }

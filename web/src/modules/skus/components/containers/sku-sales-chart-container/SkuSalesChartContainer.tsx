@@ -1,3 +1,4 @@
+import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
 import { ErrorDisplay } from "@/components/shared/error-components";
 import { LoadingNoData } from "@/components/shared/loading-states/loading-nodata";
 import { Label } from "@/components/ui/label";
@@ -22,7 +23,7 @@ export function SkuSalesChartContainer({
   const [showSales, setShowSales] = useState(true);
   const [showRevenue, setShowRevenue] = useState(true);
 
-  const { data, isLoading, error, refetch } = useSkuSalesRangeQuery({
+  const { data, isLoading, isFetching, error, refetch } = useSkuSalesRangeQuery({
     skuId,
     dateFrom,
     dateTo,
@@ -34,11 +35,11 @@ export function SkuSalesChartContainer({
     );
   }
 
-  if (isLoading) {
+  if (isLoading && !data) {
     return <AnalogSalesChartSkeleton />;
   }
 
-  if (error) {
+  if (error && !data) {
     return (
       <ErrorDisplay
         error={error}
@@ -91,17 +92,19 @@ export function SkuSalesChartContainer({
           </Label>
         </div>
       </div>
-      {showChart ? (
-        <AnalogSalesChartView
-          data={items}
-          showSales={showSales}
-          showRevenue={showRevenue}
-        />
-      ) : (
-        <div className="text-muted-foreground rounded-md border border-dashed p-4 text-center text-sm">
-          Увімкніть хоча б одну серію: Продажі або Виручка.
-        </div>
-      )}
+      <DataRefetchOverlay isFetching={isFetching} isLoading={isLoading}>
+        {showChart ? (
+          <AnalogSalesChartView
+            data={items}
+            showSales={showSales}
+            showRevenue={showRevenue}
+          />
+        ) : (
+          <div className="text-muted-foreground rounded-md border border-dashed p-4 text-center text-sm">
+            Увімкніть хоча б одну серію: Продажі або Виручка.
+          </div>
+        )}
+      </DataRefetchOverlay>
     </div>
   );
 }

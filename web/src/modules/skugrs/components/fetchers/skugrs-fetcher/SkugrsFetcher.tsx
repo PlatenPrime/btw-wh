@@ -1,3 +1,4 @@
+import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
 import { ErrorDisplay } from "@/components/shared/error-components";
 import { LoadingNoData } from "@/components/shared/loading-states";
 import { useSkugrsQuery } from "@/modules/skugrs/api/hooks/queries/useSkugrsQuery";
@@ -37,5 +38,12 @@ export function SkugrsFetcher({
     return <LoadingNoData description="Товарні групи не знайдено" />;
   }
 
-  return <ContainerComponent data={skugrsQuery.data} />;
+  return (
+    <DataRefetchOverlay
+      isFetching={skugrsQuery.isFetching}
+      isLoading={skugrsQuery.isLoading}
+    >
+      <ContainerComponent data={skugrsQuery.data} />
+    </DataRefetchOverlay>
+  );
 }

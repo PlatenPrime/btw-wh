@@ -12,12 +12,18 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Calendar } from "@/components/ui/calendar";
+import { EntityLabel } from "@/modules/analogs/components/entity-label/EntityLabel";
+import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
 import type { DateRange } from "react-day-picker";
 
 interface KonkSliceExcelDialogViewProps {
   dateRange: DateRange | undefined;
   onDateRangeChange: (range: DateRange | undefined) => void;
+  showKonkSelect: boolean;
+  selectedKonkName: string;
+  onSelectedKonkNameChange: (value: string) => void;
+  konks: KonkDto[];
   selectedProd: string;
   onSelectedProdChange: (value: string) => void;
   prods: ProdDto[];
@@ -29,6 +35,10 @@ interface KonkSliceExcelDialogViewProps {
 export function KonkSliceExcelDialogView({
   dateRange,
   onDateRangeChange,
+  showKonkSelect,
+  selectedKonkName,
+  onSelectedKonkNameChange,
+  konks,
   selectedProd,
   onSelectedProdChange,
   prods,
@@ -39,7 +49,8 @@ export function KonkSliceExcelDialogView({
   const from = dateRange?.from;
   const to = dateRange?.to;
   const isRangeValid = from !== undefined && to !== undefined && from <= to;
-  const isDownloadDisabled = !isRangeValid || !selectedProd;
+  const isKonkOk = !showKonkSelect || Boolean(selectedKonkName);
+  const isDownloadDisabled = !isRangeValid || !selectedProd || !isKonkOk;
 
   return (
     <DialogContent className="sm:max-w-[425px]">
@@ -48,9 +59,40 @@ export function KonkSliceExcelDialogView({
       </DialogHeader>
       <div className="flex flex-col gap-4">
         <p className="text-muted-foreground text-sm">
-          Оберіть виробника та період. Файл буде сформований з endpoint
-          `sku-slices/konk/excel`.
+          {showKonkSelect
+            ? "Оберіть конкурента, виробника та період. Файл буде сформований з endpoint sku-slices/konk/excel."
+            : "Оберіть виробника та період. Файл буде сформований з endpoint sku-slices/konk/excel."}
         </p>
+        {showKonkSelect && (
+          <div className="grid gap-2">
+            <p className="text-sm font-medium">Конкурент</p>
+            <Select
+              value={selectedKonkName || "placeholder"}
+              onValueChange={(v) =>
+                onSelectedKonkNameChange(v === "placeholder" ? "" : v)
+              }
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Оберіть конкурента" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="placeholder" disabled>
+                  Оберіть конкурента
+                </SelectItem>
+                {konks.map((k) => (
+                  <SelectItem key={k._id} value={k.name}>
+                    <EntityLabel
+                      imageUrl={k.imageUrl}
+                      title={k.title}
+                      fallbackLabel={k.name}
+                      imageSize="xs"
+                    />
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        )}
         <div className="grid gap-2">
           <p className="text-sm font-medium">Виробник</p>
           <Select value={selectedProd} onValueChange={onSelectedProdChange}>
@@ -60,7 +102,12 @@ export function KonkSliceExcelDialogView({
             <SelectContent>
               {prods.map((prod) => (
                 <SelectItem key={prod._id} value={prod.name}>
-                  {prod.title}
+                  <EntityLabel
+                    imageUrl={prod.imageUrl}
+                    title={prod.title}
+                    fallbackLabel={prod.name}
+                    imageSize="xs"
+                  />
                 </SelectItem>
               ))}
             </SelectContent>

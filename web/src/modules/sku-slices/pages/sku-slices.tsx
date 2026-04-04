@@ -1,4 +1,5 @@
 import { SidebarInsetLayout } from "@/components/layout/SidebarInsetLayout";
+import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
 import { PaginationControls } from "@/components/shared/pagination-controls";
 import { ErrorDisplay } from "@/components/shared/error-components";
 import { LoadingNoData } from "@/components/shared/loading-states";
@@ -53,18 +54,25 @@ export function SkuSlices() {
           </p>
         )}
 
-        {showForm && sliceQuery.isLoading && <SkuSliceTableSkeleton />}
+        {showForm && sliceQuery.isLoading && !sliceQuery.data && (
+          <SkuSliceTableSkeleton />
+        )}
 
         {showForm &&
-          sliceQuery.error &&
+          sliceQuery.isError &&
+          !sliceQuery.data &&
           isAxiosError(sliceQuery.error) &&
           sliceQuery.error.response?.status === 404 && (
             <LoadingNoData description="Зріз не знайдено" />
           )}
 
         {showForm &&
-          sliceQuery.error &&
-          !(isAxiosError(sliceQuery.error) && sliceQuery.error.response?.status === 404) && (
+          sliceQuery.isError &&
+          !sliceQuery.data &&
+          !(
+            isAxiosError(sliceQuery.error) &&
+            sliceQuery.error.response?.status === 404
+          ) && (
             <ErrorDisplay
               error={sliceQuery.error}
               title="Помилка завантаження зрізу"
@@ -72,15 +80,20 @@ export function SkuSlices() {
             />
           )}
 
-        {showForm && sliceQuery.isSuccess && sliceQuery.data && (
-          <div className="grid gap-2">
-            <PaginationControls
-              currentPage={sliceQuery.data.pagination.page}
-              totalPages={sliceQuery.data.pagination.totalPages}
-              onPageChange={setPage}
-            />
-            <SkuSliceTableContainer items={sliceQuery.data.data.items} />
-          </div>
+        {showForm && sliceQuery.data && (
+          <DataRefetchOverlay
+            isFetching={sliceQuery.isFetching}
+            isLoading={sliceQuery.isLoading}
+          >
+            <div className="grid gap-2">
+              <PaginationControls
+                currentPage={sliceQuery.data.pagination.page}
+                totalPages={sliceQuery.data.pagination.totalPages}
+                onPageChange={setPage}
+              />
+              <SkuSliceTableContainer items={sliceQuery.data.data.items} />
+            </div>
+          </DataRefetchOverlay>
         )}
       </div>
     </SidebarInsetLayout>

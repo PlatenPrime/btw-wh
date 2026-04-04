@@ -183,6 +183,16 @@ export const appSidebarData: { navMain: AppSidebarNavGroup[] } = {
           url: "/sku/sku-slices",
           iconName: "Projector",
         },
+        {
+          title: "Продажі конкурентів",
+          url: "/sku/sales",
+          iconName: "TrendingUp",
+        },
+        {
+          title: "Залишки конкурентів",
+          url: "/sku/stock-comparison",
+          iconName: "Warehouse",
+        },
       ],
     },
     {

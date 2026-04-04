@@ -1,3 +1,4 @@
+import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
 import { EntityNotFound } from "@/components/shared/entity-not-found";
 import { ErrorDisplay } from "@/components/shared/error-components";
 import { useSkugrPageByIdQuery } from "@/modules/skugrs/api/hooks/queries/useSkugrPageByIdQuery";
@@ -14,7 +15,8 @@ export function SkugrFetcher({
   ContainerComponent,
   SkeletonComponent,
 }: SkugrFetcherProps) {
-  const { data, isLoading, error, refetch } = useSkugrPageByIdQuery({ id });
+  const skugrQuery = useSkugrPageByIdQuery({ id });
+  const { data, isLoading, error, refetch, isFetching } = skugrQuery;
 
   if (isLoading) {
     return <SkeletonComponent />;
@@ -40,5 +42,9 @@ export function SkugrFetcher({
     );
   }
 
-  return <ContainerComponent skugr={data.data} />;
+  return (
+    <DataRefetchOverlay isFetching={isFetching} isLoading={isLoading}>
+      <ContainerComponent skugr={data.data} />
+    </DataRefetchOverlay>
+  );
 }

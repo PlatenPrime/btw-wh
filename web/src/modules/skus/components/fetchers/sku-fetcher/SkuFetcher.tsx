@@ -1,3 +1,4 @@
+import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
 import { EntityNotFound } from "@/components/shared/entity-not-found";
 import { ErrorDisplay } from "@/components/shared/error-components";
 import { useSkuByIdQuery } from "@/modules/skus/api/hooks/queries/useSkuByIdQuery";
@@ -14,7 +15,8 @@ export function SkuFetcher({
   ContainerComponent,
   SkeletonComponent,
 }: SkuFetcherProps) {
-  const { data, isLoading, error, refetch } = useSkuByIdQuery({ id });
+  const skuQuery = useSkuByIdQuery({ id });
+  const { data, isLoading, error, refetch, isFetching } = skuQuery;
 
   if (isLoading) {
     return <SkeletonComponent />;
@@ -40,5 +42,9 @@ export function SkuFetcher({
     );
   }
 
-  return <ContainerComponent sku={data.data} />;
+  return (
+    <DataRefetchOverlay isFetching={isFetching} isLoading={isLoading}>
+      <ContainerComponent sku={data.data} />
+    </DataRefetchOverlay>
+  );
 }

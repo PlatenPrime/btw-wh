@@ -1,3 +1,4 @@
+import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
 import { ErrorDisplay } from "@/components/shared/error-components";
 import { LoadingNoData } from "@/components/shared/loading-states";
 import { SearchPanel } from "@/components/shared/search-components/search-panel/SearchPanel";
@@ -129,12 +130,17 @@ export function SkusBySkugrFetcher({ skugrId }: SkusBySkugrFetcherProps) {
     return (
       <Wrapper className="grid gap-2">
         {controls}
-        <SkusBySkugrContainer
-          data={data}
-          konk={konk}
-          prods={prods}
-          onPageChange={setGrPage}
-        />
+        <DataRefetchOverlay
+          isFetching={skusQuery.isFetching}
+          isLoading={skusQuery.isLoading}
+        >
+          <SkusBySkugrContainer
+            data={data}
+            konk={konk}
+            prods={prods}
+            onPageChange={setGrPage}
+          />
+        </DataRefetchOverlay>
       </Wrapper>
     );
   }

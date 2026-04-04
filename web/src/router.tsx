@@ -162,6 +162,20 @@ const SkuSlices = lazy(() =>
     default: module.SkuSlices,
   })),
 );
+const SkuKonkProdSales = lazy(() =>
+  import("./modules/sku-konk-prod-charts/pages/sku-konk-prod-sales").then(
+    (module) => ({
+      default: module.SkuKonkProdSales,
+    }),
+  ),
+);
+const SkuKonkProdStock = lazy(() =>
+  import("./modules/sku-konk-prod-charts/pages/sku-konk-prod-stock").then(
+    (module) => ({
+      default: module.SkuKonkProdStock,
+    }),
+  ),
+);
 
 const Analogs = lazy(() =>
   import("./modules/analogs/pages/analogs").then((module) => ({
@@ -424,6 +438,24 @@ export const router = createHashRouter([
             element: (
               <ProtectedRoute>
                 <SkuSlices />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "sales",
+            element: (
+              <ProtectedRoute>
+                <SkuKonkProdSales />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "stock-comparison",
+            element: (
+              <ProtectedRoute>
+                <SkuKonkProdStock />
               </ProtectedRoute>
             ),
             errorElement: <RouteErrorBoundary />,

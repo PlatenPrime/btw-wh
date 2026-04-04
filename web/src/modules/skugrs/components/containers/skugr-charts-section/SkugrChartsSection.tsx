@@ -1,3 +1,4 @@
+import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
 import { ErrorDisplay } from "@/components/shared/error-components";
 import { LoadingNoData } from "@/components/shared/loading-states/loading-nodata";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -51,11 +52,12 @@ export function SkugrChartsSection({ skugrId }: SkugrChartsSectionProps) {
     [periodDays],
   );
 
-  const { data, isLoading, error, refetch } = useSkugrDailySummaryQuery({
-    skugrId,
-    dateFrom,
-    dateTo,
-  });
+  const { data, isLoading, isFetching, error, refetch } =
+    useSkugrDailySummaryQuery({
+      skugrId,
+      dateFrom,
+      dateTo,
+    });
 
   const sliceItems = useMemo((): AnalogSliceRangeItem[] => {
     const rows = data?.data ?? [];
@@ -77,7 +79,7 @@ export function SkugrChartsSection({ skugrId }: SkugrChartsSectionProps) {
     }));
   }, [data?.data]);
 
-  if (isLoading) {
+  if (isLoading && !data) {
     return (
       <div className="grid gap-3">
         <div className="flex flex-wrap items-center gap-4">
@@ -129,7 +131,7 @@ export function SkugrChartsSection({ skugrId }: SkugrChartsSectionProps) {
     );
   }
 
-  if (error) {
+  if (error && !data) {
     return (
       <div className="grid gap-3">
         <div className="flex flex-wrap items-center gap-4">
@@ -224,74 +226,76 @@ export function SkugrChartsSection({ skugrId }: SkugrChartsSectionProps) {
           </SelectContent>
         </Select>
       </div>
-      <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
-        <Card className="overflow-hidden shadow-md">
-          <CardHeader className="pb-2">
-            <h3 className="text-muted-foreground text-sm font-medium">
-              Динаміка залишків (група)
-            </h3>
-          </CardHeader>
-          <CardContent>
-            <AnalogSlicesChartView
-              data={sliceItems}
-              showStock
-              showPrice={false}
-            />
-          </CardContent>
-        </Card>
-        <Card className="overflow-hidden shadow-md">
-          <CardHeader className="pb-2">
-            <h3 className="text-muted-foreground text-sm font-medium">
-              Динаміка продаж (група)
-            </h3>
-          </CardHeader>
-          <CardContent>
-            <div className="grid gap-3">
-              <div className="flex flex-wrap items-center gap-4">
-                <div className="flex items-center gap-2">
-                  <Switch
-                    id="skugr-sales-chart-show-sales"
-                    checked={showSales}
-                    onCheckedChange={setShowSales}
-                    className="data-[state=checked]:bg-[color:var(--chart-6)]"
-                  />
-                  <Label
-                    htmlFor="skugr-sales-chart-show-sales"
-                    className="text-muted-foreground cursor-pointer text-sm"
-                  >
-                    Продажі (шт)
-                  </Label>
+      <DataRefetchOverlay isFetching={isFetching} isLoading={isLoading}>
+        <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
+          <Card className="overflow-hidden shadow-md">
+            <CardHeader className="pb-2">
+              <h3 className="text-muted-foreground text-sm font-medium">
+                Динаміка залишків (група)
+              </h3>
+            </CardHeader>
+            <CardContent>
+              <AnalogSlicesChartView
+                data={sliceItems}
+                showStock
+                showPrice={false}
+              />
+            </CardContent>
+          </Card>
+          <Card className="overflow-hidden shadow-md">
+            <CardHeader className="pb-2">
+              <h3 className="text-muted-foreground text-sm font-medium">
+                Динаміка продаж (група)
+              </h3>
+            </CardHeader>
+            <CardContent>
+              <div className="grid gap-3">
+                <div className="flex flex-wrap items-center gap-4">
+                  <div className="flex items-center gap-2">
+                    <Switch
+                      id="skugr-sales-chart-show-sales"
+                      checked={showSales}
+                      onCheckedChange={setShowSales}
+                      className="data-[state=checked]:bg-[color:var(--chart-6)]"
+                    />
+                    <Label
+                      htmlFor="skugr-sales-chart-show-sales"
+                      className="text-muted-foreground cursor-pointer text-sm"
+                    >
+                      Продажі (шт)
+                    </Label>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Switch
+                      id="skugr-sales-chart-show-revenue"
+                      checked={showRevenue}
+                      onCheckedChange={setShowRevenue}
+                      className="data-[state=checked]:bg-[color:var(--chart-7)]"
+                    />
+                    <Label
+                      htmlFor="skugr-sales-chart-show-revenue"
+                      className="text-muted-foreground cursor-pointer text-sm"
+                    >
+                      Виручка (грн)
+                    </Label>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Switch
-                    id="skugr-sales-chart-show-revenue"
-                    checked={showRevenue}
-                    onCheckedChange={setShowRevenue}
-                    className="data-[state=checked]:bg-[color:var(--chart-7)]"
+                {showSalesChart ? (
+                  <AnalogSalesChartView
+                    data={salesItems}
+                    showSales={showSales}
+                    showRevenue={showRevenue}
                   />
-                  <Label
-                    htmlFor="skugr-sales-chart-show-revenue"
-                    className="text-muted-foreground cursor-pointer text-sm"
-                  >
-                    Виручка (грн)
-                  </Label>
-                </div>
+                ) : (
+                  <div className="text-muted-foreground rounded-md border border-dashed p-4 text-center text-sm">
+                    Увімкніть хоча б одну серію: Продажі або Виручка.
+                  </div>
+                )}
               </div>
-              {showSalesChart ? (
-                <AnalogSalesChartView
-                  data={salesItems}
-                  showSales={showSales}
-                  showRevenue={showRevenue}
-                />
-              ) : (
-                <div className="text-muted-foreground rounded-md border border-dashed p-4 text-center text-sm">
-                  Увімкніть хоча б одну серію: Продажі або Виручка.
-                </div>
-              )}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+            </CardContent>
+          </Card>
+        </div>
+      </DataRefetchOverlay>
     </div>
   );
 }

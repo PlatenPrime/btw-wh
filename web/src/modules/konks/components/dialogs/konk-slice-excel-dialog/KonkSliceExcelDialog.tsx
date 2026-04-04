@@ -1,5 +1,6 @@
 import { Dialog } from "@/components/ui/dialog";
 import { useDownloadKonkSliceExcelMutation } from "@/modules/konks/api/hooks/mutations/useDownloadKonkSliceExcelMutation";
+import { useKonksQuery } from "@/modules/konks/api/hooks/queries/useKonksQuery";
 import type { KonkDto } from "@/modules/konks/api/types";
 import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
 import { format } from "date-fns";
@@ -15,7 +16,7 @@ function getDefaultDateRange(): DateRange {
 }
 
 interface KonkSliceExcelDialogProps {
-  konk: KonkDto;
+  konk?: KonkDto;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
 }
@@ -30,27 +31,33 @@ export function KonkSliceExcelDialog({
     getDefaultDateRange,
   );
   const [selectedProd, setSelectedProd] = useState("");
+  const [selectedKonkName, setSelectedKonkName] = useState("");
 
   const isControlled = controlledOpen !== undefined;
   const open = isControlled ? controlledOpen : internalOpen;
   const handleOpenChange: (open: boolean) => void =
     isControlled && onOpenChange ? onOpenChange : setInternalOpen;
 
+  const showKonkSelect = !konk;
+  const resolvedKonkName = konk?.name ?? selectedKonkName;
+
   const mutation = useDownloadKonkSliceExcelMutation();
   const prodsQuery = useProdsQuery();
+  const konksQuery = useKonksQuery();
   const prods = prodsQuery.data?.data ?? [];
+  const konks = konksQuery.data?.data ?? [];
   const isDownloading = mutation.isPending;
 
   const handleDownload = useCallback(async () => {
     const from = dateRange?.from;
     const to = dateRange?.to;
-    if (!from || !to || from > to || !selectedProd) return;
+    if (!from || !to || from > to || !selectedProd || !resolvedKonkName) return;
 
     const dateFrom = format(from, "yyyy-MM-dd");
     const dateTo = format(to, "yyyy-MM-dd");
     try {
       await mutation.mutateAsync({
-        konk: konk.name,
+        konk: resolvedKonkName,
         prod: selectedProd,
         dateFrom,
         dateTo,
@@ -59,7 +66,7 @@ export function KonkSliceExcelDialog({
     } catch {
       // toast handled in mutation onError
     }
-  }, [dateRange, selectedProd, mutation, konk.name, handleOpenChange]);
+  }, [dateRange, selectedProd, mutation, resolvedKonkName, handleOpenChange]);
 
   const handleCancel = useCallback(() => {
     handleOpenChange(false);
@@ -69,6 +76,7 @@ export function KonkSliceExcelDialog({
     if (open) {
       setDateRange(getDefaultDateRange());
       setSelectedProd("");
+      setSelectedKonkName("");
     }
   }, [open]);
 
@@ -77,6 +85,10 @@ export function KonkSliceExcelDialog({
       <KonkSliceExcelDialogView
         dateRange={dateRange}
         onDateRangeChange={setDateRange}
+        showKonkSelect={showKonkSelect}
+        selectedKonkName={selectedKonkName}
+        onSelectedKonkNameChange={setSelectedKonkName}
+        konks={konks}
         selectedProd={selectedProd}
         onSelectedProdChange={setSelectedProd}
         prods={prods}

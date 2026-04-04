@@ -1,3 +1,4 @@
+import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
 import { ErrorDisplay } from "@/components/shared/error-components";
 import { LoadingNoData } from "@/components/shared/loading-states";
 import { useSkusByKonkQuery } from "@/modules/skus/api/hooks/queries/useSkusByKonkQuery";
@@ -44,7 +45,14 @@ export function SkusByKonkFetcher({
     if (!data.data?.length && !skusQuery.isFetching) {
       return <LoadingNoData description="Товари конкурента не знайдено" />;
     }
-    return <ContainerComponent data={data} />;
+    return (
+      <DataRefetchOverlay
+        isFetching={skusQuery.isFetching}
+        isLoading={skusQuery.isLoading}
+      >
+        <ContainerComponent data={data} />
+      </DataRefetchOverlay>
+    );
   }
 
   if (isLoading) {

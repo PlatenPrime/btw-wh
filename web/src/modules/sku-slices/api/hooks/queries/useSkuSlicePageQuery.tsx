@@ -1,5 +1,5 @@
 import { getSkuSlicePage } from "@/modules/sku-slices/api/services/queries/getSkuSlicePage";
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 export interface UseSkuSlicePageQueryParams {
   konkName: string;
@@ -20,5 +20,6 @@ export function useSkuSlicePageQuery({
       getSkuSlicePage({ konkName, date, page, limit, signal }),
     enabled: Boolean(konkName && date),
     staleTime: 2 * 60 * 1000,
+    placeholderData: keepPreviousData,
   });
 }

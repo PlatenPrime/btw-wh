@@ -1,5 +1,5 @@
 import { getSkuSliceRange } from "@/modules/skus/api/services/queries/getSkuSliceRange";
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 export interface UseSkuSliceRangeQueryParams {
   skuId: string | undefined;
@@ -20,5 +20,6 @@ export function useSkuSliceRangeQuery({
       getSkuSliceRange(skuId!, dateFrom, dateTo, signal),
     enabled: !!skuId && !!dateFrom && !!dateTo && enabled,
     staleTime: 2 * 60 * 1000,
+    placeholderData: keepPreviousData,
   });
 }
