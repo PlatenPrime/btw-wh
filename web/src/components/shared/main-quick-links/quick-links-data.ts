@@ -20,20 +20,20 @@ export const quickLinksData: QuickLinkItem[] = [
     description: "Каталог та перегляд артикулів",
   },
   {
-    url: "/arts/analogs",
+    url: "/analogs",
     title: "Аналоги",
     iconName: "Link2",
     description: "Аналоги артикулів",
   },
   {
-    url: "/arts/variants",
+    url: "/analogs/variants",
     title: "Варіанти",
     iconName: "Link2",
     description: "Варіанти товарів",
     allowedRoles: [RoleType.PRIME],
   },
   {
-    url: "/arts/analog-slices",
+    url: "/analogs/slices",
     title: "Зрізи",
     iconName: "Projector",
     description: "Зрізи аналогів",

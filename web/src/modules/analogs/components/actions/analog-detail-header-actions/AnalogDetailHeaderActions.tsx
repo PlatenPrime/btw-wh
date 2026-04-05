@@ -41,7 +41,7 @@ export function AnalogDetailHeaderActions({ analog }: AnalogDetailHeaderActionsP
   }, []);
 
   const handleDeleteSuccess = useCallback(() => {
-    navigate("/arts/analogs");
+    navigate("/analogs");
   }, [navigate]);
 
   const headerActions = useMemo<HeaderAction[]>(() => {

@@ -42,7 +42,7 @@ export function AnalogGridCardView({
 
       <div className="flex flex-col items-center gap-2 px-2">
         <div className="flex min-w-0 items-start justify-center gap-2">
-          <AnalogImageLink analog={analog} to={`/arts/analogs/${analog._id}`} />
+          <AnalogImageLink analog={analog} to={`/analogs/${analog._id}`} />
           <div className="shrink-0">
             <CardActionsMenu
               actions={actions}

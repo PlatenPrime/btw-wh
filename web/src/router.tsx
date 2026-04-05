@@ -337,28 +337,50 @@ export const router = createHashRouter([
             errorElement: <RouteErrorBoundary />,
           },
           {
-            path: "analogs",
+            path: "utils",
+            element: <ArtsUtils />,
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: ":artikul",
+            element: <Art />,
+            errorElement: <RouteErrorBoundary />,
+          },
+        ],
+      },
+      {
+        path: "analogs",
+        element: (
+          <ProtectedRoute>
+            <Outlet />
+          </ProtectedRoute>
+        ),
+        errorElement: <RouteErrorBoundary />,
+        children: [
+          {
+            index: true,
+            element: <Analogs />,
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "slices",
+            element: <AnalogSlices />,
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "sales",
             element: (
               <ProtectedRoute>
-                <Analogs />
+                <SalesPage />
               </ProtectedRoute>
             ),
             errorElement: <RouteErrorBoundary />,
           },
           {
-            path: "analogs/:id",
+            path: "stock-comparison",
             element: (
               <ProtectedRoute>
-                <Analog />
-              </ProtectedRoute>
-            ),
-            errorElement: <RouteErrorBoundary />,
-          },
-          {
-            path: "analog-slices",
-            element: (
-              <ProtectedRoute>
-                <AnalogSlices />
+                <StockComparisonPage />
               </ProtectedRoute>
             ),
             errorElement: <RouteErrorBoundary />,
@@ -382,31 +404,8 @@ export const router = createHashRouter([
             errorElement: <RouteErrorBoundary />,
           },
           {
-            path: "sales",
-            element: (
-              <ProtectedRoute>
-                <SalesPage />
-              </ProtectedRoute>
-            ),
-            errorElement: <RouteErrorBoundary />,
-          },
-          {
-            path: "stock-comparison",
-            element: (
-              <ProtectedRoute>
-                <StockComparisonPage />
-              </ProtectedRoute>
-            ),
-            errorElement: <RouteErrorBoundary />,
-          },
-          {
-            path: "utils",
-            element: <ArtsUtils />,
-            errorElement: <RouteErrorBoundary />,
-          },
-          {
-            path: ":artikul",
-            element: <Art />,
+            path: ":id",
+            element: <Analog />,
             errorElement: <RouteErrorBoundary />,
           },
         ],

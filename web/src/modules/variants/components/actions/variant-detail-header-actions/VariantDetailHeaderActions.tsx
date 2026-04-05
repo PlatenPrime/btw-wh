@@ -31,7 +31,7 @@ export function VariantDetailHeaderActions({ variant }: VariantDetailHeaderActio
   }, []);
 
   const handleDeleteSuccess = useCallback(() => {
-    navigate("/arts/variants");
+    navigate("/analogs/variants");
   }, [navigate]);
 
   const headerActions = useMemo<HeaderAction[]>(() => {

@@ -38,9 +38,11 @@ type SidebarContextProps = {
   open: boolean
   setOpen: (open: boolean) => void
   openMobile: boolean
-  setOpenMobile: (open: boolean) => void
+  setOpenMobile: React.Dispatch<React.SetStateAction<boolean>>
   isMobile: boolean
   toggleSidebar: () => void
+  /** Короткое игнорирование toggle после программного закрытия drawer (ghost-click по гамбургеру). */
+  scheduleMobileDrawerCloseShield: (durationMs?: number) => void
 }
 
 const SidebarContext = React.createContext<SidebarContextProps | null>(null)
@@ -69,6 +71,14 @@ function SidebarProvider({
 }) {
   const isMobile = useIsMobile()
   const [openMobile, setOpenMobile] = React.useState(false)
+  const mobileDrawerCloseShieldUntilRef = React.useRef(0)
+
+  const scheduleMobileDrawerCloseShield = React.useCallback(
+    (durationMs = 280) => {
+      mobileDrawerCloseShieldUntilRef.current = Date.now() + durationMs
+    },
+    [],
+  )
 
   // This is the internal state of the sidebar.
   // We use openProp and setOpenProp for control from outside the component.
@@ -91,7 +101,14 @@ function SidebarProvider({
 
   // Helper to toggle the sidebar.
   const toggleSidebar = React.useCallback(() => {
-    return isMobile ? setOpenMobile((open) => !open) : setOpen((open) => !open)
+    if (isMobile) {
+      if (Date.now() < mobileDrawerCloseShieldUntilRef.current) {
+        return
+      }
+      setOpenMobile((o) => !o)
+      return
+    }
+    setOpen((o) => !o)
   }, [isMobile, setOpen, setOpenMobile])
 
   // Adds a keyboard shortcut to toggle the sidebar.
@@ -123,8 +140,18 @@ function SidebarProvider({
       openMobile,
       setOpenMobile,
       toggleSidebar,
+      scheduleMobileDrawerCloseShield,
     }),
-    [state, open, setOpen, isMobile, openMobile, setOpenMobile, toggleSidebar]
+    [
+      state,
+      open,
+      setOpen,
+      isMobile,
+      openMobile,
+      setOpenMobile,
+      toggleSidebar,
+      scheduleMobileDrawerCloseShield,
+    ],
   )
 
   return (
@@ -172,8 +199,8 @@ function Sidebar({
         data-slot="sidebar"
         className={cn(
           "text-sidebar-foreground flex h-full w-(--sidebar-width) flex-col overflow-hidden",
-          "bg-gradient-to-br from-primary/10 via-background/95 to-sky-500/10 dark:from-primary/18 dark:via-background/85 dark:to-sky-400/16",
-          "border-r border-border/60 dark:border-border/50",
+          "bg-sidebar",
+          "border-r border-sidebar-border",
           className
         )}
         {...props}
@@ -190,10 +217,12 @@ function Sidebar({
           data-sidebar="sidebar"
           data-slot="sidebar"
           data-mobile="true"
+          overlayClassName="data-[state=closed]:!duration-100 data-[state=open]:!duration-150"
           className={cn(
             "text-sidebar-foreground w-(--sidebar-width) p-0 [&>button]:hidden",
-            "bg-gradient-to-br from-primary/10 via-background/95 to-sky-500/10 dark:from-primary/18 dark:via-background/85 dark:to-sky-400/16",
-            "border-border/60 dark:border-border/50"
+            "bg-sidebar",
+            "border-sidebar-border",
+            "data-[state=closed]:!duration-100 data-[state=open]:!duration-150",
           )}
           style={
             {
@@ -201,6 +230,7 @@ function Sidebar({
             } as React.CSSProperties
           }
           side={side}
+          onCloseAutoFocus={(e) => e.preventDefault()}
         >
           <SheetHeader className="sr-only">
             <SheetTitle>Sidebar</SheetTitle>
@@ -253,8 +283,8 @@ function Sidebar({
           data-slot="sidebar-inner"
           className={cn(
             "relative flex h-full w-full flex-col overflow-hidden",
-            "bg-gradient-to-br from-primary/10 via-background/95 to-sky-500/10 dark:from-primary/18 dark:via-background/85 dark:to-sky-400/16",
-            "group-data-[side=left]:border-r group-data-[side=right]:border-l border-border/60 dark:border-border/50",
+            "bg-sidebar",
+            "group-data-[side=left]:border-r group-data-[side=right]:border-l border-sidebar-border",
             "group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:border-sidebar-border group-data-[variant=floating]:shadow-sm"
           )}
         >

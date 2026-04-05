@@ -111,7 +111,57 @@ export interface AppSidebarNavItem {
 export interface AppSidebarNavGroup {
   title: string;
   url: string;
+  /** Авто-раскрытие секции, если pathname подходит (карточка артикула, служебные /arts/* без пункта меню и т.д.) */
+  pathOpenPrefix?: string;
   items: AppSidebarNavItem[];
+}
+
+export function filterVisibleSidebarNavItems(
+  items: AppSidebarNavItem[],
+  hasAnyRole: (roles: RoleType[]) => boolean,
+): AppSidebarNavItem[] {
+  return items.filter(
+    (navItem) =>
+      !navItem.allowedRoles || hasAnyRole(navItem.allowedRoles),
+  );
+}
+
+/** Один активный пункт на группу: самый длинный url, совпадающий с pathname (exact или префикс с `/`). */
+export function getActiveSidebarNavItemUrl(
+  pathname: string,
+  visibleItems: AppSidebarNavItem[],
+): string | null {
+  let best: string | null = null;
+  for (const { url } of visibleItems) {
+    if (pathname === url || pathname.startsWith(`${url}/`)) {
+      if (!best || url.length > best.length) {
+        best = url;
+      }
+    }
+  }
+  return best;
+}
+
+export function isSidebarGroupActiveForPathname(
+  group: AppSidebarNavGroup,
+  pathname: string,
+  visibleItems: AppSidebarNavItem[],
+): boolean {
+  const itemMatch = visibleItems.some(
+    (nav) =>
+      pathname === nav.url || pathname.startsWith(`${nav.url}/`),
+  );
+  if (itemMatch) {
+    return true;
+  }
+  if (
+    group.pathOpenPrefix &&
+    (pathname === group.pathOpenPrefix ||
+      pathname.startsWith(`${group.pathOpenPrefix}/`))
+  ) {
+    return true;
+  }
+  return false;
 }
 
 const getIcon = (iconName: string) => {
@@ -134,36 +184,44 @@ export const appSidebarData: { navMain: AppSidebarNavGroup[] } = {
     {
       title: "Артикули",
       url: "/arts",
+      pathOpenPrefix: "/arts",
       items: [
         {
           title: "Артикули",
           url: "/arts/dashboard",
           iconName: "StickyNote",
         },
+      ],
+    },
+    {
+      title: "Аналоги",
+      url: "/analogs",
+      pathOpenPrefix: "/analogs",
+      items: [
         {
           title: "Аналоги",
-          url: "/arts/analogs",
+          url: "/analogs",
           iconName: "Link2",
         },
         {
+          title: "Зрізи",
+          url: "/analogs/slices",
+          iconName: "Projector",
+        },
+        {
           title: "Варіанти",
-          url: "/arts/variants",
+          url: "/analogs/variants",
           iconName: "Unlink2",
           allowedRoles: [RoleType.PRIME],
         },
         {
-          title: "Зрізи",
-          url: "/arts/analog-slices",
-          iconName: "Projector",
-        },
-        {
           title: "Продажі",
-          url: "/arts/sales",
+          url: "/analogs/sales",
           iconName: "TrendingUp",
         },
         {
           title: "Залишки",
-          url: "/arts/stock-comparison",
+          url: "/analogs/stock-comparison",
           iconName: "Warehouse",
         },
       ],
@@ -171,6 +229,7 @@ export const appSidebarData: { navMain: AppSidebarNavGroup[] } = {
     {
       title: "Товари конкурентів",
       url: "/sku/konks",
+      pathOpenPrefix: "/sku",
       items: [
         {
           title: "Конкуренти",
@@ -207,6 +266,7 @@ export const appSidebarData: { navMain: AppSidebarNavGroup[] } = {
     {
       title: "Склад",
       url: "/wh",
+      pathOpenPrefix: "/wh",
       items: [
         {
           title: "Ряди",
@@ -241,6 +301,7 @@ export const appSidebarData: { navMain: AppSidebarNavGroup[] } = {
     {
       title: "Поповнення",
       url: "/refiling",
+      pathOpenPrefix: "/refiling",
       items: [
         {
           title: "Запити",

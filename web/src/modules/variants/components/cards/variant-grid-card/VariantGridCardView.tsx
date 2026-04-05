@@ -38,7 +38,7 @@ export function VariantGridCardView({
       <div className="flex flex-col items-center gap-2 px-2">
         <div className="flex min-w-0 items-start justify-center gap-2">
           <Link
-            to={`/arts/variants/${variant._id}`}
+            to={`/analogs/variants/${variant._id}`}
             className="flex min-w-0 items-start gap-2 hover:underline"
           >
             <Image
