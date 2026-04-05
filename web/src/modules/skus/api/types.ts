@@ -7,6 +7,7 @@ export interface SkuDto {
   title: string;
   url: string;
   imageUrl: string;
+  isInvalid?: boolean;
   createdAt: string;
   updatedAt: string;
 }
@@ -29,9 +30,11 @@ export interface SkusResponseDto {
 export interface GetSkusParams {
   page: number;
   limit: number;
-  konkName: string;
+  konkName?: string;
   prodName?: string;
   search?: string;
+  isInvalid?: boolean;
+  createdFrom?: string;
   signal?: AbortSignal;
 }
 

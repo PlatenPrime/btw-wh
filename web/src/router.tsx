@@ -157,6 +157,11 @@ const Sku = lazy(() =>
     default: module.Sku,
   })),
 );
+const CompetitorSkus = lazy(() =>
+  import("./modules/skus/pages/competitor-skus").then((module) => ({
+    default: module.CompetitorSkus,
+  })),
+);
 const SkuSlices = lazy(() =>
   import("./modules/sku-slices/pages/sku-slices").then((module) => ({
     default: module.SkuSlices,
@@ -465,6 +470,15 @@ export const router = createHashRouter([
             element: (
               <ProtectedRoute>
                 <Skugrs />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "competitor-skus",
+            element: (
+              <ProtectedRoute>
+                <CompetitorSkus />
               </ProtectedRoute>
             ),
             errorElement: <RouteErrorBoundary />,

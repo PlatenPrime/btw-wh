@@ -3,6 +3,7 @@ import {
   URL_DIALOG_IMAGE_FALLBACK,
   UrlDialogImage,
 } from "@/components/shared/url-dialog-image/UrlDialogImage";
+import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { getKonkTheme } from "@/modules/analogs/components/common/konk-banner";
@@ -31,6 +32,13 @@ export function SkuGridCardView({ sku, prod }: SkuGridCardViewProps) {
         theme.shadow,
       )}
     >
+      {sku.isInvalid === true ? (
+        <div className="px-2 pt-1">
+          <Badge variant="destructive" className="text-xs">
+            Невалідний
+          </Badge>
+        </div>
+      ) : null}
       <div className="flex flex-col gap-2 px-2 pb-1">
         <div className="flex min-h-0 min-w-0 items-start gap-3">
           {hasImage ? (

@@ -1,6 +1,7 @@
 import {
   AlertTriangle,
   Bookmark,
+  Boxes,
   Building2,
   Factory,
   FileQuestion,
@@ -44,6 +45,7 @@ const icons = {
   ShoppingCart,
   Unlink2,
   TrendingUp,
+  Boxes,
 } as const;
 
 type SidebarIconName = keyof typeof icons;
@@ -95,6 +97,8 @@ const iconColorClasses: Record<SidebarIconName, string> = {
   // Продажі — зелёный
   TrendingUp:
     "text-[oklch(0.62_0.18_145)] dark:text-[oklch(0.76_0.2_145)]",
+  Boxes:
+    "text-[oklch(0.58_0.12_200)] dark:text-[oklch(0.72_0.14_200)]",
 };
 
 export interface AppSidebarNavItem {
@@ -177,6 +181,11 @@ export const appSidebarData: { navMain: AppSidebarNavGroup[] } = {
           title: "Товарні групи",
           url: "/sku/skugrs",
           iconName: "PackageSearch",
+        },
+        {
+          title: "Список SKU",
+          url: "/sku/competitor-skus",
+          iconName: "Boxes",
         },
         {
           title: "Зрізи конкурентів",
