@@ -14,7 +14,6 @@ import {
   Rows4,
   Settings,
   ShoppingCart,
-  Unlink2,
   StickyNote,
   TrendingUp,
   Truck,
@@ -43,7 +42,6 @@ const icons = {
   Link2,
   Projector,
   ShoppingCart,
-  Unlink2,
   TrendingUp,
   Boxes,
 } as const;
@@ -92,8 +90,6 @@ const iconColorClasses: Record<SidebarIconName, string> = {
     "text-[oklch(0.58_0.16_325)] dark:text-[oklch(0.72_0.18_325)]",
   ShoppingCart:
     "text-[oklch(0.6_0.15_145)] dark:text-[oklch(0.74_0.16_145)]",
-  Unlink2:
-    "text-[oklch(0.7_0.18_70)] dark:text-[oklch(0.84_0.22_70)]",
   // Продажі — зелёный
   TrendingUp:
     "text-[oklch(0.62_0.18_145)] dark:text-[oklch(0.76_0.2_145)]",
@@ -209,12 +205,6 @@ export const appSidebarData: { navMain: AppSidebarNavGroup[] } = {
           iconName: "Projector",
         },
         {
-          title: "Варіанти",
-          url: "/analogs/variants",
-          iconName: "Unlink2",
-          allowedRoles: [RoleType.PRIME],
-        },
-        {
           title: "Продажі",
           url: "/analogs/sales",
           iconName: "TrendingUp",
@@ -242,22 +232,22 @@ export const appSidebarData: { navMain: AppSidebarNavGroup[] } = {
           iconName: "PackageSearch",
         },
         {
-          title: "Список SKU",
+          title: "Товари",
           url: "/sku/competitor-skus",
           iconName: "Boxes",
         },
         {
-          title: "Зрізи конкурентів",
+          title: "Зрізи",
           url: "/sku/sku-slices",
           iconName: "Projector",
         },
         {
-          title: "Продажі конкурентів",
+          title: "Продажі",
           url: "/sku/sales",
           iconName: "TrendingUp",
         },
         {
-          title: "Залишки конкурентів",
+          title: "Залишки",
           url: "/sku/stock-comparison",
           iconName: "Warehouse",
         },

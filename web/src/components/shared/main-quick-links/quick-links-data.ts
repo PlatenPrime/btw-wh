@@ -1,119 +1,28 @@
 /**
- * Дані для блоків «Швидкий доступ» на головній.
- * Синхронізовано з app-sidebar-data (url, title, iconName).
+ * Описи карток «Швидкий доступ» на головній (ключ = url з appSidebarData.navMain).
  */
-import { RoleType } from "@/constants/roles";
-
-export interface QuickLinkItem {
-  url: string;
-  title: string;
-  iconName: string;
-  description: string;
-  allowedRoles?: RoleType[];
-}
-
-export const quickLinksData: QuickLinkItem[] = [
-  {
-    url: "/arts/dashboard",
-    title: "Артикули",
-    iconName: "StickyNote",
-    description: "Каталог та перегляд артикулів",
-  },
-  {
-    url: "/analogs",
-    title: "Аналоги",
-    iconName: "Link2",
-    description: "Аналоги артикулів",
-  },
-  {
-    url: "/analogs/variants",
-    title: "Варіанти",
-    iconName: "Link2",
-    description: "Варіанти товарів",
-    allowedRoles: [RoleType.PRIME],
-  },
-  {
-    url: "/analogs/slices",
-    title: "Зрізи",
-    iconName: "Projector",
-    description: "Зрізи аналогів",
-  },
-  {
-    url: "/wh/rows",
-    title: "Ряди",
-    iconName: "Rows4",
-    description: "Складські ряди та палети",
-  },
-  {
-    url: "/wh/zones",
-    title: "Зони",
-    iconName: "MapPin",
-    description: "Зони зберігання",
-  },
-  {
-    url: "/wh/blocks",
-    title: "Блоки",
-    iconName: "LayoutTemplate",
-    description: "Блоки та сегменти",
-  },
-  {
-    url: "/wh/pallet-groups",
-    title: "Групи палет",
-    iconName: "Route",
-    description: "Логічні групи палет та порядок",
-  },
-  {
-    url: "/wh/dels",
-    title: "Поставки",
-    iconName: "Truck",
-    description: "Поставки на склад",
-  },
-  {
-    url: "/refiling/asks",
-    title: "Запити",
-    iconName: "FileQuestion",
-    description: "Запити на поповнення",
-  },
-  {
-    url: "/refiling/defs",
-    title: "Дефіцити",
-    iconName: "AlertTriangle",
-    description: "Дефіцити та розрахунки",
-  },
-  {
-    url: "/refiling/pulls",
-    title: "Зняття",
-    iconName: "PackageSearch",
-    description: "Зняття зі складу",
-  },
-  {
-    url: "/refiling/kasks",
-    title: "Каса",
-    iconName: "ShoppingCart",
-    description: "Каса поповнення",
-  },
-  {
-    url: "/users",
-    title: "Користувачі",
-    iconName: "Users",
-    description: "Керування користувачами та доступами",
-  },
-  {
-    url: "/wh/prods",
-    title: "Виробники",
-    iconName: "Factory",
-    description: "Виробники",
-  },
-  {
-    url: "/sku/konks",
-    title: "Конкуренти",
-    iconName: "Building2",
-    description: "Конкуренти",
-  },
-  {
-    url: "/wh/constants",
-    title: "Константи",
-    iconName: "Bookmark",
-    description: "Довідкові константи",
-  },
-];
+export const quickLinkDescriptionByUrl: Record<string, string> = {
+  "/arts/dashboard": "Каталог та перегляд артикулів",
+  "/analogs": "Аналоги артикулів",
+  "/analogs/slices": "Зрізи аналогів",
+  "/analogs/sales": "Продажі за аналогами",
+  "/analogs/stock-comparison": "Залишки та порівняння по аналогах",
+  "/sku/konks": "Конкуренти",
+  "/sku/skugrs": "Товарні групи конкурентів",
+  "/sku/competitor-skus": "Товари конкурентів",
+  "/sku/sku-slices": "Зрізи по товарах SKU",
+  "/sku/sales": "Продажі товарів конкурентів",
+  "/sku/stock-comparison": "Залишки та порівняння по SKU",
+  "/wh/rows": "Складські ряди та палети",
+  "/wh/zones": "Зони зберігання",
+  "/wh/blocks": "Блоки та сегменти",
+  "/wh/pallet-groups": "Логічні групи палет та порядок",
+  "/wh/dels": "Поставки на склад",
+  "/refiling/asks": "Запити на поповнення",
+  "/refiling/defs": "Дефіцити та розрахунки",
+  "/refiling/pulls": "Зняття зі складу",
+  "/refiling/kasks": "Каса поповнення",
+  "/users": "Керування користувачами та доступами",
+  "/wh/prods": "Виробники",
+  "/wh/constants": "Довідкові константи",
+};

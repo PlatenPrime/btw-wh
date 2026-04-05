@@ -18,6 +18,8 @@ import {
 import { EntityLabel } from "@/modules/analogs/components/entity-label/EntityLabel";
 import { useKonksQuery } from "@/modules/konks/api/hooks/queries/useKonksQuery";
 import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
+import { SKU_KONK_PROD_QUERY_ALL } from "@/modules/sku-konk-prod-charts/constants";
+import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { useState } from "react";
@@ -45,7 +47,9 @@ export function SkuKonkProdChartControls({
   const konksQuery = useKonksQuery();
   const prodsQuery = useProdsQuery();
   const konks = konksQuery.data?.data ?? [];
-  const prods = prodsQuery.data?.data ?? [];
+  const prods = (prodsQuery.data?.data ?? []).filter(
+    (p) => p.name !== SKU_KONK_PROD_QUERY_ALL,
+  );
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [pendingRange, setPendingRange] = useState<DateRange | undefined>(
@@ -111,17 +115,29 @@ export function SkuKonkProdChartControls({
 
         <Select
           value={prod || "placeholder"}
-          onValueChange={(v) => onProdChange(v === "placeholder" ? "" : v)}
+          onValueChange={(v) => {
+            if (v === "placeholder") onProdChange("");
+            else onProdChange(v);
+          }}
         >
           <SelectTrigger
             aria-label="Виробник"
-            className="min-w-[160px] sm:min-w-[180px]"
+            className={cn(
+              "min-w-[160px] sm:min-w-[180px]",
+              prod === SKU_KONK_PROD_QUERY_ALL && "text-destructive",
+            )}
           >
             <SelectValue placeholder="Оберіть виробника" />
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="placeholder" disabled>
               Оберіть виробника
+            </SelectItem>
+            <SelectItem
+              value={SKU_KONK_PROD_QUERY_ALL}
+              className="text-destructive focus:bg-accent focus:text-destructive data-[highlighted]:text-destructive"
+            >
+              Всі виробники
             </SelectItem>
             {prods.map((p) => (
               <SelectItem key={p._id} value={p.name}>
