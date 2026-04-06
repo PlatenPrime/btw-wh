@@ -3,7 +3,7 @@ import { useRegisterHeaderActions } from "@/components/layout/header-actions";
 import { RoleType } from "@/constants/roles";
 import { useRole } from "@/modules/auth/hooks/useRole";
 import { useDownloadInvalidSkusExcelMutation } from "@/modules/skus/api/hooks/mutations/useDownloadInvalidSkusExcelMutation";
-import { FileDown, FileSpreadsheet, Trash2 } from "lucide-react";
+import { FileSpreadsheet, Trash2 } from "lucide-react";
 import { useCallback, useMemo } from "react";
 import { toast } from "sonner";
 
@@ -25,7 +25,8 @@ export function CompetitorSkusHeaderActions({
   const requireKonk = useCallback((): boolean => {
     if (!konkName.trim()) {
       toast.error("Оберіть конкурента", {
-        description: "Для цієї дії потрібен обраний конкурент у панелі фільтрів.",
+        description:
+          "Для цієї дії потрібен обраний конкурент у панелі фільтрів.",
       });
       return false;
     }
@@ -51,17 +52,17 @@ export function CompetitorSkusHeaderActions({
     const actions: HeaderAction[] = [
       {
         id: "comp-skus-invalid-excel",
-        label: "Excel невалідних SKU",
+        label: "Excel невалідні",
         icon: FileSpreadsheet,
-        iconColor: "green",
+        iconColor: "rose",
         variant: "default",
         onClick: handleDownloadInvalidExcel,
       },
       {
         id: "comp-skus-new-since-excel",
-        label: "Excel новинок з дати",
-        icon: FileDown,
-        iconColor: "blue",
+        label: "Excel новинки",
+        icon: FileSpreadsheet,
+        iconColor: "emerald",
         variant: "default",
         onClick: handleOpenNewSince,
       },
@@ -69,7 +70,7 @@ export function CompetitorSkusHeaderActions({
     if (canPrime) {
       actions.push({
         id: "comp-skus-delete-invalid",
-        label: "Видалити невалідні SKU",
+        label: "Видалити невалідні",
         icon: Trash2,
         iconColor: "red",
         variant: "super-destructive",

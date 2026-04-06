@@ -6,7 +6,10 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { getKonkTheme } from "@/modules/analogs/components/common/konk-banner";
+import {
+  getKonkTheme,
+  KonkBanner,
+} from "@/modules/analogs/components/common/konk-banner";
 import { EntityLabel } from "@/modules/analogs/components/entity-label";
 import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
@@ -21,17 +24,22 @@ interface SkuGridCardViewProps {
   prod: ProdDto | undefined;
 }
 
-export function SkuGridCardView({ sku, prod }: SkuGridCardViewProps) {
+export function SkuGridCardView({ sku, prod, konk }: SkuGridCardViewProps) {
   const theme = getKonkTheme(sku.konkName);
   const hasImage = Boolean(sku.imageUrl?.trim());
 
   return (
     <Card
       className={cn(
-        "flex flex-col gap-2 overflow-hidden p-2 transition-shadow",
+        "flex flex-col gap-2 overflow-hidden p-0 transition-shadow",
         theme.shadow,
       )}
     >
+      <KonkBanner
+        konkName={sku.konkName}
+        imageUrl={konk?.imageUrl}
+        title={konk?.title}
+      />
       {sku.isInvalid === true ? (
         <div className="px-2 pt-1">
           <Badge variant="destructive" className="text-xs">
@@ -57,24 +65,22 @@ export function SkuGridCardView({ sku, prod }: SkuGridCardViewProps) {
               />
             </div>
           )}
-          <Link
-            to={`/sku/skus/${sku._id}`}
-            className=" flex min-w-0 flex-1 hover:underline"
-          >
-            <span className="line-clamp-4 text-sm ">
-              {sku.title}
-            </span>
-          </Link>
+          <div className="grid gap-1">
+            <Link
+              to={`/sku/skus/${sku._id}`}
+              className="flex min-w-0 flex-1 hover:underline"
+            >
+              <span className="line-clamp-4 text-sm">{sku.title}</span>
+            </Link>
+            <EntityLabel
+              imageUrl={prod?.imageUrl}
+              title={prod?.title}
+              fallbackLabel={sku.prodName}
+              imageSize="sm"
+              className="text-muted-foreground text-xs"
+            />
+          </div>
         </div>
-      </div>
-
-      <div className="text-muted-foreground flex justify-center pb-2 ">
-        <EntityLabel
-          imageUrl={prod?.imageUrl}
-          title={prod?.title}
-          fallbackLabel={sku.prodName}
-          imageSize="md"
-        />
       </div>
     </Card>
   );
