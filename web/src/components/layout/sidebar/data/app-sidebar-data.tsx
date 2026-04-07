@@ -14,6 +14,7 @@ import {
   Rows4,
   Settings,
   ShoppingCart,
+  PieChart,
   StickyNote,
   TrendingUp,
   Truck,
@@ -42,6 +43,7 @@ const icons = {
   Link2,
   Projector,
   ShoppingCart,
+  PieChart,
   TrendingUp,
   Boxes,
 } as const;
@@ -90,6 +92,8 @@ const iconColorClasses: Record<SidebarIconName, string> = {
     "text-[oklch(0.58_0.16_325)] dark:text-[oklch(0.72_0.18_325)]",
   ShoppingCart:
     "text-[oklch(0.6_0.15_145)] dark:text-[oklch(0.74_0.16_145)]",
+  PieChart:
+    "text-[oklch(0.62_0.17_180)] dark:text-[oklch(0.76_0.18_180)]",
   // Продажі — зелёный
   TrendingUp:
     "text-[oklch(0.62_0.18_145)] dark:text-[oklch(0.76_0.2_145)]",
@@ -250,6 +254,11 @@ export const appSidebarData: { navMain: AppSidebarNavGroup[] } = {
           title: "Залишки",
           url: "/sku/stock-comparison",
           iconName: "Warehouse",
+        },
+        {
+          title: "Статистика",
+          url: "/sku/statistics",
+          iconName: "PieChart",
         },
       ],
     },

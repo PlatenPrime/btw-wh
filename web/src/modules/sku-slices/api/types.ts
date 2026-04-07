@@ -28,3 +28,16 @@ export interface GetSkuSlicePageParams {
   showInvalidOnly?: boolean;
   signal?: AbortSignal;
 }
+
+export interface SkuManufacturersPieItemDto {
+  title: string;
+  salesPcs: number;
+  salesUah: number;
+}
+
+export type SkuManufacturersPiePayload = Record<string, SkuManufacturersPieItemDto>;
+
+export interface SkuManufacturersPieResponseDto {
+  message: string;
+  data: SkuManufacturersPiePayload;
+}

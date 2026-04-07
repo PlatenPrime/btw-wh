@@ -181,6 +181,11 @@ const SkuKonkProdStock = lazy(() =>
     }),
   ),
 );
+const SkuStatistics = lazy(() =>
+  import("./modules/sku-statistics/pages/sku-statistics").then((module) => ({
+    default: module.SkuStatistics,
+  })),
+);
 
 const Analogs = lazy(() =>
   import("./modules/analogs/pages/analogs").then((module) => ({
@@ -432,6 +437,15 @@ export const router = createHashRouter([
             element: (
               <ProtectedRoute>
                 <SkuKonkProdStock />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "statistics",
+            element: (
+              <ProtectedRoute>
+                <SkuStatistics />
               </ProtectedRoute>
             ),
             errorElement: <RouteErrorBoundary />,
