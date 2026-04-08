@@ -64,6 +64,11 @@ export interface ExportArtsWithStocksResponse {
   filename: string;
 }
 
+export interface ExportArtsKeysResponse {
+  blob: Blob;
+  filename: string;
+}
+
 export interface DeleteArtsWithoutLatestMarkerResult {
   deletedCount: number;
   latestMarker: string | null;

@@ -3,6 +3,7 @@
  */
 export const quickLinkDescriptionByUrl: Record<string, string> = {
   "/arts/dashboard": "Каталог та перегляд артикулів",
+  "/arts/update": "Оновлення артикулів через Excel",
   "/analogs": "Аналоги артикулів",
   "/analogs/slices": "Зрізи аналогів",
   "/analogs/sales": "Продажі за аналогами",

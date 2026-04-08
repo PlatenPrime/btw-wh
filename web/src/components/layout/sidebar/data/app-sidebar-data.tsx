@@ -9,15 +9,16 @@ import {
   Link2,
   MapPin,
   PackageSearch,
+  PieChart,
   Projector,
   Route,
   Rows4,
   Settings,
   ShoppingCart,
-  PieChart,
   StickyNote,
   TrendingUp,
   Truck,
+  Upload,
   Users,
   Warehouse,
 } from "lucide-react";
@@ -46,6 +47,7 @@ const icons = {
   PieChart,
   TrendingUp,
   Boxes,
+  Upload,
 } as const;
 
 type SidebarIconName = keyof typeof icons;
@@ -54,8 +56,10 @@ const iconColorClasses: Record<SidebarIconName, string> = {
   // Артикули — синий
   StickyNote:
     "text-[oklch(0.6_0.16_250)] dark:text-[oklch(0.74_0.18_250)]",
-  Settings:
+    Upload:
     "text-[oklch(0.62_0.09_260)] dark:text-[oklch(0.78_0.07_260)]",
+  Settings:
+    "text-[oklch(0.6_0.16_250)] dark:text-[oklch(0.74_0.18_250)]",
   Warehouse:
     "text-[oklch(0.56_0.12_210)] dark:text-[oklch(0.72_0.12_210)]",
   // Ряди — серый, низкая насыщенность
@@ -190,6 +194,11 @@ export const appSidebarData: { navMain: AppSidebarNavGroup[] } = {
           title: "Артикули",
           url: "/arts/dashboard",
           iconName: "StickyNote",
+        },
+        {
+          title: "Оновлення артикулів",
+          url: "/arts/update",
+          iconName: "Upload",
         },
       ],
     },
@@ -350,3 +359,4 @@ export const appSidebarData: { navMain: AppSidebarNavGroup[] } = {
 };
 
 export { getIcon };
+
