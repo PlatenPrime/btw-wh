@@ -1,6 +1,7 @@
 import { getSkusBySkugr } from "@/modules/skus/api/services/queries/getSkusBySkugr";
 import type { GetSkusBySkugrParams, SkusResponseDto } from "@/modules/skus/api/types";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useDebounce } from "@/hooks/useDebounce";
 
 export interface UseSkusBySkugrQueryParams
   extends Omit<GetSkusBySkugrParams, "skugrId" | "signal"> {
@@ -16,6 +17,8 @@ export function useSkusBySkugrQuery({
   enabled = true,
 }: UseSkusBySkugrQueryParams) {
   const queryClient = useQueryClient();
+  // Keep debounce in query layer so every consumer gets stable request rate.
+  const debouncedSearch = useDebounce(search ?? "", 500);
 
   const queryKey = [
     "skusBySkugr",
@@ -23,7 +26,7 @@ export function useSkusBySkugrQuery({
       skugrId,
       page,
       limit,
-      search: search ?? "",
+      search: debouncedSearch,
     },
   ] as const;
 
@@ -34,7 +37,7 @@ export function useSkusBySkugrQuery({
         skugrId,
         page,
         limit,
-        search,
+        search: debouncedSearch || undefined,
         signal: querySignal,
       }),
     placeholderData: (): SkusResponseDto | undefined => {
@@ -45,7 +48,7 @@ export function useSkusBySkugrQuery({
           skugrId,
           page: page - 1,
           limit,
-          search: search ?? "",
+          search: debouncedSearch,
         },
       ]);
     },

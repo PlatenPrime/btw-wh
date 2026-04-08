@@ -1,3 +1,4 @@
+import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
 import { ErrorDisplay } from "@/components/shared/error-components";
 import { LoadingNoData } from "@/components/shared/loading-states";
 import { useAnalogsByArtikulQuery } from "@/modules/analogs/api/hooks/queries/useAnalogsByArtikulQuery";
@@ -38,5 +39,12 @@ export function AnalogsByArtikulFetcher({
     );
   }
 
-  return <ContainerComponent data={analogsQuery.data} />;
+  return (
+    <DataRefetchOverlay
+      isFetching={analogsQuery.isFetching}
+      isLoading={analogsQuery.isLoading}
+    >
+      <ContainerComponent data={analogsQuery.data} />
+    </DataRefetchOverlay>
+  );
 }

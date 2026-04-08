@@ -1,4 +1,3 @@
-import { useDebounce } from "@/hooks/useDebounce";
 import type { ProdDto } from "@/modules/prods/api/types";
 import { ProdDetailHeaderActions } from "@/modules/prods/components/actions/prod-detail-header-actions";
 import { ProdContainerView } from "@/modules/prods/components/containers/prod-container/ProdContainerView";
@@ -8,7 +7,6 @@ import { AnalogsByProdFetcher } from "@/modules/analogs/components/fetchers/anal
 import { useAnalogsByProdParams } from "@/modules/analogs/hooks/useAnalogsByProdParams";
 import { useKonksQuery } from "@/modules/konks/api/hooks/queries/useKonksQuery";
 import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
-import { useEffect, useState } from "react";
 
 interface ProdContainerProps {
   prod: ProdDto;
@@ -17,18 +15,6 @@ interface ProdContainerProps {
 export function ProdContainer({ prod }: ProdContainerProps) {
   const { page, limit, search, setPage, setLimit, setSearch } =
     useAnalogsByProdParams();
-  const [localSearch, setLocalSearch] = useState(search);
-  const debouncedSearch = useDebounce(localSearch, 500);
-
-  useEffect(() => {
-    if (debouncedSearch !== search) {
-      setSearch(debouncedSearch);
-    }
-  }, [debouncedSearch, search, setSearch]);
-
-  useEffect(() => {
-    setLocalSearch(search);
-  }, [search]);
 
   const konksQuery = useKonksQuery();
   const prodsQuery = useProdsQuery();
@@ -40,14 +26,14 @@ export function ProdContainer({ prod }: ProdContainerProps) {
       <ProdDetailHeaderActions prod={prod} />
       <ProdContainerView
         prod={prod}
-        search={localSearch}
-        onSearchChange={(e) => setLocalSearch(e.target.value)}
+        search={search}
+        onSearchChange={(e) => setSearch(e.target.value)}
         limit={limit}
         setLimit={setLimit}
       >
         <AnalogsByProdFetcher
           prodName={prod.name}
-          params={{ page, limit, search: debouncedSearch || undefined }}
+          params={{ page, limit, search: search || undefined }}
           ContainerComponent={({ data }) => (
             <AnalogsByProdContainer
               data={data}

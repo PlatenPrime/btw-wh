@@ -1,3 +1,4 @@
+import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
 import { ErrorDisplay } from '@/components/shared/error-components/error-display';
 import { LoadingNoData } from '@/components/shared/loading-states/loading-nodata';
 import { useRowsQuery } from "@/modules/rows/api/hooks/queries/useRowsQuery";
@@ -28,5 +29,12 @@ export function RowsFetcher({
 
   if (!rowsQuery.data) return <LoadingNoData description="Ряди не знайдено" />;
 
-  return <ContainerComponent data={rowsQuery.data} />;
+  return (
+    <DataRefetchOverlay
+      isFetching={rowsQuery.isFetching}
+      isLoading={rowsQuery.isLoading}
+    >
+      <ContainerComponent data={rowsQuery.data} />
+    </DataRefetchOverlay>
+  );
 }

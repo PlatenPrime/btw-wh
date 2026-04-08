@@ -1,3 +1,4 @@
+import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
 import { ErrorDisplay } from "@/components/shared/error-components";
 import { LoadingNoData } from "@/components/shared/loading-states";
 import { useAnalogsByProdQuery } from "@/modules/analogs/api/hooks/queries/useAnalogsByProdQuery";
@@ -37,7 +38,14 @@ export function AnalogsByProdFetcher({
     if (!data.data?.length && !analogsQuery.isFetching) {
       return <LoadingNoData description="Аналоги виробника не знайдено" />;
     }
-    return <ContainerComponent data={data} />;
+    return (
+      <DataRefetchOverlay
+        isFetching={analogsQuery.isFetching}
+        isLoading={analogsQuery.isLoading}
+      >
+        <ContainerComponent data={data} />
+      </DataRefetchOverlay>
+    );
   }
 
   if (isLoading) {

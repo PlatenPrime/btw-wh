@@ -1,3 +1,4 @@
+import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
 import { ErrorDisplay } from "@/components/shared/error-components";
 import { LoadingNoData } from "@/components/shared/loading-states";
 import { useUsersQuery } from "@/modules/auth/api/hooks/queries/useUsersQuery";
@@ -32,5 +33,12 @@ export function UsersFetcher({
     return <LoadingNoData description="Користувачів не знайдено" />;
   }
 
-  return <ContainerComponent data={usersQuery.data} />;
+  return (
+    <DataRefetchOverlay
+      isFetching={usersQuery.isFetching}
+      isLoading={usersQuery.isLoading}
+    >
+      <ContainerComponent data={usersQuery.data} />
+    </DataRefetchOverlay>
+  );
 }

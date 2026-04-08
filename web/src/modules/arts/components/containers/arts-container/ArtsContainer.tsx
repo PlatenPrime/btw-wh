@@ -1,40 +1,44 @@
-import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
+import type { ArtsDto } from "@/modules/arts/api/types/dto";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { ArtsHeaderActions } from "@/modules/arts/components/actions/arts-header-actions";
 import { ArtsContainerView } from "@/modules/arts/components/containers/arts-container/ArtsContainerView.tsx";
 
 interface ArtsContainerProps {
-  data: ArtDto[];
-  isFetchingNextPage: boolean;
-  hasNextPage: boolean;
-  fetchNextPage: () => void;
+  data: ArtsDto;
+  arts: ArtDto[];
+  isPending: boolean;
+  page: number;
+  limit: number;
   search: string;
-  onSearchChange: React.Dispatch<React.SetStateAction<string>>;
+  onPageChange: (page: number) => void;
+  onLimitChange: (limit: number) => void;
+  onSearchChange: (search: string) => void;
 }
 
 export function ArtsContainer({
   data,
-  isFetchingNextPage,
-  hasNextPage,
-  fetchNextPage,
+  arts,
+  isPending,
+  page,
+  limit,
   search,
+  onPageChange,
+  onLimitChange,
   onSearchChange,
 }: ArtsContainerProps) {
-  const bottomRef = useInfiniteScroll({
-    hasNextPage,
-    isFetchingNextPage,
-    fetchNextPage,
-  });
-
   return (
     <>
       <ArtsHeaderActions />
       <ArtsContainerView
         data={data}
-        isFetchingNextPage={isFetchingNextPage}
+        arts={arts}
+        isPending={isPending}
+        page={page}
+        limit={limit}
         search={search}
+        onPageChange={onPageChange}
+        onLimitChange={onLimitChange}
         onSearchChange={onSearchChange}
-        bottomRef={bottomRef}
       />
     </>
   );

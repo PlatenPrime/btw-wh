@@ -1,3 +1,4 @@
+import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
 import { ErrorDisplay } from "@/components/shared/error-components/error-display";
 import { LoadingNoData } from "@/components/shared/loading-states/loading-nodata";
 import { useAsksByArtikulQuery } from "@/modules/asks/api/hooks/queries/useAsksByArtikulQuery";
@@ -35,5 +36,12 @@ export function AsksByArtikulFetcher({
   if (!asksQuery.data)
     return <LoadingNoData description="Немає даних для відображення" />;
 
-  return <ContainerComponent data={asksQuery.data} />;
+  return (
+    <DataRefetchOverlay
+      isFetching={asksQuery.isFetching}
+      isLoading={asksQuery.isLoading}
+    >
+      <ContainerComponent data={asksQuery.data} />
+    </DataRefetchOverlay>
+  );
 }

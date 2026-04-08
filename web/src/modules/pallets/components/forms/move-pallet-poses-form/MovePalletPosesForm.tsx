@@ -1,6 +1,7 @@
 import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
 import { FormErrorDisplay } from "@/components/shared/error-components/form-error-display";
 import { Input } from "@/components/ui/input";
+import { useDebounce } from "@/hooks/useDebounce";
 import type { IPallet } from "@/modules/pallets/api/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMemo, useState } from "react";
@@ -30,6 +31,7 @@ export function MovePalletPosesForm({
   isSubmitting = false,
 }: MovePalletPosesFormProps) {
   const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 300);
 
   const form = useForm<MovePalletPosesFormData>({
     resolver: zodResolver(schema),
@@ -46,14 +48,14 @@ export function MovePalletPosesForm({
 
   const filteredPallets = useMemo(() => {
     if (!pallets) return [] as IPallet[];
-    const normalized = search.trim().toLowerCase();
+    const normalized = debouncedSearch.trim().toLowerCase();
     return pallets
       .filter((p) => p._id !== fromPallet._id)
       .filter((p) =>
         normalized ? p.title.toLowerCase().includes(normalized) : true,
       )
       .sort((a, b) => a.title.localeCompare(b.title));
-  }, [pallets, fromPallet._id, search]);
+  }, [pallets, fromPallet._id, debouncedSearch]);
 
   const onSubmit = (data: MovePalletPosesFormData) => {
     const selected = pallets?.find((p) => p._id === data.toPalletId);

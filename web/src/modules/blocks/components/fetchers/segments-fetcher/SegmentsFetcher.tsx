@@ -1,3 +1,4 @@
+import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
 import { ErrorDisplay } from "@/components/shared/error-components";
 import { LoadingNoData } from "@/components/shared/loading-states";
 import { useSegmentsByBlockQuery } from "@/modules/blocks/api/hooks/queries/useSegmentsByBlockQuery";
@@ -38,6 +39,13 @@ export function SegmentsFetcher({
     return <LoadingNoData description="Сегменти не знайдено" />;
   }
 
-  return <ContainerComponent data={segmentsQuery.data.data || []} />;
+  return (
+    <DataRefetchOverlay
+      isFetching={segmentsQuery.isFetching}
+      isLoading={segmentsQuery.isLoading}
+    >
+      <ContainerComponent data={segmentsQuery.data.data || []} />
+    </DataRefetchOverlay>
+  );
 }
 

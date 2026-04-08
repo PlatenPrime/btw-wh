@@ -8,7 +8,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useDebounce } from "@/hooks/useDebounce";
 import { EntityLabel } from "@/modules/analogs/components/entity-label";
 import type { KonkDto } from "@/modules/konks/api/types";
 import { KonkDetailHeaderActions } from "@/modules/konks/components/actions/konk-detail-header-actions";
@@ -20,7 +19,6 @@ import {
 } from "@/modules/skus/components/containers/skus-by-konk-container";
 import { SkusByKonkFetcher } from "@/modules/skus/components/fetchers/skus-by-konk-fetcher";
 import { useSkusByKonkParams } from "@/modules/skus/hooks/useSkusByKonkParams";
-import { useEffect, useState } from "react";
 
 interface KonkContainerProps {
   konk: KonkDto;
@@ -37,18 +35,6 @@ export function KonkContainer({ konk }: KonkContainerProps) {
     setProdName: setSkuProdName,
     setSearch,
   } = useSkusByKonkParams();
-  const [localSearch, setLocalSearch] = useState(search);
-  const debouncedSearch = useDebounce(localSearch, 500);
-
-  useEffect(() => {
-    if (debouncedSearch !== search) {
-      setSearch(debouncedSearch);
-    }
-  }, [debouncedSearch, search, setSearch]);
-
-  useEffect(() => {
-    setLocalSearch(search);
-  }, [search]);
 
   const prodsQuery = useProdsQuery();
   const prods = prodsQuery.data?.data ?? [];
@@ -64,8 +50,8 @@ export function KonkContainer({ konk }: KonkContainerProps) {
           <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
             <div className="grid min-w-0 flex-1 gap-1">
               <SearchPanel
-                search={localSearch}
-                onSearchChange={(e) => setLocalSearch(e.target.value)}
+                search={search}
+                onSearchChange={(e) => setSearch(e.target.value)}
                 placeholder="Пошук за назвою товару..."
               />
             </div>
@@ -107,7 +93,7 @@ export function KonkContainer({ konk }: KonkContainerProps) {
               page: skuPage,
               limit: skuLimit,
               prodName: skuProdName || undefined,
-              search: debouncedSearch || undefined,
+              search: search || undefined,
             }}
             ContainerComponent={({ data }) => (
               <SkusByKonkContainer

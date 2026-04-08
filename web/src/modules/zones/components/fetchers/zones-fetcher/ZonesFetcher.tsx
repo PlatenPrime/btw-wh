@@ -1,3 +1,4 @@
+import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
 import { ErrorDisplay } from "@/components/shared/error-components";
 import { LoadingNoData } from "@/components/shared/loading-states";
 import { useZonesQuery } from "@/modules/zones/api/hooks/queries/useZonesQuery";
@@ -37,6 +38,13 @@ export function ZonesFetcher({
     return <LoadingNoData description="Зони не знайдено" />;
   }
 
-  return <ContainerComponent data={zonesQuery.data} />;
+  return (
+    <DataRefetchOverlay
+      isFetching={zonesQuery.isFetching}
+      isLoading={zonesQuery.isLoading}
+    >
+      <ContainerComponent data={zonesQuery.data} />
+    </DataRefetchOverlay>
+  );
 }
 

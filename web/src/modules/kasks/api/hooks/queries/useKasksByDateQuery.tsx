@@ -12,7 +12,7 @@ export function useKasksByDateQuery({
   date,
   enabled = true,
 }: UseKasksByDateQueryParams) {
-  const debouncedDate = useDebounce(date, 300);
+  const debouncedDate = useDebounce(date, 500);
 
   return useQuery<GetKasksByDateResponse>({
     queryKey: ["kasks", "by-date", { date: debouncedDate }],

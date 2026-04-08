@@ -1,3 +1,4 @@
+import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
 import { ErrorDisplay } from "@/components/shared/error-components";
 import { LoadingNoData } from "@/components/shared/loading-states";
 import { useAnalogsByKonkQuery } from "@/modules/analogs/api/hooks/queries/useAnalogsByKonkQuery";
@@ -37,7 +38,14 @@ export function AnalogsByKonkFetcher({
     if (!data.data?.length && !analogsQuery.isFetching) {
       return <LoadingNoData description="Аналоги конкурента не знайдено" />;
     }
-    return <ContainerComponent data={data} />;
+    return (
+      <DataRefetchOverlay
+        isFetching={analogsQuery.isFetching}
+        isLoading={analogsQuery.isLoading}
+      >
+        <ContainerComponent data={data} />
+      </DataRefetchOverlay>
+    );
   }
 
   if (isLoading) {

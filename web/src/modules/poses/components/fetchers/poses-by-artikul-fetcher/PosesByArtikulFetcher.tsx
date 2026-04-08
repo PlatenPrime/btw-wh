@@ -1,3 +1,4 @@
+import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
 import { ErrorDisplay } from '@/components/shared/error-components/error-display';
 import { LoadingNoData } from '@/components/shared/loading-states/loading-nodata';
 import { usePosesByArtikulQuery } from "@/modules/poses/api/hooks/queries/usePosesByArtikulQuery";
@@ -17,7 +18,7 @@ export function PosesByArtikulFetcher({
 }: PosesByArtikulFetcherProps) {
   const posesQuery = usePosesByArtikulQuery(artikul);
 
-  if (posesQuery.isLoading || posesQuery.isFetching) return <SkeletonComponent />;
+  if (posesQuery.isLoading) return <SkeletonComponent />;
 
   if (posesQuery.error)
     return (
@@ -40,5 +41,12 @@ export function PosesByArtikulFetcher({
     );
   }
 
-  return <ContainerComponent data={posesQuery.data} />;
+  return (
+    <DataRefetchOverlay
+      isFetching={posesQuery.isFetching}
+      isLoading={posesQuery.isLoading}
+    >
+      <ContainerComponent data={posesQuery.data} />
+    </DataRefetchOverlay>
+  );
 }

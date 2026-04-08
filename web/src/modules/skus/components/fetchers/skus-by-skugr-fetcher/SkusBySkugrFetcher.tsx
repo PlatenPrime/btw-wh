@@ -4,7 +4,6 @@ import { LoadingNoData } from "@/components/shared/loading-states";
 import { SearchPanel } from "@/components/shared/search-components/search-panel/SearchPanel";
 import { SelectLimit } from "@/components/shared/select-limit";
 import { Wrapper } from "@/components/shared/wrappers/Wrapper";
-import { useDebounce } from "@/hooks/useDebounce";
 import { useKonksQuery } from "@/modules/konks/api/hooks/queries/useKonksQuery";
 import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
 import { useSkugrPageByIdQuery } from "@/modules/skugrs/api/hooks/queries/useSkugrPageByIdQuery";
@@ -12,7 +11,7 @@ import { useSkusBySkugrQuery } from "@/modules/skus/api/hooks/queries/useSkusByS
 import { SkusContainerSkeleton } from "@/modules/skus/components/containers/skus-by-konk-container/SkusContainerSkeleton";
 import { SkusBySkugrContainer } from "@/modules/skus/components/containers/skus-by-skugr-container";
 import { useSkusBySkugrParams } from "@/modules/skus/hooks/useSkusBySkugrParams";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 
 interface SkusBySkugrFetcherProps {
   skugrId: string;
@@ -28,18 +27,6 @@ export function SkusBySkugrFetcher({ skugrId }: SkusBySkugrFetcherProps) {
     setLimit: setGrLimit,
     setSearch: setGrSearch,
   } = useSkusBySkugrParams();
-  const [localSearch, setLocalSearch] = useState(grSearch);
-  const debouncedSearch = useDebounce(localSearch, 500);
-
-  useEffect(() => {
-    if (debouncedSearch !== grSearch) {
-      setGrSearch(debouncedSearch);
-    }
-  }, [debouncedSearch, grSearch, setGrSearch]);
-
-  useEffect(() => {
-    setLocalSearch(grSearch);
-  }, [grSearch]);
 
   const konksQuery = useKonksQuery();
   const prodsQuery = useProdsQuery();
@@ -56,7 +43,7 @@ export function SkusBySkugrFetcher({ skugrId }: SkusBySkugrFetcherProps) {
     skugrId,
     page: grPage,
     limit: grLimit,
-    search: debouncedSearch || undefined,
+    search: grSearch || undefined,
     enabled: Boolean(skugrMeta),
   });
   const { data, isLoading, error } = skusQuery;
@@ -90,8 +77,8 @@ export function SkusBySkugrFetcher({ skugrId }: SkusBySkugrFetcherProps) {
       <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
         <div className="grid min-w-0 flex-1 gap-1">
           <SearchPanel
-            search={localSearch}
-            onSearchChange={(e) => setLocalSearch(e.target.value)}
+            search={grSearch}
+            onSearchChange={(e) => setGrSearch(e.target.value)}
             placeholder="Пошук за назвою товару..."
           />
         </div>

@@ -1,3 +1,4 @@
+import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
 import { ErrorDisplay } from "@/components/shared/error-components/error-display";
 import { useAskPullQuery } from "@/modules/asks/api/hooks/queries/useAskPullQuery";
 import type { GetAskPullResponse } from "@/modules/asks/api/types/dto";
@@ -35,5 +36,15 @@ export function AskPullPositionsFetcher({
   }
 
   // Всегда показываем контейнер, даже если снимать не нужно
-  return <ContainerComponent data={askPullQuery.data.data} isFetching={askPullQuery.isFetching} />;
+  return (
+    <DataRefetchOverlay
+      isFetching={askPullQuery.isFetching}
+      isLoading={askPullQuery.isLoading}
+    >
+      <ContainerComponent
+        data={askPullQuery.data.data}
+        isFetching={askPullQuery.isFetching}
+      />
+    </DataRefetchOverlay>
+  );
 }

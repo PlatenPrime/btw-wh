@@ -12,7 +12,7 @@ export function useAsksByArtikulQuery({
   artikul,
   enabled = true,
 }: UseAsksByArtikulQueryParams) {
-  const debouncedArtikul = useDebounce(artikul, 300);
+  const debouncedArtikul = useDebounce(artikul, 500);
 
   return useQuery<GetAsksByArtikulResponse>({
     queryKey: ["asks", "by-artikul", { artikul: debouncedArtikul }],

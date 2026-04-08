@@ -1,3 +1,4 @@
+import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
 import { ErrorDisplay } from "@/components/shared/error-components";
 import { LoadingNoData } from "@/components/shared/loading-states";
 import { useVariantsQuery } from "@/modules/variants/api/hooks/queries/useVariantsQuery";
@@ -39,6 +40,13 @@ export function VariantsFetcher({
     return <LoadingNoData description="Варіанти не знайдено" />;
   }
 
-  return <ContainerComponent data={variantsQuery.data} />;
+  return (
+    <DataRefetchOverlay
+      isFetching={variantsQuery.isFetching}
+      isLoading={variantsQuery.isLoading}
+    >
+      <ContainerComponent data={variantsQuery.data} />
+    </DataRefetchOverlay>
+  );
 }
 

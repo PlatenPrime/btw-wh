@@ -1,40 +1,42 @@
 import { ErrorDisplay } from '@/components/shared/error-components/error-display';
 import { LoadingNoData } from '@/components/shared/loading-states/loading-nodata';
-import { useArtsInfiniteQuery } from "@/modules/arts/api/hooks/queries/useArtsInfiniteQuery";
-import type { ArtDto } from "@/modules/arts/api/types/dto";
+import { useArtsQuery } from "@/modules/arts/api/hooks/queries/useArtsQuery";
+import type { ArtDto, ArtsDto } from "@/modules/arts/api/types/dto";
 import type { ComponentType } from "react";
-import { useState } from "react";
 
 interface ArtsFetcherProps {
   ContainerComponent: ComponentType<{
-    data: ArtDto[];
-    isFetchingNextPage: boolean;
-    hasNextPage: boolean;
-    fetchNextPage: () => void;
+    data: ArtsDto;
+    arts: ArtDto[];
+    isPending: boolean;
+    page: number;
+    limit: number;
     search: string;
-    onSearchChange: React.Dispatch<React.SetStateAction<string>>;
+    onPageChange: (page: number) => void;
+    onLimitChange: (limit: number) => void;
+    onSearchChange: (search: string) => void;
   }>;
   SkeletonComponent: ComponentType;
-  limit?: number;
-  initialSearch?: string;
+  page: number;
+  limit: number;
+  search: string;
+  onPageChange: (page: number) => void;
+  onLimitChange: (limit: number) => void;
+  onSearchChange: (search: string) => void;
 }
 
 export function ArtsFetcher({
   ContainerComponent,
   SkeletonComponent,
-  limit = 20,
-  initialSearch = "",
+  page,
+  limit,
+  search,
+  onPageChange,
+  onLimitChange,
+  onSearchChange,
 }: ArtsFetcherProps) {
-  const [search, setSearch] = useState(initialSearch);
-
-  const {
-    data,
-    isLoading,
-    isFetchingNextPage,
-    fetchNextPage,
-    hasNextPage,
-    error,
-  } = useArtsInfiniteQuery({
+  const { data, isLoading, isFetching, error } = useArtsQuery({
+    page,
     limit,
     search,
   });
@@ -53,16 +55,17 @@ export function ArtsFetcher({
   if (!data)
     return <LoadingNoData description="Немає даних для відображення" />;
 
-  const flatData = data?.pages.flatMap((page) => page.data) ?? [];
-
   return (
     <ContainerComponent
-      data={flatData}
-      isFetchingNextPage={isFetchingNextPage}
-      hasNextPage={hasNextPage}
-      fetchNextPage={fetchNextPage}
+      data={data}
+      arts={data.data}
+      isPending={isFetching}
+      page={page}
+      limit={limit}
       search={search}
-      onSearchChange={setSearch}
+      onPageChange={onPageChange}
+      onLimitChange={onLimitChange}
+      onSearchChange={onSearchChange}
     />
   );
 }

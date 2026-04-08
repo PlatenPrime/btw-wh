@@ -1,3 +1,4 @@
+import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
 import { ErrorDisplay } from "@/components/shared/error-components";
 import { LoadingNoData } from "@/components/shared/loading-states";
 import { useAnalogsQuery } from "@/modules/analogs/api/hooks/queries/useAnalogsQuery";
@@ -37,5 +38,12 @@ export function AnalogsFetcher({
     return <LoadingNoData description="Аналоги не знайдено" />;
   }
 
-  return <ContainerComponent data={analogsQuery.data} />;
+  return (
+    <DataRefetchOverlay
+      isFetching={analogsQuery.isFetching}
+      isLoading={analogsQuery.isLoading}
+    >
+      <ContainerComponent data={analogsQuery.data} />
+    </DataRefetchOverlay>
+  );
 }

@@ -1,3 +1,4 @@
+import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
 import { ErrorDisplay } from "@/components/shared/error-components";
 import { LoadingNoData } from "@/components/shared/loading-states";
 import { useConstantsQuery } from "@/modules/constants/api/hooks/queries/useConstantsQuery";
@@ -33,5 +34,12 @@ export function ConstantsFetcher({
     return <LoadingNoData description="Констант не знайдено" />;
   }
 
-  return <ContainerComponent data={data} />;
+  return (
+    <DataRefetchOverlay
+      isFetching={constantsQuery.isFetching}
+      isLoading={constantsQuery.isLoading}
+    >
+      <ContainerComponent data={data} />
+    </DataRefetchOverlay>
+  );
 }

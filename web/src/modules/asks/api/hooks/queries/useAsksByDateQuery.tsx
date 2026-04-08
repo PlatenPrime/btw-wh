@@ -12,7 +12,7 @@ export function useAsksByDateQuery({
   date,
   enabled = true,
 }: UseAsksByDateQueryParams) {
-  const debouncedDate = useDebounce(date, 300);
+  const debouncedDate = useDebounce(date, 500);
 
   return useQuery<GetAsksByDateResponse>({
     queryKey: ["asks", "by-date", { date: debouncedDate }],

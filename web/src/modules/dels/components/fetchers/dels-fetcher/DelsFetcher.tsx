@@ -1,3 +1,4 @@
+import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
 import { ErrorDisplay } from "@/components/shared/error-components";
 import { LoadingNoData } from "@/components/shared/loading-states";
 import { useDelsQuery } from "@/modules/dels/api/hooks/queries/useDelsQuery";
@@ -32,5 +33,12 @@ export function DelsFetcher({
     return <LoadingNoData description="Поставок не знайдено" />;
   }
 
-  return <ContainerComponent data={delsQuery.data} />;
+  return (
+    <DataRefetchOverlay
+      isFetching={delsQuery.isFetching}
+      isLoading={delsQuery.isLoading}
+    >
+      <ContainerComponent data={delsQuery.data} />
+    </DataRefetchOverlay>
+  );
 }

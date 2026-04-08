@@ -13,6 +13,7 @@ import {
   ThemedView,
 } from "@/components/themed";
 import { SemanticColors } from "@/constants/theme";
+import { useDebounce } from "@/hooks/useDebounce";
 import { useIconColor } from "@/hooks/use-icon-color";
 import { useEmptyPalletsQuery } from "@/modules/pallets/api/hooks/queries/useEmptyPalletsQuery";
 import type { IPallet } from "@/modules/pallets/api/types";
@@ -38,6 +39,7 @@ export function MovePalletPosesForm({
   onSubmitReady,
 }: MovePalletPosesFormProps) {
   const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 300);
   const [selectedPalletId, setSelectedPalletId] = useState<string>("");
   const iconColor = useIconColor();
   const { resolvedTheme } = useTheme();
@@ -50,14 +52,14 @@ export function MovePalletPosesForm({
 
   const filteredPallets = useMemo(() => {
     if (!pallets) return [] as IPallet[];
-    const normalized = search.trim().toLowerCase();
+    const normalized = debouncedSearch.trim().toLowerCase();
     return pallets
       .filter((p) => p._id !== fromPallet._id)
       .filter((p) =>
         normalized ? p.title.toLowerCase().includes(normalized) : true
       )
       .sort((a, b) => a.title.localeCompare(b.title));
-  }, [pallets, fromPallet._id, search]);
+  }, [pallets, fromPallet._id, debouncedSearch]);
 
   const handleSubmit = useCallback(() => {
     if (!selectedPalletId) {

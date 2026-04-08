@@ -1,3 +1,4 @@
+import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
 import { ErrorDisplay } from "@/components/shared/error-components";
 import { LoadingNoData } from "@/components/shared/loading-states";
 import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
@@ -32,5 +33,12 @@ export function ProdsFetcher({
     return <LoadingNoData description="Виробників не знайдено" />;
   }
 
-  return <ContainerComponent data={prodsQuery.data} />;
+  return (
+    <DataRefetchOverlay
+      isFetching={prodsQuery.isFetching}
+      isLoading={prodsQuery.isLoading}
+    >
+      <ContainerComponent data={prodsQuery.data} />
+    </DataRefetchOverlay>
+  );
 }

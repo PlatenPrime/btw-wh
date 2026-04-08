@@ -2,6 +2,7 @@ import { useSetPalletsForGroupMutation } from "@/modules/pallet-groups/api/hooks
 import { useFreePalletsQuery } from "@/modules/pallet-groups/api/hooks/queries/useFreePalletsQuery";
 import { usePalletGroupQuery } from "@/modules/pallet-groups/api/hooks/queries/usePalletGroupQuery";
 import type { PalletShortDto } from "@/modules/pallet-groups/api/types";
+import { useDebounce } from "@/hooks/useDebounce";
 import { useMemo, useState } from "react";
 import { AddPalletsToGroupFormView } from "./AddPalletsToGroupFormView";
 
@@ -17,6 +18,7 @@ export function AddPalletsToGroupForm({
   onClose,
 }: AddPalletsToGroupFormProps) {
   const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 300);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
   const groupQuery = usePalletGroupQuery({ id: groupId, enabled });
@@ -26,10 +28,10 @@ export function AddPalletsToGroupForm({
   const filteredPallets = useMemo(() => {
     const ungroupedPallets: PalletShortDto[] =
       palletsQuery.data?.data ?? [];
-    const term = search.trim().toLowerCase();
+    const term = debouncedSearch.trim().toLowerCase();
     if (!term) return ungroupedPallets;
     return ungroupedPallets.filter((p) => p.title.toLowerCase().includes(term));
-  }, [search, palletsQuery.data?.data]);
+  }, [debouncedSearch, palletsQuery.data?.data]);
 
   const toggleSelection = (id: string) => {
     setSelectedIds((prev) =>

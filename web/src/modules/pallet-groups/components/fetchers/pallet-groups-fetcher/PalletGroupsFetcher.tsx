@@ -1,3 +1,4 @@
+import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
 import { ErrorDisplay } from "@/components/shared/error-components";
 import { LoadingNoData } from "@/components/shared/loading-states";
 import { usePalletGroupsQuery } from "@/modules/pallet-groups/api/hooks/queries/usePalletGroupsQuery";
@@ -33,5 +34,12 @@ export function PalletGroupsFetcher({
     return <LoadingNoData description="Групи палет не знайдено" />;
   }
 
-  return <ContainerComponent data={groupsQuery.data.data} />;
+  return (
+    <DataRefetchOverlay
+      isFetching={groupsQuery.isFetching}
+      isLoading={groupsQuery.isLoading}
+    >
+      <ContainerComponent data={groupsQuery.data.data} />
+    </DataRefetchOverlay>
+  );
 }

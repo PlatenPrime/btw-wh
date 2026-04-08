@@ -1,3 +1,4 @@
+import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
 import { ErrorDisplay } from "@/components/shared/error-components";
 import { LoadingNoData } from "@/components/shared/loading-states";
 import { useArtsByZoneQuery } from "@/modules/arts/api/hooks/queries/useArtsByZoneQuery";
@@ -35,5 +36,12 @@ export function ArtsByZoneFetcher({
     return <LoadingNoData description="Ця зона не має артикулів" />;
   }
 
-  return <ContainerComponent data={artsQuery.data.data} total={artsQuery.data.total} />;
+  return (
+    <DataRefetchOverlay
+      isFetching={artsQuery.isFetching}
+      isLoading={artsQuery.isLoading}
+    >
+      <ContainerComponent data={artsQuery.data.data} total={artsQuery.data.total} />
+    </DataRefetchOverlay>
+  );
 }

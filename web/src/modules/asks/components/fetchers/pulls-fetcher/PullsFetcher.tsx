@@ -1,3 +1,4 @@
+import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
 import { ErrorDisplay } from "@/components/shared/error-components/error-display";
 import { useAsksPullsQuery } from "@/modules/asks/api/hooks/queries/useAsksPullsQuery";
 import type { GetAsksPullsResponse } from "@/modules/asks/api/types/dto";
@@ -32,6 +33,16 @@ export function PullsFetcher({
     return null;
   }
 
-  return <ContainerComponent data={pullsQuery.data.data} isFetching={pullsQuery.isFetching} />;
+  return (
+    <DataRefetchOverlay
+      isFetching={pullsQuery.isFetching}
+      isLoading={pullsQuery.isLoading}
+    >
+      <ContainerComponent
+        data={pullsQuery.data.data}
+        isFetching={pullsQuery.isFetching}
+      />
+    </DataRefetchOverlay>
+  );
 }
 
