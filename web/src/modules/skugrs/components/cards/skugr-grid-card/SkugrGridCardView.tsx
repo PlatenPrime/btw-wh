@@ -42,32 +42,36 @@ export function SkugrGridCardView({
         title={konk?.title}
       />
       <CardHeader className="grid gap-2 p-2">
-        <div className="flex justify-end">
-          <CardActionsMenu actions={actions} orientation="horizontal" size="sm" align="end" />
-        </div>
-        <CardTitle className="line-clamp-2 text-center text-base leading-tight">
+    
+        <CardTitle className="flex justify-between">
           <Link
             to={`/sku/skugrs/${skugr._id}`}
             className="hover:text-primary underline-offset-4 hover:underline"
           >
             {skugr.title}
           </Link>
+          <div className="flex justify-end">
+          <CardActionsMenu actions={actions} orientation="horizontal" size="sm" align="end" />
+        </div>
         </CardTitle>
-        <CardContent className="flex items-center justify-center gap-1 text-sm">
-          <Notebook className="size-3.5" aria-hidden />
-          {skuCount}
-        </CardContent>
+        <CardContent className="flex items-center justify-between gap-1 text-sm p-0">
         <div className="flex flex-wrap items-center justify-center gap-2">
           {prod && (
             <EntityLabel
               imageUrl={prod.imageUrl}
               title={prod.title}
               fallbackLabel={skugr.prodName}
-              imageSize="md"
+              imageSize="sm"
               className="text-xs"
             />
           )}
         </div>
+          <span className="flex items-center gap-1">
+            <Notebook className="size-3.5" aria-hidden />
+            {skuCount}
+          </span>
+         
+        </CardContent>  
       </CardHeader>
     </Card>
   );

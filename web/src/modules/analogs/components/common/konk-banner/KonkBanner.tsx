@@ -1,7 +1,7 @@
 import { EntityLabel } from "@/modules/analogs/components/entity-label";
 import { cn } from "@/lib/utils";
 
-export type KonkThemeKey = "sky" | "amber" | "rose" | "lime" | "slate";
+export type KonkThemeKey = "sky" | "amber" | "rose" | "lime" | "slate" | "red";
 
 export interface KonkThemeClasses {
   banner: string;
@@ -39,6 +39,12 @@ const KONK_THEME_MAP: Record<KonkThemeKey, KonkThemeClasses> = {
     shadow:
       "shadow-slate-200/40 dark:shadow-slate-600/30 hover:shadow-slate-300/50 dark:hover:shadow-slate-500/40",
   },
+  red: {
+    banner:
+      "bg-red-500/15 text-red-700 dark:bg-red-500/20 dark:text-red-300",
+    shadow:
+      "shadow-red-200/40 dark:shadow-red-600/30 hover:shadow-red-300/50 dark:hover:shadow-red-500/40",
+  },
 };
 
 const KONK_NAME_TO_THEME: Record<string, KonkThemeKey> = {
@@ -46,6 +52,7 @@ const KONK_NAME_TO_THEME: Record<string, KonkThemeKey> = {
   yumi: "amber",
   balun: "rose",
   air: "lime",
+  yumin: "slate",
 };
 
 export function getKonkTheme(konkName: string): KonkThemeClasses {
@@ -71,7 +78,7 @@ export function KonkBanner({
   return (
     <div
       className={cn(
-        "flex justify-center py-1.5 first:rounded-t-xl",
+        "flex justify-center p-1 first:rounded-t-xl",
         theme.banner,
       )}
     >
