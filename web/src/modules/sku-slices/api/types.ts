@@ -41,3 +41,15 @@ export interface SkuManufacturersPieResponseDto {
   message: string;
   data: SkuManufacturersPiePayload;
 }
+
+export interface SkuKonkProdSkugrGroupSalesItemDto {
+  skugrId: string;
+  title: string;
+  salesPcs: number;
+  salesUah: number;
+}
+
+export interface SkuKonkProdSkugrGroupsSalesResponseDto {
+  message: string;
+  data: SkuKonkProdSkugrGroupSalesItemDto[];
+}

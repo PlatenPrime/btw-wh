@@ -6,6 +6,7 @@ import { KonkSalesExcelDialog } from "@/modules/konks/components/dialogs/konk-sa
 import { useSkuKonkProdSalesChartQuery } from "@/modules/sku-slices/api/hooks/queries/useSkuKonkProdSalesChartQuery";
 import { SkuKonkProdSalesHeaderActions } from "@/modules/sku-konk-prod-charts/components/actions/sku-konk-prod-sales-header-actions/SkuKonkProdSalesHeaderActions";
 import { SkuKonkProdChartControls } from "@/modules/sku-konk-prod-charts/components/controls/sku-konk-prod-chart-controls/SkuKonkProdChartControls";
+import { SkuKonkProdSkugrGroupsSection } from "@/modules/sku-konk-prod-charts/components/sku-konk-prod-skugr-groups-section/SkuKonkProdSkugrGroupsSection";
 import { useSkuKonkProdChartParams } from "@/modules/sku-konk-prod-charts/hooks/useSkuKonkProdChartParams";
 import { SalesChartContainer } from "@/modules/sales/components/containers/sales-chart-container/SalesChartContainer";
 import { SalesChartSkeleton } from "@/modules/sales/components/containers/sales-chart-container/SalesChartSkeleton";
@@ -89,15 +90,24 @@ export function SkuKonkProdSales() {
           )}
 
         {isFiltersReady && salesQuery.data && days.length > 0 && (
-          <DataRefetchOverlay
-            isFetching={salesQuery.isFetching}
-            isLoading={salesQuery.isLoading}
-          >
-            <div className="grid gap-4">
-              {summary && <SalesSummaryView summary={summary} />}
-              <SalesChartContainer days={days} />
-            </div>
-          </DataRefetchOverlay>
+          <div className="grid gap-4">
+            <DataRefetchOverlay
+              isFetching={salesQuery.isFetching}
+              isLoading={salesQuery.isLoading}
+              busyLabel="Оновлення графіка…"
+            >
+              <div className="grid gap-4">
+                {summary && <SalesSummaryView summary={summary} />}
+                <SalesChartContainer days={days} />
+              </div>
+            </DataRefetchOverlay>
+            <SkuKonkProdSkugrGroupsSection
+              konk={konk}
+              prod={prod}
+              dateFrom={dateFrom}
+              dateTo={dateTo}
+            />
+          </div>
         )}
         <KonkSalesExcelDialog
           open={excelDialogOpen}
