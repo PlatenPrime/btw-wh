@@ -36,12 +36,14 @@ export function useDownloadKonkSalesExcelMutation() {
       prod,
       dateFrom,
       dateTo,
+      sortBy,
     }: {
       konk: string;
       prod: string;
       dateFrom: string;
       dateTo: string;
-    }) => downloadKonkSalesExcel(konk, prod, dateFrom, dateTo),
+      sortBy?: "sales" | "revenue";
+    }) => downloadKonkSalesExcel(konk, prod, dateFrom, dateTo, { sortBy }),
     onSuccess: ({ blob, filename }) => {
       triggerBlobDownload(blob, filename);
       toast.success("Файл успішно завантажено");

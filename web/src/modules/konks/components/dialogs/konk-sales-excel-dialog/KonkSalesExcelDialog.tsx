@@ -6,7 +6,10 @@ import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
 import { format } from "date-fns";
 import type { DateRange } from "react-day-picker";
 import { useCallback, useEffect, useState } from "react";
-import { KonkSalesExcelDialogView } from "./KonkSalesExcelDialogView";
+import {
+  KonkSalesExcelDialogView,
+  type KonkSalesExcelExportSort,
+} from "./KonkSalesExcelDialogView";
 
 function getDefaultDateRange(): DateRange {
   const now = new Date();
@@ -32,6 +35,8 @@ export function KonkSalesExcelDialog({
   );
   const [selectedProd, setSelectedProd] = useState("");
   const [selectedKonkName, setSelectedKonkName] = useState("");
+  const [exportSort, setExportSort] =
+    useState<KonkSalesExcelExportSort>("default");
 
   const isControlled = controlledOpen !== undefined;
   const open = isControlled ? controlledOpen : internalOpen;
@@ -55,18 +60,32 @@ export function KonkSalesExcelDialog({
 
     const dateFrom = format(from, "yyyy-MM-dd");
     const dateTo = format(to, "yyyy-MM-dd");
+    const sortBy =
+      exportSort === "sales"
+        ? ("sales" as const)
+        : exportSort === "revenue"
+          ? ("revenue" as const)
+          : undefined;
     try {
       await mutation.mutateAsync({
         konk: resolvedKonkName,
         prod: selectedProd,
         dateFrom,
         dateTo,
+        ...(sortBy ? { sortBy } : {}),
       });
       handleOpenChange(false);
     } catch {
       // toast handled in mutation onError
     }
-  }, [dateRange, selectedProd, mutation, resolvedKonkName, handleOpenChange]);
+  }, [
+    dateRange,
+    selectedProd,
+    exportSort,
+    mutation,
+    resolvedKonkName,
+    handleOpenChange,
+  ]);
 
   const handleCancel = useCallback(() => {
     handleOpenChange(false);
@@ -77,6 +96,7 @@ export function KonkSalesExcelDialog({
       setDateRange(getDefaultDateRange());
       setSelectedProd("");
       setSelectedKonkName("");
+      setExportSort("default");
     }
   }, [open]);
 
@@ -92,6 +112,8 @@ export function KonkSalesExcelDialog({
         selectedProd={selectedProd}
         onSelectedProdChange={setSelectedProd}
         prods={prods}
+        exportSort={exportSort}
+        onExportSortChange={setExportSort}
         isExporting={isExporting}
         onDownload={handleDownload}
         onCancel={handleCancel}

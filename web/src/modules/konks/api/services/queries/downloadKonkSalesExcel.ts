@@ -11,14 +11,17 @@ export const downloadKonkSalesExcel = async (
   prod: string,
   dateFrom: string,
   dateTo: string,
-  signal?: AbortSignal,
+  options?: { sortBy?: "sales" | "revenue"; signal?: AbortSignal },
 ): Promise<DownloadKonkSalesExcelResult> => {
   const params = new URLSearchParams({ konk, prod, dateFrom, dateTo });
+  if (options?.sortBy) {
+    params.set("sortBy", options.sortBy);
+  }
   const res = await apiClient.get<Blob>(
     `sku-slices/konk/sales-excel?${params.toString()}`,
     {
       responseType: "blob",
-      signal,
+      signal: options?.signal,
     },
   );
 

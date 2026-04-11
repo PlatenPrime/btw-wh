@@ -17,6 +17,8 @@ import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
 import type { DateRange } from "react-day-picker";
 
+export type KonkSalesExcelExportSort = "default" | "sales" | "revenue";
+
 interface KonkSalesExcelDialogViewProps {
   dateRange: DateRange | undefined;
   onDateRangeChange: (range: DateRange | undefined) => void;
@@ -27,6 +29,8 @@ interface KonkSalesExcelDialogViewProps {
   selectedProd: string;
   onSelectedProdChange: (value: string) => void;
   prods: ProdDto[];
+  exportSort: KonkSalesExcelExportSort;
+  onExportSortChange: (value: KonkSalesExcelExportSort) => void;
   isExporting: boolean;
   onDownload: () => void;
   onCancel: () => void;
@@ -42,6 +46,8 @@ export function KonkSalesExcelDialogView({
   selectedProd,
   onSelectedProdChange,
   prods,
+  exportSort,
+  onExportSortChange,
   isExporting,
   onDownload,
   onCancel,
@@ -110,6 +116,24 @@ export function KonkSalesExcelDialogView({
                   />
                 </SelectItem>
               ))}
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="grid gap-2">
+          <p className="text-sm font-medium">Сортування товарів у файлі</p>
+          <Select
+            value={exportSort}
+            onValueChange={(v) =>
+              onExportSortChange(v as KonkSalesExcelExportSort)
+            }
+          >
+            <SelectTrigger>
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="default">За замовчуванням</SelectItem>
+              <SelectItem value="sales">За кількістю продажів (шт)</SelectItem>
+              <SelectItem value="revenue">За виручкою</SelectItem>
             </SelectContent>
           </Select>
         </div>
