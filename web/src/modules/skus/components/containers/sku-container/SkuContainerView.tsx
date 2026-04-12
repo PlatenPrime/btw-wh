@@ -1,17 +1,10 @@
+import { ChartDateRangeToolbar } from "@/components/shared/chart-date-range-toolbar/ChartDateRangeToolbar";
 import { Image } from "@/components/shared/image/image";
 import {
   URL_DIALOG_IMAGE_FALLBACK,
   UrlDialogImage,
 } from "@/components/shared/url-dialog-image/UrlDialogImage";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import {
   getKonkTheme,
@@ -23,42 +16,30 @@ import type { ProdDto } from "@/modules/prods/api/types";
 import type { SkuDto } from "@/modules/skus/api/types";
 import { SkuSalesChartContainer } from "@/modules/skus/components/containers/sku-sales-chart-container";
 import { SkuSlicesChartContainer } from "@/modules/skus/components/containers/sku-slices-chart-container";
-import { format, subDays } from "date-fns";
 import { ExternalLink } from "lucide-react";
-import { useMemo, useState } from "react";
 
 const SKU_DETAIL_PLACEHOLDER =
   "https://placehold.co/160x160?text=SKU&font=roboto";
-
-const PERIOD_OPTIONS = [
-  { value: "7", label: "7 днів" },
-  { value: "30", label: "30 днів" },
-  { value: "90", label: "90 днів" },
-] as const;
-
-function getPeriod(days: number): { dateFrom: string; dateTo: string } {
-  const today = new Date();
-  const from = subDays(today, days - 1);
-  return {
-    dateFrom: format(from, "yyyy-MM-dd"),
-    dateTo: format(today, "yyyy-MM-dd"),
-  };
-}
 
 interface SkuContainerViewProps {
   sku: SkuDto;
   konk: KonkDto | undefined;
   prod: ProdDto | undefined;
+  dateFrom: string;
+  dateTo: string;
+  onDateRangeChange: (from: string, to: string) => void;
 }
 
-export function SkuContainerView({ sku, konk, prod }: SkuContainerViewProps) {
+export function SkuContainerView({
+  sku,
+  konk,
+  prod,
+  dateFrom,
+  dateTo,
+  onDateRangeChange,
+}: SkuContainerViewProps) {
   const theme = getKonkTheme(sku.konkName);
   const hasImage = Boolean(sku.imageUrl?.trim());
-  const [periodDays, setPeriodDays] = useState<number>(30);
-  const { dateFrom, dateTo } = useMemo(
-    () => getPeriod(periodDays),
-    [periodDays],
-  );
 
   return (
     <div className="grid gap-2">
@@ -117,29 +98,12 @@ export function SkuContainerView({ sku, konk, prod }: SkuContainerViewProps) {
         </CardHeader>
       </Card>
       <div className="grid gap-3">
-        <div className="flex flex-wrap items-center gap-4">
-          <Label
-            htmlFor="sku-charts-period"
-            className="text-muted-foreground text-sm"
-          >
-            Період
-          </Label>
-          <Select
-            value={String(periodDays)}
-            onValueChange={(v) => setPeriodDays(Number(v))}
-          >
-            <SelectTrigger id="sku-charts-period" className="w-[120px]" size="sm">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {PERIOD_OPTIONS.map((opt) => (
-                <SelectItem key={opt.value} value={opt.value}>
-                  {opt.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+        <ChartDateRangeToolbar
+          idPrefix="sku-charts"
+          dateFrom={dateFrom}
+          dateTo={dateTo}
+          onDateRangeChange={onDateRangeChange}
+        />
         <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
           <Card className="overflow-hidden shadow-md">
             <CardHeader className="pb-2">

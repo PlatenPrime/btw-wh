@@ -6,6 +6,7 @@ export function useDeleteKaskMutation() {
   const queryClient = useQueryClient();
 
   return useMutation({
+    mutationKey: ["kasks", "delete"],
     mutationFn: (id: string) => deleteKask(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["kasks"] });

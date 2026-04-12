@@ -53,7 +53,7 @@ export function SkugrDetailCardView({
           className="text-primary inline-flex items-center gap-1 text-sm font-medium hover:underline"
         >
           <ExternalLink className="size-4" />
-          Відкрити сторінку групи на сайті конкурента
+          Посилання на дані
         </a>
       </CardHeader>
     </Card>
