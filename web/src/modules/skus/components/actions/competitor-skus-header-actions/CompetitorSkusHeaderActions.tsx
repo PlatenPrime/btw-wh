@@ -2,7 +2,6 @@ import type { HeaderAction } from "@/components/layout/header-actions";
 import { useRegisterHeaderActions } from "@/components/layout/header-actions";
 import { RoleType } from "@/constants/roles";
 import { useRole } from "@/modules/auth/hooks/useRole";
-import { useDownloadInvalidSkusExcelMutation } from "@/modules/skus/api/hooks/mutations/useDownloadInvalidSkusExcelMutation";
 import { FileSpreadsheet, Trash2 } from "lucide-react";
 import { useCallback, useMemo } from "react";
 import { toast } from "sonner";
@@ -10,17 +9,18 @@ import { toast } from "sonner";
 interface CompetitorSkusHeaderActionsProps {
   konkName: string;
   onOpenNewSinceExcel: () => void;
+  onOpenInvalidExcel: () => void;
   onOpenDeleteInvalid: () => void;
 }
 
 export function CompetitorSkusHeaderActions({
   konkName,
   onOpenNewSinceExcel,
+  onOpenInvalidExcel,
   onOpenDeleteInvalid,
 }: CompetitorSkusHeaderActionsProps) {
   const { hasRole } = useRole();
   const canPrime = hasRole(RoleType.PRIME);
-  const downloadInvalid = useDownloadInvalidSkusExcelMutation();
 
   const requireKonk = useCallback((): boolean => {
     if (!konkName.trim()) {
@@ -32,16 +32,6 @@ export function CompetitorSkusHeaderActions({
     }
     return true;
   }, [konkName]);
-
-  const handleDownloadInvalidExcel = useCallback(() => {
-    if (!requireKonk()) return;
-    downloadInvalid.mutate({ konkName: konkName.trim() });
-  }, [requireKonk, konkName, downloadInvalid]);
-
-  const handleOpenNewSince = useCallback(() => {
-    if (!requireKonk()) return;
-    onOpenNewSinceExcel();
-  }, [requireKonk, onOpenNewSinceExcel]);
 
   const handleOpenDelete = useCallback(() => {
     if (!requireKonk()) return;
@@ -56,7 +46,7 @@ export function CompetitorSkusHeaderActions({
         icon: FileSpreadsheet,
         iconColor: "rose",
         variant: "default",
-        onClick: handleDownloadInvalidExcel,
+        onClick: onOpenInvalidExcel,
       },
       {
         id: "comp-skus-new-since-excel",
@@ -64,7 +54,7 @@ export function CompetitorSkusHeaderActions({
         icon: FileSpreadsheet,
         iconColor: "emerald",
         variant: "default",
-        onClick: handleOpenNewSince,
+        onClick: onOpenNewSinceExcel,
       },
     ];
     if (canPrime) {
@@ -78,12 +68,7 @@ export function CompetitorSkusHeaderActions({
       });
     }
     return actions;
-  }, [
-    canPrime,
-    handleDownloadInvalidExcel,
-    handleOpenNewSince,
-    handleOpenDelete,
-  ]);
+  }, [canPrime, onOpenInvalidExcel, onOpenNewSinceExcel, handleOpenDelete]);
 
   useRegisterHeaderActions(headerActions);
 

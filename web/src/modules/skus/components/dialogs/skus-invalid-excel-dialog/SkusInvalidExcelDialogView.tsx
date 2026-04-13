@@ -11,44 +11,38 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Calendar } from "@/components/ui/calendar";
 import { EntityLabel } from "@/modules/analogs/components/entity-label/EntityLabel";
 import type { KonkDto } from "@/modules/konks/api/types";
 import { SKUS_EXCEL_ALL_KONKS_VALUE } from "@/modules/skus/components/dialogs/skus-excel-konk-scope";
 
-interface SkusNewSinceExcelDialogViewProps {
+interface SkusInvalidExcelDialogViewProps {
   konks: KonkDto[];
   selectedKonkOrAll: string;
   onSelectedKonkOrAllChange: (value: string) => void;
-  selectedDate: Date | undefined;
-  onSelectDate: (d: Date | undefined) => void;
   isDownloading: boolean;
   onDownload: () => void;
   onCancel: () => void;
 }
 
-export function SkusNewSinceExcelDialogView({
+export function SkusInvalidExcelDialogView({
   konks,
   selectedKonkOrAll,
   onSelectedKonkOrAllChange,
-  selectedDate,
-  onSelectDate,
   isDownloading,
   onDownload,
   onCancel,
-}: SkusNewSinceExcelDialogViewProps) {
+}: SkusInvalidExcelDialogViewProps) {
   const isKonkOk = Boolean(selectedKonkOrAll);
 
   return (
     <DialogContent className="sm:max-w-[425px]">
       <DialogHeader>
-        <DialogTitle>Excel новинок</DialogTitle>
+        <DialogTitle>Excel невалідних SKU</DialogTitle>
       </DialogHeader>
       <div className="flex flex-col gap-4">
         <p className="text-muted-foreground text-sm">
-          У файл потрапляють SKU з датою створення не раніше обраного календарного
-          дня (за правилами зрізів на сервері) — для одного конкурента або для
-          усіх.
+          Оберіть конкурента або «усі конкуренти». У файл потрапляють SKU з
+          позначкою невалідності згідно з правилами модуля.
         </p>
         <div className="grid gap-2">
           <p className="text-sm font-medium">Конкурент</p>
@@ -81,20 +75,13 @@ export function SkusNewSinceExcelDialogView({
             </SelectContent>
           </Select>
         </div>
-        <Calendar
-          mode="single"
-          selected={selectedDate}
-          onSelect={onSelectDate}
-          disabled={(date) => date > new Date()}
-          numberOfMonths={1}
-        />
         <DialogActions
           onCancel={onCancel}
           onSubmit={onDownload}
           isSubmitting={isDownloading}
           submitText="Скачати"
           submitLoadingText="Завантаження..."
-          isDisabled={!selectedDate || !isKonkOk}
+          isDisabled={!isKonkOk}
           variant="default"
           className="justify-end"
         />

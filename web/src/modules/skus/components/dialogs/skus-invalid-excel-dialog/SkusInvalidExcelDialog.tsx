@@ -1,59 +1,48 @@
 import { Dialog } from "@/components/ui/dialog";
-import { useDownloadNewSinceSkusExcelMutation } from "@/modules/skus/api/hooks/mutations/useDownloadNewSinceSkusExcelMutation";
+import { useDownloadInvalidSkusExcelMutation } from "@/modules/skus/api/hooks/mutations/useDownloadInvalidSkusExcelMutation";
 import type { KonkDto } from "@/modules/konks/api/types";
-import { format } from "date-fns";
-import { useCallback, useEffect, useState } from "react";
 import { SKUS_EXCEL_ALL_KONKS_VALUE } from "@/modules/skus/components/dialogs/skus-excel-konk-scope";
-import { SkusNewSinceExcelDialogView } from "./SkusNewSinceExcelDialogView";
-
-function defaultSinceDate(): Date {
-  const d = new Date();
-  return new Date(d.getFullYear(), d.getMonth(), 1);
-}
+import { useCallback, useEffect, useState } from "react";
+import { SkusInvalidExcelDialogView } from "./SkusInvalidExcelDialogView";
 
 function defaultKonkSelection(filterKonkName: string): string {
   const t = filterKonkName.trim();
   return t || SKUS_EXCEL_ALL_KONKS_VALUE;
 }
 
-interface SkusNewSinceExcelDialogProps {
+interface SkusInvalidExcelDialogProps {
   konks: KonkDto[];
   filterKonkName: string;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
-export function SkusNewSinceExcelDialog({
+export function SkusInvalidExcelDialog({
   konks,
   filterKonkName,
   open,
   onOpenChange,
-}: SkusNewSinceExcelDialogProps) {
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(
-    defaultSinceDate,
-  );
+}: SkusInvalidExcelDialogProps) {
   const [selectedKonkOrAll, setSelectedKonkOrAll] = useState(
     () => defaultKonkSelection(filterKonkName),
   );
-  const mutation = useDownloadNewSinceSkusExcelMutation();
+  const mutation = useDownloadInvalidSkusExcelMutation();
 
   useEffect(() => {
     if (open) {
-      setSelectedDate(defaultSinceDate());
       setSelectedKonkOrAll(defaultKonkSelection(filterKonkName));
     }
   }, [open, filterKonkName]);
 
   const handleDownload = useCallback(async () => {
-    if (!selectedDate || !selectedKonkOrAll) return;
-    const since = format(selectedDate, "yyyy-MM-dd");
+    if (!selectedKonkOrAll) return;
     try {
-      await mutation.mutateAsync({ konkName: selectedKonkOrAll, since });
+      await mutation.mutateAsync({ konkName: selectedKonkOrAll });
       onOpenChange(false);
     } catch {
       // toast у мутації
     }
-  }, [selectedDate, selectedKonkOrAll, mutation, onOpenChange]);
+  }, [selectedKonkOrAll, mutation, onOpenChange]);
 
   const handleCancel = useCallback(() => {
     onOpenChange(false);
@@ -61,12 +50,10 @@ export function SkusNewSinceExcelDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <SkusNewSinceExcelDialogView
+      <SkusInvalidExcelDialogView
         konks={konks}
         selectedKonkOrAll={selectedKonkOrAll}
         onSelectedKonkOrAllChange={setSelectedKonkOrAll}
-        selectedDate={selectedDate}
-        onSelectDate={setSelectedDate}
         isDownloading={mutation.isPending}
         onDownload={handleDownload}
         onCancel={handleCancel}

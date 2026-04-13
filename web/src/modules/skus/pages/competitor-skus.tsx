@@ -3,6 +3,7 @@ import { CompetitorSkusHeaderActions } from "@/modules/skus/components/actions/c
 import { CompetitorSkusContainer } from "@/modules/skus/components/containers/competitor-skus-container/CompetitorSkusContainer";
 import { CompetitorSkusControls } from "@/modules/skus/components/controls/competitor-skus-controls/CompetitorSkusControls";
 import { DeleteInvalidSkusDialog } from "@/modules/skus/components/dialogs/delete-invalid-skus-dialog/DeleteInvalidSkusDialog";
+import { SkusInvalidExcelDialog } from "@/modules/skus/components/dialogs/skus-invalid-excel-dialog/SkusInvalidExcelDialog";
 import { SkusNewSinceExcelDialog } from "@/modules/skus/components/dialogs/skus-new-since-excel-dialog/SkusNewSinceExcelDialog";
 import { CompetitorSkusFetcher } from "@/modules/skus/components/fetchers/competitor-skus-fetcher/CompetitorSkusFetcher";
 import { SkusContainerSkeleton } from "@/modules/skus/components/containers/skus-by-konk-container/SkusContainerSkeleton";
@@ -36,11 +37,11 @@ export function CompetitorSkus() {
   const prods = prodsQuery.data?.data;
 
   const [newSinceOpen, setNewSinceOpen] = useState(false);
+  const [invalidExcelOpen, setInvalidExcelOpen] = useState(false);
   const [deleteInvalidOpen, setDeleteInvalidOpen] = useState(false);
 
   useEffect(() => {
     if (!konkName.trim()) {
-      setNewSinceOpen(false);
       setDeleteInvalidOpen(false);
     }
   }, [konkName]);
@@ -60,6 +61,7 @@ export function CompetitorSkus() {
       <CompetitorSkusHeaderActions
         konkName={konkName}
         onOpenNewSinceExcel={() => setNewSinceOpen(true)}
+        onOpenInvalidExcel={() => setInvalidExcelOpen(true)}
         onOpenDeleteInvalid={openDeleteDialog}
       />
       <div className="grid gap-2 p-2">
@@ -100,20 +102,25 @@ export function CompetitorSkus() {
         />
       </div>
 
+      <SkusNewSinceExcelDialog
+        konks={konks ?? []}
+        filterKonkName={konkName}
+        open={newSinceOpen}
+        onOpenChange={setNewSinceOpen}
+      />
+      <SkusInvalidExcelDialog
+        konks={konks ?? []}
+        filterKonkName={konkName}
+        open={invalidExcelOpen}
+        onOpenChange={setInvalidExcelOpen}
+      />
       {konkName.trim() ? (
-        <>
-          <SkusNewSinceExcelDialog
-            konkName={konkName.trim()}
-            open={newSinceOpen}
-            onOpenChange={setNewSinceOpen}
-          />
-          <DeleteInvalidSkusDialog
-            konkName={konkName.trim()}
-            konkLabel={konkLabel}
-            open={deleteInvalidOpen}
-            onOpenChange={setDeleteInvalidOpen}
-          />
-        </>
+        <DeleteInvalidSkusDialog
+          konkName={konkName.trim()}
+          konkLabel={konkLabel}
+          open={deleteInvalidOpen}
+          onOpenChange={setDeleteInvalidOpen}
+        />
       ) : null}
     </SidebarInsetLayout>
   );
