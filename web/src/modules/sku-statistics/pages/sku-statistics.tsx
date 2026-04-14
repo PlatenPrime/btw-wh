@@ -131,7 +131,13 @@ export function SkuStatistics() {
                 </Button>
               </div>
               <SkuStatisticsPie rows={rows} metric={metric} />
-              <SkuStatisticsTable rows={rows} metric={metric} />
+              <SkuStatisticsTable
+                rows={rows}
+                metric={metric}
+                konk={konk}
+                dateFrom={dateFrom}
+                dateTo={dateTo}
+              />
             </div>
           </DataRefetchOverlay>
         )}

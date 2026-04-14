@@ -174,7 +174,14 @@ export function SkuKonkProdSkugrGroupsSection({
               Немає ненульових продажів для діаграми; див. таблицю нижче.
             </p>
           )}
-          <SkuKonkProdSkugrGroupsTable rows={tableRows} metric={metric} />
+          <SkuKonkProdSkugrGroupsTable
+            rows={tableRows}
+            metric={metric}
+            konk={konk}
+            prod={prod}
+            dateFrom={dateFrom}
+            dateTo={dateTo}
+          />
         </CardContent>
       </Card>
     </DataRefetchOverlay>
