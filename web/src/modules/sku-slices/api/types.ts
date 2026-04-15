@@ -49,7 +49,14 @@ export interface SkuKonkProdSkugrGroupSalesItemDto {
   salesUah: number;
 }
 
+export interface SkuKonkProdSkugrGroupsSalesTotalDto {
+  title: string;
+  salesPcs: number;
+  salesUah: number;
+}
+
 export interface SkuKonkProdSkugrGroupsSalesResponseDto {
   message: string;
   data: SkuKonkProdSkugrGroupSalesItemDto[];
+  all: SkuKonkProdSkugrGroupsSalesTotalDto;
 }

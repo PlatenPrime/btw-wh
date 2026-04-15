@@ -13,12 +13,14 @@ import {
   exportSalesShareTableToXlsx,
 } from "@/utils/export-sales-share-table-xlsx";
 import { Download } from "lucide-react";
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 import { Link } from "react-router";
+import type { SkuKonkProdSkugrGroupsSalesTotalDto } from "@/modules/sku-slices/api/types";
 import type { SkugrGroupSalesRow, SkugrGroupsMetric } from "./types";
 
 interface SkuKonkProdSkugrGroupsTableProps {
   rows: SkugrGroupSalesRow[];
+  all: SkuKonkProdSkugrGroupsSalesTotalDto;
   metric: SkugrGroupsMetric;
   konk: string;
   prod: string;
@@ -41,6 +43,7 @@ const percentFormat = new Intl.NumberFormat("uk-UA", {
 
 export function SkuKonkProdSkugrGroupsTable({
   rows,
+  all,
   metric,
   konk,
   prod,
@@ -49,16 +52,6 @@ export function SkuKonkProdSkugrGroupsTable({
 }: SkuKonkProdSkugrGroupsTableProps) {
   const shareColumnTitle =
     metric === "salesUah" ? "Частка за виручкою" : "Частка за продажами";
-
-  const { totalPcs, totalUah } = useMemo(() => {
-    return rows.reduce(
-      (acc, item) => ({
-        totalPcs: acc.totalPcs + item.salesPcs,
-        totalUah: acc.totalUah + item.salesUah,
-      }),
-      { totalPcs: 0, totalUah: 0 },
-    );
-  }, [rows]);
 
   const handleExportExcel = useCallback(() => {
     exportSalesShareTableToXlsx({
@@ -105,10 +98,10 @@ export function SkuKonkProdSkugrGroupsTable({
           <TableRow className="bg-muted/90 border-b-2 border-primary/25 font-semibold hover:bg-muted/90">
             <TableCell className="max-w-[320px] truncate">Усього</TableCell>
             <TableCell className="text-right tabular-nums">
-              {unitsFormat.format(totalPcs)}
+              {unitsFormat.format(all.salesPcs)}
             </TableCell>
             <TableCell className="text-right tabular-nums">
-              {currencyFormat.format(totalUah)}
+              {currencyFormat.format(all.salesUah)}
             </TableCell>
             <TableCell className="text-right tabular-nums">
               {percentFormat.format(100)}%

@@ -10,6 +10,7 @@ import type {
   SkugrGroupSalesRow,
   SkugrGroupsMetric,
 } from "@/modules/sku-konk-prod-charts/components/sku-konk-prod-skugr-groups-section/types";
+import type { SkuKonkProdSkugrGroupsSalesTotalDto } from "@/modules/sku-slices/api/types";
 import { useSkuKonkProdSkugrGroupsSalesQuery } from "@/modules/sku-slices/api/hooks/queries/useSkuKonkProdSkugrGroupsSalesQuery";
 import { SkuStatisticsContentSkeleton } from "@/modules/sku-statistics/components/skeletons/sku-statistics-content-skeleton/SkuStatisticsContentSkeleton";
 import { isAxiosError } from "axios";
@@ -39,14 +40,23 @@ export function SkuKonkProdSkugrGroupsSection({
     enabled: !isProdAll,
   });
 
+  const total = useMemo<SkuKonkProdSkugrGroupsSalesTotalDto | null>(() => {
+    const serverTotal = skugrQuery.data?.all;
+    if (!serverTotal) return null;
+    return {
+      title: serverTotal.title,
+      salesPcs: serverTotal.salesPcs,
+      salesUah: serverTotal.salesUah,
+    };
+  }, [skugrQuery.data]);
+
   const tableRows = useMemo<SkugrGroupSalesRow[]>(() => {
-    const list = skugrQuery.data?.data;
+    const response = skugrQuery.data;
+    const list = response?.data;
     if (!list?.length) return [];
 
-    const totalMetric = list.reduce(
-      (acc, item) => acc + (metric === "salesUah" ? item.salesUah : item.salesPcs),
-      0,
-    );
+    const totalMetric =
+      metric === "salesUah" ? (response?.all.salesUah ?? 0) : (response?.all.salesPcs ?? 0);
 
     return list
       .map((item) => ({
@@ -133,7 +143,7 @@ export function SkuKonkProdSkugrGroupsSection({
     );
   }
 
-  if (!skugrQuery.data || !tableRows.length) {
+  if (!skugrQuery.data || !tableRows.length || !total) {
     return null;
   }
 
@@ -176,6 +186,7 @@ export function SkuKonkProdSkugrGroupsSection({
           )}
           <SkuKonkProdSkugrGroupsTable
             rows={tableRows}
+            all={total}
             metric={metric}
             konk={konk}
             prod={prod}
