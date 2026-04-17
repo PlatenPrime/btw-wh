@@ -10,7 +10,7 @@ import { SkusContainerSkeleton } from "@/modules/skus/components/containers/skus
 import { useCompetitorSkusParams } from "@/modules/skus/hooks/useCompetitorSkusParams";
 import { useKonksQuery } from "@/modules/konks/api/hooks/queries/useKonksQuery";
 import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 
 export function CompetitorSkus() {
   const {
@@ -40,18 +40,6 @@ export function CompetitorSkus() {
   const [invalidExcelOpen, setInvalidExcelOpen] = useState(false);
   const [deleteInvalidOpen, setDeleteInvalidOpen] = useState(false);
 
-  useEffect(() => {
-    if (!konkName.trim()) {
-      setDeleteInvalidOpen(false);
-    }
-  }, [konkName]);
-
-  const konkLabel = useMemo(() => {
-    const list = konksQuery.data?.data ?? [];
-    const k = list.find((x) => x.name === konkName);
-    return k?.title ?? k?.name ?? konkName;
-  }, [konksQuery.data, konkName]);
-
   const openDeleteDialog = useCallback(() => {
     setDeleteInvalidOpen(true);
   }, []);
@@ -59,7 +47,6 @@ export function CompetitorSkus() {
   return (
     <SidebarInsetLayout headerText="Товари конкурентів">
       <CompetitorSkusHeaderActions
-        konkName={konkName}
         onOpenNewSinceExcel={() => setNewSinceOpen(true)}
         onOpenInvalidExcel={() => setInvalidExcelOpen(true)}
         onOpenDeleteInvalid={openDeleteDialog}
@@ -114,14 +101,12 @@ export function CompetitorSkus() {
         open={invalidExcelOpen}
         onOpenChange={setInvalidExcelOpen}
       />
-      {konkName.trim() ? (
-        <DeleteInvalidSkusDialog
-          konkName={konkName.trim()}
-          konkLabel={konkLabel}
-          open={deleteInvalidOpen}
-          onOpenChange={setDeleteInvalidOpen}
-        />
-      ) : null}
+      <DeleteInvalidSkusDialog
+        konks={konks ?? []}
+        filterKonkName={konkName}
+        open={deleteInvalidOpen}
+        onOpenChange={setDeleteInvalidOpen}
+      />
     </SidebarInsetLayout>
   );
 }

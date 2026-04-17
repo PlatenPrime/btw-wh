@@ -3,40 +3,21 @@ import { useRegisterHeaderActions } from "@/components/layout/header-actions";
 import { RoleType } from "@/constants/roles";
 import { useRole } from "@/modules/auth/hooks/useRole";
 import { FileSpreadsheet, Trash2 } from "lucide-react";
-import { useCallback, useMemo } from "react";
-import { toast } from "sonner";
+import { useMemo } from "react";
 
 interface CompetitorSkusHeaderActionsProps {
-  konkName: string;
   onOpenNewSinceExcel: () => void;
   onOpenInvalidExcel: () => void;
   onOpenDeleteInvalid: () => void;
 }
 
 export function CompetitorSkusHeaderActions({
-  konkName,
   onOpenNewSinceExcel,
   onOpenInvalidExcel,
   onOpenDeleteInvalid,
 }: CompetitorSkusHeaderActionsProps) {
   const { hasRole } = useRole();
   const canPrime = hasRole(RoleType.PRIME);
-
-  const requireKonk = useCallback((): boolean => {
-    if (!konkName.trim()) {
-      toast.error("Оберіть конкурента", {
-        description:
-          "Для цієї дії потрібен обраний конкурент у панелі фільтрів.",
-      });
-      return false;
-    }
-    return true;
-  }, [konkName]);
-
-  const handleOpenDelete = useCallback(() => {
-    if (!requireKonk()) return;
-    onOpenDeleteInvalid();
-  }, [requireKonk, onOpenDeleteInvalid]);
 
   const headerActions = useMemo<HeaderAction[]>(() => {
     const actions: HeaderAction[] = [
@@ -64,11 +45,11 @@ export function CompetitorSkusHeaderActions({
         icon: Trash2,
         iconColor: "red",
         variant: "super-destructive",
-        onClick: handleOpenDelete,
+        onClick: onOpenDeleteInvalid,
       });
     }
     return actions;
-  }, [canPrime, onOpenInvalidExcel, onOpenNewSinceExcel, handleOpenDelete]);
+  }, [canPrime, onOpenInvalidExcel, onOpenNewSinceExcel, onOpenDeleteInvalid]);
 
   useRegisterHeaderActions(headerActions);
 
