@@ -1,22 +1,21 @@
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export function SkuGridCardSkeleton() {
   return (
-    <Card className="gap-0 p-2 transition-shadow">
-      <CardHeader className="p-0">
-        <div className="flex items-center justify-between gap-2">
-          <Skeleton className="h-4 w-24" />
-        </div>
-      </CardHeader>
-      <CardContent className="grid gap-2 p-0 pt-2">
-        <div className="flex items-start gap-3">
+    <Card className="flex flex-col gap-2 overflow-hidden p-0 transition-shadow">
+      <Skeleton className="h-8 w-full rounded-none" />
+      <div className="flex flex-col gap-2 px-2 pb-1">
+        <div className="flex min-h-0 min-w-0 items-start gap-3">
           <Skeleton className="aspect-square w-full max-w-[6rem] shrink-0 rounded-lg" />
-          <div className="flex min-w-0 flex-1 flex-col gap-2">
-            <Skeleton className="h-4 w-full max-w-[12rem]" />
+          <div className="grid flex-1 gap-1">
+            <Skeleton className="h-4 w-full" />
+            <Skeleton className="h-4 w-11/12" />
+            <Skeleton className="h-4 w-3/4" />
+            <Skeleton className="mt-1 h-3 w-2/3" />
           </div>
         </div>
-      </CardContent>
+      </div>
     </Card>
   );
 }

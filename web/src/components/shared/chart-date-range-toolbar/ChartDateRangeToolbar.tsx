@@ -66,7 +66,7 @@ export function ChartDateRangeToolbar({
       : "Оберіть період";
 
   return (
-    <div className="flex flex-wrap items-center gap-3">
+    <div className="flex flex-wrap items-center justify-center gap-3">
       <Label htmlFor={triggerId} className="text-muted-foreground text-sm">
         Період
       </Label>

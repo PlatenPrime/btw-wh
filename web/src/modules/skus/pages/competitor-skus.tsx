@@ -1,12 +1,12 @@
 import { SidebarInsetLayout } from "@/components/layout/SidebarInsetLayout";
 import { CompetitorSkusHeaderActions } from "@/modules/skus/components/actions/competitor-skus-header-actions/CompetitorSkusHeaderActions";
 import { CompetitorSkusContainer } from "@/modules/skus/components/containers/competitor-skus-container/CompetitorSkusContainer";
+import { CompetitorSkusContainerSkeleton } from "@/modules/skus/components/containers/competitor-skus-container/CompetitorSkusContainerSkeleton";
 import { CompetitorSkusControls } from "@/modules/skus/components/controls/competitor-skus-controls/CompetitorSkusControls";
 import { DeleteInvalidSkusDialog } from "@/modules/skus/components/dialogs/delete-invalid-skus-dialog/DeleteInvalidSkusDialog";
 import { SkusInvalidExcelDialog } from "@/modules/skus/components/dialogs/skus-invalid-excel-dialog/SkusInvalidExcelDialog";
 import { SkusNewSinceExcelDialog } from "@/modules/skus/components/dialogs/skus-new-since-excel-dialog/SkusNewSinceExcelDialog";
 import { CompetitorSkusFetcher } from "@/modules/skus/components/fetchers/competitor-skus-fetcher/CompetitorSkusFetcher";
-import { SkusContainerSkeleton } from "@/modules/skus/components/containers/skus-by-konk-container/SkusContainerSkeleton";
 import { useCompetitorSkusParams } from "@/modules/skus/hooks/useCompetitorSkusParams";
 import { useKonksQuery } from "@/modules/konks/api/hooks/queries/useKonksQuery";
 import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
@@ -85,7 +85,7 @@ export function CompetitorSkus() {
               onPageChange={setPage}
             />
           )}
-          SkeletonComponent={SkusContainerSkeleton}
+          SkeletonComponent={CompetitorSkusContainerSkeleton}
         />
       </div>
 
