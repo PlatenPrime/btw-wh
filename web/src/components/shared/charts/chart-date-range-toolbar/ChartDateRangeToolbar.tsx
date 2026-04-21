@@ -7,7 +7,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { useState } from "react";
@@ -52,10 +51,7 @@ export function ChartDateRangeToolbar({
     if (from > to) {
       [from, to] = [to, from];
     }
-    onDateRangeChange(
-      format(from, "yyyy-MM-dd"),
-      format(to, "yyyy-MM-dd"),
-    );
+    onDateRangeChange(format(from, "yyyy-MM-dd"), format(to, "yyyy-MM-dd"));
     setIsDialogOpen(false);
     setPendingRange(undefined);
   };
@@ -67,9 +63,6 @@ export function ChartDateRangeToolbar({
 
   return (
     <div className="flex flex-wrap items-center justify-center gap-3">
-      <Label htmlFor={triggerId} className="text-muted-foreground text-sm">
-        Період
-      </Label>
       <Button
         id={triggerId}
         type="button"

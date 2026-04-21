@@ -1,18 +1,22 @@
-import { ChartDateRangeToolbar } from "@/components/shared/chart-date-range-toolbar/ChartDateRangeToolbar";
+import { ChartDateRangeToolbar } from "@/components/shared/charts/chart-date-range-toolbar/ChartDateRangeToolbar";
 import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
 import { ErrorDisplay } from "@/components/shared/error-components";
 import { LoadingNoData } from "@/components/shared/loading-states/loading-nodata";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import {
+  SalesRangeChartSkeleton,
+  SalesRangeChartView,
+} from "@/components/shared/charts/sales-range-chart";
+import {
+  SliceRangeChartSkeleton,
+  SliceRangeChartView,
+} from "@/components/shared/charts/slice-range-chart";
 import type {
-  AnalogSalesRangeItem,
-  AnalogSliceRangeItem,
-} from "@/modules/analogs/api/types";
-import { AnalogSalesChartSkeleton } from "@/modules/analogs/components/containers/analog-sales-chart-container/AnalogSalesChartSkeleton";
-import { AnalogSalesChartView } from "@/modules/analogs/components/containers/analog-sales-chart-container/AnalogSalesChartView";
-import { AnalogSlicesChartSkeleton } from "@/modules/analogs/components/containers/analog-slices-chart-container/AnalogSlicesChartSkeleton";
-import { AnalogSlicesChartView } from "@/modules/analogs/components/containers/analog-slices-chart-container/AnalogSlicesChartView";
+  SalesRangeChartPoint,
+  SliceRangeChartPoint,
+} from "@/types/charts-range";
 
 type SkugrChartsSectionViewToolbarProps = {
   dateFrom: string;
@@ -30,8 +34,8 @@ type SkugrChartsSectionViewProps =
   | (SkugrChartsSectionViewToolbarProps & { phase: "empty" })
   | (SkugrChartsSectionViewToolbarProps & {
       phase: "ready";
-      sliceItems: AnalogSliceRangeItem[];
-      salesItems: AnalogSalesRangeItem[];
+      sliceItems: SliceRangeChartPoint[];
+      salesItems: SalesRangeChartPoint[];
       showSales: boolean;
       onShowSalesChange: (value: boolean) => void;
       showRevenue: boolean;
@@ -61,7 +65,7 @@ export function SkugrChartsSectionView(props: SkugrChartsSectionViewProps) {
               </h3>
             </CardHeader>
             <CardContent>
-              <AnalogSlicesChartSkeleton />
+              <SliceRangeChartSkeleton />
             </CardContent>
           </Card>
           <Card className="overflow-hidden shadow-md">
@@ -71,7 +75,7 @@ export function SkugrChartsSectionView(props: SkugrChartsSectionViewProps) {
               </h3>
             </CardHeader>
             <CardContent>
-              <AnalogSalesChartSkeleton />
+              <SalesRangeChartSkeleton />
             </CardContent>
           </Card>
         </div>
@@ -101,7 +105,7 @@ export function SkugrChartsSectionView(props: SkugrChartsSectionViewProps) {
                 </h3>
               </CardHeader>
               <CardContent>
-                <AnalogSlicesChartView
+                <SliceRangeChartView
                   data={props.sliceItems}
                   showStock
                   showPrice={false}
@@ -147,7 +151,7 @@ export function SkugrChartsSectionView(props: SkugrChartsSectionViewProps) {
                     </div>
                   </div>
                   {props.showSalesChart ? (
-                    <AnalogSalesChartView
+                    <SalesRangeChartView
                       data={props.salesItems}
                       showSales={props.showSales}
                       showRevenue={props.showRevenue}

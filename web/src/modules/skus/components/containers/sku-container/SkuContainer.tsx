@@ -6,7 +6,7 @@ import { useKonksQuery } from "@/modules/konks/api/hooks/queries/useKonksQuery";
 import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
 import type { SkuDto } from "@/modules/skus/api/types";
 import { SkuDetailHeaderActions } from "@/modules/skus/components/actions/sku-detail-header-actions";
-import { SkuContainerView } from "@/modules/skus/components/charts/sku-charts-section";
+import { SkuContainerView } from "./SkuContainerView";
 import { useCallback, useMemo, useState } from "react";
 
 interface SkuContainerProps {

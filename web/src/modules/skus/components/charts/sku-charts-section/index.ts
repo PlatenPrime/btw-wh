@@ -1,3 +1,3 @@
-export { SkuChartsSection } from "./SkuChartsSection";
+export { SkuChartsSectionLayout } from "./SkuChartsSectionLayout";
+export type { SkuChartsSectionLayoutProps } from "./SkuChartsSectionLayout";
 export { SkuChartsSectionSkeleton } from "./SkuChartsSectionSkeleton";
-export { SkuContainerView } from "./SkuContainerView";

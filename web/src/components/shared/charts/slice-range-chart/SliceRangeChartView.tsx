@@ -4,26 +4,26 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@/components/ui/chart";
-import type { AnalogSalesRangeItem } from "@/modules/analogs/api/types";
+import type { SliceRangeChartPoint } from "@/types/charts-range";
 import { format, parseISO } from "date-fns";
 import { useLayoutEffect, useState } from "react";
 import { CartesianGrid, ComposedChart, Line, XAxis, YAxis } from "recharts";
 
 const chartConfig = {
-  sales: {
-    label: "Продажі ",
-    color: "var(--chart-6)",
+  stock: {
+    label: "Залишок ",
+    color: "var(--chart-1)",
   },
-  revenue: {
-    label: "Виручка ",
-    color: "var(--chart-7)",
+  price: {
+    label: "Ціна ",
+    color: "var(--chart-2)",
   },
 } satisfies ChartConfig;
 
-export interface AnalogSalesChartViewProps {
-  data: AnalogSalesRangeItem[];
-  showSales?: boolean;
-  showRevenue?: boolean;
+export interface SliceRangeChartViewProps {
+  data: SliceRangeChartPoint[];
+  showStock?: boolean;
+  showPrice?: boolean;
 }
 
 function formatDateTick(value: string): string {
@@ -36,23 +36,23 @@ function formatDateTick(value: string): string {
 
 function getChartColors(): { chart1: string; chart2: string } {
   if (typeof document === "undefined") {
-    return { chart1: "oklch(0.62 0.17 350)", chart2: "oklch(0.58 0.14 195)" };
+    return { chart1: "oklch(0.58 0.17 277)", chart2: "oklch(0.51 0.2 277)" };
   }
   const root = document.documentElement;
   const chart1 =
-    getComputedStyle(root).getPropertyValue("--chart-6").trim() ||
-    "oklch(0.62 0.17 350)";
+    getComputedStyle(root).getPropertyValue("--chart-1").trim() ||
+    "oklch(0.58 0.17 277)";
   const chart2 =
-    getComputedStyle(root).getPropertyValue("--chart-7").trim() ||
-    "oklch(0.58 0.14 195)";
+    getComputedStyle(root).getPropertyValue("--chart-2").trim() ||
+    "oklch(0.51 0.2 277)";
   return { chart1, chart2 };
 }
 
-export function AnalogSalesChartView({
+export function SliceRangeChartView({
   data,
-  showSales = true,
-  showRevenue = true,
-}: AnalogSalesChartViewProps) {
+  showStock = true,
+  showPrice = true,
+}: SliceRangeChartViewProps) {
   const [colors, setColors] = useState(getChartColors);
 
   useLayoutEffect(() => {
@@ -63,9 +63,9 @@ export function AnalogSalesChartView({
     return null;
   }
 
-  const hasSales = showSales;
-  const hasRevenue = showRevenue;
-  const hasAny = hasSales || hasRevenue;
+  const hasStock = showStock;
+  const hasPrice = showPrice;
+  const hasAny = hasStock || hasPrice;
 
   if (!hasAny) {
     return null;
@@ -74,7 +74,7 @@ export function AnalogSalesChartView({
   return (
     <ChartContainer
       config={chartConfig}
-      className="analog-sales-chart aspect-auto h-[clamp(160px,32vh,260px)] min-h-[160px] w-full max-w-full sm:h-[clamp(180px,35vh,280px)] sm:min-h-[180px] sm:max-w-xl lg:max-w-2xl [&_.recharts-wrapper]:!block [&_.recharts-wrapper]:h-full"
+      className="slice-range-chart aspect-auto h-[clamp(160px,32vh,260px)] min-h-[160px] w-full max-w-full sm:h-[clamp(180px,35vh,280px)] sm:min-h-[180px] sm:max-w-xl lg:max-w-2xl [&_.recharts-wrapper]:!block [&_.recharts-wrapper]:h-full"
     >
       <ComposedChart
         data={data}
@@ -87,7 +87,7 @@ export function AnalogSalesChartView({
           tickLine={false}
           axisLine={false}
         />
-        {hasSales && (
+        {hasStock && (
           <YAxis
             yAxisId="left"
             orientation="left"
@@ -96,7 +96,7 @@ export function AnalogSalesChartView({
             tickFormatter={(v) => String(v)}
           />
         )}
-        {hasRevenue && (
+        {hasPrice && (
           <YAxis
             yAxisId="right"
             orientation="right"
@@ -109,37 +109,33 @@ export function AnalogSalesChartView({
           content={
             <ChartTooltipContent
               labelFormatter={(_, payload) => {
-                const p = payload?.[0]?.payload as
-                  | AnalogSalesRangeItem
-                  | undefined;
-                if (!p) return "";
-                const dateStr = format(parseISO(p.date), "dd.MM.yyyy");
-                return p.isDeliveryDay ? `${dateStr} • День поставки` : dateStr;
+                const p = payload?.[0]?.payload as SliceRangeChartPoint | undefined;
+                return p ? format(parseISO(p.date), "dd.MM.yyyy") : "";
               }}
               formatter={(value, name) => [
-                name === "sales"
-                  ? chartConfig.sales.label
-                  : chartConfig.revenue.label,
-                name === "sales" ? `${value} шт` : `${value} грн`,
+                name === "stock"
+                  ? chartConfig.stock.label
+                  : chartConfig.price.label,
+                name === "stock" ? `${value} шт` : `${value} грн`,
               ]}
             />
           }
         />
-        {hasSales && (
+        {hasStock && (
           <Line
             yAxisId="left"
             type="monotone"
-            dataKey="sales"
+            dataKey="stock"
             stroke={colors.chart1}
             strokeWidth={2}
             dot={false}
           />
         )}
-        {hasRevenue && (
+        {hasPrice && (
           <Line
             yAxisId="right"
             type="monotone"
-            dataKey="revenue"
+            dataKey="price"
             stroke={colors.chart2}
             strokeWidth={2}
             dot={false}

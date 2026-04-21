@@ -1,21 +1,22 @@
-import { ChartDateRangeToolbar } from "@/components/shared/chart-date-range-toolbar/ChartDateRangeToolbar";
+import { ChartDateRangeToolbar } from "@/components/shared/charts/chart-date-range-toolbar/ChartDateRangeToolbar";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { SkuSalesChartContainer } from "@/modules/skus/components/containers/sku-sales-chart-container";
-import { SkuSlicesChartContainer } from "@/modules/skus/components/containers/sku-slices-chart-container";
+import type { ReactNode } from "react";
 
-interface SkuChartsSectionProps {
-  skuId: string;
+export interface SkuChartsSectionLayoutProps {
   dateFrom: string;
   dateTo: string;
   onDateRangeChange: (from: string, to: string) => void;
+  slicesChart: ReactNode;
+  salesChart: ReactNode;
 }
 
-export function SkuChartsSection({
-  skuId,
+export function SkuChartsSectionLayout({
   dateFrom,
   dateTo,
   onDateRangeChange,
-}: SkuChartsSectionProps) {
+  slicesChart,
+  salesChart,
+}: SkuChartsSectionLayoutProps) {
   return (
     <div className="grid gap-3">
       <ChartDateRangeToolbar
@@ -31,13 +32,7 @@ export function SkuChartsSection({
               Динаміка залишків та ціни
             </h3>
           </CardHeader>
-          <CardContent>
-            <SkuSlicesChartContainer
-              skuId={skuId}
-              dateFrom={dateFrom}
-              dateTo={dateTo}
-            />
-          </CardContent>
+          <CardContent>{slicesChart}</CardContent>
         </Card>
         <Card className="overflow-hidden shadow-md">
           <CardHeader className="pb-2">
@@ -45,13 +40,7 @@ export function SkuChartsSection({
               Динаміка продаж
             </h3>
           </CardHeader>
-          <CardContent>
-            <SkuSalesChartContainer
-              skuId={skuId}
-              dateFrom={dateFrom}
-              dateTo={dateTo}
-            />
-          </CardContent>
+          <CardContent>{salesChart}</CardContent>
         </Card>
       </div>
     </div>

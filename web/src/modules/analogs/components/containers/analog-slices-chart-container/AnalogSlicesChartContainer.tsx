@@ -2,10 +2,12 @@ import { ErrorDisplay } from "@/components/shared/error-components";
 import { LoadingNoData } from "@/components/shared/loading-states/loading-nodata";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import {
+  SliceRangeChartSkeleton,
+  SliceRangeChartView,
+} from "@/components/shared/charts/slice-range-chart";
 import { useAnalogSlicesRangeQuery } from "@/modules/analogs/api/hooks/queries/useAnalogSlicesRangeQuery";
 import { useState } from "react";
-import { AnalogSlicesChartView } from "./AnalogSlicesChartView";
-import { AnalogSlicesChartSkeleton } from "./AnalogSlicesChartSkeleton";
 
 interface AnalogSlicesChartContainerProps {
   analogId: string | undefined;
@@ -34,7 +36,7 @@ export function AnalogSlicesChartContainer({
   }
 
   if (isLoading) {
-    return <AnalogSlicesChartSkeleton />;
+    return <SliceRangeChartSkeleton />;
   }
 
   if (error) {
@@ -91,7 +93,7 @@ export function AnalogSlicesChartContainer({
         </div>
       </div>
       {showChart ? (
-        <AnalogSlicesChartView
+        <SliceRangeChartView
           data={items}
           showStock={showStock}
           showPrice={showPrice}

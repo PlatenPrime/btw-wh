@@ -3,9 +3,9 @@ import {
   normalizeChartDateRangeOrder,
 } from "@/lib/chart-date-range";
 import type {
-  AnalogSalesRangeItem,
-  AnalogSliceRangeItem,
-} from "@/modules/analogs/api/types";
+  SalesRangeChartPoint,
+  SliceRangeChartPoint,
+} from "@/types/charts-range";
 import { useSkugrDailySummaryQuery } from "@/modules/skugrs/api/hooks/queries/useSkugrDailySummaryQuery";
 import { SkugrChartsSectionView } from "@/modules/skugrs/components/containers/skugr-charts-section/SkugrChartsSectionView";
 import { useCallback, useMemo, useState } from "react";
@@ -32,7 +32,7 @@ export function SkugrChartsSection({ skugrId }: SkugrChartsSectionProps) {
       dateTo,
     });
 
-  const sliceItems = useMemo((): AnalogSliceRangeItem[] => {
+  const sliceItems = useMemo((): SliceRangeChartPoint[] => {
     const rows = data?.data ?? [];
     return rows.map((row) => ({
       date: row.date,
@@ -41,7 +41,7 @@ export function SkugrChartsSection({ skugrId }: SkugrChartsSectionProps) {
     }));
   }, [data?.data]);
 
-  const salesItems = useMemo((): AnalogSalesRangeItem[] => {
+  const salesItems = useMemo((): SalesRangeChartPoint[] => {
     const rows = data?.data ?? [];
     return rows.map((row) => ({
       date: row.date,

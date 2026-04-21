@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
-export function AnalogSalesChartSkeleton() {
+export function SalesRangeChartSkeleton() {
   return (
     <div className="grid gap-2">
       <div className="flex gap-2">

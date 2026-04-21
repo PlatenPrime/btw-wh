@@ -2,10 +2,12 @@ import { ErrorDisplay } from "@/components/shared/error-components";
 import { LoadingNoData } from "@/components/shared/loading-states/loading-nodata";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import {
+  SalesRangeChartSkeleton,
+  SalesRangeChartView,
+} from "@/components/shared/charts/sales-range-chart";
 import { useAnalogSalesRangeQuery } from "@/modules/analogs/api/hooks/queries/useAnalogSalesRangeQuery";
 import { useState } from "react";
-import { AnalogSalesChartView } from "./AnalogSalesChartView";
-import { AnalogSalesChartSkeleton } from "./AnalogSalesChartSkeleton";
 
 interface AnalogSalesChartContainerProps {
   analogId: string | undefined;
@@ -34,7 +36,7 @@ export function AnalogSalesChartContainer({
   }
 
   if (isLoading) {
-    return <AnalogSalesChartSkeleton />;
+    return <SalesRangeChartSkeleton />;
   }
 
   if (error) {
@@ -91,7 +93,7 @@ export function AnalogSalesChartContainer({
         </div>
       </div>
       {showChart ? (
-        <AnalogSalesChartView
+        <SalesRangeChartView
           data={items}
           showSales={showSales}
           showRevenue={showRevenue}

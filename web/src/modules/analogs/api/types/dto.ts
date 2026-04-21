@@ -1,3 +1,8 @@
+import type {
+  SalesRangeChartPoint,
+  SliceRangeChartPoint,
+} from "@/types/charts-range";
+
 export interface AnalogDto {
   _id: string;
   konkName: string;
@@ -99,24 +104,14 @@ export interface AnalogStockResponseDto {
   data: AnalogStockDto;
 }
 
-export interface AnalogSliceRangeItem {
-  date: string;
-  stock: number;
-  price: number;
-}
+export type AnalogSliceRangeItem = SliceRangeChartPoint;
 
 export interface AnalogSliceRangeResponseDto {
   message: string;
   data: AnalogSliceRangeItem[];
 }
 
-export interface AnalogSalesRangeItem {
-  date: string;
-  sales: number;
-  revenue: number;
-  price: number;
-  isDeliveryDay: boolean;
-}
+export type AnalogSalesRangeItem = SalesRangeChartPoint;
 
 export interface AnalogSalesRangeResponseDto {
   message: string;
