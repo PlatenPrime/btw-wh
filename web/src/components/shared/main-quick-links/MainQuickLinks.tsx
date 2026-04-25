@@ -10,9 +10,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { Link } from "react-router";
-import { quickLinkDescriptionByUrl } from "./quick-links-data";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
+import { Link } from "react-router";
+import { quickLinkDescriptionByUrl } from "@/components/shared/main-quick-links/quick-links-data";
 
 /**
  * Сітка карток-посилань «Швидкий доступ» по групах як у сайдбарі.
@@ -22,8 +22,15 @@ export function MainQuickLinks() {
 
   if (isLoading) {
     return (
-      <section className="flex flex-col gap-4">
-        <h2 className="text-center text-xl font-semibold md:text-2xl">
+      <section className="relative isolate overflow-hidden rounded-3xl border border-border/60 bg-card/35 p-6 backdrop-blur-xl md:p-8">
+        <div
+          className="pointer-events-none absolute inset-0 opacity-70"
+          style={{
+            background:
+              "linear-gradient(130deg, color-mix(in oklch, var(--primary) 12%, transparent) 0%, transparent 45%, color-mix(in oklch, var(--accent) 10%, transparent) 100%)",
+          }}
+        />
+        <h2 className="relative z-10 text-center text-xl font-semibold md:text-2xl">
           Швидкий доступ
         </h2>
       </section>
@@ -31,11 +38,38 @@ export function MainQuickLinks() {
   }
 
   return (
-    <section className="flex flex-col gap-4">
-      <h2 className="text-center text-xl font-semibold md:text-2xl">
-        Швидкий доступ
-      </h2>
-      <div className="flex flex-col gap-8">
+    <section className="relative isolate overflow-hidden rounded-3xl border border-border/60 bg-card/35 p-6 backdrop-blur-xl md:p-8">
+      <div className="pointer-events-none absolute inset-0">
+        <div
+          className="absolute -left-20 -top-20 h-56 w-56 rounded-full opacity-70 blur-3xl animate-pulse [animation-duration:11s] motion-reduce:animate-none"
+          style={{
+            background:
+              "radial-gradient(circle, color-mix(in oklch, var(--primary) 26%, transparent) 0%, transparent 72%)",
+          }}
+        />
+        <div
+          className="absolute -bottom-20 -right-16 h-56 w-56 rounded-full opacity-60 blur-3xl animate-pulse [animation-duration:13s] motion-reduce:animate-none"
+          style={{
+            background:
+              "radial-gradient(circle, color-mix(in oklch, var(--accent) 24%, transparent) 0%, transparent 74%)",
+          }}
+        />
+        <div
+          className="absolute inset-0 opacity-[0.12] dark:opacity-[0.2]"
+          style={{
+            backgroundImage:
+              "linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)",
+            backgroundSize: "30px 30px",
+          }}
+        />
+      </div>
+
+      <div className="relative z-10 flex flex-col gap-6">
+        <h2 className="text-center text-xl font-semibold md:text-2xl">
+          Швидкий доступ
+        </h2>
+
+        <div className="flex flex-col gap-8">
         {appSidebarData.navMain.map((group) => {
           const visibleItems = filterVisibleSidebarNavItems(
             group.items,
@@ -58,18 +92,32 @@ export function MainQuickLinks() {
                   <Link
                     key={item.url}
                     to={item.url}
-                    className="focus-visible:ring-ring block rounded-xl transition-all hover:opacity-95 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+                    className="focus-visible:ring-ring group block rounded-2xl transition-all focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
                   >
                     <Card
                       className={cn(
-                        "h-full transition-all duration-200",
-                        "hover:border-primary/30 hover:shadow-lg",
+                        "relative h-full overflow-hidden rounded-2xl border-border/70 bg-card/55 shadow-lg transition-all duration-300 backdrop-blur-xl",
+                        "group-hover:-translate-y-0.5 group-hover:border-primary/35 group-hover:shadow-2xl",
                       )}
                     >
-                      <CardContent className="flex flex-col gap-3">
+                      <div
+                        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                        style={{
+                          background:
+                            "linear-gradient(140deg, color-mix(in oklch, var(--primary) 14%, transparent) 0%, transparent 45%, color-mix(in oklch, var(--accent) 12%, transparent) 100%)",
+                        }}
+                      />
+                      <CardContent className="relative z-10 flex flex-col gap-3">
                         <div className="flex items-center justify-start gap-2">
-                          <div className="bg-primary/10 text-primary flex h-10 w-10 shrink-0 items-center justify-center rounded-lg [&_svg]:h-5 [&_svg]:w-5">
-                            {getIcon(item.iconName)}
+                          <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border/60 bg-card/70 text-primary shadow-md [&_svg]:h-5 [&_svg]:w-5">
+                            <div
+                              className="pointer-events-none absolute inset-0 rounded-xl opacity-85"
+                              style={{
+                                background:
+                                  "linear-gradient(145deg, color-mix(in oklch, var(--primary) 20%, transparent) 0%, color-mix(in oklch, var(--accent) 16%, transparent) 100%)",
+                              }}
+                            />
+                            <span className="relative z-10">{getIcon(item.iconName)}</span>
                           </div>
                           <CardTitle className="text-base">{item.title}</CardTitle>
                         </div>
@@ -85,6 +133,7 @@ export function MainQuickLinks() {
             </div>
           );
         })}
+        </div>
       </div>
     </section>
   );

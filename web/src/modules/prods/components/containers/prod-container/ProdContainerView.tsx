@@ -1,3 +1,4 @@
+import { SearchFiltersLayout } from "@/components/shared/search-components/search-filters-layout";
 import { SearchPanel } from "@/components/shared/search-components/search-panel/SearchPanel";
 import { SelectLimit } from "@/components/shared/select-limit";
 import { Wrapper } from "@/components/shared/wrappers/Wrapper";
@@ -27,22 +28,26 @@ export function ProdContainerView({
 
       <Wrapper className="grid gap-2">
         <h2 className="text-lg font-semibold">Аналоги виробника</h2>
-        <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
-          <div className="grid min-w-0 flex-1 gap-1">
-            <SearchPanel
-              search={search}
-              onSearchChange={onSearchChange}
-              placeholder="Пошук за назвою..."
-            />
-          </div>
-          <div className="flex flex-wrap items-center gap-2 lg:justify-end">
-            <SelectLimit
-              limitOptions={[10, 20, 50, 100]}
-              limit={limit}
-              setLimit={setLimit}
-            />
-          </div>
-        </div>
+        <SearchFiltersLayout
+          searchSlot={
+            <div className="grid gap-1">
+              <SearchPanel
+                search={search}
+                onSearchChange={onSearchChange}
+                placeholder="Пошук за назвою..."
+              />
+            </div>
+          }
+          filtersSlot={
+            <div className="flex flex-wrap items-center gap-2">
+              <SelectLimit
+                limitOptions={[10, 20, 50, 100]}
+                limit={limit}
+                setLimit={setLimit}
+              />
+            </div>
+          }
+        />
         {children}
       </Wrapper>
     </div>

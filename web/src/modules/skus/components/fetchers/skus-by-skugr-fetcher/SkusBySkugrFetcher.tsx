@@ -1,6 +1,7 @@
 import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
 import { ErrorDisplay } from "@/components/shared/error-components";
 import { LoadingNoData } from "@/components/shared/loading-states";
+import { SearchFiltersLayout } from "@/components/shared/search-components/search-filters-layout";
 import { SearchPanel } from "@/components/shared/search-components/search-panel/SearchPanel";
 import { SelectLimit } from "@/components/shared/select-limit";
 import { Wrapper } from "@/components/shared/wrappers/Wrapper";
@@ -73,23 +74,26 @@ export function SkusBySkugrFetcher({ skugrId }: SkusBySkugrFetcherProps) {
   const controls = (
     <>
       <h2 className="text-lg font-semibold">Товари в групі</h2>
-
-      <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
-        <div className="grid min-w-0 flex-1 gap-1">
-          <SearchPanel
-            search={grSearch}
-            onSearchChange={(e) => setGrSearch(e.target.value)}
-            placeholder="Пошук за назвою товару..."
-          />
-        </div>
-        <div className="flex flex-wrap items-center gap-2 lg:justify-end">
-          <SelectLimit
-            limitOptions={[10, 20, 50, 100]}
-            limit={grLimit}
-            setLimit={setGrLimit}
-          />
-        </div>
-      </div>
+      <SearchFiltersLayout
+        searchSlot={
+          <div className="grid gap-1">
+            <SearchPanel
+              search={grSearch}
+              onSearchChange={(e) => setGrSearch(e.target.value)}
+              placeholder="Пошук за назвою товару..."
+            />
+          </div>
+        }
+        filtersSlot={
+          <div className="flex flex-wrap items-center gap-2">
+            <SelectLimit
+              limitOptions={[10, 20, 50, 100]}
+              limit={grLimit}
+              setLimit={setGrLimit}
+            />
+          </div>
+        }
+      />
     </>
   );
 

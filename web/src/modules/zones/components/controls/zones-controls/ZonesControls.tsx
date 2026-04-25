@@ -1,3 +1,4 @@
+import { SearchFiltersLayout } from "@/components/shared/search-components/search-filters-layout";
 import { SearchPanel } from "@/components/shared/search-components/search-panel/SearchPanel";
 import { SelectLimit } from "@/components/shared/select-limit";
 import { Wrapper } from "@/components/shared/wrappers/Wrapper";
@@ -23,43 +24,44 @@ export function ZonesControls() {
   };
 
   return (
-    <Wrapper className="grid grid-cols-1 gap-2 lg:grid-cols-2">
-      {/* Пошук і дії */}
-      <div className="flex items-center justify-between gap-2">
-        <div className="max-w-md flex-1">
-          <SearchPanel
-            search={search}
-            onSearchChange={(e) => setSearch(e.target.value)}
-            placeholder="Пошук за назвою..."
-          />
-        </div>
-      </div>
+    <Wrapper className="grid gap-2">
+      <SearchFiltersLayout
+        searchSlot={
+          <div className="max-w-md">
+            <SearchPanel
+              search={search}
+              onSearchChange={(e) => setSearch(e.target.value)}
+              placeholder="Пошук за назвою..."
+            />
+          </div>
+        }
+        filtersSlot={
+          <div className="flex flex-wrap items-center gap-2">
+            <SelectLimit
+              limit={limit}
+              setLimit={setLimit}
+              limitOptions={[10, 20, 50, 100]}
+            />
 
-      {/* Фільтри і сортування */}
-      <div className="flex flex-wrap items-center gap-2 lg:justify-end">
-        <SelectLimit
-          limit={limit}
-          setLimit={setLimit}
-          limitOptions={[10, 20, 50, 100]}
-        />
+            <div className="flex items-center gap-2">
+              <SortZonesSelect sortBy={sortBy} setSortBy={setSortBy} />
 
-        <div className="flex items-center gap-2">
-          <SortZonesSelect sortBy={sortBy} setSortBy={setSortBy} />
-
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleSortToggle}
-            className="px-2"
-          >
-            {sortOrder === "asc" ? (
-              <ArrowUp className="h-4 w-4" />
-            ) : (
-              <ArrowDown className="h-4 w-4" />
-            )}
-          </Button>
-        </div>
-      </div>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleSortToggle}
+                className="px-2"
+              >
+                {sortOrder === "asc" ? (
+                  <ArrowUp className="h-4 w-4" />
+                ) : (
+                  <ArrowDown className="h-4 w-4" />
+                )}
+              </Button>
+            </div>
+          </div>
+        }
+      />
     </Wrapper>
   );
 }
