@@ -17,11 +17,11 @@ interface HeaderActionsMenuProps {
 }
 
 const iconColorClasses: Record<HeaderActionIconColor, string> = {
-  slate: "text-slate-500",
-  gray: "text-gray-500",
-  zinc: "text-zinc-500",
-  neutral: "text-neutral-500",
-  stone: "text-stone-500",
+  slate: "text-muted-foreground",
+  gray: "text-muted-foreground",
+  zinc: "text-muted-foreground",
+  neutral: "text-muted-foreground",
+  stone: "text-muted-foreground",
   red: "text-red-500",
   orange: "text-orange-500",
   amber: "text-amber-500",
