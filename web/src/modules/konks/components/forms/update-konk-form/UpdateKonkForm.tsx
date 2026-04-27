@@ -16,6 +16,14 @@ interface UpdateKonkFormProps {
   onCancel?: () => void;
 }
 
+const normalizeRecountDays = (recountDays: string[] | undefined): string[] => {
+  if (!recountDays?.length) {
+    return [];
+  }
+
+  return Array.from(new Set(recountDays));
+};
+
 export function UpdateKonkForm({
   konk,
   onSuccess,
@@ -37,12 +45,18 @@ export function UpdateKonkForm({
       title: konk.title,
       url: konk.url,
       imageUrl: konk.imageUrl,
+      recountDays: normalizeRecountDays(konk.recountDays),
     });
   }, [konk, form]);
 
   const onSubmit = async (data: UpdateKonkFormValues) => {
     try {
-      await mutation.mutateAsync({ id: konk._id, data });
+      const payload: UpdateKonkFormValues = {
+        ...data,
+        recountDays: normalizeRecountDays(data.recountDays),
+      };
+
+      await mutation.mutateAsync({ id: konk._id, data: payload });
       onSuccess?.();
     } catch (error) {
       form.setError("root", {

@@ -4,6 +4,7 @@ const nameSchema = z
   .string()
   .min(1, "Ключ (name) обовʼязковий")
   .regex(/^\S+$/, "Ключ має бути одним словом (без пробілів)");
+const recountDaySchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Некоректний формат дати переобліку");
 
 export const createKonkSchema = z.object({
   name: nameSchema,
@@ -17,6 +18,7 @@ export const updateKonkSchema = z.object({
   title: z.string().min(1, "Назва обовʼязкова").optional(),
   url: z.string().url("Введіть коректний URL сайту").optional(),
   imageUrl: z.string().url("Введіть коректний URL зображення").optional(),
+  recountDays: z.array(recountDaySchema).optional(),
 });
 
 export type CreateKonkFormValues = z.infer<typeof createKonkSchema>;
@@ -29,4 +31,6 @@ export const createKonkDefaultValues: CreateKonkFormValues = {
   imageUrl: "",
 };
 
-export const updateKonkDefaultValues: UpdateKonkFormValues = {};
+export const updateKonkDefaultValues: UpdateKonkFormValues = {
+  recountDays: [],
+};

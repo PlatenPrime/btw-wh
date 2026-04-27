@@ -1,8 +1,12 @@
 import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
 import { Image } from "@/components/shared/image/image";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
+import { format } from "date-fns";
+import { X } from "lucide-react";
 import type { UpdateKonkFormValues } from "@/modules/konks/components/forms/schema";
 import type { UseFormReturn } from "react-hook-form";
 
@@ -26,8 +30,33 @@ export function UpdateKonkFormView({
   const {
     register,
     handleSubmit,
+    watch,
+    setValue,
     formState: { errors },
   } = form;
+  const recountDays = watch("recountDays") ?? [];
+
+  const selectedCalendarDays = recountDays.map((day) => new Date(`${day}T00:00:00`));
+
+  const handleCalendarSelect = (days: Date[] | undefined) => {
+    const normalizedDays = Array.from(
+      new Set((days ?? []).map((day) => format(day, "yyyy-MM-dd")))
+    ).sort((left, right) => left.localeCompare(right));
+
+    setValue("recountDays", normalizedDays, { shouldDirty: true });
+  };
+
+  const handleRemoveRecountDay = (dayToRemove: string) => {
+    setValue(
+      "recountDays",
+      recountDays.filter((day) => day !== dayToRemove),
+      { shouldDirty: true }
+    );
+  };
+
+  const handleClearRecountDays = () => {
+    setValue("recountDays", [], { shouldDirty: true });
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4">
@@ -81,6 +110,58 @@ export function UpdateKonkFormView({
             />
             {errors.imageUrl && (
               <p className="text-destructive text-sm">{errors.imageUrl.message}</p>
+            )}
+          </div>
+          <div className="grid gap-2">
+            <div className="flex items-center justify-between gap-2">
+              <Label>Дні переобліку</Label>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={handleClearRecountDays}
+                disabled={isLoading || recountDays.length === 0}
+              >
+                Очистити всі
+              </Button>
+            </div>
+            <Calendar
+              mode="multiple"
+              selected={selectedCalendarDays}
+              onSelect={handleCalendarSelect}
+              disabled={isLoading}
+              numberOfMonths={1}
+            />
+            <div className="flex flex-wrap gap-2">
+              {recountDays.length > 0 ? (
+                recountDays.map((day) => (
+                  <div
+                    key={day}
+                    className="bg-muted inline-flex items-center gap-1 rounded-md px-2 py-1 text-xs"
+                  >
+                    <span>{day}</span>
+                    <Button
+                      type="button"
+                      size="icon"
+                      variant="ghost"
+                      className="size-4"
+                      onClick={() => handleRemoveRecountDay(day)}
+                      disabled={isLoading}
+                    >
+                      <X className="size-3" />
+                    </Button>
+                  </div>
+                ))
+              ) : (
+                <p className="text-muted-foreground text-sm">
+                  Дні переобліку не вибрані
+                </p>
+              )}
+            </div>
+            {errors.recountDays && (
+              <p className="text-destructive text-sm">
+                {errors.recountDays.message}
+              </p>
             )}
           </div>
         </div>

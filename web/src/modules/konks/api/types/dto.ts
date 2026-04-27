@@ -6,6 +6,7 @@ export interface KonkDto {
   title: string;
   url: string;
   imageUrl: string;
+  recountDays: string[];
   createdAt: string;
   updatedAt: string;
 }
@@ -22,6 +23,7 @@ export interface UpdateKonkDto {
   title?: string;
   url?: string;
   imageUrl?: string;
+  recountDays?: string[];
 }
 
 export interface DeleteKonkResponse {
