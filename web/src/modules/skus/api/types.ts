@@ -35,7 +35,23 @@ export interface GetSkusParams {
   search?: string;
   isInvalid?: boolean;
   createdFrom?: string;
+  /** GET /skus — лише SKU, чиї _id не входять до жодного skugr.skus */
+  notInAnySkugr?: boolean;
   signal?: AbortSignal;
+}
+
+/** Query для DELETE /skus/not-in-any-skugr (без пагінації) */
+export interface DeleteOrphanSkusQueryDto {
+  konkName?: string;
+  prodName?: string;
+  search?: string;
+  isInvalid?: boolean;
+  createdFrom?: string;
+}
+
+export interface DeleteOrphanSkusResponseDto {
+  message: string;
+  deletedCount: number;
 }
 
 export interface GetSkusBySkugrParams {

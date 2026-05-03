@@ -9,6 +9,7 @@ export const getSkus = async ({
   search,
   isInvalid,
   createdFrom,
+  notInAnySkugr,
   signal,
 }: GetSkusParams): Promise<SkusResponseDto> => {
   const params = new URLSearchParams({
@@ -22,6 +23,9 @@ export const getSkus = async ({
     params.set("isInvalid", String(isInvalid));
   }
   if (createdFrom?.trim()) params.set("createdFrom", createdFrom.trim());
+  if (typeof notInAnySkugr === "boolean") {
+    params.set("notInAnySkugr", String(notInAnySkugr));
+  }
 
   const res = await apiClient.get<SkusResponseDto>(
     `/skus?${params.toString()}`,

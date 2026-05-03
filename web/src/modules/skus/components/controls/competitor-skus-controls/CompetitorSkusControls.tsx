@@ -161,6 +161,7 @@ export function CompetitorSkusControls({
                   <SelectItem value="all">Усі товари</SelectItem>
                   <SelectItem value="invalid">Лише невалідні</SelectItem>
                   <SelectItem value="new_since">Новинки з дати</SelectItem>
+                  <SelectItem value="no_skugr">Без товарної групи</SelectItem>
                 </SelectContent>
               </Select>
             </div>

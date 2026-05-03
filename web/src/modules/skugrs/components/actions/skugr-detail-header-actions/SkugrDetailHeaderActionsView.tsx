@@ -1,5 +1,7 @@
 import type { SkugrPageDto } from "@/modules/skugrs/api/types";
+import { ClearSkugrSkusDialog } from "@/modules/skugrs/components/dialogs/clear-skugr-skus-dialog/ClearSkugrSkusDialog";
 import { DeleteSkugrDialog } from "@/modules/skugrs/components/dialogs/delete-skugr-dialog/DeleteSkugrDialog";
+import { DeleteSkugrWithSkusDialog } from "@/modules/skugrs/components/dialogs/delete-skugr-with-skus-dialog/DeleteSkugrWithSkusDialog";
 import { FillSkugrSkusDialog } from "@/modules/skugrs/components/dialogs/fill-skugr-skus-dialog/FillSkugrSkusDialog";
 import { SkugrSalesExcelDialog } from "@/modules/skugrs/components/dialogs/skugr-sales-excel-dialog";
 import { SkugrSliceExcelDialog } from "@/modules/skugrs/components/dialogs/skugr-slice-excel-dialog";
@@ -17,6 +19,10 @@ interface SkugrDetailHeaderActionsViewProps {
   onFillDialogOpenChange: (open: boolean) => void;
   deleteDialogOpen: boolean;
   onDeleteDialogOpenChange: (open: boolean) => void;
+  clearSkusDialogOpen: boolean;
+  onClearSkusDialogOpenChange: (open: boolean) => void;
+  deleteWithSkusDialogOpen: boolean;
+  onDeleteWithSkusDialogOpenChange: (open: boolean) => void;
   onDeleteSuccess: () => void;
 }
 
@@ -32,6 +38,10 @@ export function SkugrDetailHeaderActionsView({
   onFillDialogOpenChange,
   deleteDialogOpen,
   onDeleteDialogOpenChange,
+  clearSkusDialogOpen,
+  onClearSkusDialogOpenChange,
+  deleteWithSkusDialogOpen,
+  onDeleteWithSkusDialogOpenChange,
   onDeleteSuccess,
 }: SkugrDetailHeaderActionsViewProps) {
   return (
@@ -61,6 +71,19 @@ export function SkugrDetailHeaderActionsView({
         skugr={skugr}
         open={deleteDialogOpen}
         onOpenChange={onDeleteDialogOpenChange}
+        onSuccess={onDeleteSuccess}
+      />
+      <ClearSkugrSkusDialog
+        skugrId={skugr._id}
+        skugrTitle={skugr.title}
+        open={clearSkusDialogOpen}
+        onOpenChange={onClearSkusDialogOpenChange}
+      />
+      <DeleteSkugrWithSkusDialog
+        skugrId={skugr._id}
+        skugrTitle={skugr.title}
+        open={deleteWithSkusDialogOpen}
+        onOpenChange={onDeleteWithSkusDialogOpenChange}
         onSuccess={onDeleteSuccess}
       />
     </>

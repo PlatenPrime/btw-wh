@@ -4,6 +4,7 @@ import { CompetitorSkusContainer } from "@/modules/skus/components/containers/co
 import { CompetitorSkusContainerSkeleton } from "@/modules/skus/components/containers/competitor-skus-container/CompetitorSkusContainerSkeleton";
 import { CompetitorSkusControls } from "@/modules/skus/components/controls/competitor-skus-controls/CompetitorSkusControls";
 import { DeleteInvalidSkusDialog } from "@/modules/skus/components/dialogs/delete-invalid-skus-dialog/DeleteInvalidSkusDialog";
+import { DeleteOrphanSkusDialog } from "@/modules/skus/components/dialogs/delete-orphan-skus-dialog/DeleteOrphanSkusDialog";
 import { SkusInvalidExcelDialog } from "@/modules/skus/components/dialogs/skus-invalid-excel-dialog/SkusInvalidExcelDialog";
 import { SkusNewSinceExcelDialog } from "@/modules/skus/components/dialogs/skus-new-since-excel-dialog/SkusNewSinceExcelDialog";
 import { CompetitorSkusFetcher } from "@/modules/skus/components/fetchers/competitor-skus-fetcher/CompetitorSkusFetcher";
@@ -39,9 +40,14 @@ export function CompetitorSkus() {
   const [newSinceOpen, setNewSinceOpen] = useState(false);
   const [invalidExcelOpen, setInvalidExcelOpen] = useState(false);
   const [deleteInvalidOpen, setDeleteInvalidOpen] = useState(false);
+  const [deleteOrphansOpen, setDeleteOrphansOpen] = useState(false);
 
   const openDeleteDialog = useCallback(() => {
     setDeleteInvalidOpen(true);
+  }, []);
+
+  const openDeleteOrphansDialog = useCallback(() => {
+    setDeleteOrphansOpen(true);
   }, []);
 
   return (
@@ -50,6 +56,7 @@ export function CompetitorSkus() {
         onOpenNewSinceExcel={() => setNewSinceOpen(true)}
         onOpenInvalidExcel={() => setInvalidExcelOpen(true)}
         onOpenDeleteInvalid={openDeleteDialog}
+        onOpenDeleteOrphans={openDeleteOrphansDialog}
       />
       <div className="grid gap-2 p-2">
         <CompetitorSkusControls
@@ -76,6 +83,7 @@ export function CompetitorSkus() {
             search,
             isInvalid: listQuery.isInvalid,
             createdFrom: listQuery.createdFromForApi,
+            notInAnySkugr: listQuery.notInAnySkugrForApi,
           }}
           ContainerComponent={({ data }) => (
             <CompetitorSkusContainer
@@ -106,6 +114,19 @@ export function CompetitorSkus() {
         filterKonkName={konkName}
         open={deleteInvalidOpen}
         onOpenChange={setDeleteInvalidOpen}
+      />
+      <DeleteOrphanSkusDialog
+        konks={konks ?? []}
+        prods={prods ?? []}
+        open={deleteOrphansOpen}
+        onOpenChange={setDeleteOrphansOpen}
+        filters={{
+          konkName: konkName || undefined,
+          prodName: prodName || undefined,
+          search: search || undefined,
+          isInvalid: listQuery.isInvalid,
+          createdFrom: listQuery.createdFromForApi,
+        }}
       />
     </SidebarInsetLayout>
   );

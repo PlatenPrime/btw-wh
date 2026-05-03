@@ -4,10 +4,10 @@ import { format } from "date-fns";
 import { useCallback, useMemo } from "react";
 import { useSearchParams } from "react-router";
 
-export type CompetitorSkusScope = "all" | "invalid" | "new_since";
+export type CompetitorSkusScope = "all" | "invalid" | "new_since" | "no_skugr";
 
 function parseScope(raw: string): CompetitorSkusScope {
-  if (raw === "invalid" || raw === "new_since") return raw;
+  if (raw === "invalid" || raw === "new_since" || raw === "no_skugr") return raw;
   return "all";
 }
 
@@ -65,6 +65,14 @@ export function useCompetitorSkusParams() {
         );
         return;
       }
+      if (next === "no_skugr") {
+        updateSearchParams(
+          params,
+          { scope: "no_skugr", createdFrom: "", page: "1" },
+          setParams,
+        );
+        return;
+      }
       const from =
         getParam(params, "createdFrom", "") || defaultCreatedFrom();
       updateSearchParams(
@@ -81,17 +89,30 @@ export function useCompetitorSkusParams() {
 
   const listQuery = useMemo(() => {
     if (scope === "invalid") {
-      return { isInvalid: true as const, createdFromForApi: undefined as string | undefined };
+      return {
+        isInvalid: true as const,
+        createdFromForApi: undefined as string | undefined,
+        notInAnySkugrForApi: undefined as boolean | undefined,
+      };
     }
     if (scope === "new_since") {
       return {
         isInvalid: undefined as boolean | undefined,
         createdFromForApi: createdFrom,
+        notInAnySkugrForApi: undefined as boolean | undefined,
+      };
+    }
+    if (scope === "no_skugr") {
+      return {
+        isInvalid: undefined as boolean | undefined,
+        createdFromForApi: undefined as string | undefined,
+        notInAnySkugrForApi: true as const,
       };
     }
     return {
       isInvalid: undefined as boolean | undefined,
       createdFromForApi: undefined as string | undefined,
+      notInAnySkugrForApi: undefined as boolean | undefined,
     };
   }, [scope, createdFrom]);
 

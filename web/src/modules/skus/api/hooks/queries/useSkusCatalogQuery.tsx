@@ -11,6 +11,7 @@ export interface UseSkusCatalogQueryParams {
   search?: string;
   isInvalid?: boolean;
   createdFrom?: string;
+  notInAnySkugr?: boolean;
   signal?: AbortSignal;
   enabled?: boolean;
 }
@@ -23,6 +24,7 @@ export function useSkusCatalogQuery({
   search = "",
   isInvalid,
   createdFrom,
+  notInAnySkugr,
   signal,
   enabled = true,
 }: UseSkusCatalogQueryParams) {
@@ -36,6 +38,7 @@ export function useSkusCatalogQuery({
     search: debouncedSearch.trim() || undefined,
     isInvalid,
     createdFrom: createdFrom?.trim() || undefined,
+    notInAnySkugr,
   };
 
   return useQuery<SkusResponseDto>({
@@ -49,6 +52,7 @@ export function useSkusCatalogQuery({
         search: debouncedSearch,
         isInvalid,
         createdFrom: createdFrom ?? "",
+        notInAnySkugr,
       },
     ],
     queryFn: ({ signal: querySignal }) =>

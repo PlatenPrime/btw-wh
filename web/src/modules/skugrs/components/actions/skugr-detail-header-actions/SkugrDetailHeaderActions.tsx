@@ -4,7 +4,7 @@ import { RoleType } from "@/constants/roles";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 import type { SkugrPageDto } from "@/modules/skugrs/api/types";
 import { SkugrDetailHeaderActionsView } from "@/modules/skugrs/components/actions/skugr-detail-header-actions/SkugrDetailHeaderActionsView";
-import { FileDown, Pencil, RefreshCw, Trash, TrendingUp } from "lucide-react";
+import { Eraser, FileDown, Pencil, RefreshCw, Trash, Trash2, TrendingUp } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 
@@ -20,6 +20,8 @@ export function SkugrDetailHeaderActions({ skugr }: SkugrDetailHeaderActionsProp
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [fillDialogOpen, setFillDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [clearSkusDialogOpen, setClearSkusDialogOpen] = useState(false);
+  const [deleteWithSkusDialogOpen, setDeleteWithSkusDialogOpen] = useState(false);
   const canExportExcel = hasRole(RoleType.USER);
   const canAdmin = hasRole(RoleType.ADMIN);
   const canDelete = hasRole(RoleType.PRIME);
@@ -34,6 +36,14 @@ export function SkugrDetailHeaderActions({ skugr }: SkugrDetailHeaderActionsProp
 
   const openDeleteDialog = useCallback(() => {
     setDeleteDialogOpen(true);
+  }, []);
+
+  const openClearSkusDialog = useCallback(() => {
+    setClearSkusDialogOpen(true);
+  }, []);
+
+  const openDeleteWithSkusDialog = useCallback(() => {
+    setDeleteWithSkusDialogOpen(true);
   }, []);
 
   const openSliceExcelDialog = useCallback(() => {
@@ -88,17 +98,35 @@ export function SkugrDetailHeaderActions({ skugr }: SkugrDetailHeaderActionsProp
           variant: "default",
           onClick: openFillDialog,
         },
+        {
+          id: "clear-skugr-skus",
+          label: "Очистити від товарів",
+          icon: Eraser,
+          iconColor: "amber",
+          variant: "destructive",
+          onClick: openClearSkusDialog,
+        },
       );
     }
     if (canDelete) {
-      actions.push({
-        id: "delete-skugr",
-        label: "Видалити товарну групу",
-        icon: Trash,
-        iconColor: "red",
-        variant: "super-destructive",
-        onClick: openDeleteDialog,
-      });
+      actions.push(
+        {
+          id: "delete-skugr",
+          label: "Видалити товарну групу",
+          icon: Trash,
+          iconColor: "red",
+          variant: "super-destructive",
+          onClick: openDeleteDialog,
+        },
+        {
+          id: "delete-skugr-with-skus",
+          label: "Видалити з товарами",
+          icon: Trash2,
+          iconColor: "red",
+          variant: "super-destructive",
+          onClick: openDeleteWithSkusDialog,
+        },
+      );
     }
     return actions;
   }, [
@@ -109,7 +137,9 @@ export function SkugrDetailHeaderActions({ skugr }: SkugrDetailHeaderActionsProp
     openSalesExcelDialog,
     openEditDialog,
     openFillDialog,
+    openClearSkusDialog,
     openDeleteDialog,
+    openDeleteWithSkusDialog,
   ]);
 
   useRegisterHeaderActions(headerActions);
@@ -127,6 +157,10 @@ export function SkugrDetailHeaderActions({ skugr }: SkugrDetailHeaderActionsProp
       onFillDialogOpenChange={setFillDialogOpen}
       deleteDialogOpen={deleteDialogOpen}
       onDeleteDialogOpenChange={setDeleteDialogOpen}
+      clearSkusDialogOpen={clearSkusDialogOpen}
+      onClearSkusDialogOpenChange={setClearSkusDialogOpen}
+      deleteWithSkusDialogOpen={deleteWithSkusDialogOpen}
+      onDeleteWithSkusDialogOpenChange={setDeleteWithSkusDialogOpen}
       onDeleteSuccess={handleDeleteSuccess}
     />
   );

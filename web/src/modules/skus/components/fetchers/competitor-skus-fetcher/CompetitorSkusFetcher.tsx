@@ -12,6 +12,7 @@ interface CompetitorSkusFetcherParams {
   search?: string;
   isInvalid?: boolean;
   createdFrom?: string;
+  notInAnySkugr?: boolean;
 }
 
 interface CompetitorSkusFetcherProps {
@@ -33,6 +34,7 @@ export function CompetitorSkusFetcher({
     search: params.search,
     isInvalid: params.isInvalid,
     createdFrom: params.createdFrom,
+    notInAnySkugr: params.notInAnySkugr,
   });
   const { data, isLoading, error } = skusQuery;
 

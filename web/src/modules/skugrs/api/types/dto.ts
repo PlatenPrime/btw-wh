@@ -69,6 +69,16 @@ export interface DeleteSkugrResponse {
   message: string;
 }
 
+export interface ClearSkugrSkusResponseDto {
+  message: string;
+  data: SkugrDto;
+}
+
+export interface DeleteSkugrWithSkusResponseDto {
+  message: string;
+  data: { deletedSkusCount: number; modifiedSkugrsCount: number };
+}
+
 export interface FillSkugrSkusStats {
   fetched: number;
   dedupedByUrl: number;
