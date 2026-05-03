@@ -1,6 +1,6 @@
 import { CardActionsMenu } from "@/components/shared/card-actions/CardActionsMenu";
 import type { CardAction } from "@/components/shared/card-actions/types";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import {
   getKonkTheme,
@@ -32,7 +32,7 @@ export function SkugrGridCardView({
   return (
     <Card
       className={cn(
-        "flex h-full flex-col overflow-hidden p-0 gap-2 transition-shadow",
+        "flex h-full flex-col gap-0 overflow-hidden p-0 transition-shadow",
         theme.shadow,
       )}
     >
@@ -40,39 +40,41 @@ export function SkugrGridCardView({
         konkName={skugr.konkName}
         imageUrl={konk?.imageUrl}
         title={konk?.title}
+        actionSlot={
+          <CardActionsMenu
+            actions={actions}
+            orientation="horizontal"
+            size="sm"
+            align="end"
+          />
+        }
       />
-      <CardHeader className="grid gap-2 p-2">
-    
-        <CardTitle className="flex justify-between">
-          <Link
-            to={`/sku/skugrs/${skugr._id}`}
-            className="hover:text-primary underline-offset-4 hover:underline"
-          >
-            {skugr.title}
-          </Link>
-          <div className="flex justify-end">
-          <CardActionsMenu actions={actions} orientation="horizontal" size="sm" align="end" />
-        </div>
-        </CardTitle>
-        <CardContent className="flex items-center justify-between gap-1 text-sm p-0">
-        <div className="flex flex-wrap items-center justify-center gap-2">
-          {prod && (
-            <EntityLabel
-              imageUrl={prod.imageUrl}
-              title={prod.title}
-              fallbackLabel={skugr.prodName}
-              imageSize="sm"
-              className="text-xs"
-            />
-          )}
-        </div>
-          <span className="flex items-center gap-1">
-            <Notebook className="size-3.5" aria-hidden />
+      <CardHeader className="flex min-h-0 w-full min-w-0 flex-1 flex-col gap-2 p-2">
+        <div className="grid w-full min-w-0 grid-cols-[minmax(0,1fr)_auto] items-start gap-x-2">
+          <CardTitle className="mb-0 min-w-0 text-base leading-tight font-semibold">
+            <Link
+              to={`/sku/skugrs/${skugr._id}`}
+              className="hover:text-primary block wrap-break-word underline-offset-4 hover:underline"
+            >
+              {skugr.title}
+            </Link>
+          </CardTitle>
+          <span className="text-muted-foreground flex shrink-0 items-center gap-1 self-start text-sm tabular-nums">
+            <Notebook className="size-3.5 shrink-0" aria-hidden />
             {skuCount}
           </span>
-         
-        </CardContent>  
+        </div>
       </CardHeader>
+      {prod ? (
+        <div className="border-border/80 text-muted-foreground flex shrink-0 items-center justify-center border-t px-2 py-1.5 text-xs">
+          <EntityLabel
+            imageUrl={prod.imageUrl}
+            title={prod.title}
+            fallbackLabel={skugr.prodName}
+            imageSize="sm"
+          />
+        </div>
+      ) : null}
     </Card>
   );
 }

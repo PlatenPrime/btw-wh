@@ -38,20 +38,18 @@ export function AnalogGridCardView({
         konkName={analog.konkName}
         imageUrl={konk?.imageUrl}
         title={konk?.title}
+        actionSlot={
+          <CardActionsMenu
+            actions={actions}
+            orientation="horizontal"
+            size="sm"
+            align="end"
+          />
+        }
       />
 
       <div className="flex flex-col items-center gap-2 px-2">
-        <div className="flex min-w-0 items-start justify-center gap-2">
-          <AnalogImageLink analog={analog} to={`/analogs/${analog._id}`} />
-          <div className="shrink-0">
-            <CardActionsMenu
-              actions={actions}
-              orientation="horizontal"
-              size="sm"
-              align="end"
-            />
-          </div>
-        </div>
+        <AnalogImageLink analog={analog} to={`/analogs/${analog._id}`} />
       </div>
 
       <div className="text-muted-foreground flex justify-center pb-2 text-xs">

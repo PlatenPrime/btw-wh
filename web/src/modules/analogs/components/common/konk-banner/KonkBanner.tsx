@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { EntityLabel } from "@/modules/analogs/components/entity-label";
 import { cn } from "@/lib/utils";
 
@@ -53,6 +54,7 @@ const KONK_NAME_TO_THEME: Record<string, KonkThemeKey> = {
   balun: "rose",
   air: "lime",
   yumin: "slate",
+  perfect: "red",
 };
 
 export function getKonkTheme(konkName: string): KonkThemeClasses {
@@ -66,28 +68,36 @@ export interface KonkBannerProps {
   konkName: string;
   imageUrl?: string | null;
   title?: string | null;
+  actionSlot?: ReactNode;
 }
 
 export function KonkBanner({
   konkName,
   imageUrl,
   title,
+  actionSlot,
 }: KonkBannerProps) {
   const theme = getKonkTheme(konkName);
 
   return (
     <div
       className={cn(
-        "flex justify-center p-1 first:rounded-t-xl",
+        "flex items-center gap-2 p-1 first:rounded-t-xl",
         theme.banner,
       )}
     >
-      <EntityLabel
-        imageUrl={imageUrl}
-        title={title}
-        fallbackLabel={konkName}
-        imageSize="sm"
-      />
+      <div className="flex min-w-0 flex-1 justify-center">
+        <EntityLabel
+          imageUrl={imageUrl}
+          title={title}
+          fallbackLabel={konkName}
+          imageSize="xs"
+          className="text-xs"
+        />
+      </div>
+      {actionSlot ? (
+        <div className="flex shrink-0 items-center">{actionSlot}</div>
+      ) : null}
     </div>
   );
 }
