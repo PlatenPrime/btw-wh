@@ -1,10 +1,10 @@
-import { useRef } from "react";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useContainerInfiniteScroll } from "@/hooks/useContainerInfiniteScroll";
 import type { SkugrDto } from "@/modules/skugrs/api/types/dto";
+import { useRef } from "react";
 import { SkugrMultiSelectControlSkeleton } from "./SkugrMultiSelectControlSkeleton";
 
 interface SkugrMultiSelectControlViewProps {
@@ -79,11 +79,11 @@ export function SkugrMultiSelectControlView({
                 />
                 <Label
                   htmlFor={`skugr-${skugr._id}`}
-                  className="flex flex-1 cursor-pointer flex-col gap-0.5 leading-snug"
+                  className="grid grid-cols-[1fr_auto] gap-0.5 leading-snug"
                 >
                   <span className="font-medium">{skugr.title}</span>
                   <span className="text-muted-foreground text-xs">
-                    SKU у групі: {skugr.skus?.length ?? 0}
+                   ( {skugr.skus?.length ?? 0} шт.)
                   </span>
                 </Label>
               </div>
