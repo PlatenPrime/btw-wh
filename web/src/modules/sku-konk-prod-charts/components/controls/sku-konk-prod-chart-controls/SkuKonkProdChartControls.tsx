@@ -1,4 +1,5 @@
 import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -19,9 +20,10 @@ import { EntityLabel } from "@/modules/analogs/components/entity-label/EntityLab
 import { useKonksQuery } from "@/modules/konks/api/hooks/queries/useKonksQuery";
 import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
 import { SKU_KONK_PROD_QUERY_ALL } from "@/modules/sku-konk-prod-charts/constants";
+import { SelectSkugrsDialog } from "@/modules/skugrs/components/dialogs/select-skugrs-dialog";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, Layers, X } from "lucide-react";
 import { useState } from "react";
 import type { DateRange } from "react-day-picker";
 
@@ -30,9 +32,11 @@ interface SkuKonkProdChartControlsProps {
   prod: string;
   dateFrom: string;
   dateTo: string;
+  skugrIds: string[];
   onKonkChange: (value: string) => void;
   onProdChange: (value: string) => void;
   onDateRangeChange: (from: string, to: string) => void;
+  onSkugrIdsChange: (ids: string[]) => void;
 }
 
 export function SkuKonkProdChartControls({
@@ -40,9 +44,11 @@ export function SkuKonkProdChartControls({
   prod,
   dateFrom,
   dateTo,
+  skugrIds,
   onKonkChange,
   onProdChange,
   onDateRangeChange,
+  onSkugrIdsChange,
 }: SkuKonkProdChartControlsProps) {
   const konksQuery = useKonksQuery();
   const prodsQuery = useProdsQuery();
@@ -52,9 +58,14 @@ export function SkuKonkProdChartControls({
   );
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isSkugrDialogOpen, setIsSkugrDialogOpen] = useState(false);
   const [pendingRange, setPendingRange] = useState<DateRange | undefined>(
     undefined,
   );
+
+  const filtersReady = Boolean(konk && prod);
+  const prodNameForSkugrList =
+    prod === SKU_KONK_PROD_QUERY_ALL ? "" : prod;
 
   const handleDialogOpenChange = (open: boolean) => {
     setIsDialogOpen(open);
@@ -161,6 +172,34 @@ export function SkuKonkProdChartControls({
           {dateLabel}
         </Button>
 
+        <Button
+          type="button"
+          variant="outline"
+          className="min-w-[160px] justify-start gap-2 sm:min-w-[180px]"
+          disabled={!filtersReady}
+          onClick={() => setIsSkugrDialogOpen(true)}
+        >
+          <Layers className="size-4 shrink-0" />
+          Товарні групи
+        </Button>
+
+        {skugrIds.length > 0 && (
+          <Badge
+            variant="secondary"
+            className="flex max-w-full items-center gap-1 py-1 pr-1"
+          >
+            <span className="truncate">Груп: {skugrIds.length}</span>
+            <button
+              type="button"
+              className="hover:bg-secondary/80 rounded p-0.5"
+              aria-label="Скинути фільтр товарних груп"
+              onClick={() => onSkugrIdsChange([])}
+            >
+              <X className="size-3.5 shrink-0" />
+            </button>
+          </Badge>
+        )}
+
         <Dialog open={isDialogOpen} onOpenChange={handleDialogOpenChange}>
           <DialogContent className="sm:max-w-fit">
             <DialogHeader>
@@ -183,6 +222,15 @@ export function SkuKonkProdChartControls({
             </DialogFooter>
           </DialogContent>
         </Dialog>
+
+        <SelectSkugrsDialog
+          open={isSkugrDialogOpen}
+          onOpenChange={setIsSkugrDialogOpen}
+          konkName={konk}
+          prodNameForList={prodNameForSkugrList}
+          value={skugrIds}
+          onConfirm={onSkugrIdsChange}
+        />
       </div>
     </Wrapper>
   );

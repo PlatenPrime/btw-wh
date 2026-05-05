@@ -15,6 +15,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { EntityLabel } from "@/modules/analogs/components/entity-label/EntityLabel";
 import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
+import { SkugrMultiSelectControl } from "@/modules/skugrs/components/controls/skugr-multi-select-control";
 import type { DateRange } from "react-day-picker";
 
 export type KonkSalesExcelExportSort = "default" | "sales" | "revenue";
@@ -26,9 +27,12 @@ interface KonkSalesExcelDialogViewProps {
   selectedKonkName: string;
   onSelectedKonkNameChange: (value: string) => void;
   konks: KonkDto[];
+  resolvedKonkName: string;
   selectedProd: string;
   onSelectedProdChange: (value: string) => void;
   prods: ProdDto[];
+  selectedSkugrIds: string[];
+  onSelectedSkugrIdsChange: (ids: string[]) => void;
   exportSort: KonkSalesExcelExportSort;
   onExportSortChange: (value: KonkSalesExcelExportSort) => void;
   isExporting: boolean;
@@ -43,9 +47,12 @@ export function KonkSalesExcelDialogView({
   selectedKonkName,
   onSelectedKonkNameChange,
   konks,
+  resolvedKonkName,
   selectedProd,
   onSelectedProdChange,
   prods,
+  selectedSkugrIds,
+  onSelectedSkugrIdsChange,
   exportSort,
   onExportSortChange,
   isExporting,
@@ -58,8 +65,10 @@ export function KonkSalesExcelDialogView({
   const isKonkOk = !showKonkSelect || Boolean(selectedKonkName);
   const isDownloadDisabled = !isRangeValid || !selectedProd || !isKonkOk;
 
+  const skugrListReady = Boolean(resolvedKonkName && selectedProd);
+
   return (
-    <DialogContent className="sm:max-w-[425px]">
+    <DialogContent className="flex max-h-[min(90vh,720px)] flex-col gap-4 overflow-y-auto sm:max-w-lg">
       <DialogHeader>
         <DialogTitle>Експорт Excel продаж конкурента</DialogTitle>
       </DialogHeader>
@@ -118,6 +127,24 @@ export function KonkSalesExcelDialogView({
               ))}
             </SelectContent>
           </Select>
+        </div>
+        <div className="grid min-h-0 gap-2">
+          <p className="text-sm font-medium">Товарні групи (опційно)</p>
+          {!skugrListReady ? (
+            <p className="text-muted-foreground text-sm">
+              Оберіть конкурента та виробника, щоб обмежити вивантаження
+              товарними групами.
+            </p>
+          ) : null}
+          <SkugrMultiSelectControl
+            konkName={resolvedKonkName}
+            prodName={selectedProd}
+            value={selectedSkugrIds}
+            onChange={onSelectedSkugrIdsChange}
+            enabled={skugrListReady}
+            disabled={!skugrListReady}
+            searchInputId="konk-sales-excel-skugr-search"
+          />
         </div>
         <div className="grid gap-2">
           <p className="text-sm font-medium">Сортування товарів у файлі</p>

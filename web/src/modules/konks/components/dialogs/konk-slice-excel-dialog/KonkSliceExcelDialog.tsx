@@ -32,6 +32,7 @@ export function KonkSliceExcelDialog({
   );
   const [selectedProd, setSelectedProd] = useState("");
   const [selectedKonkName, setSelectedKonkName] = useState("");
+  const [selectedSkugrIds, setSelectedSkugrIds] = useState<string[]>([]);
 
   const isControlled = controlledOpen !== undefined;
   const open = isControlled ? controlledOpen : internalOpen;
@@ -61,12 +62,20 @@ export function KonkSliceExcelDialog({
         prod: selectedProd,
         dateFrom,
         dateTo,
+        ...(selectedSkugrIds.length ? { skugrIds: selectedSkugrIds } : {}),
       });
       handleOpenChange(false);
     } catch {
       // toast handled in mutation onError
     }
-  }, [dateRange, selectedProd, mutation, resolvedKonkName, handleOpenChange]);
+  }, [
+    dateRange,
+    selectedProd,
+    selectedSkugrIds,
+    mutation,
+    resolvedKonkName,
+    handleOpenChange,
+  ]);
 
   const handleCancel = useCallback(() => {
     handleOpenChange(false);
@@ -77,8 +86,13 @@ export function KonkSliceExcelDialog({
       setDateRange(getDefaultDateRange());
       setSelectedProd("");
       setSelectedKonkName("");
+      setSelectedSkugrIds([]);
     }
   }, [open]);
+
+  useEffect(() => {
+    setSelectedSkugrIds([]);
+  }, [resolvedKonkName, selectedProd]);
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
@@ -89,9 +103,12 @@ export function KonkSliceExcelDialog({
         selectedKonkName={selectedKonkName}
         onSelectedKonkNameChange={setSelectedKonkName}
         konks={konks}
+        resolvedKonkName={resolvedKonkName}
         selectedProd={selectedProd}
         onSelectedProdChange={setSelectedProd}
         prods={prods}
+        selectedSkugrIds={selectedSkugrIds}
+        onSelectedSkugrIdsChange={setSelectedSkugrIds}
         isDownloading={isDownloading}
         onDownload={handleDownload}
         onCancel={handleCancel}

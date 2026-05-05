@@ -14,8 +14,17 @@ import { isAxiosError } from "axios";
 import { useState } from "react";
 
 export function SkuKonkProdStock() {
-  const { konk, prod, dateFrom, dateTo, setKonk, setProd, setDateRange } =
-    useSkuKonkProdChartParams();
+  const {
+    konk,
+    prod,
+    dateFrom,
+    dateTo,
+    skugrIds,
+    setKonk,
+    setProd,
+    setDateRange,
+    setSkugrIds,
+  } = useSkuKonkProdChartParams();
   const [excelDialogOpen, setExcelDialogOpen] = useState(false);
 
   const isFiltersReady = Boolean(konk && prod && dateFrom && dateTo);
@@ -25,6 +34,7 @@ export function SkuKonkProdStock() {
     prod,
     dateFrom,
     dateTo,
+    skugrIds,
   });
 
   const days = stockQuery.data?.data?.days ?? [];
@@ -41,9 +51,11 @@ export function SkuKonkProdStock() {
           prod={prod}
           dateFrom={dateFrom}
           dateTo={dateTo}
+          skugrIds={skugrIds}
           onKonkChange={setKonk}
           onProdChange={setProd}
           onDateRangeChange={setDateRange}
+          onSkugrIdsChange={setSkugrIds}
         />
 
         {!isFiltersReady && (

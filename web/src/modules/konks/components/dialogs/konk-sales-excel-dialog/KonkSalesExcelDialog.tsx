@@ -35,6 +35,7 @@ export function KonkSalesExcelDialog({
   );
   const [selectedProd, setSelectedProd] = useState("");
   const [selectedKonkName, setSelectedKonkName] = useState("");
+  const [selectedSkugrIds, setSelectedSkugrIds] = useState<string[]>([]);
   const [exportSort, setExportSort] =
     useState<KonkSalesExcelExportSort>("default");
 
@@ -73,6 +74,7 @@ export function KonkSalesExcelDialog({
         dateFrom,
         dateTo,
         ...(sortBy ? { sortBy } : {}),
+        ...(selectedSkugrIds.length ? { skugrIds: selectedSkugrIds } : {}),
       });
       handleOpenChange(false);
     } catch {
@@ -81,6 +83,7 @@ export function KonkSalesExcelDialog({
   }, [
     dateRange,
     selectedProd,
+    selectedSkugrIds,
     exportSort,
     mutation,
     resolvedKonkName,
@@ -96,9 +99,14 @@ export function KonkSalesExcelDialog({
       setDateRange(getDefaultDateRange());
       setSelectedProd("");
       setSelectedKonkName("");
+      setSelectedSkugrIds([]);
       setExportSort("default");
     }
   }, [open]);
+
+  useEffect(() => {
+    setSelectedSkugrIds([]);
+  }, [resolvedKonkName, selectedProd]);
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
@@ -109,9 +117,12 @@ export function KonkSalesExcelDialog({
         selectedKonkName={selectedKonkName}
         onSelectedKonkNameChange={setSelectedKonkName}
         konks={konks}
+        resolvedKonkName={resolvedKonkName}
         selectedProd={selectedProd}
         onSelectedProdChange={setSelectedProd}
         prods={prods}
+        selectedSkugrIds={selectedSkugrIds}
+        onSelectedSkugrIdsChange={setSelectedSkugrIds}
         exportSort={exportSort}
         onExportSortChange={setExportSort}
         isExporting={isExporting}

@@ -37,13 +37,23 @@ export function useDownloadKonkSalesExcelMutation() {
       dateFrom,
       dateTo,
       sortBy,
+      skugrIds,
     }: {
       konk: string;
       prod: string;
       dateFrom: string;
       dateTo: string;
       sortBy?: "sales" | "revenue";
-    }) => downloadKonkSalesExcel(konk, prod, dateFrom, dateTo, { sortBy }),
+      skugrIds?: string[];
+    }) =>
+      downloadKonkSalesExcel({
+        konk,
+        prod,
+        dateFrom,
+        dateTo,
+        sortBy,
+        skugrIds,
+      }),
     onSuccess: ({ blob, filename }) => {
       triggerBlobDownload(blob, filename);
       toast.success("Файл успішно завантажено");

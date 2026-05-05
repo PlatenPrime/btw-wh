@@ -36,12 +36,15 @@ export function useDownloadKonkSliceExcelMutation() {
       prod,
       dateFrom,
       dateTo,
+      skugrIds,
     }: {
       konk: string;
       prod: string;
       dateFrom: string;
       dateTo: string;
-    }) => downloadKonkSliceExcel(konk, prod, dateFrom, dateTo),
+      skugrIds?: string[];
+    }) =>
+      downloadKonkSliceExcel({ konk, prod, dateFrom, dateTo, skugrIds }),
     onSuccess: ({ blob, filename }) => {
       triggerBlobDownload(blob, filename);
       toast.success("Файл успішно завантажено");

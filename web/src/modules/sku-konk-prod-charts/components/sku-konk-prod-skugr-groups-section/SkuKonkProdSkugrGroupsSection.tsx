@@ -21,6 +21,8 @@ interface SkuKonkProdSkugrGroupsSectionProps {
   prod: string;
   dateFrom: string;
   dateTo: string;
+  /** Якщо true — зверху показується нотатка, що API цього блоку не враховує фільтр `skugrIds` на графіку */
+  hasActiveSkugrFilter?: boolean;
 }
 
 export function SkuKonkProdSkugrGroupsSection({
@@ -28,6 +30,7 @@ export function SkuKonkProdSkugrGroupsSection({
   prod,
   dateFrom,
   dateTo,
+  hasActiveSkugrFilter = false,
 }: SkuKonkProdSkugrGroupsSectionProps) {
   const isProdAll = prod === SKU_KONK_PROD_QUERY_ALL;
   const [metric, setMetric] = useState<SkugrGroupsMetric>("salesUah");
@@ -155,10 +158,16 @@ export function SkuKonkProdSkugrGroupsSection({
       className="rounded-xl"
     >
       <Card className="overflow-hidden shadow-md">
-        <CardHeader className="pb-2">
+        <CardHeader className="grid gap-2 pb-2">
           <h3 className="text-muted-foreground text-sm font-medium">
             Продажі по товарних групах
           </h3>
+          {hasActiveSkugrFilter && (
+            <p className="text-muted-foreground text-xs">
+              Перелік нижче не враховує обраний фільтр товарних груп для графіка
+              вище — відповідний API цей параметр не приймає.
+            </p>
+          )}
         </CardHeader>
         <CardContent className="grid gap-4">
           <div className="flex flex-wrap items-center gap-2">

@@ -1,4 +1,5 @@
 import { apiClient } from "@/lib/apiClient";
+import { appendSkugrIds } from "@/modules/sku-slices/api/utils/appendSkugrIds";
 import { parseContentDisposition } from "@/utils/parseContentDisposition";
 
 export interface DownloadKonkSalesExcelResult {
@@ -6,22 +7,35 @@ export interface DownloadKonkSalesExcelResult {
   filename: string;
 }
 
-export const downloadKonkSalesExcel = async (
-  konk: string,
-  prod: string,
-  dateFrom: string,
-  dateTo: string,
-  options?: { sortBy?: "sales" | "revenue"; signal?: AbortSignal },
-): Promise<DownloadKonkSalesExcelResult> => {
+export interface DownloadKonkSalesExcelParams {
+  konk: string;
+  prod: string;
+  dateFrom: string;
+  dateTo: string;
+  sortBy?: "sales" | "revenue";
+  skugrIds?: string[];
+  signal?: AbortSignal;
+}
+
+export const downloadKonkSalesExcel = async ({
+  konk,
+  prod,
+  dateFrom,
+  dateTo,
+  sortBy,
+  skugrIds,
+  signal,
+}: DownloadKonkSalesExcelParams): Promise<DownloadKonkSalesExcelResult> => {
   const params = new URLSearchParams({ konk, prod, dateFrom, dateTo });
-  if (options?.sortBy) {
-    params.set("sortBy", options.sortBy);
+  if (sortBy) {
+    params.set("sortBy", sortBy);
   }
+  appendSkugrIds(params, skugrIds);
   const res = await apiClient.get<Blob>(
     `sku-slices/konk/sales-excel?${params.toString()}`,
     {
       responseType: "blob",
-      signal: options?.signal,
+      signal,
     },
   );
 
