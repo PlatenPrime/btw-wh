@@ -18,7 +18,7 @@ import { quickLinkDescriptionByUrl } from "@/components/shared/main-quick-links/
  * Сітка карток-посилань «Швидкий доступ» по групах як у сайдбарі.
  */
 export function MainQuickLinks() {
-  const { hasAnyRole, isLoading, user } = useAuth();
+  const { hasAnyRole, isLoading } = useAuth();
 
   if (isLoading) {
     return (
@@ -75,10 +75,7 @@ export function MainQuickLinks() {
             group.items,
             hasAnyRole,
           );
-          const items = visibleItems.filter(
-            (item) => !item.allowedRoles || user,
-          );
-          if (items.length === 0) {
+          if (visibleItems.length === 0) {
             return null;
           }
 
@@ -88,7 +85,7 @@ export function MainQuickLinks() {
                 {group.title}
               </h3>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {items.map((item) => (
+                {visibleItems.map((item) => (
                   <Link
                     key={item.url}
                     to={item.url}

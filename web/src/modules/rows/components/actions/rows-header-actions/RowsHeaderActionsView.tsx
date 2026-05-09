@@ -2,6 +2,8 @@ import { CreateRowDialog } from "@/modules/rows/components/dialogs/create-row-di
 import { ExportPosesStocksDialog } from "@/modules/poses/components/dialogs/export-poses-stocks-dialog";
 
 interface RowsHeaderActionsViewProps {
+  showCreateRowDialog?: boolean;
+  showExportDialog?: boolean;
   exportDialogOpen: boolean;
   onExportDialogOpenChange: (open: boolean) => void;
   createRowDialogOpen: boolean;
@@ -9,6 +11,8 @@ interface RowsHeaderActionsViewProps {
 }
 
 export function RowsHeaderActionsView({
+  showCreateRowDialog = true,
+  showExportDialog = true,
   exportDialogOpen,
   onExportDialogOpenChange,
   createRowDialogOpen,
@@ -16,14 +20,18 @@ export function RowsHeaderActionsView({
 }: RowsHeaderActionsViewProps) {
   return (
     <>
-      <CreateRowDialog
-        open={createRowDialogOpen}
-        onOpenChange={onCreateRowDialogOpenChange}
-      />
-      <ExportPosesStocksDialog
-        open={exportDialogOpen}
-        onOpenChange={onExportDialogOpenChange}
-      />
+      {showCreateRowDialog ? (
+        <CreateRowDialog
+          open={createRowDialogOpen}
+          onOpenChange={onCreateRowDialogOpenChange}
+        />
+      ) : null}
+      {showExportDialog ? (
+        <ExportPosesStocksDialog
+          open={exportDialogOpen}
+          onOpenChange={onExportDialogOpenChange}
+        />
+      ) : null}
     </>
   );
 }

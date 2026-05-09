@@ -6,6 +6,8 @@ import { MovePalletPosesDialog } from "@/modules/pallets/components/dialogs/move
 
 interface PalletHeaderActionsViewProps {
   pallet: IPallet;
+  showEditorDialogs?: boolean;
+  showDeletePalletDialog?: boolean;
   clearDialogOpen: boolean;
   onClearDialogOpenChange: (open: boolean) => void;
   deleteEmptyPosesDialogOpen: boolean;
@@ -19,6 +21,8 @@ interface PalletHeaderActionsViewProps {
 
 export function PalletHeaderActionsView({
   pallet,
+  showEditorDialogs = true,
+  showDeletePalletDialog = true,
   clearDialogOpen,
   onClearDialogOpenChange,
   deleteEmptyPosesDialogOpen,
@@ -31,29 +35,35 @@ export function PalletHeaderActionsView({
 }: PalletHeaderActionsViewProps) {
   return (
     <>
-      <ClearPalletDialog
-        pallet={pallet}
-        onSuccess={() => {}}
-        open={clearDialogOpen}
-        onOpenChange={onClearDialogOpenChange}
-      />
-      <DeletePalletEmptyPosesDialog
-        pallet={pallet}
-        onSuccess={() => {}}
-        open={deleteEmptyPosesDialogOpen}
-        onOpenChange={onDeleteEmptyPosesDialogOpenChange}
-      />
-      <MovePalletPosesDialog
-        pallet={pallet}
-        open={moveDialogOpen}
-        onOpenChange={onMoveDialogOpenChange}
-      />
-      <DeletePalletDialog
-        pallet={pallet}
-        onSuccess={onDeleteSuccess}
-        open={deleteDialogOpen}
-        onOpenChange={onDeleteDialogOpenChange}
-      />
+      {showEditorDialogs ? (
+        <>
+          <ClearPalletDialog
+            pallet={pallet}
+            onSuccess={() => {}}
+            open={clearDialogOpen}
+            onOpenChange={onClearDialogOpenChange}
+          />
+          <DeletePalletEmptyPosesDialog
+            pallet={pallet}
+            onSuccess={() => {}}
+            open={deleteEmptyPosesDialogOpen}
+            onOpenChange={onDeleteEmptyPosesDialogOpenChange}
+          />
+          <MovePalletPosesDialog
+            pallet={pallet}
+            open={moveDialogOpen}
+            onOpenChange={onMoveDialogOpenChange}
+          />
+        </>
+      ) : null}
+      {showDeletePalletDialog ? (
+        <DeletePalletDialog
+          pallet={pallet}
+          onSuccess={onDeleteSuccess}
+          open={deleteDialogOpen}
+          onOpenChange={onDeleteDialogOpenChange}
+        />
+      ) : null}
     </>
   );
 }

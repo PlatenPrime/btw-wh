@@ -1,33 +1,43 @@
 import { PageLayout } from "@/components/layout/page-layout";
 import { GlassCard } from "@/components/shared/glass-card";
 import { ThemedIcon, ThemedPressable, ThemedScrollView, ThemedText, ThemedVStack } from "@/components/themed";
+import { RoleType } from "@/constants/roles";
 import { SemanticColors } from "@/constants/theme";
+import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 import { useRouter } from "expo-router";
+import { useMemo } from "react";
 import { FadeInDown } from "react-native-reanimated";
 
 export default function WarehouseList() {
   const router = useRouter();
+  const { hasRole } = useAuth();
 
-  const navigationItems = [
-    {
-      title: "Ряди",
-      icon: "view-list",
-      iconColor: SemanticColors.iconColors.teal,
-      route: "rows",
-    },
-    {
-      title: "Зони",
-      icon: "location-on",
-      iconColor: SemanticColors.iconColors.orange,
-      route: "zones",
-    },
-    {
-      title: "Блоки",
-      icon: "view-module",
-      iconColor: SemanticColors.iconColors.yellow,
-      route: "blocks",
-    },
-  ];
+  const navigationItems = useMemo(() => {
+    const all = [
+      {
+        title: "Ряди",
+        icon: "view-list",
+        iconColor: SemanticColors.iconColors.teal,
+        route: "rows",
+        minRole: RoleType.USER,
+      },
+      {
+        title: "Зони",
+        icon: "location-on",
+        iconColor: SemanticColors.iconColors.orange,
+        route: "zones",
+        minRole: RoleType.ADMIN,
+      },
+      {
+        title: "Блоки",
+        icon: "view-module",
+        iconColor: SemanticColors.iconColors.yellow,
+        route: "blocks",
+        minRole: RoleType.ADMIN,
+      },
+    ];
+    return all.filter((item) => hasRole(item.minRole));
+  }, [hasRole]);
 
   const handleNavigation = (route: string) => {
     router.push(`/(tabs)/warehouse/${route}` as any);

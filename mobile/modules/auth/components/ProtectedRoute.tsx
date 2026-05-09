@@ -13,7 +13,7 @@ interface ProtectedRouteProps {
   /**
    * Разрешенные роли для доступа к странице
    * Если не указано - доступно всем авторизованным
-   * С учетом иерархии: PRIME > ADMIN > USER
+   * С учетом иерархии: PRIME > ADMIN > EDITOR > USER
    */
   allowedRoles?: RoleType[];
 

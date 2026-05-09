@@ -21,7 +21,12 @@ interface EditUserFormViewProps {
   isLoading?: boolean;
 }
 
-const ROLE_OPTIONS = [RoleType.USER, RoleType.ADMIN, RoleType.PRIME];
+const ROLE_OPTIONS = [
+  RoleType.USER,
+  RoleType.EDITOR,
+  RoleType.ADMIN,
+  RoleType.PRIME,
+];
 
 export function EditUserFormView({
   form,

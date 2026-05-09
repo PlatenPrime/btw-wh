@@ -1,6 +1,7 @@
 import type { HeaderAction } from "@/components/layout/header-actions";
 import { useRegisterHeaderActions } from "@/components/layout/header-actions";
 import { useCalculateDefsMutation } from "@/modules/defs/api/hooks/mutations/useCalculateDefsMutation";
+import { usePermission } from "@/modules/auth/hooks/usePermission";
 import { getCalculationStatus } from "@/modules/defs/api/services/queries/getCalculationStatus";
 import { DefsHeaderActionsView } from "@/modules/defs/components/actions/defs-header-actions/DefsHeaderActionsView";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -9,6 +10,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 
 export function DefsHeaderActions() {
+  const { can } = usePermission();
+  const canCalculate = can("calculate:defs");
   const queryClient = useQueryClient();
   const calculateMutation = useCalculateDefsMutation();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -61,8 +64,9 @@ export function DefsHeaderActions() {
     setIsDialogOpen(false);
   }, [calculateMutation]);
 
-  const headerActions = useMemo<HeaderAction[]>(
-    () => [
+  const headerActions = useMemo<HeaderAction[]>(() => {
+    if (!canCalculate) return [];
+    return [
       {
         id: "calculate-defs",
         label: "Розрахувати дефіцити",
@@ -71,9 +75,8 @@ export function DefsHeaderActions() {
         variant: "default",
         onClick: openDialog,
       },
-    ],
-    [openDialog],
-  );
+    ];
+  }, [canCalculate, openDialog]);
 
   useRegisterHeaderActions(headerActions);
 
@@ -94,6 +97,10 @@ export function DefsHeaderActions() {
 
     return () => clearTimeout(timeoutId);
   }, [calculateMutation.isSuccess, queryClient]);
+
+  if (!canCalculate) {
+    return null;
+  }
 
   return (
     <DefsHeaderActionsView

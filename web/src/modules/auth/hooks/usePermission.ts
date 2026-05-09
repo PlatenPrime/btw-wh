@@ -1,5 +1,5 @@
+import { RoleType } from "@/constants/roles";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
-import type { RoleType } from "@/modules/auth/api/types";
 
 /**
  * Типы разрешений на основе матрицы доступа из бекенда
@@ -102,6 +102,23 @@ const PERMISSION_MATRIX: Record<RoleType, Permission[]> = {
     "calculate:defs",
     "view:all-users",
     "view:roles",
+  ],
+
+  /**
+   * EDITOR: модерація asks (без delete чужих), палети/створення позицій;
+   * без адмін-модулів (arts upsert, rows/zones/blocks, defs calculate, …)
+   */
+  EDITOR: [
+    "read:all",
+    "create:asks",
+    "edit:own-asks",
+    "delete:own-asks",
+    "complete:asks",
+    "reject:asks",
+    "manage:asks-actions",
+    "create:pallets",
+    "edit:pallets",
+    "create:poses",
   ],
 
   USER: [

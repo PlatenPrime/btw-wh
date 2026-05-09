@@ -328,7 +328,11 @@ export const router = createHashRouter([
           },
           {
             path: "update",
-            element: <ArtsUpdate />,
+            element: (
+              <ProtectedRoute allowedRoles={[RoleType.ADMIN]}>
+                <ArtsUpdate />
+              </ProtectedRoute>
+            ),
             errorElement: <RouteErrorBoundary />,
           },
           {
@@ -575,7 +579,7 @@ export const router = createHashRouter([
           {
             path: "constants",
             element: (
-              <ProtectedRoute>
+              <ProtectedRoute allowedRoles={[RoleType.ADMIN]}>
                 <Constants />
               </ProtectedRoute>
             ),
@@ -584,7 +588,7 @@ export const router = createHashRouter([
           {
             path: "constants/:id",
             element: (
-              <ProtectedRoute>
+              <ProtectedRoute allowedRoles={[RoleType.ADMIN]}>
                 <Constant />
               </ProtectedRoute>
             ),

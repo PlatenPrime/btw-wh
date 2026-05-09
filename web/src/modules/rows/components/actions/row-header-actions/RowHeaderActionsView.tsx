@@ -4,6 +4,8 @@ import { CreatePalletDialog } from "@/modules/pallets/components/dialogs/create-
 
 interface RowHeaderActionsViewProps {
   row: RowDto;
+  showCreatePalletDialog?: boolean;
+  showDeleteRowDialog?: boolean;
   createPalletDialogOpen: boolean;
   onCreatePalletDialogOpenChange: (open: boolean) => void;
   deleteDialogOpen: boolean;
@@ -13,6 +15,8 @@ interface RowHeaderActionsViewProps {
 
 export function RowHeaderActionsView({
   row,
+  showCreatePalletDialog = true,
+  showDeleteRowDialog = true,
   createPalletDialogOpen,
   onCreatePalletDialogOpenChange,
   deleteDialogOpen,
@@ -21,18 +25,22 @@ export function RowHeaderActionsView({
 }: RowHeaderActionsViewProps) {
   return (
     <>
-      <CreatePalletDialog
-        row={row}
-        open={createPalletDialogOpen}
-        onOpenChange={onCreatePalletDialogOpenChange}
-        showTrigger={false}
-      />
-      <DeleteRowDialog
-        row={row}
-        onSuccess={onDeleteSuccess}
-        open={deleteDialogOpen}
-        onOpenChange={onDeleteDialogOpenChange}
-      />
+      {showCreatePalletDialog ? (
+        <CreatePalletDialog
+          row={row}
+          open={createPalletDialogOpen}
+          onOpenChange={onCreatePalletDialogOpenChange}
+          showTrigger={false}
+        />
+      ) : null}
+      {showDeleteRowDialog ? (
+        <DeleteRowDialog
+          row={row}
+          onSuccess={onDeleteSuccess}
+          open={deleteDialogOpen}
+          onOpenChange={onDeleteDialogOpenChange}
+        />
+      ) : null}
     </>
   );
 }

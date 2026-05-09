@@ -1,5 +1,5 @@
+import { RoleType } from "@/constants/roles";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
-import type { RoleType } from "@/modules/auth/api/types";
 
 /**
  * 🔐 Хук для проверки роли текущего пользователя
@@ -41,14 +41,19 @@ export function useRole() {
    */
   const isAdminOrHigher = (): boolean => {
     if (!currentRole) return false;
-    return checkRole("ADMIN" as RoleType);
+    return checkRole(RoleType.ADMIN);
+  };
+
+  const isEditorOrHigher = (): boolean => {
+    if (!currentRole) return false;
+    return checkRole(RoleType.EDITOR);
   };
 
   /**
    * Проверяет, является ли пользователь PRIME
    */
   const isPrime = (): boolean => {
-    return currentRole === "PRIME";
+    return currentRole === RoleType.PRIME;
   };
 
   /**
@@ -62,7 +67,11 @@ export function useRole() {
    * Проверяет, является ли пользователь обычным USER
    */
   const isUser = (): boolean => {
-    return currentRole === "USER";
+    return currentRole === RoleType.USER;
+  };
+
+  const isEditor = (): boolean => {
+    return currentRole === RoleType.EDITOR;
   };
 
   return {
@@ -70,8 +79,10 @@ export function useRole() {
     hasRole,
     hasAnyOfRoles,
     isAdminOrHigher,
+    isEditorOrHigher,
     isPrime,
     isAdmin,
+    isEditor,
     isUser,
   };
 }

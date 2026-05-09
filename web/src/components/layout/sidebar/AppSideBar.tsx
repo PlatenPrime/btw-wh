@@ -58,23 +58,23 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     scheduleMobileDrawerCloseShield,
   } = useSidebar();
 
-  const [openByGroup, setOpenByGroup] = React.useState<Record<string, boolean>>(
-    () => {
-      const initial: Record<string, boolean> = {};
-      for (const group of appSidebarData.navMain) {
-        const visible = filterVisibleSidebarNavItems(
-          group.items,
-          hasAnyRole,
-        );
-        initial[groupKey(group.title)] = isSidebarGroupActiveForPathname(
+  const visibleNavMain = React.useMemo(
+    () =>
+      appSidebarData.navMain
+        .map((group) => ({
           group,
-          pathname,
-          visible,
-        );
-      }
-      return initial;
-    },
+          visibleItems: filterVisibleSidebarNavItems(
+            group.items,
+            hasAnyRole,
+          ),
+        }))
+        .filter((entry) => entry.visibleItems.length > 0),
+    [hasAnyRole],
   );
+
+  const [openByGroup, setOpenByGroup] = React.useState<
+    Record<string, boolean>
+  >({});
 
   React.useLayoutEffect(() => {
     if (!isMobile) return;
@@ -90,13 +90,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     setOpenByGroup((prev) => {
       const next = { ...prev };
       let changed = false;
-      for (const group of appSidebarData.navMain) {
-        const visible = filterVisibleSidebarNavItems(
-          group.items,
-          hasAnyRole,
-        );
+      for (const { group, visibleItems } of visibleNavMain) {
         const k = groupKey(group.title);
-        if (isSidebarGroupActiveForPathname(group, pathname, visible)) {
+        if (isSidebarGroupActiveForPathname(group, pathname, visibleItems)) {
           if (!next[k]) {
             next[k] = true;
             changed = true;
@@ -105,7 +101,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       }
       return changed ? next : prev;
     });
-  }, [pathname, hasAnyRole]);
+  }, [pathname, visibleNavMain]);
 
   const handleLogout = () => {
     logout();
@@ -145,12 +141,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </div>
       </SidebarHeader>
       <SidebarContent className="gap-0 overflow-x-hidden overflow-y-auto">
-        {appSidebarData.navMain.map((group, index) => {
+        {visibleNavMain.map(({ group, visibleItems }, index) => {
           const key = groupKey(group.title);
-          const visibleItems = filterVisibleSidebarNavItems(
-            group.items,
-            hasAnyRole,
-          );
           const activeNavUrl = getActiveSidebarNavItemUrl(
             pathname,
             visibleItems,

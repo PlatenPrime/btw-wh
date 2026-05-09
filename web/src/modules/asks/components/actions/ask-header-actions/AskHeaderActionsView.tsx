@@ -5,6 +5,8 @@ import { RejectAskDialog } from "@/modules/asks/components/dialogs/reject-ask-di
 interface AskHeaderActionsViewProps {
   askId: string;
   artikul: string;
+  showModerationDialogs?: boolean;
+  showDeleteDialog?: boolean;
   completeDialogOpen: boolean;
   onCompleteDialogOpenChange: (open: boolean) => void;
   rejectDialogOpen: boolean;
@@ -19,6 +21,8 @@ interface AskHeaderActionsViewProps {
 export function AskHeaderActionsView({
   askId,
   artikul,
+  showModerationDialogs = true,
+  showDeleteDialog = true,
   completeDialogOpen,
   onCompleteDialogOpenChange,
   rejectDialogOpen,
@@ -31,27 +35,33 @@ export function AskHeaderActionsView({
 }: AskHeaderActionsViewProps) {
   return (
     <>
-      <CompleteAskDialog
-        askId={askId}
-        artikul={artikul}
-        open={completeDialogOpen}
-        onOpenChange={onCompleteDialogOpenChange}
-        onSuccess={onCompleteSuccess}
-      />
-      <RejectAskDialog
-        askId={askId}
-        artikul={artikul}
-        open={rejectDialogOpen}
-        onOpenChange={onRejectDialogOpenChange}
-        onSuccess={onRejectSuccess}
-      />
-      <DeleteAskDialog
-        askId={askId}
-        artikul={artikul}
-        open={deleteDialogOpen}
-        onOpenChange={onDeleteDialogOpenChange}
-        onSuccess={onDeleteSuccess}
-      />
+      {showModerationDialogs ? (
+        <>
+          <CompleteAskDialog
+            askId={askId}
+            artikul={artikul}
+            open={completeDialogOpen}
+            onOpenChange={onCompleteDialogOpenChange}
+            onSuccess={onCompleteSuccess}
+          />
+          <RejectAskDialog
+            askId={askId}
+            artikul={artikul}
+            open={rejectDialogOpen}
+            onOpenChange={onRejectDialogOpenChange}
+            onSuccess={onRejectSuccess}
+          />
+        </>
+      ) : null}
+      {showDeleteDialog ? (
+        <DeleteAskDialog
+          askId={askId}
+          artikul={artikul}
+          open={deleteDialogOpen}
+          onOpenChange={onDeleteDialogOpenChange}
+          onSuccess={onDeleteSuccess}
+        />
+      ) : null}
     </>
   );
 }

@@ -4,11 +4,12 @@
 
 /**
  * Типы ролей в системе с иерархией
- * PRIME (3) > ADMIN (2) > USER (1)
+ * PRIME (4) > ADMIN (3) > EDITOR (2) > USER (1)
  */
 export const RoleType = {
   PRIME: "PRIME",
   ADMIN: "ADMIN",
+  EDITOR: "EDITOR",
   USER: "USER",
 } as const;
 
@@ -19,8 +20,9 @@ export type RoleType = (typeof RoleType)[keyof typeof RoleType];
  * Чем выше число, тем больше прав
  */
 export const ROLE_HIERARCHY: Record<RoleType, number> = {
-  [RoleType.PRIME]: 3,
-  [RoleType.ADMIN]: 2,
+  [RoleType.PRIME]: 4,
+  [RoleType.ADMIN]: 3,
+  [RoleType.EDITOR]: 2,
   [RoleType.USER]: 1,
 };
 
@@ -86,7 +88,6 @@ export function hasAnyRole(
 ): boolean {
   if (!isValidRole(userRole)) return false;
 
-  // Проверяем, есть ли у пользователя доступ хотя бы к одной из требуемых ролей
   return allowedRoles.some((requiredRole) =>
     hasRoleAccess(userRole, requiredRole),
   );
@@ -98,6 +99,7 @@ export function hasAnyRole(
 export const ROLE_LABELS: Record<RoleType, string> = {
   [RoleType.PRIME]: "Суперадміністратор",
   [RoleType.ADMIN]: "Адміністратор",
+  [RoleType.EDITOR]: "Редактор",
   [RoleType.USER]: "Користувач",
 };
 
