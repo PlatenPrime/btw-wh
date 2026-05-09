@@ -2,6 +2,8 @@ import {
   getChartDateRangeForLastDays,
   normalizeChartDateRangeOrder,
 } from "@/lib/chart-date-range";
+import { RoleType } from "@/constants/roles";
+import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 import { useKonksQuery } from "@/modules/konks/api/hooks/queries/useKonksQuery";
 import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
 import type { SkuDetailDto } from "@/modules/skus/api/types";
@@ -14,7 +16,10 @@ interface SkuContainerProps {
 }
 
 export function SkuContainer({ sku }: SkuContainerProps) {
-  const konksQuery = useKonksQuery();
+  const { hasRole } = useAuth();
+  const canViewAdminSkuExtras = hasRole(RoleType.ADMIN);
+
+  const konksQuery = useKonksQuery({ enabled: canViewAdminSkuExtras });
   const prodsQuery = useProdsQuery();
 
   const [{ dateFrom, dateTo }, setDateRange] = useState(() =>
@@ -43,6 +48,7 @@ export function SkuContainer({ sku }: SkuContainerProps) {
         konk={konk}
         prod={prod}
         skugrs={sku.skugrs}
+        showCharts={canViewAdminSkuExtras}
         dateFrom={dateFrom}
         dateTo={dateTo}
         onDateRangeChange={onDateRangeChange}

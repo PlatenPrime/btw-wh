@@ -1,3 +1,5 @@
+import { RoleType } from "@/constants/roles";
+import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 import type { KonkDto } from "@/modules/konks/api/types";
 import { KonkContainerView } from "@/modules/konks/components/containers/konk-container/KonkContainerView";
 import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
@@ -8,6 +10,9 @@ interface KonkContainerProps {
 }
 
 export function KonkContainer({ konk }: KonkContainerProps) {
+  const { hasRole } = useAuth();
+  const canViewSkuCatalog = hasRole(RoleType.ADMIN);
+
   const {
     page: skuPage,
     limit: skuLimit,
@@ -19,12 +24,13 @@ export function KonkContainer({ konk }: KonkContainerProps) {
     setSearch,
   } = useSkusByKonkParams();
 
-  const prodsQuery = useProdsQuery();
+  const prodsQuery = useProdsQuery({ enabled: canViewSkuCatalog });
   const prods = prodsQuery.data?.data ?? [];
 
   return (
     <KonkContainerView
       konk={konk}
+      showSkuCatalogSection={canViewSkuCatalog}
       prods={prods}
       skuPage={skuPage}
       skuLimit={skuLimit}

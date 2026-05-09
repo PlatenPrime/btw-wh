@@ -14,6 +14,8 @@ import { SkusByKonkFetcher } from "@/modules/skus/components/fetchers/skus-by-ko
 
 interface KonkContainerViewProps {
   konk: KonkDto;
+  /** Список SKU та фільтри — API ≥ ADMIN */
+  showSkuCatalogSection?: boolean;
   prods: ProdDto[];
   skuPage: number;
   skuLimit: number;
@@ -27,6 +29,7 @@ interface KonkContainerViewProps {
 
 export function KonkContainerView({
   konk,
+  showSkuCatalogSection = true,
   prods,
   skuPage,
   skuLimit,
@@ -43,6 +46,7 @@ export function KonkContainerView({
       <div className="grid gap-2">
         <KonkDetailsCard konk={konk} />
 
+        {showSkuCatalogSection ? (
         <Wrapper className="grid gap-2">
           <SearchFiltersLayout
             searchSlot={
@@ -83,6 +87,7 @@ export function KonkContainerView({
             SkeletonComponent={SkusContainerSkeleton}
           />
         </Wrapper>
+        ) : null}
       </div>
     </>
   );

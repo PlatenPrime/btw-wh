@@ -11,6 +11,8 @@ export interface SkuContainerViewProps {
   konk: KonkDto | undefined;
   prod: ProdDto | undefined;
   skugrs: SkuSkugrDto[];
+  /** Графіки (ADMIN-only API) */
+  showCharts?: boolean;
   dateFrom: string;
   dateTo: string;
   onDateRangeChange: (from: string, to: string) => void;
@@ -21,6 +23,7 @@ export function SkuContainerView({
   konk,
   prod,
   skugrs,
+  showCharts = true,
   dateFrom,
   dateTo,
   onDateRangeChange,
@@ -28,25 +31,27 @@ export function SkuContainerView({
   return (
     <div className="grid gap-2">
       <SkuDetailCard sku={sku} konk={konk} prod={prod} skugrs={skugrs} />
-      <SkuChartsSectionLayout
-        dateFrom={dateFrom}
-        dateTo={dateTo}
-        onDateRangeChange={onDateRangeChange}
-        slicesChart={
-          <SkuSlicesChartContainer
-            skuId={sku._id}
-            dateFrom={dateFrom}
-            dateTo={dateTo}
-          />
-        }
-        salesChart={
-          <SkuSalesChartContainer
-            skuId={sku._id}
-            dateFrom={dateFrom}
-            dateTo={dateTo}
-          />
-        }
-      />
+      {showCharts ? (
+        <SkuChartsSectionLayout
+          dateFrom={dateFrom}
+          dateTo={dateTo}
+          onDateRangeChange={onDateRangeChange}
+          slicesChart={
+            <SkuSlicesChartContainer
+              skuId={sku._id}
+              dateFrom={dateFrom}
+              dateTo={dateTo}
+            />
+          }
+          salesChart={
+            <SkuSalesChartContainer
+              skuId={sku._id}
+              dateFrom={dateFrom}
+              dateTo={dateTo}
+            />
+          }
+        />
+      ) : null}
     </div>
   );
 }

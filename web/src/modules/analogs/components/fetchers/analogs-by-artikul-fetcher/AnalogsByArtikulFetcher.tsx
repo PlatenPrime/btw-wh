@@ -6,6 +6,8 @@ import type { AnalogsByArtikulResponseDto } from "@/modules/analogs/api/types";
 
 interface AnalogsByArtikulFetcherProps {
   artikul: string;
+  /** Якщо false — не виконує запит і нічого не рендерить (доступ лише за роллю). */
+  enabled?: boolean;
   ContainerComponent: React.ComponentType<{
     data: AnalogsByArtikulResponseDto;
   }>;
@@ -14,10 +16,15 @@ interface AnalogsByArtikulFetcherProps {
 
 export function AnalogsByArtikulFetcher({
   artikul,
+  enabled = true,
   ContainerComponent,
   SkeletonComponent,
 }: AnalogsByArtikulFetcherProps) {
-  const analogsQuery = useAnalogsByArtikulQuery(artikul);
+  const analogsQuery = useAnalogsByArtikulQuery(artikul, { enabled });
+
+  if (!enabled) {
+    return null;
+  }
 
   if (analogsQuery.isLoading) {
     return <SkeletonComponent />;

@@ -205,106 +205,7 @@ export const appSidebarData: { navMain: AppSidebarNavGroup[] } = {
       ],
     },
     {
-      title: "Поповнення",
-      url: "/refiling",
-      pathOpenPrefix: "/refiling",
-      items: [
-        {
-          title: "Запити",
-          url: "/refiling/asks",
-          iconName: "FileQuestion",
-          allowedRoles: [RoleType.USER],
-        },
-        {
-          title: "Дефіцити",
-          url: "/refiling/defs",
-          iconName: "AlertTriangle",
-          allowedRoles: [RoleType.USER],
-        },
-        {
-          title: "Зняття",
-          url: "/refiling/pulls",
-          iconName: "PackageSearch",
-          allowedRoles: [RoleType.USER],
-        },
-        {
-          title: "Каса",
-          url: "/refiling/kasks",
-          iconName: "ShoppingCart",
-          allowedRoles: [RoleType.USER],
-        },
-      ],
-    },
-    {
-      title: "Склад",
-      url: "/wh",
-      pathOpenPrefix: "/wh",
-      items: [
-        {
-          title: "Ряди",
-          url: "/wh/rows",
-          iconName: "Rows4",
-          allowedRoles: [RoleType.USER],
-        },
-        {
-          title: "Зони",
-          url: "/wh/zones",
-          iconName: "MapPin",
-          allowedRoles: [RoleType.ADMIN],
-        },
-        {
-          title: "Блоки",
-          url: "/wh/blocks",
-          iconName: "LayoutTemplate",
-          allowedRoles: [RoleType.ADMIN],
-        },
-        {
-          title: "Групи палет",
-          url: "/wh/pallet-groups",
-          iconName: "Route",
-          allowedRoles: [RoleType.ADMIN],
-        },
-        {
-          title: "Поставки",
-          url: "/wh/dels",
-          iconName: "Truck",
-          allowedRoles: [RoleType.ADMIN],
-        },
-      ],
-    },
-    {
-      title: "Аналоги",
-      url: "/analogs",
-      pathOpenPrefix: "/analogs",
-      items: [
-        {
-          title: "Аналоги",
-          url: "/analogs",
-          iconName: "Link2",
-          allowedRoles: [RoleType.ADMIN],
-        },
-        {
-          title: "Зрізи",
-          url: "/analogs/slices",
-          iconName: "Projector",
-          allowedRoles: [RoleType.ADMIN],
-        },
-        {
-          title: "Продажі",
-          url: "/analogs/sales",
-          iconName: "TrendingUp",
-          allowedRoles: [RoleType.ADMIN],
-        },
-        {
-          title: "Залишки",
-          url: "/analogs/stock-comparison",
-          iconName: "Warehouse",
-          allowedRoles: [RoleType.ADMIN],
-        },
-      ],
-    },
-    {
-      title: "Товари конкурентів",
+      title: "Аналітика",
       url: "/sku/konks",
       pathOpenPrefix: "/sku",
       items: [
@@ -352,6 +253,110 @@ export const appSidebarData: { navMain: AppSidebarNavGroup[] } = {
         },
       ],
     },
+    // Поповнення
+    {
+      title: "Поповнення",
+      url: "/refiling",
+      pathOpenPrefix: "/refiling",
+      items: [
+        {
+          title: "Запити",
+          url: "/refiling/asks",
+          iconName: "FileQuestion",
+          allowedRoles: [RoleType.USER],
+        },
+        {
+          title: "Дефіцити",
+          url: "/refiling/defs",
+          iconName: "AlertTriangle",
+          allowedRoles: [RoleType.USER],
+        },
+        {
+          title: "Зняття",
+          url: "/refiling/pulls",
+          iconName: "PackageSearch",
+          allowedRoles: [RoleType.USER],
+        },
+        {
+          title: "Каса",
+          url: "/refiling/kasks",
+          iconName: "ShoppingCart",
+          allowedRoles: [RoleType.USER],
+        },
+      ],
+    },
+    // Склад
+    {
+      title: "Склад",
+      url: "/wh",
+      pathOpenPrefix: "/wh",
+      items: [
+        {
+          title: "Ряди",
+          url: "/wh/rows",
+          iconName: "Rows4",
+          allowedRoles: [RoleType.USER],
+        },
+        {
+          title: "Зони",
+          url: "/wh/zones",
+          iconName: "MapPin",
+          allowedRoles: [RoleType.ADMIN],
+        },
+        {
+          title: "Блоки",
+          url: "/wh/blocks",
+          iconName: "LayoutTemplate",
+          allowedRoles: [RoleType.ADMIN],
+        },
+        {
+          title: "Групи палет",
+          url: "/wh/pallet-groups",
+          iconName: "Route",
+          allowedRoles: [RoleType.ADMIN],
+        },
+        {
+          title: "Поставки",
+          url: "/wh/dels",
+          iconName: "Truck",
+          allowedRoles: [RoleType.ADMIN],
+        },
+      ],
+    },
+    // Аналоги
+    {
+      title: "Аналоги",
+      url: "/analogs",
+      pathOpenPrefix: "/analogs",
+      items: [
+        {
+          title: "Аналоги",
+          url: "/analogs",
+          iconName: "Link2",
+          allowedRoles: [RoleType.ADMIN],
+        },
+        {
+          title: "Зрізи",
+          url: "/analogs/slices",
+          iconName: "Projector",
+          allowedRoles: [RoleType.ADMIN],
+        },
+        {
+          title: "Продажі",
+          url: "/analogs/sales",
+          iconName: "TrendingUp",
+          allowedRoles: [RoleType.ADMIN],
+        },
+        {
+          title: "Залишки",
+          url: "/analogs/stock-comparison",
+          iconName: "Warehouse",
+          allowedRoles: [RoleType.ADMIN],
+        },
+      ],
+    },
+    // Аналітика
+ 
     {
       title: "Довідники",
       url: "/wh/prods",

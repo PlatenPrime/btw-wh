@@ -16,6 +16,8 @@ import {
 
 interface ProdContainerViewProps {
   prod: ProdDto;
+  /** Секція конкурентних SKU та фільтрів — лише для ADMIN+ */
+  showCompetitorSkusSection?: boolean;
   search: string;
   onSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   konkName: string;
@@ -29,6 +31,7 @@ interface ProdContainerViewProps {
 
 export function ProdContainerView({
   prod,
+  showCompetitorSkusSection = true,
   search,
   onSearchChange,
   konkName,
@@ -43,6 +46,7 @@ export function ProdContainerView({
     <div className="grid gap-2">
       <ProdDetailsCard prod={prod} />
 
+      {showCompetitorSkusSection ? (
       <Wrapper className="grid gap-2">
         <h2 className="text-lg font-semibold text-center">Товари виробника</h2>
         <SearchFiltersLayout
@@ -94,6 +98,7 @@ export function ProdContainerView({
         />
         {children}
       </Wrapper>
+      ) : null}
     </div>
   );
 }
