@@ -4,13 +4,13 @@ import {
 } from "@/lib/chart-date-range";
 import { useKonksQuery } from "@/modules/konks/api/hooks/queries/useKonksQuery";
 import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
-import type { SkuDto } from "@/modules/skus/api/types";
+import type { SkuDetailDto } from "@/modules/skus/api/types";
 import { SkuDetailHeaderActions } from "@/modules/skus/components/actions/sku-detail-header-actions";
 import { SkuContainerView } from "./SkuContainerView";
 import { useCallback, useMemo, useState } from "react";
 
 interface SkuContainerProps {
-  sku: SkuDto;
+  sku: SkuDetailDto;
 }
 
 export function SkuContainer({ sku }: SkuContainerProps) {
@@ -42,6 +42,7 @@ export function SkuContainer({ sku }: SkuContainerProps) {
         sku={sku}
         konk={konk}
         prod={prod}
+        skugrs={sku.skugrs}
         dateFrom={dateFrom}
         dateTo={dateTo}
         onDateRangeChange={onDateRangeChange}

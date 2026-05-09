@@ -2,11 +2,11 @@ import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/Dat
 import { EntityNotFound } from "@/components/shared/entity-not-found";
 import { ErrorDisplay } from "@/components/shared/error-components";
 import { useSkuByIdQuery } from "@/modules/skus/api/hooks/queries/useSkuByIdQuery";
-import type { SkuDto } from "@/modules/skus/api/types";
+import type { SkuDetailDto } from "@/modules/skus/api/types";
 
 interface SkuFetcherProps {
   id: string;
-  ContainerComponent: React.ComponentType<{ sku: SkuDto }>;
+  ContainerComponent: React.ComponentType<{ sku: SkuDetailDto }>;
   SkeletonComponent: React.ComponentType;
 }
 

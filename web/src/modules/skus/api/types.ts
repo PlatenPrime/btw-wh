@@ -12,6 +12,22 @@ export interface SkuDto {
   updatedAt: string;
 }
 
+export interface SkuSkugrDto {
+  _id: string;
+  konkName: string;
+  prodName: string;
+  title: string;
+  url: string;
+  isSliced: boolean;
+  skus: string[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface SkuDetailDto extends SkuDto {
+  skugrs: SkuSkugrDto[];
+}
+
 export interface SkusPagination {
   page: number;
   limit: number;
@@ -64,7 +80,7 @@ export interface GetSkusBySkugrParams {
 
 export interface SkuByIdResponseDto {
   message: string;
-  data: SkuDto;
+  data: SkuDetailDto;
 }
 
 export interface SkuSliceRangeItem {

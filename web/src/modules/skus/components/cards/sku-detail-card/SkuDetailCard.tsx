@@ -12,9 +12,10 @@ import {
 import { EntityLabel } from "@/modules/analogs/components/entity-label";
 import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
-import type { SkuDto } from "@/modules/skus/api/types";
+import type { SkuDto, SkuSkugrDto } from "@/modules/skus/api/types";
 import { ExternalLink } from "lucide-react";
 import type { ReactNode } from "react";
+import { Link } from "react-router";
 
 const SKU_DETAIL_PLACEHOLDER =
   "https://placehold.co/160x160?text=SKU&font=roboto";
@@ -23,12 +24,14 @@ interface SkuDetailCardProps {
   sku: SkuDto;
   konk: KonkDto | undefined;
   prod: ProdDto | undefined;
+  skugrs: SkuSkugrDto[];
 }
 
-export function SkuDetailCard({ sku, konk, prod }: SkuDetailCardProps) {
+export function SkuDetailCard({ sku, konk, prod, skugrs }: SkuDetailCardProps) {
   const theme = getKonkTheme(sku.konkName);
   const hasImage = Boolean(sku.imageUrl?.trim());
   const hasBtradeAnalog = Boolean(sku.btradeAnalog?.trim());
+  const hasSkugrs = skugrs.length > 0;
 
   let skuImageContent: ReactNode;
   if (hasImage) {
@@ -86,6 +89,28 @@ export function SkuDetailCard({ sku, konk, prod }: SkuDetailCardProps) {
             <ExternalLink className="size-4 shrink-0" />
             Відкрити на сайті конкурента
           </a>
+          <div className="grid gap-2">
+            <span className="text-muted-foreground text-sm font-medium">
+              Товарні групи
+            </span>
+            {hasSkugrs ? (
+              <div className="flex flex-wrap gap-2">
+                {skugrs.map((skugr) => (
+                  <Link
+                    key={skugr._id}
+                    to={`/sku/skugrs/${skugr._id}`}
+                    className="bg-muted hover:bg-muted/80 rounded-md px-2 py-1 text-sm transition-colors"
+                  >
+                    {skugr.title}
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <span className="text-muted-foreground text-sm">
+                Не входить до жодної товарної групи
+              </span>
+            )}
+          </div>
         </div>
       </CardHeader>
     </Card>

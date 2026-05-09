@@ -1,6 +1,6 @@
 import { CardActionsMenu } from "@/components/shared/card-actions/CardActionsMenu";
 import type { CardAction } from "@/components/shared/card-actions/types";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import {
   getKonkTheme,
@@ -49,30 +49,28 @@ export function SkugrGridCardView({
           />
         }
       />
-      <CardHeader className="flex min-h-0 w-full min-w-0 flex-1 flex-col gap-2 p-2">
-        <div className="grid w-full min-w-0 grid-cols-[minmax(0,1fr)_auto] items-start gap-x-2">
-          <CardTitle className="mb-0 min-w-0 text-base leading-tight font-semibold">
-            <Link
-              to={`/sku/skugrs/${skugr._id}`}
-              className="hover:text-primary block wrap-break-word underline-offset-4 hover:underline"
-            >
-              {skugr.title}
-            </Link>
-          </CardTitle>
-          <span className="text-muted-foreground flex shrink-0 items-center gap-1 self-start text-sm tabular-nums">
-            <Notebook className="size-3.5 shrink-0" aria-hidden />
-            {skuCount}
-          </span>
-        </div>
-      </CardHeader>
+
+      <div className="flex justify-center py-2">
+        <Link
+          to={`/sku/skugrs/${skugr._id}`}
+          className=" block text-center wrap-break-word underline-offset-4 hover:underline"
+        >
+          {skugr.title}
+        </Link>
+      </div>
+
       {prod ? (
-        <div className="border-border/80 text-muted-foreground flex shrink-0 items-center justify-center border-t px-2 py-1.5 text-xs">
+        <div className="border-border/80 text-muted-foreground flex shrink-0 items-center justify-between border-t px-2 py-1.5 text-xs">
           <EntityLabel
             imageUrl={prod.imageUrl}
             title={prod.title}
             fallbackLabel={skugr.prodName}
             imageSize="sm"
           />
+          <span className="text-muted-foreground flex shrink-0 items-center gap-1  text-sm tabular-nums">
+            <Notebook className="size-3.5 shrink-0" aria-hidden />
+            {skuCount}
+          </span>
         </div>
       ) : null}
     </Card>
