@@ -62,11 +62,11 @@ export function ChartDateRangeToolbar({
       : "Оберіть період";
 
   return (
-    <div className="flex flex-wrap items-center justify-center gap-3">
+    <div className="flex flex-wrap items-center justify-center gap-3 rounded-xl border border-border/60 bg-surface-1/90 p-2 shadow-elevation-1">
       <Button
         id={triggerId}
         type="button"
-        variant="outline"
+        variant="info-soft"
         className="min-w-[220px] justify-start font-normal"
         onClick={() => setIsDialogOpen(true)}
       >
@@ -97,6 +97,7 @@ export function ChartDateRangeToolbar({
             </Button>
             <Button
               type="button"
+              variant="success"
               disabled={!isRangeComplete}
               onClick={handleConfirm}
             >

@@ -7,13 +7,9 @@ interface ClearTriggerProps {
 
 export function ClearTrigger({ onClick }: ClearTriggerProps) {
   return (
-    <Button
-      variant="ghost"
-      size="sm"
-      className="hover:bg-pink-500/10 text-pink-500 hover:text-pink-400 h-8 w-8 p-0"
-      onClick={onClick}
-    >
+    <Button variant="warning" size="icon-sm" onClick={onClick}>
       <BrushCleaning className="h-4 w-4" />
+      <span className="sr-only">Очистити</span>
     </Button>
   );
 }

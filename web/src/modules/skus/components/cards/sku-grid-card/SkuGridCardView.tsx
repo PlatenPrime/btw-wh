@@ -4,7 +4,7 @@ import {
   UrlDialogImage,
 } from "@/components/shared/url-dialog-image/UrlDialogImage";
 import { Badge } from "@/components/ui/badge";
-import { Card } from "@/components/ui/card";
+import { GridTileCard } from "@/components/shared/cards";
 import { cn } from "@/lib/utils";
 import {
   getKonkTheme,
@@ -29,11 +29,8 @@ export function SkuGridCardView({ sku, prod, konk }: SkuGridCardViewProps) {
   const hasImage = Boolean(sku.imageUrl?.trim());
 
   return (
-    <Card
-      className={cn(
-        "flex flex-col gap-2 overflow-hidden p-0 transition-shadow",
-        theme.shadow,
-      )}
+    <GridTileCard
+      className={cn("flex flex-col gap-2 overflow-hidden p-0", theme.shadow)}
     >
       <KonkBanner
         konkName={sku.konkName}
@@ -82,6 +79,6 @@ export function SkuGridCardView({ sku, prod, konk }: SkuGridCardViewProps) {
           </div>
         </div>
       </div>
-    </Card>
+    </GridTileCard>
   );
 }

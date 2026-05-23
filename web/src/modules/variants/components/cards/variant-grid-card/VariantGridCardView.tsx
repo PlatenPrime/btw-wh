@@ -1,7 +1,7 @@
 import { CardActionsMenu } from "@/components/shared/card-actions/CardActionsMenu";
 import { Image } from "@/components/shared/image/image";
 import type { CardAction } from "@/components/shared/card-actions/types";
-import { Card } from "@/components/ui/card";
+import { GridTileCard } from "@/components/shared/cards";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router";
 import type { VariantDto } from "@/modules/variants/api/types";
@@ -29,11 +29,8 @@ export function VariantGridCardView({
   const theme = getKonkTheme(variant.konkName);
 
   return (
-    <Card
-      className={cn(
-        "flex flex-col gap-2 overflow-hidden p-0 transition-shadow",
-        theme.shadow,
-      )}
+    <GridTileCard
+      className={cn("flex flex-col gap-2 overflow-hidden p-0", theme.shadow)}
     >
       <KonkBanner
         konkName={variant.konkName}
@@ -79,7 +76,7 @@ export function VariantGridCardView({
           imageSize="sm"
         />
       </div>
-    </Card>
+    </GridTileCard>
   );
 }
 

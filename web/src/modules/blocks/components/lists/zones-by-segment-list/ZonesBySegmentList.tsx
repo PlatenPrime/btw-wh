@@ -1,4 +1,4 @@
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+﻿import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
 import { LoadingNoData } from "@/components/shared/loading-states";
 import { ZoneBySegmentCard } from "@/modules/blocks/components/cards/zone-by-segment-card";
 import type { SegmentDto, ZoneWithSegmentDto } from "@/modules/blocks/api/types";
@@ -14,11 +14,11 @@ export function ZonesBySegmentList({
 }: ZonesBySegmentListProps) {
   if (zones.length === 0) {
     return (
-      <Wrapper>
+      <SurfaceSection>
         <div className="grid gap-4 rounded-lg border border-dashed p-6 text-center">
           <LoadingNoData description="Цей сегмент не має зон" />
         </div>
-      </Wrapper>
+      </SurfaceSection>
     );
   }
 

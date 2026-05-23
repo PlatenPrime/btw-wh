@@ -1,4 +1,4 @@
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -90,7 +90,7 @@ export function StockControls({
       : "Оберіть період";
 
   return (
-    <Wrapper className="grid grid-cols-1 gap-3">
+    <SurfaceSection className="grid grid-cols-1 gap-3">
       <div className="flex min-w-0 flex-wrap items-center gap-3">
         <Select
           value={konk || "placeholder"}
@@ -201,6 +201,6 @@ export function StockControls({
           </DialogContent>
         </Dialog>
       </div>
-    </Wrapper>
+    </SurfaceSection>
   );
 }

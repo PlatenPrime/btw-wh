@@ -1,4 +1,4 @@
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
 import type { AskDto } from "@/modules/asks/api/types/dto";
 import { AskDetailsCard } from "@/modules/asks/components/cards/ask-details-card/AskDetailsCard";
 import { AskEvents } from "@/modules/asks/components/containers/ask-container/components/ask-events/AskEvents";
@@ -15,7 +15,7 @@ export const AskContainerView = memo(function AskContainerView({
 }: AskContainerViewProps) {
   return (
     <section className="grid gap-2">
-      <Wrapper className="grid gap-2 lg:grid-cols-2">
+      <SurfaceSection className="grid gap-2 lg:grid-cols-2">
         <AskDetailsCard askData={askData} />
         <AskEvents
           events={askData.events ?? []}
@@ -23,23 +23,23 @@ export const AskContainerView = memo(function AskContainerView({
           pullBox={askData.pullBox}
           pullBoxes={askData.pullBoxes}
         />
-      </Wrapper>
+      </SurfaceSection>
 
       {/* Позиции для снятия */}
       {askData.artikul ? (
-        <Wrapper>
+        <SurfaceSection>
           <AskPullPositionsContainer askId={askData._id} />
-        </Wrapper>
+        </SurfaceSection>
       ) : null}
 
       {/* Позиции по артикулу */}
       {askData.artikul ? (
-        <Wrapper>
+        <SurfaceSection>
           <AskPosesByArtikulContainer
             artikul={askData.artikul}
             askId={askData._id}
           />
-        </Wrapper>
+        </SurfaceSection>
       ) : null}
     </section>
   );

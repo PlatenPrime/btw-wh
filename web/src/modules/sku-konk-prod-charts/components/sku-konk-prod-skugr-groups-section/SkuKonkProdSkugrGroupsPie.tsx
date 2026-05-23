@@ -1,4 +1,4 @@
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+﻿import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
 import { ChartContainer, type ChartConfig } from "@/components/ui/chart";
 import type { SkugrGroupSalesRow, SkugrGroupsMetric } from "./types";
 import { Cell, Pie, PieChart, Tooltip } from "recharts";
@@ -46,7 +46,7 @@ export function SkuKonkProdSkugrGroupsPie({
   }));
 
   return (
-    <Wrapper className="grid gap-3">
+    <SurfaceSection className="grid gap-3">
       <ChartContainer
         config={chartConfig}
         className="aspect-auto h-[320px] w-full max-w-full"
@@ -83,6 +83,6 @@ export function SkuKonkProdSkugrGroupsPie({
           />
         </PieChart>
       </ChartContainer>
-    </Wrapper>
+    </SurfaceSection>
   );
 }

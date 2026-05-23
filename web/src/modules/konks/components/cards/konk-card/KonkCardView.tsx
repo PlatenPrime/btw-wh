@@ -1,6 +1,7 @@
 import { CardActionsMenu } from "@/components/shared/card-actions";
 import type { CardAction } from "@/components/shared/card-actions";
-import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import { ListRowCard } from "@/components/shared/cards";
+import { CardContent, CardTitle } from "@/components/ui/card";
 import { Image } from "@/components/shared/image/image";
 import type { KonkDto } from "@/modules/konks/api/types";
 import { Link } from "react-router";
@@ -14,9 +15,9 @@ interface KonkCardViewProps {
 
 export function KonkCardView({ konk, actions }: KonkCardViewProps) {
   return (
-    <Card className="gap-0 p-2 transition-shadow hover:shadow-md">
+    <ListRowCard>
       <CardContent className="flex items-center gap-2 p-0">
-        <div className="size-12 shrink-0 overflow-hidden rounded border bg-muted">
+        <div className="size-12 shrink-0 overflow-hidden rounded-lg border border-border/60 bg-muted ring-1 ring-border/40">
           <Image
             src={konk.imageUrl}
             alt={konk.title}
@@ -33,7 +34,7 @@ export function KonkCardView({ konk, actions }: KonkCardViewProps) {
               {konk.title}
             </Link>
           </CardTitle>
-          <span className="text-muted-foreground truncate text-xs">
+          <span className="truncate text-xs text-muted-foreground">
             {konk.name}
           </span>
         </div>
@@ -46,6 +47,6 @@ export function KonkCardView({ konk, actions }: KonkCardViewProps) {
           />
         )}
       </CardContent>
-    </Card>
+    </ListRowCard>
   );
 }

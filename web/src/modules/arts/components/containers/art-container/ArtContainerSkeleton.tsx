@@ -1,4 +1,4 @@
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+﻿import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
 import { ArtDetailCardSkeleton } from "@/modules/arts/components/cards/art-detail-card/ArtDetailCardSkeleton";
 import { PosesByArtikulContainerSkeleton } from "@/modules/poses/components/containers/poses-by-artikul-container";
 import { AsksByArtikulContainerSkeleton } from "@/modules/asks/components/containers/asks-by-artikul-container";
@@ -6,17 +6,17 @@ import { AsksByArtikulContainerSkeleton } from "@/modules/asks/components/contai
 export function ArtContainerSkeleton() {
   return (
     <section className="grid gap-2">
-      <Wrapper>
+      <SurfaceSection>
         <ArtDetailCardSkeleton />
-      </Wrapper>
+      </SurfaceSection>
 
-      <Wrapper>
+      <SurfaceSection>
         <PosesByArtikulContainerSkeleton />
-      </Wrapper>
+      </SurfaceSection>
 
-      <Wrapper>
+      <SurfaceSection>
         <AsksByArtikulContainerSkeleton />
-      </Wrapper>
+      </SurfaceSection>
     </section>
   );
 }

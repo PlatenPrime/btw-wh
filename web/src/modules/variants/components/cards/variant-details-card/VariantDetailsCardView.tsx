@@ -1,4 +1,5 @@
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import { DetailPanelCard } from "@/components/shared/cards";
+import { CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Image } from "@/components/shared/image/image";
 import type { KonkDto } from "@/modules/konks/api/types";
@@ -20,7 +21,7 @@ export function VariantDetailsCardView({
   prod,
 }: VariantDetailsCardViewProps) {
   return (
-    <Card className="gap-0 overflow-hidden p-0 shadow-md">
+    <DetailPanelCard className="gap-0 overflow-hidden p-0">
       <KonkBanner
         konkName={variant.konkName}
         imageUrl={konk?.imageUrl}
@@ -65,7 +66,7 @@ export function VariantDetailsCardView({
           imageSize="sm"
         />
       </CardFooter>
-    </Card>
+    </DetailPanelCard>
   );
 }
 

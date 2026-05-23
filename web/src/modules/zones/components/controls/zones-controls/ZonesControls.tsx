@@ -1,7 +1,7 @@
 import { SearchFiltersLayout } from "@/components/shared/search-components/search-filters-layout";
 import { SearchPanel } from "@/components/shared/search-components/search-panel/SearchPanel";
 import { SelectLimit } from "@/components/shared/select-limit";
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
 import { Button } from "@/components/ui/button";
 import { useZonesParams } from "@/modules/zones/hooks/useZonesParams";
 import { ArrowDown, ArrowUp } from "lucide-react";
@@ -24,7 +24,7 @@ export function ZonesControls() {
   };
 
   return (
-    <Wrapper className="grid gap-2">
+    <SurfaceSection className="grid gap-2">
       <SearchFiltersLayout
         searchSlot={
           <div className="max-w-md">
@@ -62,6 +62,6 @@ export function ZonesControls() {
           </div>
         }
       />
-    </Wrapper>
+    </SurfaceSection>
   );
 }

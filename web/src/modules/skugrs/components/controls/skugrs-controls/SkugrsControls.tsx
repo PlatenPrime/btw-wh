@@ -1,7 +1,7 @@
-import { SearchFiltersLayout } from "@/components/shared/search-components/search-filters-layout";
+﻿import { SearchFiltersLayout } from "@/components/shared/search-components/search-filters-layout";
 import { SearchPanel } from "@/components/shared/search-components/search-panel/SearchPanel";
 import { SelectLimit } from "@/components/shared/select-limit";
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
 import {
   Select,
   SelectContent,
@@ -47,7 +47,7 @@ export function SkugrsControls() {
   };
 
   return (
-    <Wrapper className="grid gap-3">
+    <SurfaceSection className="grid gap-3">
       <SearchFiltersLayout
         className="gap-3"
         searchSlotClassName="lg:max-w-xl"
@@ -126,6 +126,6 @@ export function SkugrsControls() {
           </div>
         }
       />
-    </Wrapper>
+    </SurfaceSection>
   );
 }

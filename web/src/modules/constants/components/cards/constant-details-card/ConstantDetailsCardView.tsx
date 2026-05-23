@@ -1,4 +1,5 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { DetailPanelCard } from "@/components/shared/cards";
+import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -27,7 +28,7 @@ export function ConstantDetailsCardView({
   const entries = Object.entries(constant.data ?? {});
 
   return (
-    <Card className="p-2">
+    <DetailPanelCard className="p-2">
       <CardHeader className="p-0 pb-2">
         <CardTitle className="p-0">{constant.title}</CardTitle>
         <span className="text-muted-foreground text-sm">{constant.name}</span>
@@ -97,6 +98,6 @@ export function ConstantDetailsCardView({
           <p className="text-muted-foreground text-sm">Дані порожні</p>
         )}
       </CardContent>
-    </Card>
+    </DetailPanelCard>
   );
 }

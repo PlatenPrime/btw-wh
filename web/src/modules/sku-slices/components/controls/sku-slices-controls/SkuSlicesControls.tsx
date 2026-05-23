@@ -1,7 +1,7 @@
-import { format, parse } from "date-fns";
+﻿import { format, parse } from "date-fns";
 import { uk } from "date-fns/locale";
 import { CalendarIcon } from "lucide-react";
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
 import {
   Select,
   SelectContent,
@@ -59,7 +59,7 @@ export function SkuSlicesControls({
   };
 
   return (
-    <Wrapper className="flex flex-wrap items-end gap-3">
+    <SurfaceSection className="flex flex-wrap items-end gap-3">
       <div className="flex min-w-0 flex-col gap-2">
         <Label htmlFor="sku-slices-konk">Конкурент</Label>
         <Select
@@ -134,6 +134,6 @@ export function SkuSlicesControls({
           Лише невалідні
         </Label>
       </div>
-    </Wrapper>
+    </SurfaceSection>
   );
 }

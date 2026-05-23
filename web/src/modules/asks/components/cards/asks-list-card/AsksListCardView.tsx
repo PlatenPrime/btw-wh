@@ -1,7 +1,7 @@
 import { ArtikulImageLink } from "@/components/shared/artikul-image-link/ArtikulImageLink";
 import { CalendarDate } from "@/components/shared/date/CalendarDate";
 import { UserAvatarName } from "@/components/shared/user/UserAvatarName";
-import { Card } from "@/components/ui/card";
+import { ListRowCard } from "@/components/shared/cards";
 import type { AskDto, AskStatus } from "@/modules/asks/api/types/dto";
 import { AskStatusBage } from "@/modules/asks/components/elements/ask-status-bage/AskStatusBage";
 import { AskCom } from "../../elements/ask-com/AskCom";
@@ -19,7 +19,7 @@ export function AsksListCardView({
   statusText,
 }: AsksListCardViewProps) {
   return (
-    <Card className="grid gap-2 p-2 shadow-none ring-1 ring-gray-200 transition-all duration-500 ease-out hover:shadow-lg hover:bg-muted-foreground/5 dark:ring-gray-700">
+    <ListRowCard className="grid gap-2 hover:bg-muted/30">
       <ArtikulImageLink
         artikul={ask.artikul}
         nameukr={ask.nameukr}
@@ -39,6 +39,6 @@ export function AsksListCardView({
         />
         <CalendarDate date={ask.createdAt} />
       </div>
-    </Card>
+    </ListRowCard>
   );
 }

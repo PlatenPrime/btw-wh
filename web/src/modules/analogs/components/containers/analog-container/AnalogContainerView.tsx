@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { ChartSection } from "@/components/shared/charts/chart-section/ChartSection";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -68,34 +68,20 @@ export function AnalogContainerView({ analog }: AnalogContainerViewProps) {
           </Select>
         </div>
         <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
-          <Card className="overflow-hidden shadow-md">
-            <CardHeader className="pb-2">
-              <h3 className="text-muted-foreground text-sm font-medium">
-                Динаміка залишків та ціни
-              </h3>
-            </CardHeader>
-            <CardContent>
-              <AnalogSlicesChartContainer
-                analogId={analog._id}
-                dateFrom={dateFrom}
-                dateTo={dateTo}
-              />
-            </CardContent>
-          </Card>
-          <Card className="overflow-hidden shadow-md">
-            <CardHeader className="pb-2">
-              <h3 className="text-muted-foreground text-sm font-medium">
-                Динаміка продаж
-              </h3>
-            </CardHeader>
-            <CardContent>
-              <AnalogSalesChartContainer
-                analogId={analog._id}
-                dateFrom={dateFrom}
-                dateTo={dateTo}
-              />
-            </CardContent>
-          </Card>
+          <ChartSection title="Динаміка залишків та ціни">
+            <AnalogSlicesChartContainer
+              analogId={analog._id}
+              dateFrom={dateFrom}
+              dateTo={dateTo}
+            />
+          </ChartSection>
+          <ChartSection title="Динаміка продаж">
+            <AnalogSalesChartContainer
+              analogId={analog._id}
+              dateFrom={dateFrom}
+              dateTo={dateTo}
+            />
+          </ChartSection>
         </div>
       </div>
     </div>

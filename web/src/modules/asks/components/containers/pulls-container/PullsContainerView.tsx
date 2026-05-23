@@ -1,4 +1,4 @@
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
 import { cn } from "@/lib/utils";
 import type { GetAsksPullsResponse } from "@/modules/asks/api/types/dto";
 import { LoaderPinwheel } from "lucide-react";
@@ -19,7 +19,7 @@ export function PullsContainerView({
   );
 
   return (
-    <Wrapper className="relative grid gap-4">
+    <SurfaceSection className="relative grid gap-4">
       <div className="grid gap-2">
         <h2 className="flex items-center gap-2 text-lg font-semibold">
           Позиції для зняття
@@ -48,7 +48,7 @@ export function PullsContainerView({
           ))}
         </div>
       )}
-    </Wrapper>
+    </SurfaceSection>
   );
 }
 

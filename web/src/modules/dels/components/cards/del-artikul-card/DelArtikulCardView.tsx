@@ -1,6 +1,6 @@
 import { ArtikulImageLink } from "@/components/shared/artikul-image-link/ArtikulImageLink";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { ListRowCard } from "@/components/shared/cards";
 import { cn } from "@/lib/utils";
 import type { DelArtikulItem } from "@/modules/dels/api/types";
 import { Check, Clock, Loader2, RefreshCw, X } from "lucide-react";
@@ -12,15 +12,12 @@ export interface DelArtikulCardViewChainStep {
   error?: string;
 }
 
-const cardBaseClasses =
-  "flex flex-row items-center gap-2 p-2 shadow-none ring-1 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:shadow-md";
+const cardBaseClasses = "flex flex-row items-center gap-2 p-2";
 
 const variantClasses: Record<DelArtikulCardVariant, string> = {
-  normal: "ring-gray-200 dark:ring-gray-700",
-  zeroQuantity:
-    "ring-red-300 bg-red-50 dark:ring-red-800 dark:bg-red-950/30",
-  noNameUkr:
-    "ring-amber-300 bg-amber-50 dark:ring-amber-700 dark:bg-amber-950/30",
+  normal: "",
+  zeroQuantity: "border-destructive/40 bg-destructive/10",
+  noNameUkr: "border-warning/40 bg-warning/10",
 };
 
 interface DelArtikulCardViewProps {
@@ -47,7 +44,7 @@ export function DelArtikulCardView({
   const showChainStatus = chainRunning && chainStep;
 
   return (
-    <Card className={cn(cardBaseClasses, variantClasses[variant])}>
+    <ListRowCard className={cn(cardBaseClasses, variantClasses[variant])}>
       <div className="flex min-w-0 flex-1 items-center gap-2">
         <ArtikulImageLink
           artikul={artikul}
@@ -109,6 +106,6 @@ export function DelArtikulCardView({
           </Button>
         )}
       </div>
-    </Card>
+    </ListRowCard>
   );
 }

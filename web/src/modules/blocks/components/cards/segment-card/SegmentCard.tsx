@@ -1,5 +1,6 @@
 import { CardActionsMenu } from "@/components/shared/card-actions/CardActionsMenu";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { ListRowCard } from "@/components/shared/cards";
+import { CardHeader, CardTitle } from "@/components/ui/card";
 import { RoleType } from "@/constants/roles";
 import { RoleGuard } from "@/modules/auth/components/RoleGuard";
 import type { SegmentDto } from "@/modules/blocks/api/types";
@@ -26,7 +27,7 @@ export function SegmentCard({ segment, blockId, onDelete }: SegmentCardProps) {
   ].filter(() => true);
 
   return (
-    <Card className="gap-0 p-2 transition-shadow hover:shadow-md">
+    <ListRowCard>
       <CardHeader className="p-0">
         <div className="flex items-center justify-between">
           <CardTitle className="flex flex-row items-center justify-start gap-2">
@@ -54,6 +55,6 @@ export function SegmentCard({ segment, blockId, onDelete }: SegmentCardProps) {
           </RoleGuard>
         </div>
       </CardHeader>
-    </Card>
+    </ListRowCard>
   );
 }

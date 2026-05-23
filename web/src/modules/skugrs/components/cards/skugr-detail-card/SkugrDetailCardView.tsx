@@ -1,4 +1,5 @@
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { DetailPanelCard } from "@/components/shared/cards";
+import { CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import {
   getKonkTheme,
@@ -24,8 +25,8 @@ export function SkugrDetailCardView({
   const theme = getKonkTheme(skugr.konkName);
 
   return (
-    <Card
-      className={cn("overflow-hidden p-0 gap-2 transition-shadow", theme.shadow)}
+    <DetailPanelCard
+      className={cn("gap-2 overflow-hidden p-0", theme.shadow)}
     >
       <KonkBanner
         konkName={skugr.konkName}
@@ -56,6 +57,6 @@ export function SkugrDetailCardView({
           Посилання на дані
         </a>
       </CardHeader>
-    </Card>
+    </DetailPanelCard>
   );
 }

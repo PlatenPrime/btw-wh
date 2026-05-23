@@ -4,31 +4,32 @@ import type { ReactNode } from "react";
 export type HeaderActionVariant =
   | "default"
   | "destructive"
-  | "super-destructive";
+  | "super-destructive"
+  | "success"
+  | "edit"
+  | "info";
+
 export type HeaderActionIconColor =
-  | "slate"
-  | "gray"
-  | "zinc"
-  | "neutral"
-  | "stone"
-  | "red"
-  | "orange"
-  | "amber"
-  | "yellow"
-  | "lime"
+  | "default"
+  | "primary"
+  | "muted"
+  | "success"
+  | "edit"
+  | "info"
+  | "warning"
+  | "destructive"
   | "green"
   | "emerald"
-  | "teal"
-  | "cyan"
-  | "sky"
   | "blue"
-  | "indigo"
+  | "sky"
+  | "red"
+  | "rose"
   | "violet"
   | "purple"
-  | "fuchsia"
-  | "pink"
-  | "rose"
-  | "default";
+  | "orange"
+  | "amber";
+
+export type HeaderActionEmphasis = "filled" | "soft" | "icon";
 
 export interface HeaderAction {
   id: string;
@@ -36,6 +37,7 @@ export interface HeaderAction {
   icon?: LucideIcon;
   iconColor?: HeaderActionIconColor;
   variant?: HeaderActionVariant;
+  emphasis?: HeaderActionEmphasis;
   onClick: () => void;
 }
 

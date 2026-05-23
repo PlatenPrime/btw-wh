@@ -1,4 +1,4 @@
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
 import { Button } from "@/components/ui/button";
 import type { PalletResponse } from "@/modules/pallets/api/types";
 import { PalletInfo } from "@/modules/pallets/components/elements/pallet-info/PalletInfo";
@@ -26,7 +26,7 @@ export function PalletContainerView({
 }: PalletContainerViewProps) {
   return (
     <div className="grid gap-2">
-      <Wrapper className="grid gap-2">
+      <SurfaceSection className="grid gap-2">
         <div className="grid place-content-center gap-2 md:grid-cols-3">
           <PalletSortControls
             sortParams={sortParams}
@@ -47,7 +47,7 @@ export function PalletContainerView({
             }
           />
         </div>
-      </Wrapper>
+      </SurfaceSection>
 
       <PosesByPalletFetcher
         palletId={pallet.data!._id}

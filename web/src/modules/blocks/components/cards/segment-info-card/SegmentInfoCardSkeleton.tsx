@@ -1,10 +1,10 @@
-import { Card, CardContent } from "@/components/ui/card";
+import { ListRowCard } from "@/components/shared/cards";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export function SegmentInfoCardSkeleton() {
   return (
-    <Card className="gap-2 p-2 transition-shadow hover:shadow-md">
-      <CardContent className="grid gap-2 p-0">
+    <ListRowCard className="gap-2">
+      <div className="grid gap-2 p-0">
         <div className="flex gap-1">
           <Skeleton className="h-4 w-16" />
           <Skeleton className="h-4 w-8" />
@@ -21,7 +21,7 @@ export function SegmentInfoCardSkeleton() {
           <Skeleton className="h-4 w-24" />
           <Skeleton className="h-4 w-8" />
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </ListRowCard>
   );
 }

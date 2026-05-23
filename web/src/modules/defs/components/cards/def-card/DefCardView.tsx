@@ -1,5 +1,5 @@
 import { ArtikulImageLink } from "@/components/shared/artikul-image-link/ArtikulImageLink";
-import { Card } from "@/components/ui/card";
+import { ListRowCard } from "@/components/shared/cards";
 import { cn } from "@/lib/utils";
 import type { DeficitItem } from "@/modules/defs/api/types/dto";
 import { DefAskButton } from "@/modules/defs/components/elements/def-ask-button/DefAskButton";
@@ -19,10 +19,9 @@ export function DefCardView({ artikul, defItem }: DefCardViewProps) {
       : "shadow-amber-300/30 dark:shadow-amber-500/40 hover:shadow-amber-400/40 dark:hover:shadow-amber-400/50";
 
   return (
-    <Card
+    <ListRowCard
       className={cn(
-        " h-full grid p-2 shadow-none ring-1 ring-gray-200 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:shadow-md dark:ring-gray-700",
-        "gap-2 text-sm",
+        "h-full grid gap-2 p-2 text-sm",
         shadowClasses,
       )}
     >
@@ -46,6 +45,6 @@ export function DefCardView({ artikul, defItem }: DefCardViewProps) {
           )}
         </div>
       </div>
-    </Card>
+    </ListRowCard>
   );
 }

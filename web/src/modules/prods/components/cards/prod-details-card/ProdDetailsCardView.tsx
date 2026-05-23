@@ -1,5 +1,6 @@
 import { Image } from "@/components/shared/image/image";
-import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import { DetailPanelCard } from "@/components/shared/cards";
+import { CardContent, CardTitle } from "@/components/ui/card";
 import type { ProdDto } from "@/modules/prods/api/types";
 
 const FALLBACK_IMAGE = "https://placehold.co/200x200?text=Лого&font=roboto";
@@ -10,7 +11,7 @@ interface ProdDetailsCardViewProps {
 
 export function ProdDetailsCardView({ prod }: ProdDetailsCardViewProps) {
   return (
-    <Card className="p-2">
+    <DetailPanelCard className="p-2">
       <CardContent className="flex items-start gap-2 p-0">
         <div className="bg-muted aspect-square w-16 shrink-0 overflow-hidden rounded-lg border ">
           <Image
@@ -27,6 +28,6 @@ export function ProdDetailsCardView({ prod }: ProdDetailsCardViewProps) {
           </span>
         </div>
       </CardContent>
-    </Card>
+    </DetailPanelCard>
   );
 }

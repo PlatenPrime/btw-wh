@@ -1,6 +1,6 @@
 import { CardActionsMenu } from "@/components/shared/card-actions/CardActionsMenu";
 import type { CardAction } from "@/components/shared/card-actions/types";
-import { Card } from "@/components/ui/card";
+import { GridTileCard } from "@/components/shared/cards";
 import { cn } from "@/lib/utils";
 import {
   getKonkTheme,
@@ -30,9 +30,9 @@ export function SkugrGridCardView({
   const skuCount = skugr.skus?.length ?? 0;
 
   return (
-    <Card
+    <GridTileCard
       className={cn(
-        "flex h-full flex-col gap-0 overflow-hidden p-0 transition-shadow",
+        "flex h-full flex-col gap-0 overflow-hidden p-0",
         theme.shadow,
       )}
     >
@@ -73,6 +73,6 @@ export function SkugrGridCardView({
           </span>
         </div>
       ) : null}
-    </Card>
+    </GridTileCard>
   );
 }

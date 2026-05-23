@@ -1,4 +1,4 @@
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
 import type { PalletShortDto } from "@/modules/pallet-groups/api/types";
 import { PalletCard } from "@/modules/pallet-groups/components/cards/pallet-card/PalletCard";
 
@@ -17,10 +17,10 @@ export function PalletsGrid({ pallets, onUnlink }: PalletsGridProps) {
   }
 
   return (
-    <Wrapper className="grid grid-cols-1 gap-2 p-2">
+    <SurfaceSection className="grid grid-cols-1 gap-2 p-2">
       {pallets.map((pallet) => (
         <PalletCard key={pallet.id} pallet={pallet} onUnlink={onUnlink} />
       ))}
-    </Wrapper>
+    </SurfaceSection>
   );
 }

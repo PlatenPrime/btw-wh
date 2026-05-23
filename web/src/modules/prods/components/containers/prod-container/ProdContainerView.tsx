@@ -1,7 +1,7 @@
-import { SearchFiltersLayout } from "@/components/shared/search-components/search-filters-layout";
+﻿import { SearchFiltersLayout } from "@/components/shared/search-components/search-filters-layout";
 import { SearchPanel } from "@/components/shared/search-components/search-panel/SearchPanel";
 import { SelectLimit } from "@/components/shared/select-limit";
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
 import { EntityLabel } from "@/modules/analogs/components/entity-label";
 import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
@@ -47,7 +47,7 @@ export function ProdContainerView({
       <ProdDetailsCard prod={prod} />
 
       {showCompetitorSkusSection ? (
-      <Wrapper className="grid gap-2">
+      <SurfaceSection className="grid gap-2">
         <h2 className="text-lg font-semibold text-center">Товари виробника</h2>
         <SearchFiltersLayout
           searchSlot={
@@ -97,7 +97,7 @@ export function ProdContainerView({
           }
         />
         {children}
-      </Wrapper>
+      </SurfaceSection>
       ) : null}
     </div>
   );

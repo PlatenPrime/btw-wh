@@ -1,5 +1,5 @@
-import { Skeleton } from "@/components/ui/skeleton";
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SkugrGridCardSkeleton } from "@/modules/skugrs/components/cards/skugr-grid-card/SkugrGridCardSkeleton";
 
 interface SkugrsGridSkeletonProps {
   count?: number;
@@ -7,10 +7,10 @@ interface SkugrsGridSkeletonProps {
 
 export function SkugrsGridSkeleton({ count = 8 }: SkugrsGridSkeletonProps) {
   return (
-    <Wrapper className="grid grid-cols-1 gap-2 p-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-      {Array.from({ length: count }).map((_, i) => (
-        <Skeleton key={i} className="h-56 rounded-lg" />
+    <SurfaceSection className="grid grid-cols-1 gap-2 p-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      {Array.from({ length: count }).map((_, index) => (
+        <SkugrGridCardSkeleton key={index} />
       ))}
-    </Wrapper>
+    </SurfaceSection>
   );
 }

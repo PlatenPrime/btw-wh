@@ -1,9 +1,9 @@
-import { Card } from "@/components/ui/card";
+import { GridTileCard } from "@/components/shared/cards";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export function SkuGridCardSkeleton() {
   return (
-    <Card className="flex flex-col gap-2 overflow-hidden p-0 transition-shadow">
+    <GridTileCard className="flex flex-col gap-2 overflow-hidden p-0">
       <Skeleton className="h-8 w-full rounded-none" />
       <div className="flex flex-col gap-2 px-2 pb-1">
         <div className="flex min-h-0 min-w-0 items-start gap-3">
@@ -16,6 +16,6 @@ export function SkuGridCardSkeleton() {
           </div>
         </div>
       </div>
-    </Card>
+    </GridTileCard>
   );
 }

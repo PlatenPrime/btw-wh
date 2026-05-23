@@ -12,10 +12,10 @@ import { useState } from "react";
 import type { CardActionIconColor, CardActionsMenuProps } from "./types";
 
 const iconColorClasses: Record<CardActionIconColor, string> = {
-  emerald: "text-emerald-500",
-  rose: "text-rose-500",
-  red: "text-red-500",
-  default: "",
+  emerald: "text-success",
+  rose: "text-destructive",
+  red: "text-destructive",
+  default: "text-foreground",
 };
 
 const sizeClasses = {
@@ -75,9 +75,9 @@ export function CardActionsMenu({
       <DropdownMenuTrigger asChild>
         {trigger || (
           <Button
-            variant="ghost"
-            size="icon"
-            className={cn("hover:bg-muted shrink-0 p-0", sizeConfig.button)}
+            variant="info-soft"
+            size="icon-sm"
+            className={cn("shrink-0", sizeConfig.button)}
           >
             <Icon className={sizeConfig.icon} />
             <span className="sr-only">Відкрити меню дій</span>

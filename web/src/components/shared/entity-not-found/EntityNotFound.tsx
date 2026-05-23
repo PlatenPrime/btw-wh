@@ -24,7 +24,7 @@ export function EntityNotFound({
   className,
 }: EntityNotFoundProps) {
   return (
-    <Card className={className}>
+    <Card variant="elevated" className={className}>
       <CardHeader>
         <div className="flex items-center gap-3">
           <div className="bg-muted flex h-10 w-10 items-center justify-center rounded-full">
@@ -45,7 +45,7 @@ export function EntityNotFound({
             </Button>
           )}
           {onRetry && (
-            <Button onClick={onRetry} variant="default" size="sm">
+            <Button onClick={onRetry} variant="info" size="sm">
               <RefreshCw className="mr-2 h-3 w-3" />
               Спробувати знову
             </Button>

@@ -1,5 +1,5 @@
 import { SidebarInsetLayout } from "@/components/layout/SidebarInsetLayout";
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
 import { ArtsByZoneFetcher } from "@/modules/arts/components/fetchers/arts-by-zone-fetcher";
 import {
   ArtsByZoneContainer,
@@ -31,20 +31,20 @@ export function Zone() {
     <SidebarInsetLayout headerText={`Зона ${title}`}>
       <main className="p-2">
         <div className="flex flex-col gap-2">
-          <Wrapper>
+          <SurfaceSection>
             <ZoneFetcher
               zoneTitle={title}
               ContainerComponent={({ zone }) => <ZoneContainer zone={zone} />}
               SkeletonComponent={ZoneContainerSkeleton}
             />
-          </Wrapper>
-          <Wrapper>
+          </SurfaceSection>
+          <SurfaceSection>
             <ArtsByZoneFetcher
               zone={title}
               ContainerComponent={ArtsByZoneContainer}
               SkeletonComponent={ArtsByZoneContainerSkeleton}
             />
-          </Wrapper>
+          </SurfaceSection>
         </div>
       </main>
     </SidebarInsetLayout>

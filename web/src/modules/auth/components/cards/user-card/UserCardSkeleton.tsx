@@ -1,9 +1,10 @@
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { ListRowCard } from "@/components/shared/cards";
+import { CardContent, CardHeader } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export function UserCardSkeleton() {
   return (
-    <Card className="gap-0 p-2">
+    <ListRowCard>
       <CardHeader className="flex flex-row items-center justify-between gap-2 p-0">
         <div className="flex min-w-0 flex-1 items-center gap-2">
           <Skeleton className="size-10 shrink-0 rounded-full" />
@@ -18,6 +19,6 @@ export function UserCardSkeleton() {
         <Skeleton className="size-9 shrink-0 rounded-md" />
       </CardHeader>
       <CardContent className="grid gap-1 p-0 pt-2" />
-    </Card>
+    </ListRowCard>
   );
 }

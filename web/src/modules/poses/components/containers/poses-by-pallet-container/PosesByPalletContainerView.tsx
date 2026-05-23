@@ -1,4 +1,4 @@
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+﻿import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
 import type { IPos } from "@/modules/poses/api/types";
 import { PosInPalletCard } from "@/modules/poses/components/cards/pos-in-pallet-card/PosInPalletCard";
 
@@ -10,12 +10,10 @@ export function PosesByPalletContainerView({
   poses,
 }: PosesByPalletContainerViewProps) {
   return (
-    <Wrapper className="grid gap-2 lg:grid-cols-2 2xl:grid-cols-4">
+    <SurfaceSection className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {poses.map((pos, index) => (
-        <div key={`${pos.artikul}-${index}`}>
-          <PosInPalletCard pos={pos} />
-        </div>
+        <PosInPalletCard key={`${pos.artikul}-${index}`} pos={pos} />
       ))}
-    </Wrapper>
+    </SurfaceSection>
   );
 }

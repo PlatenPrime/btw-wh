@@ -17,7 +17,7 @@ export function RowCardMenu({ row }: DeleteRowMenuProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+        <Button variant="info-soft" size="icon-sm">
           <MoreVertical className="h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>

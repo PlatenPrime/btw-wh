@@ -1,15 +1,39 @@
+import { cva, type VariantProps } from "class-variance-authority"
 import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
-function Card({ className, ...props }: React.ComponentProps<"div">) {
+const cardVariants = cva(
+  "flex flex-col text-card-foreground border border-card-border transition-all duration-300",
+  {
+    variants: {
+      variant: {
+        default:
+          "gap-6 rounded-xl glass-card py-6",
+        elevated:
+          "gap-6 rounded-xl glass-card py-6 hover:-translate-y-0.5 hover:shadow-elevation-2",
+        compact:
+          "gap-2 rounded-xl glass-card p-3 hover:-translate-y-0.5 hover:shadow-elevation-2",
+        ghost: "gap-2 rounded-xl border-transparent bg-transparent shadow-none",
+        inset:
+          "gap-4 rounded-lg glass-inset py-4 shadow-none",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+    },
+  },
+)
+
+function Card({
+  className,
+  variant,
+  ...props
+}: React.ComponentProps<"div"> & VariantProps<typeof cardVariants>) {
   return (
     <div
       data-slot="card"
-      className={cn(
-        "flex flex-col gap-6 rounded-xl border bg-card py-6 text-card-foreground shadow-sm",
-        className
-      )}
+      className={cn(cardVariants({ variant }), className)}
       {...props}
     />
   )
@@ -21,7 +45,7 @@ function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
       data-slot="card-header"
       className={cn(
         "@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-2 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6",
-        className
+        className,
       )}
       {...props}
     />
@@ -54,7 +78,7 @@ function CardAction({ className, ...props }: React.ComponentProps<"div">) {
       data-slot="card-action"
       className={cn(
         "col-start-2 row-span-2 row-start-1 self-start justify-self-end",
-        className
+        className,
       )}
       {...props}
     />
@@ -81,6 +105,9 @@ function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
+export type CardProps = React.ComponentProps<typeof Card> &
+  VariantProps<typeof cardVariants>
+
 export {
   Card,
   CardHeader,
@@ -89,4 +116,5 @@ export {
   CardAction,
   CardDescription,
   CardContent,
+  cardVariants,
 }

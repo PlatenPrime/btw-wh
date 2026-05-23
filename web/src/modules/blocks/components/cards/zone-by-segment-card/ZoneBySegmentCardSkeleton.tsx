@@ -1,5 +1,5 @@
+import { ListRowCard } from "@/components/shared/cards";
 import {
-  Card,
   CardAction,
   CardDescription,
   CardHeader,
@@ -9,7 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export function ZoneBySegmentCardSkeleton() {
   return (
-    <Card className="gap-0 p-2 transition-shadow">
+    <ListRowCard>
       <CardHeader className="p-0">
         <CardTitle>
           <Skeleton className="h-5 w-32" />
@@ -21,9 +21,9 @@ export function ZoneBySegmentCardSkeleton() {
           </div>
         </CardDescription>
         <CardAction>
-          <Skeleton className="h-6 w-6 shrink-0 rounded" />
+          <Skeleton className="size-6 shrink-0 rounded" />
         </CardAction>
       </CardHeader>
-    </Card>
+    </ListRowCard>
   );
 }

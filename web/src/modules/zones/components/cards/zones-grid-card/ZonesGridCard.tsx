@@ -1,5 +1,6 @@
 import { CardActionsMenu } from "@/components/shared/card-actions/CardActionsMenu";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ListRowCard } from "@/components/shared/cards";
+import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RoleType } from "@/constants/roles";
 import { RoleGuard } from "@/modules/auth/components/RoleGuard";
 import type { ZoneDto } from "@/modules/zones/api/types";
@@ -32,7 +33,7 @@ export function ZonesGridCard({ zone, onEdit, onDelete }: ZonesGridCardProps) {
   ].filter(() => true); // Фільтрація буде в RoleGuard
 
   return (
-    <Card className="gap-0 p-2 transition-shadow hover:shadow-md">
+    <ListRowCard>
       <CardHeader className="p-0">
         <div className="flex items-center justify-between">
           <CardTitle className="">
@@ -60,6 +61,6 @@ export function ZonesGridCard({ zone, onEdit, onDelete }: ZonesGridCardProps) {
           <ZoneSector zone={zone} className="text-muted-foreground text-xs" />
         </div>
       </CardContent>
-    </Card>
+    </ListRowCard>
   );
 }

@@ -1,15 +1,11 @@
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from "@/components/ui/card";
+import { DetailPanelCard } from "@/components/shared/cards";
+import { CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export function UserDetailsCardSkeleton() {
   return (
-    <Card className="overflow-hidden border-l-4 border-l-primary gap-0 p-0 shadow-md">
+    <DetailPanelCard className="gap-0 overflow-hidden border-l-4 border-l-primary p-0">
       <CardHeader className="flex flex-row items-center gap-4 p-6 pb-4">
         <Skeleton className="size-32 shrink-0 rounded-full ring-2 ring-primary/20" />
         <div className="flex min-w-0 flex-1 flex-col gap-2">
@@ -35,6 +31,6 @@ export function UserDetailsCardSkeleton() {
         <Skeleton className="h-4 w-36" />
         <Skeleton className="h-4 w-36" />
       </CardFooter>
-    </Card>
+    </DetailPanelCard>
   );
 }

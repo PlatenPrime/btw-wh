@@ -1,12 +1,8 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from "@/components/ui/card";
+import { DetailPanelCard } from "@/components/shared/cards";
+import { CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { RoleType, getRoleLabel } from "@/constants/roles";
 import { RoleGuard } from "@/modules/auth/components/RoleGuard";
@@ -49,7 +45,7 @@ function MetadataItem({
 
 export function UserDetailsCard({ user, onEdit }: UserDetailsCardProps) {
   return (
-    <Card className="overflow-hidden border-l-4 border-l-primary gap-0 p-0 shadow-md">
+    <DetailPanelCard className="gap-0 overflow-hidden border-l-4 border-l-primary p-0">
       <CardHeader className="flex flex-row items-center gap-4 p-6 pb-4">
         <Avatar className="size-32 shrink-0 ring-2 ring-primary/20">
           <AvatarImage src={user.photo} alt={user.fullname} />
@@ -128,6 +124,6 @@ export function UserDetailsCard({ user, onEdit }: UserDetailsCardProps) {
           Оновлено: {formatDate(user.updatedAt)}
         </span>
       </CardFooter>
-    </Card>
+    </DetailPanelCard>
   );
 }

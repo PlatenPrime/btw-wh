@@ -1,7 +1,7 @@
 import { AnalogImageLink } from "@/components/shared/analog-image-link/AnalogImageLink";
 import { CardActionsMenu } from "@/components/shared/card-actions/CardActionsMenu";
 import type { CardAction } from "@/components/shared/card-actions/types";
-import { Card } from "@/components/ui/card";
+import { GridTileCard } from "@/components/shared/cards";
 import { cn } from "@/lib/utils";
 import type { AnalogDto } from "@/modules/analogs/api/types";
 import {
@@ -28,9 +28,9 @@ export function AnalogGridCardView({
   const theme = getKonkTheme(analog.konkName);
 
   return (
-    <Card
+    <GridTileCard
       className={cn(
-        "flex flex-col gap-2 overflow-hidden p-0 transition-shadow",
+        "flex flex-col gap-2 overflow-hidden p-0",
         theme.shadow,
       )}
     >
@@ -60,6 +60,6 @@ export function AnalogGridCardView({
           imageSize="sm"
         />
       </div>
-    </Card>
+    </GridTileCard>
   );
 }

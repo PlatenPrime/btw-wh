@@ -1,8 +1,8 @@
-import { PaginationControls } from "@/components/shared/pagination-controls";
+﻿import { PaginationControls } from "@/components/shared/pagination-controls";
 import { SearchFiltersLayout } from "@/components/shared/search-components/search-filters-layout";
 import { SearchPanel } from "@/components/shared/search-components/search-panel/SearchPanel";
 import { SelectLimit } from "@/components/shared/select-limit";
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
 import type { ArtDto, ArtsDto } from "@/modules/arts/api/types/dto";
 import { ArtsGrid } from "@/modules/arts/components/lists/arts-grid/ArtsGrid.tsx";
 
@@ -31,7 +31,7 @@ export function ArtsContainerView({
 }: ArtsContainerViewProps) {
   return (
     <main className="grid max-w-screen grid-cols-1 gap-2 p-2">
-      <Wrapper className="grid gap-2">
+      <SurfaceSection className="grid gap-2">
         <SearchFiltersLayout
           searchSlot={
             <div className="max-w-md">
@@ -52,8 +52,8 @@ export function ArtsContainerView({
             </div>
           }
         />
-      </Wrapper>
-      <Wrapper>
+      </SurfaceSection>
+      <SurfaceSection>
         <div className="grid gap-2">
           <PaginationControls
             currentPage={page}
@@ -63,7 +63,7 @@ export function ArtsContainerView({
           />
           <ArtsGrid arts={arts} />
         </div>
-      </Wrapper>
+      </SurfaceSection>
     </main>
   );
 }

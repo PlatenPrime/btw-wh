@@ -29,14 +29,6 @@ export function MainHero() {
               "linear-gradient(125deg, color-mix(in oklch, var(--primary) 16%, transparent) 0%, transparent 34%, color-mix(in oklch, var(--accent) 14%, transparent) 72%, color-mix(in oklch, var(--chart-2) 16%, transparent) 100%)",
           }}
         />
-        <div
-          className="absolute inset-0 opacity-[0.12] dark:opacity-[0.2]"
-          style={{
-            backgroundImage:
-              "linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)",
-            backgroundSize: "30px 30px",
-          }}
-        />
       </div>
 
       <div className="relative z-10 mx-auto grid max-w-4xl gap-8 px-4 md:gap-10">

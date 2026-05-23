@@ -1,4 +1,4 @@
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+﻿import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
 import type { AnalogDto } from "@/modules/analogs/api/types";
 import { AnalogGridCard } from "@/modules/analogs/components/cards/analog-grid-card";
 import type { KonkDto } from "@/modules/konks/api/types";
@@ -20,7 +20,7 @@ export function AnalogsGrid({
   onDelete,
 }: AnalogsGridProps) {
   return (
-    <Wrapper className="grid grid-cols-1 gap-2 p-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <SurfaceSection className="grid grid-cols-1 gap-2 p-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {analogs.map((analog) => (
         <AnalogGridCard
           key={analog._id}
@@ -31,6 +31,6 @@ export function AnalogsGrid({
           onDelete={onDelete}
         />
       ))}
-    </Wrapper>
+    </SurfaceSection>
   );
 }

@@ -2,7 +2,7 @@ import { ChartDateRangeToolbar } from "@/components/shared/charts/chart-date-ran
 import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
 import { ErrorDisplay } from "@/components/shared/error-components";
 import { LoadingNoData } from "@/components/shared/loading-states/loading-nodata";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { ChartSection } from "@/components/shared/charts/chart-section/ChartSection";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import {
@@ -58,26 +58,12 @@ export function SkugrChartsSectionView(props: SkugrChartsSectionViewProps) {
       />
       {props.phase === "loading" ? (
         <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
-          <Card className="overflow-hidden shadow-md">
-            <CardHeader className="pb-2">
-              <h3 className="text-muted-foreground text-sm font-medium">
-                Динаміка залишків (група)
-              </h3>
-            </CardHeader>
-            <CardContent>
-              <SliceRangeChartSkeleton />
-            </CardContent>
-          </Card>
-          <Card className="overflow-hidden shadow-md">
-            <CardHeader className="pb-2">
-              <h3 className="text-muted-foreground text-sm font-medium">
-                Динаміка продаж (група)
-              </h3>
-            </CardHeader>
-            <CardContent>
-              <SalesRangeChartSkeleton />
-            </CardContent>
-          </Card>
+          <ChartSection title="Динаміка залишків (група)">
+            <SliceRangeChartSkeleton />
+          </ChartSection>
+          <ChartSection title="Динаміка продаж (група)">
+            <SalesRangeChartSkeleton />
+          </ChartSection>
         </div>
       ) : null}
       {props.phase === "error" ? (
@@ -98,72 +84,60 @@ export function SkugrChartsSectionView(props: SkugrChartsSectionViewProps) {
           isLoading={props.isLoading}
         >
           <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
-            <Card className="overflow-hidden shadow-md">
-              <CardHeader className="pb-2">
-                <h3 className="text-muted-foreground text-sm font-medium">
-                  Динаміка залишків (група)
-                </h3>
-              </CardHeader>
-              <CardContent>
-                <SliceRangeChartView
-                  data={props.sliceItems}
-                  showStock
-                  showPrice={false}
-                />
-              </CardContent>
-            </Card>
-            <Card className="overflow-hidden shadow-md">
-              <CardHeader className="pb-2">
-                <h3 className="text-muted-foreground text-sm font-medium">
-                  Динаміка продаж (група)
-                </h3>
-              </CardHeader>
-              <CardContent>
-                <div className="grid gap-3">
-                  <div className="flex flex-wrap items-center gap-4">
-                    <div className="flex items-center gap-2">
-                      <Switch
-                        id="skugr-sales-chart-show-sales"
-                        checked={props.showSales}
-                        onCheckedChange={props.onShowSalesChange}
-                        className="data-[state=checked]:bg-[color:var(--chart-6)]"
-                      />
-                      <Label
-                        htmlFor="skugr-sales-chart-show-sales"
-                        className="text-muted-foreground cursor-pointer text-sm"
-                      >
-                        Продажі (шт)
-                      </Label>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Switch
-                        id="skugr-sales-chart-show-revenue"
-                        checked={props.showRevenue}
-                        onCheckedChange={props.onShowRevenueChange}
-                        className="data-[state=checked]:bg-[color:var(--chart-7)]"
-                      />
-                      <Label
-                        htmlFor="skugr-sales-chart-show-revenue"
-                        className="text-muted-foreground cursor-pointer text-sm"
-                      >
-                        Виручка (грн)
-                      </Label>
-                    </div>
-                  </div>
-                  {props.showSalesChart ? (
-                    <SalesRangeChartView
-                      data={props.salesItems}
-                      showSales={props.showSales}
-                      showRevenue={props.showRevenue}
+            <ChartSection title="Динаміка залишків (група)">
+              <SliceRangeChartView
+                data={props.sliceItems}
+                showStock
+                showPrice={false}
+              />
+            </ChartSection>
+            <ChartSection
+              title="Динаміка продаж (група)"
+              toolbar={
+                <div className="flex flex-wrap items-center gap-4">
+                  <div className="flex items-center gap-2">
+                    <Switch
+                      id="skugr-sales-chart-show-sales"
+                      checked={props.showSales}
+                      onCheckedChange={props.onShowSalesChange}
+                      className="data-[state=checked]:bg-[color:var(--chart-6)]"
                     />
-                  ) : (
-                    <div className="text-muted-foreground rounded-md border border-dashed p-4 text-center text-sm">
-                      Увімкніть хоча б одну серію: Продажі або Виручка.
-                    </div>
-                  )}
+                    <Label
+                      htmlFor="skugr-sales-chart-show-sales"
+                      className="cursor-pointer text-sm text-muted-foreground"
+                    >
+                      Продажі (шт)
+                    </Label>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Switch
+                      id="skugr-sales-chart-show-revenue"
+                      checked={props.showRevenue}
+                      onCheckedChange={props.onShowRevenueChange}
+                      className="data-[state=checked]:bg-[color:var(--chart-7)]"
+                    />
+                    <Label
+                      htmlFor="skugr-sales-chart-show-revenue"
+                      className="cursor-pointer text-sm text-muted-foreground"
+                    >
+                      Виручка (грн)
+                    </Label>
+                  </div>
                 </div>
-              </CardContent>
-            </Card>
+              }
+            >
+              {props.showSalesChart ? (
+                <SalesRangeChartView
+                  data={props.salesItems}
+                  showSales={props.showSales}
+                  showRevenue={props.showRevenue}
+                />
+              ) : (
+                <div className="rounded-md border border-dashed p-4 text-center text-sm text-muted-foreground">
+                  Увімкніть хоча б одну серію: Продажі або Виручка.
+                </div>
+              )}
+            </ChartSection>
           </div>
         </DataRefetchOverlay>
       ) : null}

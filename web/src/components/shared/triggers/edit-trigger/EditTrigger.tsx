@@ -7,13 +7,9 @@ interface EditTriggerProps {
 
 export function EditTrigger({ onClick }: EditTriggerProps) {
   return (
-    <Button
-      variant="ghost"
-      size="sm"
-      className="hover:bg-edit/10 text-edit  h-8 w-8 p-0"
-      onClick={onClick}
-    >
+    <Button variant="edit-soft" size="icon-sm" onClick={onClick}>
       <Edit className="h-4 w-4" />
+      <span className="sr-only">Редагувати</span>
     </Button>
   );
 }

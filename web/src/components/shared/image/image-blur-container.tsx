@@ -44,7 +44,7 @@ export function ImageBlurContainer({
       {/* Полупрозрачный слой поверх блюра */}
       <div
         className={cn(
-          "absolute inset-0 bg-white/50 opacity-0 backdrop-blur transition-opacity duration-300 group-hover:opacity-100",
+          "absolute inset-0 bg-background/60 opacity-0 backdrop-blur transition-opacity duration-300 group-hover:opacity-100",
         )}
       />
 

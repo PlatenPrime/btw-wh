@@ -1,5 +1,5 @@
-import { ErrorDisplay } from "@/components/shared/error-components";
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+﻿import { ErrorDisplay } from "@/components/shared/error-components";
+import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
 import type {
   SegmentDto,
   ZoneWithSegmentDto,
@@ -23,25 +23,25 @@ export function SegmentContainerView({
 }: SegmentContainerViewProps) {
   return (
     <div className="flex flex-col gap-2">
-      <Wrapper>
+      <SurfaceSection>
         <SegmentInfoCard segment={segment} zonesCount={zones.length} />
-      </Wrapper>
+      </SurfaceSection>
 
       {isLoadingZones ? (
-        <Wrapper>
+        <SurfaceSection>
           <div className="flex flex-col gap-2">
             <ZoneBySegmentCardSkeleton />
             <ZoneBySegmentCardSkeleton />
           </div>
-        </Wrapper>
+        </SurfaceSection>
       ) : zonesError ? (
-        <Wrapper>
+        <SurfaceSection>
           <ErrorDisplay
             error={zonesError}
             title="Помилка завантаження зон"
             description="Не вдалося завантажити зони сегмента"
           />
-        </Wrapper>
+        </SurfaceSection>
       ) : (
         <ZonesBySegmentList segment={segment} zones={zones} />
       )}

@@ -1,4 +1,4 @@
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+﻿import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -72,7 +72,7 @@ export function SkuStatisticsTable({
   }, [rows, metric, konk, dateFrom, dateTo]);
 
   return (
-    <Wrapper className="grid gap-2 p-0">
+    <SurfaceSection className="grid gap-2 p-0">
       <div className="flex flex-wrap items-center justify-end gap-2 px-3 pt-3">
         <Button
           type="button"
@@ -127,6 +127,6 @@ export function SkuStatisticsTable({
           ))}
         </TableBody>
       </Table>
-    </Wrapper>
+    </SurfaceSection>
   );
 }

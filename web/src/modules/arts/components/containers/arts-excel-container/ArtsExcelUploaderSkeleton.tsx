@@ -1,9 +1,9 @@
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+﻿import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
 import { Skeleton } from "@/components/ui";
 
 export function ArtsExcelUploaderSkeleton() {
   return (
-    <Wrapper className="grid w-full gap-6">
+    <SurfaceSection className="grid w-full gap-6">
       {/* Скелетон для header */}
       <header className="space-y-2">
         <Skeleton className="h-7 w-48" />
@@ -18,6 +18,6 @@ export function ArtsExcelUploaderSkeleton() {
 
       {/* Скелетон для Button */}
       <Skeleton className="h-10 w-32" />
-    </Wrapper>
+    </SurfaceSection>
   );
 }

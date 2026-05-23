@@ -1,4 +1,4 @@
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+﻿import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
 import { Badge } from "@/components/ui/badge";
 import type { DefsCalculationStatus } from "@/modules/defs/api/types/dto";
 import { formatDate } from "@/utils/formatDate";
@@ -10,7 +10,7 @@ interface CalculationFinishViewProps {
 
 export function CalculationFinishView({ status }: CalculationFinishViewProps) {
   return (
-    <Wrapper className="grid gap-4 p-4">
+    <SurfaceSection className="grid gap-4 p-4">
       <div className="flex items-center gap-2">
         <CheckCircle2 className="h-5 w-5 text-green-600" />
         <h3 className="text-lg font-semibold">
@@ -55,7 +55,7 @@ export function CalculationFinishView({ status }: CalculationFinishViewProps) {
           </div>
         )}
       </div>
-    </Wrapper>
+    </SurfaceSection>
   );
 }
 

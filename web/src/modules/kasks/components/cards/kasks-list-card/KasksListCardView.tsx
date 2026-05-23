@@ -3,7 +3,7 @@ import { CardActionsMenu } from "@/components/shared/card-actions";
 import type { CardAction } from "@/components/shared/card-actions/types";
 import { CalendarDate } from "@/components/shared/date/CalendarDate";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { ListRowCard } from "@/components/shared/cards";
 import type { KaskDto } from "@/modules/kasks/api/types/dto";
 import { CircleIcon, MapPin, MessageSquareMore, MoreHorizontal } from "lucide-react";
 
@@ -21,7 +21,7 @@ export function KasksListCardView({
   const comText = kask.com?.trim();
 
   return (
-    <Card className="grid gap-2 p-2 shadow-none ring-1 ring-gray-200 transition-all duration-500 ease-out hover:bg-muted-foreground/5 hover:shadow-lg dark:ring-gray-700">
+    <ListRowCard className="grid gap-2 hover:bg-muted/30">
       <div className="flex items-start gap-2">
         <div className="min-w-0 flex-1">
           <ArtikulImageLink
@@ -38,10 +38,10 @@ export function KasksListCardView({
           trigger={
             <Button
               type="button"
-              variant="ghost"
-              size="icon"
+              variant="info-soft"
+              size="icon-sm"
               disabled={isMenuDisabled}
-              className="hover:bg-muted h-6 w-6 shrink-0 p-0"
+              className="shrink-0"
             >
               <MoreHorizontal className="h-3 w-3" />
               <span className="sr-only">Відкрити меню дій</span>
@@ -68,6 +68,6 @@ export function KasksListCardView({
         ) : null}
         <CalendarDate date={kask.createdAt} />
       </div>
-    </Card>
+    </ListRowCard>
   );
 }

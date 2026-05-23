@@ -1,0 +1,23 @@
+---
+description: Design system tokens, surfaces, buttons, cards, layout
+globs: web/**/*
+alwaysApply: false
+---
+
+# Design System (web)
+
+Читай `docs/DESIGN_SYSTEM.md` перед UI-задачами.
+
+## Обязательно
+
+- Surfaces: `surface-0`…`3`, не сливать sidebar с background.
+- Отступы: `flex gap` / `grid gap`, не `space-x` / `space-y`.
+- Цвета: только theme tokens (`bg-card`, `text-muted-foreground`, `border-border`). Без `gray-*`, `bg-white`.
+- Градиенты: `color-mix(in oklch, var(--token) …)` или CSS vars `--gradient-*`.
+- Кнопки: бизнес-действия — semantic filled (`default`, `success`, `edit`, `info`, `destructive`); `ghost` только toolbar.
+- Карточки: паттерны `GridTileCard`, `ListRowCard`, `DetailPanelCard` из `@/components/shared/cards/`.
+- Layout: контент в `Page` / `PageSection`; секции списков — `SurfaceSection` (бывший `Wrapper`).
+
+## Скелетоны
+
+При изменении layout карточки/секции — обновить соответствующий `*Skeleton` в той же папке.

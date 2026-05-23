@@ -1,5 +1,5 @@
 import { DateNavigation } from "@/components/shared/date-navigation/DateNavigation";
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
 import type { GetKasksByDateResponse } from "@/modules/kasks/api/types/dto";
 import { KasksList } from "@/modules/kasks/components/lists/kasks-list/KasksList";
 
@@ -22,7 +22,7 @@ export function KasksContainerView({
 }: KasksContainerViewProps) {
   return (
     <div className="grid gap-2">
-      <Wrapper className="flex flex-wrap items-center justify-between gap-2">
+      <SurfaceSection className="flex flex-wrap items-center justify-between gap-2">
         <DateNavigation
           selectedDate={selectedDate}
           onPreviousDay={onPreviousDay}
@@ -30,11 +30,11 @@ export function KasksContainerView({
           onDateSelect={onDateSelect}
         />
         <p className="text-muted-foreground text-sm">Всього: {data.count}</p>
-      </Wrapper>
+      </SurfaceSection>
 
-      <Wrapper className={isFetching ? "opacity-50" : ""}>
+      <SurfaceSection className={isFetching ? "opacity-50" : ""}>
         <KasksList kasks={data.data} />
-      </Wrapper>
+      </SurfaceSection>
     </div>
   );
 }

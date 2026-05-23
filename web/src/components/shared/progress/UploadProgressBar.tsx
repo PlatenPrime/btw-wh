@@ -19,9 +19,9 @@ interface UploadProgressBarProps {
           <span>Відправка на сервер...</span>
           <span>{uploadProgress}%</span>
         </div>
-        <div className="h-3 w-full rounded-full bg-gray-200 dark:bg-zinc-700">
+        <div className="h-3 w-full rounded-full bg-muted">
           <div
-            className="h-full rounded-full bg-emerald-600 transition-[width] duration-300 ease-in-out"
+            className="h-full rounded-full bg-success transition-[width] duration-300 ease-in-out"
             style={{ width: `${uploadProgress}%` }}
           />
         </div>

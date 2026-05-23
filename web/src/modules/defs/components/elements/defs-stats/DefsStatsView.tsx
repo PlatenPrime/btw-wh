@@ -1,4 +1,4 @@
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+﻿import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
@@ -20,7 +20,7 @@ export function DefsStatsView({
   onFilterChange,
 }: DefsStatsViewProps) {
   return (
-    <Wrapper className="flex flex-col gap-2 sm:flex-row">
+    <SurfaceSection className="flex flex-col gap-2 sm:flex-row">
       <Card
         className={cn(
           "flex cursor-pointer flex-row justify-between gap-2 p-2 py-1 text-sm transition-all duration-200 hover:shadow-md",
@@ -60,6 +60,6 @@ export function DefsStatsView({
           {stats.nearLimit}
         </span>
       </Card>
-    </Wrapper>
+    </SurfaceSection>
   );
 }

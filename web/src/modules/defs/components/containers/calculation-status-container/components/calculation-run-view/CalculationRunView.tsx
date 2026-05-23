@@ -1,4 +1,4 @@
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+﻿import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
 import { Badge, Progress } from "@/components/ui";
 import type { DefsCalculationStatus } from "@/modules/defs/api/types/dto";
 import { formatDate } from "@/utils/formatDate";
@@ -11,7 +11,7 @@ interface CalculationRunViewProps {
 
 export function CalculationRunView({ status }: CalculationRunViewProps) {
   return (
-    <Wrapper className="space-y-4 p-4">
+    <SurfaceSection className="space-y-4 p-4">
       <div className="flex items-center gap-2">
         <Loader2 className="h-5 w-5 animate-spin text-blue-600" />
         <h3 className="text-lg font-semibold">
@@ -70,7 +70,7 @@ export function CalculationRunView({ status }: CalculationRunViewProps) {
             </div>
           )}
       </div>
-    </Wrapper>
+    </SurfaceSection>
   );
 }
 

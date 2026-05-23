@@ -55,11 +55,10 @@ export function MainQuickLinks() {
           }}
         />
         <div
-          className="absolute inset-0 opacity-[0.12] dark:opacity-[0.2]"
+          className="absolute inset-0 opacity-70"
           style={{
-            backgroundImage:
-              "linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)",
-            backgroundSize: "30px 30px",
+            background:
+              "linear-gradient(130deg, color-mix(in oklch, var(--primary) 10%, transparent) 0%, transparent 42%, color-mix(in oklch, var(--accent) 8%, transparent) 100%)",
           }}
         />
       </div>

@@ -1,14 +1,14 @@
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
 import { DelCardSkeleton } from "@/modules/dels/components/cards/del-card";
 
 export function DelsContainerSkeleton() {
   return (
     <div className="grid gap-2">
-      <Wrapper className="grid grid-cols-1 gap-2 p-2 ">
+      <SurfaceSection className="grid grid-cols-1 gap-2 p-2 ">
         {Array.from({ length: 8 }).map((_, index) => (
           <DelCardSkeleton key={index} />
         ))}
-      </Wrapper>
+      </SurfaceSection>
     </div>
   );
 }

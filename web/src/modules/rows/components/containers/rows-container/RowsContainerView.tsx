@@ -1,4 +1,4 @@
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+﻿import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
 import type { RowDto } from "@/modules/rows/api/types/dto";
 import { RowsGrid } from "@/modules/rows/components/lists/rows-grid/RowsGrid";
 
@@ -9,9 +9,9 @@ interface RowsContainerViewProps {
 export function RowsContainerView({ data }: RowsContainerViewProps) {
   return (
     <div className="grid gap-2">
-      <Wrapper>
+      <SurfaceSection>
         <RowsGrid rows={data} />
-      </Wrapper>
+      </SurfaceSection>
     </div>
   );
 }

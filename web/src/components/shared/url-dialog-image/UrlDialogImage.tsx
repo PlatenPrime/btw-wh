@@ -45,7 +45,7 @@ export function UrlDialogImage({
           />
         </button>
       </DialogTrigger>
-      <DialogContent className="flex max-h-[90vh] min-h-40 max-w-[95vw] justify-center rounded-xl border bg-white p-0 shadow-none">
+      <DialogContent className="flex max-h-[90vh] min-h-40 max-w-[95vw] justify-center rounded-xl border border-card-border bg-surface-3 p-0 shadow-elevation-4">
         <Image
           src={src}
           alt={alt}

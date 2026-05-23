@@ -20,15 +20,15 @@ function formatPercent(value: number | null): string {
 
 function DiffIndicator({ value }: { value: number | null }) {
   if (value === null) return <Minus className="h-4 w-4 text-muted-foreground" />;
-  if (value > 0) return <ArrowUp className="h-4 w-4 text-emerald-500" />;
-  if (value < 0) return <ArrowDown className="h-4 w-4 text-red-500" />;
+  if (value > 0) return <ArrowUp className="h-4 w-4 text-success" />;
+  if (value < 0) return <ArrowDown className="h-4 w-4 text-destructive" />;
   return <Minus className="h-4 w-4 text-muted-foreground" />;
 }
 
 function getDiffColor(value: number | null): string {
   if (value === null) return "text-muted-foreground";
-  if (value > 0) return "text-emerald-600 dark:text-emerald-400";
-  if (value < 0) return "text-red-600 dark:text-red-400";
+  if (value > 0) return "text-success";
+  if (value < 0) return "text-destructive";
   return "text-muted-foreground";
 }
 
@@ -52,7 +52,7 @@ function StockSummaryCard({
   diffPctNumeric,
 }: StockSummaryCardProps) {
   return (
-    <Card className="shadow-md">
+    <Card variant="elevated">
       <CardHeader className="pb-2">
         <h3 className="text-muted-foreground text-sm font-medium">{title}</h3>
       </CardHeader>

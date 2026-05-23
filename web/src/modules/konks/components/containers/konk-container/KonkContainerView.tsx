@@ -1,6 +1,7 @@
+import { PageSection } from "@/components/shared/layout";
 import { SearchFiltersLayout } from "@/components/shared/search-components/search-filters-layout";
 import { SearchPanel } from "@/components/shared/search-components/search-panel/SearchPanel";
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
 import type { KonkDto } from "@/modules/konks/api/types";
 import { KonkDetailHeaderActions } from "@/modules/konks/components/actions/konk-detail-header-actions";
 import { KonkDetailsCard } from "@/modules/konks/components/cards/konk-details-card";
@@ -43,11 +44,11 @@ export function KonkContainerView({
   return (
     <>
       <KonkDetailHeaderActions konk={konk} />
-      <div className="grid gap-2">
+      <PageSection>
         <KonkDetailsCard konk={konk} />
 
         {showSkuCatalogSection ? (
-        <Wrapper className="grid gap-2">
+        <SurfaceSection className="grid gap-2">
           <SearchFiltersLayout
             searchSlot={
               <div className="grid gap-1">
@@ -86,9 +87,9 @@ export function KonkContainerView({
             )}
             SkeletonComponent={SkusContainerSkeleton}
           />
-        </Wrapper>
+        </SurfaceSection>
         ) : null}
-      </div>
+      </PageSection>
     </>
   );
 }

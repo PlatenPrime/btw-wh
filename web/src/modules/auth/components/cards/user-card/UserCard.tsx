@@ -1,6 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { ListRowCard } from "@/components/shared/cards";
+import { CardContent, CardHeader } from "@/components/ui/card";
 import { RoleType, getRoleLabel } from "@/constants/roles";
 import type { User } from "@/modules/auth/api/types";
 import { RoleGuard } from "@/modules/auth/components/RoleGuard";
@@ -14,7 +15,7 @@ interface UserCardProps {
 
 export function UserCard({ user, onEdit }: UserCardProps) {
   return (
-    <Card className="gap-0 p-2 transition-shadow hover:shadow-md">
+    <ListRowCard>
       <CardHeader className="flex flex-row items-center justify-between gap-2 p-0">
         <div className="flex min-w-0 flex-1 items-center gap-2">
           <Avatar className="size-10 shrink-0">
@@ -44,8 +45,8 @@ export function UserCard({ user, onEdit }: UserCardProps) {
           <RoleGuard allowedRoles={[RoleType.PRIME]}>
             <Button
               type="button"
-              variant="ghost"
-              size="icon"
+              variant="edit-soft"
+              size="icon-sm"
               aria-label="Редагувати"
               onClick={() => onEdit?.(user)}
             >
@@ -55,6 +56,6 @@ export function UserCard({ user, onEdit }: UserCardProps) {
         </div>
       </CardHeader>
       <CardContent className="grid gap-1 p-0 pt-2"></CardContent>
-    </Card>
+    </ListRowCard>
   );
 }

@@ -1,10 +1,6 @@
 import { ArtikulImageLink } from "@/components/shared/artikul-image-link/ArtikulImageLink";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from "@/components/ui/card";
+import { DetailPanelCard } from "@/components/shared/cards";
+import { CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import type { EnrichedAnalogDto } from "@/modules/analogs/api/types";
 import { KonkBanner } from "@/modules/analogs/components/common/konk-banner";
@@ -22,7 +18,7 @@ interface AnalogDetailsCardViewProps {
 
 export function AnalogDetailsCardView({ analog }: AnalogDetailsCardViewProps) {
   return (
-    <Card className="gap-0 overflow-hidden p-0 shadow-md">
+    <DetailPanelCard className="gap-0 overflow-hidden p-0">
       <KonkBanner
         konkName={analog.konkName}
         imageUrl={analog.konk?.imageUrl}
@@ -71,6 +67,6 @@ export function AnalogDetailsCardView({ analog }: AnalogDetailsCardViewProps) {
           </div>
         </CardFooter>
       </>
-    </Card>
+    </DetailPanelCard>
   );
 }

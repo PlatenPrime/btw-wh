@@ -17,29 +17,24 @@ interface HeaderActionsMenuProps {
 }
 
 const iconColorClasses: Record<HeaderActionIconColor, string> = {
-  slate: "text-muted-foreground",
-  gray: "text-muted-foreground",
-  zinc: "text-muted-foreground",
-  neutral: "text-muted-foreground",
-  stone: "text-muted-foreground",
-  red: "text-red-500",
-  orange: "text-orange-500",
-  amber: "text-amber-500",
-  yellow: "text-yellow-500",
-  lime: "text-lime-500",
-  green: "text-green-500",
-  emerald: "text-emerald-500",
-  teal: "text-teal-500",
-  cyan: "text-cyan-500",
-  sky: "text-sky-500",
-  blue: "text-blue-500",
-  indigo: "text-indigo-500",
-  violet: "text-violet-500",
-  purple: "text-purple-500",
-  fuchsia: "text-fuchsia-500",
-  pink: "text-pink-500",
-  rose: "text-rose-500",
-  default: "",
+  default: "text-foreground",
+  primary: "text-primary",
+  muted: "text-muted-foreground",
+  success: "text-success",
+  edit: "text-edit",
+  info: "text-info",
+  warning: "text-warning",
+  destructive: "text-destructive",
+  green: "text-success",
+  emerald: "text-success",
+  blue: "text-info",
+  sky: "text-info",
+  red: "text-destructive",
+  rose: "text-destructive",
+  violet: "text-primary",
+  purple: "text-primary",
+  orange: "text-warning",
+  amber: "text-warning",
 };
 
 export function HeaderActionsMenu({ trigger }: HeaderActionsMenuProps) {
@@ -84,7 +79,7 @@ export function HeaderActionsMenu({ trigger }: HeaderActionsMenuProps) {
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
         {trigger || (
-          <Button variant="ghost" size="icon" className="shrink-0">
+          <Button variant="info-soft" size="icon" className="shrink-0">
             <MenuIcon />
             <span className="sr-only">Відкрити меню дій</span>
           </Button>

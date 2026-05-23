@@ -1,5 +1,5 @@
 import { ChartDateRangeToolbar } from "@/components/shared/charts/chart-date-range-toolbar/ChartDateRangeToolbar";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { ChartSection } from "@/components/shared/charts/chart-section/ChartSection";
 import type { ReactNode } from "react";
 
 export interface SkuChartsSectionLayoutProps {
@@ -26,22 +26,10 @@ export function SkuChartsSectionLayout({
         onDateRangeChange={onDateRangeChange}
       />
       <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
-        <Card className="overflow-hidden shadow-md">
-          <CardHeader className="pb-2">
-            <h3 className="text-muted-foreground text-sm font-medium">
-              Динаміка залишків та ціни
-            </h3>
-          </CardHeader>
-          <CardContent>{slicesChart}</CardContent>
-        </Card>
-        <Card className="overflow-hidden shadow-md">
-          <CardHeader className="pb-2">
-            <h3 className="text-muted-foreground text-sm font-medium">
-              Динаміка продаж
-            </h3>
-          </CardHeader>
-          <CardContent>{salesChart}</CardContent>
-        </Card>
+        <ChartSection title="Динаміка залишків та ціни">
+          {slicesChart}
+        </ChartSection>
+        <ChartSection title="Динаміка продаж">{salesChart}</ChartSection>
       </div>
     </div>
   );

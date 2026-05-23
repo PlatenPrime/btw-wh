@@ -1,4 +1,4 @@
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+﻿import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
 import { ChartContainer, type ChartConfig } from "@/components/ui/chart";
 import type {
   SkuStatisticsMetric,
@@ -46,7 +46,7 @@ export function SkuStatisticsPie({ rows, metric }: SkuStatisticsPieProps) {
   }));
 
   return (
-    <Wrapper className="grid gap-3 ">
+    <SurfaceSection className="grid gap-3 ">
       <ChartContainer
         config={chartConfig}
         className="aspect-auto h-[320px] w-full max-w-full"
@@ -83,6 +83,6 @@ export function SkuStatisticsPie({ rows, metric }: SkuStatisticsPieProps) {
           />
         </PieChart>
       </ChartContainer>
-    </Wrapper>
+    </SurfaceSection>
   );
 }

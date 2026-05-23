@@ -24,9 +24,8 @@ export function PalletActionsMenu({
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          variant="ghost"
-          size="icon"
-          className="h-8 w-8"
+          variant="info-soft"
+          size="icon-sm"
           aria-label="Дії з паллетою"
         >
           <Menu className="h-4 w-4" />

@@ -1,5 +1,5 @@
 import { DateNavigation } from "@/components/shared/date-navigation/DateNavigation";
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
 import type { GetAsksByDateResponse } from "@/modules/asks/api/types/dto";
 import { AsksList } from "@/modules/asks/components/lists/asks-list/AsksList";
 
@@ -22,7 +22,7 @@ export function AsksContainerView({
 }: AsksContainerViewProps) {
   return (
     <main className="grid gap-2">
-      <Wrapper className="grid gap-2 lg:grid-cols-2">
+      <SurfaceSection className="grid gap-2 lg:grid-cols-2">
         <DateNavigation
           selectedDate={selectedDate}
           onPreviousDay={onPreviousDay}
@@ -35,11 +35,11 @@ export function AsksContainerView({
             {data.completedCount + data.rejectedCount}/{data.count}
           </p>
         </div>
-      </Wrapper>
+      </SurfaceSection>
 
-      <Wrapper className={isFetching ? "opacity-50" : ""}>
+      <SurfaceSection className={isFetching ? "opacity-50" : ""}>
         <AsksList data={data} selectedDate={selectedDate} />
-      </Wrapper>
+      </SurfaceSection>
     </main>
   );
 }

@@ -7,13 +7,9 @@ interface CheckTriggerProps {
 
 export function CheckTrigger({ onClick }: CheckTriggerProps) {
   return (
-    <Button
-      variant="ghost"
-      size="sm"
-      className="hover:bg-emerald-500/10 text-emerald-500 hover:text-emerald-400 h-8 w-8 p-0"
-      onClick={onClick}
-    >
+    <Button variant="success-soft" size="icon-sm" onClick={onClick}>
       <SquareCheckBig className="h-4 w-4" />
+      <span className="sr-only">Підтвердити</span>
     </Button>
   );
 }

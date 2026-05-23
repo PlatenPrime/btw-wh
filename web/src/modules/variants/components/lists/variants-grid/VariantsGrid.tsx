@@ -1,4 +1,4 @@
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
 import type { VariantDto } from "@/modules/variants/api/types";
 import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
@@ -20,7 +20,7 @@ export function VariantsGrid({
   onDelete,
 }: VariantsGridProps) {
   return (
-    <Wrapper className="grid grid-cols-1 gap-2 p-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <SurfaceSection className="grid grid-cols-1 gap-2 p-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {variants.map((variant) => (
         <VariantGridCard
           key={variant._id}
@@ -31,7 +31,7 @@ export function VariantsGrid({
           onDelete={onDelete}
         />
       ))}
-    </Wrapper>
+    </SurfaceSection>
   );
 }
 

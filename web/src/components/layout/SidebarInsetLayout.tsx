@@ -23,7 +23,7 @@ export function SidebarInsetLayout({
   return (
     <HeaderActionsProvider>
       <SidebarInset className="relative min-h-0 overflow-hidden">
-        <header className="bg-background/95 supports-[backdrop-filter]:bg-background/80 z-10 flex h-10 shrink-0 items-center justify-between gap-2 border-b px-4 backdrop-blur">
+        <header className="bg-surface-1/95 supports-[backdrop-filter]:bg-surface-1/80 z-10 flex h-12 shrink-0 items-center justify-between gap-2 border-b border-border/60 px-4 shadow-elevation-1 backdrop-blur">
           <div className="flex items-center gap-2">
             <SidebarTrigger className="-ml-1" />
             <Separator orientation="vertical" className="h-4" />

@@ -1,10 +1,11 @@
 import { CardActionsMenu } from "@/components/shared/card-actions";
 import type { CardAction } from "@/components/shared/card-actions";
-import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import { ListRowCard } from "@/components/shared/cards";
+import { CardContent, CardTitle } from "@/components/ui/card";
 import { Image } from "@/components/shared/image/image";
 import type { DelListItemDto } from "@/modules/dels/api/types";
-import { Link } from "react-router";
 import { Package } from "lucide-react";
+import { Link } from "react-router";
 
 const FALLBACK_IMAGE = "https://placehold.co/80x80?text=Лого&font=roboto";
 
@@ -27,9 +28,9 @@ interface DelCardViewProps {
 
 export function DelCardView({ del, actions }: DelCardViewProps) {
   return (
-    <Card className="gap-0 p-2 transition-shadow hover:shadow-md">
+    <ListRowCard>
       <CardContent className="flex items-center gap-2 p-0">
-        <div className="size-12 shrink-0 overflow-hidden rounded border bg-muted">
+        <div className="size-12 shrink-0 overflow-hidden rounded-lg border border-border/60 bg-muted ring-1 ring-border/40">
           <Image
             src={del.prod?.imageUrl ?? FALLBACK_IMAGE}
             alt={del.prod?.title ?? "Логотип"}
@@ -47,8 +48,11 @@ export function DelCardView({ del, actions }: DelCardViewProps) {
             </Link>
           </CardTitle>
           <div className="flex items-center gap-2">
-            <Package className="text-muted-foreground size-3.5 shrink-0" aria-hidden />
-            <span className="text-muted-foreground truncate text-xs">
+            <Package
+              className="size-3.5 shrink-0 text-muted-foreground"
+              aria-hidden
+            />
+            <span className="truncate text-xs text-muted-foreground">
               {formatDate(del.createdAt)}
             </span>
           </div>
@@ -60,6 +64,6 @@ export function DelCardView({ del, actions }: DelCardViewProps) {
           align="end"
         />
       </CardContent>
-    </Card>
+    </ListRowCard>
   );
 }

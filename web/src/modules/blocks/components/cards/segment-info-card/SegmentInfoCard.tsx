@@ -1,4 +1,5 @@
-import { Card, CardContent } from "@/components/ui/card";
+import { ListRowCard } from "@/components/shared/cards";
+import { CardContent } from "@/components/ui/card";
 import type { SegmentDto } from "@/modules/blocks/api/types";
 
 interface SegmentInfoCardProps {
@@ -8,7 +9,7 @@ interface SegmentInfoCardProps {
 
 export function SegmentInfoCard({ segment, zonesCount }: SegmentInfoCardProps) {
   return (
-    <Card className="gap-2 p-2 transition-shadow hover:shadow-md">
+    <ListRowCard className="gap-2">
       <CardContent className="grid gap-2 p-0">
         <div className="flex gap-1">
           <span className="text-muted-foreground text-sm">Порядок:</span>
@@ -27,6 +28,6 @@ export function SegmentInfoCard({ segment, zonesCount }: SegmentInfoCardProps) {
           <span className="text-sm">{zonesCount}</span>
         </div>
       </CardContent>
-    </Card>
+    </ListRowCard>
   );
 }

@@ -2,7 +2,7 @@ import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/Dat
 import { ErrorDisplay } from "@/components/shared/error-components";
 import { LoadingNoData } from "@/components/shared/loading-states";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { ChartSection } from "@/components/shared/charts/chart-section/ChartSection";
 import { SKU_KONK_PROD_QUERY_ALL } from "@/modules/sku-konk-prod-charts/constants";
 import { SkuKonkProdSkugrGroupsPie } from "@/modules/sku-konk-prod-charts/components/sku-konk-prod-skugr-groups-section/SkuKonkProdSkugrGroupsPie";
 import { SkuKonkProdSkugrGroupsTable } from "@/modules/sku-konk-prod-charts/components/sku-konk-prod-skugr-groups-section/SkuKonkProdSkugrGroupsTable";
@@ -157,19 +157,17 @@ export function SkuKonkProdSkugrGroupsSection({
       busyLabel="Оновлення товарних груп…"
       className="rounded-xl"
     >
-      <Card className="overflow-hidden shadow-md">
-        <CardHeader className="grid gap-2 pb-2">
-          <h3 className="text-muted-foreground text-sm font-medium">
-            Продажі по товарних групах
-          </h3>
-          {hasActiveSkugrFilter && (
-            <p className="text-muted-foreground text-xs">
+      <ChartSection
+        title="Продажі по товарних групах"
+        className="gap-2"
+      >
+        <div className="grid gap-4">
+          {hasActiveSkugrFilter ? (
+            <p className="text-xs text-muted-foreground">
               Перелік нижче не враховує обраний фільтр товарних груп для графіка
               вище — відповідний API цей параметр не приймає.
             </p>
-          )}
-        </CardHeader>
-        <CardContent className="grid gap-4">
+          ) : null}
           <div className="flex flex-wrap items-center gap-2">
             <Button
               variant={metric === "salesUah" ? "default" : "outline"}
@@ -189,7 +187,7 @@ export function SkuKonkProdSkugrGroupsSection({
           {pieRowsForChart.length > 0 ? (
             <SkuKonkProdSkugrGroupsPie rows={pieRowsForChart} metric={metric} />
           ) : (
-            <p className="text-muted-foreground text-sm">
+            <p className="text-sm text-muted-foreground">
               Немає ненульових продажів для діаграми; див. таблицю нижче.
             </p>
           )}
@@ -202,8 +200,8 @@ export function SkuKonkProdSkugrGroupsSection({
             dateFrom={dateFrom}
             dateTo={dateTo}
           />
-        </CardContent>
-      </Card>
+        </div>
+      </ChartSection>
     </DataRefetchOverlay>
   );
 }

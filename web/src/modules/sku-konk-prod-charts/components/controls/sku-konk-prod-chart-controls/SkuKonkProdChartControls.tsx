@@ -1,4 +1,4 @@
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+﻿import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -95,7 +95,7 @@ export function SkuKonkProdChartControls({
       : "Оберіть період";
 
   return (
-    <Wrapper className="grid grid-cols-1 gap-3">
+    <SurfaceSection className="grid grid-cols-1 gap-3">
       <div className="flex min-w-0 flex-wrap items-center gap-3">
         <Select
           value={konk || "placeholder"}
@@ -232,6 +232,6 @@ export function SkuKonkProdChartControls({
           onConfirm={onSkugrIdsChange}
         />
       </div>
-    </Wrapper>
+    </SurfaceSection>
   );
 }

@@ -1,4 +1,4 @@
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
 import { Skeleton } from "@/components/ui/skeleton";
 import { PalletCardSkeleton } from "@/modules/pallet-groups/components/cards/pallet-card/PalletCardSkeleton";
 
@@ -9,12 +9,12 @@ export function PalletGroupContainerSkeleton() {
           <Skeleton className="h-9 w-60 rounded-md" />    
       </div>
 
-      <Wrapper className="grid grid-cols-1 gap-2 p-2">
+      <SurfaceSection className="grid grid-cols-1 gap-2 p-2">
         <PalletCardSkeleton />
         <PalletCardSkeleton />
         <PalletCardSkeleton />
         <PalletCardSkeleton />
-      </Wrapper>
+      </SurfaceSection>
     </div>
   );
 }

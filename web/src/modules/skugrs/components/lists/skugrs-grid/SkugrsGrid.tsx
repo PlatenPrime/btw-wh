@@ -1,4 +1,4 @@
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
 import { SkugrGridCard } from "@/modules/skugrs/components/cards/skugr-grid-card";
 import type { SkugrDto } from "@/modules/skugrs/api/types";
 import type { KonkDto } from "@/modules/konks/api/types";
@@ -13,7 +13,7 @@ interface SkugrsGridProps {
 
 export function SkugrsGrid({ skugrs, konks, prods, onEdit }: SkugrsGridProps) {
   return (
-    <Wrapper className="grid grid-cols-1 gap-2 p-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <SurfaceSection className="grid grid-cols-1 gap-2 p-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {skugrs.map((skugr) => (
         <SkugrGridCard
           key={skugr._id}
@@ -23,6 +23,6 @@ export function SkugrsGrid({ skugrs, konks, prods, onEdit }: SkugrsGridProps) {
           onEdit={onEdit}
         />
       ))}
-    </Wrapper>
+    </SurfaceSection>
   );
 }

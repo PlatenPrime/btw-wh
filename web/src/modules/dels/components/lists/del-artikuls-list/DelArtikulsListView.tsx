@@ -1,4 +1,4 @@
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
 import { DelArtikulCard } from "@/modules/dels/components/cards/del-artikul-card";
 import type { DelArtikulItem } from "@/modules/dels/api/types";
 
@@ -20,16 +20,16 @@ interface DelArtikulsListViewProps {
 export function DelArtikulsListView({ empty, items }: DelArtikulsListViewProps) {
   if (empty) {
     return (
-      <Wrapper>
+      <SurfaceSection>
         <p className="text-muted-foreground text-sm">
           У поставці ще немає артикулів.
         </p>
-      </Wrapper>
+      </SurfaceSection>
     );
   }
 
   return (
-    <Wrapper className="grid grid-cols-1 gap-2 p-2">
+    <SurfaceSection className="grid grid-cols-1 gap-2 p-2">
       {items.map(({ artikul, item, onRefresh, isUpdating, disabled, chainStep, chainRunning }) => (
         <DelArtikulCard
           key={artikul}
@@ -42,6 +42,6 @@ export function DelArtikulsListView({ empty, items }: DelArtikulsListViewProps) 
           chainRunning={chainRunning}
         />
       ))}
-    </Wrapper>
+    </SurfaceSection>
   );
 }

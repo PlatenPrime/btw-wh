@@ -25,10 +25,9 @@ export function RowActionsMenu({ row }: RowActionsMenuProps) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          variant="ghost"
-          size="icon"
-          className="h-8 w-8"
-          aria-label="Дії з паллетою"
+          variant="info-soft"
+          size="icon-sm"
+          aria-label="Дії з рядом"
         >
           <Menu className="h-4 w-4" />
         </Button>

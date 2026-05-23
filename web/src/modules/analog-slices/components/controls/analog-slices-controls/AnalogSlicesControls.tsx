@@ -1,7 +1,7 @@
-import { format, parse } from "date-fns";
+﻿import { format, parse } from "date-fns";
 import { uk } from "date-fns/locale";
 import { CalendarIcon } from "lucide-react";
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
 import {
   Select,
   SelectContent,
@@ -54,7 +54,7 @@ export function AnalogSlicesControls({
   };
 
   return (
-    <Wrapper className="flex flex-wrap items-end gap-3">
+    <SurfaceSection className="flex flex-wrap items-end gap-3">
       <div className="flex min-w-0 flex-col gap-2">
         <Label htmlFor="analog-slices-konk">Конкурент</Label>
         <Select
@@ -115,6 +115,6 @@ export function AnalogSlicesControls({
           </PopoverContent>
         </Popover>
       </div>
-    </Wrapper>
+    </SurfaceSection>
   );
 }

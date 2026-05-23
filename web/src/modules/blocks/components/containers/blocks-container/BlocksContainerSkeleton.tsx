@@ -1,4 +1,4 @@
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+﻿import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
 import { Skeleton } from "@/components/ui/skeleton";
 import { BlockCardSkeleton } from "@/modules/blocks/components/cards/block-card";
 
@@ -10,11 +10,11 @@ export function BlocksContainerSkeleton() {
           <Skeleton key={index} className="h-10 w-44" />
         ))}
       </div>
-      <Wrapper className="grid grid-cols-1 gap-2 p-2">
+      <SurfaceSection className="grid grid-cols-1 gap-2 p-2">
         {Array.from({ length: 12 }).map((_, i) => (
           <BlockCardSkeleton key={i} />
         ))}
-      </Wrapper>
+      </SurfaceSection>
     </div>
   );
 }

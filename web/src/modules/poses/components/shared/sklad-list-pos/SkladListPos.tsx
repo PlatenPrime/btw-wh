@@ -14,7 +14,7 @@ export function SkladListPos({ pos, onClick }: SkladListPosProps) {
   return (
     <Card
       className={cn(
-        "hover:bg-foreground/5 block cursor-pointer rounded-md  p-2 transition-colors shadow-none ring-1 ring-gray-200 dark:ring-gray-700",
+        "block cursor-pointer rounded-md border border-border/60 p-2 shadow-elevation-1 transition-colors hover:bg-muted/40 hover:shadow-elevation-2",
       )}
       onClick={onClick}
     >

@@ -1,4 +1,4 @@
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
 import {
   AnalogsByArtikulContainer,
   AnalogsByArtikulContainerSkeleton,
@@ -23,7 +23,7 @@ export function ArtAnalogsByArtikulSection({
   const prods = prodsQuery.data?.data ?? [];
 
   return (
-    <Wrapper className="grid gap-2">
+    <SurfaceSection className="grid gap-2">
       <h2 className="text-lg font-semibold">Аналоги з таким артикулом</h2>
       <AnalogsByArtikulFetcher
         artikul={artikul}
@@ -32,6 +32,6 @@ export function ArtAnalogsByArtikulSection({
         )}
         SkeletonComponent={AnalogsByArtikulContainerSkeleton}
       />
-    </Wrapper>
+    </SurfaceSection>
   );
 }

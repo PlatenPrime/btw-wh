@@ -1,4 +1,5 @@
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { GridTileCard } from "@/components/shared/cards";
+import { CardAction, CardContent, CardHeader } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import type { PalletShortDto } from "@/modules/pallets/api/types";
 import { Calculator, Layers, LayoutGrid } from "lucide-react";
@@ -12,46 +13,45 @@ interface PalletInRowCardProps {
 
 export function PalletInRowCardView({ pallet, rowId }: PalletInRowCardProps) {
   return (
-    <Card
+    <GridTileCard
       className={cn(
-        "gap-2 p-2",
+        "h-full w-full gap-2 p-2",
         pallet.isEmpty
-          ? "bg-rose-500/15 dark:bg-rose-200/5 border-rose-500/20 dark:border-rose-500/40 "
-          : "bg-yellow-500/15 dark:bg-yellow-200/5 border-yellow-500/20 dark:border-yellow-500/40 ",
+          ? "border-destructive/30 bg-destructive/10"
+          : "border-warning/30 bg-warning/10",
       )}
     >
-      <CardHeader className="flex items-start p-0">
+      <CardHeader className="p-0">
         <Link
           to={`/wh/pallets/${pallet.title}`}
-          className={cn(
-            "",
-            "flex w-full items-center justify-start gap-2 rounded-md transition-colors duration-300 ease-in-out hover:underline",
-          )}
+          className="flex min-w-0 items-center gap-2 rounded-md transition-colors duration-300 ease-in-out hover:underline"
         >
           <span className="text-base font-semibold">{pallet.title}</span>
-          {pallet.isEmpty && (
-            <span className="text-muted-foreground border-muted-foreground bg-muted-foreground/10 rounded-md border px-1 text-xs font-semibold">
+          {pallet.isEmpty ? (
+            <span className="rounded-md border border-muted-foreground bg-muted-foreground/10 px-1 text-xs font-semibold text-muted-foreground">
               порожня
             </span>
-          )}
+          ) : null}
         </Link>
-        <PalletCardActions pallet={pallet} rowId={rowId} />
+        <CardAction>
+          <PalletCardActions pallet={pallet} rowId={rowId} />
+        </CardAction>
       </CardHeader>
 
       <CardContent className="grid gap-2 p-0">
-        <div className="border-border flex items-center justify-start gap-2 ">
-          <LayoutGrid className="text-muted-foreground size-3.5 shrink-0" aria-hidden />
+        <div className="flex items-center justify-start gap-2 border-border">
+          <LayoutGrid className="size-3.5 shrink-0 text-muted-foreground" aria-hidden />
           <span className="text-xs">{pallet.sector ?? "Немає"}</span>
         </div>
 
-        <div className="border-border flex items-center justify-start gap-2 ">
-          <Calculator className="text-muted-foreground size-3.5 shrink-0" aria-hidden />
+        <div className="flex items-center justify-start gap-2 border-border">
+          <Calculator className="size-3.5 shrink-0 text-muted-foreground" aria-hidden />
           <span className="text-xs">{pallet.isDef ? "Так" : "Ні"}</span>
         </div>
 
-        {pallet.palgrId && pallet.palgrTitle && (
-          <div className="border-border flex items-center justify-start gap-2 ">
-            <Layers className="text-muted-foreground size-3.5 shrink-0" aria-hidden />
+        {pallet.palgrId && pallet.palgrTitle ? (
+          <div className="flex items-center justify-start gap-2 border-border">
+            <Layers className="size-3.5 shrink-0 text-muted-foreground" aria-hidden />
             <Link
               to={`/wh/pallet-groups/${pallet.palgrId}`}
               className="text-xs hover:underline"
@@ -59,8 +59,8 @@ export function PalletInRowCardView({ pallet, rowId }: PalletInRowCardProps) {
               {pallet.palgrTitle}
             </Link>
           </div>
-        )}
+        ) : null}
       </CardContent>
-    </Card>
+    </GridTileCard>
   );
 }

@@ -1,9 +1,9 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { CardActionsMenu } from "@/components/shared/card-actions/CardActionsMenu";
 import { Dialog } from "@/components/ui/dialog";
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { ListRowCard } from "@/components/shared/cards";
 import {
-  Card,
   CardAction,
   CardDescription,
   CardHeader,
@@ -44,9 +44,9 @@ export function ZoneBySegmentCard({ segment, zone }: ZoneBySegmentCardProps) {
     : [];
 
   return (
-    <Wrapper>
+    <SurfaceSection>
       <div className="grid gap-2">
-        <Card className="gap-0 p-2 transition-shadow hover:shadow-md">
+        <ListRowCard>
           <CardHeader className="p-0">
             <CardTitle>Зона {zone.title}</CardTitle>
             <CardDescription>
@@ -73,7 +73,7 @@ export function ZoneBySegmentCard({ segment, zone }: ZoneBySegmentCardProps) {
               onClose={() => setIsDialogOpen(false)}
             />
           </Dialog>
-        </Card>
+        </ListRowCard>
         {zone.title && (
           <ArtsByZoneFetcher
             zone={zone.title.trim()}
@@ -82,6 +82,6 @@ export function ZoneBySegmentCard({ segment, zone }: ZoneBySegmentCardProps) {
           />
         )}
       </div>
-    </Wrapper>
+    </SurfaceSection>
   );
 }

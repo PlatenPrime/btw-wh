@@ -1,16 +1,17 @@
-import { Card, CardContent } from "@/components/ui/card";
+import { ListRowCard } from "@/components/shared/cards";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export function DelCardSkeleton() {
   return (
-    <Card className="gap-0 p-2 transition-shadow hover:shadow-md">
-      <CardContent className="flex items-center gap-2 p-0">
-        <Skeleton className="size-12 shrink-0 rounded" />
-        <div className="flex min-w-0 flex-1 flex-col gap-0.5">
-          <Skeleton className="h-6 w-32" />
-          <Skeleton className="h-4 w-24" />
+    <ListRowCard>
+      <div className="flex items-center gap-2 p-0">
+        <Skeleton className="size-12 shrink-0 rounded-lg" />
+        <div className="flex min-w-0 flex-1 flex-col gap-1">
+          <Skeleton className="h-4 w-3/4" />
+          <Skeleton className="h-3 w-1/2" />
         </div>
-      </CardContent>
-    </Card>
+        <Skeleton className="size-8 rounded-md" />
+      </div>
+    </ListRowCard>
   );
 }

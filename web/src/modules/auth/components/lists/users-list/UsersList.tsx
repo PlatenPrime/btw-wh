@@ -1,4 +1,4 @@
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+﻿import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
 import type { User } from "@/modules/auth/api/types";
 import { UserCard } from "@/modules/auth/components/cards/user-card";
 
@@ -9,10 +9,10 @@ interface UsersListProps {
 
 export function UsersList({ users, onEdit }: UsersListProps) {
   return (
-    <Wrapper className="grid gap-2">
+    <SurfaceSection className="grid gap-2">
       {users.map((user) => (
         <UserCard key={user._id} user={user} onEdit={onEdit} />
       ))}
-    </Wrapper>
+    </SurfaceSection>
   );
 }

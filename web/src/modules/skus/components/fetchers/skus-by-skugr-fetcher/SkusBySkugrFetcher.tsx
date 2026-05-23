@@ -4,7 +4,7 @@ import { LoadingNoData } from "@/components/shared/loading-states";
 import { SearchFiltersLayout } from "@/components/shared/search-components/search-filters-layout";
 import { SearchPanel } from "@/components/shared/search-components/search-panel/SearchPanel";
 import { SelectLimit } from "@/components/shared/select-limit";
-import { Wrapper } from "@/components/shared/wrappers/Wrapper";
+import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
 import { useKonksQuery } from "@/modules/konks/api/hooks/queries/useKonksQuery";
 import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
 import { useSkugrPageByIdQuery } from "@/modules/skugrs/api/hooks/queries/useSkugrPageByIdQuery";
@@ -51,23 +51,23 @@ export function SkusBySkugrFetcher({ skugrId }: SkusBySkugrFetcherProps) {
 
   if (skugrMetaQuery.isError) {
     return (
-      <Wrapper className="grid gap-2">
+      <SurfaceSection className="grid gap-2">
         <h2 className="text-lg font-semibold">Товари в групі</h2>
         <ErrorDisplay
           error={skugrMetaQuery.error}
           title="Помилка завантаження групи"
           description="Не вдалося отримати дані товарної групи для списку SKU"
         />
-      </Wrapper>
+      </SurfaceSection>
     );
   }
 
   if (skugrMetaQuery.isPending || !skugrMeta) {
     return (
-      <Wrapper className="grid gap-2">
+      <SurfaceSection className="grid gap-2">
         <h2 className="text-lg font-semibold">Товари в групі</h2>
         <SkusContainerSkeleton />
-      </Wrapper>
+      </SurfaceSection>
     );
   }
 
@@ -100,26 +100,26 @@ export function SkusBySkugrFetcher({ skugrId }: SkusBySkugrFetcherProps) {
   if (data) {
     if (error) {
       return (
-        <Wrapper className="grid gap-2">
+        <SurfaceSection className="grid gap-2">
           {controls}
           <ErrorDisplay
             error={error}
             title="Помилка завантаження товарів групи"
             description="Не вдалося завантажити список SKU цієї товарної групи"
           />
-        </Wrapper>
+        </SurfaceSection>
       );
     }
     if (!data.data?.length && !skusQuery.isFetching) {
       return (
-        <Wrapper className="grid gap-2">
+        <SurfaceSection className="grid gap-2">
           {controls}
           <LoadingNoData description="У групі немає товарів за цими фільтрами" />
-        </Wrapper>
+        </SurfaceSection>
       );
     }
     return (
-      <Wrapper className="grid gap-2">
+      <SurfaceSection className="grid gap-2">
         {controls}
         <DataRefetchOverlay
           isFetching={skusQuery.isFetching}
@@ -132,36 +132,36 @@ export function SkusBySkugrFetcher({ skugrId }: SkusBySkugrFetcherProps) {
             onPageChange={setGrPage}
           />
         </DataRefetchOverlay>
-      </Wrapper>
+      </SurfaceSection>
     );
   }
 
   if (isLoading) {
     return (
-      <Wrapper className="grid gap-2">
+      <SurfaceSection className="grid gap-2">
         {controls}
         <SkusContainerSkeleton />
-      </Wrapper>
+      </SurfaceSection>
     );
   }
 
   if (error) {
     return (
-      <Wrapper className="grid gap-2">
+      <SurfaceSection className="grid gap-2">
         {controls}
         <ErrorDisplay
           error={error}
           title="Помилка завантаження товарів групи"
           description="Не вдалося завантажити список SKU цієї товарної групи"
         />
-      </Wrapper>
+      </SurfaceSection>
     );
   }
 
   return (
-    <Wrapper className="grid gap-2">
+    <SurfaceSection className="grid gap-2">
       {controls}
       <LoadingNoData description="У групі немає товарів за цими фільтрами" />
-    </Wrapper>
+    </SurfaceSection>
   );
 }
