@@ -11,7 +11,7 @@ export function AskZone({ zone }: AskZoneProps) {
 
   return (
     <p className="text-foreground flex items-center gap-2 text-sm text-nowrap">
-      <MapPin className="h-4 w-4 text-orange-500" />
+      <MapPin className="text-warning h-4 w-4" />
       <span>{zone}</span>
     </p>
   );
