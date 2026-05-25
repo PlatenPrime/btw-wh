@@ -63,7 +63,9 @@ export default defineConfig({
     minify: "esbuild",
   },
   optimizeDeps: {
-    include: ["xlsx"],
+    // lucide-react — большой barrel-пакет; pre-bundling объединяет его в один модуль,
+    // устраняя обработку тысяч re-exports при каждом dev cold start.
+    include: ["xlsx", "lucide-react"],
     exclude: ["@tanstack/react-query-devtools"],
   },
 });

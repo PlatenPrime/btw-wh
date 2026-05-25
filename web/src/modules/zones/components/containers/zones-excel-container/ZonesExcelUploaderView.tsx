@@ -31,7 +31,7 @@ export function ZonesExcelUploaderView({
   isUploading,
 }: ZonesExcelUploaderViewProps) {
   return (
-    <div className="space-y-6">
+    <div className="flex flex-col gap-6">
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
@@ -39,14 +39,14 @@ export function ZonesExcelUploaderView({
             Імпорт зон з Excel
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="flex flex-col gap-4">
           <div
             className="border-muted-foreground/25 hover:border-muted-foreground/50 rounded-lg border-2 border-dashed p-8 text-center transition-colors"
             onDrop={handleDrop}
             onDragOver={handleDragOver}
           >
             <Upload className="text-muted-foreground mx-auto mb-4 h-12 w-12" />
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <p className="text-lg font-medium">Перетягніть Excel файл сюди</p>
               <p className="text-muted-foreground text-sm">
                 або виберіть файл для завантаження
@@ -67,7 +67,7 @@ export function ZonesExcelUploaderView({
           </div>
 
           {parsedData && (
-            <div className="space-y-4">
+            <div className="flex flex-col gap-4">
               <div className="flex items-center justify-between">
                 <p className="text-muted-foreground text-sm">
                   Знайдено записів: {parsedData.length}
@@ -92,7 +92,7 @@ export function ZonesExcelUploaderView({
               </div>
 
               {isUploading && (
-                <div className="space-y-2">
+                <div className="flex flex-col gap-2">
                   <div className="flex items-center justify-between text-sm">
                     <span>Завантаження...</span>
                     <span>{uploadProgress}%</span>
@@ -102,7 +102,7 @@ export function ZonesExcelUploaderView({
               )}
 
               {preview.length > 0 && (
-                <div className="space-y-2">
+                <div className="flex flex-col gap-2">
                   <p className="text-sm font-medium">
                     Попередній перегляд (перші 20 записів):
                   </p>
@@ -155,7 +155,7 @@ export function ZonesExcelUploaderView({
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-muted-foreground space-y-2 text-sm">
+          <div className="text-muted-foreground flex flex-col gap-2 text-sm">
             <p>• Файл повинен бути у форматі Excel (.xlsx)</p>
             <p>
               • Обов'язкові колонки:{" "}

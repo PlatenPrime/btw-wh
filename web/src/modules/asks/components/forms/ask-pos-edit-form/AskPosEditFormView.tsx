@@ -42,7 +42,7 @@ export function AskPosEditFormView({
   return (
     <Card className="w-full max-w-md">
       <CardContent>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
           <div className="grid gap-4">
             {/* Информация о текущих остатках */}
             <div className="bg-muted/50 grid gap-2 rounded-lg p-3">

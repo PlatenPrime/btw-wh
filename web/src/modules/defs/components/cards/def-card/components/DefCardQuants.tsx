@@ -10,7 +10,7 @@ const iconClassName = "size-4 shrink-0 text-muted-foreground";
 
 export function DefCardQuants({ defItem }: DefCardQuantsProps) {
   return (
-    <div className="space-y-1 px-2 pb-2">
+    <div className="flex flex-col gap-1 px-2 pb-2">
       <div
         className="flex items-center justify-start gap-2  text-xs"
         title="Запаси"

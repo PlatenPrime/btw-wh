@@ -11,7 +11,7 @@ export function PosContainerView({ pos }: PosContainerViewProps) {
       <CardHeader>
         <CardTitle>Позиція: {pos.artikul}</CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="flex flex-col gap-4">
         <div className="grid gap-2">
           <div>
             <span className="font-medium">Назва:</span>{" "}

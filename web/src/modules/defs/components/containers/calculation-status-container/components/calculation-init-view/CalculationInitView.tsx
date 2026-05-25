@@ -4,7 +4,7 @@ import { Loader2 } from "lucide-react";
 
 export function CalculationInitView() {
   return (
-    <SurfaceSection className="space-y-4 p-4">
+    <SurfaceSection className="flex flex-col gap-4 p-4">
       <div className="flex items-center gap-2">
         <Loader2 className="h-5 w-5 animate-spin text-blue-600" />
         <h3 className="text-lg font-semibold">

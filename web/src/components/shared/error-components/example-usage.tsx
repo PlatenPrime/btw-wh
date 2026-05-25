@@ -59,7 +59,7 @@ export function ErrorComponentsExample() {
   }
 
   return (
-    <div className="container mx-auto space-y-8 p-6">
+    <div className="container mx-auto flex flex-col gap-8 p-6">
       <div className="text-center">
         <h1 className="mb-2 text-3xl font-bold">
           Приклади компонентів помилок
@@ -201,11 +201,11 @@ export function ErrorComponentsExample() {
           <CardTitle>Про компоненти</CardTitle>
           <CardDescription>Короткий опис можливостей</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="flex flex-col gap-4">
           <div className="grid gap-4 md:grid-cols-2">
             <div>
               <h4 className="mb-2 font-semibold">Основні можливості:</h4>
-              <ul className="text-muted-foreground space-y-1 text-sm">
+              <ul className="text-muted-foreground flex flex-col gap-1 text-sm">
                 <li>• Автоматичне визначення типу помилки</li>
                 <li>• Три варіанти відображення</li>
                 <li>• Вбудовані дії (повторити, назад, додому)</li>
@@ -215,7 +215,7 @@ export function ErrorComponentsExample() {
             </div>
             <div>
               <h4 className="mb-2 font-semibold">Типи помилок:</h4>
-              <ul className="text-muted-foreground space-y-1 text-sm">
+              <ul className="text-muted-foreground flex flex-col gap-1 text-sm">
                 <li>• Мережеві помилки</li>
                 <li>• Помилки авторизації</li>
                 <li>• Помилки валідації</li>

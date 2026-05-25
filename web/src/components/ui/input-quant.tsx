@@ -81,7 +81,7 @@ export const InputQuant = forwardRef<HTMLInputElement, InputQuantProps>(
         : String(currentValue);
 
     return (
-      <div className="space-y-2">
+      <div className="flex flex-col gap-2">
         {label && (
           <Label
             htmlFor={props.id}

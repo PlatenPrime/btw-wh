@@ -11,7 +11,7 @@ interface CalculationRunViewProps {
 
 export function CalculationRunView({ status }: CalculationRunViewProps) {
   return (
-    <SurfaceSection className="space-y-4 p-4">
+    <SurfaceSection className="flex flex-col gap-4 p-4">
       <div className="flex items-center gap-2">
         <Loader2 className="h-5 w-5 animate-spin text-blue-600" />
         <h3 className="text-lg font-semibold">
@@ -23,7 +23,7 @@ export function CalculationRunView({ status }: CalculationRunViewProps) {
       </div>
 
       {status.progress !== undefined && (
-        <div className="space-y-2">
+        <div className="flex flex-col gap-2">
           <div className="flex justify-between text-sm">
             <span>Прогрес</span>
             <span className="font-medium">{status.progress}%</span>

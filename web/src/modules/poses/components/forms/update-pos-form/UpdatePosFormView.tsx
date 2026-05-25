@@ -45,7 +45,7 @@ export function UpdatePosFormView({
   return (
     <Card className="w-full max-w-md">
       <CardContent>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
           <div className="grid gap-4">
             <InputQuant
               id="quant"

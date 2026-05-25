@@ -24,8 +24,8 @@ export function CreateZoneFormView({
   } = form;
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      <div className="space-y-2">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+      <div className="flex flex-col gap-2">
         <Label htmlFor="title">Назва зони</Label>
         <Input
           id="title"
@@ -38,7 +38,7 @@ export function CreateZoneFormView({
         )}
       </div>
 
-      <div className="space-y-2">
+      <div className="flex flex-col gap-2">
         <Label htmlFor="bar">Штрих-код</Label>
         <Input
           id="bar"
@@ -52,7 +52,7 @@ export function CreateZoneFormView({
         )}
       </div>
 
-      <div className="space-y-2">
+      <div className="flex flex-col gap-2">
         <Label htmlFor="sector">Сектор</Label>
         <Input
           id="sector"

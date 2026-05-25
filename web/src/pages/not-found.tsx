@@ -35,7 +35,7 @@ export function NotFound() {
               Вибачте, сторінка, яку ви шукаєте, не існує або була переміщена.
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="flex flex-col gap-4">
             <div className="flex flex-col gap-2 sm:flex-row sm:justify-center">
               <Button onClick={handleGoHome} className="flex-1 sm:flex-none">
                 На головну

@@ -64,7 +64,7 @@ export default function LoginPage() {
                 <p className="text-lg text-muted-foreground">Warehouse App</p>
               </div>
             </div>
-            <div className="mt-8 space-y-4">
+            <div className="mt-8 flex flex-col gap-4">
               <h2 className="text-2xl font-semibold">
                 Управління складом
                 <br />

@@ -81,7 +81,7 @@ export class ErrorBoundary extends Component<Props, State> {
                 Произошла неожиданная ошибка в приложении
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-6">
+            <CardContent className="flex flex-col gap-6">
               <Alert variant="destructive">
                 <AlertTriangle className="h-4 w-4" />
                 <AlertTitle>Детали ошибки</AlertTitle>

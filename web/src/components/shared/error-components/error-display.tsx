@@ -102,7 +102,7 @@ export function ErrorDisplay({
               {description || "Сталася помилка при виконанні операції"}
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-6">
+          <CardContent className="flex flex-col gap-6">
             <Alert variant="destructive">
               {errorIcon}
               <AlertTitle>Деталі помилки</AlertTitle>
@@ -168,7 +168,7 @@ export function ErrorDisplay({
           {errorType}
         </Badge>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="flex flex-col gap-4">
         <Alert variant="destructive">
           {errorIcon}
           <AlertTitle>Опис помилки</AlertTitle>

@@ -34,7 +34,7 @@ export function Forbidden() {
             У вас недостатньо прав для доступу до цієї сторінки.
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="flex flex-col gap-4">
           {user && (
             <div className="bg-muted rounded-md p-3 text-sm">
               <p className="text-muted-foreground">Ваша роль:</p>

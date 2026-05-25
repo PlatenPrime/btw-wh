@@ -63,7 +63,7 @@ export const UserProfileForm = () => {
 
   return (
     <Card className="mx-auto mt-10 max-w-sm p-6">
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4" noValidate>
         <h2 className="text-xl font-semibold">Оновити профіль</h2>
         <Separator />
         {errors.root && (

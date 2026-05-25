@@ -57,7 +57,7 @@ export function CreateAskFormView({
   return (
     <Card className="w-full max-w-md">
       <CardContent>
-        <form onSubmit={handleFormSubmit} className="space-y-4">
+        <form onSubmit={handleFormSubmit} className="flex flex-col gap-4">
           {/* Информация об артикуле */}
           {artData && (
             <div className="bg-muted/50 rounded-lg border p-3">
@@ -82,7 +82,7 @@ export function CreateAskFormView({
           )}
 
           {/* Поле артикула */}
-          <div className="space-y-2">
+          <div className="flex flex-col gap-2">
             <Label htmlFor="artikul">Артикул *</Label>
             <Input
               id="artikul"
@@ -122,7 +122,7 @@ export function CreateAskFormView({
           />
 
           {/* Поле комментария */}
-          <div className="space-y-2">
+          <div className="flex flex-col gap-2">
             <Label htmlFor="com">Коментар</Label>
             <Textarea
               id="com"
@@ -138,7 +138,7 @@ export function CreateAskFormView({
           </div>
 
           {/* Поле склада */}
-          <div className="space-y-2">
+          <div className="flex flex-col gap-2">
             <Label htmlFor="sklad">Склад</Label>
             <Select
               value={watchedValues.sklad || "pogrebi"}

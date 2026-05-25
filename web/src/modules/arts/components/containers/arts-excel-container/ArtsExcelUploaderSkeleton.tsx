@@ -5,7 +5,7 @@ export function ArtsExcelUploaderSkeleton() {
   return (
     <SurfaceSection className="grid w-full gap-6">
       {/* Скелетон для header */}
-      <header className="space-y-2">
+      <header className="flex flex-col gap-2">
         <Skeleton className="h-7 w-48" />
         <Skeleton className="h-4 w-96" />
       </header>

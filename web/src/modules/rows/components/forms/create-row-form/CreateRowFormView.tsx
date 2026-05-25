@@ -30,10 +30,10 @@ export function CreateRowFormView({
       <CardContent>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="space-y-4"
+          className="flex flex-col gap-4"
           noValidate
         >
-          <div className="space-y-2">
+          <div className="flex flex-col gap-2">
             <Label htmlFor="title">Назва ряду</Label>
             <Input
               id="title"

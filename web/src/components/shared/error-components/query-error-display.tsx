@@ -94,7 +94,7 @@ export function QueryErrorDisplay({
               {description || "Сталася помилка при завантаженні даних"}
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-6">
+          <CardContent className="flex flex-col gap-6">
             <Alert variant="destructive">
               {errorIcon}
               <AlertTitle>Деталі помилки</AlertTitle>
@@ -160,7 +160,7 @@ export function QueryErrorDisplay({
           {errorType}
         </Badge>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="flex flex-col gap-4">
         <Alert variant="destructive">
           {errorIcon}
           <AlertTitle>Опис помилки</AlertTitle>

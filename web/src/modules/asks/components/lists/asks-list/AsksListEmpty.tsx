@@ -8,7 +8,7 @@ interface AsksListEmptyProps {
 export function AsksListEmpty({ selectedDate }: AsksListEmptyProps) {
   return (
     <Card className="p-8 text-center">
-      <div className="space-y-2">
+      <div className="flex flex-col gap-2">
         <h3 className="text-lg font-medium">Запитів не знайдено</h3>
         <p className="text-muted-foreground text-sm">
           На {formatDisplayDate(selectedDate)} немає активних запитів

@@ -29,7 +29,7 @@ export function Unauthorized() {
             Для доступу до цієї сторінки необхідно авторизуватися в системі.
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="flex flex-col gap-4">
           <Button onClick={handleGoToLogin} className="w-full">
             Увійти в систему
           </Button>

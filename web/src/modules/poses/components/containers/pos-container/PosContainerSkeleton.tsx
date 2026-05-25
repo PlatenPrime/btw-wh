@@ -7,7 +7,7 @@ export function PosContainerSkeleton() {
       <CardHeader>
         <Skeleton className="h-6 w-48" />
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="flex flex-col gap-4">
         <div className="grid gap-2">
           <div>
             <Skeleton className="h-4 w-16" />

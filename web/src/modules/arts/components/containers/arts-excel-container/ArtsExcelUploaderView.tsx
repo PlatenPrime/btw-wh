@@ -26,7 +26,7 @@ export function ArtsExcelUploaderView({
 }: ViewProps) {
   return (
     <SurfaceSection className="grid w-full gap-6">
-      <header className="space-y-2">
+      <header className="flex flex-col gap-2">
         <h2 className="text-xl font-bold">Імпорт з Excel</h2>
         <p className="text-muted-foreground text-sm">
           Завантажте файл <code className="rounded px-1">.xlsx</code> з полями{" "}
