@@ -2,7 +2,7 @@ import { ErrorDisplay } from "@/components/shared/error-components";
 import { LoadingNoData } from "@/components/shared/loading-states/loading-nodata";
 import { SliceRangeChartSkeleton } from "@/components/shared/charts/slice-range-chart";
 import { useSkuSliceRangeQuery } from "@/modules/skus/api/hooks/queries/useSkuSliceRangeQuery";
-import { SkuSlicesChartContainerView } from "@/modules/skus/components/containers/sku-slices-chart-container/SkuSlicesChartContainerView";
+import { SkuSlicesChartView } from "@/modules/skus/components/charts/sku-slices-chart";
 import type { SliceRangeChartPoint } from "@/types/charts-range";
 import { useState } from "react";
 
@@ -56,7 +56,7 @@ export function SkuSlicesChartContainer({
   }
 
   return (
-    <SkuSlicesChartContainerView
+    <SkuSlicesChartView
       items={items}
       showStock={showStock}
       showPrice={showPrice}
@@ -67,3 +67,4 @@ export function SkuSlicesChartContainer({
     />
   );
 }
+

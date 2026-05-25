@@ -1,22 +1,21 @@
 import { ChartDateRangeToolbar } from "@/components/shared/charts/chart-date-range-toolbar/ChartDateRangeToolbar";
-import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
-import { ErrorDisplay } from "@/components/shared/error-components";
-import { LoadingNoData } from "@/components/shared/loading-states/loading-nodata";
 import { ChartSection } from "@/components/shared/charts/chart-section/ChartSection";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import {
-  SalesRangeChartSkeleton,
   SalesRangeChartView,
 } from "@/components/shared/charts/sales-range-chart";
 import {
-  SliceRangeChartSkeleton,
   SliceRangeChartView,
 } from "@/components/shared/charts/slice-range-chart";
+import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
+import { ErrorDisplay } from "@/components/shared/error-components";
+import { LoadingNoData } from "@/components/shared/loading-states/loading-nodata";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import type {
   SalesRangeChartPoint,
   SliceRangeChartPoint,
 } from "@/types/charts-range";
+import { SkugrChartsSectionSkeleton } from "@/modules/skugrs/components/charts/skugr-charts-section/SkugrChartsSectionSkeleton";
 
 type SkugrChartsSectionViewToolbarProps = {
   dateFrom: string;
@@ -48,6 +47,10 @@ type SkugrChartsSectionViewProps =
 export function SkugrChartsSectionView(props: SkugrChartsSectionViewProps) {
   const { dateFrom, dateTo, onDateRangeChange } = props;
 
+  if (props.phase === "loading") {
+    return <SkugrChartsSectionSkeleton />;
+  }
+
   return (
     <div className="grid gap-3">
       <ChartDateRangeToolbar
@@ -56,16 +59,6 @@ export function SkugrChartsSectionView(props: SkugrChartsSectionViewProps) {
         dateTo={dateTo}
         onDateRangeChange={onDateRangeChange}
       />
-      {props.phase === "loading" ? (
-        <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
-          <ChartSection title="Динаміка залишків (група)">
-            <SliceRangeChartSkeleton />
-          </ChartSection>
-          <ChartSection title="Динаміка продаж (група)">
-            <SalesRangeChartSkeleton />
-          </ChartSection>
-        </div>
-      ) : null}
       {props.phase === "error" ? (
         <ErrorDisplay
           error={props.error}

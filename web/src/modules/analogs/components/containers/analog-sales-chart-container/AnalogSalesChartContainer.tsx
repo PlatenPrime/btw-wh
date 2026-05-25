@@ -1,12 +1,10 @@
 import { ErrorDisplay } from "@/components/shared/error-components";
 import { LoadingNoData } from "@/components/shared/loading-states/loading-nodata";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
-import {
-  SalesRangeChartSkeleton,
-  SalesRangeChartView,
-} from "@/components/shared/charts/sales-range-chart";
 import { useAnalogSalesRangeQuery } from "@/modules/analogs/api/hooks/queries/useAnalogSalesRangeQuery";
+import {
+  AnalogSalesChartSkeleton,
+  AnalogSalesChartView,
+} from "@/modules/analogs/components/charts/analog-sales-chart";
 import { useState } from "react";
 
 interface AnalogSalesChartContainerProps {
@@ -36,7 +34,7 @@ export function AnalogSalesChartContainer({
   }
 
   if (isLoading) {
-    return <SalesRangeChartSkeleton />;
+    return <AnalogSalesChartSkeleton />;
   }
 
   if (error) {
@@ -58,51 +56,13 @@ export function AnalogSalesChartContainer({
     );
   }
 
-  const showChart = showSales || showRevenue;
-
   return (
-    <div className="grid gap-3">
-      <div className="flex flex-wrap items-center gap-4">
-        <div className="flex items-center gap-2">
-          <Switch
-            id="sales-chart-show-sales"
-            checked={showSales}
-            onCheckedChange={setShowSales}
-            className="data-[state=checked]:bg-[color:var(--chart-6)]"
-          />
-          <Label
-            htmlFor="sales-chart-show-sales"
-            className="text-muted-foreground cursor-pointer text-sm"
-          >
-            Продажі (шт)
-          </Label>
-        </div>
-        <div className="flex items-center gap-2">
-          <Switch
-            id="sales-chart-show-revenue"
-            checked={showRevenue}
-            onCheckedChange={setShowRevenue}
-            className="data-[state=checked]:bg-[color:var(--chart-7)]"
-          />
-          <Label
-            htmlFor="sales-chart-show-revenue"
-            className="text-muted-foreground cursor-pointer text-sm"
-          >
-            Виручка (грн)
-          </Label>
-        </div>
-      </div>
-      {showChart ? (
-        <SalesRangeChartView
-          data={items}
-          showSales={showSales}
-          showRevenue={showRevenue}
-        />
-      ) : (
-        <div className="text-muted-foreground rounded-md border border-dashed p-4 text-center text-sm">
-          Увімкніть хоча б одну серію: Продажі або Виручка.
-        </div>
-      )}
-    </div>
+    <AnalogSalesChartView
+      items={items}
+      showSales={showSales}
+      onShowSalesChange={setShowSales}
+      showRevenue={showRevenue}
+      onShowRevenueChange={setShowRevenue}
+    />
   );
 }

@@ -1,10 +1,10 @@
 import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import { SliceRangeChartView } from "@/components/shared/charts/slice-range-chart";
 import type { SliceRangeChartPoint } from "@/types/charts-range";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 
-export interface SkuSlicesChartContainerViewProps {
+export interface SkuSlicesChartViewProps {
   items: SliceRangeChartPoint[];
   showStock: boolean;
   showPrice: boolean;
@@ -14,7 +14,7 @@ export interface SkuSlicesChartContainerViewProps {
   isLoading: boolean;
 }
 
-export function SkuSlicesChartContainerView({
+export function SkuSlicesChartView({
   items,
   showStock,
   showPrice,
@@ -22,7 +22,7 @@ export function SkuSlicesChartContainerView({
   onShowPriceChange,
   isFetching,
   isLoading,
-}: SkuSlicesChartContainerViewProps) {
+}: SkuSlicesChartViewProps) {
   const showChart = showStock || showPrice;
 
   return (
@@ -37,7 +37,7 @@ export function SkuSlicesChartContainerView({
           />
           <Label
             htmlFor="sku-chart-show-stock"
-            className="text-muted-foreground cursor-pointer text-sm"
+            className="cursor-pointer text-sm text-muted-foreground"
           >
             Залишок
           </Label>
@@ -51,7 +51,7 @@ export function SkuSlicesChartContainerView({
           />
           <Label
             htmlFor="sku-chart-show-price"
-            className="text-muted-foreground cursor-pointer text-sm"
+            className="cursor-pointer text-sm text-muted-foreground"
           >
             Ціна
           </Label>
@@ -65,7 +65,7 @@ export function SkuSlicesChartContainerView({
             showPrice={showPrice}
           />
         ) : (
-          <div className="text-muted-foreground rounded-md border border-dashed p-4 text-center text-sm">
+          <div className="rounded-md border border-dashed p-4 text-center text-sm text-muted-foreground">
             Увімкніть хоча б одну серію: Залишок або Ціна.
           </div>
         )}

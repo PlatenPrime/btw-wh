@@ -7,7 +7,7 @@ import type {
   SliceRangeChartPoint,
 } from "@/types/charts-range";
 import { useSkugrDailySummaryQuery } from "@/modules/skugrs/api/hooks/queries/useSkugrDailySummaryQuery";
-import { SkugrChartsSectionView } from "@/modules/skugrs/components/containers/skugr-charts-section/SkugrChartsSectionView";
+import { SkugrChartsSectionView } from "@/modules/skugrs/components/charts/skugr-charts-section";
 import { useCallback, useMemo, useState } from "react";
 
 interface SkugrChartsSectionProps {

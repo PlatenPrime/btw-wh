@@ -3,7 +3,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import type { StockComparisonDay } from "@/modules/stock-comparison/api/types";
 import { useState } from "react";
-import { StockChartStockView } from "./StockChartView";
+import { StockChartStockView } from "@/modules/stock-comparison/components/charts/stock-chart";
 
 interface StockChartContainerProps {
   days: StockComparisonDay[];

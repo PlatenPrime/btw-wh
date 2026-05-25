@@ -6,7 +6,7 @@ import { useState } from "react";
 import {
   SalesChartRevenueView,
   SalesChartSalesView,
-} from "./SalesChartView";
+} from "@/modules/sales/components/charts/sales-chart";
 
 interface SalesChartContainerProps {
   days: SalesComparisonDay[];

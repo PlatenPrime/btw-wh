@@ -1,10 +1,10 @@
 import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import { SalesRangeChartView } from "@/components/shared/charts/sales-range-chart";
 import type { SalesRangeChartPoint } from "@/types/charts-range";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 
-export interface SkuSalesChartContainerViewProps {
+export interface SkuSalesChartViewProps {
   items: SalesRangeChartPoint[];
   showSales: boolean;
   showRevenue: boolean;
@@ -14,7 +14,7 @@ export interface SkuSalesChartContainerViewProps {
   isLoading: boolean;
 }
 
-export function SkuSalesChartContainerView({
+export function SkuSalesChartView({
   items,
   showSales,
   showRevenue,
@@ -22,7 +22,7 @@ export function SkuSalesChartContainerView({
   onShowRevenueChange,
   isFetching,
   isLoading,
-}: SkuSalesChartContainerViewProps) {
+}: SkuSalesChartViewProps) {
   const showChart = showSales || showRevenue;
 
   return (
@@ -37,7 +37,7 @@ export function SkuSalesChartContainerView({
           />
           <Label
             htmlFor="sku-sales-chart-show-sales"
-            className="text-muted-foreground cursor-pointer text-sm"
+            className="cursor-pointer text-sm text-muted-foreground"
           >
             Продажі (шт)
           </Label>
@@ -51,7 +51,7 @@ export function SkuSalesChartContainerView({
           />
           <Label
             htmlFor="sku-sales-chart-show-revenue"
-            className="text-muted-foreground cursor-pointer text-sm"
+            className="cursor-pointer text-sm text-muted-foreground"
           >
             Виручка (грн)
           </Label>
@@ -65,7 +65,7 @@ export function SkuSalesChartContainerView({
             showRevenue={showRevenue}
           />
         ) : (
-          <div className="text-muted-foreground rounded-md border border-dashed p-4 text-center text-sm">
+          <div className="rounded-md border border-dashed p-4 text-center text-sm text-muted-foreground">
             Увімкніть хоча б одну серію: Продажі або Виручка.
           </div>
         )}
