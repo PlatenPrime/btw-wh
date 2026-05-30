@@ -1,3 +1,4 @@
+import { SKU_KONK_PROD_QUERY_ALL } from "@/modules/sku-konk-prod-charts/constants";
 import { getParam } from "@/utils/getParam";
 import { updateSearchParams } from "@/utils/updateSearchParams";
 import { useMemo } from "react";
@@ -27,8 +28,19 @@ export function useSkuKonkProdChartParams() {
   const setKonk = (value: string) =>
     updateSearchParams(params, { konk: value, skugrIds: "" }, setParams);
 
-  const setProd = (value: string) =>
-    updateSearchParams(params, { prod: value, skugrIds: "" }, setParams);
+  const setProd = (value: string) => {
+    const isSpecificProd = (v: string) =>
+      Boolean(v) && v !== SKU_KONK_PROD_QUERY_ALL;
+    const updates: Record<string, string> = { prod: value };
+    if (
+      isSpecificProd(prod) &&
+      isSpecificProd(value) &&
+      prod !== value
+    ) {
+      updates.skugrIds = "";
+    }
+    updateSearchParams(params, updates, setParams);
+  };
 
   const setDateRange = (from: string, to: string) =>
     updateSearchParams(params, { dateFrom: from, dateTo: to }, setParams);

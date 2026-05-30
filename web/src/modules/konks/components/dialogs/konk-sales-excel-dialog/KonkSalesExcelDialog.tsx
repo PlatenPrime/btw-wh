@@ -3,9 +3,10 @@ import { useDownloadKonkSalesExcelMutation } from "@/modules/konks/api/hooks/mut
 import { useKonksQuery } from "@/modules/konks/api/hooks/queries/useKonksQuery";
 import type { KonkDto } from "@/modules/konks/api/types";
 import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
+import { SKU_KONK_PROD_QUERY_ALL } from "@/modules/sku-konk-prod-charts/constants";
 import { format } from "date-fns";
 import type { DateRange } from "react-day-picker";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   KonkSalesExcelDialogView,
   type KonkSalesExcelExportSort,
@@ -50,7 +51,9 @@ export function KonkSalesExcelDialog({
   const mutation = useDownloadKonkSalesExcelMutation();
   const prodsQuery = useProdsQuery();
   const konksQuery = useKonksQuery();
-  const prods = prodsQuery.data?.data ?? [];
+  const prods = (prodsQuery.data?.data ?? []).filter(
+    (p) => p.name !== SKU_KONK_PROD_QUERY_ALL,
+  );
   const konks = konksQuery.data?.data ?? [];
   const isExporting = mutation.isPending;
 
@@ -104,8 +107,27 @@ export function KonkSalesExcelDialog({
     }
   }, [open]);
 
+  const prevKonkRef = useRef(resolvedKonkName);
+  const prevProdRef = useRef(selectedProd);
+
   useEffect(() => {
-    setSelectedSkugrIds([]);
+    if (prevKonkRef.current !== resolvedKonkName) {
+      setSelectedSkugrIds([]);
+      prevKonkRef.current = resolvedKonkName;
+      prevProdRef.current = selectedProd;
+      return;
+    }
+    const prevProd = prevProdRef.current;
+    const isSpecificProd = (value: string) =>
+      Boolean(value) && value !== SKU_KONK_PROD_QUERY_ALL;
+    if (
+      isSpecificProd(prevProd) &&
+      isSpecificProd(selectedProd) &&
+      prevProd !== selectedProd
+    ) {
+      setSelectedSkugrIds([]);
+    }
+    prevProdRef.current = selectedProd;
   }, [resolvedKonkName, selectedProd]);
 
   return (

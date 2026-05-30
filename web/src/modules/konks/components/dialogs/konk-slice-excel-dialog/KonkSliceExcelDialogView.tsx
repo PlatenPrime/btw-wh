@@ -12,9 +12,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Calendar } from "@/components/ui/calendar";
+import { cn } from "@/lib/utils";
 import { EntityLabel } from "@/modules/analogs/components/entity-label/EntityLabel";
 import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
+import { SKU_KONK_PROD_QUERY_ALL } from "@/modules/sku-konk-prod-charts/constants";
 import { SkugrMultiSelectControl } from "@/modules/skugrs/components/controls/skugr-multi-select-control";
 import type { DateRange } from "react-day-picker";
 
@@ -59,7 +61,9 @@ export function KonkSliceExcelDialogView({
   const isKonkOk = !showKonkSelect || Boolean(selectedKonkName);
   const isDownloadDisabled = !isRangeValid || !selectedProd || !isKonkOk;
 
-  const skugrListReady = Boolean(resolvedKonkName && selectedProd);
+  const skugrListReady = Boolean(resolvedKonkName);
+  const prodNameForSkugrList =
+    selectedProd === SKU_KONK_PROD_QUERY_ALL ? "" : selectedProd;
 
   return (
     <DialogContent className="flex max-h-[min(90vh,720px)] flex-col gap-4 overflow-y-auto sm:max-w-lg">
@@ -104,11 +108,30 @@ export function KonkSliceExcelDialogView({
         )}
         <div className="grid gap-2">
           <p className="text-sm font-medium">Виробник</p>
-          <Select value={selectedProd} onValueChange={onSelectedProdChange}>
-            <SelectTrigger>
+          <Select
+            value={selectedProd || "placeholder"}
+            onValueChange={(v) => {
+              if (v === "placeholder") onSelectedProdChange("");
+              else onSelectedProdChange(v);
+            }}
+          >
+            <SelectTrigger
+              className={cn(
+                selectedProd === SKU_KONK_PROD_QUERY_ALL && "text-destructive",
+              )}
+            >
               <SelectValue placeholder="Оберіть виробника" />
             </SelectTrigger>
             <SelectContent>
+              <SelectItem value="placeholder" disabled>
+                Оберіть виробника
+              </SelectItem>
+              <SelectItem
+                value={SKU_KONK_PROD_QUERY_ALL}
+                className="text-destructive focus:bg-accent focus:text-destructive data-[highlighted]:text-destructive"
+              >
+                Всі виробники
+              </SelectItem>
               {prods.map((prod) => (
                 <SelectItem key={prod._id} value={prod.name}>
                   <EntityLabel
@@ -126,13 +149,12 @@ export function KonkSliceExcelDialogView({
           <p className="text-sm font-medium">Товарні групи (опційно)</p>
           {!skugrListReady ? (
             <p className="text-muted-foreground text-sm">
-              Оберіть конкурента та виробника, щоб обмежити вивантаження
-              товарними групами.
+              Оберіть конкурента, щоб обмежити вивантаження товарними групами.
             </p>
           ) : null}
           <SkugrMultiSelectControl
             konkName={resolvedKonkName}
-            prodName={selectedProd}
+            prodName={prodNameForSkugrList}
             value={selectedSkugrIds}
             onChange={onSelectedSkugrIdsChange}
             enabled={skugrListReady}

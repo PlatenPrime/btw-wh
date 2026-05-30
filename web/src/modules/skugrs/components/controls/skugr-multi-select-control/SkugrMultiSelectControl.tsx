@@ -1,3 +1,5 @@
+import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
+import type { ProdDto } from "@/modules/prods/api/types";
 import { useSkugrsInfiniteQuery } from "@/modules/skugrs/api/hooks/queries/useSkugrsInfiniteQuery";
 import { useCallback, useMemo, useState } from "react";
 import { SkugrMultiSelectControlView } from "./SkugrMultiSelectControlView";
@@ -24,6 +26,20 @@ export function SkugrMultiSelectControl({
   searchInputId,
 }: SkugrMultiSelectControlProps) {
   const [search, setSearch] = useState("");
+  const prodsQuery = useProdsQuery();
+
+  const prodByName = useMemo(() => {
+    const map = new Map<string, ProdDto>();
+    for (const prod of prodsQuery.data?.data ?? []) {
+      map.set(prod.name, prod);
+    }
+    return map;
+  }, [prodsQuery.data?.data]);
+
+  const getProdForSkugr = useCallback(
+    (prodName: string) => prodByName.get(prodName),
+    [prodByName],
+  );
 
   /** prodName може бути порожнім — усі групи конкурента (режим «Всі виробники»). */
   const listEnabled = enabled && Boolean(konkName) && !disabled;
@@ -71,6 +87,7 @@ export function SkugrMultiSelectControl({
       fetchNextPage={() => void infiniteQuery.fetchNextPage()}
       disabled={disabled}
       searchInputId={searchInputId}
+      getProdForSkugr={getProdForSkugr}
     />
   );
 }

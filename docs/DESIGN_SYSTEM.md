@@ -27,7 +27,8 @@ Frosted glass: полупрозрачный фон + `backdrop-filter` + тон�
 | ----- | ---------- |
 | `--glass-card-bg` / `--glass-card-border` / `--glass-card-highlight` | Карточки (~48% mix light / ~50% dark — иначе на почти белом `--card` glass не читается) |
 | `--glass-inset-bg` | Variant `inset` в `Card` |
-| `--glass-overlay-bg` | Dialog, sheet, popover, dropdown, select |
+| `--glass-overlay-bg` | Dialog, sheet, popover, dropdown, select (~92% popover light / ~82% dark — почти непрозрачно, чтобы `text-muted-foreground` проходил WCAG на модалах) |
+| `--glass-overlay-border` | Граница overlay (~70% border light / ~60% dark) |
 | `--glass-panel-bg` | `FilterBar`, панели surface-1 |
 | `--glass-section-bg` | Оболочка `SurfaceSection` (слабее карточек) |
 | `--glass-blur` / `--glass-blur-sm` | Сила размытия (16px / 8px) |
@@ -42,7 +43,7 @@ Frosted glass: полупрозрачный фон + `backdrop-filter` + тон�
 
 **Правила:** не дублировать `backdrop-blur` в модулях — только utilities. `Card variant="ghost"` — без glass. `SurfaceSection variant="none"` — без оболочки (чистая grid).
 
-**Доступность:** `@media (prefers-reduced-transparency: reduce)` и `@supports not (backdrop-filter)` — непрозрачный fallback на `var(--card)` / `var(--popover)`.
+**Доступность:** `@media (prefers-reduced-transparency: reduce)` и `@supports not (backdrop-filter)` — непрозрачный fallback на `var(--card)` / `var(--popover)`. Вторичный текст на overlay — `--muted-foreground` (light L≈0.37, dark L≈0.80); не ослаблять непрозрачность `--glass-overlay-bg` без проверки контраста на модалах.
 
 Glass читается на **surface-0 с ambient-градиентом**, не на плоском непрозрачном `bg-background` в main-области.
 

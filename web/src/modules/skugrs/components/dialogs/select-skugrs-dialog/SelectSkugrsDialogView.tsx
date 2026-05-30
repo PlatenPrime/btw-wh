@@ -36,8 +36,8 @@ export function SelectSkugrsDialogView({
         <DialogTitle>Товарні групи</DialogTitle>
       </DialogHeader>
       <p className="text-muted-foreground text-sm">
-        Оберіть одну або кілька груп для звуження звіту. Для режиму «Всі
-        виробники» показані всі групи конкурента.
+        Оберіть одну або кілька груп для звуження звіту. Без виробника або в
+        режимі «Всі виробники» показані всі групи конкурента.
       </p>
       <SkugrMultiSelectControl
         konkName={konkName}

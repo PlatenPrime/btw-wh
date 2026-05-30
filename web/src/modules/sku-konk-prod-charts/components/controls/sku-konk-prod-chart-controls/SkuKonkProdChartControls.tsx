@@ -63,7 +63,7 @@ export function SkuKonkProdChartControls({
     undefined,
   );
 
-  const filtersReady = Boolean(konk && prod);
+  const skugrDialogReady = Boolean(konk);
   const prodNameForSkugrList =
     prod === SKU_KONK_PROD_QUERY_ALL ? "" : prod;
 
@@ -176,7 +176,7 @@ export function SkuKonkProdChartControls({
           type="button"
           variant="outline"
           className="min-w-[160px] justify-start gap-2 sm:min-w-[180px]"
-          disabled={!filtersReady}
+          disabled={!skugrDialogReady}
           onClick={() => setIsSkugrDialogOpen(true)}
         >
           <Layers className="size-4 shrink-0" />

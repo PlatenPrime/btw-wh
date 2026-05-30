@@ -95,9 +95,9 @@
   --primary: oklch(0.58 0.17 277);
   --primary-foreground: oklch(1.0000 0 0);
   --secondary: oklch(0.93 0.004 264);
-  --secondary-foreground: oklch(0.37 0.028 260);
+  --secondary-foreground: oklch(0.34 0.028 260);
   --muted: oklch(0.965 0.002 264);
-  --muted-foreground: oklch(0.42 0.022 264);
+  --muted-foreground: oklch(0.37 0.024 264);
   --accent: oklch(0.8 0.028 272);
   --accent-foreground: oklch(0.37 0.028 260);
   --destructive: oklch(0.6368 0.2078 25.3313);
@@ -209,8 +209,12 @@
   --glass-card-border: color-mix(in oklch, var(--card-border) 45%, transparent);
   --glass-card-highlight: color-mix(in oklch, var(--primary-foreground) 55%, transparent);
   --glass-inset-bg: color-mix(in oklch, var(--surface-2) 58%, transparent);
-  --glass-overlay-bg: color-mix(in oklch, var(--popover) 62%, transparent);
-  --glass-overlay-border: color-mix(in oklch, var(--border) 50%, transparent);
+  --glass-overlay-bg: color-mix(
+    in oklch,
+    var(--popover) 92%,
+    var(--background) 8%
+  );
+  --glass-overlay-border: color-mix(in oklch, var(--border) 70%, transparent);
   --glass-panel-bg: color-mix(in oklch, var(--surface-1) 72%, transparent);
   --glass-panel-border: color-mix(in oklch, var(--border) 55%, transparent);
   --glass-section-bg: color-mix(in oklch, var(--card) 28%, transparent);
@@ -232,7 +236,7 @@
   --secondary: oklch(0.32 0.028 261);
   --secondary-foreground: oklch(0.87 0.008 258);
   --muted: oklch(0.23 0.032 260);
-  --muted-foreground: oklch(0.76 0.014 261);
+  --muted-foreground: oklch(0.8 0.014 261);
   --accent: oklch(0.36 0.026 260);
   --accent-foreground: oklch(0.87 0.008 258);
   --destructive: oklch(0.6368 0.2078 25.3313);
@@ -343,8 +347,8 @@
   --glass-card-border: color-mix(in oklch, var(--card-border) 42%, transparent);
   --glass-card-highlight: color-mix(in oklch, var(--primary-foreground) 12%, transparent);
   --glass-inset-bg: color-mix(in oklch, var(--surface-2) 55%, transparent);
-  --glass-overlay-bg: color-mix(in oklch, var(--popover) 58%, transparent);
-  --glass-overlay-border: color-mix(in oklch, var(--border) 45%, transparent);
+  --glass-overlay-bg: color-mix(in oklch, var(--popover) 82%, transparent);
+  --glass-overlay-border: color-mix(in oklch, var(--border) 60%, transparent);
   --glass-panel-bg: color-mix(in oklch, var(--surface-1) 65%, transparent);
   --glass-panel-border: color-mix(in oklch, var(--border) 50%, transparent);
   --glass-section-bg: color-mix(in oklch, var(--card) 24%, transparent);
