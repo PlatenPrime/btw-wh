@@ -1,22 +1,22 @@
 import { cn } from "@/lib/utils";
 import type { ReactNode } from "react";
 
-interface AskDetailsSummaryFieldProps {
+interface SummaryFieldProps {
   label: string;
   value: ReactNode;
   className?: string;
   valueClassName?: string;
 }
 
-export function AskDetailsSummaryField({
+export function SummaryField({
   label,
   value,
   className,
   valueClassName,
-}: AskDetailsSummaryFieldProps) {
+}: SummaryFieldProps) {
   return (
     <div className={cn("grid min-w-0 gap-0.5", className)}>
-      <span className="text-muted-foreground/80 text-xs leading-none">
+      <span className="text-muted-foreground text-xs leading-none">
         {label}
       </span>
       <span

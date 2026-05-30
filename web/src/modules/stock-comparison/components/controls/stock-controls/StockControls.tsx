@@ -1,13 +1,9 @@
-import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
+import { ChartDateRangeToolbar } from "@/components/shared/charts/chart-date-range-toolbar/ChartDateRangeToolbar";
 import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+  KonkEntitySelect,
+  ProdEntitySelect,
+} from "@/components/shared/controls";
+import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
 import {
   Select,
   SelectContent,
@@ -15,13 +11,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { EntityLabel } from "@/modules/analogs/components/entity-label/EntityLabel";
 import { useKonksQuery } from "@/modules/konks/api/hooks/queries/useKonksQuery";
 import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
-import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
-import { useState } from "react";
-import type { DateRange } from "react-day-picker";
 
 const ABC_OPTIONS = [
   { value: "all", label: "ABC" },
@@ -59,90 +50,12 @@ export function StockControls({
   const konks = konksQuery.data?.data ?? [];
   const prods = prodsQuery.data?.data ?? [];
 
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [pendingRange, setPendingRange] = useState<DateRange | undefined>(undefined);
-
-  const handleDialogOpenChange = (open: boolean) => {
-    setIsDialogOpen(open);
-    if (open && dateFrom && dateTo) {
-      setPendingRange({ from: new Date(dateFrom), to: new Date(dateTo) });
-    }
-    if (!open) {
-      setPendingRange(undefined);
-    }
-  };
-
-  const isRangeComplete = !!pendingRange?.from && !!pendingRange?.to;
-
-  const handleConfirm = () => {
-    if (!pendingRange?.from || !pendingRange?.to) return;
-    onDateRangeChange(
-      format(pendingRange.from, "yyyy-MM-dd"),
-      format(pendingRange.to, "yyyy-MM-dd"),
-    );
-    setIsDialogOpen(false);
-    setPendingRange(undefined);
-  };
-
-  const dateLabel =
-    dateFrom && dateTo
-      ? `${format(new Date(dateFrom), "dd.MM.yyyy")} — ${format(new Date(dateTo), "dd.MM.yyyy")}`
-      : "Оберіть період";
-
   return (
     <SurfaceSection className="grid grid-cols-1 gap-3">
       <div className="flex min-w-0 flex-wrap items-center gap-3">
-        <Select
-          value={konk || "placeholder"}
-          onValueChange={(v) => onKonkChange(v === "placeholder" ? "" : v)}
-        >
-          <SelectTrigger
-            aria-label="Конкурент"
-            className="min-w-[160px] sm:min-w-[180px]"
-          >
-            <SelectValue placeholder="Оберіть конкурента" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="placeholder" disabled>
-              Оберіть конкурента
-            </SelectItem>
-            {konks.map((k) => (
-              <SelectItem key={k._id} value={k.name}>
-                <EntityLabel
-                  imageUrl={k.imageUrl}
-                  title={k.title}
-                  fallbackLabel={k.name}
-                />
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <KonkEntitySelect value={konk} onValueChange={onKonkChange} konks={konks} />
 
-        <Select
-          value={prod || "placeholder"}
-          onValueChange={(v) => onProdChange(v === "placeholder" ? "" : v)}
-        >
-          <SelectTrigger
-            aria-label="Виробник"
-            className="min-w-[160px] sm:min-w-[180px]"
-          >
-            <SelectValue placeholder="Оберіть виробника" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="placeholder" disabled>
-              Оберіть виробника
-            </SelectItem>
-            {prods.map((p) => (
-              <SelectItem key={p._id} value={p.name}>
-                <EntityLabel
-                  imageUrl={p.imageUrl}
-                  title={p.title}
-                  fallbackLabel={p.name}
-                />
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <ProdEntitySelect value={prod} onValueChange={onProdChange} prods={prods} />
 
         <Select
           value={abc || "all"}
@@ -163,43 +76,13 @@ export function StockControls({
           </SelectContent>
         </Select>
 
-        <Button
-          variant="outline"
-          className="min-w-[220px] justify-start text-left font-normal"
-          onClick={() => setIsDialogOpen(true)}
-        >
-          <CalendarIcon className="mr-2 h-4 w-4" />
-          {dateLabel}
-        </Button>
-
-        <Dialog open={isDialogOpen} onOpenChange={handleDialogOpenChange}>
-          <DialogContent className="sm:max-w-fit">
-            <DialogHeader>
-              <DialogTitle>Оберіть період</DialogTitle>
-            </DialogHeader>
-            <Calendar
-              mode="range"
-              selected={pendingRange}
-              onSelect={setPendingRange}
-              disabled={(date) => date > new Date()}
-              numberOfMonths={2}
-            />
-            <DialogFooter>
-              <Button
-                variant="outline"
-                onClick={() => setIsDialogOpen(false)}
-              >
-                Скасувати
-              </Button>
-              <Button
-                disabled={!isRangeComplete}
-                onClick={handleConfirm}
-              >
-                Обрати
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+        <ChartDateRangeToolbar
+          layout="inline"
+          idPrefix="stock-controls"
+          dateFrom={dateFrom}
+          dateTo={dateTo}
+          onDateRangeChange={onDateRangeChange}
+        />
       </div>
     </SurfaceSection>
   );

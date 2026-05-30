@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
-export function AskDetailsBtradeSkeleton() {
+export function BtradeArtDataPanelSkeleton() {
   return (
     <>
       <div className="grid gap-1">

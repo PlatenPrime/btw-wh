@@ -1,12 +1,10 @@
 import { ArtikulImageLink } from "@/components/shared/artikul-image-link/ArtikulImageLink";
 import { Card, CardContent } from "@/components/ui";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
-import { ArtProdPreview } from "@/modules/arts/components/elements/art-prod-preview";
-import { BtradeArtDataContainer } from "@/modules/arts/components/containers/btrade-art-data-container/BtradeArtDataContainer";
-import { BtradeArtDataSkeleton } from "@/modules/arts/components/containers/btrade-art-data-container/BtradeArtDataSkeleton";
-import { ArtZone } from "@/modules/arts/components/elements/art-zone/ArtZone";
-import { BtradeArtDataFetcher } from "@/modules/arts/components/fetchers/btrade-art-data-fetcher/BtradeArtDataFetcher";
 import { ArtAbc } from "@/modules/arts/components/elements/art-abc/ArtAbc";
+import { BtradeArtDataPanel } from "@/modules/arts/components/elements/btrade-art-data-panel";
+import { ArtProdPreview } from "@/modules/arts/components/elements/art-prod-preview";
+import { ArtZone } from "@/modules/arts/components/elements/art-zone/ArtZone";
 import { ArtLimit } from "../../elements/art-limit/ArtLimit";
 
 interface ArtDetailCardProps {
@@ -35,11 +33,7 @@ export function ArtDetailCard({ artData }: ArtDetailCardProps) {
           <ArtZone artData={artData} />
           <ArtLimit limit={artData.limit} />
           <ArtAbc abc={artData.abc} />
-          <BtradeArtDataFetcher
-            artikul={artData.artikul}
-            ContainerComponent={BtradeArtDataContainer}
-            SkeletonComponent={BtradeArtDataSkeleton}
-          />
+          <BtradeArtDataPanel artikul={artData.artikul} />
         </div>
       </CardContent>
     </Card>

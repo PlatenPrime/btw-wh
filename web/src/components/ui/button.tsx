@@ -31,7 +31,7 @@ const buttonVariants = cva(
         info:
           "bg-info text-info-foreground tracking-tight shadow-[0_1px_0_0_theme(colors.info.foreground/0.08)_inset,0_2px_4px_-1px_var(--shadow-color)/0.12,0_4px_8px_-2px_var(--shadow-color)/0.08] hover:bg-info/95 hover:shadow-[0_1px_0_0_theme(colors.info.foreground/0.06)_inset,0_4px_12px_-2px_var(--shadow-color)/0.15,0_8px_16px_-4px_var(--shadow-color)/0.1] active:shadow-[0_1px_2px_var(--shadow-color)/0.08] focus-visible:ring-info/30",
         "info-soft":
-          "bg-info/15 text-info border border-info/30 shadow-xs hover:bg-info/25 hover:border-info/45 focus-visible:ring-info/30 dark:bg-info/20 dark:hover:bg-info/30",
+          "bg-info/5 text-info  shadow-xs hover:bg-info/25 hover:border-info/45 focus-visible:ring-info/30 dark:bg-info/20 dark:hover:bg-info/30",
         edit:
           "bg-edit text-foreground tracking-tight shadow-[0_2px_4px_-1px_var(--shadow-color)/0.12,0_4px_8px_-2px_var(--shadow-color)/0.08] hover:bg-edit/90 hover:shadow-elevation-2 focus-visible:ring-edit/40 dark:text-foreground",
         "edit-soft":

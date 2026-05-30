@@ -1,5 +1,9 @@
 import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
 import {
+  KonkEntitySelect,
+  ProdEntitySelect,
+} from "@/components/shared/controls";
+import {
   DialogContent,
   DialogHeader,
   DialogTitle,
@@ -12,8 +16,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Calendar } from "@/components/ui/calendar";
-import { cn } from "@/lib/utils";
-import { EntityLabel } from "@/modules/analogs/components/entity-label/EntityLabel";
 import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
 import { SKU_KONK_PROD_QUERY_ALL } from "@/modules/sku-konk-prod-charts/constants";
@@ -82,74 +84,26 @@ export function KonkSalesExcelDialogView({
             ? "Оберіть конкурента, виробника та період. Файл формується на backend та завантажується готовим Excel."
             : "Оберіть виробника та період. Файл формується на backend та завантажується готовим Excel."}
         </p>
-        {showKonkSelect && (
+        {showKonkSelect ? (
           <div className="grid gap-2">
             <p className="text-sm font-medium">Конкурент</p>
-            <Select
-              value={selectedKonkName || "placeholder"}
-              onValueChange={(v) =>
-                onSelectedKonkNameChange(v === "placeholder" ? "" : v)
-              }
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Оберіть конкурента" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="placeholder" disabled>
-                  Оберіть конкурента
-                </SelectItem>
-                {konks.map((k) => (
-                  <SelectItem key={k._id} value={k.name}>
-                    <EntityLabel
-                      imageUrl={k.imageUrl}
-                      title={k.title}
-                      fallbackLabel={k.name}
-                      imageSize="xs"
-                    />
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <KonkEntitySelect
+              value={selectedKonkName}
+              onValueChange={onSelectedKonkNameChange}
+              konks={konks}
+              className="w-full min-w-0"
+            />
           </div>
-        )}
+        ) : null}
         <div className="grid gap-2">
           <p className="text-sm font-medium">Виробник</p>
-          <Select
-            value={selectedProd || "placeholder"}
-            onValueChange={(v) => {
-              if (v === "placeholder") onSelectedProdChange("");
-              else onSelectedProdChange(v);
-            }}
-          >
-            <SelectTrigger
-              className={cn(
-                selectedProd === SKU_KONK_PROD_QUERY_ALL && "text-destructive",
-              )}
-            >
-              <SelectValue placeholder="Оберіть виробника" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="placeholder" disabled>
-                Оберіть виробника
-              </SelectItem>
-              <SelectItem
-                value={SKU_KONK_PROD_QUERY_ALL}
-                className="text-destructive focus:bg-accent focus:text-destructive data-[highlighted]:text-destructive"
-              >
-                Всі виробники
-              </SelectItem>
-              {prods.map((prod) => (
-                <SelectItem key={prod._id} value={prod.name}>
-                  <EntityLabel
-                    imageUrl={prod.imageUrl}
-                    title={prod.title}
-                    fallbackLabel={prod.name}
-                    imageSize="xs"
-                  />
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <ProdEntitySelect
+            value={selectedProd}
+            onValueChange={onSelectedProdChange}
+            prods={prods}
+            showAllProducersOption
+            className="w-full min-w-0"
+          />
         </div>
         <div className="grid min-h-0 gap-2">
           <p className="text-sm font-medium">Товарні групи (опційно)</p>

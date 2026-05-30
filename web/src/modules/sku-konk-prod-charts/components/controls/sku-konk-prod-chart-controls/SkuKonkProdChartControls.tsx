@@ -1,33 +1,10 @@
-﻿import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { EntityLabel } from "@/modules/analogs/components/entity-label/EntityLabel";
-import { useKonksQuery } from "@/modules/konks/api/hooks/queries/useKonksQuery";
+﻿import { useKonksQuery } from "@/modules/konks/api/hooks/queries/useKonksQuery";
 import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
+import { SkuKonkProdChartControlsView } from "@/modules/sku-konk-prod-charts/components/controls/sku-konk-prod-chart-controls/SkuKonkProdChartControlsView";
 import { SKU_KONK_PROD_QUERY_ALL } from "@/modules/sku-konk-prod-charts/constants";
-import { SelectSkugrsDialog } from "@/modules/skugrs/components/dialogs/select-skugrs-dialog";
-import { cn } from "@/lib/utils";
-import { format } from "date-fns";
-import { CalendarIcon, Layers, X } from "lucide-react";
 import { useState } from "react";
-import type { DateRange } from "react-day-picker";
 
-interface SkuKonkProdChartControlsProps {
+export interface SkuKonkProdChartControlsProps {
   konk: string;
   prod: string;
   dateFrom: string;
@@ -57,181 +34,28 @@ export function SkuKonkProdChartControls({
     (p) => p.name !== SKU_KONK_PROD_QUERY_ALL,
   );
 
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isSkugrDialogOpen, setIsSkugrDialogOpen] = useState(false);
-  const [pendingRange, setPendingRange] = useState<DateRange | undefined>(
-    undefined,
-  );
 
   const skugrDialogReady = Boolean(konk);
-  const prodNameForSkugrList =
-    prod === SKU_KONK_PROD_QUERY_ALL ? "" : prod;
-
-  const handleDialogOpenChange = (open: boolean) => {
-    setIsDialogOpen(open);
-    if (open && dateFrom && dateTo) {
-      setPendingRange({ from: new Date(dateFrom), to: new Date(dateTo) });
-    }
-    if (!open) {
-      setPendingRange(undefined);
-    }
-  };
-
-  const isRangeComplete = !!pendingRange?.from && !!pendingRange?.to;
-
-  const handleConfirm = () => {
-    if (!pendingRange?.from || !pendingRange?.to) return;
-    onDateRangeChange(
-      format(pendingRange.from, "yyyy-MM-dd"),
-      format(pendingRange.to, "yyyy-MM-dd"),
-    );
-    setIsDialogOpen(false);
-    setPendingRange(undefined);
-  };
-
-  const dateLabel =
-    dateFrom && dateTo
-      ? `${format(new Date(dateFrom), "dd.MM.yyyy")} — ${format(new Date(dateTo), "dd.MM.yyyy")}`
-      : "Оберіть період";
+  const prodNameForSkugrList = prod === SKU_KONK_PROD_QUERY_ALL ? "" : prod;
 
   return (
-    <SurfaceSection className="grid grid-cols-1 gap-3">
-      <div className="flex min-w-0 flex-wrap items-center gap-3">
-        <Select
-          value={konk || "placeholder"}
-          onValueChange={(v) => onKonkChange(v === "placeholder" ? "" : v)}
-        >
-          <SelectTrigger
-            aria-label="Конкурент"
-            className="min-w-[160px] sm:min-w-[180px]"
-          >
-            <SelectValue placeholder="Оберіть конкурента" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="placeholder" disabled>
-              Оберіть конкурента
-            </SelectItem>
-            {konks.map((k) => (
-              <SelectItem key={k._id} value={k.name}>
-                <EntityLabel
-                  imageUrl={k.imageUrl}
-                  title={k.title}
-                  fallbackLabel={k.name}
-                  imageSize="xs"
-                />
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-
-        <Select
-          value={prod || "placeholder"}
-          onValueChange={(v) => {
-            if (v === "placeholder") onProdChange("");
-            else onProdChange(v);
-          }}
-        >
-          <SelectTrigger
-            aria-label="Виробник"
-            className={cn(
-              "min-w-[160px] sm:min-w-[180px]",
-              prod === SKU_KONK_PROD_QUERY_ALL && "text-destructive",
-            )}
-          >
-            <SelectValue placeholder="Оберіть виробника" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="placeholder" disabled>
-              Оберіть виробника
-            </SelectItem>
-            <SelectItem
-              value={SKU_KONK_PROD_QUERY_ALL}
-              className="text-destructive focus:bg-accent focus:text-destructive data-[highlighted]:text-destructive"
-            >
-              Всі виробники
-            </SelectItem>
-            {prods.map((p) => (
-              <SelectItem key={p._id} value={p.name}>
-                <EntityLabel
-                  imageUrl={p.imageUrl}
-                  title={p.title}
-                  fallbackLabel={p.name}
-                  imageSize="xs"
-                />
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-
-        <Button
-          variant="outline"
-          className="min-w-[220px] justify-start text-left font-normal"
-          onClick={() => setIsDialogOpen(true)}
-        >
-          <CalendarIcon className="mr-2 h-4 w-4" />
-          {dateLabel}
-        </Button>
-
-        <Button
-          type="button"
-          variant="outline"
-          className="min-w-[160px] justify-start gap-2 sm:min-w-[180px]"
-          disabled={!skugrDialogReady}
-          onClick={() => setIsSkugrDialogOpen(true)}
-        >
-          <Layers className="size-4 shrink-0" />
-          Товарні групи
-        </Button>
-
-        {skugrIds.length > 0 && (
-          <Badge
-            variant="secondary"
-            className="flex max-w-full items-center gap-1 py-1 pr-1"
-          >
-            <span className="truncate">Груп: {skugrIds.length}</span>
-            <button
-              type="button"
-              className="hover:bg-secondary/80 rounded p-0.5"
-              aria-label="Скинути фільтр товарних груп"
-              onClick={() => onSkugrIdsChange([])}
-            >
-              <X className="size-3.5 shrink-0" />
-            </button>
-          </Badge>
-        )}
-
-        <Dialog open={isDialogOpen} onOpenChange={handleDialogOpenChange}>
-          <DialogContent className="sm:max-w-fit">
-            <DialogHeader>
-              <DialogTitle>Оберіть період</DialogTitle>
-            </DialogHeader>
-            <Calendar
-              mode="range"
-              selected={pendingRange}
-              onSelect={setPendingRange}
-              disabled={(date) => date > new Date()}
-              numberOfMonths={2}
-            />
-            <DialogFooter>
-              <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
-                Скасувати
-              </Button>
-              <Button disabled={!isRangeComplete} onClick={handleConfirm}>
-                Обрати
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-
-        <SelectSkugrsDialog
-          open={isSkugrDialogOpen}
-          onOpenChange={setIsSkugrDialogOpen}
-          konkName={konk}
-          prodNameForList={prodNameForSkugrList}
-          value={skugrIds}
-          onConfirm={onSkugrIdsChange}
-        />
-      </div>
-    </SurfaceSection>
+    <SkuKonkProdChartControlsView
+      konk={konk}
+      prod={prod}
+      dateFrom={dateFrom}
+      dateTo={dateTo}
+      skugrIds={skugrIds}
+      konks={konks}
+      prods={prods}
+      onKonkChange={onKonkChange}
+      onProdChange={onProdChange}
+      onDateRangeChange={onDateRangeChange}
+      onSkugrIdsChange={onSkugrIdsChange}
+      isSkugrDialogOpen={isSkugrDialogOpen}
+      onSkugrDialogOpenChange={setIsSkugrDialogOpen}
+      prodNameForSkugrList={prodNameForSkugrList}
+      skugrDialogReady={skugrDialogReady}
+    />
   );
 }

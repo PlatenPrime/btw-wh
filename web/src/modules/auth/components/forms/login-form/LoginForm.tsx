@@ -18,6 +18,8 @@ const loginSchema = z.object({
 
 type LoginFormValues = z.infer<typeof loginSchema>;
 
+const stripSpaces = (value: string) => value.replace(/\s/g, "");
+
 export const LoginForm = () => {
   const { login, isLoading, error } = useAuth();
   const navigate = useNavigate();
@@ -38,6 +40,9 @@ export const LoginForm = () => {
   React.useEffect(() => {
     setFocus("username");
   }, [setFocus]);
+
+  const usernameField = register("username");
+  const passwordField = register("password");
 
   const onSubmit = async (data: LoginFormValues) => {
     try {
@@ -73,7 +78,11 @@ export const LoginForm = () => {
             autoComplete="username"
             aria-invalid={!!errors.username}
             aria-describedby="username-error"
-            {...register("username")}
+            {...usernameField}
+            onChange={(event) => {
+              event.target.value = stripSpaces(event.target.value);
+              void usernameField.onChange(event);
+            }}
             disabled={isLoading}
             className="h-11"
           />
@@ -91,7 +100,11 @@ export const LoginForm = () => {
               autoComplete="current-password"
               aria-invalid={!!errors.password}
               aria-describedby="password-error"
-              {...register("password")}
+              {...passwordField}
+              onChange={(event) => {
+                event.target.value = stripSpaces(event.target.value);
+                void passwordField.onChange(event);
+              }}
               disabled={isLoading}
               className="h-11 pr-10"
             />
