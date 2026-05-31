@@ -1,4 +1,4 @@
-import { SelectLimit } from "@/components/shared/select-limit";
+import { SelectLimit } from "@/components/shared/controls";
 import {
   Select,
   SelectContent,
@@ -6,7 +6,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { EntityLabel } from "@/components/shared/entity-label";
+import { EntityLabel } from "@/components/shared/entities/entity-label";
 import type { ProdDto } from "@/modules/prods/api/types";
 
 interface KonkSkusControlsProps {

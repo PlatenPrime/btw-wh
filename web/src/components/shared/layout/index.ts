@@ -1,3 +1,5 @@
-export { Page } from "@/components/shared/layout/Page";
-export { PageHeader } from "@/components/shared/layout/PageHeader";
-export { PageSection } from "@/components/shared/layout/PageSection";
+export { Page } from "./Page";
+export { PageHeader } from "./PageHeader";
+export { PageSection } from "./PageSection";
+export { SurfaceSection } from "./SurfaceSection";
+export { SurfaceSection as Wrapper } from "./Wrapper";

@@ -1,4 +1,4 @@
-﻿import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 import { Badge } from "@/components/ui/badge";
 import { Loader2 } from "lucide-react";
 

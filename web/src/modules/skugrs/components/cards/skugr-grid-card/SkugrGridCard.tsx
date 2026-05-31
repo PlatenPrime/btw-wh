@@ -1,5 +1,5 @@
 import { RoleType } from "@/constants/roles";
-import type { CardAction } from "@/components/shared/card-actions/types";
+import type { CardAction } from "@/components/shared/actions/card-actions";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 import type { SkugrDto } from "@/modules/skugrs/api/types";
 import type { KonkDto } from "@/modules/konks/api/types";

@@ -1,5 +1,5 @@
-import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
-import { ErrorDisplay } from "@/components/shared/error-components/error-display";
+import { DataRefetchOverlay } from "@/components/shared/feedback/data-refetch-overlay/DataRefetchOverlay";
+import { ErrorDisplay } from "@/components/shared/errors";
 import { useAskPullQuery } from "@/modules/asks/api/hooks/queries/useAskPullQuery";
 import type { GetAskPullResponse } from "@/modules/asks/api/types/dto";
 import type { ComponentType } from "react";

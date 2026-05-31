@@ -1,5 +1,5 @@
-import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
-import { ErrorDisplay } from "@/components/shared/error-components";
+import { DataRefetchOverlay } from "@/components/shared/feedback/data-refetch-overlay/DataRefetchOverlay";
+import { ErrorDisplay } from "@/components/shared/errors";
 import { useBlocksQuery } from "@/modules/blocks/api/hooks/queries/useBlocksQuery";
 import type { BlockDto } from "@/modules/blocks/api/types";
 import { BlocksEmptyState } from "@/modules/blocks/components/fetchers/blocks-fetcher/BlocksEmptyState";

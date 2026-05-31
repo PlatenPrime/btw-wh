@@ -1,4 +1,4 @@
-import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 import { cn } from "@/lib/utils";
 import type { GetAsksPullsResponse } from "@/modules/asks/api/types/dto";
 import { LoaderPinwheel } from "lucide-react";

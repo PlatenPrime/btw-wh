@@ -1,4 +1,4 @@
-import { Image } from "@/components/shared/image/image";
+import { Image } from "@/components/shared/media/image/Image";
 import { DetailPanelCard } from "@/components/shared/cards";
 import { CardContent, CardTitle } from "@/components/ui/card";
 import type { ProdDto } from "@/modules/prods/api/types";

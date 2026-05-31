@@ -1,7 +1,7 @@
-﻿import { useState } from "react";
-import { CardActionsMenu } from "@/components/shared/card-actions/CardActionsMenu";
+import { useState } from "react";
+import { CardActionsMenu } from "@/components/shared/actions/card-actions";
 import { Dialog } from "@/components/ui/dialog";
-import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 import { ListRowCard } from "@/components/shared/cards";
 import {
   CardAction,

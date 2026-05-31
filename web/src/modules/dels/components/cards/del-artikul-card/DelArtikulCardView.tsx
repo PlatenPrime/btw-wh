@@ -1,4 +1,4 @@
-import { ArtikulImageLink } from "@/components/shared/artikul-image-link/ArtikulImageLink";
+import { ArtikulImageLink } from "@/components/shared/media/artikul-image-link/ArtikulImageLink";
 import { Button } from "@/components/ui/button";
 import { ListRowCard } from "@/components/shared/cards";
 import { cn } from "@/lib/utils";

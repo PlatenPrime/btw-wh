@@ -8,7 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
+import { DialogActions } from "@/components/shared/dialogs";
 import { getRoleLabel } from "@/constants/roles";
 import { RoleType } from "@/constants/roles";
 import type { EditUserFormValues } from "@/modules/auth/components/forms/schema";

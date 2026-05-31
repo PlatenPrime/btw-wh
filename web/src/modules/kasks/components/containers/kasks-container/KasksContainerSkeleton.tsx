@@ -1,5 +1,5 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 
 export function KasksContainerSkeleton() {
   return (

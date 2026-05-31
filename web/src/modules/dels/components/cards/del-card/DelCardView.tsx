@@ -1,8 +1,8 @@
-import { CardActionsMenu } from "@/components/shared/card-actions";
-import type { CardAction } from "@/components/shared/card-actions";
+import { CardActionsMenu } from "@/components/shared/actions/card-actions";
+import type { CardAction } from "@/components/shared/actions/card-actions";
 import { ListRowCard } from "@/components/shared/cards";
 import { CardContent, CardTitle } from "@/components/ui/card";
-import { Image } from "@/components/shared/image/image";
+import { Image } from "@/components/shared/media/image/Image";
 import type { DelListItemDto } from "@/modules/dels/api/types";
 import { Package } from "lucide-react";
 import { Link } from "react-router";

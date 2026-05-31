@@ -1,4 +1,4 @@
-import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 import { DelArtikulCard } from "@/modules/dels/components/cards/del-artikul-card";
 import type { DelArtikulItem } from "@/modules/dels/api/types";
 

@@ -1,8 +1,8 @@
-import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
+import { DialogActions } from "@/components/shared/dialogs";
 import {
   FieldErrorDisplay,
   FormErrorDisplay,
-} from "@/components/shared/error-components";
+} from "@/components/shared/errors";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";

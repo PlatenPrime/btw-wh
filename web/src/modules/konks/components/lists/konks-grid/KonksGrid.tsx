@@ -1,4 +1,4 @@
-import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 import type { KonkDto } from "@/modules/konks/api/types";
 import { KonkCard } from "@/modules/konks/components/cards/konk-card";
 

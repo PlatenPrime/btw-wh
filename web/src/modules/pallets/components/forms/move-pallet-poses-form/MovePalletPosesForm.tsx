@@ -1,5 +1,5 @@
-import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
-import { FormErrorDisplay } from "@/components/shared/error-components/form-error-display";
+import { DialogActions } from "@/components/shared/dialogs";
+import { FormErrorDisplay } from "@/components/shared/errors";
 import { Input } from "@/components/ui/input";
 import { useDebounce } from "@/hooks/useDebounce";
 import type { IPallet } from "@/modules/pallets/api/types";

@@ -1,6 +1,6 @@
-import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
-import { ErrorDisplay } from "@/components/shared/error-components";
-import { LoadingNoData } from "@/components/shared/loading-states";
+import { DataRefetchOverlay } from "@/components/shared/feedback/data-refetch-overlay/DataRefetchOverlay";
+import { ErrorDisplay } from "@/components/shared/errors";
+import { LoadingNoData } from "@/components/shared/feedback/loading-states";
 import { useKonksQuery } from "@/modules/konks/api/hooks/queries/useKonksQuery";
 import type { KonksListResponse } from "@/modules/konks/api/types";
 

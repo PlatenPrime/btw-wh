@@ -1,4 +1,4 @@
-import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 import { SkugrGridCard } from "@/modules/skugrs/components/cards/skugr-grid-card";
 import type { SkugrDto } from "@/modules/skugrs/api/types";
 import type { KonkDto } from "@/modules/konks/api/types";

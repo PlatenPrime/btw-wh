@@ -1,5 +1,5 @@
-import { EntityNotFound } from "@/components/shared/entity-not-found";
-import { ErrorDisplay } from "@/components/shared/error-components";
+import { EntityNotFound } from "@/components/shared/entities/entity-not-found";
+import { ErrorDisplay } from "@/components/shared/errors";
 import { useZoneByTitleQuery } from "@/modules/zones/api/hooks/queries/useZoneByTitleQuery";
 import type { ZoneDto } from "@/modules/zones/api/types";
 

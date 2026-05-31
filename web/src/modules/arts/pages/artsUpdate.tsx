@@ -1,4 +1,4 @@
-import { SidebarInsetLayout } from "@/components/layout/SidebarInsetLayout";
+import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout/SidebarInsetLayout";
 import { ArtsUpdateHeaderActions } from "@/modules/arts/components/actions/arts-update-header-actions/ArtsUpdateHeaderActions";
 import { ArtsExcelUploaderLazy } from "@/modules/arts/components/containers/arts-excel-container/ArtsExcelUploaderLazy";
 

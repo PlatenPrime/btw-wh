@@ -1,6 +1,6 @@
 import { memo } from "react";
 import { Virtuoso } from "react-virtuoso";
-import { LoadingNoData } from "@/components/shared/loading-states/loading-nodata";
+import { LoadingNoData } from "@/components/shared/feedback/loading-states";
 import type { GetAsksByArtikulResponse } from "@/modules/asks/api/types/dto";
 import { AsksByArtikulCard } from "@/modules/asks/components/cards/asks-by-artikul-card";
 

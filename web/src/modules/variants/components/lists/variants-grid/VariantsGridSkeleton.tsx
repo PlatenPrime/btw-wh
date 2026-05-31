@@ -1,4 +1,4 @@
-import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 import { VariantGridCardSkeleton } from "@/modules/variants/components/cards/variant-grid-card/VariantGridCardSkeleton";
 
 interface VariantsGridSkeletonProps {

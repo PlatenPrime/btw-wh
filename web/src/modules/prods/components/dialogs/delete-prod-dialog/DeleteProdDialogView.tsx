@@ -1,4 +1,4 @@
-import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
+import { DialogActions } from "@/components/shared/dialogs";
 import {
   DialogContent,
   DialogHeader,

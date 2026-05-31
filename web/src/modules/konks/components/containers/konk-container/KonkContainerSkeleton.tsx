@@ -1,6 +1,6 @@
 import { PageSection } from "@/components/shared/layout";
-import { SearchFiltersLayout } from "@/components/shared/search-components/search-filters-layout";
-import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SearchFiltersLayout } from "@/components/shared/search/search-filters-layout";
+import { SurfaceSection } from "@/components/shared/layout";
 import { Skeleton } from "@/components/ui/skeleton";
 import { KonkDetailsCardSkeleton } from "@/modules/konks/components/cards/konk-details-card";
 import { SkusContainerSkeleton } from "@/modules/skus/components/containers/skus-by-konk-container/SkusContainerSkeleton";

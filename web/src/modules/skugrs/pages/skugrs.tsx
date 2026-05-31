@@ -1,4 +1,4 @@
-import { SidebarInsetLayout } from "@/components/layout/SidebarInsetLayout";
+import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout/SidebarInsetLayout";
 import { SkugrsHeaderActions } from "@/modules/skugrs/components/actions/skugrs-header-actions/SkugrsHeaderActions";
 import {
   SkugrsContainer,

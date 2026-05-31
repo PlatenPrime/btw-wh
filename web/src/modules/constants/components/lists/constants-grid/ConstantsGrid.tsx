@@ -1,4 +1,4 @@
-﻿import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 import type { ConstantDto } from "@/modules/constants/api/types";
 import { ConstantCard } from "@/modules/constants/components/cards/constant-card";
 

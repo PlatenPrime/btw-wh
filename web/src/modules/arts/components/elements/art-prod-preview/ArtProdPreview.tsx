@@ -1,4 +1,4 @@
-import { EntityLabel } from "@/components/shared/entity-label";
+import { EntityLabel } from "@/components/shared/entities/entity-label";
 import { cn } from "@/lib/utils";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 

@@ -1,5 +1,5 @@
-import { SidebarInsetLayout } from "@/components/layout/SidebarInsetLayout";
-import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout/SidebarInsetLayout";
+import { SurfaceSection } from "@/components/shared/layout";
 import { ArtsByZoneFetcher } from "@/modules/arts/components/fetchers/arts-by-zone-fetcher";
 import {
   ArtsByZoneContainer,

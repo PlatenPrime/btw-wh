@@ -1,6 +1,6 @@
-import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
-import { ErrorDisplay } from "@/components/shared/error-components";
-import { LoadingNoData } from "@/components/shared/loading-states";
+import { DataRefetchOverlay } from "@/components/shared/feedback/data-refetch-overlay/DataRefetchOverlay";
+import { ErrorDisplay } from "@/components/shared/errors";
+import { LoadingNoData } from "@/components/shared/feedback/loading-states";
 import { useDelsQuery } from "@/modules/dels/api/hooks/queries/useDelsQuery";
 import type { DelsListResponse } from "@/modules/dels/api/types";
 

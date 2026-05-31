@@ -1,5 +1,5 @@
-import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
-import { Image } from "@/components/shared/image/image";
+import { DialogActions } from "@/components/shared/dialogs";
+import { Image } from "@/components/shared/media/image/Image";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/select";
 import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
-import { EntityLabel } from "@/components/shared/entity-label";
+import { EntityLabel } from "@/components/shared/entities/entity-label";
 import type { UseFormReturn } from "react-hook-form";
 import { type UpdateVariantFormData } from "./schema";
 

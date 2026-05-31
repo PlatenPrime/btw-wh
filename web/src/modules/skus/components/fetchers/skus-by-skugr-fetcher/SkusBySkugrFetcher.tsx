@@ -1,10 +1,10 @@
-import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
-import { ErrorDisplay } from "@/components/shared/error-components";
-import { LoadingNoData } from "@/components/shared/loading-states";
-import { SearchFiltersLayout } from "@/components/shared/search-components/search-filters-layout";
-import { SearchPanel } from "@/components/shared/search-components/search-panel/SearchPanel";
-import { SelectLimit } from "@/components/shared/select-limit";
-import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { DataRefetchOverlay } from "@/components/shared/feedback/data-refetch-overlay/DataRefetchOverlay";
+import { ErrorDisplay } from "@/components/shared/errors";
+import { LoadingNoData } from "@/components/shared/feedback/loading-states";
+import { SearchFiltersLayout } from "@/components/shared/search/search-filters-layout";
+import { SearchPanel } from "@/components/shared/search/search-panel/SearchPanel";
+import { SelectLimit } from "@/components/shared/controls";
+import { SurfaceSection } from "@/components/shared/layout";
 import { useKonksQuery } from "@/modules/konks/api/hooks/queries/useKonksQuery";
 import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
 import { useSkugrPageByIdQuery } from "@/modules/skugrs/api/hooks/queries/useSkugrPageByIdQuery";

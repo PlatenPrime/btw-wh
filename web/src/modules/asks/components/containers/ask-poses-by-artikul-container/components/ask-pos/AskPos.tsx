@@ -1,7 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { AskPosEditDialog } from "@/modules/asks/components/dialogs/ask-pos-edit-dialog/AskPosEditDialog";
 import type { PosResponse } from "@/modules/poses/api/types";
-import { SkladListPos } from "@/components/shared/sklad-list-pos";
+import { SkladListPos } from "@/components/shared/domain/sklad-list-pos";
 import { useState } from "react";
 
 interface AskPosProps {

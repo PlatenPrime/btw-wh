@@ -1,4 +1,4 @@
-import { SidebarInsetLayout } from "@/components/layout/SidebarInsetLayout";
+import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout/SidebarInsetLayout";
 import { Button } from "@/components/ui/button";
 import {
   Card,

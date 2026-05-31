@@ -1,5 +1,5 @@
-import { DateNavigation } from "@/components/shared/date-navigation/DateNavigation";
-import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { DateNavigation } from "@/components/shared/date/date-navigation/DateNavigation";
+import { SurfaceSection } from "@/components/shared/layout";
 import type { GetAsksByDateResponse } from "@/modules/asks/api/types/dto";
 import { AsksList } from "@/modules/asks/components/lists/asks-list/AsksList";
 

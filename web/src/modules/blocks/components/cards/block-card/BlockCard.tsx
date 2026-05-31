@@ -1,4 +1,4 @@
-import { CardActionsMenu } from "@/components/shared/card-actions/CardActionsMenu";
+import { CardActionsMenu } from "@/components/shared/actions/card-actions";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RoleType } from "@/constants/roles";
 import { RoleGuard } from "@/modules/auth/components/elements/RoleGuard";

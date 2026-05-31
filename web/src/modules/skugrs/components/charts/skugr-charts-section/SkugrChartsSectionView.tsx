@@ -6,9 +6,9 @@ import {
 import {
   SliceRangeChartView,
 } from "@/components/shared/charts/slice-range-chart";
-import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
-import { ErrorDisplay } from "@/components/shared/error-components";
-import { LoadingNoData } from "@/components/shared/loading-states/loading-nodata";
+import { DataRefetchOverlay } from "@/components/shared/feedback/data-refetch-overlay/DataRefetchOverlay";
+import { ErrorDisplay } from "@/components/shared/errors";
+import { LoadingNoData } from "@/components/shared/feedback/loading-states";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import type {

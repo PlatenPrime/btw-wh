@@ -1,4 +1,4 @@
-﻿import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 import type { RowDto } from "@/modules/rows/api/types/dto";
 import { RowsGrid } from "@/modules/rows/components/lists/rows-grid/RowsGrid";
 

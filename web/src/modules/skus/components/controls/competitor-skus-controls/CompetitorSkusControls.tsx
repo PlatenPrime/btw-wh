@@ -1,7 +1,7 @@
-import { SearchFiltersLayout } from "@/components/shared/search-components/search-filters-layout";
-import { SearchPanel } from "@/components/shared/search-components/search-panel/SearchPanel";
-import { SelectLimit } from "@/components/shared/select-limit";
-import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SearchFiltersLayout } from "@/components/shared/search/search-filters-layout";
+import { SearchPanel } from "@/components/shared/search/search-panel/SearchPanel";
+import { SelectLimit } from "@/components/shared/controls";
+import { SurfaceSection } from "@/components/shared/layout";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -17,7 +17,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
-import { EntityLabel } from "@/components/shared/entity-label";
+import { EntityLabel } from "@/components/shared/entities/entity-label";
 import { useKonksQuery } from "@/modules/konks/api/hooks/queries/useKonksQuery";
 import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
 import type { CompetitorSkusScope } from "@/modules/skus/hooks/useCompetitorSkusParams";

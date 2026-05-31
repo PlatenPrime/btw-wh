@@ -1,4 +1,4 @@
-﻿import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 import { Badge } from "@/components/ui/badge";
 import type { DefsCalculationStatus } from "@/modules/defs/api/types/dto";
 import { formatDate } from "@/utils/formatDate";

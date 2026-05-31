@@ -1,14 +1,14 @@
-import { ArtikulImageLink } from "@/components/shared/artikul-image-link/ArtikulImageLink";
+import { ArtikulImageLink } from "@/components/shared/media/artikul-image-link/ArtikulImageLink";
 import { DetailPanelCard } from "@/components/shared/cards";
 import { CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import type { EnrichedAnalogDto } from "@/modules/analogs/api/types";
-import { KonkBanner } from "@/components/shared/konk-banner";
+import { KonkBanner } from "@/components/shared/domain/konk-banner";
 import {
   AnalogStockContainer,
   AnalogStockSkeleton,
 } from "@/modules/analogs/components/containers/analog-stock-container";
-import { EntityLabel } from "@/components/shared/entity-label";
+import { EntityLabel } from "@/components/shared/entities/entity-label";
 import { AnalogStockFetcher } from "@/modules/analogs/components/fetchers/analog-stock-fetcher";
 import { ExternalLink } from "lucide-react";
 

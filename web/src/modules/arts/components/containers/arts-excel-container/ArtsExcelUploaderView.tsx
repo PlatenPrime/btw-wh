@@ -1,5 +1,5 @@
-﻿import { UploadProgressBar } from "@/components/shared/progress/UploadProgressBar";
-import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { UploadProgressBar } from "@/components/shared/feedback/progress/UploadProgressBar";
+import { SurfaceSection } from "@/components/shared/layout";
 import { Button } from "@/components/ui/button";
 import type { UploadingArt } from "@/modules/arts/api/types/arts";
 import { InputUploader } from "@/modules/arts/components/containers/arts-excel-container/components/input-uploader";

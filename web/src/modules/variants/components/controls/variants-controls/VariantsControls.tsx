@@ -1,7 +1,7 @@
-import { SearchFiltersLayout } from "@/components/shared/search-components/search-filters-layout";
-import { SearchPanel } from "@/components/shared/search-components/search-panel/SearchPanel";
-import { SelectLimit } from "@/components/shared/select-limit";
-import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SearchFiltersLayout } from "@/components/shared/search/search-filters-layout";
+import { SearchPanel } from "@/components/shared/search/search-panel/SearchPanel";
+import { SelectLimit } from "@/components/shared/controls";
+import { SurfaceSection } from "@/components/shared/layout";
 import {
   Select,
   SelectContent,
@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/select";
 import { useKonksQuery } from "@/modules/konks/api/hooks/queries/useKonksQuery";
 import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
-import { EntityLabel } from "@/components/shared/entity-label";
+import { EntityLabel } from "@/components/shared/entities/entity-label";
 import { useVariantsParams } from "@/modules/variants/hooks/useVariantsParams";
 
 export function VariantsControls() {

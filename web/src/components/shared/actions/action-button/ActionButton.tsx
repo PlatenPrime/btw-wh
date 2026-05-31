@@ -8,7 +8,7 @@ import {
   actionTypeToButtonVariant,
   actionTypeToIconVariant,
   type ActionType,
-} from "@/components/shared/action-button/action-button-variants";
+} from "@/components/shared/actions/action-button/action-button-variants";
 
 interface ActionButtonProps
   extends Omit<React.ComponentProps<typeof Button>, "variant"> {

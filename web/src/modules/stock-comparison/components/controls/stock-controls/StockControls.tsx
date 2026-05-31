@@ -3,7 +3,7 @@ import {
   KonkEntitySelect,
   ProdEntitySelect,
 } from "@/components/shared/controls";
-import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 import {
   Select,
   SelectContent,

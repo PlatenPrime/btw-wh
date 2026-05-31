@@ -1,4 +1,4 @@
-﻿import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 import { ConstantCardSkeleton } from "@/modules/constants/components/cards/constant-card";
 
 const SKELETON_ITEMS_COUNT = 8;

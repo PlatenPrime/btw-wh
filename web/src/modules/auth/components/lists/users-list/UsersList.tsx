@@ -1,4 +1,4 @@
-﻿import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 import type { User } from "@/modules/auth/api/types";
 import { UserCard } from "@/modules/auth/components/cards/user-card";
 

@@ -1,14 +1,14 @@
-import { AnalogImageLink } from "@/components/shared/analog-image-link/AnalogImageLink";
-import { CardActionsMenu } from "@/components/shared/card-actions/CardActionsMenu";
-import type { CardAction } from "@/components/shared/card-actions/types";
+import { AnalogImageLink } from "@/components/shared/media/analog-image-link/AnalogImageLink";
+import { CardActionsMenu } from "@/components/shared/actions/card-actions";
+import type { CardAction } from "@/components/shared/actions/card-actions";
 import { GridTileCard } from "@/components/shared/cards";
 import { cn } from "@/lib/utils";
 import type { AnalogDto } from "@/modules/analogs/api/types";
 import {
   getKonkTheme,
   KonkBanner,
-} from "@/components/shared/konk-banner";
-import { EntityLabel } from "@/components/shared/entity-label";
+} from "@/components/shared/domain/konk-banner";
+import { EntityLabel } from "@/components/shared/entities/entity-label";
 import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
 

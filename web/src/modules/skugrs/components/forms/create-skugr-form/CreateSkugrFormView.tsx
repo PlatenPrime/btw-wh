@@ -1,4 +1,4 @@
-import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
+import { DialogActions } from "@/components/shared/dialogs";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,7 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { EntityLabel } from "@/components/shared/entity-label";
+import { EntityLabel } from "@/components/shared/entities/entity-label";
 import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
 import type { FieldValues, Path, PathValue, UseFormReturn } from "react-hook-form";

@@ -1,8 +1,8 @@
-﻿import { PaginationControls } from "@/components/shared/pagination-controls";
-import { SearchFiltersLayout } from "@/components/shared/search-components/search-filters-layout";
-import { SearchPanel } from "@/components/shared/search-components/search-panel/SearchPanel";
-import { SelectLimit } from "@/components/shared/select-limit";
-import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { PaginationControls } from "@/components/shared/controls";
+import { SearchFiltersLayout } from "@/components/shared/search/search-filters-layout";
+import { SearchPanel } from "@/components/shared/search/search-panel/SearchPanel";
+import { SelectLimit } from "@/components/shared/controls";
+import { SurfaceSection } from "@/components/shared/layout";
 import type { ArtDto, ArtsDto } from "@/modules/arts/api/types/dto";
 import { ArtsGrid } from "@/modules/arts/components/lists/arts-grid/ArtsGrid.tsx";
 

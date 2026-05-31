@@ -1,4 +1,4 @@
-import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 import { SkuGridCardSkeleton } from "@/modules/skus/components/cards/sku-grid-card";
 
 interface SkusGridSkeletonProps {

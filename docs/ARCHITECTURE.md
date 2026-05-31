@@ -22,10 +22,9 @@
 ```
 web/src/
 ├── components/          # Общие компоненты
-│   ├── layout/         # Компоненты макета (sidebar, header)
-│   ├── shared/         # Переиспользуемые компоненты
-│   │   └── charts/     # Спільні графіки, скелетони, chart-date-range-toolbar (без привʼязки до модуля)
-│   └── ui/             # Базовые UI компоненты (shadcn/ui)
+│   ├── layout/         # App shell: sidebar, header-actions, sidebar-inset-layout
+│   ├── shared/         # Cross-module UI (15 категорий, см. ниже)
+│   └── ui/             # Базовые UI компоненты (shadcn/ui), полный barrel index.ts
 ├── modules/            # Функциональные модули
 ├── pages/              # Системные страницы (main, not-found)
 ├── hooks/              # Глобальные хуки
@@ -76,12 +75,12 @@ modules/{module-name}/
 
 | Путь | Назначение |
 |------|------------|
-| `components/layout/` | App shell: sidebar, header-actions, `SidebarInsetLayout` |
-| `components/shared/layout/` | Контентная обёртка страниц: `Page`, `PageHeader`, `PageSection` |
+| `components/layout/` | App shell: `sidebar/`, `header-actions/`, `sidebar-inset-layout/` + barrel `index.ts` |
+| `components/shared/layout/` | Контентная обёртка страниц: `Page`, `PageHeader`, `PageSection`, `SurfaceSection` |
 
 ### Cross-module UI и изоляция модулей
 
-1. Компоненты, импортируемые из **двух и более модулей**, размещаются в `components/shared/` (например, `konk-banner/`, `sklad-list-pos/`).
+1. Компоненты, импортируемые из **двух и более модулей**, размещаются в `components/shared/<category>/` (например, `domain/konk-banner/`, `domain/sklad-list-pos/`).
 2. **Запрещены** импорты вида `@/modules/{A}/...` из `@/modules/{B}/...` (кроме временной миграции; целевое состояние — ноль таких импортов).
 3. Импорты между модулями — только через `@/components/shared/` или общие `@/types/`, `@/lib/`.
 
@@ -280,7 +279,43 @@ export function useArtsQuery({ page, limit, search, ... }: UseArtsQueryParams) {
 
 ## Компоненты и их структура
 
-### Категории компонентов
+### `web/src/components/` — три слоя
+
+| Слой | Путь | Назначение |
+|------|------|------------|
+| App shell | `layout/` | Sidebar, header actions, `SidebarInsetLayout` |
+| Cross-module UI | `shared/<category>/` | Переиспользуемые между модулями компоненты |
+| Примитивы | `ui/` | shadcn/ui; импорт через `@/components/ui` или direct `@/components/ui/button` |
+
+### Категории `components/shared/`
+
+| Категория | Содержимое |
+|-----------|------------|
+| `actions/` | `action-button/`, `card-actions/` |
+| `cards/` | `GridTileCard`, `ListRowCard`, `DetailPanelCard` |
+| `charts/` | Range-графики, `ChartSection`, `ChartDateRangeToolbar` |
+| `controls/` | Entity selects, `SelectLimit`, `PaginationControls` |
+| `date/` | `CalendarDate`, `DateNavigation` |
+| `dialogs/` | `DialogActions`, `UrlDialogImage` |
+| `domain/` | Cross-module domain widgets (`konk-banner`, `sklad-list-pos`) |
+| `elements/` | `FetchIndicator`, `ModeToggle`, `Status`, `AnimatedMood`, `SummaryField` |
+| `entities/` | `EntityLabel`, `EntityNotFound`, `UserAvatarName` |
+| `errors/` | `ErrorDisplay`, `ErrorBoundary`, `FormErrorDisplay`, … |
+| `feedback/` | `loading-states/`, `DataRefetchOverlay`, `UploadProgressBar` |
+| `home/` | `MainHero`, `MainQuickLinks` |
+| `layout/` | `Page`, `PageHeader`, `PageSection`, `SurfaceSection` |
+| `media/` | `Image`, image links |
+| `search/` | `SearchPanel`, `SearchFiltersLayout` |
+| `triggers/` | Icon action triggers (`EditTrigger`, `DeleteTrigger`, …) |
+
+**Правила именования shared:**
+
+- Папка компонента: **kebab-case** (`pagination-controls/`)
+- Файл компонента: **PascalCase** (`PaginationControls.tsx`)
+- Каждая категория и активная подгруппа: **`index.ts`** с публичным API
+- Mega-barrel `shared/index.ts` **не используется** — импорт по категории: `@/components/shared/controls`, `@/components/shared/errors`
+
+### Категории компонентов (модули)
 
 1. **Cards** - карточки для отображения данных
 2. **Actions** - компоненты для регистрации header actions и связанных диалогов/побочных эффектов
@@ -511,8 +546,8 @@ export function useNewModulesQuery(params: GetNewModulesParams) {
 
 ```typescript
 // components/fetchers/new-modules-fetcher/NewModulesFetcher.tsx
-import { ErrorDisplay } from "@/components/shared/error-components";
-import { LoadingNoData } from "@/components/shared/loading-states";
+import { ErrorDisplay } from "@/components/shared/errors";
+import { LoadingNoData } from "@/components/shared/feedback/loading-states";
 import { useNewModulesQuery } from "../../api/hooks/queries/useNewModulesQuery";
 
 // SkeletonComponent — скелетон того же контейнера/секции, что и ContainerComponent (например NewModulesContainerSkeleton).
@@ -651,7 +686,7 @@ import { useArtsQuery } from "../api/hooks/queries/useArtsQuery";
 - [ ] Каждый `*Container` имеет `*ContainerView` (+ `*ContainerSkeleton` при loading)
 - [ ] Страница не вызывает `useQuery` — данные через Fetcher → Container
 - [ ] Chart view в `charts/`, логика сценария в `containers/`
-- [ ] Cross-module UI только в `@/components/shared/`
+- [x] Cross-module UI только в `@/components/shared/<category>/`
 - [ ] Нет импортов `@/modules/A/...` из `@/modules/B/...`
 - [ ] `useRegisterHeaderActions` только в `components/actions/`
 - [ ] Скелетон обновлён вместе с изменением layout компонента

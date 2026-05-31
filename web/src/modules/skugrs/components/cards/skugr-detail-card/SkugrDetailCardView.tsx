@@ -4,8 +4,8 @@ import { cn } from "@/lib/utils";
 import {
   getKonkTheme,
   KonkBanner,
-} from "@/components/shared/konk-banner";
-import { EntityLabel } from "@/components/shared/entity-label";
+} from "@/components/shared/domain/konk-banner";
+import { EntityLabel } from "@/components/shared/entities/entity-label";
 import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
 import type { SkugrPageDto } from "@/modules/skugrs/api/types";

@@ -1,5 +1,5 @@
-import { SidebarInsetLayout } from "@/components/layout/SidebarInsetLayout";
-import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout/SidebarInsetLayout";
+import { SurfaceSection } from "@/components/shared/layout";
 import { ZonesExcelUploader } from "@/modules/zones/components/containers/zones-excel-container";
 
 export function ZonesImportExport() {

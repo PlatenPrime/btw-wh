@@ -5,7 +5,7 @@ import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
 import { Edit, Trash } from "lucide-react";
 import { useMemo } from "react";
-import type { CardAction } from "@/components/shared/card-actions";
+import type { CardAction } from "@/components/shared/actions/card-actions";
 import { VariantGridCardView } from "./VariantGridCardView";
 
 interface VariantGridCardProps {

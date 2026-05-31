@@ -1,4 +1,4 @@
-import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 import type { PalletShortDto } from "@/modules/pallets/api/types";
 import { PalletInRowCard } from "@/modules/pallets/components/cards/pallet-in-row-card/PalletInRowCard.tsx";
 

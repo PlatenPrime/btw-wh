@@ -1,5 +1,5 @@
 // router.tsx
-import { RouteErrorBoundary } from "@/components/shared/error-components/route-error-boundary";
+import { RouteErrorBoundary } from "@/components/shared/errors";
 import { RoleType } from "@/constants/roles";
 import { ProtectedRoute } from "@/modules/auth/components/index.ts";
 import { lazy } from "react";

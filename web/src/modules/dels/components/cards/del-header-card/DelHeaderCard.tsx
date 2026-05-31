@@ -1,4 +1,4 @@
-import { Image } from "@/components/shared/image/image";
+import { Image } from "@/components/shared/media/image/Image";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import type { DelDto } from "@/modules/dels/api/types";
 

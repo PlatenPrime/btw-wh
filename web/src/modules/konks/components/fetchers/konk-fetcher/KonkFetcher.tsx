@@ -1,6 +1,6 @@
-import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
-import { EntityNotFound } from "@/components/shared/entity-not-found";
-import { ErrorDisplay } from "@/components/shared/error-components";
+import { DataRefetchOverlay } from "@/components/shared/feedback/data-refetch-overlay/DataRefetchOverlay";
+import { EntityNotFound } from "@/components/shared/entities/entity-not-found";
+import { ErrorDisplay } from "@/components/shared/errors";
 import { useKonkByIdQuery } from "@/modules/konks/api/hooks/queries/useKonkByIdQuery";
 import type { KonkDto } from "@/modules/konks/api/types";
 

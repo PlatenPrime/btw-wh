@@ -1,4 +1,4 @@
-import { SummaryField } from "@/components/shared/summary-field";
+import { SummaryField } from "@/components/shared/elements/summary-field";
 import type { BtradeArtInfoDto } from "@/modules/arts/api/types/dto";
 import type { BtradeArtDataContainerProps } from "@/modules/arts/components/fetchers/btrade-art-data-fetcher/BtradeArtDataFetcher";
 

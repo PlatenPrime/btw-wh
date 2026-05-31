@@ -1,16 +1,16 @@
-import { Image } from "@/components/shared/image/image";
+import { Image } from "@/components/shared/media/image/Image";
 import {
   URL_DIALOG_IMAGE_FALLBACK,
   UrlDialogImage,
-} from "@/components/shared/url-dialog-image/UrlDialogImage";
+} from "@/components/shared/dialogs";
 import { Badge } from "@/components/ui/badge";
 import { GridTileCard } from "@/components/shared/cards";
 import { cn } from "@/lib/utils";
 import {
   getKonkTheme,
   KonkBanner,
-} from "@/components/shared/konk-banner";
-import { EntityLabel } from "@/components/shared/entity-label";
+} from "@/components/shared/domain/konk-banner";
+import { EntityLabel } from "@/components/shared/entities/entity-label";
 import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
 import type { SkuDto } from "@/modules/skus/api/types";

@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { ListRowCard } from "@/components/shared/cards";
-import { CalendarDate } from "@/components/shared/date/CalendarDate";
-import { UserAvatarName } from "@/components/shared/user/UserAvatarName";
+import { CalendarDate } from "@/components/shared/date/calendar-date/CalendarDate";
+import { UserAvatarName } from "@/components/shared/entities/user/UserAvatarName";
 import type { AskDto } from "@/modules/asks/api/types/dto";
 import { AskStatusBage } from "@/modules/asks/components/elements/ask-status-bage/AskStatusBage";
 import { Link } from "react-router";

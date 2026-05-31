@@ -1,4 +1,4 @@
-import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 import { SkugrGridCardSkeleton } from "@/modules/skugrs/components/cards/skugr-grid-card/SkugrGridCardSkeleton";
 
 interface SkugrsGridSkeletonProps {

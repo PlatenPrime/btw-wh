@@ -1,4 +1,4 @@
-import { ArtikulImageLink } from "@/components/shared/artikul-image-link/ArtikulImageLink";
+import { ArtikulImageLink } from "@/components/shared/media/artikul-image-link/ArtikulImageLink";
 import {
   Table,
   TableBody,

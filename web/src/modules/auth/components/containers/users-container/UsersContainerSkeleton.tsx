@@ -1,4 +1,4 @@
-﻿import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 import { UserCardSkeleton } from "@/modules/auth/components/cards/user-card";
 
 export function UsersContainerSkeleton() {

@@ -1,6 +1,6 @@
-import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
-import { ErrorDisplay } from "@/components/shared/error-components";
-import { LoadingNoData } from "@/components/shared/loading-states";
+import { DataRefetchOverlay } from "@/components/shared/feedback/data-refetch-overlay/DataRefetchOverlay";
+import { ErrorDisplay } from "@/components/shared/errors";
+import { LoadingNoData } from "@/components/shared/feedback/loading-states";
 import { usePalletGroupsQuery } from "@/modules/pallet-groups/api/hooks/queries/usePalletGroupsQuery";
 import type { PalletGroupDto } from "@/modules/pallet-groups/api/types";
 import type { ComponentType } from "react";

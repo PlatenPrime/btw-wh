@@ -1,4 +1,4 @@
-import { SidebarInsetLayout } from "@/components/layout/SidebarInsetLayout";
+import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout/SidebarInsetLayout";
 import { useBlockQuery } from "@/modules/blocks/api/hooks/queries/useBlockQuery";
 import { BlockHeaderActions } from "@/modules/blocks/components/actions/block-header-actions";
 import {

@@ -1,5 +1,5 @@
 import { DetailPanelCard } from "@/components/shared/cards";
-import { Image } from "@/components/shared/image/image";
+import { Image } from "@/components/shared/media/image/Image";
 import { CardContent, CardTitle } from "@/components/ui/card";
 import type { KonkDto } from "@/modules/konks/api/types";
 

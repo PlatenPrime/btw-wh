@@ -1,4 +1,4 @@
-﻿import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 import { SegmentCardSkeleton } from "@/modules/blocks/components/cards/segment-card";
 
 export function SegmentsContainerSkeleton() {

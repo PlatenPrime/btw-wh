@@ -1,4 +1,4 @@
-import { SidebarInsetLayout } from "@/components/layout/SidebarInsetLayout";
+import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout/SidebarInsetLayout";
 import type { VariantDto } from "@/modules/variants/api/types";
 import { VariantsHeaderActions } from "@/modules/variants/components/actions/variants-header-actions";
 import { VariantsContainer, VariantsContainerSkeleton } from "@/modules/variants/components/containers/variants-container";

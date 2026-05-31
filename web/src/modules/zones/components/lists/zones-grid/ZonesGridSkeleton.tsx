@@ -1,4 +1,4 @@
-import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 import { ZonesGridCardSkeleton } from "@/modules/zones/components/cards/zones-grid-card";
 
 interface ZonesGridSkeletonProps {

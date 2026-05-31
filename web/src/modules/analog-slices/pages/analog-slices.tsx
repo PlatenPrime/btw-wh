@@ -1,4 +1,4 @@
-import { SidebarInsetLayout } from "@/components/layout/SidebarInsetLayout";
+import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout/SidebarInsetLayout";
 import { AnalogSlicesControls } from "@/modules/analog-slices/components/controls/analog-slices-controls/AnalogSlicesControls";
 import { AnalogSliceFetcher } from "@/modules/analog-slices/components/fetchers/analog-slice-fetcher";
 import { useState } from "react";

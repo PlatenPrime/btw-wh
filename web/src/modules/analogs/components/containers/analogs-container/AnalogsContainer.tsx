@@ -1,4 +1,4 @@
-import { PaginationControls } from "@/components/shared/pagination-controls";
+import { PaginationControls } from "@/components/shared/controls";
 import type {
   AnalogDto,
   AnalogsResponseDto,

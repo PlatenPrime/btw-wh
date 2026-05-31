@@ -1,4 +1,4 @@
-import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 import { Button } from "@/components/ui/button";
 import type { PalletResponse } from "@/modules/pallets/api/types";
 import { PalletInfo } from "@/modules/pallets/components/elements/pallet-info/PalletInfo";

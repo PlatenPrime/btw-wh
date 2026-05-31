@@ -1,5 +1,5 @@
-import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
-import { Image } from "@/components/shared/image/image";
+import { DialogActions } from "@/components/shared/dialogs";
+import { Image } from "@/components/shared/media/image/Image";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";

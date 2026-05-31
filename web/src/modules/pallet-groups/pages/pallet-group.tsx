@@ -1,4 +1,4 @@
-import { SidebarInsetLayout } from "@/components/layout/SidebarInsetLayout";
+import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout/SidebarInsetLayout";
 import { usePalletGroupQuery } from "@/modules/pallet-groups/api/hooks/queries/usePalletGroupQuery";
 import { PalletGroupHeaderActions } from "@/modules/pallet-groups/components/actions/pallet-group-header-actions";
 import { PalletGroupContainer } from "@/modules/pallet-groups/components/containers/pallet-group-container/PalletGroupContainer";

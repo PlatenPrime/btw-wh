@@ -1,4 +1,4 @@
-import { SidebarInsetLayout } from "@/components/layout/SidebarInsetLayout";
+import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout/SidebarInsetLayout";
 import { AsksHeaderActions } from "@/modules/asks/components/actions/asks-header-actions";
 import { AsksContainer } from "@/modules/asks/components/containers/asks-container/AsksContainer.tsx";
 import { AsksContainerSkeleton } from "@/modules/asks/components/containers/asks-container/AsksContainerSkeleton.tsx";

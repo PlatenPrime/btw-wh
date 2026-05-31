@@ -1,4 +1,4 @@
-import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 import { DelCardSkeleton } from "@/modules/dels/components/cards/del-card";
 
 export function DelsContainerSkeleton() {

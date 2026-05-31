@@ -1,4 +1,4 @@
-import { SidebarInsetLayout } from "@/components/layout/SidebarInsetLayout";
+import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout/SidebarInsetLayout";
 import { DefsHeaderActions } from "@/modules/defs/components/actions/defs-header-actions";
 import {
   CalculationStatusContainer,

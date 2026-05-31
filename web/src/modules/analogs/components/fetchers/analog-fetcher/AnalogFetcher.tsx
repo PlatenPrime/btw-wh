@@ -1,5 +1,5 @@
-import { EntityNotFound } from "@/components/shared/entity-not-found";
-import { ErrorDisplay } from "@/components/shared/error-components";
+import { EntityNotFound } from "@/components/shared/entities/entity-not-found";
+import { ErrorDisplay } from "@/components/shared/errors";
 import { useAnalogByIdQuery } from "@/modules/analogs/api/hooks/queries/useAnalogByIdQuery";
 import type { EnrichedAnalogDto } from "@/modules/analogs/api/types";
 

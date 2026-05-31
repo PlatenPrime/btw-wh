@@ -1,4 +1,4 @@
-import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { ArtDetailCard } from "@/modules/arts/components/cards/art-detail-card/ArtDetailCard";
 import { PosesByArtikulContainer } from "@/modules/arts/components/containers/poses-by-artikul-container";

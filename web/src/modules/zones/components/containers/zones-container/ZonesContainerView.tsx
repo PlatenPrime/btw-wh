@@ -1,4 +1,4 @@
-import { PaginationControls } from "@/components/shared/pagination-controls";
+import { PaginationControls } from "@/components/shared/controls";
 import type { ZoneDto, ZonesResponseDto } from "@/modules/zones/api/types";
 import { ZonesGrid } from "@/modules/zones/components/lists/zones-grid";
 

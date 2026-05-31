@@ -1,7 +1,7 @@
 import {
   CardActionsMenu,
   type CardAction,
-} from "@/components/shared/card-actions";
+} from "@/components/shared/actions/card-actions";
 import type { IPos } from "@/modules/poses/api/types";
 import { DeletePosDialog } from "@/modules/poses/components/dialogs/delete-pos-dialog/DeletePosDialog";
 import { UpdatePosDialog } from "@/modules/poses/components/dialogs/update-pos-dialog/UpdatePosDialog";

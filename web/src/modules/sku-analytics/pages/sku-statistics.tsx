@@ -1,4 +1,4 @@
-import { SidebarInsetLayout } from "@/components/layout/SidebarInsetLayout";
+import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout/SidebarInsetLayout";
 import { SkuStatisticsControls } from "@/modules/sku-analytics/components/controls/sku-statistics-controls/SkuStatisticsControls";
 import { SkuStatisticsFetcher } from "@/modules/sku-analytics/components/fetchers/sku-statistics-fetcher";
 import { useSkuStatisticsParams } from "@/modules/sku-analytics/hooks/useSkuStatisticsParams";

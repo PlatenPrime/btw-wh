@@ -1,6 +1,6 @@
-import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
-import { ErrorDisplay } from "@/components/shared/error-components/error-display";
-import { LoadingNoData } from "@/components/shared/loading-states/loading-nodata";
+import { DataRefetchOverlay } from "@/components/shared/feedback/data-refetch-overlay/DataRefetchOverlay";
+import { ErrorDisplay } from "@/components/shared/errors";
+import { LoadingNoData } from "@/components/shared/feedback/loading-states";
 import { useAsksByArtikulQuery } from "@/modules/asks/api/hooks/queries/useAsksByArtikulQuery";
 import type { GetAsksByArtikulResponse } from "@/modules/asks/api/types/dto";
 import type { ComponentType } from "react";

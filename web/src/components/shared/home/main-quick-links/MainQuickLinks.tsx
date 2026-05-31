@@ -12,7 +12,7 @@ import {
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 import { Link } from "react-router";
-import { quickLinkDescriptionByUrl } from "@/components/shared/main-quick-links/quick-links-data";
+import { quickLinkDescriptionByUrl } from "@/components/shared/home/main-quick-links/quick-links-data";
 
 /**
  * Сітка карток-посилань «Швидкий доступ» по групах як у сайдбарі.

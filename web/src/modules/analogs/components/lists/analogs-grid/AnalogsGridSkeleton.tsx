@@ -1,4 +1,4 @@
-﻿import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 import { AnalogGridCardSkeleton } from "@/modules/analogs/components/cards/analog-grid-card/AnalogGridCardSkeleton";
 
 interface AnalogsGridSkeletonProps {

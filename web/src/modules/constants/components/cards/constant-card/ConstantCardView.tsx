@@ -1,5 +1,5 @@
-import { CardActionsMenu } from "@/components/shared/card-actions";
-import type { CardAction } from "@/components/shared/card-actions";
+import { CardActionsMenu } from "@/components/shared/actions/card-actions";
+import type { CardAction } from "@/components/shared/actions/card-actions";
 import { ListRowCard } from "@/components/shared/cards";
 import { CardContent, CardTitle } from "@/components/ui/card";
 import type { ConstantDto } from "@/modules/constants/api/types";

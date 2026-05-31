@@ -1,4 +1,4 @@
-﻿import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 import type { SegmentDto } from "@/modules/blocks/api/types";
 import { SegmentCard } from "@/modules/blocks/components/cards/segment-card";
 

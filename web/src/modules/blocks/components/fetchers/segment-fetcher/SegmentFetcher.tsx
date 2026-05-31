@@ -1,4 +1,4 @@
-import { ErrorDisplay } from "@/components/shared/error-components";
+import { ErrorDisplay } from "@/components/shared/errors";
 import { useSegmentQuery } from "@/modules/blocks/api/hooks/queries/useSegmentQuery";
 import { useZonesBySegmentQuery } from "@/modules/blocks/api/hooks/queries/useZonesBySegmentQuery";
 import type { SegmentDto, ZoneWithSegmentDto } from "@/modules/blocks/api/types";

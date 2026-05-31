@@ -1,4 +1,4 @@
-import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
+import { DataRefetchOverlay } from "@/components/shared/feedback/data-refetch-overlay/DataRefetchOverlay";
 import { SalesRangeChartView } from "@/components/shared/charts/sales-range-chart";
 import type { SalesRangeChartPoint } from "@/types/charts-range";
 import { Label } from "@/components/ui/label";

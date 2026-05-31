@@ -1,5 +1,5 @@
-import { EntityNotFound } from "@/components/shared/entity-not-found";
-import { ErrorDisplay } from "@/components/shared/error-components/error-display";
+import { EntityNotFound } from "@/components/shared/entities/entity-not-found";
+import { ErrorDisplay } from "@/components/shared/errors";
 import { usePosByIdQuery } from "@/modules/poses/api/hooks/queries/usePosByIdQuery";
 import type { IPos } from "@/modules/poses/api/types";
 import type { ComponentType } from "react";

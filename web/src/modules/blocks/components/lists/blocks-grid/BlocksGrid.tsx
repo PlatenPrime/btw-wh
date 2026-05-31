@@ -1,4 +1,4 @@
-﻿import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 import type { BlockDto } from "@/modules/blocks/api/types";
 import { BlockCard } from "@/modules/blocks/components/cards/block-card";
 

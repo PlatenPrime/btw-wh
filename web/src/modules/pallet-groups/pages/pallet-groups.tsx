@@ -1,4 +1,4 @@
-import { SidebarInsetLayout } from "@/components/layout/SidebarInsetLayout";
+import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout/SidebarInsetLayout";
 import { PalletGroupsHeaderActions } from "@/modules/pallet-groups/components/actions/pallet-groups-header-actions";
 import { PalletGroupsContainer } from "@/modules/pallet-groups/components/containers/pallet-groups-container/PalletGroupsContainer";
 import { PalletGroupsContainerSkeleton } from "@/modules/pallet-groups/components/containers/pallet-groups-container/PalletGroupsContainerSkeleton";

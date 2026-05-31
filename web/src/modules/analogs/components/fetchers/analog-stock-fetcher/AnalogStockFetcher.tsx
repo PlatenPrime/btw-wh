@@ -1,5 +1,5 @@
-import { ErrorDisplay } from "@/components/shared/error-components";
-import { LoadingNoData } from "@/components/shared/loading-states/loading-nodata";
+import { ErrorDisplay } from "@/components/shared/errors";
+import { LoadingNoData } from "@/components/shared/feedback/loading-states";
 import { useAnalogStockQuery } from "@/modules/analogs/api/hooks/queries/useAnalogStockQuery";
 import type { AnalogStockDto } from "@/modules/analogs/api/types";
 import type { ComponentType } from "react";

@@ -1,5 +1,5 @@
-import { EntityNotFound } from "@/components/shared/entity-not-found";
-import { ErrorDisplay } from "@/components/shared/error-components";
+import { EntityNotFound } from "@/components/shared/entities/entity-not-found";
+import { ErrorDisplay } from "@/components/shared/errors";
 import { useConstantByIdQuery } from "@/modules/constants/api/hooks/queries/useConstantByIdQuery";
 import type { ConstantDto } from "@/modules/constants/api/types";
 

@@ -1,4 +1,4 @@
-import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
+import { DialogActions } from "@/components/shared/dialogs";
 import {
   DialogContent,
   DialogHeader,
@@ -12,7 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Calendar } from "@/components/ui/calendar";
-import { EntityLabel } from "@/components/shared/entity-label";
+import { EntityLabel } from "@/components/shared/entities/entity-label";
 import type { KonkDto } from "@/modules/konks/api/types";
 import { SKUS_EXCEL_ALL_KONKS_VALUE } from "@/modules/skus/components/dialogs/skus-excel-konk-scope";
 

@@ -1,4 +1,4 @@
-﻿import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 import { Skeleton } from "@/components/ui";
 
 export function ArtsExcelUploaderSkeleton() {

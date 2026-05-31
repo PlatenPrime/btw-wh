@@ -1,4 +1,4 @@
-﻿import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 import { Button } from "@/components/ui/button";
 import { Calculator, CheckCircle2 } from "lucide-react";
 

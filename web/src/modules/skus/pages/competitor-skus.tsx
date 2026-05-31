@@ -1,4 +1,4 @@
-import { SidebarInsetLayout } from "@/components/layout/SidebarInsetLayout";
+import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout/SidebarInsetLayout";
 import { CompetitorSkusHeaderActions } from "@/modules/skus/components/actions/competitor-skus-header-actions/CompetitorSkusHeaderActions";
 import { CompetitorSkusContainer } from "@/modules/skus/components/containers/competitor-skus-container/CompetitorSkusContainer";
 import { CompetitorSkusContainerSkeleton } from "@/modules/skus/components/containers/competitor-skus-container/CompetitorSkusContainerSkeleton";

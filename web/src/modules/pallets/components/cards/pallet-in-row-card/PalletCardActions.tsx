@@ -1,7 +1,7 @@
 import {
   CardActionsMenu,
   type CardAction,
-} from "@/components/shared/card-actions";
+} from "@/components/shared/actions/card-actions";
 import type { PalletShortDto } from "@/modules/pallets/api/types";
 import { UpdatePalletDialogView } from "@/modules/pallets/components/dialogs/update-pallet-dialog/UpdatePalletDialogView";
 import { Edit } from "lucide-react";

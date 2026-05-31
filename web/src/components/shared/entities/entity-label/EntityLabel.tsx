@@ -1,4 +1,4 @@
-import { Image } from "@/components/shared/image/image";
+import { Image } from "@/components/shared/media/image/Image";
 import { cn } from "@/lib/utils";
 
 export interface EntityLabelProps {

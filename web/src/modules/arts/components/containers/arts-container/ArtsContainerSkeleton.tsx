@@ -1,5 +1,5 @@
-﻿import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
-import { SearchPanelSkeleton } from '@/components/shared/search-components/search-panel/SearchPanelSkeleton';
+import { SurfaceSection } from "@/components/shared/layout";
+import { SearchPanelSkeleton } from '@/components/shared/search/search-panel/SearchPanelSkeleton';
 import { ArtsGridSkeleton } from "@/modules/arts/components/lists/arts-grid/ArtsGridSkeleton.tsx";
 
 export function ArtsContainerSkeleton() {

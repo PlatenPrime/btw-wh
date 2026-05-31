@@ -3,7 +3,7 @@ import {
   KonkEntitySelect,
   ProdEntitySelect,
 } from "@/components/shared/controls";
-import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
 import { SkuKonkProdChartSkugrFilterView } from "@/modules/sku-analytics/components/controls/sku-konk-prod-chart-controls/SkuKonkProdChartSkugrFilterView";

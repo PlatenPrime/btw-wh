@@ -1,4 +1,4 @@
-import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 import { KonkCardSkeleton } from "@/modules/konks/components/cards/konk-card";
 
 const SKELETON_ITEMS_COUNT = 8;

@@ -1,4 +1,4 @@
-﻿import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 import { DefCardSkeleton } from "@/modules/defs/components/cards/def-card/DefCardSkeleton";
 
 export function DefsGridSkeleton() {

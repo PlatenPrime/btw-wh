@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { CardActionsMenu, type CardAction } from "@/components/shared/card-actions";
+import { CardActionsMenu, type CardAction } from "@/components/shared/actions/card-actions";
 import type { ConstantDto } from "@/modules/constants/api/types";
 import type { ConstantEntry } from "@/modules/constants/components/dialogs/edit-constant-entry-dialog";
 

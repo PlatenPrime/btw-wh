@@ -1,4 +1,4 @@
-﻿import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 import { ChartContainer, type ChartConfig } from "@/components/ui/chart";
 import type { SkugrGroupSalesRow, SkugrGroupsMetric } from "@/modules/sku-analytics/components/containers/sku-konk-prod-skugr-groups-section/types";
 import { Cell, Pie, PieChart, Tooltip } from "recharts";

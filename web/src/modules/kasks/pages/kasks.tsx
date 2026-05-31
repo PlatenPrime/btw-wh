@@ -1,4 +1,4 @@
-import { SidebarInsetLayout } from "@/components/layout/SidebarInsetLayout";
+import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout/SidebarInsetLayout";
 import { KasksContainer } from "@/modules/kasks/components/containers/kasks-container/KasksContainer";
 import { KasksContainerSkeleton } from "@/modules/kasks/components/containers/kasks-container/KasksContainerSkeleton";
 import { CreateKaskForm } from "@/modules/kasks/components/forms/create-kask-form/CreateKaskForm";

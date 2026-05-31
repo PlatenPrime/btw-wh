@@ -1,4 +1,4 @@
-﻿import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 import { ProdCardSkeleton } from "@/modules/prods/components/cards/prod-card";
 
 const SKELETON_ITEMS_COUNT = 8;

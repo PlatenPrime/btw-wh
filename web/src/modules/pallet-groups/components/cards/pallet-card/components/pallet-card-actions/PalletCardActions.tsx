@@ -1,7 +1,7 @@
 import {
   CardActionsMenu,
   type CardAction,
-} from "@/components/shared/card-actions";
+} from "@/components/shared/actions/card-actions";
 import type { PalletShortDto } from "@/modules/pallet-groups/api/types";
 import { UnlinkPalletConfirmDialog } from "@/modules/pallet-groups/components/dialogs/unlink-pallet-confirm-dialog/UnlinkPalletConfirmDialog";
 import { Unlink } from "lucide-react";

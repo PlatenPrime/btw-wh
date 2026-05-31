@@ -1,5 +1,5 @@
-import { EntityNotFound } from "@/components/shared/entity-not-found";
-import { ErrorDisplay } from "@/components/shared/error-components";
+import { EntityNotFound } from "@/components/shared/entities/entity-not-found";
+import { ErrorDisplay } from "@/components/shared/errors";
 import { useVariantByIdQuery } from "@/modules/variants/api/hooks/queries/useVariantByIdQuery";
 import type { VariantDto } from "@/modules/variants/api/types";
 

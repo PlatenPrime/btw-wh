@@ -1,4 +1,4 @@
-import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 import { AskDetailsCardSkeleton } from "@/modules/asks/components/cards/ask-details-card/AskDetailsCardSkeleton";
 import { AskEventsSkeleton } from "@/modules/asks/components/containers/ask-container/components/ask-events/AskEventsSkeleton";
 import { AskPullPositionsContainerSkeleton } from "@/modules/asks/components/containers/ask-pull-positions-container/AskPullPositionsContainerSkeleton";

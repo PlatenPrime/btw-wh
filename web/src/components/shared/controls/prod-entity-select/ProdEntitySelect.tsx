@@ -6,7 +6,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
-import { EntityLabel } from "@/components/shared/entity-label";
+import { EntityLabel } from "@/components/shared/entities/entity-label";
 import type { ProdDto } from "@/modules/prods/api/types";
 import { SKU_KONK_PROD_QUERY_ALL } from "@/modules/sku-analytics/constants";
 

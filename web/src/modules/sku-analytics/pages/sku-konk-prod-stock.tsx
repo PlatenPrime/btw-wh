@@ -1,7 +1,7 @@
-import { SidebarInsetLayout } from "@/components/layout/SidebarInsetLayout";
-import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
-import { ErrorDisplay } from "@/components/shared/error-components";
-import { LoadingNoData } from "@/components/shared/loading-states";
+import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout/SidebarInsetLayout";
+import { DataRefetchOverlay } from "@/components/shared/feedback/data-refetch-overlay/DataRefetchOverlay";
+import { ErrorDisplay } from "@/components/shared/errors";
+import { LoadingNoData } from "@/components/shared/feedback/loading-states";
 import { KonkSliceExcelDialog } from "@/modules/konks/components/dialogs/konk-slice-excel-dialog/KonkSliceExcelDialog";
 import { SkuKonkProdStockHeaderActions } from "@/modules/sku-analytics/components/actions/sku-konk-prod-stock-header-actions/SkuKonkProdStockHeaderActions";
 import { SkuKonkProdChartControls } from "@/modules/sku-analytics/components/controls/sku-konk-prod-chart-controls/SkuKonkProdChartControls";

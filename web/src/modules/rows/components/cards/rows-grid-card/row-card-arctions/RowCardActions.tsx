@@ -1,7 +1,7 @@
 import {
   CardActionsMenu,
   type CardAction,
-} from "@/components/shared/card-actions";
+} from "@/components/shared/actions/card-actions";
 import type { RowDto } from "@/modules/rows/api/types/dto";
 import { DeleteRowDialog } from "@/modules/rows/components/dialogs/delete-row-dialog/DeleteRowDialog";
 import { UpdateRowDialog } from "@/modules/rows/components/dialogs/update-row-dialog/UpdateRowDialog";

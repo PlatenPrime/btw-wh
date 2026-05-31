@@ -1,4 +1,4 @@
-import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 import { TotalItem } from "@/modules/arts/components/containers/poses-by-artikul-container/components/total-items/TotalItem.tsx";
 import type { GetPosesByArtikulResponse } from "@/modules/poses/api/types";
 import { Circle, NotepadText, Package } from "lucide-react";

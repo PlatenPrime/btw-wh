@@ -1,4 +1,4 @@
-import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 import type { ZoneDto } from "@/modules/zones/api/types";
 import { ZonesGridCard } from "@/modules/zones/components/cards/zones-grid-card";
 

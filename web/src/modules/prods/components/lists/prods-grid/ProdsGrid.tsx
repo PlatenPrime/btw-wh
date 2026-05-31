@@ -1,4 +1,4 @@
-﻿import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 import type { ProdDto } from "@/modules/prods/api/types";
 import { ProdCard } from "@/modules/prods/components/cards/prod-card";
 

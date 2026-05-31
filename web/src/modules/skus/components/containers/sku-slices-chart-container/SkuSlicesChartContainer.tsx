@@ -1,5 +1,5 @@
-import { ErrorDisplay } from "@/components/shared/error-components";
-import { LoadingNoData } from "@/components/shared/loading-states/loading-nodata";
+import { ErrorDisplay } from "@/components/shared/errors";
+import { LoadingNoData } from "@/components/shared/feedback/loading-states";
 import { SliceRangeChartSkeleton } from "@/components/shared/charts/slice-range-chart";
 import { useSkuSliceRangeQuery } from "@/modules/skus/api/hooks/queries/useSkuSliceRangeQuery";
 import { SkuSlicesChartContainerView } from "./SkuSlicesChartContainerView";

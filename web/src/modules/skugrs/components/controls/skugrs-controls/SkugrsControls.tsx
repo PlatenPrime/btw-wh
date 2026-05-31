@@ -1,7 +1,7 @@
-import { SearchFiltersLayout } from "@/components/shared/search-components/search-filters-layout";
-import { SearchPanel } from "@/components/shared/search-components/search-panel/SearchPanel";
-import { SelectLimit } from "@/components/shared/select-limit";
-import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SearchFiltersLayout } from "@/components/shared/search/search-filters-layout";
+import { SearchPanel } from "@/components/shared/search/search-panel/SearchPanel";
+import { SelectLimit } from "@/components/shared/controls";
+import { SurfaceSection } from "@/components/shared/layout";
 import {
   Select,
   SelectContent,
@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { EntityLabel } from "@/components/shared/entity-label";
+import { EntityLabel } from "@/components/shared/entities/entity-label";
 import { useKonksQuery } from "@/modules/konks/api/hooks/queries/useKonksQuery";
 import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
 import { useSkugrsParams } from "@/modules/skugrs/hooks/useSkugrsParams";
@@ -55,7 +55,7 @@ export function SkugrsControls() {
           <SearchPanel
             search={search}
             onSearchChange={(e) => setSearch(e.target.value)}
-            placeholder="Пошук за назвою групи..."
+            placeholder="РџРѕС€СѓРє Р·Р° РЅР°Р·РІРѕСЋ РіСЂСѓРїРё..."
           />
         }
         filtersSlot={
@@ -65,13 +65,13 @@ export function SkugrsControls() {
               onValueChange={(v) => setKonkName(v === "all" ? "" : v)}
             >
               <SelectTrigger
-                aria-label="Конкурент"
+                aria-label="РљРѕРЅРєСѓСЂРµРЅС‚"
                 className="min-w-[140px] sm:min-w-[160px]"
               >
-                <SelectValue placeholder="Усі конкуренти" />
+                <SelectValue placeholder="РЈСЃС– РєРѕРЅРєСѓСЂРµРЅС‚Рё" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">Усі конкуренти</SelectItem>
+                <SelectItem value="all">РЈСЃС– РєРѕРЅРєСѓСЂРµРЅС‚Рё</SelectItem>
                 {konks.map((k) => (
                   <SelectItem key={k._id} value={k.name}>
                     <EntityLabel
@@ -89,13 +89,13 @@ export function SkugrsControls() {
               onValueChange={(v) => setProdName(v === "all" ? "" : v)}
             >
               <SelectTrigger
-                aria-label="Виробник"
+                aria-label="Р’РёСЂРѕР±РЅРёРє"
                 className="min-w-[140px] sm:min-w-[160px]"
               >
-                <SelectValue placeholder="Усі виробники" />
+                <SelectValue placeholder="РЈСЃС– РІРёСЂРѕР±РЅРёРєРё" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">Усі виробники</SelectItem>
+                <SelectItem value="all">РЈСЃС– РІРёСЂРѕР±РЅРёРєРё</SelectItem>
                 {prods.map((p) => (
                   <SelectItem key={p._id} value={p.name}>
                     <EntityLabel
@@ -114,13 +114,13 @@ export function SkugrsControls() {
               setLimit={setLimit}
             />
             <Select value={slicedFilterValue} onValueChange={handleSlicedFilterChange}>
-              <SelectTrigger aria-label="Фільтр по срезах">
-                <SelectValue placeholder="Срези" />
+              <SelectTrigger aria-label="Р¤С–Р»СЊС‚СЂ РїРѕ СЃСЂРµР·Р°С…">
+                <SelectValue placeholder="РЎСЂРµР·Рё" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">Усі</SelectItem>
-                <SelectItem value="sliced">Зрізи</SelectItem>
-                <SelectItem value="unsliced">Без зрізів</SelectItem>
+                <SelectItem value="all">РЈСЃС–</SelectItem>
+                <SelectItem value="sliced">Р—СЂС–Р·Рё</SelectItem>
+                <SelectItem value="unsliced">Р‘РµР· Р·СЂС–Р·С–РІ</SelectItem>
               </SelectContent>
             </Select>
           </div>

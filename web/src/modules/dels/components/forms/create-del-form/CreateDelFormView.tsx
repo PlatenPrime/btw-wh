@@ -1,4 +1,5 @@
-import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
+import { DialogActions } from "@/components/shared/dialogs";
+import { EntityLabel } from "@/components/shared/entities/entity-label";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -83,7 +84,12 @@ export function CreateDelFormView({
           <SelectContent>
             {prods.map((p) => (
               <SelectItem key={p._id} value={p.name}>
-                {p.title || p.name}
+                <EntityLabel
+                  imageUrl={p.imageUrl}
+                  title={p.title}
+                  fallbackLabel={p.name}
+                  imageSize="xs"
+                />
               </SelectItem>
             ))}
           </SelectContent>

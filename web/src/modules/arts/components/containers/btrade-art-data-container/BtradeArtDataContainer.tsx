@@ -1,4 +1,4 @@
-import { EntityNotFound } from "@/components/shared/entity-not-found";
+import { EntityNotFound } from "@/components/shared/entities/entity-not-found";
 import { BtradeArtDataContainerView } from "@/modules/arts/components/containers/btrade-art-data-container/BtradeArtDataContainerView.tsx";
 import type { BtradeArtDataContainerProps } from "@/modules/arts/components/fetchers/btrade-art-data-fetcher/BtradeArtDataFetcher";
 

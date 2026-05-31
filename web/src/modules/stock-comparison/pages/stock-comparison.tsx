@@ -1,4 +1,4 @@
-import { SidebarInsetLayout } from "@/components/layout/SidebarInsetLayout";
+import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout/SidebarInsetLayout";
 import { KonkBtradeComparisonExcelDialog } from "@/modules/analogs/components/dialogs/konk-btrade-comparison-excel-dialog/KonkBtradeComparisonExcelDialog";
 import { StockHeaderActions } from "@/modules/stock-comparison/components/actions/stock-header-actions/StockHeaderActions";
 import { StockControls } from "@/modules/stock-comparison/components/controls/stock-controls/StockControls";

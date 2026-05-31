@@ -1,4 +1,4 @@
-import { SidebarInsetLayout } from "@/components/layout/SidebarInsetLayout";
+import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout/SidebarInsetLayout";
 import { PullsContainer } from "@/modules/asks/components/containers/pulls-container/PullsContainer";
 import { PullsContainerSkeleton } from "@/modules/asks/components/containers/pulls-container/PullsContainerSkeleton";
 import { PullsFetcher } from "@/modules/asks/components/fetchers/pulls-fetcher/PullsFetcher";

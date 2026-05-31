@@ -1,7 +1,7 @@
-import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 import { Skeleton } from "@/components/ui/skeleton";
 import { AsksListSkeleton } from "@/modules/asks/components/lists/asks-list/AsksListSkeleton";
-import { DateNavigationSkeleton } from "@/components/shared/date-navigation/DateNavigationSkeleton";
+import { DateNavigationSkeleton } from "@/components/shared/date/date-navigation/DateNavigationSkeleton";
 
 export function AsksContainerSkeleton() {
   return (

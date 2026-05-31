@@ -1,5 +1,5 @@
-import { EntityNotFound } from "@/components/shared/entity-not-found";
-import { ErrorDisplay } from "@/components/shared/error-components/error-display";
+import { EntityNotFound } from "@/components/shared/entities/entity-not-found";
+import { ErrorDisplay } from "@/components/shared/errors";
 import { useOneArtQuery } from "@/modules/arts/api/hooks/queries/useOneArtQuery";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import type { ComponentType } from "react";

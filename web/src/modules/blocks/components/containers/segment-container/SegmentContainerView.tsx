@@ -1,5 +1,5 @@
-﻿import { ErrorDisplay } from "@/components/shared/error-components";
-import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { ErrorDisplay } from "@/components/shared/errors";
+import { SurfaceSection } from "@/components/shared/layout";
 import type {
   SegmentDto,
   ZoneWithSegmentDto,

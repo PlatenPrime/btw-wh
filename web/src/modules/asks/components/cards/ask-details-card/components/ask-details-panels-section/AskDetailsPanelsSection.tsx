@@ -1,4 +1,4 @@
-import { SummaryField } from "@/components/shared/summary-field";
+import { SummaryField } from "@/components/shared/elements/summary-field";
 import { cn } from "@/lib/utils";
 import { BtradeArtDataPanel } from "@/modules/arts/components/elements/btrade-art-data-panel";
 

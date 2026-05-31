@@ -1,4 +1,4 @@
-import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
+import { DialogActions } from "@/components/shared/dialogs";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import type { CreateBlockFormValues } from "@/modules/blocks/components/forms/create-block-form/schema";

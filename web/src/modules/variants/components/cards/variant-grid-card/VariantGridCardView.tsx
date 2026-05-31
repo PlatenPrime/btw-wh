@@ -1,6 +1,6 @@
-import { CardActionsMenu } from "@/components/shared/card-actions/CardActionsMenu";
-import { Image } from "@/components/shared/image/image";
-import type { CardAction } from "@/components/shared/card-actions/types";
+import { CardActionsMenu } from "@/components/shared/actions/card-actions";
+import { Image } from "@/components/shared/media/image/Image";
+import type { CardAction } from "@/components/shared/actions/card-actions";
 import { GridTileCard } from "@/components/shared/cards";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router";
@@ -10,8 +10,8 @@ import type { ProdDto } from "@/modules/prods/api/types";
 import {
   getKonkTheme,
   KonkBanner,
-} from "@/components/shared/konk-banner";
-import { EntityLabel } from "@/components/shared/entity-label";
+} from "@/components/shared/domain/konk-banner";
+import { EntityLabel } from "@/components/shared/entities/entity-label";
 
 interface VariantGridCardViewProps {
   variant: VariantDto;

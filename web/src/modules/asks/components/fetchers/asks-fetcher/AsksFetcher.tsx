@@ -1,6 +1,6 @@
-import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
-import { ErrorDisplay } from '@/components/shared/error-components/error-display';
-import { LoadingNoData } from '@/components/shared/loading-states/loading-nodata';
+import { DataRefetchOverlay } from "@/components/shared/feedback/data-refetch-overlay/DataRefetchOverlay";
+import { ErrorDisplay } from '@/components/shared/errors';
+import { LoadingNoData } from '@/components/shared/feedback/loading-states';
 import { useAsksByDateQuery } from "@/modules/asks/api/hooks/queries/useAsksByDateQuery";
 import { format } from "date-fns";
 import { useState } from "react";

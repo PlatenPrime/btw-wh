@@ -1,4 +1,4 @@
-import { FormErrorDisplay } from "@/components/shared/error-components/form-error-display";
+import { FormErrorDisplay } from "@/components/shared/errors";
 import {
   DialogContent,
   DialogHeader,

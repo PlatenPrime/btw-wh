@@ -1,4 +1,4 @@
-import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
+import { DataRefetchOverlay } from "@/components/shared/feedback/data-refetch-overlay/DataRefetchOverlay";
 import { SliceRangeChartView } from "@/components/shared/charts/slice-range-chart";
 import type { SliceRangeChartPoint } from "@/types/charts-range";
 import { Label } from "@/components/ui/label";

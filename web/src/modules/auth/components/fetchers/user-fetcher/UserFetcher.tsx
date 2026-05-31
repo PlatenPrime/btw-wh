@@ -1,5 +1,5 @@
-import { SidebarInsetLayout } from "@/components/layout/SidebarInsetLayout";
-import { ErrorDisplay } from "@/components/shared/error-components";
+import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout/SidebarInsetLayout";
+import { ErrorDisplay } from "@/components/shared/errors";
 import { useUserByIdQuery } from "@/modules/auth/api/hooks/queries/useUserByIdQuery";
 import type { User } from "@/modules/auth/api/types";
 

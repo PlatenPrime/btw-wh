@@ -1,6 +1,6 @@
 import { ListRowCard } from "@/components/shared/cards";
-import { CalendarDate } from "@/components/shared/date/CalendarDate";
-import { UserAvatarName } from "@/components/shared/user/UserAvatarName";
+import { CalendarDate } from "@/components/shared/date/calendar-date/CalendarDate";
+import { UserAvatarName } from "@/components/shared/entities/user/UserAvatarName";
 import { ArtDialogImage } from "@/modules/arts/components/dialogs/art-dialog-image/ArtDialogImage";
 import type { AskDto, AskStatus } from "@/modules/asks/api/types/dto";
 import { AskStatusBage } from "@/modules/asks/components/elements/ask-status-bage/AskStatusBage";

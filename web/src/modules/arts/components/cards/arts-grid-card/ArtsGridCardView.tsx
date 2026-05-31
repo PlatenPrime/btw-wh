@@ -1,6 +1,6 @@
-import { ArtikulImageLink } from "@/components/shared/artikul-image-link/ArtikulImageLink";
+import { ArtikulImageLink } from "@/components/shared/media/artikul-image-link/ArtikulImageLink";
 import { GridTileCard } from "@/components/shared/cards";
-import { ImageBlurContainer } from "@/components/shared/image/image-blur-container";
+import { ImageBlurContainer } from "@/components/shared/media/image/ImageBlurContainer";
 
 interface ArtsGridCardViewProps {
   artikul: string;

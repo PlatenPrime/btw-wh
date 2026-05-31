@@ -1,4 +1,4 @@
-﻿import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 import { PosInPalletCardSkeleton } from "@/modules/poses/components/cards/pos-in-pallet-card/PosInPalletCardSkeleton";
 
 export function PosesByPalletContainerSkeleton() {

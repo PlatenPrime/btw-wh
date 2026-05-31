@@ -1,4 +1,4 @@
-import { SidebarInsetLayout } from "@/components/layout/SidebarInsetLayout";
+import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout/SidebarInsetLayout";
 import { useSegmentQuery } from "@/modules/blocks/api/hooks/queries/useSegmentQuery";
 import {
   SegmentContainer,

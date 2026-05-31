@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { EntityLabel } from "@/components/shared/entity-label";
+import { EntityLabel } from "@/components/shared/entities/entity-label";
 import { cn } from "@/lib/utils";
 
 export type KonkThemeKey = "sky" | "amber" | "rose" | "lime" | "slate" | "red";

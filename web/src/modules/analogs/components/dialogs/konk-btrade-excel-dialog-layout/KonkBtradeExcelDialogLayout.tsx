@@ -1,4 +1,4 @@
-import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
+import { DialogActions } from "@/components/shared/dialogs";
 import {
   DialogContent,
   DialogHeader,
@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/select";
 import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
-import { EntityLabel } from "@/components/shared/entity-label";
+import { EntityLabel } from "@/components/shared/entities/entity-label";
 import type { DateRange } from "react-day-picker";
 
 const ABC_OPTIONS = [

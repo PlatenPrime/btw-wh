@@ -1,5 +1,5 @@
-﻿import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
-import { LoadingNoData } from "@/components/shared/loading-states";
+import { SurfaceSection } from "@/components/shared/layout";
+import { LoadingNoData } from "@/components/shared/feedback/loading-states";
 import { ZoneBySegmentCard } from "@/modules/blocks/components/cards/zone-by-segment-card";
 import type { SegmentDto, ZoneWithSegmentDto } from "@/modules/blocks/api/types";
 

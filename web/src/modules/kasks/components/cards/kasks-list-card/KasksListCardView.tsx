@@ -1,7 +1,7 @@
-import { ArtikulImageLink } from "@/components/shared/artikul-image-link/ArtikulImageLink";
-import { CardActionsMenu } from "@/components/shared/card-actions";
-import type { CardAction } from "@/components/shared/card-actions/types";
-import { CalendarDate } from "@/components/shared/date/CalendarDate";
+import { ArtikulImageLink } from "@/components/shared/media/artikul-image-link/ArtikulImageLink";
+import { CardActionsMenu } from "@/components/shared/actions/card-actions";
+import type { CardAction } from "@/components/shared/actions/card-actions";
+import { CalendarDate } from "@/components/shared/date/calendar-date/CalendarDate";
 import { Button } from "@/components/ui/button";
 import { ListRowCard } from "@/components/shared/cards";
 import type { KaskDto } from "@/modules/kasks/api/types/dto";

@@ -1,4 +1,4 @@
-import { PaginationControls } from "@/components/shared/pagination-controls";
+import { PaginationControls } from "@/components/shared/controls";
 import type { AnalogsResponseDto } from "@/modules/analogs/api/types";
 import { AnalogsGrid } from "@/modules/analogs/components/lists/analogs-grid";
 import type { KonkDto } from "@/modules/konks/api/types";

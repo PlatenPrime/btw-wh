@@ -1,4 +1,4 @@
-import { PaginationControls } from "@/components/shared/pagination-controls";
+import { PaginationControls } from "@/components/shared/controls";
 import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
 import type { SkugrDto, SkugrsResponseDto } from "@/modules/skugrs/api/types";

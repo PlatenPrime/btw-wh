@@ -1,4 +1,4 @@
-import { LoadingNoData } from "@/components/shared/loading-states/loading-nodata";
+import { LoadingNoData } from "@/components/shared/feedback/loading-states";
 import { Button } from "@/components/ui/button";
 import { CreateBlockDialog } from "@/modules/blocks/components/dialogs/create-block-dialog/CreateBlockDialog";
 import { Plus } from "lucide-react";

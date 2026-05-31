@@ -1,4 +1,4 @@
-import { CardActionsMenu } from "@/components/shared/card-actions/CardActionsMenu";
+import { CardActionsMenu } from "@/components/shared/actions/card-actions";
 import { ListRowCard } from "@/components/shared/cards";
 import { CardHeader, CardTitle } from "@/components/ui/card";
 import { RoleType } from "@/constants/roles";

@@ -1,5 +1,5 @@
-import { DateNavigation } from "@/components/shared/date-navigation/DateNavigation";
-import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { DateNavigation } from "@/components/shared/date/date-navigation/DateNavigation";
+import { SurfaceSection } from "@/components/shared/layout";
 import type { GetKasksByDateResponse } from "@/modules/kasks/api/types/dto";
 import { KasksList } from "@/modules/kasks/components/lists/kasks-list/KasksList";
 

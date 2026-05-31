@@ -4,26 +4,25 @@
 
 ## Глобальный уровень `web/src/`
 
-### Current
+### Current (components — done)
 
 | Область | Состояние |
 |---------|-----------|
-| `components/layout/` | App shell: sidebar, header-actions, `SidebarInsetLayout` (flat + подпапки) |
-| `components/shared/layout/` | Page primitives: `Page`, `PageHeader`, `PageSection` — не описано в ARCHITECTURE |
-| `components/shared/` | 28+ групп; ~50% без `index.ts`; смешаны flat-файлы и folder-per-component |
-| `components/ui/` | shadcn; неполный barrel (`index.ts`) |
+| `components/layout/` | App shell: `sidebar/`, `header-actions/`, `sidebar-inset-layout/` + barrel `index.ts` |
+| `components/shared/` | 15 категорий (`actions`, `cards`, `charts`, `controls`, `date`, `dialogs`, `domain`, `elements`, `entities`, `errors`, `feedback`, `home`, `layout`, `media`, `search`, `triggers`); kebab-папки; PascalCase файлы; `index.ts` на категорию |
+| `components/shared/layout/` | `Page`, `PageHeader`, `PageSection`, `SurfaceSection` (бывший `wrappers/`) |
+| `components/ui/` | shadcn; полный barrel `index.ts` |
 | `pages/` | Системные страницы; naming mix (`artsUpdate.tsx` vs `analog-slices.tsx`) |
 | `hooks/` | 6 flat-хуков; mix kebab/camel, `.ts`/`.tsx` |
-| Cross-module UI | `KonkBanner` в `modules/analogs/common/`, `SkladListPos` в `modules/poses/shared/` |
+| Cross-module UI | Только `@/components/shared/<category>/` |
 
 ### Target
 
 | Область | Правило |
 |---------|---------|
 | `components/layout/` | Только app shell + barrel |
-| `components/shared/layout/` | Контентная обёртка страниц (зафиксировано в ARCHITECTURE) |
-| `components/shared/` | Весь cross-module UI; kebab-папки; PascalCase файлы; `index.ts` для активных групп |
-| `components/ui/` | Полный barrel или явное правило direct-import |
+| `components/shared/` | Таксономия из 15 категорий (см. ARCHITECTURE.md) |
+| `components/ui/` | Полный barrel; direct-import допустим |
 | `pages/` | Только system pages; kebab-case |
 | Cross-module UI | **Только** `@/components/shared/` — импорты между модулями запрещены |
 

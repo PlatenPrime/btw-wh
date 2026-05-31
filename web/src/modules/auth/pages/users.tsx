@@ -1,4 +1,4 @@
-import { SidebarInsetLayout } from "@/components/layout/SidebarInsetLayout";
+import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout/SidebarInsetLayout";
 import type { User } from "@/modules/auth/api/types";
 import { UsersHeaderActions } from "@/modules/auth/components/actions/users-header-actions";
 import {

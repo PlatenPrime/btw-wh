@@ -1,4 +1,4 @@
-import { SidebarInsetLayout } from "@/components/layout/SidebarInsetLayout";
+import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout/SidebarInsetLayout";
 import type { ZoneDto } from "@/modules/zones/api/types";
 import { ZonesHeaderActions } from "@/modules/zones/components/actions/zones-header-actions";
 import {

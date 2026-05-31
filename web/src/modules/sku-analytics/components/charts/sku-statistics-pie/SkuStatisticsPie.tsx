@@ -1,4 +1,4 @@
-﻿import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 import { ChartContainer, type ChartConfig } from "@/components/ui/chart";
 import type {
   SkuStatisticsMetric,

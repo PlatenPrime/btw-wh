@@ -1,5 +1,5 @@
-import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
-import { FormErrorDisplay } from "@/components/shared/error-components";
+import { DialogActions } from "@/components/shared/dialogs";
+import { FormErrorDisplay } from "@/components/shared/errors";
 import { InputQuant } from "@/components/ui/input-quant";
 import { Label } from "@/components/ui/label";
 import {
@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/select";
 import { usePatchArtMutation } from "@/modules/arts/api/hooks/mutations/usePatchArtMutation";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
-import { EntityLabel } from "@/components/shared/entity-label";
+import { EntityLabel } from "@/components/shared/entities/entity-label";
 import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMemo } from "react";

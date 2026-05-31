@@ -1,4 +1,4 @@
-import { EntityNotFound } from "@/components/shared/entity-not-found";
+import { EntityNotFound } from "@/components/shared/entities/entity-not-found";
 import type { AnalogStockContainerProps } from "@/modules/analogs/components/fetchers/analog-stock-fetcher";
 import { AnalogStockContainerView } from "./AnalogStockContainerView";
 

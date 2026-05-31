@@ -1,12 +1,12 @@
 import { DetailPanelCard } from "@/components/shared/cards";
 import { CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Image } from "@/components/shared/image/image";
+import { Image } from "@/components/shared/media/image/Image";
 import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
 import type { VariantDto } from "@/modules/variants/api/types";
-import { KonkBanner } from "@/components/shared/konk-banner";
-import { EntityLabel } from "@/components/shared/entity-label";
+import { KonkBanner } from "@/components/shared/domain/konk-banner";
+import { EntityLabel } from "@/components/shared/entities/entity-label";
 import { ExternalLink } from "lucide-react";
 
 interface VariantDetailsCardViewProps {

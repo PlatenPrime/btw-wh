@@ -1,8 +1,8 @@
-import { SidebarInsetLayout } from "@/components/layout/SidebarInsetLayout";
-import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
-import { PaginationControls } from "@/components/shared/pagination-controls";
-import { ErrorDisplay } from "@/components/shared/error-components";
-import { LoadingNoData } from "@/components/shared/loading-states";
+import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout/SidebarInsetLayout";
+import { DataRefetchOverlay } from "@/components/shared/feedback/data-refetch-overlay/DataRefetchOverlay";
+import { PaginationControls } from "@/components/shared/controls";
+import { ErrorDisplay } from "@/components/shared/errors";
+import { LoadingNoData } from "@/components/shared/feedback/loading-states";
 import { SkuSlicesControls } from "@/modules/sku-analytics/components/controls/sku-slices-controls/SkuSlicesControls";
 import {
   SkuSliceTableContainer,

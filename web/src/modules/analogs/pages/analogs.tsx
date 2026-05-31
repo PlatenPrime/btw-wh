@@ -1,4 +1,4 @@
-import { SidebarInsetLayout } from "@/components/layout/SidebarInsetLayout";
+import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout/SidebarInsetLayout";
 import type { AnalogDto } from "@/modules/analogs/api/types";
 import { AnalogsHeaderActions } from "@/modules/analogs/components/actions/analogs-header-actions";
 import {

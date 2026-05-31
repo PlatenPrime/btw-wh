@@ -1,5 +1,5 @@
-import { ErrorDisplay } from "@/components/shared/error-components";
-import { EntityNotFound } from "@/components/shared/entity-not-found";
+import { ErrorDisplay } from "@/components/shared/errors";
+import { EntityNotFound } from "@/components/shared/entities/entity-not-found";
 import { useBlockQuery } from "@/modules/blocks/api/hooks/queries/useBlockQuery";
 import type { BlockDto } from "@/modules/blocks/api/types";
 

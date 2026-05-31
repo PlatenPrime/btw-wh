@@ -1,7 +1,7 @@
-import { SidebarInsetLayout } from "@/components/layout/SidebarInsetLayout";
+import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout/SidebarInsetLayout";
 import { Page } from "@/components/shared/layout";
-import { MainHero } from "@/components/shared/main-hero/MainHero";
-import { MainQuickLinks } from "@/components/shared/main-quick-links/MainQuickLinks";
+import { MainHero } from "@/components/shared/home/main-hero/MainHero";
+import { MainQuickLinks } from "@/components/shared/home/main-quick-links/MainQuickLinks";
 
 export function Main() {
   return (

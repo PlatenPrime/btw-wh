@@ -1,4 +1,4 @@
-import { Loader } from "@/components/shared/loading-states/loader.tsx";
+import { Loader } from "@/components/shared/feedback/loading-states";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth.ts";
 import type { RoleType } from "@/modules/auth/api/types";
 import type { ReactNode } from "react";

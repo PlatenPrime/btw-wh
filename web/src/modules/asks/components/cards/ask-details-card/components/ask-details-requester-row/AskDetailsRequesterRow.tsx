@@ -1,5 +1,5 @@
-import { CalendarDate } from "@/components/shared/date/CalendarDate";
-import { UserAvatarName } from "@/components/shared/user/UserAvatarName";
+import { CalendarDate } from "@/components/shared/date/calendar-date/CalendarDate";
+import { UserAvatarName } from "@/components/shared/entities/user/UserAvatarName";
 
 interface AskDetailsRequesterRowProps {
   fullname?: string | null;

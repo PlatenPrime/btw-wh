@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ChevronDown } from "lucide-react";
 
-import { ModeToggle } from "@/components/shared/mode-toggle.tsx";
+import { ModeToggle } from "@/components/shared/elements";
 import { ProfileSidebarCard } from "@/components/layout/sidebar/profile-sidebar-card/ProfileSidebarCard";
 import {
   appSidebarData,

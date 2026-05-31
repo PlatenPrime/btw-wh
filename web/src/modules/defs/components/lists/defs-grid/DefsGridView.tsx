@@ -1,4 +1,4 @@
-﻿import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 import type { Def, DeficitItem } from "@/modules/defs/api/types/dto";
 import { DefCard } from "@/modules/defs/components/cards/def-card/DefCard";
 import type { DeficitFilter } from "@/modules/defs/components/elements/defs-stats/DefsStatsView";

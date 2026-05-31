@@ -1,6 +1,6 @@
-import { DataRefetchOverlay } from "@/components/shared/data-refetch-overlay/DataRefetchOverlay";
-import { ErrorDisplay } from '@/components/shared/error-components/error-display';
-import { LoadingNoData } from '@/components/shared/loading-states/loading-nodata';
+import { DataRefetchOverlay } from "@/components/shared/feedback/data-refetch-overlay/DataRefetchOverlay";
+import { ErrorDisplay } from '@/components/shared/errors';
+import { LoadingNoData } from '@/components/shared/feedback/loading-states';
 import { usePosesByArtikulQuery } from "@/modules/poses/api/hooks/queries/usePosesByArtikulQuery";
 import type { GetPosesByArtikulResponse } from "@/modules/poses/api/types";
 import type { ComponentType } from "react";

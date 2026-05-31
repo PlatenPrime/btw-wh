@@ -1,4 +1,4 @@
-import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 import { DelArtikulCardSkeleton } from "@/modules/dels/components/cards/del-artikul-card";
 
 const SKELETON_ITEMS_COUNT = 4;

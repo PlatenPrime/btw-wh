@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { DialogActions } from "@/components/shared/dialog-actions/DialogActions";
+import { DialogActions } from "@/components/shared/dialogs";
 import { useContainerInfiniteScroll } from "@/hooks/useContainerInfiniteScroll";
 import type { ZoneDto } from "@/modules/zones/api/types";
 import { Skeleton } from "@/components/ui/skeleton";

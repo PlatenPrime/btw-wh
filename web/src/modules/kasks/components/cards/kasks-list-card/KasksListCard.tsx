@@ -1,4 +1,4 @@
-import type { CardAction } from "@/components/shared/card-actions/types";
+import type { CardAction } from "@/components/shared/actions/card-actions";
 import type { KaskDto } from "@/modules/kasks/api/types/dto";
 import { KasksListCardView } from "@/modules/kasks/components/cards/kasks-list-card/KasksListCardView";
 import { Trash2 } from "lucide-react";

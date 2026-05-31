@@ -1,5 +1,5 @@
-import { EntityNotFound } from "@/components/shared/entity-not-found";
-import { ErrorDisplay } from "@/components/shared/error-components";
+import { EntityNotFound } from "@/components/shared/entities/entity-not-found";
+import { ErrorDisplay } from "@/components/shared/errors";
 import { useDelByIdQuery } from "@/modules/dels/api/hooks/queries/useDelByIdQuery";
 import type { DelDto } from "@/modules/dels/api/types";
 

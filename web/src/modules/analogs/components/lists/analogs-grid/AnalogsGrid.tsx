@@ -1,4 +1,4 @@
-﻿import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
+import { SurfaceSection } from "@/components/shared/layout";
 import type { AnalogDto } from "@/modules/analogs/api/types";
 import { AnalogGridCard } from "@/modules/analogs/components/cards/analog-grid-card";
 import type { KonkDto } from "@/modules/konks/api/types";
