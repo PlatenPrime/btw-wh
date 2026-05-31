@@ -2,7 +2,7 @@ import { ErrorDisplay } from "@/components/shared/error-components";
 import { LoadingNoData } from "@/components/shared/loading-states/loading-nodata";
 import { SalesRangeChartSkeleton } from "@/components/shared/charts/sales-range-chart";
 import { useSkuSalesRangeQuery } from "@/modules/skus/api/hooks/queries/useSkuSalesRangeQuery";
-import { SkuSalesChartView } from "@/modules/skus/components/charts/sku-sales-chart";
+import { SkuSalesChartContainerView } from "./SkuSalesChartContainerView";
 import type { SalesRangeChartPoint } from "@/types/charts-range";
 import { useState } from "react";
 
@@ -56,7 +56,7 @@ export function SkuSalesChartContainer({
   }
 
   return (
-    <SkuSalesChartView
+    <SkuSalesChartContainerView
       items={items}
       showSales={showSales}
       showRevenue={showRevenue}

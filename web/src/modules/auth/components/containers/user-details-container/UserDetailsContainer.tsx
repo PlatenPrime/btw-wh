@@ -1,9 +1,8 @@
 import type { User } from "@/modules/auth/api/types";
-import { UserDetailsCard } from "@/modules/auth/components/cards/user-details-card";
-import { EditUserDialog } from "@/modules/auth/components/dialogs/edit-user-dialog";
+import { UserDetailsContainerView } from "./UserDetailsContainerView";
 import { useState } from "react";
 
-interface UserDetailsContainerProps {
+export interface UserDetailsContainerProps {
   user: User;
   onEdit?: (user: User) => void;
 }
@@ -14,19 +13,20 @@ export function UserDetailsContainer({
 }: UserDetailsContainerProps) {
   const [editDialogOpen, setEditDialogOpen] = useState(false);
 
-  const handleEdit = () => setEditDialogOpen(true);
+  const handleEditClick = () => {
+    if (onEdit) {
+      onEdit(user);
+      return;
+    }
+    setEditDialogOpen(true);
+  };
 
   return (
-    <div className="grid gap-4">
-      <UserDetailsCard
-        user={user}
-        onEdit={onEdit ?? handleEdit}
-      />
-      <EditUserDialog
-        user={user}
-        open={editDialogOpen}
-        onOpenChange={setEditDialogOpen}
-      />
-    </div>
+    <UserDetailsContainerView
+      user={user}
+      editDialogOpen={editDialogOpen}
+      onEditDialogOpenChange={setEditDialogOpen}
+      onEdit={handleEditClick}
+    />
   );
 }

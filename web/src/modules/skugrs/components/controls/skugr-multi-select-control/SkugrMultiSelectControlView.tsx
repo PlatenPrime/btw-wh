@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useContainerInfiniteScroll } from "@/hooks/useContainerInfiniteScroll";
-import { EntityLabel } from "@/modules/analogs/components/entity-label/EntityLabel";
+import { EntityLabel } from "@/components/shared/entity-label";
 import type { ProdDto } from "@/modules/prods/api/types";
 import type { SkugrDto } from "@/modules/skugrs/api/types/dto";
 import { useRef } from "react";

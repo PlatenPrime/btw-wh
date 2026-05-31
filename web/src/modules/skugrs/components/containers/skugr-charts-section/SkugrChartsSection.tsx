@@ -7,7 +7,7 @@ import type {
   SliceRangeChartPoint,
 } from "@/types/charts-range";
 import { useSkugrDailySummaryQuery } from "@/modules/skugrs/api/hooks/queries/useSkugrDailySummaryQuery";
-import { SkugrChartsSectionView } from "@/modules/skugrs/components/charts/skugr-charts-section";
+import { SkugrChartsSectionContainerView } from "@/modules/skugrs/components/containers/skugr-charts-section/SkugrChartsSectionContainerView";
 import { useCallback, useMemo, useState } from "react";
 
 interface SkugrChartsSectionProps {
@@ -59,12 +59,12 @@ export function SkugrChartsSection({ skugrId }: SkugrChartsSectionProps) {
   } as const;
 
   if (isLoading && !data) {
-    return <SkugrChartsSectionView {...toolbar} phase="loading" />;
+    return <SkugrChartsSectionContainerView {...toolbar} phase="loading" />;
   }
 
   if (error && !data) {
     return (
-      <SkugrChartsSectionView
+      <SkugrChartsSectionContainerView
         {...toolbar}
         phase="error"
         error={error}
@@ -74,13 +74,13 @@ export function SkugrChartsSection({ skugrId }: SkugrChartsSectionProps) {
   }
 
   if (!sliceItems.length) {
-    return <SkugrChartsSectionView {...toolbar} phase="empty" />;
+    return <SkugrChartsSectionContainerView {...toolbar} phase="empty" />;
   }
 
   const showSalesChart = showSales || showRevenue;
 
   return (
-    <SkugrChartsSectionView
+    <SkugrChartsSectionContainerView
       {...toolbar}
       phase="ready"
       sliceItems={sliceItems}

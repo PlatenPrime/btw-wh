@@ -1,0 +1,1 @@
+export { SkladListPos } from "./SkladListPos";

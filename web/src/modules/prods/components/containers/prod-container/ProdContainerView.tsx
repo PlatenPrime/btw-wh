@@ -1,8 +1,8 @@
-п»їimport { SearchFiltersLayout } from "@/components/shared/search-components/search-filters-layout";
+import { SearchFiltersLayout } from "@/components/shared/search-components/search-filters-layout";
 import { SearchPanel } from "@/components/shared/search-components/search-panel/SearchPanel";
 import { SelectLimit } from "@/components/shared/select-limit";
 import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
-import { EntityLabel } from "@/modules/analogs/components/entity-label";
+import { EntityLabel } from "@/components/shared/entity-label";
 import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
 import { ProdDetailsCard } from "@/modules/prods/components/cards/prod-details-card";
@@ -16,7 +16,7 @@ import {
 
 interface ProdContainerViewProps {
   prod: ProdDto;
-  /** РЎРµРєС†С–СЏ РєРѕРЅРєСѓСЂРµРЅС‚РЅРёС… SKU С‚Р° С„С–Р»СЊС‚СЂС–РІ вЂ” Р»РёС€Рµ РґР»СЏ ADMIN+ */
+  /** Секція конкурентних SKU та фільтрів — лише для ADMIN+ */
   showCompetitorSkusSection?: boolean;
   search: string;
   onSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -48,14 +48,14 @@ export function ProdContainerView({
 
       {showCompetitorSkusSection ? (
       <SurfaceSection className="grid gap-2">
-        <h2 className="text-lg font-semibold text-center">РўРѕРІР°СЂРё РІРёСЂРѕР±РЅРёРєР°</h2>
+        <h2 className="text-lg font-semibold text-center">Товари виробника</h2>
         <SearchFiltersLayout
           searchSlot={
             <div className="grid gap-1">
               <SearchPanel
                 search={search}
                 onSearchChange={onSearchChange}
-                placeholder="РџРѕС€СѓРє Р·Р° РЅР°Р·РІРѕСЋ..."
+                placeholder="Пошук за назвою..."
               />
             </div>
           }
@@ -67,15 +67,15 @@ export function ProdContainerView({
                   onKonkNameChange(value === "all" ? "" : value)
                 }
               >
-                <SelectTrigger className="min-w-[160px]" aria-label="РљРѕРЅРєСѓСЂРµРЅС‚">
+                <SelectTrigger className="min-w-[160px]" aria-label="Конкурент">
                   <SelectValue
                     placeholder={
-                      isKonksLoading ? "Р—Р°РІР°РЅС‚Р°Р¶РµРЅРЅСЏ..." : "РЈСЃС– РєРѕРЅРєСѓСЂРµРЅС‚Рё"
+                      isKonksLoading ? "Завантаження..." : "Усі конкуренти"
                     }
                   />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">РЈСЃС– РєРѕРЅРєСѓСЂРµРЅС‚Рё</SelectItem>
+                  <SelectItem value="all">Усі конкуренти</SelectItem>
                   {konks.map((konk) => (
                     <SelectItem key={konk._id} value={konk.name}>
                       <EntityLabel

@@ -10,8 +10,8 @@ import type { ProdDto } from "@/modules/prods/api/types";
 import {
   getKonkTheme,
   KonkBanner,
-} from "@/modules/analogs/components/common/konk-banner";
-import { EntityLabel } from "@/modules/analogs/components/entity-label";
+} from "@/components/shared/konk-banner";
+import { EntityLabel } from "@/components/shared/entity-label";
 
 interface VariantGridCardViewProps {
   variant: VariantDto;

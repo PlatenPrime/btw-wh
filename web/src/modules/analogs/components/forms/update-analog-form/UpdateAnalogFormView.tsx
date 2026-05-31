@@ -15,7 +15,7 @@ import { ArtProdPreview } from "@/modules/arts/components/elements/art-prod-prev
 import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
 import { useFormContext } from "react-hook-form";
-import { EntityLabel } from "../../entity-label";
+import { EntityLabel } from "@/components/shared/entity-label";
 import type { UpdateAnalogFormData } from "./schema";
 
 interface UpdateAnalogFormViewProps {

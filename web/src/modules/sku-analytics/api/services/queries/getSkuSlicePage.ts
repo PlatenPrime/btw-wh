@@ -1,0 +1,29 @@
+import { apiClient } from "@/lib/apiClient";
+import type {
+  GetSkuSlicePageParams,
+  SkuSlicePageResponseDto,
+} from "@/modules/sku-analytics/api/types";
+
+export const getSkuSlicePage = async ({
+  konkName,
+  date,
+  page,
+  limit,
+  showInvalidOnly,
+  signal,
+}: GetSkuSlicePageParams): Promise<SkuSlicePageResponseDto> => {
+  const params = new URLSearchParams({
+    konkName,
+    date,
+    page: String(page),
+    limit: String(limit),
+  });
+  if (showInvalidOnly) {
+    params.set("isInvalid", "true");
+  }
+  const res = await apiClient.get<SkuSlicePageResponseDto>(
+    `sku-slices?${params.toString()}`,
+    { signal },
+  );
+  return res.data;
+};

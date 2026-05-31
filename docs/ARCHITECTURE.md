@@ -70,7 +70,35 @@ modules/{module-name}/
 └── constants/         # Константы модуля
 ```
 
-**Дополнительные каталоги в `components/`** (только если модуль это оправдывает): `menus/` (контекстные меню действий), `tables/` (таблицы, если не подходит `lists/`), `common/`, `entity-label/`, `shared/` — вспомогательные куски UI; `skeletons/` — исключение для одного скелетона всей области контента (см. `sku-statistics`); в остальных случаях скелетоны **рядом** с компонентом (см. раздел про скелетоны ниже).
+**Дополнительные каталоги в `components/`** (только если модуль это оправдывает): `menus/` (контекстные меню действий), `tables/` (таблицы, если не подходит `lists/`), `entity-label/` — domain-specific UI **только внутри модуля**. Каталоги `common/` и `shared/` в модуле допустимы **только** для UI, который не импортируется из других модулей; cross-module UI — в `components/shared/`. Скелетоны **рядом** с компонентом (см. раздел про скелетоны ниже).
+
+### Разделение layout: app shell vs page content
+
+| Путь | Назначение |
+|------|------------|
+| `components/layout/` | App shell: sidebar, header-actions, `SidebarInsetLayout` |
+| `components/shared/layout/` | Контентная обёртка страниц: `Page`, `PageHeader`, `PageSection` |
+
+### Cross-module UI и изоляция модулей
+
+1. Компоненты, импортируемые из **двух и более модулей**, размещаются в `components/shared/` (например, `konk-banner/`, `sklad-list-pos/`).
+2. **Запрещены** импорты вида `@/modules/{A}/...` из `@/modules/{B}/...` (кроме временной миграции; целевое состояние — ноль таких импортов).
+3. Импорты между модулями — только через `@/components/shared/` или общие `@/types/`, `@/lib/`.
+
+### Модуль `sku-analytics`
+
+Объединяет аналитику SKU: бывшие `sku-slices` (API), `sku-statistics`, `sku-konk-prod-charts` (UI). Структура:
+
+```
+modules/sku-analytics/
+├── api/              # hooks, services, types/
+├── components/       # actions, charts, containers, controls, fetchers, tables
+├── hooks/            # URL params, UI state
+├── pages/            # sku-statistics, sku-konk-prod-sales, sku-konk-prod-stock
+└── types/            # UI-типы (metric, row)
+```
+
+Страницы не вызывают `useQuery` напрямую — только Fetcher → Container → ContainerView.
 
 ### Принципы модульности
 
@@ -78,6 +106,7 @@ modules/{module-name}/
 2. **Единообразие**: Все модули следуют одной структуре
 3. **Переиспользование**: Общие компоненты выносятся в `components/shared/`
 4. **Типизация**: Каждый модуль имеет свои типы в `api/types/`
+5. **Strict Container/View**: каждый `*Container` обязан иметь `*ContainerView`, даже для thin wrappers
 
 Небольшие модули (например, только график и фильтры) могут содержать **минимальный** набор папок из списка выше — без дублирования пустых каталогов.
 
@@ -123,7 +152,7 @@ export function ArtsContainerView({ data, bottomRef }: ArtsContainerViewProps) {
 }
 ```
 
-**Правило**: Один компонент допустим только если это исключительно компонент отрисовки без логики.
+**Правило**: Один компонент допустим только если это исключительно компонент отрисовки без логики. Для `*Container` пара `*ContainerView` **обязательна всегда** — без исключений для «тонких» обёрток.
 
 ### Fetcher паттерн
 
@@ -615,6 +644,18 @@ import { useArtsQuery } from "../api/hooks/queries/useArtsQuery";
 ### Prettier
 
 Используется для форматирования кода с плагином для Tailwind CSS.
+
+## Чеклист code review (web)
+
+- [ ] Модуль использует только нужные папки из канона (без лишних пустых каталогов)
+- [ ] Каждый `*Container` имеет `*ContainerView` (+ `*ContainerSkeleton` при loading)
+- [ ] Страница не вызывает `useQuery` — данные через Fetcher → Container
+- [ ] Chart view в `charts/`, логика сценария в `containers/`
+- [ ] Cross-module UI только в `@/components/shared/`
+- [ ] Нет импортов `@/modules/A/...` из `@/modules/B/...`
+- [ ] `useRegisterHeaderActions` только в `components/actions/`
+- [ ] Скелетон обновлён вместе с изменением layout компонента
+- [ ] Импорты через `@/`; gap вместо space-x/space-y
 
 ## Заключение
 

@@ -7,8 +7,8 @@ import type { AnalogDto } from "@/modules/analogs/api/types";
 import {
   getKonkTheme,
   KonkBanner,
-} from "@/modules/analogs/components/common/konk-banner";
-import { EntityLabel } from "@/modules/analogs/components/entity-label";
+} from "@/components/shared/konk-banner";
+import { EntityLabel } from "@/components/shared/entity-label";
 import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
 

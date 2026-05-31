@@ -1,7 +1,7 @@
 import { CardActionsMenu } from "@/components/shared/card-actions/CardActionsMenu";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RoleType } from "@/constants/roles";
-import { RoleGuard } from "@/modules/auth/components/RoleGuard";
+import { RoleGuard } from "@/modules/auth/components/elements/RoleGuard";
 import type { BlockDto } from "@/modules/blocks/api/types";
 import { Trash } from "lucide-react";
 import { Link } from "react-router";

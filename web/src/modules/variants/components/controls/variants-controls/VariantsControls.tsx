@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/select";
 import { useKonksQuery } from "@/modules/konks/api/hooks/queries/useKonksQuery";
 import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
-import { EntityLabel } from "@/modules/analogs/components/entity-label";
+import { EntityLabel } from "@/components/shared/entity-label";
 import { useVariantsParams } from "@/modules/variants/hooks/useVariantsParams";
 
 export function VariantsControls() {

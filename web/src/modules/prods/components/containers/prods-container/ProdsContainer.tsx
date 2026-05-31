@@ -1,14 +1,10 @@
 import type { ProdsListResponse } from "@/modules/prods/api/types";
-import { ProdsGrid } from "@/modules/prods/components/lists/prods-grid";
+import { ProdsContainerView } from "@/modules/prods/components/containers/prods-container/ProdsContainerView";
 
 interface ProdsContainerProps {
   data: ProdsListResponse;
 }
 
 export function ProdsContainer({ data }: ProdsContainerProps) {
-  return (
-    <div className="grid gap-2">
-      <ProdsGrid prods={data.data} />
-    </div>
-  );
+  return <ProdsContainerView data={data} />;
 }

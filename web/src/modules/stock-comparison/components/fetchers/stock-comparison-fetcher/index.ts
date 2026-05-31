@@ -1,0 +1,1 @@
+export { StockComparisonFetcher } from "./StockComparisonFetcher";

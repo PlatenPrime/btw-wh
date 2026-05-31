@@ -1,25 +1,13 @@
 import { SidebarInsetLayout } from "@/components/layout/SidebarInsetLayout";
-import { ErrorDisplay } from "@/components/shared/error-components";
-import { LoadingNoData } from "@/components/shared/loading-states";
 import { AnalogSlicesControls } from "@/modules/analog-slices/components/controls/analog-slices-controls/AnalogSlicesControls";
-import {
-  AnalogSliceTableContainer,
-  AnalogSliceTableSkeleton,
-} from "@/modules/analog-slices/components/containers/analog-slice-table-container";
-import { useAnalogSliceQuery } from "@/modules/analog-slices/api/hooks/queries/useAnalogSliceQuery";
+import { AnalogSliceFetcher } from "@/modules/analog-slices/components/fetchers/analog-slice-fetcher";
 import { useState } from "react";
-import { isAxiosError } from "axios";
 
 export function AnalogSlices() {
   const [konkName, setKonkName] = useState("");
   const [date, setDate] = useState("");
 
-  const sliceQuery = useAnalogSliceQuery({ konkName, date });
-
   const showForm = Boolean(konkName && date);
-  const isEmpty =
-    sliceQuery.data?.data?.data &&
-    Object.keys(sliceQuery.data.data.data).length === 0;
 
   return (
     <SidebarInsetLayout headerText="Зрізи">
@@ -37,39 +25,9 @@ export function AnalogSlices() {
           </p>
         )}
 
-        {showForm && sliceQuery.isLoading && <AnalogSliceTableSkeleton />}
-
-        {showForm &&
-          sliceQuery.error &&
-          isAxiosError(sliceQuery.error) &&
-          sliceQuery.error.response?.status === 404 && (
-            <LoadingNoData description="Зріз не знайдено" />
-          )}
-
-        {showForm &&
-          sliceQuery.error &&
-          !(isAxiosError(sliceQuery.error) && sliceQuery.error.response?.status === 404) && (
-            <ErrorDisplay
-              error={sliceQuery.error}
-              title="Помилка завантаження зрізу"
-              description="Не вдалося завантажити зріз аналогів"
-            />
-          )}
-
-        {showForm &&
-          sliceQuery.isSuccess &&
-          (sliceQuery.data?.data?.data == null || isEmpty) && (
-            <LoadingNoData description="Зріз не знайдено" />
-          )}
-
-        {showForm &&
-          sliceQuery.isSuccess &&
-          sliceQuery.data?.data?.data != null &&
-          !isEmpty && (
-            <AnalogSliceTableContainer
-              data={sliceQuery.data.data.data}
-            />
-          )}
+        {showForm ? (
+          <AnalogSliceFetcher konkName={konkName} date={date} />
+        ) : null}
       </div>
     </SidebarInsetLayout>
   );

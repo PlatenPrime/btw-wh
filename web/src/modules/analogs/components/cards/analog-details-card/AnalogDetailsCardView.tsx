@@ -3,12 +3,12 @@ import { DetailPanelCard } from "@/components/shared/cards";
 import { CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import type { EnrichedAnalogDto } from "@/modules/analogs/api/types";
-import { KonkBanner } from "@/modules/analogs/components/common/konk-banner";
+import { KonkBanner } from "@/components/shared/konk-banner";
 import {
   AnalogStockContainer,
   AnalogStockSkeleton,
 } from "@/modules/analogs/components/containers/analog-stock-container";
-import { EntityLabel } from "@/modules/analogs/components/entity-label";
+import { EntityLabel } from "@/components/shared/entity-label";
 import { AnalogStockFetcher } from "@/modules/analogs/components/fetchers/analog-stock-fetcher";
 import { ExternalLink } from "lucide-react";
 

@@ -4,7 +4,7 @@ import { ListRowCard } from "@/components/shared/cards";
 import { CardContent, CardHeader } from "@/components/ui/card";
 import { RoleType, getRoleLabel } from "@/constants/roles";
 import type { User } from "@/modules/auth/api/types";
-import { RoleGuard } from "@/modules/auth/components/RoleGuard";
+import { RoleGuard } from "@/modules/auth/components/elements/RoleGuard";
 import { Edit } from "lucide-react";
 import { Link } from "react-router";
 

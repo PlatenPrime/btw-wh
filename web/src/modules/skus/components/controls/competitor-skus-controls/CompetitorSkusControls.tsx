@@ -17,7 +17,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
-import { EntityLabel } from "@/modules/analogs/components/entity-label";
+import { EntityLabel } from "@/components/shared/entity-label";
 import { useKonksQuery } from "@/modules/konks/api/hooks/queries/useKonksQuery";
 import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
 import type { CompetitorSkusScope } from "@/modules/skus/hooks/useCompetitorSkusParams";

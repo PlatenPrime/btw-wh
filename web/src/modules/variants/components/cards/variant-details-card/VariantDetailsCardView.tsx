@@ -5,8 +5,8 @@ import { Image } from "@/components/shared/image/image";
 import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
 import type { VariantDto } from "@/modules/variants/api/types";
-import { KonkBanner } from "@/modules/analogs/components/common/konk-banner";
-import { EntityLabel } from "@/modules/analogs/components/entity-label";
+import { KonkBanner } from "@/components/shared/konk-banner";
+import { EntityLabel } from "@/components/shared/entity-label";
 import { ExternalLink } from "lucide-react";
 
 interface VariantDetailsCardViewProps {

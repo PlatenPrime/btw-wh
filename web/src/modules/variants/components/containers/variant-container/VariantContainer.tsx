@@ -1,8 +1,8 @@
 import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
 import type { VariantDto } from "@/modules/variants/api/types";
-import { VariantDetailsCard } from "@/modules/variants/components/cards/variant-details-card";
 import { VariantDetailHeaderActions } from "@/modules/variants/components/actions/variant-detail-header-actions/VariantDetailHeaderActions";
+import { VariantContainerView } from "@/modules/variants/components/containers/variant-container/VariantContainerView";
 import { useMemo } from "react";
 
 interface VariantContainerProps {
@@ -25,8 +25,7 @@ export function VariantContainer({ variant, konks, prods }: VariantContainerProp
   return (
     <>
       <VariantDetailHeaderActions variant={variant} />
-      <VariantDetailsCard variant={variant} konk={konk} prod={prod} />
+      <VariantContainerView variant={variant} konk={konk} prod={prod} />
     </>
   );
 }
-

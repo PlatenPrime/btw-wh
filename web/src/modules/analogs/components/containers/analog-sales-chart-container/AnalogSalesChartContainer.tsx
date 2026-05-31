@@ -3,8 +3,8 @@ import { LoadingNoData } from "@/components/shared/loading-states/loading-nodata
 import { useAnalogSalesRangeQuery } from "@/modules/analogs/api/hooks/queries/useAnalogSalesRangeQuery";
 import {
   AnalogSalesChartSkeleton,
-  AnalogSalesChartView,
 } from "@/modules/analogs/components/charts/analog-sales-chart";
+import { AnalogSalesChartContainerView } from "./AnalogSalesChartContainerView";
 import { useState } from "react";
 
 interface AnalogSalesChartContainerProps {
@@ -57,7 +57,7 @@ export function AnalogSalesChartContainer({
   }
 
   return (
-    <AnalogSalesChartView
+    <AnalogSalesChartContainerView
       items={items}
       showSales={showSales}
       onShowSalesChange={setShowSales}

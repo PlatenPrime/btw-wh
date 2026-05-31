@@ -6,9 +6,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
-import { EntityLabel } from "@/modules/analogs/components/entity-label/EntityLabel";
+import { EntityLabel } from "@/components/shared/entity-label";
 import type { ProdDto } from "@/modules/prods/api/types";
-import { SKU_KONK_PROD_QUERY_ALL } from "@/modules/sku-konk-prod-charts/constants";
+import { SKU_KONK_PROD_QUERY_ALL } from "@/modules/sku-analytics/constants";
 
 export interface ProdEntitySelectProps {
   value: string;

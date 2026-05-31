@@ -1,4 +1,4 @@
-п»їimport { format, parse } from "date-fns";
+import { format, parse } from "date-fns";
 import { uk } from "date-fns/locale";
 import { CalendarIcon } from "lucide-react";
 import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/popover";
 import { Label } from "@/components/ui/label";
 import { useKonksQuery } from "@/modules/konks/api/hooks/queries/useKonksQuery";
-import { EntityLabel } from "@/modules/analogs/components/entity-label";
+import { EntityLabel } from "@/components/shared/entity-label";
 import { cn } from "@/lib/utils";
 
 const DATE_API_FORMAT = "yyyy-MM-dd";
@@ -56,20 +56,20 @@ export function AnalogSlicesControls({
   return (
     <SurfaceSection className="flex flex-wrap items-end gap-3">
       <div className="flex min-w-0 flex-col gap-2">
-        <Label htmlFor="analog-slices-konk">РљРѕРЅРєСѓСЂРµРЅС‚</Label>
+        <Label htmlFor="analog-slices-konk">Конкурент</Label>
         <Select
           value={konkName || "all"}
           onValueChange={(v) => onKonkNameChange(v === "all" ? "" : v)}
         >
           <SelectTrigger
             id="analog-slices-konk"
-            aria-label="РљРѕРЅРєСѓСЂРµРЅС‚"
+            aria-label="Конкурент"
             className="min-w-[140px] sm:min-w-[160px]"
           >
-            <SelectValue placeholder="РћР±РµСЂС–С‚СЊ РєРѕРЅРєСѓСЂРµРЅС‚Р°" />
+            <SelectValue placeholder="Оберіть конкурента" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">РћР±РµСЂС–С‚СЊ РєРѕРЅРєСѓСЂРµРЅС‚Р°</SelectItem>
+            <SelectItem value="all">Оберіть конкурента</SelectItem>
             {konks.map((k) => (
               <SelectItem key={k._id} value={k.name}>
                 <EntityLabel
@@ -83,14 +83,14 @@ export function AnalogSlicesControls({
         </Select>
       </div>
       <div className="flex min-w-0 flex-col gap-2">
-        <Label id="analog-slices-date-label">Р”Р°С‚Р°</Label>
+        <Label id="analog-slices-date-label">Дата</Label>
         <Popover>
           <PopoverTrigger asChild>
             <Button
               id="analog-slices-date"
               variant="outline"
               aria-labelledby="analog-slices-date-label"
-              aria-label="Р”Р°С‚Р° Р·СЂС–Р·Сѓ"
+              aria-label="Дата зрізу"
               className={cn(
                 "min-w-[140px] justify-start text-left font-normal sm:min-w-[200px]",
                 !selectedDate && "text-muted-foreground",
@@ -100,7 +100,7 @@ export function AnalogSlicesControls({
               {selectedDate ? (
                 format(selectedDate, "d MMM yyyy", { locale: uk })
               ) : (
-                <span>РћР±РµСЂС–С‚СЊ РґР°С‚Сѓ</span>
+                <span>Оберіть дату</span>
               )}
             </Button>
           </PopoverTrigger>

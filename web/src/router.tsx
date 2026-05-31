@@ -78,22 +78,7 @@ const Rows = lazy(() =>
   })),
 );
 
-const Stock = lazy(() =>
-  import("./modules/stocks/pages/stock").then((module) => ({
-    default: module.Stock,
-  })),
-);
-const Stocks = lazy(() =>
-  import("./modules/stocks/pages/stocks").then((module) => ({
-    default: module.Stocks,
-  })),
-);
 
-const WhUtils = lazy(() =>
-  import("./modules/wh/pages/whUtils").then((module) => ({
-    default: module.WhUtils,
-  })),
-);
 const Zones = lazy(() =>
   import("./modules/zones/pages/zones").then((module) => ({
     default: module.Zones,
@@ -163,26 +148,26 @@ const CompetitorSkus = lazy(() =>
   })),
 );
 const SkuSlices = lazy(() =>
-  import("./modules/sku-slices/pages/sku-slices").then((module) => ({
+  import("./modules/sku-analytics/pages/sku-slices").then((module) => ({
     default: module.SkuSlices,
   })),
 );
 const SkuKonkProdSales = lazy(() =>
-  import("./modules/sku-konk-prod-charts/pages/sku-konk-prod-sales").then(
+  import("./modules/sku-analytics/pages/sku-konk-prod-sales").then(
     (module) => ({
       default: module.SkuKonkProdSales,
     }),
   ),
 );
 const SkuKonkProdStock = lazy(() =>
-  import("./modules/sku-konk-prod-charts/pages/sku-konk-prod-stock").then(
+  import("./modules/sku-analytics/pages/sku-konk-prod-stock").then(
     (module) => ({
       default: module.SkuKonkProdStock,
     }),
   ),
 );
 const SkuStatistics = lazy(() =>
-  import("./modules/sku-statistics/pages/sku-statistics").then((module) => ({
+  import("./modules/sku-analytics/pages/sku-statistics").then((module) => ({
     default: module.SkuStatistics,
   })),
 );
@@ -512,16 +497,6 @@ export const router = createHashRouter([
             errorElement: <RouteErrorBoundary />,
           },
           {
-            path: "stocks",
-            element: <Stocks />,
-            errorElement: <RouteErrorBoundary />,
-          },
-          {
-            path: "stocks/:stock",
-            element: <Stock />,
-            errorElement: <RouteErrorBoundary />,
-          },
-          {
             path: "zones",
             element: (
               <ProtectedRoute allowedRoles={[RoleType.ADMIN]}>
@@ -655,11 +630,6 @@ export const router = createHashRouter([
                 <Zone />
               </ProtectedRoute>
             ),
-            errorElement: <RouteErrorBoundary />,
-          },
-          {
-            path: "utils",
-            element: <WhUtils />,
             errorElement: <RouteErrorBoundary />,
           },
           {

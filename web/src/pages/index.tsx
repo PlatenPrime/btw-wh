@@ -10,6 +10,3 @@ export { Zones } from "../modules/zones/pages/zones";
 export { ArtsUtils } from "../modules/arts/pages/artsUtils";
 export { Main } from "./main";
 export { Path } from "./path";
-export { Stock } from "../modules/stocks/pages/stock";
-export { Stocks } from "../modules/stocks/pages/stocks";
-export { WhUtils } from "../modules/wh/pages/whUtils";

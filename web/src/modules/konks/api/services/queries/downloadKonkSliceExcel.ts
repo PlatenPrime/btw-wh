@@ -1,5 +1,5 @@
 import { apiClient } from "@/lib/apiClient";
-import { appendSkugrIds } from "@/modules/sku-slices/api/utils/appendSkugrIds";
+import { appendSkugrIds } from "@/modules/sku-analytics/api/utils/appendSkugrIds";
 import { parseContentDisposition } from "@/utils/parseContentDisposition";
 
 export interface DownloadKonkSliceExcelResult {

@@ -11,7 +11,7 @@ import {
 import { Calendar } from "@/components/ui/calendar";
 import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
-import { SKU_KONK_PROD_QUERY_ALL } from "@/modules/sku-konk-prod-charts/constants";
+import { SKU_KONK_PROD_QUERY_ALL } from "@/modules/sku-analytics/constants";
 import { SkugrMultiSelectControl } from "@/modules/skugrs/components/controls/skugr-multi-select-control";
 import type { DateRange } from "react-day-picker";
 

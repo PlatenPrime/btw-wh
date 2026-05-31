@@ -12,7 +12,7 @@ import {
 import { useAnalogsParams } from "@/modules/analogs/hooks/useAnalogsParams";
 import { useKonksQuery } from "@/modules/konks/api/hooks/queries/useKonksQuery";
 import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
-import { EntityLabel } from "../../entity-label";
+import { EntityLabel } from "@/components/shared/entity-label";
 
 export function AnalogsControls() {
   const { limit, setLimit, konkName, setKonkName, prodName, setProdName, search, setSearch } =

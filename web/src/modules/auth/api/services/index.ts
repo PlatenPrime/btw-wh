@@ -1,7 +1,7 @@
-export { getMe } from "./getMe";
-export { login } from "./login";
-export { register } from "./register";
-export { updateUser } from "./updateUser";
+export { getMe } from "./queries/getMe";
+export { login } from "./mutations/login";
+export { register } from "./mutations/register";
+export { updateUser } from "./mutations/updateUser";
 export { getUsers } from "./queries/getUsers";
 export { getUserById } from "./queries/getUserById";
 export { getRoles } from "./queries/getRoles";

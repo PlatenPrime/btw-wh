@@ -1,14 +1,10 @@
 import type { KonksListResponse } from "@/modules/konks/api/types";
-import { KonksGrid } from "@/modules/konks/components/lists/konks-grid";
+import { KonksContainerView } from "@/modules/konks/components/containers/konks-container/KonksContainerView";
 
 interface KonksContainerProps {
   data: KonksListResponse;
 }
 
 export function KonksContainer({ data }: KonksContainerProps) {
-  return (
-    <div className="grid gap-2">
-      <KonksGrid konks={data.data} />
-    </div>
-  );
+  return <KonksContainerView data={data} />;
 }

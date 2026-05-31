@@ -5,7 +5,7 @@ import { DetailPanelCard } from "@/components/shared/cards";
 import { CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { RoleType, getRoleLabel } from "@/constants/roles";
-import { RoleGuard } from "@/modules/auth/components/RoleGuard";
+import { RoleGuard } from "@/modules/auth/components/elements/RoleGuard";
 import type { User } from "@/modules/auth/api/types";
 import { formatDate } from "@/utils/formatDate";
 import {

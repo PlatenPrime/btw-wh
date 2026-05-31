@@ -6,7 +6,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
-import { EntityLabel } from "@/modules/analogs/components/entity-label/EntityLabel";
+import { EntityLabel } from "@/components/shared/entity-label";
 import type { KonkDto } from "@/modules/konks/api/types";
 
 export interface KonkEntitySelectProps {

@@ -3,7 +3,7 @@ import { useDownloadKonkSalesExcelMutation } from "@/modules/konks/api/hooks/mut
 import { useKonksQuery } from "@/modules/konks/api/hooks/queries/useKonksQuery";
 import type { KonkDto } from "@/modules/konks/api/types";
 import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
-import { SKU_KONK_PROD_QUERY_ALL } from "@/modules/sku-konk-prod-charts/constants";
+import { SKU_KONK_PROD_QUERY_ALL } from "@/modules/sku-analytics/constants";
 import { format } from "date-fns";
 import type { DateRange } from "react-day-picker";
 import { useCallback, useEffect, useRef, useState } from "react";

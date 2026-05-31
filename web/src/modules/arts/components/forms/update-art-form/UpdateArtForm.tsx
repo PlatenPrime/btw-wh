@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/select";
 import { usePatchArtMutation } from "@/modules/arts/api/hooks/mutations/usePatchArtMutation";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
-import { EntityLabel } from "@/modules/analogs/components/entity-label";
+import { EntityLabel } from "@/components/shared/entity-label";
 import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMemo } from "react";

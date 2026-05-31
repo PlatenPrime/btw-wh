@@ -2,7 +2,7 @@ import { CardActionsMenu } from "@/components/shared/card-actions/CardActionsMen
 import { ListRowCard } from "@/components/shared/cards";
 import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RoleType } from "@/constants/roles";
-import { RoleGuard } from "@/modules/auth/components/RoleGuard";
+import { RoleGuard } from "@/modules/auth/components/elements/RoleGuard";
 import type { ZoneDto } from "@/modules/zones/api/types";
 import { ZoneBarcode } from "@/modules/zones/components/elements/zone-barcode";
 import { ZoneLink } from "@/modules/zones/components/elements/zone-link";

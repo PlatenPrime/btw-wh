@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/select";
 import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
-import { EntityLabel } from "@/modules/analogs/components/entity-label/EntityLabel";
+import { EntityLabel } from "@/components/shared/entity-label";
 import type { DateRange } from "react-day-picker";
 
 const ABC_OPTIONS = [

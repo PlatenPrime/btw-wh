@@ -1,4 +1,4 @@
-п»їimport { SearchFiltersLayout } from "@/components/shared/search-components/search-filters-layout";
+import { SearchFiltersLayout } from "@/components/shared/search-components/search-filters-layout";
 import { SearchPanel } from "@/components/shared/search-components/search-panel/SearchPanel";
 import { SelectLimit } from "@/components/shared/select-limit";
 import { SurfaceSection } from "@/components/shared/wrappers/SurfaceSection";
@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { EntityLabel } from "@/modules/analogs/components/entity-label";
+import { EntityLabel } from "@/components/shared/entity-label";
 import { useKonksQuery } from "@/modules/konks/api/hooks/queries/useKonksQuery";
 import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
 import { useSkugrsParams } from "@/modules/skugrs/hooks/useSkugrsParams";
@@ -55,7 +55,7 @@ export function SkugrsControls() {
           <SearchPanel
             search={search}
             onSearchChange={(e) => setSearch(e.target.value)}
-            placeholder="РџРѕС€СѓРє Р·Р° РЅР°Р·РІРѕСЋ РіСЂСѓРїРё..."
+            placeholder="Пошук за назвою групи..."
           />
         }
         filtersSlot={
@@ -65,13 +65,13 @@ export function SkugrsControls() {
               onValueChange={(v) => setKonkName(v === "all" ? "" : v)}
             >
               <SelectTrigger
-                aria-label="РљРѕРЅРєСѓСЂРµРЅС‚"
+                aria-label="Конкурент"
                 className="min-w-[140px] sm:min-w-[160px]"
               >
-                <SelectValue placeholder="РЈСЃС– РєРѕРЅРєСѓСЂРµРЅС‚Рё" />
+                <SelectValue placeholder="Усі конкуренти" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">РЈСЃС– РєРѕРЅРєСѓСЂРµРЅС‚Рё</SelectItem>
+                <SelectItem value="all">Усі конкуренти</SelectItem>
                 {konks.map((k) => (
                   <SelectItem key={k._id} value={k.name}>
                     <EntityLabel
@@ -89,13 +89,13 @@ export function SkugrsControls() {
               onValueChange={(v) => setProdName(v === "all" ? "" : v)}
             >
               <SelectTrigger
-                aria-label="Р’РёСЂРѕР±РЅРёРє"
+                aria-label="Виробник"
                 className="min-w-[140px] sm:min-w-[160px]"
               >
-                <SelectValue placeholder="РЈСЃС– РІРёСЂРѕР±РЅРёРєРё" />
+                <SelectValue placeholder="Усі виробники" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">РЈСЃС– РІРёСЂРѕР±РЅРёРєРё</SelectItem>
+                <SelectItem value="all">Усі виробники</SelectItem>
                 {prods.map((p) => (
                   <SelectItem key={p._id} value={p.name}>
                     <EntityLabel
@@ -114,13 +114,13 @@ export function SkugrsControls() {
               setLimit={setLimit}
             />
             <Select value={slicedFilterValue} onValueChange={handleSlicedFilterChange}>
-              <SelectTrigger aria-label="Р¤С–Р»СЊС‚СЂ РїРѕ СЃСЂРµР·Р°С…">
-                <SelectValue placeholder="РЎСЂРµР·Рё" />
+              <SelectTrigger aria-label="Фільтр по срезах">
+                <SelectValue placeholder="Срези" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">РЈСЃС–</SelectItem>
-                <SelectItem value="sliced">Р—СЂС–Р·Рё</SelectItem>
-                <SelectItem value="unsliced">Р‘РµР· Р·СЂС–Р·С–РІ</SelectItem>
+                <SelectItem value="all">Усі</SelectItem>
+                <SelectItem value="sliced">Зрізи</SelectItem>
+                <SelectItem value="unsliced">Без зрізів</SelectItem>
               </SelectContent>
             </Select>
           </div>
