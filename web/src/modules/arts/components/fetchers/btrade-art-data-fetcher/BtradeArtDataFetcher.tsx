@@ -2,7 +2,7 @@ import { ErrorDisplay } from "@/components/shared/errors";
 import { LoadingNoData } from "@/components/shared/feedback/loading-states";
 import { useBtradeArtDataQuery } from "@/modules/arts/api/hooks/queries/useBtradeArtDataQuery";
 import type { BtradeArtInfoDto } from "@/modules/arts/api/types/dto";
-import type { ComponentType } from "react";
+import type { ComponentType, ReactNode } from "react";
 
 export interface BtradeArtDataContainerProps {
   artikul: string;
@@ -12,16 +12,22 @@ export interface BtradeArtDataContainerProps {
   onRetry: () => void;
 }
 
+interface BtradeArtDataFetcherChromeProps {
+  children: ReactNode;
+}
+
 interface BtradeArtDataFetcherProps {
   artikul: string | undefined;
   ContainerComponent: ComponentType<BtradeArtDataContainerProps>;
   SkeletonComponent: ComponentType;
+  ChromeComponent?: ComponentType<BtradeArtDataFetcherChromeProps>;
 }
 
 export function BtradeArtDataFetcher({
   artikul,
   ContainerComponent,
   SkeletonComponent,
+  ChromeComponent,
 }: BtradeArtDataFetcherProps) {
   const {
     data: btradeArtResponse,
@@ -30,23 +36,30 @@ export function BtradeArtDataFetcher({
     refetch,
   } = useBtradeArtDataQuery(artikul);
 
+  const wrapChrome = (content: ReactNode) =>
+    ChromeComponent ? <ChromeComponent>{content}</ChromeComponent> : content;
+
   if (!artikul) {
-    return <LoadingNoData description="Артикул не передан для завантаження даних" />;
+    return wrapChrome(
+      <LoadingNoData description="Артикул не передан для завантаження даних" />,
+    );
   }
 
   if (isLoading) return <SkeletonComponent />;
 
   if (error)
-    return (
+    return wrapChrome(
       <ErrorDisplay
         error={error}
         title="Помилка завантаження даних з sharik.ua"
         description="Не вдалося завантажити дані з sharik.ua"
-      />
+      />,
     );
 
   if (!btradeArtResponse) {
-    return <LoadingNoData description="Немає даних для відображення" />;
+    return wrapChrome(
+      <LoadingNoData description="Немає даних для відображення" />,
+    );
   }
 
   const containerProps: BtradeArtDataContainerProps = {
@@ -59,5 +72,5 @@ export function BtradeArtDataFetcher({
     },
   };
 
-  return <ContainerComponent {...containerProps} />;
+  return wrapChrome(<ContainerComponent {...containerProps} />);
 }

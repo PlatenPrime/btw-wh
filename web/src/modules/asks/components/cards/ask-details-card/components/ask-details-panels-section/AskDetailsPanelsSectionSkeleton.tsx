@@ -1,8 +1,5 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import {
-  BtradeArtDataPanelSkeleton,
-  BtradeArtDataPanelView,
-} from "@/modules/arts/components/elements/btrade-art-data-panel";
+import { BtradeArtDataPanelSkeleton } from "@/modules/arts/components/elements/btrade-art-data-panel";
 
 export function AskDetailsPanelsSectionSkeleton() {
   return (
@@ -17,9 +14,7 @@ export function AskDetailsPanelsSectionSkeleton() {
         </div>
       </div>
 
-      <BtradeArtDataPanelView>
-        <BtradeArtDataPanelSkeleton />
-      </BtradeArtDataPanelView>
+      <BtradeArtDataPanelSkeleton />
     </div>
   );
 }

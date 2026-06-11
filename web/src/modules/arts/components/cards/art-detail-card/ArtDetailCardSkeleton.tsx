@@ -1,9 +1,6 @@
 import { Card, CardContent } from "@/components/ui";
 import { Skeleton } from "@/components/ui/skeleton";
-import {
-  BtradeArtDataPanelSkeleton,
-  BtradeArtDataPanelView,
-} from "@/modules/arts/components/elements/btrade-art-data-panel";
+import { BtradeArtDataPanelSkeleton } from "@/modules/arts/components/elements/btrade-art-data-panel";
 
 export function ArtDetailCardSkeleton() {
   return (
@@ -22,9 +19,7 @@ export function ArtDetailCardSkeleton() {
             <Skeleton className="h-4 w-12" />
           </div>
 
-          <BtradeArtDataPanelView>
-            <BtradeArtDataPanelSkeleton />
-          </BtradeArtDataPanelView>
+          <BtradeArtDataPanelSkeleton />
         </div>
       </CardContent>
     </Card>
