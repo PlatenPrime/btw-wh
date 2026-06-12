@@ -152,6 +152,11 @@ const SkuSlices = lazy(() =>
     default: module.SkuSlices,
   })),
 );
+const BtradeSlices = lazy(() =>
+  import("./modules/btrade-slices/pages/btrade-slices").then((module) => ({
+    default: module.BtradeSlices,
+  })),
+);
 const SkuKonkProdSales = lazy(() =>
   import("./modules/sku-analytics/pages/sku-konk-prod-sales").then(
     (module) => ({
@@ -408,6 +413,15 @@ export const router = createHashRouter([
             element: (
               <ProtectedRoute>
                 <SkuSlices />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "btrade-slices",
+            element: (
+              <ProtectedRoute>
+                <BtradeSlices />
               </ProtectedRoute>
             ),
             errorElement: <RouteErrorBoundary />,

@@ -12,6 +12,7 @@ export const quickLinkDescriptionByUrl: Record<string, string> = {
   "/sku/skugrs": "Товарні групи конкурентів",
   "/sku/competitor-skus": "Товари конкурентів",
   "/sku/sku-slices": "Зрізи по товарах SKU",
+  "/sku/btrade-slices": "Зрізи каталогу Btrade",
   "/sku/sales": "Продажі товарів конкурентів",
   "/sku/stock-comparison": "Залишки та порівняння по SKU",
   "/sku/statistics": "Статистика продажів по виробниках",

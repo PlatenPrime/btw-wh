@@ -228,12 +228,6 @@ export const appSidebarData: { navMain: AppSidebarNavGroup[] } = {
           allowedRoles: [RoleType.ADMIN],
         },
         {
-          title: "Зрізи",
-          url: "/sku/sku-slices",
-          iconName: "Projector",
-          allowedRoles: [RoleType.ADMIN],
-        },
-        {
           title: "Продажі",
           url: "/sku/sales",
           iconName: "TrendingUp",
@@ -249,6 +243,18 @@ export const appSidebarData: { navMain: AppSidebarNavGroup[] } = {
           title: "Статистика",
           url: "/sku/statistics",
           iconName: "PieChart",
+          allowedRoles: [RoleType.ADMIN],
+        },
+        {
+          title: "Зрізи конкуренти",
+          url: "/sku/sku-slices",
+          iconName: "Projector",
+          allowedRoles: [RoleType.ADMIN],
+        },
+        {
+          title: "Зрізи Btrade",
+          url: "/sku/btrade-slices",
+          iconName: "Projector",
           allowedRoles: [RoleType.ADMIN],
         },
       ],
