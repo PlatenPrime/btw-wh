@@ -22,7 +22,7 @@ export const getSkuKonkProdSalesChartData = async ({
   const params = new URLSearchParams({ konk, prod, dateFrom, dateTo });
   appendSkugrIds(params, skugrIds);
   const res = await apiClient.get<SalesComparisonResponse>(
-    `sku-slices/konk-prod/sales-chart-data?${params.toString()}`,
+    `sku-chart-reports/konk-prod/sales?${params.toString()}`,
     { signal },
   );
   return res.data;

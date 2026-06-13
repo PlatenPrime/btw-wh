@@ -14,7 +14,7 @@ export const downloadSkuSalesExcel = async (
 ): Promise<DownloadSkuSalesExcelResult> => {
   const params = new URLSearchParams({ dateFrom, dateTo });
   const res = await apiClient.get<Blob>(
-    `sku-slices/sku/${skuId}/sales-excel?${params.toString()}`,
+    `sku-excel-reports/sku/${skuId}/sales?${params.toString()}`,
     { responseType: "blob", signal },
   );
 

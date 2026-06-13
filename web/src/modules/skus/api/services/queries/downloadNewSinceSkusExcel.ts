@@ -11,8 +11,8 @@ export const downloadNewSinceSkusExcel = async (
   since: string,
   signal?: AbortSignal,
 ): Promise<DownloadSkusExcelResult> => {
-  const params = new URLSearchParams({ since });
-  const path = `skus/konk/${encodeURIComponent(konkName)}/new-since-excel?${params.toString()}`;
+  const params = new URLSearchParams({ konk: konkName, since });
+  const path = `sku-excel-reports/catalog/new-since?${params.toString()}`;
   const res = await apiClient.get<Blob>(path, {
     responseType: "blob",
     signal,

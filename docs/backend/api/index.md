@@ -6,21 +6,24 @@ API системы управления складом предоставляе�
 
 ## Базовые пути
 
-Все API эндпоинты имеют базовый путь `/api`, за которым следует название модуля:
+Все API эндпоинты имеют базовый путь `/api`, за которым следует название модуля. **Кто каким методом может пользоваться** — в едином реестре: [Матрица доступа](access-matrix.md).
 
 - [API Analog Slices](analog-slices.md) — `/api/analog-slices` — срезы остатков и цен аналогов по датам
 - [API Analogs](analogs.md) — `/api/analogs` — аналоги артикулов у конкурентов
 - [API Variants](variants.md) — `/api/variants` — варианты товаров у конкурентов
 - [API Browser](browser.md) — `/api/browser` — остаток и цена по URL страницы товара (yumi, yumin)
+- [API Btrade Slices](btrade-slices.md) — `/api/btrade-slices` — срезы Btrade
 - [API Auth](auth.md) — `/api/auth` — аутентификация и управление пользователями
 - [API Arts](arts.md) — `/api/arts` — артикулы
 - [API Asks](asks.md) — `/api/asks` — заявки
 - [API Kasks](kasks.md) — `/api/kasks` — запросы доставить к кассе
 - [API Blocks](blocks.md) — `/api/blocks` — блоки
+- [API Constants](constants.md) — `/api/constants` — именованные константы приложения
 - [API Segs](segs.md) — `/api/segs` — сегменты
 - [API Zones](zones.md) — `/api/zones` — зоны
 - [API Rows](rows.md) — `/api/rows` — ряды
 - [API Pallets](pallets.md) — `/api/pallets` — паллеты
+- [API Pallet Groups](pallet-groups.md) — `/api/pallet-groups` — группы паллет
 - [API Poses](poses.md) — `/api/poses` — позиции
 - [API Defs](defs.md) — `/api/defs` — расчёт дефицитов
 - [API Dels](dels.md) — `/api/dels` — поставки
@@ -28,7 +31,11 @@ API системы управления складом предоставляе�
 - [API Prods](prods.md) — `/api/prods` — производители
 - [API Skus](skus.md) — `/api/skus` — товары конкурентов (sku)
 - [API Skugrs](skugrs.md) — `/api/skugrs` — группы товаров конкурента
-- [API Sku Slices](sku-slices.md) — `/api/sku-slices` — ежедневные срезы остатков и цен по SKU конкурентов (корневой GET с пагинацией и маппингом на Sku), Excel и агрегаты по группам (в т.ч. Skugr)
+- [API Sku Slices](sku-slices.md) — `/api/sku-slices` — сырые ежедневные срезы остатков и цен
+- [API Sku Excel Reports](sku-excel-reports.md) — `/api/sku-excel-reports` — Excel по SKU, группам и каталогу
+- [API Sku Sales Reports](sku-sales-reports.md) — `/api/sku-sales-reports` — JSON продажи и агрегаты
+- [API Sku Chart Reports](sku-chart-reports.md) — `/api/sku-chart-reports` — JSON для графиков konk vs Btrade
+- [Миграция API SKU](sku-api-migration.md) — таблица замены путей после реструктуризации
 
 ## Аутентификация
 
@@ -40,15 +47,20 @@ Authorization: Bearer <token>
 
 Токен получается при успешном входе через эндпоинт `/api/auth/login` и содержит информацию о пользователе и его роли.
 
+Публичные маршруты (без JWT): `POST /api/auth/login`, `POST /api/auth/register`, все `GET` под `/api/browser/*` — см. [Матрица доступа](access-matrix.md).
+
 ## Роли и права доступа
 
-Система использует три уровня ролей:
+В коде заданы четыре роли (`RoleType` в `src/constants/roles.ts`) и **иерархия уровней**: PRIME (4) > ADMIN (3) > EDITOR (2) > USER (1). Middleware `checkRoles` после `checkAuth` разрешает доступ, если у пользователя уровень **не ниже** минимального, указанного для маршрута. Например, при требовании «минимум USER» подходят USER, EDITOR, ADMIN и PRIME; при требовании «минимум ADMIN» — ADMIN и PRIME.
 
-- **USER** - базовый уровень доступа. Позволяет просматривать данные и создавать заявки.
-- **ADMIN** - расширенный уровень доступа. Позволяет просматривать список пользователей, создавать, обновлять и удалять данные в большинстве модулей.
-- **PRIME** - максимальный уровень доступа. Создание и полное редактирование пользователей (включая логин), критические операции (удаление рядов, паллет и т.д.).
+- **USER** — просмотр и операции «поля» (заявки, каски, часть складских чтений и т.д. по матрице).
+- **EDITOR** — промежуточный уровень: например, операции с паллетами и позициями без полномочий администратора по конкурентным данным.
+- **ADMIN** — управление большинством сущностей, справочники конкурентов, срезы, константы, группы паллет (чтение/изменение по матрице).
+- **PRIME** — создание пользователей и полное обновление учётных данных, массовые/опасные удаления и upsert-операции там, где в роутере задано `PRIME`.
 
-Каждый эндпоинт имеет указание о требуемой роли в документации модуля.
+Отдельные маршруты используют **дополнительные правила** (например, владение ресурсом), а не только роль — это отражено в [Матрице доступа](access-matrix.md).
+
+Точный перечень методов, путей и условий: **[Матрица доступа](access-matrix.md)**. В файлах отдельных модулей ниже — в основном форматы данных; при расхождении с роутером источником истины остаётся код и матрица.
 
 ## Стандартные форматы запросов и ответов
 
@@ -169,19 +181,24 @@ Authorization: Bearer <token>
 
 ## Документация модулей
 
-Детальная документация по эндпоинтам и форматам данных каждого модуля (по базовым путям):
+Детальная документация по эндпоинтам и форматам данных каждого модуля (по базовым путям). Доступ по ролям — [Матрица доступа](access-matrix.md).
 
 - [API Analog Slices](analog-slices.md)
 - [API Analogs](analogs.md)
+- [API Variants](variants.md)
+- [API Browser](browser.md)
+- [API Btrade Slices](btrade-slices.md)
 - [API Auth](auth.md)
 - [API Arts](arts.md)
 - [API Asks](asks.md)
 - [API Kasks](kasks.md)
 - [API Blocks](blocks.md)
+- [API Constants](constants.md)
 - [API Segs](segs.md)
 - [API Zones](zones.md)
 - [API Rows](rows.md)
 - [API Pallets](pallets.md)
+- [API Pallet Groups](pallet-groups.md)
 - [API Poses](poses.md)
 - [API Defs](defs.md)
 - [API Dels](dels.md)
@@ -189,5 +206,6 @@ Authorization: Bearer <token>
 - [API Prods](prods.md)
 - [API Skus](skus.md)
 - [API Skugrs](skugrs.md)
+- [API Sku Slices](sku-slices.md)
 
-Концептуальная документация модулей (сущности, связи, решения): [../modules/](../modules/) — analog-slices, analogs, auth, arts, asks, kasks, blocks, segs, zones, rows, pallets, poses, defs, dels, konks, prods, skus, skugrs, comps, palgrs.
+Концептуальная документация модулей (сущности, связи, решения): [../modules/](../modules/) — analog-slices, analogs, auth, arts, asks, kasks, blocks, segs, zones, rows, pallets, [pallet-groups](../modules/pallet-groups.md), poses, defs, dels, konks, prods, skus, skugrs, sku-slices, [browser](../modules/browser.md), [btrade-slices](../modules/btrade-slices.md), [slices](../modules/slices.md), [slice-compensation](../modules/slice-compensation.md), variants, constants.

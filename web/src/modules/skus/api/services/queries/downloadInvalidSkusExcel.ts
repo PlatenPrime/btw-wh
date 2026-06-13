@@ -10,7 +10,8 @@ export const downloadInvalidSkusExcel = async (
   konkName: string,
   signal?: AbortSignal,
 ): Promise<DownloadSkusExcelResult> => {
-  const path = `skus/konk/${encodeURIComponent(konkName)}/invalid-excel`;
+  const params = new URLSearchParams({ konk: konkName });
+  const path = `sku-excel-reports/catalog/invalid?${params.toString()}`;
   const res = await apiClient.get<Blob>(path, {
     responseType: "blob",
     signal,

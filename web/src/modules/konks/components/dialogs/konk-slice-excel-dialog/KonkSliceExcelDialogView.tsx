@@ -68,8 +68,8 @@ export function KonkSliceExcelDialogView({
       <div className="flex flex-col gap-4">
         <p className="text-muted-foreground text-sm">
           {showKonkSelect
-            ? "Оберіть конкурента, виробника та період. Файл буде сформований з endpoint sku-slices/konk/excel."
-            : "Оберіть виробника та період. Файл буде сформований з endpoint sku-slices/konk/excel."}
+            ? "Оберіть конкурента, виробника та період. Файл буде сформований з endpoint sku-excel-reports/konk/stock."
+            : "Оберіть виробника та період. Файл буде сформований з endpoint sku-excel-reports/konk/stock."}
         </p>
         {showKonkSelect ? (
           <div className="grid gap-2">

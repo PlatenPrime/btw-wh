@@ -14,7 +14,7 @@ export const downloadSkugrSliceExcel = async (
 ): Promise<DownloadSkugrSliceExcelResult> => {
   const params = new URLSearchParams({ dateFrom, dateTo });
   const res = await apiClient.get<Blob>(
-    `sku-slices/skugr/${skugrId}/slice-excel?${params.toString()}`,
+    `sku-excel-reports/skugr/${skugrId}/stock?${params.toString()}`,
     { responseType: "blob", signal },
   );
 

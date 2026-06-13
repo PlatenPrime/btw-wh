@@ -15,7 +15,7 @@ export function useSkuSalesRangeQuery({
   enabled = true,
 }: UseSkuSalesRangeQueryParams) {
   return useQuery({
-    queryKey: ["sku-slices", "sales-range", skuId, dateFrom, dateTo],
+    queryKey: ["sku-sales-reports", "sales-range", skuId, dateFrom, dateTo],
     queryFn: ({ signal }) =>
       getSkuSalesRange(skuId!, dateFrom, dateTo, signal),
     enabled: !!skuId && !!dateFrom && !!dateTo && enabled,

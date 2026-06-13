@@ -9,7 +9,7 @@ export const getSkuManufacturersPieData = async (
 ): Promise<SkuManufacturersPieResponseDto> => {
   const params = new URLSearchParams({ konk, dateFrom, dateTo });
   const res = await apiClient.get<SkuManufacturersPieResponseDto>(
-    `sku-slices/konk-prod/manufacturers-pie-data?${params.toString()}`,
+    `sku-chart-reports/konk-prod/manufacturers-pie?${params.toString()}`,
     { signal },
   );
 

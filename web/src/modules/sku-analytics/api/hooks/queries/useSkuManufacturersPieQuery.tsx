@@ -15,7 +15,7 @@ export function useSkuManufacturersPieQuery({
   enabled = true,
 }: UseSkuManufacturersPieQueryParams) {
   return useQuery({
-    queryKey: ["sku-slices", "manufacturers-pie", konk, dateFrom, dateTo],
+    queryKey: ["sku-chart-reports", "manufacturers-pie", konk, dateFrom, dateTo],
     queryFn: ({ signal }) =>
       getSkuManufacturersPieData(konk, dateFrom, dateTo, signal),
     enabled: !!konk && !!dateFrom && !!dateTo && enabled,

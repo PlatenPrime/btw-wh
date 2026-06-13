@@ -15,7 +15,7 @@ export function useSkugrDailySummaryQuery({
   enabled = true,
 }: UseSkugrDailySummaryQueryParams) {
   return useQuery({
-    queryKey: ["sku-slices", "skugr-daily-summary", skugrId, dateFrom, dateTo],
+    queryKey: ["sku-sales-reports", "skugr-daily-summary", skugrId, dateFrom, dateTo],
     queryFn: ({ signal }) =>
       getSkugrDailySummary(skugrId!, dateFrom, dateTo, signal),
     enabled: Boolean(skugrId && dateFrom && dateTo && enabled),

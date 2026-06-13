@@ -27,7 +27,7 @@ export const downloadKonkSliceExcel = async ({
   const params = new URLSearchParams({ konk, prod, dateFrom, dateTo });
   appendSkugrIds(params, skugrIds);
   const res = await apiClient.get<Blob>(
-    `sku-slices/konk/excel?${params.toString()}`,
+    `sku-excel-reports/konk/stock?${params.toString()}`,
     {
       responseType: "blob",
       signal,

@@ -32,7 +32,7 @@ export const downloadKonkSalesExcel = async ({
   }
   appendSkugrIds(params, skugrIds);
   const res = await apiClient.get<Blob>(
-    `sku-slices/konk/sales-excel?${params.toString()}`,
+    `sku-excel-reports/konk/sales?${params.toString()}`,
     {
       responseType: "blob",
       signal,

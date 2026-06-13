@@ -10,7 +10,7 @@ export const getSkuKonkProdSkugrGroupsSalesData = async (
 ): Promise<SkuKonkProdSkugrGroupsSalesResponseDto> => {
   const params = new URLSearchParams({ konk, prod, dateFrom, dateTo });
   const res = await apiClient.get<SkuKonkProdSkugrGroupsSalesResponseDto>(
-    `sku-slices/konk-prod/skugr-groups-sales?${params.toString()}`,
+    `sku-sales-reports/konk-prod/skugr-groups-sales?${params.toString()}`,
     { signal },
   );
   return res.data;

@@ -9,7 +9,7 @@ export const getSkugrDailySummary = async (
 ): Promise<SkugrDailySummaryResponseDto> => {
   const params = new URLSearchParams({ dateFrom, dateTo });
   const res = await apiClient.get<SkugrDailySummaryResponseDto>(
-    `sku-slices/skugr/${skugrId}/daily-summary?${params.toString()}`,
+    `sku-sales-reports/skugr/${skugrId}/daily-summary?${params.toString()}`,
     { signal },
   );
   return res.data;
