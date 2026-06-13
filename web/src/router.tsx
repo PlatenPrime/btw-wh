@@ -2,7 +2,7 @@
 import { RouteErrorBoundary } from "@/components/shared/errors";
 import { RoleType } from "@/constants/roles";
 import { ProtectedRoute } from "@/modules/auth/components/index.ts";
-import { lazy } from "react";
+import { lazyWithRetry } from "@/lib/chunk-load";
 import { createHashRouter, Navigate, Outlet, useParams } from "react-router";
 
 function RedirectWhKonkDetailToSku() {
@@ -11,261 +11,261 @@ function RedirectWhKonkDetailToSku() {
   return <Navigate to={`/sku/konks/${id}`} replace />;
 }
 
-const App = lazy(() => import("./App"));
+const App = lazyWithRetry(() => import("./App"));
 
-const Login = lazy(() => import("@/modules/auth/pages/login"));
-const Register = lazy(() => import("./modules/auth/pages/register"));
+const Login = lazyWithRetry(() => import("@/modules/auth/pages/login"));
+const Register = lazyWithRetry(() => import("./modules/auth/pages/register"));
 
-const Art = lazy(() =>
+const Art = lazyWithRetry(() =>
   import("./modules/arts/pages/art").then((module) => ({
     default: module.Art,
   })),
 );
-const Arts = lazy(() =>
+const Arts = lazyWithRetry(() =>
   import("./modules/arts/pages/arts").then((module) => ({
     default: module.Arts,
   })),
 );
-const ArtsUpdate = lazy(() =>
+const ArtsUpdate = lazyWithRetry(() =>
   import("./modules/arts/pages/artsUpdate").then((module) => ({
     default: module.ArtsUpdate,
   })),
 );
-const ArtsUtils = lazy(() =>
+const ArtsUtils = lazyWithRetry(() =>
   import("./modules/arts/pages/artsUtils").then((module) => ({
     default: module.ArtsUtils,
   })),
 );
 
-const Ask = lazy(() =>
+const Ask = lazyWithRetry(() =>
   import("./modules/asks/pages/ask").then((module) => ({
     default: module.Ask,
   })),
 );
-const Asks = lazy(() =>
+const Asks = lazyWithRetry(() =>
   import("./modules/asks/pages/asks").then((module) => ({
     default: module.Asks,
   })),
 );
-const Pulls = lazy(() =>
+const Pulls = lazyWithRetry(() =>
   import("./modules/asks/pages/pulls").then((module) => ({
     default: module.Pulls,
   })),
 );
-const KasksPage = lazy(() =>
+const KasksPage = lazyWithRetry(() =>
   import("./modules/kasks/pages/kasks").then((module) => ({
     default: module.KasksPage,
   })),
 );
 
-const Defs = lazy(() =>
+const Defs = lazyWithRetry(() =>
   import("./modules/defs/pages/defs").then((module) => ({
     default: module.Defs,
   })),
 );
-const Main = lazy(() =>
+const Main = lazyWithRetry(() =>
   import("./pages/main").then((module) => ({ default: module.Main })),
 );
 
-const Row = lazy(() =>
+const Row = lazyWithRetry(() =>
   import("./modules/rows/pages/row").then((module) => ({
     default: module.Row,
   })),
 );
-const Rows = lazy(() =>
+const Rows = lazyWithRetry(() =>
   import("./modules/rows/pages/rows").then((module) => ({
     default: module.Rows,
   })),
 );
 
 
-const Zones = lazy(() =>
+const Zones = lazyWithRetry(() =>
   import("./modules/zones/pages/zones").then((module) => ({
     default: module.Zones,
   })),
 );
-const ZonesImportExport = lazy(() =>
+const ZonesImportExport = lazyWithRetry(() =>
   import("./modules/zones/pages/zones-import-export").then((module) => ({
     default: module.ZonesImportExport,
   })),
 );
-const Zone = lazy(() =>
+const Zone = lazyWithRetry(() =>
   import("./modules/zones/pages/zone").then((module) => ({
     default: module.Zone,
   })),
 );
 
-const Dels = lazy(() =>
+const Dels = lazyWithRetry(() =>
   import("./modules/dels/pages/dels").then((module) => ({
     default: module.Dels,
   })),
 );
-const Del = lazy(() =>
+const Del = lazyWithRetry(() =>
   import("./modules/dels/pages/del").then((module) => ({
     default: module.Del,
   })),
 );
 
-const Prods = lazy(() =>
+const Prods = lazyWithRetry(() =>
   import("./modules/prods/pages/prods").then((module) => ({
     default: module.Prods,
   })),
 );
-const Prod = lazy(() =>
+const Prod = lazyWithRetry(() =>
   import("./modules/prods/pages/prod").then((module) => ({
     default: module.Prod,
   })),
 );
 
-const Konks = lazy(() =>
+const Konks = lazyWithRetry(() =>
   import("./modules/konks/pages/konks").then((module) => ({
     default: module.Konks,
   })),
 );
-const Konk = lazy(() =>
+const Konk = lazyWithRetry(() =>
   import("./modules/konks/pages/konk").then((module) => ({
     default: module.Konk,
   })),
 );
-const Skugrs = lazy(() =>
+const Skugrs = lazyWithRetry(() =>
   import("./modules/skugrs/pages/skugrs").then((module) => ({
     default: module.Skugrs,
   })),
 );
-const Skugr = lazy(() =>
+const Skugr = lazyWithRetry(() =>
   import("./modules/skugrs/pages/skugr").then((module) => ({
     default: module.Skugr,
   })),
 );
-const Sku = lazy(() =>
+const Sku = lazyWithRetry(() =>
   import("./modules/skus/pages/sku").then((module) => ({
     default: module.Sku,
   })),
 );
-const CompetitorSkus = lazy(() =>
+const CompetitorSkus = lazyWithRetry(() =>
   import("./modules/skus/pages/competitor-skus").then((module) => ({
     default: module.CompetitorSkus,
   })),
 );
-const SkuSlices = lazy(() =>
+const SkuSlices = lazyWithRetry(() =>
   import("./modules/sku-analytics/pages/sku-slices").then((module) => ({
     default: module.SkuSlices,
   })),
 );
-const BtradeSlices = lazy(() =>
+const BtradeSlices = lazyWithRetry(() =>
   import("./modules/btrade-slices/pages/btrade-slices").then((module) => ({
     default: module.BtradeSlices,
   })),
 );
-const SkuKonkProdSales = lazy(() =>
+const SkuKonkProdSales = lazyWithRetry(() =>
   import("./modules/sku-analytics/pages/sku-konk-prod-sales").then(
     (module) => ({
       default: module.SkuKonkProdSales,
     }),
   ),
 );
-const SkuKonkProdStock = lazy(() =>
+const SkuKonkProdStock = lazyWithRetry(() =>
   import("./modules/sku-analytics/pages/sku-konk-prod-stock").then(
     (module) => ({
       default: module.SkuKonkProdStock,
     }),
   ),
 );
-const SkuStatistics = lazy(() =>
+const SkuStatistics = lazyWithRetry(() =>
   import("./modules/sku-analytics/pages/sku-statistics").then((module) => ({
     default: module.SkuStatistics,
   })),
 );
 
-const Analogs = lazy(() =>
+const Analogs = lazyWithRetry(() =>
   import("./modules/analogs/pages/analogs").then((module) => ({
     default: module.Analogs,
   })),
 );
-const Analog = lazy(() =>
+const Analog = lazyWithRetry(() =>
   import("./modules/analogs/pages/analog").then((module) => ({
     default: module.Analog,
   })),
 );
-const AnalogSlices = lazy(() =>
+const AnalogSlices = lazyWithRetry(() =>
   import("./modules/analog-slices/pages/analog-slices").then((module) => ({
     default: module.AnalogSlices,
   })),
 );
-const SalesPage = lazy(() =>
+const SalesPage = lazyWithRetry(() =>
   import("./modules/sales/pages/sales").then((module) => ({
     default: module.Sales,
   })),
 );
-const StockComparisonPage = lazy(() =>
+const StockComparisonPage = lazyWithRetry(() =>
   import("./modules/stock-comparison/pages/stock-comparison").then((module) => ({
     default: module.StockComparison,
   })),
 );
 
-const Constants = lazy(() =>
+const Constants = lazyWithRetry(() =>
   import("./modules/constants/pages/constants").then((module) => ({
     default: module.Constants,
   })),
 );
-const Constant = lazy(() =>
+const Constant = lazyWithRetry(() =>
   import("./modules/constants/pages/constant").then((module) => ({
     default: module.Constant,
   })),
 );
 
-const BlocksPage = lazy(() =>
+const BlocksPage = lazyWithRetry(() =>
   import("./modules/blocks/pages/blocks").then((module) => ({
     default: module.BlocksPage,
   })),
 );
-const BlockPage = lazy(() =>
+const BlockPage = lazyWithRetry(() =>
   import("./modules/blocks/pages/block").then((module) => ({
     default: module.BlockPage,
   })),
 );
-const SegPage = lazy(() =>
+const SegPage = lazyWithRetry(() =>
   import("./modules/blocks/pages/seg").then((module) => ({
     default: module.SegPage,
   })),
 );
-const PalletGroupsPage = lazy(() =>
+const PalletGroupsPage = lazyWithRetry(() =>
   import("./modules/pallet-groups/pages/pallet-groups").then((module) => ({
     default: module.PalletGroupsPage,
   })),
 );
-const PalletGroupPage = lazy(() =>
+const PalletGroupPage = lazyWithRetry(() =>
   import("./modules/pallet-groups/pages/pallet-group").then((module) => ({
     default: module.PalletGroupPage,
   })),
 );
 
-const PalletPage = lazy(() =>
+const PalletPage = lazyWithRetry(() =>
   import("./modules/pallets/pages/pallet").then((module) => ({
     default: module.Pallet,
   })),
 );
-const NotFound = lazy(() =>
+const NotFound = lazyWithRetry(() =>
   import("./pages/not-found").then((module) => ({
     default: module.NotFound,
   })),
 );
-const Unauthorized = lazy(() =>
+const Unauthorized = lazyWithRetry(() =>
   import("./modules/auth/pages/unauthorized").then((module) => ({
     default: module.Unauthorized,
   })),
 );
-const Forbidden = lazy(() =>
+const Forbidden = lazyWithRetry(() =>
   import("./modules/auth/pages/forbidden").then((module) => ({
     default: module.Forbidden,
   })),
 );
-const UsersPage = lazy(() =>
+const UsersPage = lazyWithRetry(() =>
   import("./modules/auth/pages/users").then((module) => ({
     default: module.UsersPage,
   })),
 );
-const UserPage = lazy(() =>
+const UserPage = lazyWithRetry(() =>
   import("./modules/auth/pages/user").then((module) => ({
     default: module.UserPage,
   })),

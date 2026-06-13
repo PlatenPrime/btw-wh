@@ -3,11 +3,28 @@ import {
   useNavigate,
   useRouteError,
 } from "react-router-dom";
+import { useEffect } from "react";
 import { ErrorDisplay } from "@/components/shared/errors";
+import {
+  isChunkLoadError,
+  reloadOnStaleChunk,
+} from "@/lib/chunk-load";
 
 export function RouteErrorBoundary() {
   const error = useRouteError();
   const navigate = useNavigate();
+
+  const isStaleChunkError = isChunkLoadError(error);
+
+  useEffect(() => {
+    if (isStaleChunkError) {
+      reloadOnStaleChunk();
+    }
+  }, [isStaleChunkError]);
+
+  if (isStaleChunkError) {
+    return null;
+  }
 
   // Обробляємо різні типи помилок роутера
   if (isRouteErrorResponse(error)) {

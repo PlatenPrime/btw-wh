@@ -4,9 +4,16 @@ import { StrictMode, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import { RouterProvider } from "react-router";
 import { ErrorBoundary } from "@/components/shared/errors";
+import {
+  clearStaleChunkReloadGuard,
+  setupStaleChunkHandlers,
+} from "@/lib/chunk-load";
 import "./index.css";
 import { Providers } from "@/providers/providers.tsx";
 import { router } from "@/router.tsx";
+
+setupStaleChunkHandlers();
+clearStaleChunkReloadGuard();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

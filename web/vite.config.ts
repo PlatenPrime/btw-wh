@@ -1,12 +1,46 @@
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
+import { execSync } from "node:child_process";
+import { writeFileSync } from "node:fs";
 import path from "path";
-import { defineConfig } from "vite";
+import { defineConfig, type Plugin } from "vite";
+
+function appVersionPlugin(): Plugin {
+  return {
+    name: "app-version",
+    writeBundle(options) {
+      const outDir = options.dir ?? path.resolve(__dirname, "dist");
+      const version =
+        process.env.VERCEL_GIT_COMMIT_SHA ??
+        (() => {
+          try {
+            return execSync("git rev-parse --short HEAD", {
+              encoding: "utf-8",
+            }).trim();
+          } catch {
+            return Date.now().toString();
+          }
+        })();
+
+      writeFileSync(
+        path.join(outDir, "version.json"),
+        JSON.stringify(
+          {
+            version,
+            builtAt: new Date().toISOString(),
+          },
+          null,
+          2,
+        ),
+      );
+    },
+  };
+}
 
 // https://vite.dev/config/
 export default defineConfig({
   base: "./",
-  plugins: [react(), tailwindcss()],
+  plugins: [react(), tailwindcss(), appVersionPlugin()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),

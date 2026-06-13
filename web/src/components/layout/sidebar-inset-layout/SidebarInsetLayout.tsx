@@ -4,7 +4,6 @@ import {
 } from "@/components/layout/header-actions";
 import { Separator } from "@/components/ui/separator";
 import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
-import { Toaster } from "@/components/ui/sonner";
 import React from "react";
 
 interface SidebarInsetLayoutProps {
@@ -38,7 +37,6 @@ export function SidebarInsetLayout({
 
         <div className="flex min-h-0 flex-1 flex-col overflow-auto">
           <main className="">{children}</main>
-          <Toaster />
           <footer className="h-10" />
         </div>
       </SidebarInset>

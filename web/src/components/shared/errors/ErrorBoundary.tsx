@@ -9,6 +9,10 @@ import {
 } from "@/components/ui/card";
 import { AlertTriangle, ArrowLeft, Home, RefreshCw } from "lucide-react";
 import { Component, type ErrorInfo, type ReactNode } from "react";
+import {
+  isChunkLoadError,
+  reloadOnStaleChunk,
+} from "@/lib/chunk-load";
 
 interface Props {
   children: ReactNode;
@@ -29,10 +33,19 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   static getDerivedStateFromError(error: Error): State {
+    if (isChunkLoadError(error)) {
+      return { hasError: false, error: null, errorInfo: null };
+    }
+
     return { hasError: true, error, errorInfo: null };
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    if (isChunkLoadError(error)) {
+      reloadOnStaleChunk();
+      return;
+    }
+
     this.setState({
       error,
       errorInfo,
