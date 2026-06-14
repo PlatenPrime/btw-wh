@@ -4,7 +4,7 @@ import { UserAvatarName } from "@/components/shared/entities/user/UserAvatarName
 import { ArtDialogImage } from "@/modules/arts/components/dialogs/art-dialog-image/ArtDialogImage";
 import type { AskDto, AskStatus } from "@/modules/asks/api/types/dto";
 import { AskStatusBage } from "@/modules/asks/components/elements/ask-status-bage/AskStatusBage";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router";
 import { AskCom } from "../../elements/ask-com/AskCom";
 import { AskQuant } from "../../elements/ask-quant/AskQuant";
 
@@ -14,6 +14,7 @@ interface AsksListCardViewProps {
 }
 
 export function AsksListCardView({ ask, statusText }: AsksListCardViewProps) {
+  const [searchParams] = useSearchParams();
   const productName = ask.nameukr ? ask.nameukr.slice(10) : ask.artikul;
   const hasDetails = Boolean(ask.quant || ask.com);
 
@@ -24,7 +25,7 @@ export function AsksListCardView({ ask, statusText }: AsksListCardViewProps) {
           <ArtDialogImage artikul={ask.artikul} />
 
           <Link
-            to={ask._id}
+            to={{ pathname: ask._id, search: searchParams.toString() }}
             className="grid min-w-0 flex-1 gap-1 hover:underline"
           >
             <span className="text-base font-semibold tracking-tight">

@@ -6,26 +6,26 @@ interface AsksContainerProps {
   data: GetAsksByDateResponse;
   isFetching: boolean;
   selectedDate: Date;
-  setSelectedDate: React.Dispatch<React.SetStateAction<Date>>
+  setDate: (date: Date) => void;
 }
 
 export function AsksContainer({
   data,
   isFetching,
   selectedDate,
-  setSelectedDate,
+  setDate,
 }: AsksContainerProps) {
   const handlePreviousDay = () => {
-    setSelectedDate((prev) => subDays(prev, 1));
+    setDate(subDays(selectedDate, 1));
   };
 
   const handleNextDay = () => {
-    setSelectedDate((prev) => addDays(prev, 1));
+    setDate(addDays(selectedDate, 1));
   };
 
   const handleDateSelect = (date: Date | undefined) => {
     if (date) {
-      setSelectedDate(date);
+      setDate(date);
     }
   };
 

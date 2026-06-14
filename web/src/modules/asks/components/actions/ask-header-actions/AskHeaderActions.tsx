@@ -7,7 +7,7 @@ import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 import { usePermission } from "@/modules/auth/hooks/usePermission";
 import { Ban, SquareCheckBig, Trash } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 import { toast } from "sonner";
 
 interface AskHeaderActionsProps {
@@ -16,6 +16,7 @@ interface AskHeaderActionsProps {
 
 export function AskHeaderActions({ askData }: AskHeaderActionsProps) {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { hasRole } = useAuth();
   const { canDeleteResource } = usePermission();
   const canModerateAsk = hasRole(RoleType.EDITOR);
@@ -46,9 +47,10 @@ export function AskHeaderActions({ askData }: AskHeaderActionsProps) {
   }, []);
 
   const onDeleteSuccess = useCallback(() => {
-    navigate("/refiling/asks");
+    const date = searchParams.get("date");
+    navigate(date ? `/refiling/asks?date=${date}` : "/refiling/asks");
     toast.success("Запит успішно видалений");
-  }, [navigate]);
+  }, [navigate, searchParams]);
 
   const headerActions = useMemo<HeaderAction[]>(() => {
     const actions: HeaderAction[] = [];

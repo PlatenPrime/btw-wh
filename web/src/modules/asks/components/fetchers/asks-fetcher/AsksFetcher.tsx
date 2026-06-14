@@ -2,8 +2,7 @@ import { DataRefetchOverlay } from "@/components/shared/feedback/data-refetch-ov
 import { ErrorDisplay } from '@/components/shared/errors';
 import { LoadingNoData } from '@/components/shared/feedback/loading-states';
 import { useAsksByDateQuery } from "@/modules/asks/api/hooks/queries/useAsksByDateQuery";
-import { format } from "date-fns";
-import { useState } from "react";
+import { useAsksParams } from "@/modules/asks/hooks/useAsksParams";
 import type { GetAsksByDateResponse } from "@/modules/asks/api/types/dto";
 import type { ComponentType } from "react";
 
@@ -12,21 +11,16 @@ interface AsksFetcherProps {
     data: GetAsksByDateResponse;
     isFetching: boolean;
     selectedDate: Date;
-    setSelectedDate: React.Dispatch<React.SetStateAction<Date>>;
+    setDate: (date: Date) => void;
   }>;
   SkeletonComponent: ComponentType;
-  initialDate?: Date;
 }
 
 export function AsksFetcher({
   ContainerComponent,
   SkeletonComponent,
-  initialDate = new Date(),
 }: AsksFetcherProps) {
-  const [selectedDate, setSelectedDate] = useState<Date>(initialDate);
-
-  // Форматируем дату для API (YYYY-MM-DD)
-  const dateString = format(selectedDate, "yyyy-MM-dd");
+  const { selectedDate, dateString, setDate } = useAsksParams();
 
   const asksQuery = useAsksByDateQuery({
     date: dateString,
@@ -55,7 +49,7 @@ export function AsksFetcher({
         data={asksQuery.data}
         isFetching={asksQuery.isFetching}
         selectedDate={selectedDate}
-        setSelectedDate={setSelectedDate}
+        setDate={setDate}
       />
     </DataRefetchOverlay>
   );

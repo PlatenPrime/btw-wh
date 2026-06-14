@@ -2,7 +2,6 @@ import { SurfaceSection } from "@/components/shared/layout";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { ArtDetailCard } from "@/modules/arts/components/cards/art-detail-card/ArtDetailCard";
 import { ArtChartsSectionLayout } from "@/modules/arts/components/charts/art-charts-section";
-import { ArtAnalogsByArtikulSection } from "@/modules/arts/components/containers/art-container/ArtAnalogsByArtikulSection";
 import { ArtSalesChartContainer } from "@/modules/arts/components/containers/art-sales-chart-container";
 import { ArtStockChartContainer } from "@/modules/arts/components/containers/art-stock-chart-container";
 import { PosesByArtikulContainer } from "@/modules/arts/components/containers/poses-by-artikul-container";
@@ -63,11 +62,6 @@ export const ArtContainerView = memo(function ArtContainerView({
             }
           />
         </SurfaceSection>
-      ) : null}
-
-  
-      {showAnalogs ? (
-        <ArtAnalogsByArtikulSection artikul={artData.artikul} />
       ) : null}
 
       <SurfaceSection>
