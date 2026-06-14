@@ -1,16 +1,18 @@
 import { Image } from "@/components/shared/media/image/Image";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { getBigImageUrl, getSmallImageUrl } from "@/constants/art-image-url";
+import { cn } from "@/lib/utils";
 
 interface ArtImageProps {
   artikul?: string;
+  imageClassName?: string;
 }
 
 /**
  * Показывает маленькую картинку-превью; при клике открывает
  * диалог с полноразмерным изображением.
  */
-export function ArtDialogImage({ artikul }: ArtImageProps) {
+export function ArtDialogImage({ artikul, imageClassName }: ArtImageProps) {
   // если нет артикула — ничего не рендерим, избегаем «битых» ссылок
   if (!artikul) return null;
 
@@ -21,7 +23,10 @@ export function ArtDialogImage({ artikul }: ArtImageProps) {
         <Image
           src={getSmallImageUrl(artikul)}
           alt={artikul}
-          className="size-10 cursor-pointer rounded-md object-cover"
+          className={cn(
+            "size-10 cursor-pointer rounded-md object-cover",
+            imageClassName,
+          )}
           loading="lazy"
         />
       </DialogTrigger>

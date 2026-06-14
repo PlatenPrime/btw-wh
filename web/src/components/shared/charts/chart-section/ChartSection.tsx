@@ -24,7 +24,7 @@ export function ChartSection({
           {toolbar ? <div className="flex flex-wrap items-center gap-2">{toolbar}</div> : null}
         </CardHeader>
       ) : null}
-      <CardContent className="px-4">{children}</CardContent>
+      <CardContent className="flex min-h-0 flex-1 flex-col px-4">{children}</CardContent>
     </Card>
   );
 }

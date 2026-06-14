@@ -29,11 +29,11 @@ export  function ArtikulImageLink({
         className="flex h-full w-full flex-col justify-between hover:underline"
       >
         <div className="flex items-center gap-2" >
-          <span className="text-sm font-semibold">{artikul}</span>
+          <span className="text-base font-semibold">{artikul}</span>
           {bage && bage}
         </div>
 
-        <span className={cn("text-muted-foreground text-sm font-normal")}>
+        <span className={cn("text-muted-foreground text-xs font-normal")}>
           {nameukr ? nameukr.slice(10) : artikul}
         </span>
       </Link>
