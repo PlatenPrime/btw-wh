@@ -1,3 +1,4 @@
+import { ContentReveal } from "@/components/shared/motion";
 import { ErrorDisplay } from "@/components/shared/errors";
 import { LoadingNoData } from "@/components/shared/feedback/loading-states";
 import { useKasksByDateQuery } from "@/modules/kasks/api/hooks/queries/useKasksByDateQuery";
@@ -44,11 +45,13 @@ export function KasksFetcher({
   }
 
   return (
-    <ContainerComponent
-      data={query.data}
-      isFetching={query.isFetching}
-      selectedDate={selectedDate}
-      setSelectedDate={setSelectedDate}
-    />
+    <ContentReveal>
+      <ContainerComponent
+        data={query.data}
+        isFetching={query.isFetching}
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
+      />
+    </ContentReveal>
   );
 }

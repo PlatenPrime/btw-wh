@@ -1,3 +1,4 @@
+import { ContentReveal } from "@/components/shared/motion";
 import { EntityNotFound } from "@/components/shared/entities/entity-not-found";
 import { ErrorDisplay } from "@/components/shared/errors";
 import { useOneArtQuery } from "@/modules/arts/api/hooks/queries/useOneArtQuery";
@@ -42,5 +43,9 @@ export function ArtFetcher({
       />
     );
 
-  return <ContainerComponent artData={artResponse.data!} />;
+  return (
+    <ContentReveal>
+      <ContainerComponent artData={artResponse.data!} />
+    </ContentReveal>
+  );
 }

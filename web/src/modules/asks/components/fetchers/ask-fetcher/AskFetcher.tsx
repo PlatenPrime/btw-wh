@@ -1,3 +1,4 @@
+import { ContentReveal } from "@/components/shared/motion";
 import { EntityNotFound } from "@/components/shared/entities/entity-not-found";
 import { ErrorDisplay } from "@/components/shared/errors";
 import { useAskQuery } from "@/modules/asks/api/hooks/queries/useAskQuery";
@@ -38,5 +39,9 @@ export function AskFetcher({
       />
     );
 
-  return <ContainerComponent askData={askResponse.data!} />;
+  return (
+    <ContentReveal>
+      <ContainerComponent askData={askResponse.data!} />
+    </ContentReveal>
+  );
 }

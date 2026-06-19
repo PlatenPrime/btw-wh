@@ -1,3 +1,4 @@
+import { ContentReveal } from "@/components/shared/motion";
 import { ErrorDisplay } from "@/components/shared/errors";
 import { LoadingNoData } from "@/components/shared/feedback/loading-states";
 import { usePosesByPalletQuery } from "@/modules/poses/api/hooks/queries/usePosesByPalletQuery";
@@ -38,5 +39,9 @@ export function PosesByPalletFetcher({
   if (!poses || poses.length === 0)
     return <LoadingNoData description="Позиції не знайдено" />;
 
-  return <ContainerComponent poses={poses} />;
+  return (
+    <ContentReveal>
+      <ContainerComponent poses={poses} />
+    </ContentReveal>
+  );
 }

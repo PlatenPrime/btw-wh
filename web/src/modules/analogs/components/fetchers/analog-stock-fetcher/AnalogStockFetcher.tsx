@@ -1,3 +1,4 @@
+import { ContentReveal } from "@/components/shared/motion";
 import { ErrorDisplay } from "@/components/shared/errors";
 import { LoadingNoData } from "@/components/shared/feedback/loading-states";
 import { useAnalogStockQuery } from "@/modules/analogs/api/hooks/queries/useAnalogStockQuery";
@@ -52,5 +53,9 @@ export function AnalogStockFetcher({
     },
   };
 
-  return <ContainerComponent {...containerProps} />;
+  return (
+    <ContentReveal>
+      <ContainerComponent {...containerProps} />
+    </ContentReveal>
+  );
 }

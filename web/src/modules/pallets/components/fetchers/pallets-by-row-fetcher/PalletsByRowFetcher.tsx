@@ -1,3 +1,4 @@
+import { ContentReveal } from "@/components/shared/motion";
 import { ErrorDisplay } from '@/components/shared/errors';
 import { LoadingNoData } from '@/components/shared/feedback/loading-states';
 import { usePalletsByRowQuery } from "@/modules/pallets/api/hooks/queries/usePalletsByRowQuery";
@@ -31,5 +32,9 @@ export function PalletsByRowFetcher({
   if (!palletsQuery.data || !palletsQuery.data.length)
     return <LoadingNoData description="Палети не знайдено" />;
 
-  return <ContainerComponent pallets={palletsQuery.data} rowId={rowId || ""} />;
+  return (
+    <ContentReveal>
+      <ContainerComponent pallets={palletsQuery.data} rowId={rowId || ""} />
+    </ContentReveal>
+  );
 }

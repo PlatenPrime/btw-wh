@@ -1,3 +1,4 @@
+import { ContentRevealStagger } from "@/components/shared/motion";
 import { SurfaceSection } from "@/components/shared/layout";
 import type { PalletShortDto } from "@/modules/pallet-groups/api/types";
 import { PalletCard } from "@/modules/pallet-groups/components/cards/pallet-card/PalletCard";
@@ -17,10 +18,12 @@ export function PalletsGrid({ pallets, onUnlink }: PalletsGridProps) {
   }
 
   return (
-    <SurfaceSection className="grid grid-cols-1 gap-2 p-2">
-      {pallets.map((pallet) => (
-        <PalletCard key={pallet.id} pallet={pallet} onUnlink={onUnlink} />
-      ))}
+    <SurfaceSection className="p-2">
+      <ContentRevealStagger className="grid grid-cols-1 gap-2">
+        {pallets.map((pallet) => (
+          <PalletCard key={pallet.id} pallet={pallet} onUnlink={onUnlink} />
+        ))}
+      </ContentRevealStagger>
     </SurfaceSection>
   );
 }

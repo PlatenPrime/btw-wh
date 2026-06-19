@@ -1,3 +1,4 @@
+import { ContentReveal } from "@/components/shared/motion";
 import { ErrorDisplay } from "@/components/shared/errors";
 import { LoadingNoData } from "@/components/shared/feedback/loading-states";
 import { useAnalogSliceQuery } from "@/modules/analog-slices/api/hooks/queries/useAnalogSliceQuery";
@@ -44,5 +45,9 @@ export function AnalogSliceFetcher({ konkName, date }: AnalogSliceFetcherProps) 
     return <LoadingNoData description="Зріз не знайдено" />;
   }
 
-  return <AnalogSliceTableContainer data={data} />;
+  return (
+    <ContentReveal>
+      <AnalogSliceTableContainer data={data} />
+    </ContentReveal>
+  );
 }

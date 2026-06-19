@@ -1,3 +1,4 @@
+import { motion } from "@/lib/motion";
 import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout/SidebarInsetLayout";
 import { Page } from "@/components/shared/layout";
 import { MainHero } from "@/components/shared/home/main-hero/MainHero";
@@ -7,10 +8,10 @@ export function Main() {
   return (
     <SidebarInsetLayout headerText="Головна">
       <Page className="gap-8">
-        <div className="animate-in fade-in-0 duration-500">
+        <div className={motion.revealBlock}>
           <MainHero />
         </div>
-        <div className="animate-in fade-in-0 duration-500 [animation-delay:120ms]">
+        <div className={`${motion.revealBlock} [animation-delay:120ms]`}>
           <MainQuickLinks />
         </div>
       </Page>

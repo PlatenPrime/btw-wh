@@ -1,3 +1,4 @@
+import { ContentReveal } from "@/components/shared/motion";
 import { EntityNotFound } from "@/components/shared/entities/entity-not-found";
 import { ErrorDisplay } from "@/components/shared/errors";
 import { useVariantByIdQuery } from "@/modules/variants/api/hooks/queries/useVariantByIdQuery";
@@ -42,6 +43,10 @@ export function VariantFetcher({
     );
   }
 
-  return <ContainerComponent variant={data.data} />;
+  return (
+    <ContentReveal>
+      <ContainerComponent variant={data.data} />
+    </ContentReveal>
+  );
 }
 

@@ -1,3 +1,4 @@
+import { ContentReveal } from "@/components/shared/motion";
 import { EntityNotFound } from "@/components/shared/entities/entity-not-found";
 import { ErrorDisplay } from "@/components/shared/errors";
 import { useRowByTitleQuery } from "@/modules/rows/api/hooks/queries/useRowByTitleQuery";
@@ -42,5 +43,9 @@ export function RowFetcher({
       />
     );
 
-  return <ContainerComponent row={rowResponse.data!} />;
+  return (
+    <ContentReveal>
+      <ContainerComponent row={rowResponse.data!} />
+    </ContentReveal>
+  );
 }

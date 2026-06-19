@@ -1,3 +1,4 @@
+import { ContentReveal } from "@/components/shared/motion";
 import { EntityNotFound } from "@/components/shared/entities/entity-not-found";
 import { ErrorDisplay } from "@/components/shared/errors";
 import { useZoneByTitleQuery } from "@/modules/zones/api/hooks/queries/useZoneByTitleQuery";
@@ -45,6 +46,10 @@ export function ZoneFetcher({
     );
   }
 
-  return <ContainerComponent zone={zoneResponse.data!} />;
+  return (
+    <ContentReveal>
+      <ContainerComponent zone={zoneResponse.data!} />
+    </ContentReveal>
+  );
 }
 

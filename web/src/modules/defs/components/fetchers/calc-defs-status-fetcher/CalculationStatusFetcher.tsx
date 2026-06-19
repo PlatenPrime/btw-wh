@@ -1,3 +1,4 @@
+import { ContentReveal } from "@/components/shared/motion";
 import { useDefsCalculationStatus } from "@/modules/defs/api/hooks/queries/useDefsCalculationStatus";
 import type { DefsCalculationStatus } from "@/modules/defs/api/types/dto";
 import type { ComponentType } from "react";
@@ -41,7 +42,11 @@ export function CalculationStatusFetcher({
 
   // Показываем данные если есть
   if (statusQuery.data?.data) {
-    return <ContainerComponent status={statusQuery.data.data} isLoading={false} />;
+    return (
+      <ContentReveal>
+        <ContainerComponent status={statusQuery.data.data} isLoading={false} />
+      </ContentReveal>
+    );
   }
 
   // Не показываем ничего, если нет данных

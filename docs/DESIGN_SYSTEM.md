@@ -7,8 +7,25 @@
 1. **Depth** — слои (surface-0…3), elevation-тени, не плоский лист.
 2. **Restraint** — glass на карточках (surface-2) и overlay (surface-3); не на каждой ячейке `<td>` таблицы. Насыщенный цвет — у кнопок и CTA.
 3. **Color = action** — насыщенность у кнопок и CTA; карточки и фон спокойные.
-4. **Motion** — декоративные анимации с `motion-reduce:animate-none`.
+4. **Motion** — декоративные анимации с `motion-reduce:animate-none`. См. раздел [Motion](#motion) ниже.
 5. **Tokens only** — без `gray-*`, `bg-white`, `hsl(var(--primary))` при OKLCH-токенах.
+
+## Motion
+
+Появление контента после скелетона — единый паттерн, не ad-hoc `animate-in` на карточках.
+
+| Компонент / token | Когда |
+| ----------------- | ----- |
+| [`ContentReveal`](web/src/components/shared/motion/ContentReveal.tsx) | Блок после загрузки: внутри `DataRefetchOverlay`, в fetcher'ах без overlay, Suspense fallback→content |
+| [`ContentRevealStagger`](web/src/components/shared/motion/ContentReveal.tsx) | Grid/list: прямые дети (карточки) с каскадом 50 ms, cap на 12+ элементов |
+| `motion.revealBlock` / `motion.revealItem` | [`web/src/lib/motion.ts`](web/src/lib/motion.ts) — классы для кастомных обёрток |
+| `content-reveal-stagger` | CSS utility в [`index.css`](web/src/index.css) — nth-child delays |
+
+**Правила:**
+
+- Анимация только при **первом mount** (skeleton → data). Background refetch не размонтирует контент — повторной анимации нет.
+- `prefers-reduced-motion: reduce` → `motion-reduce:animate-none` (мгновенное появление).
+- **Anti-pattern:** `animate-in` на отдельных `GridTileCard` / `ListRowCard` — каскад задаётся на контейнере списка.
 
 ## Surface levels
 

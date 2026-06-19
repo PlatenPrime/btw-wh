@@ -1,4 +1,5 @@
 import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout/SidebarInsetLayout";
+import { ContentReveal } from "@/components/shared/motion";
 import { ErrorDisplay } from "@/components/shared/errors";
 import { useUserByIdQuery } from "@/modules/auth/api/hooks/queries/useUserByIdQuery";
 import type { User } from "@/modules/auth/api/types";
@@ -56,7 +57,9 @@ export function UserFetcher({
   return (
     <SidebarInsetLayout headerText={user.fullname}>
       <main className="p-4">
-        <ContainerComponent user={user} />
+        <ContentReveal>
+          <ContainerComponent user={user} />
+        </ContentReveal>
       </main>
     </SidebarInsetLayout>
   );

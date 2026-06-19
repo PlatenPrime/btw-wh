@@ -1,3 +1,4 @@
+import { ContentRevealStagger } from "@/components/shared/motion";
 import { SurfaceSection } from "@/components/shared/layout";
 import type { AnalogDto } from "@/modules/analogs/api/types";
 import { AnalogGridCard } from "@/modules/analogs/components/cards/analog-grid-card";
@@ -20,17 +21,19 @@ export function AnalogsGrid({
   onDelete,
 }: AnalogsGridProps) {
   return (
-    <SurfaceSection className="grid grid-cols-1 gap-2 p-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-      {analogs.map((analog) => (
-        <AnalogGridCard
-          key={analog._id}
-          analog={analog}
-          konks={konks}
-          prods={prods}
-          onEdit={onEdit}
-          onDelete={onDelete}
-        />
-      ))}
+    <SurfaceSection className="p-2">
+      <ContentRevealStagger className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {analogs.map((analog) => (
+          <AnalogGridCard
+            key={analog._id}
+            analog={analog}
+            konks={konks}
+            prods={prods}
+            onEdit={onEdit}
+            onDelete={onDelete}
+          />
+        ))}
+      </ContentRevealStagger>
     </SurfaceSection>
   );
 }

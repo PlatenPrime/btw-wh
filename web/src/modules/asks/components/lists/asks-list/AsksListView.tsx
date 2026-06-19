@@ -1,3 +1,4 @@
+import { ContentRevealStagger } from "@/components/shared/motion";
 import type { AskDto } from "@/modules/asks/api/types/dto";
 import { AsksListCard } from "@/modules/asks/components/index.ts";
 
@@ -7,10 +8,10 @@ interface AsksListViewProps {
 
 export function AsksListView({ asks }: AsksListViewProps) {
   return (
-    <div className="grid gap-2">
+    <ContentRevealStagger className="grid gap-2">
       {asks.map((ask) => (
         <AsksListCard key={ask._id} ask={ask} />
       ))}
-    </div>
+    </ContentRevealStagger>
   );
 }

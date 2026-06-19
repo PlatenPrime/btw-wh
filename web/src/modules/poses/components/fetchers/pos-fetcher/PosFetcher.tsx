@@ -1,3 +1,4 @@
+import { ContentReveal } from "@/components/shared/motion";
 import { EntityNotFound } from "@/components/shared/entities/entity-not-found";
 import { ErrorDisplay } from "@/components/shared/errors";
 import { usePosByIdQuery } from "@/modules/poses/api/hooks/queries/usePosByIdQuery";
@@ -42,5 +43,9 @@ export function PosFetcher({
       />
     );
 
-  return <ContainerComponent pos={posResponse.data!} />;
+  return (
+    <ContentReveal>
+      <ContainerComponent pos={posResponse.data!} />
+    </ContentReveal>
+  );
 }

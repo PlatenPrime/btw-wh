@@ -1,3 +1,4 @@
+import { ContentRevealStagger } from "@/components/shared/motion";
 import { SurfaceSection } from "@/components/shared/layout";
 import type { VariantDto } from "@/modules/variants/api/types";
 import type { KonkDto } from "@/modules/konks/api/types";
@@ -20,17 +21,19 @@ export function VariantsGrid({
   onDelete,
 }: VariantsGridProps) {
   return (
-    <SurfaceSection className="grid grid-cols-1 gap-2 p-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-      {variants.map((variant) => (
-        <VariantGridCard
-          key={variant._id}
-          variant={variant}
-          konks={konks}
-          prods={prods}
-          onEdit={onEdit}
-          onDelete={onDelete}
-        />
-      ))}
+    <SurfaceSection className="p-2">
+      <ContentRevealStagger className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {variants.map((variant) => (
+          <VariantGridCard
+            key={variant._id}
+            variant={variant}
+            konks={konks}
+            prods={prods}
+            onEdit={onEdit}
+            onDelete={onDelete}
+          />
+        ))}
+      </ContentRevealStagger>
     </SurfaceSection>
   );
 }

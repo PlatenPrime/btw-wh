@@ -1,3 +1,4 @@
+import { ContentReveal } from "@/components/shared/motion";
 import { EntityNotFound } from "@/components/shared/entities/entity-not-found";
 import { ErrorDisplay } from "@/components/shared/errors";
 import { useConstantByIdQuery } from "@/modules/constants/api/hooks/queries/useConstantByIdQuery";
@@ -40,5 +41,9 @@ export function ConstantFetcher({
     );
   }
 
-  return <ContainerComponent constant={data.data} />;
+  return (
+    <ContentReveal>
+      <ContainerComponent constant={data.data} />
+    </ContentReveal>
+  );
 }

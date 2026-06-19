@@ -1,3 +1,4 @@
+import { ContentRevealStagger } from "@/components/shared/motion";
 import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
 import type { SkuDto } from "@/modules/skus/api/types";
@@ -13,7 +14,7 @@ interface SkusGridProps {
 
 export function SkusGrid({ skus, konk, konks, prods }: SkusGridProps) {
   return (
-    <div className="grid grid-cols-1 gap-2  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <ContentRevealStagger className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {skus.map((sku) => {
         const resolvedKonk =
           konks?.find((k) => k.name === sku.konkName) ?? konk;
@@ -26,6 +27,6 @@ export function SkusGrid({ skus, konk, konks, prods }: SkusGridProps) {
           />
         );
       })}
-    </div>
+    </ContentRevealStagger>
   );
 }

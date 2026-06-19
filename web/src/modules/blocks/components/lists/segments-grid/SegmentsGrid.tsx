@@ -1,3 +1,4 @@
+import { ContentRevealStagger } from "@/components/shared/motion";
 import { SurfaceSection } from "@/components/shared/layout";
 import type { SegmentDto } from "@/modules/blocks/api/types";
 import { SegmentCard } from "@/modules/blocks/components/cards/segment-card";
@@ -10,10 +11,12 @@ interface SegmentsGridProps {
 
 export function SegmentsGrid({ segments, blockId, onDelete }: SegmentsGridProps) {
   return (
-    <SurfaceSection className="grid grid-cols-1 gap-2 p-2">
-      {segments.map((segment) => (
-        <SegmentCard key={segment._id} segment={segment} blockId={blockId} onDelete={onDelete} />
-      ))}
+    <SurfaceSection className="p-2">
+      <ContentRevealStagger className="grid grid-cols-1 gap-2">
+        {segments.map((segment) => (
+          <SegmentCard key={segment._id} segment={segment} blockId={blockId} onDelete={onDelete} />
+        ))}
+      </ContentRevealStagger>
     </SurfaceSection>
   );
 }

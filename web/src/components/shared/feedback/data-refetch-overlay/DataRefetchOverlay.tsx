@@ -1,3 +1,4 @@
+import { ContentReveal } from "@/components/shared/motion";
 import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 
@@ -24,7 +25,7 @@ export function DataRefetchOverlay({
 
   return (
     <div className={cn("relative min-h-0", className)}>
-      {children}
+      <ContentReveal>{children}</ContentReveal>
       {showOverlay ? (
         <div
           className="pointer-events-none absolute inset-0 z-[5] flex items-start justify-center rounded-[inherit] bg-background/45 pt-6 backdrop-blur-[1px]"

@@ -1,3 +1,4 @@
+import { ContentReveal } from "@/components/shared/motion";
 import { ErrorDisplay } from "@/components/shared/errors";
 import { LoadingNoData } from "@/components/shared/feedback/loading-states";
 import { useBtradeArtDataQuery } from "@/modules/arts/api/hooks/queries/useBtradeArtDataQuery";
@@ -72,5 +73,9 @@ export function BtradeArtDataFetcher({
     },
   };
 
-  return wrapChrome(<ContainerComponent {...containerProps} />);
+  return wrapChrome(
+    <ContentReveal>
+      <ContainerComponent {...containerProps} />
+    </ContentReveal>,
+  );
 }

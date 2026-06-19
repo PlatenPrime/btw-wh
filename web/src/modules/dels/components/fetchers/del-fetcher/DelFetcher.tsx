@@ -1,3 +1,4 @@
+import { ContentReveal } from "@/components/shared/motion";
 import { EntityNotFound } from "@/components/shared/entities/entity-not-found";
 import { ErrorDisplay } from "@/components/shared/errors";
 import { useDelByIdQuery } from "@/modules/dels/api/hooks/queries/useDelByIdQuery";
@@ -40,5 +41,9 @@ export function DelFetcher({
     );
   }
 
-  return <ContainerComponent del={data.data} />;
+  return (
+    <ContentReveal>
+      <ContainerComponent del={data.data} />
+    </ContentReveal>
+  );
 }

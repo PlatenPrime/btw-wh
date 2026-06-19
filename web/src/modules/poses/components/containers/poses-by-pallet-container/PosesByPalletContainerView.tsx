@@ -1,3 +1,4 @@
+import { ContentRevealStagger } from "@/components/shared/motion";
 import { SurfaceSection } from "@/components/shared/layout";
 import type { IPos } from "@/modules/poses/api/types";
 import { PosInPalletCard } from "@/modules/poses/components/cards/pos-in-pallet-card/PosInPalletCard";
@@ -10,10 +11,12 @@ export function PosesByPalletContainerView({
   poses,
 }: PosesByPalletContainerViewProps) {
   return (
-    <SurfaceSection className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-      {poses.map((pos, index) => (
-        <PosInPalletCard key={`${pos.artikul}-${index}`} pos={pos} />
-      ))}
+    <SurfaceSection>
+      <ContentRevealStagger className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {poses.map((pos, index) => (
+          <PosInPalletCard key={`${pos.artikul}-${index}`} pos={pos} />
+        ))}
+      </ContentRevealStagger>
     </SurfaceSection>
   );
 }

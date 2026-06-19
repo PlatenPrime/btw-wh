@@ -1,3 +1,4 @@
+import { ContentReveal } from "@/components/shared/motion";
 import { ErrorDisplay } from '@/components/shared/errors';
 import { LoadingNoData } from '@/components/shared/feedback/loading-states';
 import { useArtsQuery } from "@/modules/arts/api/hooks/queries/useArtsQuery";
@@ -56,16 +57,18 @@ export function ArtsFetcher({
     return <LoadingNoData description="Немає даних для відображення" />;
 
   return (
-    <ContainerComponent
-      data={data}
-      arts={data.data}
-      isPending={isFetching}
-      page={page}
-      limit={limit}
-      search={search}
-      onPageChange={onPageChange}
-      onLimitChange={onLimitChange}
-      onSearchChange={onSearchChange}
-    />
+    <ContentReveal>
+      <ContainerComponent
+        data={data}
+        arts={data.data}
+        isPending={isFetching}
+        page={page}
+        limit={limit}
+        search={search}
+        onPageChange={onPageChange}
+        onLimitChange={onLimitChange}
+        onSearchChange={onSearchChange}
+      />
+    </ContentReveal>
   );
 }

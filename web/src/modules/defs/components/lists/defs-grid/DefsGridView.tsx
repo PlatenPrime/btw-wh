@@ -1,3 +1,4 @@
+import { ContentRevealStagger } from "@/components/shared/motion";
 import { SurfaceSection } from "@/components/shared/layout";
 import type { Def, DeficitItem } from "@/modules/defs/api/types/dto";
 import { DefCard } from "@/modules/defs/components/cards/def-card/DefCard";
@@ -36,10 +37,12 @@ export function DefsGridView({ defsData, filter }: DefsGridViewProps) {
   }
 
   return (
-    <SurfaceSection className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-      {filteredDeficits.map(([artikul, defItem]) => (
-        <DefCard key={artikul} artikul={artikul} defItem={defItem} />
-      ))}
+    <SurfaceSection>
+      <ContentRevealStagger className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {filteredDeficits.map(([artikul, defItem]) => (
+          <DefCard key={artikul} artikul={artikul} defItem={defItem} />
+        ))}
+      </ContentRevealStagger>
     </SurfaceSection>
   );
 }

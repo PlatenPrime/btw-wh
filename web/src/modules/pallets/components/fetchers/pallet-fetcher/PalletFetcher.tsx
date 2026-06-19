@@ -1,3 +1,4 @@
+import { ContentReveal } from "@/components/shared/motion";
 import { EntityNotFound } from "@/components/shared/entities/entity-not-found";
 import { ErrorDisplay } from "@/components/shared/errors";
 import { usePalletByTitleQuery } from "@/modules/pallets/api/hooks/queries/usePalletByTitleQuery";
@@ -50,9 +51,11 @@ export function PalletFetcher({
     );
 
   return (
-    <ContainerComponent
-      pallet={palletResponse}
-      onPosCreated={handlePosCreated}
-    />
+    <ContentReveal>
+      <ContainerComponent
+        pallet={palletResponse}
+        onPosCreated={handlePosCreated}
+      />
+    </ContentReveal>
   );
 }

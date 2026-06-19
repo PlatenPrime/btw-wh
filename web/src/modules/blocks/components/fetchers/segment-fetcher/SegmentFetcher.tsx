@@ -1,3 +1,4 @@
+import { ContentReveal } from "@/components/shared/motion";
 import { ErrorDisplay } from "@/components/shared/errors";
 import { useSegmentQuery } from "@/modules/blocks/api/hooks/queries/useSegmentQuery";
 import { useZonesBySegmentQuery } from "@/modules/blocks/api/hooks/queries/useZonesBySegmentQuery";
@@ -66,12 +67,14 @@ export function SegmentFetcher({
     zonesData?.exists && zonesData?.data ? zonesData.data : [];
 
   return (
-    <ContainerComponent
-      segment={segmentData.data}
-      zones={zones}
-      isLoadingZones={isZonesLoading}
-      zonesError={zonesError}
-    />
+    <ContentReveal>
+      <ContainerComponent
+        segment={segmentData.data}
+        zones={zones}
+        isLoadingZones={isZonesLoading}
+        zonesError={zonesError}
+      />
+    </ContentReveal>
   );
 }
 

@@ -1,3 +1,4 @@
+import { ContentReveal } from "@/components/shared/motion";
 import { ErrorDisplay } from "@/components/shared/errors";
 import { useLatestDefsQuery } from "@/modules/defs/api/hooks/queries/useLatestDefsQuery";
 import type { GetLatestDefsResponse } from "@/modules/defs/api/types/dto";
@@ -38,5 +39,9 @@ export function LatestDefsFetcher({
       />
     );
 
-  return <ContainerComponent defsData={defsQuery.data.data} />;
+  return (
+    <ContentReveal>
+      <ContainerComponent defsData={defsQuery.data.data} />
+    </ContentReveal>
+  );
 }

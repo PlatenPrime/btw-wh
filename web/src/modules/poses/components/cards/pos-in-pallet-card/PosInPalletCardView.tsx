@@ -20,7 +20,7 @@ export function PosInPalletCardView({
   onSuccess,
 }: PosInPalletCardProps) {
   return (
-    <GridTileCard className="flex h-full w-full animate-in flex-col justify-between gap-2 overflow-hidden p-2 fade-in-0 zoom-in-75">
+    <GridTileCard className="flex h-full w-full flex-col justify-between gap-2 overflow-hidden p-2">
       <CardHeader className="flex min-h-0 shrink-0 items-start gap-3 p-0">
         <ArtikulImageLink artikul={pos.artikul} nameukr={pos.nameukr || ""} />
         <PosCardActions pos={pos} onSuccess={onSuccess ?? (() => {})} />

@@ -1,3 +1,4 @@
+import { ContentReveal } from "@/components/shared/motion";
 import { ErrorDisplay } from '@/components/shared/errors';
 import { LoadingNoData } from '@/components/shared/feedback/loading-states';
 import { usePosesByRowQuery } from "@/modules/poses/api/hooks/queries/usePosesByRowQuery";
@@ -32,5 +33,9 @@ export function PosesByRowFetcher({
   if (!poses || poses.length === 0)
     return <LoadingNoData description="Позиції не знайдено" />;
 
-  return <ContainerComponent poses={poses} />;
+  return (
+    <ContentReveal>
+      <ContainerComponent poses={poses} />
+    </ContentReveal>
+  );
 }

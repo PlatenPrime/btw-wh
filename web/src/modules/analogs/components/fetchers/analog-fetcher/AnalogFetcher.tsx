@@ -1,3 +1,4 @@
+import { ContentReveal } from "@/components/shared/motion";
 import { EntityNotFound } from "@/components/shared/entities/entity-not-found";
 import { ErrorDisplay } from "@/components/shared/errors";
 import { useAnalogByIdQuery } from "@/modules/analogs/api/hooks/queries/useAnalogByIdQuery";
@@ -40,5 +41,9 @@ export function AnalogFetcher({
     );
   }
 
-  return <ContainerComponent analog={data.data} />;
+  return (
+    <ContentReveal>
+      <ContainerComponent analog={data.data} />
+    </ContentReveal>
+  );
 }

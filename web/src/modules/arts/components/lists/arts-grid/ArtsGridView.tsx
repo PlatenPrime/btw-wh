@@ -1,3 +1,4 @@
+import { ContentRevealStagger } from "@/components/shared/motion";
 import { cn } from "@/lib/utils";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { ArtsGridCard } from "@/modules/arts/components/cards/arts-grid-card/ArtsGridCard";
@@ -16,9 +17,10 @@ export function ArtsGridView({ arts }: ViewProps) {
   }
 
   return (
-    <ul
+    <ContentRevealStagger
+      as="ul"
       className={cn(
-       "grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+        "grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4",
       )}
     >
       {arts &&
@@ -27,6 +29,6 @@ export function ArtsGridView({ arts }: ViewProps) {
             <ArtsGridCard art={art} />
           </li>
         ))}
-    </ul>
+    </ContentRevealStagger>
   );
 }

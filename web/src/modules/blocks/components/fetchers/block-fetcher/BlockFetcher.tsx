@@ -1,3 +1,4 @@
+import { ContentReveal } from "@/components/shared/motion";
 import { ErrorDisplay } from "@/components/shared/errors";
 import { EntityNotFound } from "@/components/shared/entities/entity-not-found";
 import { useBlockQuery } from "@/modules/blocks/api/hooks/queries/useBlockQuery";
@@ -45,6 +46,10 @@ export function BlockFetcher({
     );
   }
 
-  return <ContainerComponent block={blockResponse.data!} />;
+  return (
+    <ContentReveal>
+      <ContainerComponent block={blockResponse.data!} />
+    </ContentReveal>
+  );
 }
 

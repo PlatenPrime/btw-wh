@@ -1,3 +1,4 @@
+import { ContentRevealStagger } from "@/components/shared/motion";
 import type { KaskDto } from "@/modules/kasks/api/types/dto";
 import { KasksListCard } from "@/modules/kasks/components/cards/kasks-list-card/KasksListCard";
 import { DeleteKaskDialog } from "@/modules/kasks/components/dialogs/delete-kask-dialog/DeleteKaskDialog";
@@ -23,7 +24,7 @@ export function KasksList({ kasks }: KasksListProps) {
 
   return (
     <>
-      <div className="grid gap-2">
+      <ContentRevealStagger className="grid gap-2">
         {kasks.map((k) => (
           <KasksListCard
             key={k._id}
@@ -32,7 +33,7 @@ export function KasksList({ kasks }: KasksListProps) {
             onRequestDelete={() => setKaskToDelete(k)}
           />
         ))}
-      </div>
+      </ContentRevealStagger>
 
       {kaskToDelete ? (
         <DeleteKaskDialog
