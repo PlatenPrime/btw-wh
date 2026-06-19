@@ -17,6 +17,7 @@ import type { ProdDto } from "@/modules/prods/api/types";
 import type { UseFormReturn } from "react-hook-form";
 import { EntityLabel } from "@/components/shared/entities/entity-label";
 import type { CreateAnalogFormData } from "./schema";
+import { typography } from "@/lib/typography";
 
 interface CreateAnalogFormViewProps {
   form: UseFormReturn<CreateAnalogFormData>;
@@ -84,7 +85,7 @@ export function CreateAnalogFormView({
               </SelectContent>
             </Select>
             {errors.konkName && (
-              <p className="text-destructive text-xs">
+              <p className={typography.formError}>
                 {errors.konkName.message}
               </p>
             )}
@@ -118,7 +119,7 @@ export function CreateAnalogFormView({
               </SelectContent>
             </Select>
             {errors.prodName && (
-              <p className="text-destructive text-xs">
+              <p className={typography.formError}>
                 {errors.prodName.message}
               </p>
             )}
@@ -135,7 +136,7 @@ export function CreateAnalogFormView({
               className={errors.url ? "border-destructive" : ""}
             />
             {errors.url && (
-              <p className="text-destructive text-xs">{errors.url.message}</p>
+              <p className={typography.formError}>{errors.url.message}</p>
             )}
           </div>
 
@@ -152,7 +153,7 @@ export function CreateAnalogFormView({
               className={errors.artikul ? "border-destructive" : ""}
             />
             {isArtLoading && (
-              <p className="text-muted-foreground text-xs">Пошук артикула...</p>
+              <p className={typography.formHint}>Пошук артикула...</p>
             )}
           </div>
 
@@ -161,8 +162,8 @@ export function CreateAnalogFormView({
               <div className="flex items-center gap-3">
                 <ArtImage artikul={artikul} />
                 <div className="flex-1">
-                  <p className="text-sm font-medium">{artData.nameukr}</p>
-                  <p className="text-muted-foreground text-xs">{artikul}</p>
+                  <p className={typography.formLabel}>{artData.nameukr}</p>
+                  <p className={typography.formHint}>{artikul}</p>
                   <ArtProdPreview art={artData} />
                 </div>
               </div>

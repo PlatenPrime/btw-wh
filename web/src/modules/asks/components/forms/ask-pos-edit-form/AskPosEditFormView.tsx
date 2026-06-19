@@ -1,3 +1,5 @@
+import { cn } from "@/lib/utils";
+import { typography } from "@/lib/typography";
 import { DialogActions } from "@/components/shared/dialogs";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -46,14 +48,14 @@ export function AskPosEditFormView({
           <div className="grid gap-4">
             {/* Информация о текущих остатках */}
             <div className="bg-muted/50 grid gap-2 rounded-lg p-3">
-              <Label className="text-sm font-medium">Поточні залишки:</Label>
-              <div className="grid gap-2 text-sm">
+              <Label className={typography.formLabel}>Поточні залишки:</Label>
+              <div className={cn("grid gap-2 text-sm", typography.body)}>
                 <div>
-                  <span className="text-muted-foreground">Товар:</span>{" "}
+                  <span className={typography.formHint}>Товар:</span>{" "}
                   {pos.data!.quant} шт.
                 </div>
                 <div>
-                  <span className="text-muted-foreground">Коробки:</span>{" "}
+                  <span className={typography.formHint}>Коробки:</span>{" "}
                   {pos.data!.boxes} шт.
                 </div>
               </div>
@@ -90,17 +92,18 @@ export function AskPosEditFormView({
               }`}
             >
               <Label
-                className={`text-sm font-medium ${
+                className={cn(
+                  typography.formLabel,
                   remainingQuant < 0 || remainingBoxes < 0
                     ? "text-red-700 dark:text-red-300"
-                    : "text-green-700 dark:text-green-300"
-                }`}
+                    : "text-green-700 dark:text-green-300",
+                )}
               >
                 {remainingQuant < 0 || remainingBoxes < 0
                   ? "Попередження: Недостатньо товару!"
                   : "Залишиться після операції:"}
               </Label>
-              <div className="grid gap-2 text-sm">
+              <div className={cn("grid gap-2", typography.body)}>
                 <div
                   className={
                     remainingQuant < 0
@@ -108,7 +111,7 @@ export function AskPosEditFormView({
                       : "text-green-700 dark:text-green-300"
                   }
                 >
-                  <span className="text-muted-foreground">Товар:</span>{" "}
+                  <span className={typography.formHint}>Товар:</span>{" "}
                   {remainingQuant} шт.
                 </div>
                 <div
@@ -118,7 +121,7 @@ export function AskPosEditFormView({
                       : "text-green-700 dark:text-green-300"
                   }
                 >
-                  <span className="text-muted-foreground">Коробки:</span>{" "}
+                  <span className={typography.formHint}>Коробки:</span>{" "}
                   {remainingBoxes} шт.
                 </div>
               </div>

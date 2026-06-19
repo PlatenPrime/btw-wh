@@ -5,6 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import type { IPallet } from "@/modules/pallets/api/types";
 import type { UseFormReturn } from "react-hook-form";
 import type { MovePalletPosesFormData } from "./MovePalletPosesForm";
+import { typography } from "@/lib/typography";
 
 export interface MovePalletPosesFormViewProps {
   form: UseFormReturn<MovePalletPosesFormData>;
@@ -34,7 +35,7 @@ export function MovePalletPosesFormView({
             <Skeleton className="h-8 w-full" />
           </div>
         ) : pallets.length === 0 ? (
-          <div className="text-muted-foreground text-sm">
+          <div className={typography.pageDescription}>
             Нічого не знайдено
           </div>
         ) : (
@@ -64,8 +65,8 @@ export function MovePalletPosesFormView({
                     className="h-4 w-4"
                   />
                   <div className="flex flex-col">
-                    <span className="text-sm font-medium">{p.title}</span>
-                    <span className="text-muted-foreground text-xs">
+                    <span className={typography.formLabel}>{p.title}</span>
+                    <span className={typography.formHint}>
                       Ряд: {p.rowData?.title}
                     </span>
                   </div>

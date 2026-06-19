@@ -5,6 +5,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import type { VariantDto } from "@/modules/variants/api/types";
+import { typography } from "@/lib/typography";
 
 interface DeleteVariantDialogViewProps {
   variant: VariantDto;
@@ -27,7 +28,7 @@ export function DeleteVariantDialogView({
         <DialogTitle>Видалити варіант</DialogTitle>
       </DialogHeader>
       <div className="grid gap-4">
-        <p className="text-muted-foreground text-sm">
+        <p className={typography.pageDescription}>
           Ви впевнені, що хочете видалити варіант{" "}
           <strong>{String(label).slice(0, 50)}</strong>? Цю дію неможливо
           скасувати.

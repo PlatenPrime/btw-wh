@@ -14,6 +14,7 @@ import {
 import { EntityLabel } from "@/components/shared/entities/entity-label";
 import type { KonkDto } from "@/modules/konks/api/types";
 import { SKUS_EXCEL_ALL_KONKS_VALUE } from "@/modules/skus/components/dialogs/skus-excel-konk-scope";
+import { typography } from "@/lib/typography";
 
 interface SkusInvalidExcelDialogViewProps {
   konks: KonkDto[];
@@ -40,12 +41,12 @@ export function SkusInvalidExcelDialogView({
         <DialogTitle>Excel невалідних SKU</DialogTitle>
       </DialogHeader>
       <div className="flex flex-col gap-4">
-        <p className="text-muted-foreground text-sm">
+        <p className={typography.pageDescription}>
           Оберіть конкурента або «усі конкуренти». У файл потрапляють SKU з
           позначкою невалідності згідно з правилами модуля.
         </p>
         <div className="grid gap-2">
-          <p className="text-sm font-medium">Конкурент</p>
+          <p className={typography.formLabel}>Конкурент</p>
           <Select
             value={selectedKonkOrAll || "placeholder"}
             onValueChange={(v) =>

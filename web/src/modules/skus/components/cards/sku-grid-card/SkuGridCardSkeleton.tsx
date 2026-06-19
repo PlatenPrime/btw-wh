@@ -7,7 +7,7 @@ export function SkuGridCardSkeleton() {
       <Skeleton className="h-8 w-full rounded-none" />
       <div className="flex flex-col gap-2 px-2 pb-1">
         <div className="flex min-h-0 min-w-0 items-start gap-3">
-          <Skeleton className="aspect-square w-full max-w-[6rem] shrink-0 rounded-lg" />
+          <Skeleton className="size-14 shrink-0 rounded-lg" />
           <div className="grid flex-1 gap-1">
             <Skeleton className="h-4 w-full" />
             <Skeleton className="h-4 w-11/12" />

@@ -1,4 +1,5 @@
 import { DialogActions } from "@/components/shared/dialogs";
+import { typography } from "@/lib/typography";
 import {
   DialogContent,
   DialogDescription,
@@ -27,7 +28,7 @@ export function DeleteArtsWithoutLatestMarkerDialogView({
         </DialogDescription>
       </DialogHeader>
       <div className="grid gap-4">
-        <p className="text-muted-foreground text-sm">
+        <p className={typography.pageDescription}>
           Будуть видалені всі артикули, у яких маркер відсутній або менший за
           максимальний знайдений маркер. Артикули з максимальним маркером
           залишаться в базі.

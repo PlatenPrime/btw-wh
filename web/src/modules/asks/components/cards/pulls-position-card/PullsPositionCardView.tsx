@@ -1,3 +1,5 @@
+import { iconSize, typography } from "@/lib/typography";
+import { cn } from "@/lib/utils";
 import { ArtikulImageLink } from "@/components/shared/media/artikul-image-link/ArtikulImageLink";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -25,7 +27,7 @@ export function PullsPositionCardView({
     <Card className="p-0">
       <CardContent className="flex flex-col gap-2 p-2">
         <div className="flex items-center justify-between gap-2">
-          <h4 className="text-base font-semibold flex-1 min-w-0 truncate">
+          <h4 className={cn("min-w-0 flex-1", typography.listTitleEmphasized)}>
             {position.palletTitle}
           </h4>
           <Button
@@ -44,8 +46,8 @@ export function PullsPositionCardView({
           link={`/arts/${position.artikul}`}
         />
         {position.askRemainingQuantity !== null && (
-          <div className="text-foreground flex items-center gap-1 text-sm">
-            <Circle className="h-3 w-3 shrink-0" aria-hidden />
+          <div className={cn("text-foreground flex items-center gap-1", typography.body)}>
+            <Circle className={iconSize.inline} aria-hidden />
             {position.askRemainingQuantity}
           </div>
         )}

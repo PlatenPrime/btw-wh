@@ -1,3 +1,4 @@
+import { typography } from "@/lib/typography";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -40,9 +41,7 @@ export function KeyValueEditor<T extends FieldValues>({
   return (
     <div className="grid gap-2">
       <div className="flex items-center justify-between gap-2">
-        <Label className="text-muted-foreground text-xs">
-          Дані (ключ–значення)
-        </Label>
+        <Label className={typography.formHint}>Дані (ключ–значення)</Label>
         <Button
           type="button"
           variant="outline"
@@ -59,7 +58,7 @@ export function KeyValueEditor<T extends FieldValues>({
       </div>
       <div className="grid max-h-[320px] min-h-0 gap-2 overflow-y-auto">
         {fields.length === 0 && (
-          <p className="text-muted-foreground text-sm">Пар ще немає</p>
+          <p className={typography.pageDescription}>Пар ще немає</p>
         )}
         {fields.map((field, index) => (
           <div

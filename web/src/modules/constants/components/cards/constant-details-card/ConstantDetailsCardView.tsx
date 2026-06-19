@@ -1,3 +1,5 @@
+import { typography } from "@/lib/typography";
+import { cn } from "@/lib/utils";
 import { DetailPanelCard } from "@/components/shared/cards";
 import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -30,8 +32,8 @@ export function ConstantDetailsCardView({
   return (
     <DetailPanelCard className="p-2">
       <CardHeader className="p-0 pb-2">
-        <CardTitle className="p-0">{constant.title}</CardTitle>
-        <span className="text-muted-foreground text-sm">{constant.name}</span>
+        <CardTitle className={cn("p-0", typography.detailTitle)}>{constant.title}</CardTitle>
+        <span className={typography.detailSubtitle}>{constant.name}</span>
       </CardHeader>
       <CardContent className="flex flex-col gap-2 p-0">
         {entries.length > 0 ? (
@@ -95,7 +97,7 @@ export function ConstantDetailsCardView({
             </Table>
           </div>
         ) : (
-          <p className="text-muted-foreground text-sm">Дані порожні</p>
+          <p className={typography.detailSubtitle}>Дані порожні</p>
         )}
       </CardContent>
     </DetailPanelCard>

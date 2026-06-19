@@ -5,6 +5,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import type { SkugrPageDto } from "@/modules/skugrs/api/types";
+import { typography } from "@/lib/typography";
 
 interface DeleteSkugrDialogViewProps {
   skugr: SkugrPageDto;
@@ -25,7 +26,7 @@ export function DeleteSkugrDialogView({
         <DialogTitle>Видалити товарну групу</DialogTitle>
       </DialogHeader>
       <div className="grid gap-4">
-        <p className="text-muted-foreground text-sm">
+        <p className={typography.pageDescription}>
           Ви впевнені, що хочете видалити групу <strong>{skugr.title}</strong>? Цю
           дію неможливо скасувати. Документи товарів (SKU) у базі не видаляються.
         </p>

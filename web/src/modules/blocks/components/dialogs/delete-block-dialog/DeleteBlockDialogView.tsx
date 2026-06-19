@@ -5,6 +5,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import type { BlockDto } from "@/modules/blocks/api/types";
+import { typography } from "@/lib/typography";
 
 interface DeleteBlockDialogViewProps {
   block: BlockDto;
@@ -25,7 +26,7 @@ export function DeleteBlockDialogView({
         <DialogTitle>Видалити блок</DialogTitle>
       </DialogHeader>
       <div className="grid gap-4">
-        <p className="text-muted-foreground text-sm">
+        <p className={typography.pageDescription}>
           Ви впевнені, що хочете видалити блок <strong>{block.title}</strong>?
           Це дію неможливо скасувати. Всі зони, пов'язані з цим блоком, будуть
           відв'язані від блоку.

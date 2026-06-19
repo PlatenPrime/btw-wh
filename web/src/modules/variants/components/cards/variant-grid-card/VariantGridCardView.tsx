@@ -3,6 +3,7 @@ import { Image } from "@/components/shared/media/image/Image";
 import type { CardAction } from "@/components/shared/actions/card-actions";
 import { GridTileCard } from "@/components/shared/cards";
 import { cn } from "@/lib/utils";
+import { iconSize, typography } from "@/lib/typography";
 import { Link } from "react-router";
 import type { VariantDto } from "@/modules/variants/api/types";
 import type { KonkDto } from "@/modules/konks/api/types";
@@ -54,21 +55,24 @@ export function VariantGridCardView({
           <Image
             src={variant.imageUrl}
             alt={variant.title}
-            className="size-14 shrink-0 rounded-lg border bg-muted object-cover"
+            className={cn(
+              iconSize.avatarGrid,
+              "rounded-lg border bg-muted object-cover",
+            )}
           />
 
           <div className="min-w-0">
-            <div className="text-sm font-semibold line-clamp-1">
+            <div className={cn("line-clamp-1", typography.gridTitle)}>
               {variant.title}
             </div>
-            <div className="text-muted-foreground line-clamp-2 text-xs">
+            <div className={cn("line-clamp-2", typography.gridSubtitle)}>
               {variant.url}
             </div>
           </div>
         </Link>
       </div>
 
-      <div className="text-muted-foreground flex justify-center pb-2 text-xs">
+      <div className={cn("flex justify-center pb-2", typography.gridSubtitle)}>
         <EntityLabel
           imageUrl={prod?.imageUrl}
           title={prod?.title}

@@ -5,6 +5,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import type { ZoneDto } from "@/modules/zones/api/types";
+import { typography } from "@/lib/typography";
 
 interface DeleteZoneDialogViewProps {
   zone: ZoneDto;
@@ -25,7 +26,7 @@ export function DeleteZoneDialogView({
         <DialogTitle>Видалити зону</DialogTitle>
       </DialogHeader>
       <div className="grid gap-4">
-        <p className="text-muted-foreground text-sm">
+        <p className={typography.pageDescription}>
           Ви впевнені, що хочете видалити зону <strong>{zone.title}</strong>? Це
           дію неможливо скасувати.
         </p>

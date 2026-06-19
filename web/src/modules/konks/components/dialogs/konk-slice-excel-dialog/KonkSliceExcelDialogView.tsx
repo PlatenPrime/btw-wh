@@ -14,6 +14,7 @@ import type { ProdDto } from "@/modules/prods/api/types";
 import { SKU_KONK_PROD_QUERY_ALL } from "@/modules/sku-analytics/constants";
 import { SkugrMultiSelectControl } from "@/modules/skugrs/components/controls/skugr-multi-select-control";
 import type { DateRange } from "react-day-picker";
+import { typography } from "@/lib/typography";
 
 interface KonkSliceExcelDialogViewProps {
   dateRange: DateRange | undefined;
@@ -66,14 +67,14 @@ export function KonkSliceExcelDialogView({
         <DialogTitle>Експорт Excel залишків конкурента</DialogTitle>
       </DialogHeader>
       <div className="flex flex-col gap-4">
-        <p className="text-muted-foreground text-sm">
+        <p className={typography.pageDescription}>
           {showKonkSelect
             ? "Оберіть конкурента, виробника та період. Файл буде сформований з endpoint sku-excel-reports/konk/stock."
             : "Оберіть виробника та період. Файл буде сформований з endpoint sku-excel-reports/konk/stock."}
         </p>
         {showKonkSelect ? (
           <div className="grid gap-2">
-            <p className="text-sm font-medium">Конкурент</p>
+            <p className={typography.formLabel}>Конкурент</p>
             <KonkEntitySelect
               value={selectedKonkName}
               onValueChange={onSelectedKonkNameChange}
@@ -83,7 +84,7 @@ export function KonkSliceExcelDialogView({
           </div>
         ) : null}
         <div className="grid gap-2">
-          <p className="text-sm font-medium">Виробник</p>
+          <p className={typography.formLabel}>Виробник</p>
           <ProdEntitySelect
             value={selectedProd}
             onValueChange={onSelectedProdChange}
@@ -93,9 +94,9 @@ export function KonkSliceExcelDialogView({
           />
         </div>
         <div className="grid min-h-0 gap-2">
-          <p className="text-sm font-medium">Товарні групи (опційно)</p>
+          <p className={typography.formLabel}>Товарні групи (опційно)</p>
           {!skugrListReady ? (
-            <p className="text-muted-foreground text-sm">
+            <p className={typography.pageDescription}>
               Оберіть конкурента, щоб обмежити вивантаження товарними групами.
             </p>
           ) : null}

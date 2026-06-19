@@ -1,4 +1,6 @@
 import { DetailPanelCard } from "@/components/shared/cards";
+import { typography } from "@/lib/typography";
+import { cn } from "@/lib/utils";
 import { CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
@@ -13,9 +15,7 @@ interface ArtDetailCardViewProps {
 
 function ArtDetailSectionLabel({ children }: { children: string }) {
   return (
-    <span className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
-      {children}
-    </span>
+    <span className={typography.sectionLabel}>{children}</span>
   );
 }
 
@@ -43,19 +43,15 @@ export function ArtDetailCardView({ artData }: ArtDetailCardViewProps) {
             imageClassName="size-16 shrink-0 rounded-lg border border-border sm:size-20"
           />
           <div className="grid min-w-0 flex-1 gap-2">
-            <CardTitle className="text-base leading-tight sm:text-lg">
-              {artData.artikul}
-            </CardTitle>
+            <CardTitle className={typography.detailTitle}>{artData.artikul}</CardTitle>
             {displayName ? (
-              <p className="text-muted-foreground text-sm leading-snug">
-                {displayName}
-              </p>
+              <p className={typography.detailSubtitle}>{displayName}</p>
             ) : null}
             <ArtProdPreview
               art={artData}
               imageSize="sm"
-              className="text-sm"
-              fallbackKeyClassName="text-muted-foreground text-sm"
+              className={typography.detailSubtitle}
+              fallbackKeyClassName={cn("text-muted-foreground", typography.detailSubtitle)}
             />
           </div>
         </section>

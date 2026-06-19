@@ -1,3 +1,5 @@
+import { typography } from "@/lib/typography";
+import { cn } from "@/lib/utils";
 import { DialogActions } from "@/components/shared/dialogs";
 import {
   DialogContent,
@@ -81,13 +83,13 @@ export function KonkBtradeExcelDialogLayout({
         <DialogTitle>{title}</DialogTitle>
       </DialogHeader>
       <div className="flex flex-col gap-4 items-center w-full">
-        <p className="text-muted-foreground text-sm text-justify max-w-md">
+        <p className={cn("max-w-md text-justify", typography.pageDescription)}>
           {description}
         </p>
 
-        <div className="grid gap-3 w-full justify-center">
+        <div className="grid w-full justify-center gap-3">
           <div className="grid gap-1.5">
-            <span className="text-sm font-medium">Конкурент</span>
+            <span className={typography.formLabel}>Конкурент</span>
             <Select
               value={selectedKonk}
               onValueChange={onSelectedKonkChange}
@@ -110,7 +112,7 @@ export function KonkBtradeExcelDialogLayout({
           </div>
 
           <div className="grid gap-1.5">
-            <span className="text-sm font-medium">Виробник</span>
+            <span className={typography.formLabel}>Виробник</span>
             <Select
               value={selectedProd}
               onValueChange={onSelectedProdChange}
@@ -157,10 +159,7 @@ export function KonkBtradeExcelDialogLayout({
                 checked={sortByAbc}
                 onCheckedChange={onSortByAbcChange}
               />
-              <Label
-                htmlFor={sortByAbcSwitchId}
-                className="text-sm font-medium cursor-pointer"
-              >
+              <Label htmlFor={sortByAbcSwitchId} className="cursor-pointer">
                 Сортувати по ABC
               </Label>
             </div>
@@ -168,7 +167,7 @@ export function KonkBtradeExcelDialogLayout({
         </div>
 
         <div className="grid gap-2 w-full justify-center">
-          <span className="text-sm font-medium">Період дат</span>
+          <span className={typography.formLabel}>Період дат</span>
           <Calendar
             mode="range"
             selected={dateRange}

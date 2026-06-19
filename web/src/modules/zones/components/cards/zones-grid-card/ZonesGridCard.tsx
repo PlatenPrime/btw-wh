@@ -1,8 +1,10 @@
 import { CardActionsMenu } from "@/components/shared/actions/card-actions";
 import { ListRowCard } from "@/components/shared/cards";
+import { cn } from "@/lib/utils";
 import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RoleType } from "@/constants/roles";
 import { RoleGuard } from "@/modules/auth/components/elements/RoleGuard";
+import { iconSize, typography } from "@/lib/typography";
 import type { ZoneDto } from "@/modules/zones/api/types";
 import { ZoneBarcode } from "@/modules/zones/components/elements/zone-barcode";
 import { ZoneLink } from "@/modules/zones/components/elements/zone-link";
@@ -36,8 +38,8 @@ export function ZonesGridCard({ zone, onEdit, onDelete }: ZonesGridCardProps) {
     <ListRowCard>
       <CardHeader className="p-0">
         <div className="flex items-center justify-between">
-          <CardTitle className="">
-            <ZoneLink zone={zone} className="hover:underline">
+          <CardTitle size="sm">
+            <ZoneLink zone={zone} className={typography.listTitleCompact}>
               {zone.title}
             </ZoneLink>
           </CardTitle>
@@ -53,12 +55,12 @@ export function ZonesGridCard({ zone, onEdit, onDelete }: ZonesGridCardProps) {
       </CardHeader>
       <CardContent className="grid gap-2 p-0">
         <div className="flex items-center gap-2">
-          <Barcode className="text-muted-foreground size-3.5 shrink-0" aria-hidden />
-          <ZoneBarcode zone={zone} className="text-muted-foreground text-xs" />
+          <Barcode className={cn(iconSize.inline, "text-muted-foreground")} aria-hidden />
+          <ZoneBarcode zone={zone} className={typography.listSubtitle} />
         </div>
         <div className="flex items-center gap-2">
-          <LayoutGrid className="text-muted-foreground size-3.5 shrink-0" aria-hidden />
-          <ZoneSector zone={zone} className="text-muted-foreground text-xs" />
+          <LayoutGrid className={cn(iconSize.inline, "text-muted-foreground")} aria-hidden />
+          <ZoneSector zone={zone} className={typography.listSubtitle} />
         </div>
       </CardContent>
     </ListRowCard>

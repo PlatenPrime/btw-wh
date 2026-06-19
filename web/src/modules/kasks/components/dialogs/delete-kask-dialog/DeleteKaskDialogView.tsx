@@ -5,6 +5,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import type { KaskDto } from "@/modules/kasks/api/types/dto";
+import { typography } from "@/lib/typography";
 
 interface DeleteKaskDialogViewProps {
   kask: KaskDto;
@@ -25,7 +26,7 @@ export function DeleteKaskDialogView({
         <DialogTitle>Видалити запис до каси</DialogTitle>
       </DialogHeader>
       <div className="grid gap-4">
-        <p className="text-muted-foreground text-sm">
+        <p className={typography.pageDescription}>
           Ви впевнені, що хочете видалити запис для артикулу{" "}
           <strong className="font-mono">{kask.artikul}</strong>
           {kask.nameukr ? (

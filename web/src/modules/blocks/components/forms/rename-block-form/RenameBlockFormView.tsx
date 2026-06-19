@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import type { RenameBlockFormValues } from "@/modules/blocks/components/forms/rename-block-form/schema";
 import type { UseFormReturn } from "react-hook-form";
+import { typography } from "@/lib/typography";
 
 interface RenameBlockFormViewProps {
     form: UseFormReturn<RenameBlockFormValues>;
@@ -34,7 +35,7 @@ export function RenameBlockFormView({
                     disabled={isLoading}
                 />
                 {errors.title && (
-                    <p className="text-destructive text-sm">{errors.title.message}</p>
+                    <p className={typography.formError}>{errors.title.message}</p>
                 )}
             </div>
 

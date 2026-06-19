@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { iconSize, typography } from "@/lib/typography";
 import type { PalletShortDto } from "@/modules/pallet-groups/api/types";
 import { ListOrdered } from "lucide-react";
 import { Link } from "react-router";
@@ -19,17 +20,17 @@ export function PalletCard({ pallet, onUnlink }: PalletCardProps) {
           target="_blank"
           rel="noopener noreferrer"
           className={cn(
-            "min-w-0 flex-1 truncate text-sm font-semibold",
-            "transition-colors duration-200 hover:underline",
+            "min-w-0 flex-1 transition-colors duration-200 hover:underline",
+            typography.listTitleCompact,
           )}
         >
           {pallet.title}
         </Link>
         <PalletCardActions pallet={pallet} onUnlink={onUnlink} />
       </CardHeader>
-      <CardContent className="text-muted-foreground p-0 pt-2 text-xs">
+      <CardContent className={cn("p-0 pt-2", typography.gridSubtitle)}>
         <div className="flex items-center gap-2">
-          <ListOrdered className="size-4 shrink-0" aria-label="Сектор" />
+          <ListOrdered className={iconSize.ui} aria-label="Сектор" />
           <span className="font-mono">{pallet.sector}</span>
         </div>
       </CardContent>

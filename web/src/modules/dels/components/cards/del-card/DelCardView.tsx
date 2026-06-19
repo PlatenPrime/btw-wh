@@ -3,6 +3,8 @@ import type { CardAction } from "@/components/shared/actions/card-actions";
 import { ListRowCard } from "@/components/shared/cards";
 import { CardContent, CardTitle } from "@/components/ui/card";
 import { Image } from "@/components/shared/media/image/Image";
+import { cn } from "@/lib/utils";
+import { iconSize, typography } from "@/lib/typography";
 import type { DelListItemDto } from "@/modules/dels/api/types";
 import { Package } from "lucide-react";
 import { Link } from "react-router";
@@ -30,7 +32,7 @@ export function DelCardView({ del, actions }: DelCardViewProps) {
   return (
     <ListRowCard>
       <CardContent className="flex items-center gap-2 p-0">
-        <div className="size-12 shrink-0 overflow-hidden rounded-lg border border-border/60 bg-muted ring-1 ring-border/40">
+        <div className={cn("overflow-hidden rounded-lg border border-border/60 bg-muted ring-1 ring-border/40", iconSize.avatarList)}>
           <Image
             src={del.prod?.imageUrl ?? FALLBACK_IMAGE}
             alt={del.prod?.title ?? "Логотип"}
@@ -39,22 +41,17 @@ export function DelCardView({ del, actions }: DelCardViewProps) {
           />
         </div>
         <div className="flex min-w-0 flex-1 flex-col gap-0.5">
-          <CardTitle className="p-0">
+          <CardTitle size="sm" className="p-0">
             <Link
               to={`/wh/dels/${del._id}`}
-              className="block truncate hover:underline"
+              className={cn("block hover:underline", typography.listTitleCompact)}
             >
               {del.title}
             </Link>
           </CardTitle>
           <div className="flex items-center gap-2">
-            <Package
-              className="size-3.5 shrink-0 text-muted-foreground"
-              aria-hidden
-            />
-            <span className="truncate text-xs text-muted-foreground">
-              {formatDate(del.createdAt)}
-            </span>
+            <Package className={cn(iconSize.inline, "text-muted-foreground")} aria-hidden />
+            <span className={typography.listSubtitle}>{formatDate(del.createdAt)}</span>
           </div>
         </div>
         <CardActionsMenu

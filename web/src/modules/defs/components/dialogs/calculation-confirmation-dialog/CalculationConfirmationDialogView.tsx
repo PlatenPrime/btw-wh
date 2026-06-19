@@ -8,6 +8,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Calculator, Clock } from "lucide-react";
+import { typography } from "@/lib/typography";
 
 interface CalculationConfirmationDialogViewProps {
   isOpen: boolean;
@@ -41,7 +42,7 @@ export function CalculationConfirmationDialogView({
 
         <div className="bg-muted flex items-center gap-2 rounded-lg p-4">
           <Clock className="text-muted-foreground h-4 w-4" />
-          <span className="text-muted-foreground text-sm">
+          <span className={typography.pageDescription}>
             Очікуваний час виконання: 6-8 хвилин
           </span>
         </div>

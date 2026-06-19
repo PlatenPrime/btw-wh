@@ -74,8 +74,74 @@ Glass читается на **surface-0 с ambient-градиентом**, не 
 ## Typography
 
 - **UI:** `font-sans` (Inter)
-- **Display (H1 hero):** `font-display` (Merriweather)
-- Scale: `text-xs` … `text-5xl`; заголовки страниц — `text-lg font-semibold` в header
+- **Display (hero / marketing):** `font-display` (Merriweather) — только landing/auth hero, не карточки
+- **Источник правды:** [`web/src/lib/typography.ts`](../web/src/lib/typography.ts) — semantic tokens + icon sizes
+- **Импорт:** `import { typography, iconSize } from "@/lib/typography"`
+
+### Semantic tokens
+
+| Token | Классы | Когда |
+| ----- | ------ | ----- |
+| `pageTitle` | `text-lg font-semibold` | Sidebar header, `PageHeader`, заголовок профиля в detail |
+| `pageDescription` | `text-sm muted` | Подзаголовок страницы |
+| `sectionTitle` | `text-base font-semibold` | Заголовок chart-секции, `CardTitle` в section |
+| `sectionLabel` | `text-xs uppercase semibold muted` | Метки колонок в detail (Склад, Sharik.ua) |
+| `gridTitle` | `text-sm font-semibold` | Primary в `GridTileCard` |
+| `gridSubtitle` | `text-xs muted` | Meta/footer grid-карточки |
+| `listTitleCompact` | `text-sm font-semibold truncate` | Konk/Prod/Del/Zone list-row |
+| `listSubtitle` | `text-xs muted truncate` | Вторичная строка compact list |
+| `listTitleEmphasized` | `text-base font-semibold` | Asks, pulls — акцентный list-row |
+| `listSubtitleEmphasized` | `text-sm muted` | Описание в emphasized list |
+| `detailTitle` | `text-base font-semibold` | Заголовок `DetailPanelCard` / `CardTitle` default |
+| `detailSubtitle` | `text-sm muted` | Подпись, meta в detail |
+| `body` | `text-sm` | Обычный текст, footer meta |
+| `caption` | `text-xs muted` | Даты, badges, KonkBanner |
+| `label` / `value` | xs / sm medium | `SummaryField` |
+| `formLabel` | `text-sm font-medium` | `Label`, подписи полей в формах и excel-dialog |
+| `formHint` | `text-xs muted` | `FormDescription`, helper-текст, preview labels |
+| `formError` | `text-destructive text-sm font-medium` | `FormMessage`, inline-ошибки полей (**только sm**, без xs) |
+
+### Forms & dialogs
+
+| Элемент | Token |
+| ------- | ----- |
+| `DialogTitle` | `pageTitle` |
+| `DialogDescription` / confirm body | `pageDescription` |
+| `Label` default | `formLabel` |
+| `FormDescription` | `formHint` |
+| `FormMessage` | `formError` |
+| Excel-dialog field header | `formLabel` |
+
+
+| Pattern | Title | Subtitle / meta | Avatar |
+| ------- | ----- | ----------------- | ------ |
+| **GridTileCard** | `gridTitle` | `gridSubtitle` | `iconSize.avatarGrid` (`size-14`) |
+| **ListRowCard compact** | `CardTitle size="sm"` + `listTitleCompact` | `listSubtitle` | `iconSize.avatarList` (`size-12`) |
+| **ListRowCard emphasized** | `listTitleEmphasized` | `listSubtitleEmphasized` | — |
+| **DetailPanelCard** | `CardTitle` / `detailTitle` | `detailSubtitle`, `SummaryField` | по контексту |
+
+### Icon sizes (`iconSize`)
+
+| Token | Tailwind | Когда |
+| ----- | -------- | ----- |
+| `inline` | `size-3.5` | Meta-иконки в карточках (sector, barcode) |
+| `ui` | `size-4` | Shadcn UI default, calendar, dropdown |
+| `avatarList` | `size-12` | Thumbnail compact list-row |
+| `avatarGrid` | `size-14` | Thumbnail grid-tile |
+
+`CardTitle` ([`card.tsx`](../web/src/components/ui/card.tsx)): `size="default"` → `text-base`, `size="sm"` → `text-sm`, `size="lg"` → `text-lg`.
+
+### Skeleton line heights
+
+- compact title (`text-sm`): `Skeleton` → `h-4`
+- emphasized / detail title (`text-base`): `h-5`
+- caption (`text-xs`): `h-3`
+
+### Исключения
+
+- **Hero / auth landing:** `MainHero`, login — `font-display` + `text-3xl`…`text-5xl`
+- **Chart KPI / summary stats:** могут быть `text-lg`+ (не card typography)
+- **Shadcn primitives:** не переписывать; `size-4` = UI icon default
 
 ## Spacing & layout
 

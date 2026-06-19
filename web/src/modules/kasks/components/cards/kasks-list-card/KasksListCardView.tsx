@@ -1,3 +1,5 @@
+import { iconSize, typography } from "@/lib/typography";
+import { cn } from "@/lib/utils";
 import { ArtikulImageLink } from "@/components/shared/media/artikul-image-link/ArtikulImageLink";
 import { CardActionsMenu } from "@/components/shared/actions/card-actions";
 import type { CardAction } from "@/components/shared/actions/card-actions";
@@ -51,18 +53,18 @@ export function KasksListCardView({
       </div>
       <div className="grid gap-2 pl-12">
         {kask.quant != null ? (
-          <div className="text-foreground flex items-center gap-2 text-sm">
-            <CircleIcon className="h-4 w-4 shrink-0" />
+          <div className={cn("text-foreground flex items-center gap-2", typography.body)}>
+            <CircleIcon className={iconSize.ui} />
             <span>{kask.quant}</span>
           </div>
         ) : null}
-        <div className="text-foreground flex items-center gap-2 text-sm">
-          <MapPin className="h-4 w-4 shrink-0" />
+        <div className={cn("text-foreground flex items-center gap-2", typography.body)}>
+          <MapPin className={iconSize.ui} />
           <span>{kask.zone}</span>
         </div>
         {comText ? (
-          <div className="text-foreground flex items-start gap-2 text-sm">
-            <MessageSquareMore className="mt-0.5 h-4 w-4 shrink-0" />
+          <div className={cn("text-foreground flex items-start gap-2", typography.body)}>
+            <MessageSquareMore className={cn(iconSize.ui, "mt-0.5")} />
             <span className="italic">{comText}</span>
           </div>
         ) : null}

@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { iconSize, typography } from "@/lib/typography";
 import { ArtDialogImage } from "@/modules/arts/components/dialogs/art-dialog-image/ArtDialogImage";
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
@@ -37,8 +38,8 @@ export function AnalogImageLink({
   const titleText = artikul || "Посилання";
   const linkInner = (
     <>
-      <span className="text-sm font-semibold">{titleText}</span>
-      <span className="text-muted-foreground line-clamp-2 text-sm font-normal">
+      <span className={typography.gridTitle}>{titleText}</span>
+      <span className={cn("line-clamp-2", typography.gridSubtitle)}>
         {subtitle}
       </span>
     </>
@@ -49,7 +50,7 @@ export function AnalogImageLink({
     imageBlock = <ArtDialogImage artikul={artikul} />;
   } else {
     imageBlock = (
-      <div className="bg-muted aspect-square w-full max-w-[6rem] rounded-lg" />
+      <div className={cn("bg-muted aspect-square rounded-lg", iconSize.avatarGrid)} />
     );
   }
 

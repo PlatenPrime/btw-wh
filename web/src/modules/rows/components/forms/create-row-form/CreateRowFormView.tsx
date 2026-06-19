@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { type RowFormValues } from "@/modules/rows/components/forms/schema.ts";
 import type { UseFormReturn } from "react-hook-form";
+import { typography } from "@/lib/typography";
 
 interface CreateRowFormViewProps {
   form: UseFormReturn<RowFormValues>;
@@ -51,7 +52,7 @@ export function CreateRowFormView({
           </div>
 
           {errors.root && (
-            <div className="text-destructive text-sm">
+            <div className={typography.formError}>
               {errors.root.message}
             </div>
           )}

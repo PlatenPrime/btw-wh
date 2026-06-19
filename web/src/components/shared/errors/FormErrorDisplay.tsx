@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { iconSize, typography } from "@/lib/typography";
 import { AlertCircle, X } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
@@ -20,47 +21,41 @@ export function FormErrorDisplay({
 
   if (variant === "compact") {
     return (
-      <div
-        className={cn(
-          "text-destructive flex items-center gap-2 text-sm",
-          className,
-        )}
-      >
-        <AlertCircle className="h-4 w-4 flex-shrink-0" />
+      <div className={cn("flex items-center gap-2", typography.formError, className)}>
+        <AlertCircle className={iconSize.ui} />
         <span>{error}</span>
-        {onDismiss && (
+        {onDismiss ? (
           <Button
             variant="ghost"
             size="sm"
             onClick={onDismiss}
             className="text-destructive hover:bg-destructive/10 h-auto p-1"
           >
-            <X className="h-3 w-3" />
+            <X className={iconSize.inline} />
           </Button>
-        )}
+        ) : null}
       </div>
     );
   }
 
   return (
     <Alert variant="destructive" className={cn("relative", className)}>
-      <AlertCircle className="h-4 w-4" />
+      <AlertCircle className={iconSize.ui} />
       <AlertDescription>{error}</AlertDescription>
-      {onDismiss && (
+      {onDismiss ? (
         <Button
           variant="ghost"
           size="sm"
           onClick={onDismiss}
           className="text-destructive hover:bg-destructive/10 absolute right-2 top-2 h-auto p-1"
         >
-          <X className="h-3 w-3" />
+          <X className={iconSize.inline} />
         </Button>
-      )}
+      ) : null}
     </Alert>
   );
 }
 
-// Компонент для відображення помилок валідації полів
 export interface FieldErrorDisplayProps {
   error?: string | null;
   className?: string;
@@ -74,12 +69,9 @@ export function FieldErrorDisplay({
 
   return (
     <div
-      className={cn(
-        "text-destructive flex items-center gap-1.5 text-sm",
-        className,
-      )}
+      className={cn("flex items-center gap-1.5", typography.formError, className)}
     >
-      <AlertCircle className="h-3.5 w-3.5 flex-shrink-0" />
+      <AlertCircle className={iconSize.inline} />
       <span>{error}</span>
     </div>
   );

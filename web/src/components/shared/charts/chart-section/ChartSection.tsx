@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { typography } from "@/lib/typography";
 import { cn } from "@/lib/utils";
 
 interface ChartSectionProps {
@@ -20,7 +21,7 @@ export function ChartSection({
     <Card variant="elevated" className={cn("gap-4 py-4", className)}>
       {title || toolbar ? (
         <CardHeader className="flex flex-row flex-wrap items-center justify-between gap-3 px-4 pb-0">
-          {title ? <CardTitle className="text-base">{title}</CardTitle> : <span />}
+          {title ? <CardTitle className={typography.sectionTitle}>{title}</CardTitle> : <span />}
           {toolbar ? <div className="flex flex-wrap items-center gap-2">{toolbar}</div> : null}
         </CardHeader>
       ) : null}

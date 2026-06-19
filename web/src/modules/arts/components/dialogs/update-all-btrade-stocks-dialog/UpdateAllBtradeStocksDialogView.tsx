@@ -1,4 +1,5 @@
 import { DialogActions } from "@/components/shared/dialogs";
+import { typography } from "@/lib/typography";
 import {
   DialogContent,
   DialogDescription,
@@ -27,7 +28,7 @@ export function UpdateAllBtradeStocksDialogView({
         </DialogDescription>
       </DialogHeader>
       <div className="grid gap-4">
-        <p className="text-muted-foreground text-sm">
+        <p className={typography.pageDescription}>
           Після підтвердження буде запущено процес оновлення залишків Btrade для
           всіх артикулів у системі. Оновлення виконується в фоновому режимі, і
           ви отримаєте сповіщення після запуску процесу.

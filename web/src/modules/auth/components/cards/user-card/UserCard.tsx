@@ -2,6 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { ListRowCard } from "@/components/shared/cards";
 import { CardContent, CardHeader } from "@/components/ui/card";
+import { iconSize, typography } from "@/lib/typography";
 import { RoleType, getRoleLabel } from "@/constants/roles";
 import type { User } from "@/modules/auth/api/types";
 import { RoleGuard } from "@/modules/auth/components/elements/RoleGuard";
@@ -28,17 +29,15 @@ export function UserCard({ user, onEdit }: UserCardProps) {
             <div className="flex flex-wrap items-center gap-x-2 gap-y-0">
               <Link
                 to={`/users/${user._id}`}
-                className="truncate font-medium hover:underline"
+                className={typography.listTitleCompact}
               >
                 {user.fullname}
               </Link>
-              <span className="text-muted-foreground shrink-0 text-xs">
+              <span className={typography.caption}>
                 {user.role ? getRoleLabel(user.role) : "—"}
               </span>
             </div>
-            <span className="text-muted-foreground truncate text-sm">
-              @{user.username}
-            </span>
+            <span className={typography.listSubtitle}>@{user.username}</span>
           </div>
         </div>
         <div className="flex shrink-0 items-center">
@@ -50,7 +49,7 @@ export function UserCard({ user, onEdit }: UserCardProps) {
               aria-label="Редагувати"
               onClick={() => onEdit?.(user)}
             >
-              <Edit className="h-4 w-4" />
+              <Edit className={iconSize.ui} />
             </Button>
           </RoleGuard>
         </div>

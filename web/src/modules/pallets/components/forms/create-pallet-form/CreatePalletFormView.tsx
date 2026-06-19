@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { type PalletFormValues } from "@/modules/pallets/components/forms/schema";
 import type { UseFormReturn } from "react-hook-form";
+import { typography } from "@/lib/typography";
 
 interface CreatePalletFormViewProps {
   form: UseFormReturn<PalletFormValues>;
@@ -34,7 +35,7 @@ export function CreatePalletFormView({
   return (
     <form onSubmit={onSubmit} className="grid gap-4" noValidate>
       <div className="grid gap-2">
-        <Label htmlFor="pallet-title" className="text-sm font-medium">
+        <Label htmlFor="pallet-title" className={typography.formLabel}>
           Назва палети *
         </Label>
         <Input
@@ -49,7 +50,7 @@ export function CreatePalletFormView({
         {errors.title && <FieldErrorDisplay error={errors.title.message} />}
       </div>
       <div className="flex items-center justify-between">
-        <Label htmlFor="pallet-isDef" className="text-sm font-medium">
+        <Label htmlFor="pallet-isDef" className={typography.formLabel}>
           Аналіз
         </Label>
         <Switch

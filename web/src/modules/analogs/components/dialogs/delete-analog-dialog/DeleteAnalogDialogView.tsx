@@ -5,6 +5,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import type { AnalogDto } from "@/modules/analogs/api/types";
+import { typography } from "@/lib/typography";
 
 interface DeleteAnalogDialogViewProps {
   analog: AnalogDto;
@@ -28,7 +29,7 @@ export function DeleteAnalogDialogView({
         <DialogTitle>Видалити аналог</DialogTitle>
       </DialogHeader>
       <div className="grid gap-4">
-        <p className="text-muted-foreground text-sm">
+        <p className={typography.pageDescription}>
           Ви впевнені, що хочете видалити аналог{" "}
           <strong>{String(label).slice(0, 50)}</strong>? Цю дію неможливо
           скасувати.

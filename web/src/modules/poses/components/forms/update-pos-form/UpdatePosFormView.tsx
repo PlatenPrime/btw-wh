@@ -13,6 +13,7 @@ import {
 import { sklads, type ISklads } from "@/constants/sklad";
 import { useFormContext } from "react-hook-form";
 import type { UpdatePosFormData } from "./schema";
+import { typography } from "@/lib/typography";
 
 interface UpdatePosFormViewProps {
   form: ReturnType<typeof useFormContext<UpdatePosFormData>>;
@@ -86,7 +87,7 @@ export function UpdatePosFormView({
                 </SelectContent>
               </Select>
               {errors.sklad && (
-                <p className="text-destructive text-sm">
+                <p className={typography.formError}>
                   {errors.sklad.message}
                 </p>
               )}

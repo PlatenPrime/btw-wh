@@ -3,6 +3,19 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
+const cardTitleVariants = cva("leading-none font-semibold", {
+  variants: {
+    size: {
+      default: "text-base",
+      sm: "text-sm",
+      lg: "text-lg",
+    },
+  },
+  defaultVariants: {
+    size: "default",
+  },
+})
+
 const cardVariants = cva(
   "flex flex-col text-card-foreground border border-card-border transition-all duration-300",
   {
@@ -52,11 +65,15 @@ function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
+function CardTitle({
+  className,
+  size,
+  ...props
+}: React.ComponentProps<"div"> & VariantProps<typeof cardTitleVariants>) {
   return (
     <div
       data-slot="card-title"
-      className={cn("leading-none font-semibold", className)}
+      className={cn(cardTitleVariants({ size }), className)}
       {...props}
     />
   )

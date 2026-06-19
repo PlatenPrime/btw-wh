@@ -4,6 +4,7 @@ import { Label } from "@/components/ui/label";
 import { KeyValueEditor } from "@/modules/constants/components/forms/key-value-editor";
 import type { UpdateConstantFormValues } from "@/modules/constants/components/forms/schema";
 import type { UseFormReturn } from "react-hook-form";
+import { typography } from "@/lib/typography";
 
 interface UpdateConstantFormViewProps {
   form: UseFormReturn<UpdateConstantFormValues>;
@@ -37,7 +38,7 @@ export function UpdateConstantFormView({
             disabled={isLoading}
           />
           {errors.name && (
-            <p className="text-destructive text-sm">{errors.name.message}</p>
+            <p className={typography.formError}>{errors.name.message}</p>
           )}
         </div>
         <div className="grid gap-2">
@@ -49,7 +50,7 @@ export function UpdateConstantFormView({
             disabled={isLoading}
           />
           {errors.title && (
-            <p className="text-destructive text-sm">{errors.title.message}</p>
+            <p className={typography.formError}>{errors.title.message}</p>
           )}
         </div>
         <KeyValueEditor<UpdateConstantFormValues>
@@ -60,7 +61,7 @@ export function UpdateConstantFormView({
       </div>
 
       {errors.root && (
-        <p className="text-destructive text-sm">{errors.root.message}</p>
+        <p className={typography.formError}>{errors.root.message}</p>
       )}
 
       <DialogActions

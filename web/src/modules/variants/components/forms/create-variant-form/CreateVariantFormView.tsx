@@ -15,6 +15,8 @@ import type { ProdDto } from "@/modules/prods/api/types";
 import { EntityLabel } from "@/components/shared/entities/entity-label";
 import type { UseFormReturn } from "react-hook-form";
 import { type CreateVariantFormData } from "./schema";
+import { typography } from "@/lib/typography";
+import { cn } from "@/lib/utils";
 
 interface CreateVariantFormViewProps {
   form: UseFormReturn<CreateVariantFormData>;
@@ -76,7 +78,7 @@ export function CreateVariantFormView({
               </SelectContent>
             </Select>
             {errors.konkName && (
-              <p className="text-destructive text-xs">
+              <p className={typography.formError}>
                 {errors.konkName.message}
               </p>
             )}
@@ -110,7 +112,7 @@ export function CreateVariantFormView({
               </SelectContent>
             </Select>
             {errors.prodName && (
-              <p className="text-destructive text-xs">
+              <p className={typography.formError}>
                 {errors.prodName.message}
               </p>
             )}
@@ -127,7 +129,7 @@ export function CreateVariantFormView({
               className={errors.title ? "border-destructive" : ""}
             />
             {errors.title && (
-              <p className="text-destructive text-xs">
+              <p className={typography.formError}>
                 {errors.title.message}
               </p>
             )}
@@ -144,7 +146,7 @@ export function CreateVariantFormView({
               className={errors.url ? "border-destructive" : ""}
             />
             {errors.url && (
-              <p className="text-destructive text-xs">
+              <p className={typography.formError}>
                 {errors.url.message}
               </p>
             )}
@@ -161,7 +163,7 @@ export function CreateVariantFormView({
               className={errors.imageUrl ? "border-destructive" : ""}
             />
             {errors.imageUrl && (
-              <p className="text-destructive text-xs">
+              <p className={typography.formError}>
                 {errors.imageUrl.message}
               </p>
             )}
@@ -176,8 +178,8 @@ export function CreateVariantFormView({
                   className="size-12 shrink-0 rounded object-cover border"
                 />
                 <div className="flex-1">
-                  <p className="text-sm font-medium">Попередній перегляд</p>
-                  <p className="text-muted-foreground text-xs line-clamp-1">
+                  <p className={typography.formLabel}>Попередній перегляд</p>
+                  <p className={cn("line-clamp-1", typography.formHint)}>
                     {imageUrl}
                   </p>
                 </div>

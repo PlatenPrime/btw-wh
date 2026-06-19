@@ -7,6 +7,7 @@ import {
 import { Calendar } from "@/components/ui/calendar";
 import type { AnalogDto } from "@/modules/analogs/api/types";
 import type { DateRange } from "react-day-picker";
+import { typography } from "@/lib/typography";
 
 interface ComparisonExcelDialogViewProps {
   analog: AnalogDto;
@@ -35,7 +36,7 @@ export function ComparisonExcelDialogView({
         <DialogTitle>Експорт Excel порівняння аналога та Btrade</DialogTitle>
       </DialogHeader>
       <div className="flex flex-col gap-4">
-        <p className="text-muted-foreground text-sm">
+        <p className={typography.pageDescription}>
           Оберіть період дат для формування звіту. Файл міститиме зрізи аналога
           та Btrade по датах, різницю та різницю у відсотках.
         </p>

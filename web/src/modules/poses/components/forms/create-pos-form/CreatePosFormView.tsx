@@ -19,6 +19,7 @@ import { ArtProdPreview } from "@/modules/arts/components/elements/art-prod-prev
 import type { IPos } from "@/modules/poses/api/types";
 import { useFormContext } from "react-hook-form";
 import type { CreatePosFormData } from "./schema";
+import { typography } from "@/lib/typography";
 
 interface CreatePosFormViewProps {
   form: ReturnType<typeof useFormContext<CreatePosFormData>>;
@@ -68,14 +69,14 @@ export function CreatePosFormView({
               <div className="flex items-center gap-3">
                 <ArtImage artikul={artikul} />
                 <div className="flex-1">
-                  <p className="text-sm font-medium">{artData.nameukr}</p>
-                  <p className="text-muted-foreground text-xs">{artikul}</p>
+                  <p className={typography.formLabel}>{artData.nameukr}</p>
+                  <p className={typography.formHint}>{artikul}</p>
                   <ArtProdPreview art={artData} />
                 </div>
               </div>
             ) : (
               <div className="flex h-full min-h-[6rem] items-center justify-center">
-                <p className="text-muted-foreground text-sm">
+                <p className={typography.pageDescription}>
                   Введіть артикул для перегляду
                 </p>
               </div>
@@ -96,12 +97,12 @@ export function CreatePosFormView({
               className={errors.artikul ? "border-destructive" : ""}
             />
             {errors.artikul && (
-              <p className="text-destructive text-xs">
+              <p className={typography.formError}>
                 {errors.artikul.message}
               </p>
             )}
             {isArtLoading && (
-              <p className="text-muted-foreground text-xs">Пошук артикула...</p>
+              <p className={typography.formHint}>Пошук артикула...</p>
             )}
           </div>
 
@@ -155,7 +156,7 @@ export function CreatePosFormView({
               </SelectContent>
             </Select>
             {errors.sklad && (
-              <p className="text-destructive text-xs">{errors.sklad.message}</p>
+              <p className={typography.formError}>{errors.sklad.message}</p>
             )}
           </div>
 

@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { typography } from "@/lib/typography";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { ArtDialogImage } from "@/modules/arts/components/dialogs/art-dialog-image/ArtDialogImage";
 import { Link } from "react-router-dom";
@@ -29,11 +30,11 @@ export  function ArtikulImageLink({
         className="flex h-full w-full flex-col justify-between hover:underline"
       >
         <div className="flex items-center gap-2" >
-          <span className="text-base font-semibold">{artikul}</span>
+          <span className={typography.gridTitle}>{artikul}</span>
           {bage && bage}
         </div>
 
-        <span className={cn("text-muted-foreground text-xs font-normal")}>
+        <span className={typography.gridSubtitle}>
           {nameukr ? nameukr.slice(10) : artikul}
         </span>
       </Link>

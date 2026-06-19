@@ -10,7 +10,7 @@ export function VariantGridCardSkeleton() {
       </div>
       <div className="grid gap-2 p-0 pt-2">
         <div className="flex items-start gap-3">
-          <Skeleton className="aspect-square w-full max-w-[6rem] rounded-lg" />
+          <Skeleton className="size-14 shrink-0 rounded-lg" />
           <div className="flex flex-1 flex-col gap-2">
             <Skeleton className="h-4 w-20" />
             <Skeleton className="h-4 w-32" />

@@ -6,6 +6,7 @@ import {
 import { DetailPanelCard } from "@/components/shared/cards";
 import { CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { iconSize, typography } from "@/lib/typography";
 import {
   getKonkTheme,
   KonkBanner,
@@ -76,8 +77,8 @@ export function SkuDetailCard({ sku, konk, prod, skugrs }: SkuDetailCardProps) {
       <CardHeader className="flex flex-col gap-4 pb-6 sm:flex-row sm:items-start">
         {skuImageContent}
         <div className="grid min-w-0 flex-1 gap-2">
-          <CardTitle className="text-base">{sku.title}</CardTitle>
-          <div className="text-muted-foreground flex flex-wrap items-center gap-3 text-sm">
+          <CardTitle className={typography.detailTitle}>{sku.title}</CardTitle>
+          <div className={cn("flex flex-wrap items-center gap-3", typography.detailSubtitle)}>
             {prodLabelContent}
             {hasBtradeAnalog && <span>Аналог БТрейд: {sku.btradeAnalog}</span>}
           </div>
@@ -85,13 +86,13 @@ export function SkuDetailCard({ sku, konk, prod, skugrs }: SkuDetailCardProps) {
             href={sku.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-primary inline-flex items-center gap-1 text-sm font-medium hover:underline"
+            className={cn("text-primary inline-flex items-center gap-1 hover:underline", typography.body)}
           >
-            <ExternalLink className="size-4 shrink-0" />
+            <ExternalLink className={iconSize.ui} />
             Відкрити на сайті конкурента
           </a>
           <div className="grid gap-2">
-            <span className="text-muted-foreground text-sm font-medium">
+            <span className={cn("font-medium", typography.detailSubtitle)}>
               Товарні групи
             </span>
             {hasSkugrs ? (
@@ -100,14 +101,14 @@ export function SkuDetailCard({ sku, konk, prod, skugrs }: SkuDetailCardProps) {
                   <Link
                     key={skugr._id}
                     to={`/sku/skugrs/${skugr._id}`}
-                    className="bg-muted hover:bg-muted/80 rounded-md px-2 py-1 text-sm transition-colors"
+                    className={cn("bg-muted hover:bg-muted/80 rounded-md px-2 py-1 transition-colors", typography.body)}
                   >
                     {skugr.title}
                   </Link>
                 ))}
               </div>
             ) : (
-              <span className="text-muted-foreground text-sm">
+              <span className={typography.detailSubtitle}>
                 Не входить до жодної товарної групи
               </span>
             )}

@@ -5,6 +5,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { SkugrMultiSelectControl } from "@/modules/skugrs/components/controls/skugr-multi-select-control";
+import { typography } from "@/lib/typography";
 
 interface SelectSkugrsDialogViewProps {
   konkName: string;
@@ -35,7 +36,7 @@ export function SelectSkugrsDialogView({
       <DialogHeader>
         <DialogTitle>Товарні групи</DialogTitle>
       </DialogHeader>
-      <p className="text-muted-foreground text-sm">
+      <p className={typography.pageDescription}>
         Оберіть одну або кілька груп для звуження звіту. Без виробника або в
         режимі «Всі виробники» показані всі групи конкурента.
       </p>

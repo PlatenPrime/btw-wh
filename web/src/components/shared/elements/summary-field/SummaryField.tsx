@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { typography } from "@/lib/typography";
 import type { ReactNode } from "react";
 
 interface SummaryFieldProps {
@@ -16,15 +17,8 @@ export function SummaryField({
 }: SummaryFieldProps) {
   return (
     <div className={cn("grid min-w-0 gap-0.5", className)}>
-      <span className="text-muted-foreground text-xs leading-none">
-        {label}
-      </span>
-      <span
-        className={cn(
-          "text-foreground text-sm leading-snug font-medium",
-          valueClassName,
-        )}
-      >
+      <span className={typography.label}>{label}</span>
+      <span className={cn(typography.value, valueClassName)}>
         {value}
       </span>
     </div>

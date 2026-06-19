@@ -12,6 +12,7 @@ import {
 import { getRoleLabel, RoleType } from "@/constants/roles";
 import type { CreateUserFormValues } from "@/modules/auth/components/forms/schema";
 import type { UseFormReturn } from "react-hook-form";
+import { typography } from "@/lib/typography";
 
 interface CreateUserFormViewProps {
   form: UseFormReturn<CreateUserFormValues>;
@@ -59,7 +60,7 @@ export function CreateUserFormView({
           {...register("username")}
         />
         {errors.username && (
-          <p className="text-destructive text-sm">{errors.username.message}</p>
+          <p className={typography.formError}>{errors.username.message}</p>
         )}
       </div>
 
@@ -74,7 +75,7 @@ export function CreateUserFormView({
           {...register("password")}
         />
         {errors.password && (
-          <p className="text-destructive text-sm">{errors.password.message}</p>
+          <p className={typography.formError}>{errors.password.message}</p>
         )}
       </div>
 
@@ -89,7 +90,7 @@ export function CreateUserFormView({
           {...register("fullname")}
         />
         {errors.fullname && (
-          <p className="text-destructive text-sm">{errors.fullname.message}</p>
+          <p className={typography.formError}>{errors.fullname.message}</p>
         )}
       </div>
 
@@ -136,7 +137,7 @@ export function CreateUserFormView({
           {...register("photo")}
         />
         {errors.photo && (
-          <p className="text-destructive text-sm">{errors.photo.message}</p>
+          <p className={typography.formError}>{errors.photo.message}</p>
         )}
       </div>
 

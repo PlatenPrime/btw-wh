@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import type { CreateZoneFormValues } from "@/modules/zones/components/forms/schema";
 import type { UseFormReturn } from "react-hook-form";
+import { typography } from "@/lib/typography";
 
 interface CreateZoneFormViewProps {
   form: UseFormReturn<CreateZoneFormValues>;
@@ -34,7 +35,7 @@ export function CreateZoneFormView({
           disabled={isLoading}
         />
         {errors.title && (
-          <p className="text-destructive text-sm">{errors.title.message}</p>
+          <p className={typography.formError}>{errors.title.message}</p>
         )}
       </div>
 
@@ -48,7 +49,7 @@ export function CreateZoneFormView({
           disabled={isLoading}
         />
         {errors.bar && (
-          <p className="text-destructive text-sm">{errors.bar.message}</p>
+          <p className={typography.formError}>{errors.bar.message}</p>
         )}
       </div>
 
@@ -62,7 +63,7 @@ export function CreateZoneFormView({
           disabled={isLoading}
         />
         {errors.sector && (
-          <p className="text-destructive text-sm">{errors.sector.message}</p>
+          <p className={typography.formError}>{errors.sector.message}</p>
         )}
       </div>
 

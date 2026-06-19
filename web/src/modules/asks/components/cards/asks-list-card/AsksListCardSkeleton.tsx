@@ -10,7 +10,7 @@ export function AsksListCardSkeleton() {
           <ArtDialogImageSkeleton />
 
           <div className="grid min-w-0 flex-1 gap-1">
-            <Skeleton className="h-4 w-24" />
+            <Skeleton className="h-5 w-24" />
             <Skeleton className="h-4 w-full max-w-xs" />
           </div>
         </div>

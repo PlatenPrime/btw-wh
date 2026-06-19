@@ -5,6 +5,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import type { ProdDto } from "@/modules/prods/api/types";
+import { typography } from "@/lib/typography";
 
 interface DeleteProdDialogViewProps {
   prod: ProdDto;
@@ -25,7 +26,7 @@ export function DeleteProdDialogView({
         <DialogTitle>Видалити виробника</DialogTitle>
       </DialogHeader>
       <div className="grid gap-4">
-        <p className="text-muted-foreground text-sm">
+        <p className={typography.pageDescription}>
           Ви впевнені, що хочете видалити виробника <strong>{prod.title}</strong> (
           {prod.name})? Цю дію неможливо скасувати.
         </p>

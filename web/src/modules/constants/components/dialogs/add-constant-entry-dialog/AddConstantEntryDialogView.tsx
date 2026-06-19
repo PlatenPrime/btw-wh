@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import type { AddConstantEntryFormValues } from "@/modules/constants/components/forms/schema";
 import type { UseFormReturn } from "react-hook-form";
+import { typography } from "@/lib/typography";
 
 interface AddConstantEntryDialogViewProps {
   form: UseFormReturn<AddConstantEntryFormValues>;
@@ -46,7 +47,7 @@ export function AddConstantEntryDialogView({
             {...register("key")}
           />
           {errors.key && (
-            <p className="text-destructive text-sm">{errors.key.message}</p>
+            <p className={typography.formError}>{errors.key.message}</p>
           )}
         </div>
         <div className="grid gap-2">
@@ -58,12 +59,12 @@ export function AddConstantEntryDialogView({
             {...register("value")}
           />
           {errors.value && (
-            <p className="text-destructive text-sm">{errors.value.message}</p>
+            <p className={typography.formError}>{errors.value.message}</p>
           )}
         </div>
 
         {errors.root && (
-          <p className="text-destructive text-sm">{errors.root.message}</p>
+          <p className={typography.formError}>{errors.root.message}</p>
         )}
 
         <DialogActions

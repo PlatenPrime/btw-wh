@@ -17,6 +17,7 @@ import { ArtImage } from "@/modules/arts/components/elements/art-image/ArtImage"
 import { ArtProdPreview } from "@/modules/arts/components/elements/art-prod-preview";
 import { useFormContext } from "react-hook-form";
 import type { CreateAskFormData } from "./schema";
+import { typography } from "@/lib/typography";
 
 interface CreateAskFormViewProps {
   form: ReturnType<typeof useFormContext<CreateAskFormData>>;
@@ -64,8 +65,8 @@ export function CreateAskFormView({
               <div className="flex items-center gap-3">
                 <ArtImage artikul={artikul} />
                 <div className="flex-1">
-                  <p className="text-sm font-medium">{artData.nameukr}</p>
-                  <p className="text-muted-foreground text-xs">{artikul}</p>
+                  <p className={typography.formLabel}>{artData.nameukr}</p>
+                  <p className={typography.formHint}>{artikul}</p>
                   <ArtProdPreview art={artData} />
                 </div>
               </div>
@@ -95,15 +96,15 @@ export function CreateAskFormView({
               className={errors.artikul ? "border-destructive" : ""}
             />
             {errors.artikul && (
-              <p className="text-destructive text-xs">
+              <p className={typography.formError}>
                 {errors.artikul.message}
               </p>
             )}
             {isArtLoading && (
-              <p className="text-muted-foreground text-xs">Пошук артикула...</p>
+              <p className={typography.formHint}>Пошук артикула...</p>
             )}
             {isArtikulPreFilled && (
-              <p className="text-muted-foreground text-xs">
+              <p className={typography.formHint}>
                 Артикул вибрано зі сторінки товару
               </p>
             )}
@@ -133,7 +134,7 @@ export function CreateAskFormView({
               rows={3}
             />
             {errors.com && (
-              <p className="text-destructive text-xs">{errors.com.message}</p>
+              <p className={typography.formError}>{errors.com.message}</p>
             )}
           </div>
 
@@ -166,7 +167,7 @@ export function CreateAskFormView({
               </SelectContent>
             </Select>
             {errors.sklad && (
-              <p className="text-destructive text-xs">{errors.sklad.message}</p>
+              <p className={typography.formError}>{errors.sklad.message}</p>
             )}
           </div>
 

@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/dialog";
 import { Calendar } from "@/components/ui/calendar";
 import type { DateRange } from "react-day-picker";
+import { typography } from "@/lib/typography";
 
 interface ArtStockExcelDialogViewProps {
   dateRange: DateRange | undefined;
@@ -33,7 +34,7 @@ export function ArtStockExcelDialogView({
         <DialogTitle>Експорт Excel залишків</DialogTitle>
       </DialogHeader>
       <div className="flex flex-col gap-4">
-        <p className="text-muted-foreground text-sm">
+        <p className={typography.pageDescription}>
           Файл формується на backend та завантажується готовим Excel за обраний
           період.
         </p>

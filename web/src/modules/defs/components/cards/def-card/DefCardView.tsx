@@ -1,5 +1,6 @@
 import { ArtikulImageLink } from "@/components/shared/media/artikul-image-link/ArtikulImageLink";
 import { ListRowCard } from "@/components/shared/cards";
+import { typography } from "@/lib/typography";
 import { cn } from "@/lib/utils";
 import type { DeficitItem } from "@/modules/defs/api/types/dto";
 import { DefAskButton } from "@/modules/defs/components/elements/def-ask-button/DefAskButton";
@@ -21,11 +22,12 @@ export function DefCardView({ artikul, defItem }: DefCardViewProps) {
   return (
     <ListRowCard
       className={cn(
-        "h-full grid gap-2 p-2 text-sm",
+        "h-full grid gap-2 p-2",
+        typography.body,
         shadowClasses,
       )}
     >
-      <div className="flex items-center justify-between gap-2 text-sm">
+      <div className={cn("flex items-center justify-between gap-2", typography.body)}>
         <ArtikulImageLink
           artikul={artikul}
           nameukr={defItem.nameukr}

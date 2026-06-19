@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { AlertTriangle } from "lucide-react";
+import { typography } from "@/lib/typography";
 
 export interface DeleteOrphanSkusDialogViewProps {
   hasPageFilters: boolean;
@@ -67,14 +68,14 @@ export function DeleteOrphanSkusDialogView({
               </div>
             </div>
             {!applyPageFilters ? (
-              <p className="text-muted-foreground text-sm">
+              <p className={typography.pageDescription}>
                 Будуть видалені <strong>усі</strong> SKU без групи в системі,
                 незалежно від фільтрів вище.
               </p>
             ) : null}
           </div>
         ) : (
-          <p className="text-muted-foreground text-sm">
+          <p className={typography.pageDescription}>
             На сторінці немає додаткових фільтрів — будуть видалені{" "}
             <strong>усі</strong> SKU без групи в системі.
           </p>

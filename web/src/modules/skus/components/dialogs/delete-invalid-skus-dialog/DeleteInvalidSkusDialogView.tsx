@@ -14,6 +14,7 @@ import {
 import { EntityLabel } from "@/components/shared/entities/entity-label";
 import type { KonkDto } from "@/modules/konks/api/types";
 import { SKUS_EXCEL_ALL_KONKS_VALUE } from "@/modules/skus/components/dialogs/skus-excel-konk-scope";
+import { typography } from "@/lib/typography";
 
 interface DeleteInvalidSkusDialogViewProps {
   konks: KonkDto[];
@@ -44,14 +45,14 @@ export function DeleteInvalidSkusDialogView({
         <DialogTitle>Видалити невалідні SKU</DialogTitle>
       </DialogHeader>
       <div className="grid gap-4">
-        <p className="text-muted-foreground text-sm">
+        <p className={typography.pageDescription}>
           Оберіть конкурента або «усі конкуренти». Після підтвердження буде
           видалено відповідні записи з позначкою невалідності (
           <code className="text-xs">isInvalid: true</code>). Інші SKU не
           зміняться. Цю дію неможливо скасувати.
         </p>
         <div className="grid gap-2">
-          <p className="text-sm font-medium">Конкурент</p>
+          <p className={typography.formLabel}>Конкурент</p>
           <Select
             value={selectedKonkOrAll || "placeholder"}
             onValueChange={(v) =>
@@ -82,7 +83,7 @@ export function DeleteInvalidSkusDialogView({
           </Select>
         </div>
         {isKonkOk ? (
-          <p className="text-muted-foreground text-sm">
+          <p className={typography.pageDescription}>
             {isAllKonks ? (
               <>
                 Буде видалено <strong>усі</strong> невалідні SKU{" "}

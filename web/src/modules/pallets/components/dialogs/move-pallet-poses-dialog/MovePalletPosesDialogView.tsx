@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/dialog";
 import type { IPallet } from "@/modules/pallets/api/types";
 import { MovePalletPosesForm } from "@/modules/pallets/components/forms/move-pallet-poses-form/MovePalletPosesForm";
+import { typography } from "@/lib/typography";
 
 interface MovePalletPosesDialogViewProps {
   pallet: IPallet;
@@ -32,7 +33,7 @@ export function MovePalletPosesDialogView({
       <div className="flex flex-col gap-3">
         <FormErrorDisplay error={mutationError} />
         {isSourceEmpty ? (
-          <div className="text-muted-foreground text-sm">
+          <div className={typography.pageDescription}>
             На цій паллеті немає позицій для переміщення
           </div>
         ) : (

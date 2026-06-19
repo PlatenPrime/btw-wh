@@ -5,6 +5,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import type { SegmentDto } from "@/modules/blocks/api/types";
+import { typography } from "@/lib/typography";
 
 interface DeleteSegmentDialogViewProps {
   segment: SegmentDto;
@@ -25,7 +26,7 @@ export function DeleteSegmentDialogView({
         <DialogTitle>Видалити сегмент</DialogTitle>
       </DialogHeader>
       <div className="grid gap-4">
-        <p className="text-muted-foreground text-sm">
+        <p className={typography.pageDescription}>
           Ви впевнені, що хочете видалити сегмент #{segment.order}? Це дію
           неможливо скасувати. Всі зони, пов'язані з цим сегментом, будуть
           відв'язані від сегмента.

@@ -17,6 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { updateArtSchema, type UpdateArtFormData } from "./schema";
+import { typography } from "@/lib/typography";
 
 /** Значення Select для порожнього prodName (скидання в БД) */
 const CLEAR_PROD_SELECT_VALUE = "__clear__";
@@ -155,12 +156,12 @@ export function UpdateArtForm({
           </SelectContent>
         </Select>
         {prodsQuery.isError && (
-          <p className="text-destructive text-xs">
+          <p className={typography.formError}>
             Список виробників недоступний. Спробуйте пізніше.
           </p>
         )}
         {errors.prodName && (
-          <p className="text-destructive text-xs">{errors.prodName.message}</p>
+          <p className={typography.formError}>{errors.prodName.message}</p>
         )}
       </div>
 

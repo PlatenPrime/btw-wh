@@ -1,4 +1,5 @@
 import { Label } from "@/components/ui/label";
+import { typography } from "@/lib/typography";
 import { cn } from "@/lib/utils";
 import type * as LabelPrimitive from "@radix-ui/react-label";
 import { Slot } from "@radix-ui/react-slot";
@@ -128,7 +129,7 @@ const FormDescription = React.forwardRef<
     <p
       ref={ref}
       id={formDescriptionId}
-      className={cn("text-muted-foreground text-sm leading-5", className)}
+      className={cn(typography.formHint, className)}
       {...props}
     />
   );
@@ -151,7 +152,7 @@ const FormMessage = React.forwardRef<
     <p
       ref={ref}
       id={formMessageId}
-      className={cn("text-destructive text-sm leading-5 font-medium", className)}
+      className={cn(typography.formError, className)}
       {...props}
     >
       {body}

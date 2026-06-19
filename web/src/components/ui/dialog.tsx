@@ -3,6 +3,7 @@ import * as DialogPrimitive from "@radix-ui/react-dialog"
 import { XIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+import { typography } from "@/lib/typography"
 
 function Dialog({
   ...props
@@ -108,7 +109,7 @@ function DialogTitle({
   return (
     <DialogPrimitive.Title
       data-slot="dialog-title"
-      className={cn("text-lg leading-none font-semibold text-center", className)}
+      className={cn(typography.pageTitle, "text-center", className)}
       {...props}
     />
   )
@@ -121,7 +122,7 @@ function DialogDescription({
   return (
     <DialogPrimitive.Description
       data-slot="dialog-description"
-      className={cn("text-muted-foreground text-sm", className)}
+      className={cn(typography.pageDescription, className)}
       {...props}
     />
   )

@@ -14,6 +14,7 @@ import { EntityLabel } from "@/components/shared/entities/entity-label";
 import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
 import type { FieldValues, Path, PathValue, UseFormReturn } from "react-hook-form";
+import { typography } from "@/lib/typography";
 
 type BaseSkugrFormData = FieldValues & {
   konkName: string;
@@ -94,7 +95,7 @@ export function CreateSkugrFormView<TFormData extends BaseSkugrFormData>({
                 ))}
               </SelectContent>
             </Select>
-            {konkNameError && <p className="text-destructive text-xs">{konkNameError}</p>}
+            {konkNameError && <p className={typography.formError}>{konkNameError}</p>}
           </div>
 
           <div className="grid gap-2">
@@ -129,7 +130,7 @@ export function CreateSkugrFormView<TFormData extends BaseSkugrFormData>({
                 ))}
               </SelectContent>
             </Select>
-            {prodNameError && <p className="text-destructive text-xs">{prodNameError}</p>}
+            {prodNameError && <p className={typography.formError}>{prodNameError}</p>}
           </div>
 
           <div className="grid gap-2">
@@ -141,7 +142,7 @@ export function CreateSkugrFormView<TFormData extends BaseSkugrFormData>({
               className={errors.title ? "border-destructive" : ""}
               placeholder="Наприклад, Категорія на сайті конкурента"
             />
-            {titleError && <p className="text-destructive text-xs">{titleError}</p>}
+            {titleError && <p className={typography.formError}>{titleError}</p>}
           </div>
 
           <div className="grid gap-2">
@@ -154,7 +155,7 @@ export function CreateSkugrFormView<TFormData extends BaseSkugrFormData>({
               className={errors.url ? "border-destructive" : ""}
               placeholder="https://..."
             />
-            {urlError && <p className="text-destructive text-xs">{urlError}</p>}
+            {urlError && <p className={typography.formError}>{urlError}</p>}
           </div>
 
           <div className="flex items-center justify-between gap-2">

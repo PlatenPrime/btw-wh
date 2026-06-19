@@ -3,6 +3,8 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import type { CreateKaskFormData } from "@/modules/kasks/components/forms/create-kask-form/schema";
 import type { FieldErrors, UseFormRegister } from "react-hook-form";
+import { typography } from "@/lib/typography";
+import { cn } from "@/lib/utils";
 
 interface CreateKaskFormFieldsProps {
   register: UseFormRegister<CreateKaskFormData>;
@@ -36,7 +38,7 @@ export function CreateKaskFormFields({
           disabled={isSubmitting}
         />
         {errors.artikul && (
-          <p className="text-destructive text-xs leading-snug">
+          <p className={typography.formError}>
             {errors.artikul.message}
           </p>
         )}
@@ -47,7 +49,7 @@ export function CreateKaskFormFields({
           <Label htmlFor="kask-quant" className="text-foreground text-sm">
             Кількість
           </Label>
-          <span className="text-muted-foreground text-xs leading-none">
+          <span className={cn("leading-none", typography.formHint)}>
             необов&apos;язково
           </span>
         </div>
@@ -63,7 +65,7 @@ export function CreateKaskFormFields({
           disabled={isSubmitting}
         />
         {errors.quant && (
-          <p className="text-destructive text-xs leading-snug">
+          <p className={typography.formError}>
             {errors.quant.message}
           </p>
         )}
@@ -74,7 +76,7 @@ export function CreateKaskFormFields({
           <Label htmlFor="kask-com" className="text-foreground text-sm">
             Коментар
           </Label>
-          <span className="text-muted-foreground text-xs leading-none">
+          <span className={cn("leading-none", typography.formHint)}>
             необов&apos;язково
           </span>
         </div>
@@ -87,7 +89,7 @@ export function CreateKaskFormFields({
           disabled={isSubmitting}
         />
         {errors.com && (
-          <p className="text-destructive text-xs leading-snug">
+          <p className={typography.formError}>
             {errors.com.message}
           </p>
         )}

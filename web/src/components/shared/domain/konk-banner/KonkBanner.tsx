@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { EntityLabel } from "@/components/shared/entities/entity-label";
 import { cn } from "@/lib/utils";
+import { typography } from "@/lib/typography";
 
 export type KonkThemeKey = "sky" | "amber" | "rose" | "lime" | "slate" | "red";
 
@@ -92,7 +93,7 @@ export function KonkBanner({
           title={title}
           fallbackLabel={konkName}
           imageSize="xs"
-          className="text-xs"
+          className={typography.caption}
         />
       </div>
       {actionSlot ? (

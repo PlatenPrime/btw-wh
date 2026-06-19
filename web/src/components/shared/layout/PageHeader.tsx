@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { typography } from "@/lib/typography";
 
 interface PageHeaderProps extends React.ComponentProps<"div"> {
   title?: string;
@@ -23,13 +24,9 @@ export function PageHeader({
       {...props}
     >
       <div className="flex flex-col gap-1">
-        {title ? (
-          <h2 className="font-display text-xl font-semibold tracking-tight md:text-2xl">
-            {title}
-          </h2>
-        ) : null}
+        {title ? <h2 className={typography.pageTitle}>{title}</h2> : null}
         {description ? (
-          <p className="text-sm text-muted-foreground">{description}</p>
+          <p className={typography.pageDescription}>{description}</p>
         ) : null}
         {children}
       </div>

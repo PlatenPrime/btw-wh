@@ -3,6 +3,7 @@ import { CardActionsMenu } from "@/components/shared/actions/card-actions";
 import type { CardAction } from "@/components/shared/actions/card-actions";
 import { GridTileCard } from "@/components/shared/cards";
 import { cn } from "@/lib/utils";
+import { typography } from "@/lib/typography";
 import type { AnalogDto } from "@/modules/analogs/api/types";
 import {
   getKonkTheme,
@@ -52,7 +53,7 @@ export function AnalogGridCardView({
         <AnalogImageLink analog={analog} to={`/analogs/${analog._id}`} />
       </div>
 
-      <div className="text-muted-foreground flex justify-center pb-2 text-xs">
+      <div className={cn("flex justify-center pb-2", typography.gridSubtitle)}>
         <EntityLabel
           imageUrl={prod?.imageUrl}
           title={prod?.title}

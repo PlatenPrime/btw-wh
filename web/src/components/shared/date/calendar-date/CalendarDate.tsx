@@ -1,6 +1,7 @@
 import { formatDate } from "date-fns";
 import { uk } from "date-fns/locale";
 import { CalendarIcon } from "lucide-react";
+import { iconSize, typography } from "@/lib/typography";
 
 interface CalendarDateBageProps {
   date: string;
@@ -9,8 +10,8 @@ interface CalendarDateBageProps {
 export function CalendarDate({ date }: CalendarDateBageProps) {
   return (
     <div className="flex shrink-0 items-center gap-2">
-      <CalendarIcon className="h-4 w-4" />
-      <span className="text-muted-foreground text-sm">
+      <CalendarIcon className={iconSize.ui} />
+      <span className={typography.caption}>
         {formatDate(date, "dd MMMM yyyy, HH:mm", {
           locale: uk,
         })}

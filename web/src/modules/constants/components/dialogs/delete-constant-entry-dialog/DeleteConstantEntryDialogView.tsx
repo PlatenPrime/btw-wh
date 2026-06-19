@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/dialog";
 import type { ConstantDto } from "@/modules/constants/api/types";
 import type { ConstantEntry } from "@/modules/constants/components/dialogs/edit-constant-entry-dialog";
+import { typography } from "@/lib/typography";
 
 interface DeleteConstantEntryDialogViewProps {
   constant: ConstantDto;
@@ -28,7 +29,7 @@ export function DeleteConstantEntryDialogView({
         <DialogTitle>Видалити запис</DialogTitle>
       </DialogHeader>
       <div className="grid gap-4">
-        <p className="text-muted-foreground text-sm">
+        <p className={typography.pageDescription}>
           Ви впевнені, що хочете видалити запис{" "}
           <strong>
             {entry.key}: {entry.value}

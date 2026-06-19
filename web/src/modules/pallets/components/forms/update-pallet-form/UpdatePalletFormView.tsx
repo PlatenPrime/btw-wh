@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { type PalletFormValues } from "@/modules/pallets/components/forms/schema.ts";
 import type { UseFormReturn } from "react-hook-form";
+import { typography } from "@/lib/typography";
 
 interface UpdatePalletFormViewProps {
   form: UseFormReturn<PalletFormValues>;
@@ -66,7 +67,7 @@ export function UpdatePalletFormView({
           </div>
 
           {errors.root && (
-            <div className="text-destructive text-sm">
+            <div className={typography.formError}>
               {errors.root.message}
             </div>
           )}

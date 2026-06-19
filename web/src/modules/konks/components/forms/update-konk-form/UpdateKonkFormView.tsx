@@ -9,6 +9,7 @@ import { format } from "date-fns";
 import { X } from "lucide-react";
 import type { UpdateKonkFormValues } from "@/modules/konks/components/forms/schema";
 import type { UseFormReturn } from "react-hook-form";
+import { typography } from "@/lib/typography";
 
 const PREVIEW_PLACEHOLDER = "https://placehold.co/200x200?text=Лого&font=roboto";
 
@@ -71,7 +72,7 @@ export function UpdateKonkFormView({
               disabled={isLoading}
             />
             {errors.name && (
-              <p className="text-destructive text-sm">{errors.name.message}</p>
+              <p className={typography.formError}>{errors.name.message}</p>
             )}
           </div>
           <div className="grid gap-2">
@@ -83,7 +84,7 @@ export function UpdateKonkFormView({
               disabled={isLoading}
             />
             {errors.title && (
-              <p className="text-destructive text-sm">{errors.title.message}</p>
+              <p className={typography.formError}>{errors.title.message}</p>
             )}
           </div>
           <div className="grid gap-2">
@@ -96,7 +97,7 @@ export function UpdateKonkFormView({
               disabled={isLoading}
             />
             {errors.url && (
-              <p className="text-destructive text-sm">{errors.url.message}</p>
+              <p className={typography.formError}>{errors.url.message}</p>
             )}
           </div>
           <div className="grid gap-2">
@@ -109,7 +110,7 @@ export function UpdateKonkFormView({
               disabled={isLoading}
             />
             {errors.imageUrl && (
-              <p className="text-destructive text-sm">{errors.imageUrl.message}</p>
+              <p className={typography.formError}>{errors.imageUrl.message}</p>
             )}
           </div>
           <div className="grid gap-2">
@@ -153,20 +154,20 @@ export function UpdateKonkFormView({
                   </div>
                 ))
               ) : (
-                <p className="text-muted-foreground text-sm">
+                <p className={typography.pageDescription}>
                   Дні переобліку не вибрані
                 </p>
               )}
             </div>
             {errors.recountDays && (
-              <p className="text-destructive text-sm">
+              <p className={typography.formError}>
                 {errors.recountDays.message}
               </p>
             )}
           </div>
         </div>
         <div className="flex flex-col gap-2">
-          <Label className="text-muted-foreground text-xs">Превʼю</Label>
+          <Label className={typography.formHint}>Превʼю</Label>
           <div className="mx-auto aspect-square w-32 shrink-0 overflow-hidden rounded-lg border bg-muted">
             {imagePreviewUrl ? (
               <Image
@@ -185,7 +186,7 @@ export function UpdateKonkFormView({
       </div>
 
       {errors.root && (
-        <p className="text-destructive text-sm">{errors.root.message}</p>
+        <p className={typography.formError}>{errors.root.message}</p>
       )}
 
       <DialogActions

@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/dialog";
 import { Calendar } from "@/components/ui/calendar";
 import type { DateRange } from "react-day-picker";
+import { typography } from "@/lib/typography";
 
 interface SkugrSalesExcelDialogViewProps {
   dateRange: DateRange | undefined;
@@ -33,7 +34,7 @@ export function SkugrSalesExcelDialogView({
         <DialogTitle>Експорт Excel продаж товарної групи</DialogTitle>
       </DialogHeader>
       <div className="flex flex-col gap-4">
-        <p className="text-muted-foreground text-sm">
+        <p className={typography.pageDescription}>
           Файл з усіма SKU групи: рядки «Продажі», «Ціна», «Виручка» та загальні
           підсумки за період.
         </p>

@@ -9,6 +9,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { z } from "zod";
+import { typography } from "@/lib/typography";
+import { cn } from "@/lib/utils";
 
 // Zod schema for login form
 const loginSchema = z.object({
@@ -87,7 +89,7 @@ export const LoginForm = () => {
             className="h-11"
           />
           {errors.username && (
-            <span id="username-error" className="block text-sm text-destructive">
+            <span id="username-error" className={cn("block", typography.formError)}>
               {errors.username.message}
             </span>
           )}
@@ -123,7 +125,7 @@ export const LoginForm = () => {
             </button>
           </div>
           {errors.password && (
-            <span id="password-error" className="block text-sm text-destructive">
+            <span id="password-error" className={cn("block", typography.formError)}>
               {errors.password.message}
             </span>
           )}

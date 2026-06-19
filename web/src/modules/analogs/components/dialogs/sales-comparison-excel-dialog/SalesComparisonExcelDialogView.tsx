@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/dialog";
 import { Calendar } from "@/components/ui/calendar";
 import type { DateRange } from "react-day-picker";
+import { typography } from "@/lib/typography";
 
 interface SalesComparisonExcelDialogViewProps {
   dateRange: DateRange | undefined;
@@ -33,7 +34,7 @@ export function SalesComparisonExcelDialogView({
         <DialogTitle>Експорт Excel порівняння продаж та виручки</DialogTitle>
       </DialogHeader>
       <div className="flex flex-col gap-4">
-        <p className="text-muted-foreground text-sm">
+        <p className={typography.pageDescription}>
           Оберіть період дат для формування звіту. Файл міститиме продажі
           (різницю залишків по днях), ціни та виручку аналога та Btrade по
           датах, колонку «Всього» та дельти (Δ Продажі, Δ Виручка).

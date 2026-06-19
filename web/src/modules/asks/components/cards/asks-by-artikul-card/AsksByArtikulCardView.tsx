@@ -1,4 +1,5 @@
 import { memo } from "react";
+import { typography } from "@/lib/typography";
 import { ListRowCard } from "@/components/shared/cards";
 import { CalendarDate } from "@/components/shared/date/calendar-date/CalendarDate";
 import { UserAvatarName } from "@/components/shared/entities/user/UserAvatarName";
@@ -24,7 +25,7 @@ export const AsksByArtikulCardView = memo(function AsksByArtikulCardView({
                 <UserAvatarName
                   photoUrl={ask.askerData.photo}
                   fullname={ask.askerData.fullname}
-                  className="text-sm"
+                  className={typography.body}
                   size="xs"
                 />
               ) : null}

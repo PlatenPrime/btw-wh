@@ -1,3 +1,5 @@
+import { iconSize, typography } from "@/lib/typography";
+import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -34,8 +36,8 @@ function MetadataItem({
 }) {
   return (
     <div className="grid gap-1">
-      <span className="text-muted-foreground flex items-center gap-1.5 text-sm">
-        <Icon className="size-4 shrink-0" />
+      <span className={cn("flex items-center gap-1.5", typography.detailSubtitle)}>
+        <Icon className={iconSize.ui} />
         {label}
       </span>
       {children}
@@ -54,9 +56,7 @@ export function UserDetailsCard({ user, onEdit }: UserDetailsCardProps) {
           </AvatarFallback>
         </Avatar>
         <div className="flex min-w-0 flex-1 flex-col gap-2">
-          <h2 className="font-serif text-2xl font-semibold tracking-tight">
-            {user.fullname}
-          </h2>
+          <h2 className={typography.pageTitle}>{user.fullname}</h2>
           <RoleGuard allowedRoles={[RoleType.PRIME]}>
             {onEdit && (
               <div className="flex">
@@ -67,7 +67,7 @@ export function UserDetailsCard({ user, onEdit }: UserDetailsCardProps) {
                   onClick={() => onEdit(user)}
                   aria-label="Редагувати"
                 >
-                  <Edit className="mr-2 h-4 w-4" />
+                  <Edit className={cn(iconSize.ui, "mr-2")} />
                   Редагувати
                 </Button>
               </div>
@@ -103,9 +103,9 @@ export function UserDetailsCard({ user, onEdit }: UserDetailsCardProps) {
               href={user.photo}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-primary inline-flex items-center gap-1 text-sm hover:underline"
+              className={cn("text-primary inline-flex items-center gap-1 hover:underline", typography.body)}
             >
-              <ExternalLink className="size-4 shrink-0" />
+              <ExternalLink className={iconSize.ui} />
               Відкрити в новій вкладці
             </a>
           </MetadataItem>
@@ -114,13 +114,13 @@ export function UserDetailsCard({ user, onEdit }: UserDetailsCardProps) {
 
       <Separator />
 
-      <CardFooter className="flex flex-wrap gap-x-6 gap-y-1 border-t-0 p-6 pt-4 text-muted-foreground">
-        <span className="flex items-center gap-1.5 text-sm">
-          <Calendar className="size-4 shrink-0" />
+      <CardFooter className={cn("flex flex-wrap gap-x-6 gap-y-1 border-t-0 p-6 pt-4", typography.detailSubtitle)}>
+        <span className={cn("flex items-center gap-1.5", typography.body)}>
+          <Calendar className={iconSize.ui} />
           Створено: {formatDate(user.createdAt)}
         </span>
-        <span className="flex items-center gap-1.5 text-sm">
-          <Calendar className="size-4 shrink-0" />
+        <span className={cn("flex items-center gap-1.5", typography.body)}>
+          <Calendar className={iconSize.ui} />
           Оновлено: {formatDate(user.updatedAt)}
         </span>
       </CardFooter>

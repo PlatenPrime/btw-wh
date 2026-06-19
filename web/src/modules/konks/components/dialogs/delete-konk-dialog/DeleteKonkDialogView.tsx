@@ -5,6 +5,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import type { KonkDto } from "@/modules/konks/api/types";
+import { typography } from "@/lib/typography";
 
 interface DeleteKonkDialogViewProps {
   konk: KonkDto;
@@ -25,7 +26,7 @@ export function DeleteKonkDialogView({
         <DialogTitle>Видалити конкурента</DialogTitle>
       </DialogHeader>
       <div className="grid gap-4">
-        <p className="text-muted-foreground text-sm">
+        <p className={typography.pageDescription}>
           Ви впевнені, що хочете видалити конкурента <strong>{konk.title}</strong> (
           {konk.name})? Цю дію неможливо скасувати.
         </p>

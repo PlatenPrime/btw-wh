@@ -1,4 +1,6 @@
 import { Image } from "@/components/shared/media/image/Image";
+import { typography } from "@/lib/typography";
+import { cn } from "@/lib/utils";
 import { DetailPanelCard } from "@/components/shared/cards";
 import { CardContent, CardTitle } from "@/components/ui/card";
 import type { ProdDto } from "@/modules/prods/api/types";
@@ -22,10 +24,8 @@ export function ProdDetailsCardView({ prod }: ProdDetailsCardViewProps) {
           />
         </div>
         <div className="flex min-w-0 flex-1 flex-col gap-2">
-          <CardTitle className="p-0">{prod.title}</CardTitle>
-          <span className="text-muted-foreground truncate text-xs">
-            {prod.name}
-          </span>
+          <CardTitle className={cn("p-0", typography.detailTitle)}>{prod.title}</CardTitle>
+          <span className={typography.listSubtitle}>{prod.name}</span>
         </div>
       </CardContent>
     </DetailPanelCard>

@@ -1,5 +1,6 @@
 import { DetailPanelCard } from "@/components/shared/cards";
 import { CardHeader, CardTitle } from "@/components/ui/card";
+import { iconSize, typography } from "@/lib/typography";
 import { cn } from "@/lib/utils";
 import {
   getKonkTheme,
@@ -34,8 +35,8 @@ export function SkugrDetailCardView({
         title={konk?.title}
       />
       <CardHeader className="gap-2 p-2">
-        <CardTitle className="text-xl">{skugr.title}</CardTitle>
-        <div className="text-muted-foreground flex flex-wrap items-center gap-3 text-sm">
+        <CardTitle className={typography.detailTitle}>{skugr.title}</CardTitle>
+        <div className={cn("flex flex-wrap items-center gap-3", typography.detailSubtitle)}>
           {prod ? (
             <EntityLabel
               imageUrl={prod.imageUrl}
@@ -51,9 +52,9 @@ export function SkugrDetailCardView({
           href={skugr.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-primary inline-flex items-center gap-1 text-sm font-medium hover:underline"
+          className={cn("text-primary inline-flex items-center gap-1 hover:underline", typography.body)}
         >
-          <ExternalLink className="size-4" />
+          <ExternalLink className={iconSize.ui} />
           Посилання на дані
         </a>
       </CardHeader>

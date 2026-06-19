@@ -1,3 +1,5 @@
+import { cn } from "@/lib/utils";
+import { typography } from "@/lib/typography";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { ArtImage } from "@/modules/arts/components/elements/art-image/ArtImage";
 import { ArtProdPreview } from "@/modules/arts/components/elements/art-prod-preview";
@@ -25,7 +27,7 @@ function renderArtPreviewContent(state: ArtPreviewUiState): ReactNode {
             <ArtImage artikul={state.artikul} />
           </div>
           {state.artData.nameukr && (
-            <p className="text-foreground text-center text-sm leading-snug font-semibold">
+            <p className={cn("text-center font-semibold leading-snug", typography.formLabel)}>
               {state.artData.nameukr}
             </p>
           )}
@@ -33,8 +35,11 @@ function renderArtPreviewContent(state: ArtPreviewUiState): ReactNode {
             <ArtProdPreview
               art={state.artData}
               imageSize="xs"
-              className="text-muted-foreground max-w-full justify-center text-center text-sm leading-snug"
-              fallbackKeyClassName="text-muted-foreground text-sm leading-snug"
+              className={cn(
+                "max-w-full justify-center text-center leading-snug",
+                typography.pageDescription,
+              )}
+              fallbackKeyClassName={cn("leading-snug", typography.pageDescription)}
             />
           </div>
         </div>
@@ -43,7 +48,12 @@ function renderArtPreviewContent(state: ArtPreviewUiState): ReactNode {
       const message =
         state.hintKind === "wrongLength" ? "9 символів" : "Введіть артикул";
       return (
-        <div className="text-muted-foreground flex min-h-[6.5rem] w-full max-w-[7rem] flex-col items-center justify-center gap-2 rounded-lg border border-dashed bg-background/50 px-2 text-center text-xs leading-snug">
+        <div
+          className={cn(
+            "flex min-h-[6.5rem] w-full max-w-[7rem] flex-col items-center justify-center gap-2 rounded-lg border border-dashed bg-background/50 px-2 text-center leading-snug",
+            typography.formHint,
+          )}
+        >
           <span className="font-medium">{message}</span>
         </div>
       );

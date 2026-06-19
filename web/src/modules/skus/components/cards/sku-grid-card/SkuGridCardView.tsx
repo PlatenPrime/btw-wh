@@ -6,6 +6,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { GridTileCard } from "@/components/shared/cards";
 import { cn } from "@/lib/utils";
+import { iconSize, typography } from "@/lib/typography";
 import {
   getKonkTheme,
   KonkBanner,
@@ -51,10 +52,18 @@ export function SkuGridCardView({ sku, prod, konk }: SkuGridCardViewProps) {
               imageUrl={sku.imageUrl}
               alt={sku.title}
               fallbackSrc={URL_DIALOG_IMAGE_FALLBACK}
-              previewClassName="bg-muted aspect-square w-full max-w-[6rem] shrink-0 rounded-lg"
+              previewClassName={cn(
+                "bg-muted aspect-square rounded-lg object-cover",
+                iconSize.avatarGrid,
+              )}
             />
           ) : (
-            <div className="bg-muted aspect-square w-full max-w-[6rem] shrink-0 overflow-hidden rounded-lg">
+            <div
+              className={cn(
+                "bg-muted aspect-square overflow-hidden rounded-lg",
+                iconSize.avatarGrid,
+              )}
+            >
               <Image
                 src={SKU_CARD_PLACEHOLDER}
                 alt=""
@@ -67,14 +76,16 @@ export function SkuGridCardView({ sku, prod, konk }: SkuGridCardViewProps) {
               to={`/sku/skus/${sku._id}`}
               className="flex min-w-0 flex-1 hover:underline"
             >
-              <span className="line-clamp-4 text-sm">{sku.title}</span>
+              <span className={cn("line-clamp-4", typography.gridTitle)}>
+                {sku.title}
+              </span>
             </Link>
             <EntityLabel
               imageUrl={prod?.imageUrl}
               title={prod?.title}
               fallbackLabel={sku.prodName}
               imageSize="sm"
-              className="text-muted-foreground text-xs"
+              className={typography.gridSubtitle}
             />
           </div>
         </div>

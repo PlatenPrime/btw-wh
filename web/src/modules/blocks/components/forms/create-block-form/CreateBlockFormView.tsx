@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import type { CreateBlockFormValues } from "@/modules/blocks/components/forms/create-block-form/schema";
 import type { UseFormReturn } from "react-hook-form";
+import { typography } from "@/lib/typography";
 
 interface CreateBlockFormViewProps {
   form: UseFormReturn<CreateBlockFormValues>;
@@ -34,7 +35,7 @@ export function CreateBlockFormView({
           disabled={isLoading}
         />
         {errors.title && (
-          <p className="text-destructive text-sm">{errors.title.message}</p>
+          <p className={typography.formError}>{errors.title.message}</p>
         )}
       </div>
 

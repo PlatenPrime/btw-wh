@@ -15,6 +15,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { EntityLabel } from "@/components/shared/entities/entity-label";
 import type { KonkDto } from "@/modules/konks/api/types";
 import { SKUS_EXCEL_ALL_KONKS_VALUE } from "@/modules/skus/components/dialogs/skus-excel-konk-scope";
+import { typography } from "@/lib/typography";
 
 interface SkusNewSinceExcelDialogViewProps {
   konks: KonkDto[];
@@ -45,13 +46,13 @@ export function SkusNewSinceExcelDialogView({
         <DialogTitle>Excel новинок</DialogTitle>
       </DialogHeader>
       <div className="flex flex-col gap-4">
-        <p className="text-muted-foreground text-sm">
+        <p className={typography.pageDescription}>
           У файл потрапляють SKU з датою створення не раніше обраного календарного
           дня (за правилами зрізів на сервері) — для одного конкурента або для
           усіх.
         </p>
         <div className="grid gap-2">
-          <p className="text-sm font-medium">Конкурент</p>
+          <p className={typography.formLabel}>Конкурент</p>
           <Select
             value={selectedKonkOrAll || "placeholder"}
             onValueChange={(v) =>

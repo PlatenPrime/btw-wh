@@ -1,6 +1,7 @@
 import { CardActionsMenu } from "@/components/shared/actions/card-actions";
 import { ListRowCard } from "@/components/shared/cards";
 import { CardHeader, CardTitle } from "@/components/ui/card";
+import { typography } from "@/lib/typography";
 import { RoleType } from "@/constants/roles";
 import { RoleGuard } from "@/modules/auth/components/elements/RoleGuard";
 import type { SegmentDto } from "@/modules/blocks/api/types";
@@ -30,19 +31,19 @@ export function SegmentCard({ segment, blockId, onDelete }: SegmentCardProps) {
     <ListRowCard>
       <CardHeader className="p-0">
         <div className="flex items-center justify-between">
-          <CardTitle className="flex flex-row items-center justify-start gap-2">
+          <CardTitle size="sm" className="flex flex-row items-center justify-start gap-2">
             <Link
               to={`/wh/blocks/${blockId}/segs/${segment._id}`}
               className="flex flex-row items-center justify-start gap-2 hover:underline"
             >
-              <div className="bg-accent/50 flex h-8 w-8 items-center justify-center rounded-full p-2">
-                <span className="text-foreground text-xs">{segment.order}</span>
+              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-accent/50 p-2">
+                <span className={typography.caption}>{segment.order}</span>
               </div>
-              {segment.zones.length > 0 && (
+              {segment.zones.length > 0 ? (
                 <div className="grid gap-1">
-                  <span className="">{zoneTitles}</span>
+                  <span className={typography.listTitleCompact}>{zoneTitles}</span>
                 </div>
-              )}
+              ) : null}
             </Link>
           </CardTitle>
           <RoleGuard allowedRoles={[RoleType.ADMIN]}>

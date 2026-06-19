@@ -1,4 +1,6 @@
 import { ListRowCard } from "@/components/shared/cards";
+import { typography } from "@/lib/typography";
+import { cn } from "@/lib/utils";
 import { CalendarDate } from "@/components/shared/date/calendar-date/CalendarDate";
 import { UserAvatarName } from "@/components/shared/entities/user/UserAvatarName";
 import { ArtDialogImage } from "@/modules/arts/components/dialogs/art-dialog-image/ArtDialogImage";
@@ -28,10 +30,8 @@ export function AsksListCardView({ ask, statusText }: AsksListCardViewProps) {
             to={{ pathname: ask._id, search: searchParams.toString() }}
             className="grid min-w-0 flex-1 gap-1 hover:underline"
           >
-            <span className="text-base font-semibold tracking-tight">
-              {ask.artikul}
-            </span>
-            <span className="text-muted-foreground line-clamp-2 text-sm leading-snug">
+            <span className={typography.listTitleEmphasized}>{ask.artikul}</span>
+            <span className={cn("line-clamp-2", typography.listSubtitleEmphasized)}>
               {productName}
             </span>
           </Link>
@@ -52,7 +52,7 @@ export function AsksListCardView({ ask, statusText }: AsksListCardViewProps) {
         <UserAvatarName
           photoUrl={ask.askerData?.photo}
           fullname={ask.askerData?.fullname}
-          className="text-sm"
+          className={typography.body}
           size="xs"
         />
         <CalendarDate date={ask.createdAt} />

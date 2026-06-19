@@ -1,3 +1,5 @@
+import { iconSize, typography } from "@/lib/typography";
+import { cn } from "@/lib/utils";
 import { ArtikulImageLink } from "@/components/shared/media/artikul-image-link/ArtikulImageLink";
 import { DetailPanelCard } from "@/components/shared/cards";
 import { CardContent, CardFooter, CardHeader } from "@/components/ui/card";
@@ -41,9 +43,9 @@ export function AnalogDetailsCardView({ analog }: AnalogDetailsCardViewProps) {
           href={analog.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-primary inline-flex items-center gap-1.5 text-sm hover:underline"
+          className={cn("text-primary inline-flex items-center gap-1.5 hover:underline", typography.body)}
         >
-          <ExternalLink className="size-4 shrink-0" />
+          <ExternalLink className={iconSize.ui} />
           Відкрити на сайті конкурента
         </a>
 
@@ -56,7 +58,7 @@ export function AnalogDetailsCardView({ analog }: AnalogDetailsCardViewProps) {
 
       <>
         <Separator />
-        <CardFooter className="text-muted-foreground flex flex-wrap gap-x-6 gap-y-1 border-t-0 p-6 pt-4">
+        <CardFooter className={cn("flex flex-wrap gap-x-6 gap-y-1 border-t-0 p-6 pt-4", typography.detailSubtitle)}>
           <div className="grid gap-1.5">
             <EntityLabel
               imageUrl={analog.prod?.imageUrl}

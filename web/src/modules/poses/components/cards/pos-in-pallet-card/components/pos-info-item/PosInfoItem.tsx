@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { iconSize, typography } from "@/lib/typography";
 import { type LucideIcon } from "lucide-react";
 
 interface StatItemProps {
@@ -19,8 +20,8 @@ export const PosInfoItem = ({
         className,
       )}
     >
-      <Icon className=" size-3 flex-shrink-0" />
-      <span className={cn(" truncate text-xs font-medium")}>
+      <Icon className={iconSize.inline} />
+      <span className={cn("truncate font-medium", typography.caption)}>
         {value}
       </span>
     </div>

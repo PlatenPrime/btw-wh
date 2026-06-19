@@ -1,5 +1,6 @@
 import { CardActionsMenu } from "@/components/shared/actions/card-actions";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { typography } from "@/lib/typography";
 import { RoleType } from "@/constants/roles";
 import { RoleGuard } from "@/modules/auth/components/elements/RoleGuard";
 import type { BlockDto } from "@/modules/blocks/api/types";
@@ -26,14 +27,12 @@ export function BlockCard({ block, onDelete }: BlockCardProps) {
     <Card className="gap-0 p-2 transition-shadow ">
       <CardHeader className="p-0 ">
         <div className="flex items-center justify-between">
-          <CardTitle className="flex flex-row items-center justify-start gap-2">
-            <div className="flex items-center justify-center bg-accent/50 p-2 rounded-full w-8 h-8 ">
-              <span className="text-foreground text-xs ">
-                {block.order}
-              </span>
+          <CardTitle size="sm" className="flex flex-row items-center justify-start gap-2">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-accent/50 p-2">
+              <span className={typography.caption}>{block.order}</span>
             </div>
 
-            <Link to={`/wh/blocks/${block._id}`} className="hover:underline">
+            <Link to={`/wh/blocks/${block._id}`} className={typography.listTitleCompact}>
               {block.title}
             </Link>
           </CardTitle>

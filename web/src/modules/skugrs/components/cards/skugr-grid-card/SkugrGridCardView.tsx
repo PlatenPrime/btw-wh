@@ -2,6 +2,7 @@ import { CardActionsMenu } from "@/components/shared/actions/card-actions";
 import type { CardAction } from "@/components/shared/actions/card-actions";
 import { GridTileCard } from "@/components/shared/cards";
 import { cn } from "@/lib/utils";
+import { iconSize, typography } from "@/lib/typography";
 import {
   getKonkTheme,
   KonkBanner,
@@ -53,22 +54,22 @@ export function SkugrGridCardView({
       <div className="flex justify-center py-2">
         <Link
           to={`/sku/skugrs/${skugr._id}`}
-          className=" block text-center wrap-break-word underline-offset-4 hover:underline"
+          className={cn("block text-center wrap-break-word underline-offset-4 hover:underline", typography.gridTitle)}
         >
           {skugr.title}
         </Link>
       </div>
 
       {prod ? (
-        <div className="border-border/80 text-muted-foreground flex shrink-0 items-center justify-between border-t px-2 py-1.5 text-xs">
+        <div className={cn("border-border/80 flex shrink-0 items-center justify-between border-t px-2 py-1.5", typography.gridSubtitle)}>
           <EntityLabel
             imageUrl={prod.imageUrl}
             title={prod.title}
             fallbackLabel={skugr.prodName}
             imageSize="sm"
           />
-          <span className="text-muted-foreground flex shrink-0 items-center gap-1  text-sm tabular-nums">
-            <Notebook className="size-3.5 shrink-0" aria-hidden />
+          <span className={cn("flex shrink-0 items-center gap-1 tabular-nums", typography.body)}>
+            <Notebook className={iconSize.inline} aria-hidden />
             {skuCount}
           </span>
         </div>

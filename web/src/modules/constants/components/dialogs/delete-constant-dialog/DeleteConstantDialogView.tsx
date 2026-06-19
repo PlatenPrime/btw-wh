@@ -5,6 +5,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import type { ConstantDto } from "@/modules/constants/api/types";
+import { typography } from "@/lib/typography";
 
 interface DeleteConstantDialogViewProps {
   constant: ConstantDto;
@@ -25,7 +26,7 @@ export function DeleteConstantDialogView({
         <DialogTitle>Видалити константу</DialogTitle>
       </DialogHeader>
       <div className="grid gap-4">
-        <p className="text-muted-foreground text-sm">
+        <p className={typography.pageDescription}>
           Ви впевнені, що хочете видалити константу <strong>{constant.title}</strong> (
           {constant.name})? Цю дію неможливо скасувати.
         </p>

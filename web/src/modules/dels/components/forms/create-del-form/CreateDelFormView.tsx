@@ -12,6 +12,7 @@ import {
 import type { CreateDelFormValues } from "@/modules/dels/components/forms/schema";
 import type { ProdDto } from "@/modules/prods/api/types";
 import type { UseFormReturn } from "react-hook-form";
+import { typography } from "@/lib/typography";
 
 interface CreateDelFormViewProps {
   form: UseFormReturn<CreateDelFormValues>;
@@ -56,7 +57,7 @@ export function CreateDelFormView({
           disabled={isLoading}
         />
         {errors.title && (
-          <p className="text-destructive text-sm">{errors.title.message}</p>
+          <p className={typography.formError}>{errors.title.message}</p>
         )}
       </div>
 
@@ -95,7 +96,7 @@ export function CreateDelFormView({
           </SelectContent>
         </Select>
         {errors.prodName && (
-          <p className="text-destructive text-sm">{errors.prodName.message}</p>
+          <p className={typography.formError}>{errors.prodName.message}</p>
         )}
       </div>
 
@@ -111,12 +112,12 @@ export function CreateDelFormView({
           className="cursor-pointer"
         />
         {fileName && (
-          <p className="text-muted-foreground text-sm">{fileName}</p>
+          <p className={typography.pageDescription}>{fileName}</p>
         )}
       </div>
 
       {errors.root && (
-        <p className="text-destructive text-sm">{errors.root.message}</p>
+        <p className={typography.formError}>{errors.root.message}</p>
       )}
 
       <DialogActions

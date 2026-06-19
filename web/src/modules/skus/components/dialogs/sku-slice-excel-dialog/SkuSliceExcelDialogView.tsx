@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/dialog";
 import { Calendar } from "@/components/ui/calendar";
 import type { DateRange } from "react-day-picker";
+import { typography } from "@/lib/typography";
 
 interface SkuSliceExcelDialogViewProps {
   dateRange: DateRange | undefined;
@@ -33,7 +34,7 @@ export function SkuSliceExcelDialogView({
         <DialogTitle>Експорт Excel залишків та цін</DialogTitle>
       </DialogHeader>
       <div className="flex flex-col gap-4">
-        <p className="text-muted-foreground text-sm">
+        <p className={typography.pageDescription}>
           Оберіть період дат. У файлі — метадані товару та колонки по датах: рядки
           «Залишок» і «Ціна».
         </p>
