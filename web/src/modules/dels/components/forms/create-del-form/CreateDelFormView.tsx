@@ -101,7 +101,7 @@ export function CreateDelFormView({
       </div>
 
       <div className="grid gap-2">
-        <Label htmlFor="excel-file">Excel-файл (колонка arts)</Label>
+        <Label htmlFor="excel-file">Excel-файл (колонки arts, quantity — опціонально)</Label>
         <Input
           id="excel-file"
           ref={fileRef}

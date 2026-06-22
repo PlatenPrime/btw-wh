@@ -1,6 +1,6 @@
 import { SurfaceSection } from "@/components/shared/layout";
-import { DelArtikulCard } from "@/modules/dels/components/cards/del-artikul-card";
 import type { DelArtikulItem } from "@/modules/dels/api/types";
+import { DelArtikulCard } from "@/modules/dels/components/cards/del-artikul-card";
 
 export interface DelArtikulsListViewItem {
   artikul: string;
@@ -17,7 +17,10 @@ interface DelArtikulsListViewProps {
   items: DelArtikulsListViewItem[];
 }
 
-export function DelArtikulsListView({ empty, items }: DelArtikulsListViewProps) {
+export function DelArtikulsListView({
+  empty,
+  items,
+}: DelArtikulsListViewProps) {
   if (empty) {
     return (
       <SurfaceSection>
@@ -30,18 +33,28 @@ export function DelArtikulsListView({ empty, items }: DelArtikulsListViewProps) 
 
   return (
     <SurfaceSection className="grid grid-cols-1 gap-2 p-2">
-      {items.map(({ artikul, item, onRefresh, isUpdating, disabled, chainStep, chainRunning }) => (
-        <DelArtikulCard
-          key={artikul}
-          artikul={artikul}
-          item={item}
-          onRefresh={onRefresh}
-          isUpdating={isUpdating}
-          disabled={disabled}
-          chainStep={chainStep}
-          chainRunning={chainRunning}
-        />
-      ))}
+      {items.map(
+        ({
+          artikul,
+          item,
+          onRefresh,
+          isUpdating,
+          disabled,
+          chainStep,
+          chainRunning,
+        }) => (
+          <DelArtikulCard
+            key={artikul}
+            artikul={artikul}
+            item={item}
+            onRefresh={onRefresh}
+            isUpdating={isUpdating}
+            disabled={disabled}
+            chainStep={chainStep}
+            chainRunning={chainRunning}
+          />
+        ),
+      )}
     </SurfaceSection>
   );
 }

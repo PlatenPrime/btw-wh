@@ -8,6 +8,7 @@ export function DelArtikulCardSkeleton() {
         <Skeleton className="size-12 shrink-0 rounded" />
         <Skeleton className="h-5 min-w-0 max-w-32 flex-1" />
         <Skeleton className="h-4 w-8 shrink-0" />
+        <Skeleton className="h-4 w-8 shrink-0" />
       </div>
       <div className="flex shrink-0 items-center gap-2">
         <Skeleton className="h-8 w-24" />

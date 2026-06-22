@@ -1,8 +1,14 @@
 import type { ListResponse, MutationResponse } from "@/types/api";
 
 export interface DelArtikulItem {
-  quantity: number;
+  quant: number;
+  stock?: number;
   nameukr?: string;
+}
+
+export interface CreateDelArtikulInput {
+  artikul: string;
+  quantity: number;
 }
 
 export interface DelProdInfo {
@@ -13,6 +19,7 @@ export interface DelProdInfo {
 export interface DelDto {
   _id: string;
   title: string;
+  prodName: string;
   artikuls: Record<string, DelArtikulItem>;
   createdAt: string;
   updatedAt: string;
@@ -22,6 +29,7 @@ export interface DelDto {
 export interface DelListItemDto {
   _id: string;
   title: string;
+  prodName: string;
   createdAt: string;
   updatedAt: string;
   prod?: DelProdInfo;
@@ -30,7 +38,7 @@ export interface DelListItemDto {
 export interface CreateDelDto {
   title: string;
   prodName: string;
-  artikuls?: Record<string, number>;
+  artikuls?: CreateDelArtikulInput[];
 }
 
 export interface DeleteDelResponse {

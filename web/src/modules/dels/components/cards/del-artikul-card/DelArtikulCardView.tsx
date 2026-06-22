@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ListRowCard } from "@/components/shared/cards";
 import { cn } from "@/lib/utils";
 import type { DelArtikulItem } from "@/modules/dels/api/types";
-import { Check, Clock, Loader2, RefreshCw, X } from "lucide-react";
+import { Check, Clock, Globe, Loader2, Package, RefreshCw, X } from "lucide-react";
 
 export type DelArtikulCardVariant = "normal" | "zeroQuantity" | "noNameUkr";
 
@@ -19,6 +19,8 @@ const variantClasses: Record<DelArtikulCardVariant, string> = {
   zeroQuantity: "border-destructive/40 bg-destructive/10",
   noNameUkr: "border-warning/40 bg-warning/10",
 };
+
+const iconClassName = "size-3.5 shrink-0 text-muted-foreground";
 
 interface DelArtikulCardViewProps {
   variant: DelArtikulCardVariant;
@@ -42,6 +44,7 @@ export function DelArtikulCardView({
   chainRunning = false,
 }: DelArtikulCardViewProps) {
   const showChainStatus = chainRunning && chainStep;
+  const hasStock = item.stock !== undefined;
 
   return (
     <ListRowCard className={cn(cardBaseClasses, variantClasses[variant])}>
@@ -51,9 +54,36 @@ export function DelArtikulCardView({
           nameukr={item.nameukr}
           className="min-w-0 flex-1"
         />
-        <span className="text-muted-foreground shrink-0 text-sm font-medium">
-          {item.quantity}
-        </span>
+        <div className="flex shrink-0 items-center gap-3">
+          <div
+            className="flex items-center gap-1"
+            title="В поставці"
+          >
+            <Package className={iconClassName} aria-hidden />
+            <span
+              className={cn(
+                "min-w-[1.25rem] text-center text-sm font-medium",
+                item.quant === 0 && "text-destructive",
+              )}
+            >
+              {item.quant}
+            </span>
+          </div>
+          <div
+            className="flex items-center gap-1"
+            title="Sharik"
+          >
+            <Globe className={iconClassName} aria-hidden />
+            <span
+              className={cn(
+                "min-w-[1.25rem] text-center text-sm font-medium",
+                !hasStock && "text-muted-foreground",
+              )}
+            >
+              {hasStock ? item.stock : "—"}
+            </span>
+          </div>
+        </div>
       </div>
       <div className="flex shrink-0 items-center gap-2">
         {showChainStatus ? (
