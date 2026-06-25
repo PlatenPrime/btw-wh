@@ -1,8 +1,6 @@
 import type { DelArtikulItem } from "@/modules/dels/api/types";
-import {
-  DelArtikulCardView,
-  type DelArtikulCardVariant,
-} from "./DelArtikulCardView";
+import type { DelArtikulCardVariant } from "@/modules/dels/components/cards/del-artikul-card/components/delArtikulCardVariants";
+import { DelArtikulCardView } from "./DelArtikulCardView";
 
 export interface DelArtikulCardChainStep {
   status: string;
@@ -20,9 +18,10 @@ interface DelArtikulCardProps {
 }
 
 function getVariant(item: DelArtikulItem): DelArtikulCardVariant {
-  const isZeroQuant = item.quant === 0;
-  const hasNoNameUkr = !item.nameukr;
-  return hasNoNameUkr ? "noNameUkr" : isZeroQuant ? "zeroQuantity" : "normal";
+  if (!item.nameukr) return "noNameUkr";
+  if (item.stock === 0) return "zeroStock";
+  if (item.quant === 0) return "zeroQuantity";
+  return "normal";
 }
 
 export function DelArtikulCard({

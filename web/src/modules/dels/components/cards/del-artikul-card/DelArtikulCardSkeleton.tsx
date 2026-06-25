@@ -3,15 +3,20 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export function DelArtikulCardSkeleton() {
   return (
-    <ListRowCard className="flex flex-row items-center gap-2 p-2">
+    <ListRowCard className="flex flex-col gap-2 p-2 sm:flex-row sm:items-center">
       <div className="flex min-w-0 flex-1 items-center gap-2">
         <Skeleton className="size-12 shrink-0 rounded" />
-        <Skeleton className="h-5 min-w-0 max-w-32 flex-1" />
-        <Skeleton className="h-4 w-8 shrink-0" />
-        <Skeleton className="h-4 w-8 shrink-0" />
+        <div className="grid min-w-0 flex-1 gap-1">
+          <Skeleton className="h-4 w-24" />
+          <Skeleton className="h-3 w-32" />
+        </div>
       </div>
-      <div className="flex shrink-0 items-center gap-2">
-        <Skeleton className="h-8 w-24" />
+      <div className="flex w-full shrink-0 items-center justify-between gap-2 sm:w-auto">
+        <div className="flex gap-3">
+          <Skeleton className="h-4 w-8" />
+          <Skeleton className="h-4 w-8" />
+        </div>
+        <Skeleton className="size-8 rounded-md" />
       </div>
     </ListRowCard>
   );

@@ -1,26 +1,15 @@
 import { ArtikulImageLink } from "@/components/shared/media/artikul-image-link/ArtikulImageLink";
-import { Button } from "@/components/ui/button";
 import { ListRowCard } from "@/components/shared/cards";
-import { cn } from "@/lib/utils";
 import type { DelArtikulItem } from "@/modules/dels/api/types";
-import { Check, Clock, Globe, Loader2, Package, RefreshCw, X } from "lucide-react";
+import { DelArtikulCardActions } from "@/modules/dels/components/cards/del-artikul-card/components/DelArtikulCardActions";
+import { DelArtikulCardQuants } from "@/modules/dels/components/cards/del-artikul-card/components/DelArtikulCardQuants";
+import {
+  getDelArtikulCardClassName,
+  type DelArtikulCardVariant,
+  type DelArtikulCardViewChainStep,
+} from "@/modules/dels/components/cards/del-artikul-card/components/delArtikulCardVariants";
 
-export type DelArtikulCardVariant = "normal" | "zeroQuantity" | "noNameUkr";
-
-export interface DelArtikulCardViewChainStep {
-  status: string;
-  error?: string;
-}
-
-const cardBaseClasses = "flex flex-row items-center gap-2 p-2";
-
-const variantClasses: Record<DelArtikulCardVariant, string> = {
-  normal: "",
-  zeroQuantity: "border-destructive/40 bg-destructive/10",
-  noNameUkr: "border-warning/40 bg-warning/10",
-};
-
-const iconClassName = "size-3.5 shrink-0 text-muted-foreground";
+export type { DelArtikulCardVariant, DelArtikulCardViewChainStep };
 
 interface DelArtikulCardViewProps {
   variant: DelArtikulCardVariant;
@@ -43,98 +32,25 @@ export function DelArtikulCardView({
   chainStep = null,
   chainRunning = false,
 }: DelArtikulCardViewProps) {
-  const showChainStatus = chainRunning && chainStep;
-  const hasStock = item.stock !== undefined;
+  const showChainStatus = Boolean(chainRunning && chainStep);
 
   return (
-    <ListRowCard className={cn(cardBaseClasses, variantClasses[variant])}>
-      <div className="flex min-w-0 flex-1 items-center gap-2">
-        <ArtikulImageLink
-          artikul={artikul}
-          nameukr={item.nameukr}
-          className="min-w-0 flex-1"
+    <ListRowCard className={getDelArtikulCardClassName(variant)}>
+      <ArtikulImageLink
+        artikul={artikul}
+        nameukr={item.nameukr}
+        className="min-w-0 w-full sm:flex-1"
+      />
+
+      <div className="flex w-full shrink-0 items-center justify-between gap-2 sm:w-auto sm:justify-end sm:gap-3">
+        <DelArtikulCardQuants item={item} />
+        <DelArtikulCardActions
+          showChainStatus={showChainStatus}
+          chainStep={chainStep}
+          onRefresh={onRefresh}
+          isUpdating={isUpdating}
+          disabled={disabled}
         />
-        <div className="flex shrink-0 items-center gap-3">
-          <div
-            className="flex items-center gap-1"
-            title="В поставці"
-          >
-            <Package className={iconClassName} aria-hidden />
-            <span
-              className={cn(
-                "min-w-[1.25rem] text-center text-sm font-medium",
-                item.quant === 0 && "text-destructive",
-              )}
-            >
-              {item.quant}
-            </span>
-          </div>
-          <div
-            className="flex items-center gap-1"
-            title="Sharik"
-          >
-            <Globe className={iconClassName} aria-hidden />
-            <span
-              className={cn(
-                "min-w-[1.25rem] text-center text-sm font-medium",
-                !hasStock && "text-muted-foreground",
-              )}
-            >
-              {hasStock ? item.stock : "—"}
-            </span>
-          </div>
-        </div>
-      </div>
-      <div className="flex shrink-0 items-center gap-2">
-        {showChainStatus ? (
-          <>
-            {chainStep.status === "pending" && (
-              <Clock
-                className="text-muted-foreground size-4 shrink-0"
-                aria-hidden
-              />
-            )}
-            {chainStep.status === "running" && (
-              <Loader2
-                className="size-4 shrink-0 animate-spin text-blue-600"
-                aria-hidden
-              />
-            )}
-            {chainStep.status === "success" && (
-              <Check
-                className="size-4 shrink-0 text-green-600"
-                aria-hidden
-              />
-            )}
-            {chainStep.status === "error" && (
-              <>
-                <X
-                  className="size-4 shrink-0 text-destructive"
-                  aria-hidden
-                />
-                {chainStep.error && (
-                  <span className="text-destructive truncate text-xs">
-                    {chainStep.error}
-                  </span>
-                )}
-              </>
-            )}
-          </>
-        ) : (
-          <Button
-            size="sm"
-            variant="outline"
-            disabled={disabled}
-            onClick={onRefresh}
-            aria-label={isUpdating ? "Оновлення…" : "Оновити артикул"}
-          >
-            {isUpdating ? (
-              <Loader2 className="size-4 animate-spin" aria-hidden />
-            ) : (
-              <RefreshCw className="size-4" aria-hidden />
-            )}
-          </Button>
-        )}
       </div>
     </ListRowCard>
   );
