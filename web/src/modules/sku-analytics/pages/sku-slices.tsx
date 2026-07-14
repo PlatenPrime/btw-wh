@@ -3,6 +3,7 @@ import { DataRefetchOverlay } from "@/components/shared/feedback/data-refetch-ov
 import { PaginationControls } from "@/components/shared/controls";
 import { ErrorDisplay } from "@/components/shared/errors";
 import { LoadingNoData } from "@/components/shared/feedback/loading-states";
+import { SkuSlicesHeaderActions } from "@/modules/sku-analytics/components/actions/sku-slices-header-actions";
 import { SkuSlicesControls } from "@/modules/sku-analytics/components/controls/sku-slices-controls/SkuSlicesControls";
 import {
   SkuSliceTableContainer,
@@ -47,6 +48,7 @@ export function SkuSlices() {
 
   return (
     <SidebarInsetLayout headerText="Зрізи конкурентів">
+      <SkuSlicesHeaderActions />
       <div className="grid gap-4 p-2">
         <SkuSlicesControls
           konkName={konkName}

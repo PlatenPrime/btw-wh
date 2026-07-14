@@ -60,3 +60,29 @@ export interface SkuKonkProdSkugrGroupsSalesResponseDto {
   data: SkuKonkProdSkugrGroupSalesItemDto[];
   all: SkuKonkProdSkugrGroupsSalesTotalDto;
 }
+
+export interface CompensatingSliceRefetchStatsDto {
+  refetched: number;
+  updated: number;
+}
+
+export interface RunCompensatingSliceBodyDto {
+  konkName: string;
+}
+
+export interface RunCompensatingSliceDataDto {
+  konkName: string;
+  sliceDate: string;
+  analog: CompensatingSliceRefetchStatsDto;
+  sku: CompensatingSliceRefetchStatsDto;
+}
+
+export interface RunCompensatingSliceResponseDto {
+  message: string;
+  data: RunCompensatingSliceDataDto;
+}
+
+export interface RunCompensatingSliceParams {
+  konkName: string;
+  signal?: AbortSignal;
+}

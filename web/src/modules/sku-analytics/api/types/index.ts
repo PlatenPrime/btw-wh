@@ -1,5 +1,10 @@
 export type {
+  CompensatingSliceRefetchStatsDto,
   GetSkuSlicePageParams,
+  RunCompensatingSliceBodyDto,
+  RunCompensatingSliceDataDto,
+  RunCompensatingSliceParams,
+  RunCompensatingSliceResponseDto,
   SkuKonkProdSkugrGroupSalesItemDto,
   SkuKonkProdSkugrGroupsSalesResponseDto,
   SkuKonkProdSkugrGroupsSalesTotalDto,
