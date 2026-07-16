@@ -11,6 +11,18 @@ function RedirectWhKonkDetailToSku() {
   return <Navigate to={`/sku/konks/${id}`} replace />;
 }
 
+function RedirectUserDetailToAdmin() {
+  const { id } = useParams<{ id: string }>();
+  if (!id) return <Navigate to="/admin/users" replace />;
+  return <Navigate to={`/admin/users/${id}`} replace />;
+}
+
+function RedirectConstantDetailToAdmin() {
+  const { id } = useParams<{ id: string }>();
+  if (!id) return <Navigate to="/admin/constants" replace />;
+  return <Navigate to={`/admin/constants/${id}`} replace />;
+}
+
 const App = lazyWithRetry(() => import("./App"));
 
 const Login = lazyWithRetry(() => import("@/modules/auth/pages/login"));
@@ -268,6 +280,11 @@ const UsersPage = lazyWithRetry(() =>
 const UserPage = lazyWithRetry(() =>
   import("./modules/auth/pages/user").then((module) => ({
     default: module.UserPage,
+  })),
+);
+const EventsPage = lazyWithRetry(() =>
+  import("./modules/events/pages/events").then((module) => ({
+    default: module.EventsPage,
   })),
 );
 
@@ -567,20 +584,12 @@ export const router = createHashRouter([
           },
           {
             path: "constants",
-            element: (
-              <ProtectedRoute allowedRoles={[RoleType.ADMIN]}>
-                <Constants />
-              </ProtectedRoute>
-            ),
+            element: <Navigate to="/admin/constants" replace />,
             errorElement: <RouteErrorBoundary />,
           },
           {
             path: "constants/:id",
-            element: (
-              <ProtectedRoute allowedRoles={[RoleType.ADMIN]}>
-                <Constant />
-              </ProtectedRoute>
-            ),
+            element: <RedirectConstantDetailToAdmin />,
             errorElement: <RouteErrorBoundary />,
           },
           {
@@ -655,21 +664,53 @@ export const router = createHashRouter([
       },
       {
         path: "users",
-        element: (
-          <ProtectedRoute allowedRoles={[RoleType.ADMIN]}>
-            <UsersPage />
-          </ProtectedRoute>
-        ),
+        element: <Navigate to="/admin/users" replace />,
         errorElement: <RouteErrorBoundary />,
       },
       {
         path: "users/:id",
+        element: <RedirectUserDetailToAdmin />,
+        errorElement: <RouteErrorBoundary />,
+      },
+      {
+        path: "admin",
         element: (
-          <ProtectedRoute>
-            <UserPage />
+          <ProtectedRoute allowedRoles={[RoleType.ADMIN]}>
+            <Outlet />
           </ProtectedRoute>
         ),
         errorElement: <RouteErrorBoundary />,
+        children: [
+          {
+            path: "users",
+            element: <UsersPage />,
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "users/:id",
+            element: (
+              <ProtectedRoute>
+                <UserPage />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "constants",
+            element: <Constants />,
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "constants/:id",
+            element: <Constant />,
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "events",
+            element: <EventsPage />,
+            errorElement: <RouteErrorBoundary />,
+          },
+        ],
       },
       {
         path: "refiling",

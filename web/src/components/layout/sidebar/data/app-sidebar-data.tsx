@@ -13,6 +13,7 @@ import {
   Projector,
   Route,
   Rows4,
+  ScrollText,
   Settings,
   ShoppingCart,
   StickyNote,
@@ -30,6 +31,7 @@ const icons = {
   Settings,
   Warehouse,
   Rows4,
+  ScrollText,
   MapPin,
   FileQuestion,
   AlertTriangle,
@@ -65,6 +67,8 @@ const iconColorClasses: Record<SidebarIconName, string> = {
   // Ряди — серый, низкая насыщенность
   Rows4:
     "text-[oklch(0.65_0.02_260)] dark:text-[oklch(0.8_0.02_260)]",
+  ScrollText:
+    "text-[oklch(0.6_0.14_25)] dark:text-[oklch(0.74_0.16_25)]",
   MapPin:
     "text-[oklch(0.67_0.15_35)] dark:text-[oklch(0.78_0.16_35)]",
   // Запити — фиолетовый
@@ -378,18 +382,25 @@ export const appSidebarData: { navMain: AppSidebarNavGroup[] } = {
     },
     {
       title: "Адміністрування",
-      url: "/users",
+      url: "/admin/events",
+      pathOpenPrefix: "/admin",
       items: [
         {
           title: "Користувачі",
-          url: "/users",
+          url: "/admin/users",
           iconName: "Users",
           allowedRoles: [RoleType.ADMIN],
         },
         {
           title: "Константи",
-          url: "/wh/constants",
+          url: "/admin/constants",
           iconName: "Bookmark",
+          allowedRoles: [RoleType.ADMIN],
+        },
+        {
+          title: "Події",
+          url: "/admin/events",
+          iconName: "ScrollText",
           allowedRoles: [RoleType.ADMIN],
         },
       ],

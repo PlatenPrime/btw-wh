@@ -19,7 +19,7 @@ export function ConstantCardView({ constant, actions }: ConstantCardViewProps) {
         <div className="flex min-w-0 flex-1 flex-col gap-0.5">
           <CardTitle size="sm" className="p-0">
             <Link
-              to={`/wh/constants/${constant._id}`}
+              to={`/admin/constants/${constant._id}`}
               className={cn("block hover:underline", typography.listTitleCompact)}
             >
               {constant.title}

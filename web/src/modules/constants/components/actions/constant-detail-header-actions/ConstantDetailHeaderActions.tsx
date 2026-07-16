@@ -32,7 +32,7 @@ export function ConstantDetailHeaderActions({
   }, []);
 
   const handleDeleteSuccess = useCallback(() => {
-    navigate("/wh/constants");
+    navigate("/admin/constants");
   }, [navigate]);
 
   const headerActions = useMemo<HeaderAction[]>(() => {

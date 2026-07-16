@@ -25,7 +25,8 @@ export const quickLinkDescriptionByUrl: Record<string, string> = {
   "/refiling/defs": "Дефіцити та розрахунки",
   "/refiling/pulls": "Зняття зі складу",
   "/refiling/kasks": "Каса поповнення",
-  "/users": "Керування користувачами та доступами",
+  "/admin/users": "Керування користувачами та доступами",
   "/wh/prods": "Виробники",
-  "/wh/constants": "Довідкові константи",
+  "/admin/constants": "Довідкові константи",
+  "/admin/events": "Журнал дій користувачів на складі",
 };

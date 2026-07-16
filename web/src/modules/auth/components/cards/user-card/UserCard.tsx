@@ -28,7 +28,7 @@ export function UserCard({ user, onEdit }: UserCardProps) {
           <div className="flex min-w-0 flex-1 flex-col gap-1">
             <div className="flex flex-wrap items-center gap-x-2 gap-y-0">
               <Link
-                to={`/users/${user._id}`}
+                to={`/admin/users/${user._id}`}
                 className={typography.listTitleCompact}
               >
                 {user.fullname}
