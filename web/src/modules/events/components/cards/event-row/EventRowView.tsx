@@ -1,9 +1,11 @@
-import { UserAvatarName } from "@/components/shared/entities/user/UserAvatarName";
 import { ListRowCard } from "@/components/shared/cards";
+import { UserAvatarName } from "@/components/shared/entities/user/UserAvatarName";
 import { Badge } from "@/components/ui/badge";
 import { CardContent } from "@/components/ui/card";
 import { typography } from "@/lib/typography";
+import { cn } from "@/lib/utils";
 import type { EventDto } from "@/modules/events/api/types";
+import { getEventTypeStyle } from "@/modules/events/components/cards/event-row/eventTypeStyles";
 import { formatDate } from "@/utils/formatDate";
 
 interface EventRowViewProps {
@@ -11,8 +13,10 @@ interface EventRowViewProps {
 }
 
 export function EventRowView({ event }: EventRowViewProps) {
+  const typeStyle = getEventTypeStyle(event.type);
+
   return (
-    <ListRowCard>
+    <ListRowCard className={cn(typeStyle.card)}>
       <CardContent className="grid gap-2 p-0">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <UserAvatarName
@@ -21,6 +25,11 @@ export function EventRowView({ event }: EventRowViewProps) {
             size="sm"
           />
           <div className="flex flex-wrap items-center gap-2">
+            {event.type ? (
+              <Badge variant="outline" className={cn(typeStyle.badge)}>
+                {typeStyle.label}
+              </Badge>
+            ) : null}
             <Badge variant="secondary">{event.department}</Badge>
             <span className={typography.caption}>
               {formatDate(event.createdAt)}

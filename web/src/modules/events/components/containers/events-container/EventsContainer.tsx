@@ -1,14 +1,21 @@
-import type { EventsListResponse } from "@/modules/events/api/types";
+import type { EventsListResponse, EventType } from "@/modules/events/api/types";
 import { EventsContainerView } from "@/modules/events/components/containers/events-container/EventsContainerView";
 import { addDays, subDays } from "date-fns";
+import { useMemo } from "react";
 
 interface EventsContainerProps {
   data: EventsListResponse;
   isFetching: boolean;
   selectedDate: Date;
   page: number;
+  limit: number;
+  department: string;
+  type: EventType | "";
   setDate: (date: Date) => void;
   setPage: (page: number) => void;
+  setLimit: (limit: number) => void;
+  setDepartment: (department: string) => void;
+  setType: (type: EventType | "") => void;
 }
 
 export function EventsContainer({
@@ -16,9 +23,26 @@ export function EventsContainer({
   isFetching,
   selectedDate,
   page,
+  limit,
+  department,
+  type,
   setDate,
   setPage,
+  setLimit,
+  setDepartment,
+  setType,
 }: EventsContainerProps) {
+  // Backend не поддерживает фильтр по type — фильтруем загруженную страницу.
+  // События без type (старые записи) относим к категории "other".
+  const filteredData = useMemo<EventsListResponse>(() => {
+    if (!type) return data;
+
+    return {
+      ...data,
+      data: data.data.filter((event) => (event.type ?? "other") === type),
+    };
+  }, [data, type]);
+
   const handlePreviousDay = () => {
     setDate(subDays(selectedDate, 1));
   };
@@ -36,13 +60,19 @@ export function EventsContainer({
   return (
     <EventsContainerView
       selectedDate={selectedDate}
-      data={data}
+      data={filteredData}
       page={page}
+      limit={limit}
+      department={department}
+      type={type}
       isFetching={isFetching}
       onPreviousDay={handlePreviousDay}
       onNextDay={handleNextDay}
       onDateSelect={handleDateSelect}
       onPageChange={setPage}
+      onLimitChange={setLimit}
+      onDepartmentChange={setDepartment}
+      onTypeChange={setType}
     />
   );
 }

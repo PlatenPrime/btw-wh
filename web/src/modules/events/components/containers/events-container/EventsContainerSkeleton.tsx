@@ -1,5 +1,5 @@
-import { SurfaceSection } from "@/components/shared/layout";
 import { DateNavigationSkeleton } from "@/components/shared/date/date-navigation/DateNavigationSkeleton";
+import { SurfaceSection } from "@/components/shared/layout";
 import { Skeleton } from "@/components/ui/skeleton";
 import { EventsListSkeleton } from "@/modules/events/components/lists/events-list";
 
@@ -8,7 +8,10 @@ export function EventsContainerSkeleton() {
     <main className="grid gap-2">
       <SurfaceSection className="grid gap-2 lg:grid-cols-2">
         <DateNavigationSkeleton />
-        <div className="flex w-full items-center justify-end gap-2">
+        <div className="flex w-full flex-wrap items-center justify-end gap-2">
+          <Skeleton className="h-9 w-[130px]" />
+          <Skeleton className="h-9 w-[180px]" />
+          <Skeleton className="h-9 w-20" />
           <Skeleton className="h-5 w-20" />
         </div>
       </SurfaceSection>

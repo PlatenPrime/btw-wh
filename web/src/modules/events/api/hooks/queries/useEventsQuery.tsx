@@ -8,6 +8,7 @@ export interface UseEventsQueryParams {
   date: string;
   page: number;
   limit: number;
+  department?: string;
   enabled?: boolean;
 }
 
@@ -15,12 +16,13 @@ export function useEventsQuery({
   date,
   page,
   limit,
+  department,
   enabled = true,
 }: UseEventsQueryParams) {
   const debouncedDate = useDebounce(date, 500);
 
   return useQuery<EventsListResponse>({
-    queryKey: ["events", { date: debouncedDate, page, limit }],
+    queryKey: ["events", { date: debouncedDate, page, limit, department }],
     queryFn: ({ signal }) => {
       const selectedDate = new Date(`${debouncedDate}T00:00:00`);
 
@@ -29,6 +31,7 @@ export function useEventsQuery({
         to: endOfDay(selectedDate).toISOString(),
         page,
         limit,
+        department: department || undefined,
         signal,
       });
     },

@@ -1,5 +1,7 @@
 import type { PaginatedResponse } from "@/types/api";
 
+export type EventType = "create" | "edit" | "delete" | "other";
+
 export interface EventUserData {
   _id: string;
   fullname: string;
@@ -12,6 +14,7 @@ export interface EventDto {
   userId: string;
   userData: EventUserData;
   department: string;
+  type?: EventType;
   description: string;
   createdAt: string;
   updatedAt: string;
