@@ -18,25 +18,21 @@ export function EventRowView({ event }: EventRowViewProps) {
   return (
     <ListRowCard className={cn(typeStyle.card)}>
       <CardContent className="grid gap-2 p-0">
-        <div className="flex flex-wrap items-center justify-between gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <UserAvatarName
             photoUrl={event.userData.photo}
             fullname={event.userData.fullname}
             size="sm"
           />
-          <div className="flex flex-wrap items-center gap-2">
-            {event.type ? (
-              <Badge variant="outline" className={cn(typeStyle.badge)}>
-                {typeStyle.label}
-              </Badge>
-            ) : null}
-            <Badge variant="secondary">{event.department}</Badge>
-            <span className={typography.caption}>
-              {formatDate(event.createdAt)}
-            </span>
-          </div>
+          <Badge variant="default" className={cn(typeStyle.badge)}>
+            {event.department}
+          </Badge>
         </div>
-        <p className={typography.listSubtitle}>{event.description}</p>
+
+        <p className={typography.gridSubtitle}>{event.description}</p>
+        <span className={typography.caption}>
+          {formatDate(event.createdAt)}
+        </span>
       </CardContent>
     </ListRowCard>
   );

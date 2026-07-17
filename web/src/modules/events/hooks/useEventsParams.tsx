@@ -63,7 +63,7 @@ export function useEventsParams() {
     );
 
   const setType = (newType: EventType | "") =>
-    updateSearchParams(params, { type: newType }, setParams);
+    updateSearchParams(params, { type: newType, page: "1" }, setParams);
 
   return {
     selectedDate,

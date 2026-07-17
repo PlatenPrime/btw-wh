@@ -1,5 +1,5 @@
 import { apiClient } from "@/lib/apiClient";
-import type { EventsListResponse } from "@/modules/events/api/types";
+import type { EventsListResponse, EventType } from "@/modules/events/api/types";
 
 export interface GetEventsParams {
   from: string;
@@ -7,6 +7,7 @@ export interface GetEventsParams {
   page: number;
   limit: number;
   department?: string;
+  type?: EventType;
   userId?: string;
   signal?: AbortSignal;
 }
@@ -17,6 +18,7 @@ export const getEvents = async ({
   page,
   limit,
   department,
+  type,
   userId,
   signal,
 }: GetEventsParams): Promise<EventsListResponse> => {
@@ -29,6 +31,10 @@ export const getEvents = async ({
 
   if (department) {
     query.set("department", department);
+  }
+
+  if (type) {
+    query.set("type", type);
   }
 
   if (userId) {

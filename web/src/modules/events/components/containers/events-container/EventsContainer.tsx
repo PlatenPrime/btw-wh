@@ -1,7 +1,6 @@
 import type { EventsListResponse, EventType } from "@/modules/events/api/types";
 import { EventsContainerView } from "@/modules/events/components/containers/events-container/EventsContainerView";
 import { addDays, subDays } from "date-fns";
-import { useMemo } from "react";
 
 interface EventsContainerProps {
   data: EventsListResponse;
@@ -32,17 +31,6 @@ export function EventsContainer({
   setDepartment,
   setType,
 }: EventsContainerProps) {
-  // Backend не поддерживает фильтр по type — фильтруем загруженную страницу.
-  // События без type (старые записи) относим к категории "other".
-  const filteredData = useMemo<EventsListResponse>(() => {
-    if (!type) return data;
-
-    return {
-      ...data,
-      data: data.data.filter((event) => (event.type ?? "other") === type),
-    };
-  }, [data, type]);
-
   const handlePreviousDay = () => {
     setDate(subDays(selectedDate, 1));
   };
@@ -60,7 +48,7 @@ export function EventsContainer({
   return (
     <EventsContainerView
       selectedDate={selectedDate}
-      data={filteredData}
+      data={data}
       page={page}
       limit={limit}
       department={department}

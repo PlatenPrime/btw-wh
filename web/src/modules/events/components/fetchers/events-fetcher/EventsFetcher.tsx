@@ -47,6 +47,7 @@ export function EventsFetcher({
     page,
     limit,
     department: department || undefined,
+    type: type || undefined,
   });
 
   if (eventsQuery.isLoading) return <SkeletonComponent />;
