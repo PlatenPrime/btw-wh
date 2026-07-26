@@ -27,10 +27,14 @@ export function KonkContainer({ konk }: KonkContainerProps) {
   const prodsQuery = useProdsQuery({ enabled: canViewSkuCatalog });
   const prods = prodsQuery.data?.data ?? [];
 
+  const showAirClientSlices =
+    canViewSkuCatalog && konk.name.toLowerCase() === "air";
+
   return (
     <KonkContainerView
       konk={konk}
       showSkuCatalogSection={canViewSkuCatalog}
+      showAirClientSlices={showAirClientSlices}
       prods={prods}
       skuPage={skuPage}
       skuLimit={skuLimit}

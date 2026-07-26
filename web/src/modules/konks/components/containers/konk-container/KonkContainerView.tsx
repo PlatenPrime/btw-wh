@@ -7,6 +7,7 @@ import { KonkDetailHeaderActions } from "@/modules/konks/components/actions/konk
 import { KonkDetailsCard } from "@/modules/konks/components/cards/konk-details-card";
 import { KonkSkusControls } from "@/modules/konks/components/controls/konk-skus-controls";
 import type { ProdDto } from "@/modules/prods/api/types/dto";
+import { AirClientSlicesContainer } from "@/modules/sku-analytics/components/containers/air-client-slices-container";
 import {
   SkusByKonkContainer,
   SkusContainerSkeleton,
@@ -17,6 +18,8 @@ interface KonkContainerViewProps {
   konk: KonkDto;
   /** Список SKU та фільтри — API ≥ ADMIN */
   showSkuCatalogSection?: boolean;
+  /** Секція клієнтського дозаповнення Air-зрізів — лише для konk.name === "air", ≥ ADMIN */
+  showAirClientSlices?: boolean;
   prods: ProdDto[];
   skuPage: number;
   skuLimit: number;
@@ -31,6 +34,7 @@ interface KonkContainerViewProps {
 export function KonkContainerView({
   konk,
   showSkuCatalogSection = true,
+  showAirClientSlices = false,
   prods,
   skuPage,
   skuLimit,
@@ -46,6 +50,8 @@ export function KonkContainerView({
       <KonkDetailHeaderActions konk={konk} />
       <PageSection>
         <KonkDetailsCard konk={konk} />
+
+        {showAirClientSlices ? <AirClientSlicesContainer /> : null}
 
         {showSkuCatalogSection ? (
         <SurfaceSection className="grid gap-2">

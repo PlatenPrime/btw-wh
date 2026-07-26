@@ -15,6 +15,7 @@ import { EntityLabel } from "@/components/shared/entities/entity-label";
 import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
 import type { SkuDto, SkuSkugrDto } from "@/modules/skus/api/types";
+import { SkuLiveStockContainer } from "@/modules/skus/components/containers/sku-live-stock-container";
 import { ExternalLink } from "lucide-react";
 import type { ReactNode } from "react";
 import { Link } from "react-router";
@@ -91,6 +92,7 @@ export function SkuDetailCard({ sku, konk, prod, skugrs }: SkuDetailCardProps) {
             <ExternalLink className={iconSize.ui} />
             Відкрити на сайті конкурента
           </a>
+          <SkuLiveStockContainer sku={sku} konkId={konk?._id} />
           <div className="grid gap-2">
             <span className={cn("font-medium", typography.detailSubtitle)}>
               Товарні групи

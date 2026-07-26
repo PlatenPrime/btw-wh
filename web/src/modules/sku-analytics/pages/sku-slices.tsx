@@ -10,58 +10,49 @@ import {
   SkuSliceTableSkeleton,
 } from "@/modules/sku-analytics/components/containers/sku-slice-table-container";
 import { useSkuSlicePageQuery } from "@/modules/sku-analytics/api/hooks/queries/useSkuSlicePageQuery";
-import { useCallback, useState } from "react";
+import { useSkuSlicesParams } from "@/modules/sku-analytics/hooks/useSkuSlicesParams";
 import { isAxiosError } from "axios";
 
 const PAGE_LIMIT = 20;
 
 export function SkuSlices() {
-  const [konkName, setKonkName] = useState("");
-  const [date, setDate] = useState("");
-  const [page, setPage] = useState(1);
-  const [showInvalidOnly, setShowInvalidOnly] = useState(false);
-
-  const handleKonkNameChange = useCallback((value: string) => {
-    setKonkName(value);
-    setPage(1);
-  }, []);
-
-  const handleDateChange = useCallback((value: string) => {
-    setDate(value);
-    setPage(1);
-  }, []);
-
-  const handleShowInvalidOnlyChange = useCallback((value: boolean) => {
-    setShowInvalidOnly(value);
-    setPage(1);
-  }, []);
+  const {
+    konk,
+    date,
+    page,
+    showInvalidOnly,
+    setKonk,
+    setDate,
+    setPage,
+    setShowInvalidOnly,
+  } = useSkuSlicesParams();
 
   const sliceQuery = useSkuSlicePageQuery({
-    konkName,
+    konkName: konk,
     date,
     page,
     limit: PAGE_LIMIT,
     showInvalidOnly,
   });
 
-  const showForm = Boolean(konkName && date);
+  const showForm = Boolean(konk);
 
   return (
     <SidebarInsetLayout headerText="Зрізи конкурентів">
       <SkuSlicesHeaderActions />
       <div className="grid gap-4 p-2">
         <SkuSlicesControls
-          konkName={konkName}
-          onKonkNameChange={handleKonkNameChange}
+          konkName={konk}
+          onKonkNameChange={setKonk}
           date={date}
-          onDateChange={handleDateChange}
+          onDateChange={setDate}
           showInvalidOnly={showInvalidOnly}
-          onShowInvalidOnlyChange={handleShowInvalidOnlyChange}
+          onShowInvalidOnlyChange={setShowInvalidOnly}
         />
 
         {!showForm && (
           <p className="text-muted-foreground text-sm">
-            Оберіть конкурента та дату для перегляду зрізу.
+            Оберіть конкурента для перегляду зрізу.
           </p>
         )}
 

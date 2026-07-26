@@ -11,6 +11,8 @@ export type {
   SkuSkugrDto,
   SkuSliceRangeItem,
   SkuSliceRangeResponseDto,
+  SkuStockDto,
+  SkuStockResponseDto,
   SkusPagination,
   SkusResponseDto,
 } from "./dto";

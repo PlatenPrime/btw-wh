@@ -86,3 +86,48 @@ export interface RunCompensatingSliceParams {
   konkName: string;
   signal?: AbortSignal;
 }
+
+/** Позиція черги клієнтського дозаповнення Air-зрізу (GET client/air/pending). */
+export interface AirClientPendingItemDto {
+  skuId: string;
+  productId: string;
+  title: string;
+  url: string;
+}
+
+export interface AirClientPendingPayload {
+  date: string;
+  items: AirClientPendingItemDto[];
+}
+
+export interface AirClientPendingResponseDto {
+  message: string;
+  data: AirClientPendingPayload;
+}
+
+/** Body для PUT client/air/sku/:skuId. */
+export interface PutAirClientSkuSliceBodyDto {
+  sourceUrl: string;
+  html: string;
+}
+
+export type AirClientSkuSliceStatus = "saved" | "skipped";
+
+export interface PutAirClientSkuSliceDataDto {
+  status: AirClientSkuSliceStatus;
+  date: string;
+  productId: string;
+  stock: number;
+  price: number;
+}
+
+export interface PutAirClientSkuSliceResponseDto {
+  message: string;
+  data: PutAirClientSkuSliceDataDto;
+}
+
+export interface PutAirClientSkuSliceParams {
+  skuId: string;
+  body: PutAirClientSkuSliceBodyDto;
+  signal?: AbortSignal;
+}

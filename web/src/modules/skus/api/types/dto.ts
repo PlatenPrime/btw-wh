@@ -83,6 +83,16 @@ export interface SkuByIdResponseDto {
   data: SkuDetailDto;
 }
 
+export interface SkuStockDto {
+  stock: number;
+  price: number;
+}
+
+export interface SkuStockResponseDto {
+  message: string;
+  data: SkuStockDto;
+}
+
 export interface SkuSliceRangeItem {
   date: string;
   stock: number;

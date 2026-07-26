@@ -15,6 +15,7 @@ export function SkuDetailCardSkeleton() {
             <Skeleton className="h-4 w-40" />
           </div>
           <Skeleton className="h-4 w-48" />
+          <Skeleton className="h-8 w-40 rounded-lg" />
         </div>
       </CardHeader>
     </DetailPanelCard>
