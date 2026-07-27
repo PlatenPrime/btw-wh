@@ -9,30 +9,22 @@ import { toast } from "sonner";
 
 interface SkuLiveStockContainerProps {
   sku: SkuDto;
-  /** _id konk (для air — посилання на сторінку дозаповнення). */
-  konkId?: string;
 }
 
 interface StockErrorBody {
   message?: string;
 }
 
-const AIR_KONK_NAME = "air";
-
-export function SkuLiveStockContainer({
-  sku,
-  konkId,
-}: SkuLiveStockContainerProps) {
+export function SkuLiveStockContainer({ sku }: SkuLiveStockContainerProps) {
   const { hasRole } = useAuth();
   const [requested, setRequested] = useState(false);
   const lastToastedError = useRef<unknown>(null);
 
-  const isAir = sku.konkName.toLowerCase() === AIR_KONK_NAME;
   const canView = hasRole(RoleType.ADMIN);
 
   const query = useSkuStockQuery({
     id: sku._id,
-    enabled: requested && canView && !isAir,
+    enabled: requested && canView,
   });
 
   useEffect(() => {
@@ -55,13 +47,8 @@ export function SkuLiveStockContainer({
 
   if (!canView) return null;
 
-  if (isAir) {
-    return <SkuLiveStockContainerView mode="air" airKonkId={konkId} />;
-  }
-
   return (
     <SkuLiveStockContainerView
-      mode="live"
       hasRequested={requested}
       isLoading={query.isFetching}
       isError={query.isError}

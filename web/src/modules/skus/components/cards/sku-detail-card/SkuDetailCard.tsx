@@ -92,7 +92,7 @@ export function SkuDetailCard({ sku, konk, prod, skugrs }: SkuDetailCardProps) {
             <ExternalLink className={iconSize.ui} />
             Відкрити на сайті конкурента
           </a>
-          <SkuLiveStockContainer sku={sku} konkId={konk?._id} />
+          <SkuLiveStockContainer sku={sku} />
           <div className="grid gap-2">
             <span className={cn("font-medium", typography.detailSubtitle)}>
               Товарні групи

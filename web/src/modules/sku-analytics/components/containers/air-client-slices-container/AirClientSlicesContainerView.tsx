@@ -99,7 +99,8 @@ export function AirClientSlicesContainerView({
         <div className="grid gap-1">
           <h3 className={typography.sectionTitle}>Дозаповнення Air сьогодні</h3>
           <p className={typography.caption}>
-            Клієнтське зчитування залишків Air через розширення
+            Паралельний канал до серверного scrape: дозаповнення missing/-1 через
+            розширення
             {sliceDate ? ` · ${new Date(sliceDate).toLocaleDateString("uk-UA")}` : ""}
           </p>
         </div>

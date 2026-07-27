@@ -4,20 +4,12 @@ import { cn } from "@/lib/utils";
 import type { SkuStockDto } from "@/modules/skus/api/types";
 import {
   DollarSign,
-  Info,
   Loader2,
   RefreshCw,
   Warehouse,
 } from "lucide-react";
-import { Link } from "react-router";
 
-interface AirModeProps {
-  mode: "air";
-  airKonkId?: string;
-}
-
-interface LiveModeProps {
-  mode: "live";
+interface SkuLiveStockContainerViewProps {
   hasRequested: boolean;
   isLoading: boolean;
   isError: boolean;
@@ -25,34 +17,13 @@ interface LiveModeProps {
   onRequest: () => void;
 }
 
-type SkuLiveStockContainerViewProps = AirModeProps | LiveModeProps;
-
-function AirHint({ airKonkId }: { airKonkId?: string }) {
-  return (
-    <div className="border-border/60 bg-muted/40 grid gap-1 rounded-lg border border-dashed px-3 py-2">
-      <p className={cn("flex items-center gap-1.5", typography.body)}>
-        <Info className={iconSize.ui} />
-        Live-залишок Air недоступний (серверний scrape вимкнено).
-      </p>
-      {airKonkId ? (
-        <Link
-          to={`/sku/konks/${airKonkId}`}
-          className={cn("text-primary hover:underline", typography.caption)}
-        >
-          Перейти до дозаповнення Air-зрізів
-        </Link>
-      ) : null}
-    </div>
-  );
-}
-
-export function SkuLiveStockContainerView(props: SkuLiveStockContainerViewProps) {
-  if (props.mode === "air") {
-    return <AirHint airKonkId={props.airKonkId} />;
-  }
-
-  const { hasRequested, isLoading, isError, data, onRequest } = props;
-
+export function SkuLiveStockContainerView({
+  hasRequested,
+  isLoading,
+  isError,
+  data,
+  onRequest,
+}: SkuLiveStockContainerViewProps) {
   return (
     <div className="grid gap-2">
       <Button
