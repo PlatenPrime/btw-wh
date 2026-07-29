@@ -11,7 +11,7 @@
   "content_scripts": [
     {
       "matches": [
-        "https://btw-wh.up.railway.app/*",
+        "https://btw-wh.vercel.app/*",
         "http://localhost/*",
         "http://127.0.0.1/*"
       ],
