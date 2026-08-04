@@ -1,8 +1,6 @@
 import type { Def, DeficitItem } from "@/modules/defs/api/types/dto";
-import {
-  DefsStatsView,
-  type DeficitFilter,
-} from "./DefsStatsView";
+import { formatDateTime } from "@/modules/asks/utils/format-date";
+import { DefsStatsView, type DeficitFilter } from "./DefsStatsView";
 import { useMemo, useState } from "react";
 
 interface DefsStatsProps {
@@ -13,10 +11,8 @@ interface DefsStatsProps {
 export function DefsStats({ defsData, onFilterChange }: DefsStatsProps) {
   const [activeFilter, setActiveFilter] = useState<DeficitFilter>("all");
   const stats = useMemo(() => {
-    // Подсчитываем статистику на основе поля status для дополнительной надежности
     const result = Object.values(defsData.result);
 
-    // Fallback функция для определения статуса
     const getDeficitStatus = (item: DeficitItem): "limited" | "critical" => {
       if (item.status) {
         return item.status;
@@ -43,6 +39,11 @@ export function DefsStats({ defsData, onFilterChange }: DefsStatsProps) {
     };
   }, [defsData]);
 
+  const calculatedAtLabel = useMemo(
+    () => `Розраховано: ${formatDateTime(defsData.calculatedAt)}`,
+    [defsData.calculatedAt],
+  );
+
   const handleFilterChange = (filter: DeficitFilter) => {
     setActiveFilter(filter);
     onFilterChange(filter);
@@ -51,6 +52,7 @@ export function DefsStats({ defsData, onFilterChange }: DefsStatsProps) {
   return (
     <DefsStatsView
       stats={stats}
+      calculatedAt={calculatedAtLabel}
       activeFilter={activeFilter}
       onFilterChange={handleFilterChange}
     />

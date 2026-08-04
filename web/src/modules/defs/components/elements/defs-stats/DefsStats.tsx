@@ -3,6 +3,7 @@ import {
   DefsStatsView,
   type DeficitFilter,
 } from "@/modules/defs/components/elements/defs-stats/DefsStatsView";
+import { formatDate } from "@/utils/formatDate";
 import { useMemo, useState } from "react";
 
 interface DefsStatsProps {
@@ -13,10 +14,8 @@ interface DefsStatsProps {
 export function DefsStats({ defsData, onFilterChange }: DefsStatsProps) {
   const [activeFilter, setActiveFilter] = useState<DeficitFilter>("all");
   const stats = useMemo(() => {
-    // Подсчитываем статистику на основе поля status для дополнительной надежности
     const result = Object.values(defsData.result);
 
-    // Fallback функция для определения статуса
     const getDeficitStatus = (item: DeficitItem): "limited" | "critical" => {
       if (item.status) {
         return item.status;
@@ -43,6 +42,11 @@ export function DefsStats({ defsData, onFilterChange }: DefsStatsProps) {
     };
   }, [defsData]);
 
+  const calculatedAtLabel = useMemo(
+    () => `Розраховано: ${formatDate(defsData.calculatedAt)}`,
+    [defsData.calculatedAt],
+  );
+
   const handleFilterChange = (filter: DeficitFilter) => {
     setActiveFilter(filter);
     onFilterChange(filter);
@@ -51,6 +55,7 @@ export function DefsStats({ defsData, onFilterChange }: DefsStatsProps) {
   return (
     <DefsStatsView
       stats={stats}
+      calculatedAt={calculatedAtLabel}
       activeFilter={activeFilter}
       onFilterChange={handleFilterChange}
     />

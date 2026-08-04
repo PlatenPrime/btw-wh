@@ -33,8 +33,8 @@ export function LatestDefsFetcher({
     return (
       <ErrorDisplay
         error="Нет данных о дефицитах"
-        title="Нет данных о дефицитах"
-        description="Расчеты дефицитов еще не проводились"
+        title="Ошибка загрузки дефицитов"
+        description="Не удалось получить результат расчёта. Попробуйте ещё раз."
         onRetry={defsQuery.refetch}
       />
     );

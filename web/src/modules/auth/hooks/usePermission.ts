@@ -37,9 +37,6 @@ export type Permission =
   | "edit:rows" // Редактирование рядов
   | "delete:rows" // Удаление рядов
 
-  // Defs
-  | "calculate:defs" // Расчет дефектов (только ADMIN/PRIME)
-
   // Users
   | "manage:users" // Управление пользователями
   | "view:all-users" // Просмотр всех пользователей
@@ -72,7 +69,6 @@ const PERMISSION_MATRIX: Record<RoleType, Permission[]> = {
     "create:rows",
     "edit:rows",
     "delete:rows",
-    "calculate:defs",
     "manage:users",
     "view:all-users",
     "edit:users",
@@ -99,14 +95,13 @@ const PERMISSION_MATRIX: Record<RoleType, Permission[]> = {
     "delete:poses",
     "create:rows",
     "edit:rows",
-    "calculate:defs",
     "view:all-users",
     "view:roles",
   ],
 
   /**
    * EDITOR: модерація asks (без delete чужих), палети/створення позицій;
-   * без адмін-модулів (arts upsert, rows/zones/blocks, defs calculate, …)
+   * без адмін-модулів (arts upsert, rows/zones/blocks, …)
    */
   EDITOR: [
     "read:all",

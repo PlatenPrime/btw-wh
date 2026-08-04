@@ -11,12 +11,14 @@ interface DefsStatsViewProps {
     critical: number;
     nearLimit: number;
   };
+  calculatedAt: string;
   activeFilter: DeficitFilter;
   onFilterChange: (filter: DeficitFilter) => void;
 }
 
 export function DefsStatsView({
   stats,
+  calculatedAt,
   activeFilter,
   onFilterChange,
 }: DefsStatsViewProps) {
@@ -99,10 +101,13 @@ export function DefsStatsView({
   };
 
   return (
-    <View className="flex-row gap-2">
-      {renderCard("all", "Дефіцитів:", stats.deficits)}
-      {renderCard("critical", "Критичних:", stats.critical)}
-      {renderCard("limited", "В ліміті:", stats.nearLimit)}
+    <View className="gap-2">
+      <ThemedText className="text-sm opacity-70">{calculatedAt}</ThemedText>
+      <View className="flex-row gap-2">
+        {renderCard("all", "Дефіцитів:", stats.deficits)}
+        {renderCard("critical", "Критичних:", stats.critical)}
+        {renderCard("limited", "В ліміті:", stats.nearLimit)}
+      </View>
     </View>
   );
 }

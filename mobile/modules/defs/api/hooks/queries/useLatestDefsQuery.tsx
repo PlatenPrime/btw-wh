@@ -6,7 +6,7 @@ export function useLatestDefsQuery() {
   return useQuery<GetLatestDefsResponse>({
     queryKey: ["defs", "latest"],
     queryFn: ({ signal }) => getLatestDefs(signal),
-    staleTime: 5 * 60 * 1000, // 5 минут
+    staleTime: 5 * 60 * 1000,
     retry: 1,
   });
 }

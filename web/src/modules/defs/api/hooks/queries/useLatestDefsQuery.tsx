@@ -5,8 +5,7 @@ export function useLatestDefsQuery() {
   return useQuery({
     queryKey: ["defs", "latest"],
     queryFn: () => getLatestDefs(),
-    staleTime: 5 * 60 * 1000, // 5 минут
+    staleTime: 5 * 60 * 1000,
     retry: 1,
-    // Убираем polling - данные обновляются только после завершения расчета
   });
 }

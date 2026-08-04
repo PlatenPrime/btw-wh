@@ -13,9 +13,12 @@ export function LatestDefsFetcher() {
 
   if (defsQuery.error) {
     return (
-      <View className="flex-1 justify-center items-center p-4">
+      <View className="flex-1 justify-center items-center p-4 gap-2">
         <ThemedText type="default" className="text-center">
           Помилка завантаження дефіцитів
+        </ThemedText>
+        <ThemedText type="default" className="text-center opacity-70">
+          Спробуйте оновити екран
         </ThemedText>
       </View>
     );
@@ -23,9 +26,12 @@ export function LatestDefsFetcher() {
 
   if (!defsQuery.data?.data) {
     return (
-      <View className="flex-1 justify-center items-center p-4">
+      <View className="flex-1 justify-center items-center p-4 gap-2">
         <ThemedText type="default" className="text-center">
-          Немає даних про дефіцити
+          Помилка завантаження дефіцитів
+        </ThemedText>
+        <ThemedText type="default" className="text-center opacity-70">
+          Не вдалося отримати результат розрахунку. Спробуйте ще раз.
         </ThemedText>
       </View>
     );
