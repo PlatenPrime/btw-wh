@@ -1,29 +1,12 @@
-import { useEffect, useCallback } from "react";
-import { View } from "react-native";
+import { View, ScrollView } from "react-native";
 import { ThemedText } from "@/components/themed/themed-text";
+import { ThemedButton } from "@/components/themed/themed-button";
 import { useLatestDefsQuery } from "@/modules/defs/api/hooks/queries/useLatestDefsQuery";
 import { DefsContainer } from "@/modules/defs/components/containers/defs-container/DefsContainer";
 import { DefsContainerSkeleton } from "@/modules/defs/components/containers/defs-container/DefsContainerSkeleton";
 
-interface DefsContentProps {
-  onRefreshingChange?: (
-    refreshing: boolean,
-    onRefresh: () => Promise<void>,
-  ) => void;
-}
-
-export function DefsContent({ onRefreshingChange }: DefsContentProps) {
+export function DefsContent() {
   const defsQuery = useLatestDefsQuery();
-
-  const refreshing = defsQuery.isRefetching;
-
-  const handleRefresh = useCallback(async () => {
-    await defsQuery.refetch();
-  }, [defsQuery.refetch]);
-
-  useEffect(() => {
-    onRefreshingChange?.(refreshing, handleRefresh);
-  }, [refreshing, handleRefresh, onRefreshingChange]);
 
   if (defsQuery.error) {
     return (
@@ -32,14 +15,29 @@ export function DefsContent({ onRefreshingChange }: DefsContentProps) {
           Помилка завантаження дефіцитів
         </ThemedText>
         <ThemedText type="default" className="text-center opacity-70">
-          Спробуйте оновити екран
+          {defsQuery.error instanceof Error
+            ? defsQuery.error.message
+            : "Спробуйте оновити екран"}
         </ThemedText>
+        <ThemedButton
+          variant="default"
+          onPress={() => void defsQuery.refetch()}
+          className="mt-2 px-4"
+        >
+          <ThemedText type="default" className="text-typography-0">
+            Повторити
+          </ThemedText>
+        </ThemedButton>
       </View>
     );
   }
 
   if (defsQuery.isLoading) {
-    return <DefsContainerSkeleton />;
+    return (
+      <ScrollView className="flex-1" contentContainerClassName="gap-2 p-2">
+        <DefsContainerSkeleton />
+      </ScrollView>
+    );
   }
 
   if (!defsQuery.data?.data) {
@@ -51,6 +49,15 @@ export function DefsContent({ onRefreshingChange }: DefsContentProps) {
         <ThemedText type="default" className="text-center opacity-70">
           Не вдалося отримати результат розрахунку. Спробуйте ще раз.
         </ThemedText>
+        <ThemedButton
+          variant="default"
+          onPress={() => void defsQuery.refetch()}
+          className="mt-2 px-4"
+        >
+          <ThemedText type="default" className="text-typography-0">
+            Повторити
+          </ThemedText>
+        </ThemedButton>
       </View>
     );
   }
@@ -58,8 +65,8 @@ export function DefsContent({ onRefreshingChange }: DefsContentProps) {
   return (
     <DefsContainer
       defsData={defsQuery.data.data}
-      refreshing={refreshing}
-      onRefresh={handleRefresh}
+      refreshing={defsQuery.isRefetching}
+      onRefresh={() => void defsQuery.refetch()}
     />
   );
 }

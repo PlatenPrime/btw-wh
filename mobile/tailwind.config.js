@@ -1,10 +1,18 @@
 import nativewindPreset from "nativewind/preset";
 import colors from "tailwindcss/colors";
 
-// Удаляем устаревшие цвета, чтобы убрать предупреждения
-const deprecatedColors = ['lightBlue', 'warmGray', 'trueGray', 'coolGray', 'blueGray'];
+// Удаляем устаревшие цвета без Object.entries — иначе Tailwind сыпет warn на getters
+const deprecatedColors = new Set([
+  "lightBlue",
+  "warmGray",
+  "trueGray",
+  "coolGray",
+  "blueGray",
+]);
 const modernColors = Object.fromEntries(
-  Object.entries(colors).filter(([key]) => !deprecatedColors.includes(key))
+  Object.keys(colors)
+    .filter((key) => !deprecatedColors.has(key))
+    .map((key) => [key, colors[key]])
 );
 
 /** @type {import('tailwindcss').Config} */
@@ -13,9 +21,12 @@ export default {
   content: [
     "./app/**/*.{html,js,jsx,ts,tsx,mdx}",
     "./components/**/*.{html,js,jsx,ts,tsx,mdx}",
+    "./modules/**/*.{html,js,jsx,ts,tsx,mdx}",
+    "./providers/**/*.{html,js,jsx,ts,tsx,mdx}",
+    "./hooks/**/*.{html,js,jsx,ts,tsx,mdx}",
+    "./lib/**/*.{html,js,jsx,ts,tsx,mdx}",
     "./utils/**/*.{html,js,jsx,ts,tsx,mdx}",
     "./*.{html,js,jsx,ts,tsx,mdx}",
-    "./src/**/*.{html,js,jsx,ts,tsx,mdx}",
   ],
   presets: [nativewindPreset],
   important: "html",

@@ -9,6 +9,7 @@
 5. [Навигация и роутинг](#навигация-и-роутинг)
 6. [Работа с данными](#работа-с-данными)
 7. [Правила и конвенции](#правила-и-конвенции)
+8. [Android release (Google Play)](#android-release-google-play)
 
 ---
 
@@ -16,10 +17,10 @@
 
 ### Основные технологии
 
-- **Expo** (~54.0.30) - фреймворк для разработки React Native приложений
+- **Expo** (~54.0.33) - фреймворк для разработки React Native приложений
 - **React Native** (0.81.5) - кроссплатформенная разработка
 - **TypeScript** (5.9.2) - типизация кода
-- **Expo Router** (~6.0.21) - file-based routing для навигации
+- **Expo Router** (~6.0.23) - file-based routing для навигации
 
 ### Ключевые библиотеки
 
@@ -32,7 +33,7 @@
 #### UI и стилизация
 
 - **NativeWind** (^4.1.23) - Tailwind CSS для React Native
-- **@gluestack-ui/core** (^3.0.10) - UI компоненты
+- **@/components/themed** - themed UI-компоненты проекта
 - **@expo/vector-icons** (^15.0.3) - иконки
 
 #### Навигация
@@ -44,7 +45,7 @@
 
 - **react-native-reanimated** (~4.1.0) - анимации
 - **react-native-gesture-handler** (~2.28.0) - обработка жестов
-- **@legendapp/motion** (^2.3.0) - анимации
+- **react-native-worklets** (^0.5.1) - worklets для Reanimated 4
 
 #### Безопасность и хранение
 
@@ -1087,6 +1088,50 @@ export function ProtectedRoute({
 
 ---
 
+## Android release (Google Play)
+
+Managed workflow + EAS. Package: `com.platenprime.btwmobile`. Версии в `app.json` (`version` / `android.versionCode`) и `package.json` (`version`) должны совпадать по semver.
+
+### Требования
+
+- Node.js ≥ 20.19.x
+- EAS CLI (`npm i -g eas-cli` или `npx eas-cli`)
+- Логин: `eas login`, проект уже привязан (`extra.eas.projectId` в `app.json`)
+
+### Перед сборкой
+
+1. Bump в `app.json`: `expo.version` и `android.versionCode` (versionCode только вверх)
+2. Синхронизируй `package.json` → `version`
+3. Иконки/splash — PNG (`assets/images/icon.png`, `android-icon-*.png`, `splash-icon.png`)
+4. Выровняй deps под SDK 54:
+
+```bash
+cd mobile
+npm install
+npx expo-doctor
+npx expo install --fix
+```
+
+### Сборка
+
+```bash
+# Preview APK (внутренняя проверка)
+npm run bap
+
+# Production AAB для Google Play
+npm run ba
+```
+
+Profiles: `preview` → APK, `production` → `app-bundle` (см. `eas.json`).
+
+### Upload
+
+AAB из EAS → Google Play Console (ручная загрузка) или `eas submit --platform android --profile production` после настройки credentials.
+
+SDK 54 по умолчанию target/compile **API 36** — соответствует требованиям Play (с 31 авг 2026).
+
+---
+
 ## Полезные ссылки
 
 - [Expo Router Documentation](https://docs.expo.dev/router/introduction/)
@@ -1094,7 +1139,8 @@ export function ProtectedRoute({
 - [React Hook Form Documentation](https://react-hook-form.com/)
 - [Zod Documentation](https://zod.dev/)
 - [NativeWind Documentation](https://www.nativewind.dev/)
-- [Gluestack UI Documentation](https://ui.gluestack.io/)
+- [EAS Build](https://docs.expo.dev/build/introduction/)
+- [Google Play target API](https://developer.android.com/google/play/requirements/target-sdk)
 
 ---
 
