@@ -11,7 +11,7 @@
 3. **Load unpacked** → вибрати теку `extensions/air-capture`.
 4. Відкрити BTW-WH, зайти на сторінку конкурента **Air** (`#/sku/konks/:id`). У блоці «Дозаповнення Air» має зʼявитися статус «Розширення активне».
 
-Якщо застосунок працює не на `https://btw-wh.up.railway.app` чи `localhost` — додайте свій origin у `manifest.json → content_scripts.matches` і перезавантажте розширення.
+Якщо застосунок працює не на `https://btw-wh-s.up.railway.app` чи `localhost` — додайте свій origin у `manifest.json → content_scripts.matches` і перезавантажте розширення.
 
 ## Протокол (`protocol.js`)
 
