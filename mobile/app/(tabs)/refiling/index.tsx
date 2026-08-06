@@ -21,12 +21,12 @@ export default function RefilingList() {
       iconColor: SemanticColors.iconColors.purple,
       route: "asks",
     },
-    {
-      title: "Дефіцити",
-      icon: "warning",
-      iconColor: SemanticColors.iconColors.rose,
-      route: "defs",
-    },
+    // {
+    //   title: "Дефіцити",
+    //   icon: "warning",
+    //   iconColor: SemanticColors.iconColors.rose,
+    //   route: "defs",
+    // },
     {
       title: "Зняття",
       icon: "arrow-downward",
@@ -46,7 +46,10 @@ export default function RefilingList() {
           {navigationItems.map((item, index) => (
             <GlassCard
               key={item.route}
-              entering={FadeInDown.springify().damping(20).stiffness(300).delay(index * 50)}
+              entering={FadeInDown.springify()
+                .damping(20)
+                .stiffness(300)
+                .delay(index * 50)}
             >
               <ThemedPressable
                 onPress={() => handleNavigation(item.route)}
@@ -58,7 +61,10 @@ export default function RefilingList() {
                   size={24}
                   color={item.iconColor}
                 />
-                <ThemedText type="defaultSemiBold" className="ml-3 text-base flex-1">
+                <ThemedText
+                  type="defaultSemiBold"
+                  className="ml-3 text-base flex-1"
+                >
                   {item.title}
                 </ThemedText>
               </ThemedPressable>
