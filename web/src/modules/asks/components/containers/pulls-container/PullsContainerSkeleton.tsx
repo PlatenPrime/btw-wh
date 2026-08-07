@@ -9,7 +9,7 @@ export function PullsContainerSkeleton() {
       </div>
       <div className="grid gap-4">
         {Array.from({ length: 5 }).map((_, index) => (
-          <Skeleton key={index} className="h-32 w-full" />
+          <Skeleton key={index} className="h-44 w-full" />
         ))}
       </div>
     </SurfaceSection>

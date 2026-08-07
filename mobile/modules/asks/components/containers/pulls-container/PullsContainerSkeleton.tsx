@@ -20,7 +20,11 @@ function PullsPositionCardSkeleton() {
       />
       <ThemedBox
         className="rounded bg-secondary-300"
-        style={{ height: 14, width: "40%" }}
+        style={{ height: 14, width: "35%" }}
+      />
+      <ThemedBox
+        className="rounded bg-secondary-300"
+        style={{ height: 14, width: "70%" }}
       />
     </View>
   );

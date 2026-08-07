@@ -21,12 +21,12 @@ export default function RefilingList() {
       iconColor: SemanticColors.iconColors.purple,
       route: "asks",
     },
-    // {
-    //   title: "Дефіцити",
-    //   icon: "warning",
-    //   iconColor: SemanticColors.iconColors.rose,
-    //   route: "defs",
-    // },
+    {
+      title: "Дефіцити",
+      icon: "warning",
+      iconColor: SemanticColors.iconColors.rose,
+      route: "defs",
+    },
     {
       title: "Зняття",
       icon: "arrow-downward",

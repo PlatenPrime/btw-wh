@@ -1,3 +1,5 @@
+import { ArtImageLink } from "@/components/shared/art-image-link";
+import { GlassCard } from "@/components/shared/glass-card";
 import {
   ThemedButton,
   ThemedHStack,
@@ -6,9 +8,7 @@ import {
   ThemedVStack,
 } from "@/components/themed";
 import { ThemedText } from "@/components/themed/themed-text";
-
-import { ArtImageLink } from "@/components/shared/art-image-link";
-import { GlassCard } from "@/components/shared/glass-card";
+import { SemanticColors } from "@/constants/theme";
 import type { IPositionForPullsPage } from "@/modules/asks/api/types/dto";
 import { AskPosEditDialog } from "@/modules/asks/components/dialogs/ask-pos-edit-dialog/AskPosEditDialog";
 import type { PosResponse } from "@/modules/poses/api/types";
@@ -28,6 +28,8 @@ export function PullsPositionCardView({
   setOpen,
   onSuccess,
 }: PullsPositionCardViewProps) {
+  const zoneLabel = position.artZone ?? "—";
+
   return (
     <>
       <GlassCard className="p-2">
@@ -58,18 +60,63 @@ export function PullsPositionCardView({
             link={`/(tabs)/arts/${position.artikul}`}
           />
 
-          {position.askRemainingQuantity !== null && (
+          <ThemedHStack className="items-center gap-1.5">
+            <ThemedIcon
+              family="MaterialIcons"
+              name="place"
+              size={14}
+              color={SemanticColors.iconColors.amber}
+            />
+            <ThemedText
+              type="default"
+              className="text-xs flex-1"
+              numberOfLines={1}
+            >
+              {zoneLabel}
+            </ThemedText>
+          </ThemedHStack>
+
+          <ThemedHStack className="flex-wrap items-center gap-3">
             <ThemedHStack className="items-center gap-1">
               <ThemedIcon
                 family="MaterialIcons"
-                name="radio-button-unchecked"
-                size={12}
+                name="inventory-2"
+                size={14}
+                color={SemanticColors.iconColors.blue}
               />
               <ThemedText type="default" className="text-xs">
-                {position.askRemainingQuantity}
+                {position.quant}
               </ThemedText>
             </ThemedHStack>
-          )}
+
+            {position.plannedQuant !== null ? (
+              <ThemedHStack className="items-center gap-1">
+                <ThemedIcon
+                  family="MaterialIcons"
+                  name="arrow-downward"
+                  size={14}
+                  color={SemanticColors.iconColors.green}
+                />
+                <ThemedText type="default" className="text-xs">
+                  {position.plannedQuant}
+                </ThemedText>
+              </ThemedHStack>
+            ) : null}
+
+            {position.askRemainingQuantity !== null ? (
+              <ThemedHStack className="items-center gap-1">
+                <ThemedIcon
+                  family="MaterialIcons"
+                  name="radio-button-unchecked"
+                  size={12}
+                  color={SemanticColors.iconColors.amber}
+                />
+                <ThemedText type="default" className="text-xs">
+                  {position.askRemainingQuantity}
+                </ThemedText>
+              </ThemedHStack>
+            ) : null}
+          </ThemedHStack>
         </ThemedVStack>
       </GlassCard>
 

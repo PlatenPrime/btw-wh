@@ -1,6 +1,7 @@
 import type { IPositionForPull } from "@/modules/asks/api/types/dto";
 import { AskPos } from "@/modules/asks/components/containers/ask-poses-by-artikul-container/components/ask-pos/AskPos";
 import type { PosResponse } from "@/modules/poses/api/types";
+import { AskPullPositionCardView } from "./AskPullPositionCardView";
 
 interface AskPullPositionCardProps {
   position: IPositionForPull;
@@ -36,17 +37,20 @@ export function AskPullPositionCard({
     limit: position.limit,
   };
 
-  // Преобразуем в PosResponse формат
   const posResponse: PosResponse = {
     data: posData,
   };
 
   return (
-    <AskPos
-      pos={posResponse}
-      askId={askId}
-      initialRemovedQuant={position.plannedQuant ?? undefined}
-    />
+    <AskPullPositionCardView
+      artZone={position.artZone}
+      plannedQuant={position.plannedQuant}
+    >
+      <AskPos
+        pos={posResponse}
+        askId={askId}
+        initialRemovedQuant={position.plannedQuant ?? undefined}
+      />
+    </AskPullPositionCardView>
   );
 }
-

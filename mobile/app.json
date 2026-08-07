@@ -2,7 +2,7 @@
   "expo": {
     "name": "BTW App",
     "slug": "btw-mobile",
-    "version": "2.2.7",
+    "version": "2.2.8",
     "orientation": "portrait",
     "icon": "./assets/images/logo-btw.jpg",
     "scheme": "mobile",
@@ -14,14 +14,14 @@
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/images/android-icon-foreground.png",
-        "backgroundImage": "./assets/images/android-icon-background.png",
-        "monochromeImage": "./assets/images/android-icon-monochrome.png"
+        "foregroundImage": "./assets/images/logo-btw.jpg",
+        "backgroundImage": "./assets/images/logo-btw.jpg",
+        "monochromeImage": "./assets/images/logo-btw.jpg"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
       "package": "com.platenprime.btwmobile",
-      "versionCode": 227
+      "versionCode": 228
     },
     "web": {
       "output": "static",

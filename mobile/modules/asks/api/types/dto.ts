@@ -92,6 +92,8 @@ export interface IPositionForPull extends Omit<IPos, "palletData"> {
   palletData: PalletDataForPull;
   /** Количество для снятия с этой позиции (null если quant не указан в ask) */
   plannedQuant: number | null;
+  /** Зона хранения артикула из Arts (null если Art не найден) */
+  artZone: string | null;
 }
 
 export interface GetAskPullResponse {
