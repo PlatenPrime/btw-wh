@@ -49,7 +49,7 @@ export function SkuStatisticsSkugrFetcher({
       <ErrorDisplay
         error={skusQuery.error}
         title="Помилка завантаження товарів"
-        description="Не вдалося завантажити дані для діаграми та таблиці"
+        description="Не вдалося завантажити дані для таблиці"
         onRetry={() => void skusQuery.refetch()}
         variant="compact"
       />

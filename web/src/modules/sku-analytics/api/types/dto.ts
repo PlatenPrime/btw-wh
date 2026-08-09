@@ -78,6 +78,7 @@ export interface SkuSkugrSkusSalesTotalDto {
 
 export interface SkuSkugrSkusSalesResponseDto {
   message: string;
+  skugrTitle: string;
   data: SkuSkugrSkusSalesItemDto[];
   all: SkuSkugrSkusSalesTotalDto;
 }

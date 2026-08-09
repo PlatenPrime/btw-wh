@@ -4,7 +4,6 @@ import type {
 } from "@/modules/sku-analytics/api/types";
 import type {
   SkuStatisticsMetric,
-  SkuStatisticsRow,
   SkuStatisticsSkuRow,
 } from "@/modules/sku-analytics/types";
 import { SkuStatisticsSkugrContainerView } from "./SkuStatisticsSkugrContainerView";
@@ -63,31 +62,11 @@ export function SkuStatisticsSkugrContainer({
       );
   }, [data.data, data.all, metric]);
 
-  const pieRows = useMemo<SkuStatisticsRow[]>(() => {
-    const nonzero = rows.filter((row) =>
-      metric === "salesUah" ? row.salesUah > 0 : row.salesPcs > 0,
-    );
-    const total = nonzero.reduce(
-      (acc, row) =>
-        acc + (metric === "salesUah" ? row.salesUah : row.salesPcs),
-      0,
-    );
-    if (total <= 0) return [];
-    return nonzero.map((row) => ({
-      prodName: row.skuId,
-      title: row.title,
-      salesPcs: row.salesPcs,
-      salesUah: row.salesUah,
-      share:
-        ((metric === "salesUah" ? row.salesUah : row.salesPcs) / total) * 100,
-    }));
-  }, [rows, metric]);
-
   return (
     <SkuStatisticsSkugrContainerView
       rows={rows}
-      pieRows={pieRows}
       all={all}
+      skugrTitle={data.skugrTitle}
       metric={metric}
       onMetricChange={setMetric}
       skugrId={skugrId}

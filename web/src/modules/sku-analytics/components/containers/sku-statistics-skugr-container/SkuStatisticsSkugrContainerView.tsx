@@ -1,17 +1,15 @@
 import { Button } from "@/components/ui/button";
-import { SkuStatisticsPie } from "@/modules/sku-analytics/components/charts/sku-statistics-pie/SkuStatisticsPie";
 import { SkuStatisticsSkusTable } from "@/modules/sku-analytics/components/tables/sku-statistics-skus-table";
 import type { SkuSkugrSkusSalesTotalDto } from "@/modules/sku-analytics/api/types";
 import type {
   SkuStatisticsMetric,
-  SkuStatisticsRow,
   SkuStatisticsSkuRow,
 } from "@/modules/sku-analytics/types";
 
 export interface SkuStatisticsSkugrContainerViewProps {
   rows: SkuStatisticsSkuRow[];
-  pieRows: SkuStatisticsRow[];
   all: SkuSkugrSkusSalesTotalDto;
+  skugrTitle: string;
   metric: SkuStatisticsMetric;
   onMetricChange: (metric: SkuStatisticsMetric) => void;
   skugrId: string;
@@ -23,8 +21,8 @@ export interface SkuStatisticsSkugrContainerViewProps {
 
 export function SkuStatisticsSkugrContainerView({
   rows,
-  pieRows,
   all,
+  skugrTitle,
   metric,
   onMetricChange,
   skugrId,
@@ -33,30 +31,36 @@ export function SkuStatisticsSkugrContainerView({
   konk,
   prod,
 }: SkuStatisticsSkugrContainerViewProps) {
+  const hasTitle = Boolean(skugrTitle);
+
   return (
     <div className="grid gap-4">
-      {pieRows.length > 0 ? (
-        <SkuStatisticsPie rows={pieRows} metric={metric} />
-      ) : (
-        <p className="text-sm text-muted-foreground">
-          Немає ненульових продажів для діаграми; див. таблицю нижче.
-        </p>
-      )}
-      <div className="flex items-center justify-center gap-2">
-        <Button
-          variant={metric === "salesUah" ? "default" : "outline"}
-          size="sm"
-          onClick={() => onMetricChange("salesUah")}
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <h2
+          className={
+            hasTitle
+              ? "text-lg font-semibold text-foreground"
+              : "text-lg font-semibold text-muted-foreground"
+          }
         >
-          Виручка, грн
-        </Button>
-        <Button
-          variant={metric === "salesPcs" ? "default" : "outline"}
-          size="sm"
-          onClick={() => onMetricChange("salesPcs")}
-        >
-          Продажі, шт
-        </Button>
+          {skugrTitle || "Товарна група"}
+        </h2>
+        <div className="flex items-center gap-2">
+          <Button
+            variant={metric === "salesUah" ? "default" : "outline"}
+            size="sm"
+            onClick={() => onMetricChange("salesUah")}
+          >
+            Виручка, грн
+          </Button>
+          <Button
+            variant={metric === "salesPcs" ? "default" : "outline"}
+            size="sm"
+            onClick={() => onMetricChange("salesPcs")}
+          >
+            Продажі, шт
+          </Button>
+        </div>
       </div>
       <SkuStatisticsSkusTable
         rows={rows}
