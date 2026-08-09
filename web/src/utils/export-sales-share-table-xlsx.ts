@@ -104,3 +104,21 @@ export function buildSkuKonkProdSkugrGroupsExportFilename(
 ): string {
   return `sku_konk_prod_skugr_groups_${sanitizeFilenamePart(konk)}_${sanitizeFilenamePart(prod)}_${sanitizeFilenamePart(dateFrom)}_${sanitizeFilenamePart(dateTo)}.xlsx`;
 }
+
+export function buildSkuStatisticsSkusExportFilename(
+  skugrId: string,
+  dateFrom: string,
+  dateTo: string,
+  konk?: string,
+  prod?: string,
+): string {
+  const parts = [
+    "sku_statistics_skus",
+    konk ? sanitizeFilenamePart(konk) : null,
+    prod ? sanitizeFilenamePart(prod) : null,
+    sanitizeFilenamePart(skugrId),
+    sanitizeFilenamePart(dateFrom),
+    sanitizeFilenamePart(dateTo),
+  ].filter(Boolean);
+  return `${parts.join("_")}.xlsx`;
+}

@@ -29,7 +29,7 @@ export function SkuSliceTableContainer({ items }: SkuSliceTableContainerProps) {
             <TableHead className="min-w-[220px]">Товар</TableHead>
             <TableHead className="w-[1%] whitespace-nowrap text-right">
               Залишок
-            </TableHead>
+            </TableHead>            
             <TableHead className="w-[1%] whitespace-nowrap text-right">
               Ціна
             </TableHead>

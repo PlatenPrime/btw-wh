@@ -1,0 +1,1 @@
+export { SkuStatisticsSkugrFetcher } from "./SkuStatisticsSkugrFetcher";

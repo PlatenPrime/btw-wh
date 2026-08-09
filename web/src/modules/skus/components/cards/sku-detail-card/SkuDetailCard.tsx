@@ -1,21 +1,20 @@
-import { Image } from "@/components/shared/media/image/Image";
+import { DetailPanelCard } from "@/components/shared/cards";
 import {
   URL_DIALOG_IMAGE_FALLBACK,
   UrlDialogImage,
 } from "@/components/shared/dialogs";
-import { DetailPanelCard } from "@/components/shared/cards";
-import { CardHeader, CardTitle } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
-import { iconSize, typography } from "@/lib/typography";
 import {
   getKonkTheme,
   KonkBanner,
 } from "@/components/shared/domain/konk-banner";
 import { EntityLabel } from "@/components/shared/entities/entity-label";
+import { Image } from "@/components/shared/media/image/Image";
+import { CardHeader, CardTitle } from "@/components/ui/card";
+import { iconSize, typography } from "@/lib/typography";
+import { cn } from "@/lib/utils";
 import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
 import type { SkuDto, SkuSkugrDto } from "@/modules/skus/api/types";
-import { SkuLiveStockContainer } from "@/modules/skus/components/containers/sku-live-stock-container";
 import { ExternalLink } from "lucide-react";
 import type { ReactNode } from "react";
 import { Link } from "react-router";
@@ -49,7 +48,11 @@ export function SkuDetailCard({ sku, konk, prod, skugrs }: SkuDetailCardProps) {
   } else {
     skuImageContent = (
       <div className="bg-muted size-40 shrink-0 overflow-hidden rounded-lg">
-        <Image src={SKU_DETAIL_PLACEHOLDER} alt="" className="size-full object-cover" />
+        <Image
+          src={SKU_DETAIL_PLACEHOLDER}
+          alt=""
+          className="size-full object-cover"
+        />
       </div>
     );
   }
@@ -79,7 +82,12 @@ export function SkuDetailCard({ sku, konk, prod, skugrs }: SkuDetailCardProps) {
         {skuImageContent}
         <div className="grid min-w-0 flex-1 gap-2">
           <CardTitle className={typography.detailTitle}>{sku.title}</CardTitle>
-          <div className={cn("flex flex-wrap items-center gap-3", typography.detailSubtitle)}>
+          <div
+            className={cn(
+              "flex flex-wrap items-center gap-3",
+              typography.detailSubtitle,
+            )}
+          >
             {prodLabelContent}
             {hasBtradeAnalog && <span>Аналог БТрейд: {sku.btradeAnalog}</span>}
           </div>
@@ -87,23 +95,25 @@ export function SkuDetailCard({ sku, konk, prod, skugrs }: SkuDetailCardProps) {
             href={sku.url}
             target="_blank"
             rel="noopener noreferrer"
-            className={cn("text-primary inline-flex items-center gap-1 hover:underline", typography.body)}
+            className={cn(
+              "text-primary inline-flex items-center gap-1 hover:underline",
+              typography.body,
+            )}
           >
             <ExternalLink className={iconSize.ui} />
             Відкрити на сайті конкурента
           </a>
-          <SkuLiveStockContainer sku={sku} />
           <div className="grid gap-2">
-            <span className={cn("font-medium", typography.detailSubtitle)}>
-              Товарні групи
-            </span>
             {hasSkugrs ? (
               <div className="flex flex-wrap gap-2">
                 {skugrs.map((skugr) => (
                   <Link
                     key={skugr._id}
                     to={`/sku/skugrs/${skugr._id}`}
-                    className={cn("bg-muted hover:bg-muted/80 rounded-md px-2 py-1 transition-colors", typography.body)}
+                    className={cn(
+                      "bg-muted hover:bg-muted/80 rounded-md px-2 py-1 transition-colors",
+                      typography.body,
+                    )}
                   >
                     {skugr.title}
                   </Link>

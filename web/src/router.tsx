@@ -188,6 +188,18 @@ const SkuStatistics = lazyWithRetry(() =>
     default: module.SkuStatistics,
   })),
 );
+const SkuStatisticsProd = lazyWithRetry(() =>
+  import("./modules/sku-analytics/pages/sku-statistics-prod").then((module) => ({
+    default: module.SkuStatisticsProd,
+  })),
+);
+const SkuStatisticsSkugr = lazyWithRetry(() =>
+  import("./modules/sku-analytics/pages/sku-statistics-skugr").then(
+    (module) => ({
+      default: module.SkuStatisticsSkugr,
+    }),
+  ),
+);
 
 const Analogs = lazyWithRetry(() =>
   import("./modules/analogs/pages/analogs").then((module) => ({
@@ -466,6 +478,24 @@ export const router = createHashRouter([
             element: (
               <ProtectedRoute>
                 <SkuStatistics />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "statistics/prod",
+            element: (
+              <ProtectedRoute>
+                <SkuStatisticsProd />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "statistics/skugr",
+            element: (
+              <ProtectedRoute>
+                <SkuStatisticsSkugr />
               </ProtectedRoute>
             ),
             errorElement: <RouteErrorBoundary />,

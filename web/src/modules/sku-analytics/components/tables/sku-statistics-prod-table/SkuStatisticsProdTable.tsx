@@ -8,22 +8,28 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { SkuStatisticsMetric, SkuStatisticsRow } from "@/modules/sku-analytics/types";
+import type { SkuKonkProdSkugrGroupsSalesTotalDto } from "@/modules/sku-analytics/api/types";
+import type {
+  SkugrGroupSalesRow,
+  SkugrGroupsMetric,
+} from "@/modules/sku-analytics/components/containers/sku-konk-prod-skugr-groups-section/types";
 import {
-  buildSkuStatisticsProdHref,
+  buildSkuStatisticsSkugrHref,
   openSkuStatisticsDrilldownInNewTab,
 } from "@/modules/sku-analytics/utils/buildSkuStatisticsDrilldownHref";
 import {
-  buildSkuStatisticsManufacturersExportFilename,
+  buildSkuKonkProdSkugrGroupsExportFilename,
   exportSalesShareTableToXlsx,
 } from "@/utils/export-sales-share-table-xlsx";
 import { Download } from "lucide-react";
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 
-interface SkuStatisticsTableProps {
-  rows: SkuStatisticsRow[];
-  metric: SkuStatisticsMetric;
+interface SkuStatisticsProdTableProps {
+  rows: SkugrGroupSalesRow[];
+  all: SkuKonkProdSkugrGroupsSalesTotalDto;
+  metric: SkugrGroupsMetric;
   konk: string;
+  prod: string;
   dateFrom: string;
   dateTo: string;
 }
@@ -41,25 +47,17 @@ const percentFormat = new Intl.NumberFormat("uk-UA", {
   maximumFractionDigits: 2,
 });
 
-export function SkuStatisticsTable({
+export function SkuStatisticsProdTable({
   rows,
+  all,
   metric,
   konk,
+  prod,
   dateFrom,
   dateTo,
-}: SkuStatisticsTableProps) {
+}: SkuStatisticsProdTableProps) {
   const shareColumnTitle =
     metric === "salesUah" ? "Частка за виручкою" : "Частка за продажами";
-
-  const { totalPcs, totalUah } = useMemo(() => {
-    return rows.reduce(
-      (acc, item) => ({
-        totalPcs: acc.totalPcs + item.salesPcs,
-        totalUah: acc.totalUah + item.salesUah,
-      }),
-      { totalPcs: 0, totalUah: 0 },
-    );
-  }, [rows]);
 
   const handleExportExcel = useCallback(() => {
     exportSalesShareTableToXlsx({
@@ -70,10 +68,15 @@ export function SkuStatisticsTable({
         sharePercent: item.share,
       })),
       metric,
-      groupColumnTitle: "Виробник",
-      filename: buildSkuStatisticsManufacturersExportFilename(konk, dateFrom, dateTo),
+      groupColumnTitle: "Товарна група",
+      filename: buildSkuKonkProdSkugrGroupsExportFilename(
+        konk,
+        prod,
+        dateFrom,
+        dateTo,
+      ),
     });
-  }, [rows, metric, konk, dateFrom, dateTo]);
+  }, [rows, metric, konk, prod, dateFrom, dateTo]);
 
   return (
     <SurfaceSection className="grid gap-2 p-0">
@@ -96,7 +99,7 @@ export function SkuStatisticsTable({
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Виробник</TableHead>
+            <TableHead>Товарна група</TableHead>
             <TableHead className="text-right">Продажі, шт</TableHead>
             <TableHead className="text-right">Виручка, грн</TableHead>
             <TableHead className="text-right">{shareColumnTitle}</TableHead>
@@ -106,26 +109,27 @@ export function SkuStatisticsTable({
           <TableRow className="bg-muted/90 border-b-2 border-primary/25 font-semibold hover:bg-muted/90">
             <TableCell className="max-w-[320px] truncate">Усього</TableCell>
             <TableCell className="text-right tabular-nums">
-              {unitsFormat.format(totalPcs)}
+              {unitsFormat.format(all.salesPcs)}
             </TableCell>
             <TableCell className="text-right tabular-nums">
-              {currencyFormat.format(totalUah)}
+              {currencyFormat.format(all.salesUah)}
             </TableCell>
             <TableCell className="text-right tabular-nums">
               {percentFormat.format(100)}%
             </TableCell>
           </TableRow>
           {rows.map((item) => {
-            const href = buildSkuStatisticsProdHref({
-              konk,
-              prod: item.prodName,
+            const href = buildSkuStatisticsSkugrHref({
+              skugrId: item.skugrId,
               dateFrom,
               dateTo,
+              konk,
+              prod,
             });
             const openRow = () => openSkuStatisticsDrilldownInNewTab(href);
             return (
               <TableRow
-                key={item.prodName}
+                key={item.skugrId}
                 role="link"
                 tabIndex={0}
                 className="cursor-pointer transition-colors hover:bg-accent/70 focus-visible:bg-accent/70 focus-visible:outline-none"

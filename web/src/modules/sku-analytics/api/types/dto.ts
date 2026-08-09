@@ -61,6 +61,27 @@ export interface SkuKonkProdSkugrGroupsSalesResponseDto {
   all: SkuKonkProdSkugrGroupsSalesTotalDto;
 }
 
+export interface SkuSkugrSkusSalesItemDto {
+  skuId: string;
+  title: string;
+  productId?: string;
+  imageUrl?: string | null;
+  salesPcs: number;
+  salesUah: number;
+}
+
+export interface SkuSkugrSkusSalesTotalDto {
+  title: string;
+  salesPcs: number;
+  salesUah: number;
+}
+
+export interface SkuSkugrSkusSalesResponseDto {
+  message: string;
+  data: SkuSkugrSkusSalesItemDto[];
+  all: SkuSkugrSkusSalesTotalDto;
+}
+
 export interface CompensatingSliceRefetchStatsDto {
   refetched: number;
   updated: number;

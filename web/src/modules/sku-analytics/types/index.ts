@@ -24,3 +24,12 @@ export interface SkuStatisticsRow {
   salesUah: number;
   share: number;
 }
+
+export interface SkuStatisticsSkuRow {
+  skuId: string;
+  title: string;
+  imageUrl?: string | null;
+  salesPcs: number;
+  salesUah: number;
+  share: number;
+}
