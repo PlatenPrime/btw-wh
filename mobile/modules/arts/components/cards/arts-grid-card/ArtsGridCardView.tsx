@@ -1,14 +1,13 @@
 import { ArtImageModal } from "@/components/shared/art-image-modal/ArtImageModal";
 import { GlassCard } from "@/components/shared/glass-card";
+import { SharikImage } from "@/components/shared/sharik-image";
 import { ThemedText } from "@/components/themed/themed-text";
-import { Image } from "expo-image";
 import { TouchableOpacity } from "react-native";
 
 interface ArtsGridCardViewProps {
   artikul: string;
   nameukr: string;
   onPress: () => void;
-  imageUrl: string;
   isModalVisible: boolean;
   onImagePress: () => void;
   onCloseModal: () => void;
@@ -18,7 +17,6 @@ export function ArtsGridCardView({
   artikul,
   nameukr,
   onPress,
-  imageUrl,
   isModalVisible,
   onImagePress,
   onCloseModal,
@@ -27,12 +25,10 @@ export function ArtsGridCardView({
     <>
       <GlassCard className="flex-row items-center p-3">
         <TouchableOpacity onPress={onImagePress} activeOpacity={0.7}>
-          <Image
-            source={{ uri: imageUrl }}
+          <SharikImage
+            artikul={artikul}
+            size="prev"
             style={{ width: 60, height: 60, borderRadius: 8 }}
-            contentFit="cover"
-            placeholder={{ blurhash: "LGF5]+Yk^6#M@-5c,1J5@[or[Q6." }}
-            transition={200}
           />
         </TouchableOpacity>
         <TouchableOpacity

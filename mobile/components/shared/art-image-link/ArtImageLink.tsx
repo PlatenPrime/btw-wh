@@ -1,6 +1,5 @@
 import { ArtImageModal } from "@/components/shared/art-image-modal/ArtImageModal";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
-import { getSmallImageUrl } from "@/modules/arts/constants/art-image-url";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { ArtImageLinkView } from "./ArtImageLInkView";
@@ -20,7 +19,6 @@ export function ArtImageLink({
 }: ArtImageLinkProps) {
   const router = useRouter();
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const imageUrl = getSmallImageUrl(artikul);
 
   const handleImagePress = () => {
     setIsModalVisible(true);
@@ -45,7 +43,6 @@ export function ArtImageLink({
       <ArtImageLinkView
         artikul={artikul}
         nameukr={nameukr || "..."}
-        imageUrl={imageUrl}
         isTextTouchable={isTextTouchable}
         onImagePress={handleImagePress}
         onTextPress={handleTextPress}

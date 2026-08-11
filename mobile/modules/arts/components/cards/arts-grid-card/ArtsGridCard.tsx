@@ -1,5 +1,5 @@
+import { ArtImageModal } from "@/components/shared/art-image-modal/ArtImageModal";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
-import { getSmallImageUrl } from "@/modules/arts/constants/art-image-url";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { ArtsGridCardView } from "./ArtsGridCardView";
@@ -11,7 +11,6 @@ interface GridCardProps {
 export function ArtsGridCard({ art }: GridCardProps) {
   const router = useRouter();
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const imageUrl = getSmallImageUrl(art.artikul);
 
   const nameukr =
     art.nameukr.length > 50
@@ -35,7 +34,6 @@ export function ArtsGridCard({ art }: GridCardProps) {
       artikul={art.artikul}
       nameukr={nameukr}
       onPress={handlePress}
-      imageUrl={imageUrl}
       isModalVisible={isModalVisible}
       onImagePress={handleImagePress}
       onCloseModal={handleCloseModal}

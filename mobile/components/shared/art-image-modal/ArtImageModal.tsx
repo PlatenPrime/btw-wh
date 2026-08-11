@@ -1,7 +1,6 @@
+import { SharikImage } from "@/components/shared/sharik-image";
 import { ThemedIcon } from "@/components/themed";
 import { SemanticColors } from "@/constants/theme";
-import { getBigImageUrl } from "@/modules/arts/constants/art-image-url";
-import { Image } from "expo-image";
 import {
   Modal,
   TouchableOpacity,
@@ -24,8 +23,6 @@ export function ArtImageModal({
   visible,
   onClose,
 }: ArtImageModalProps) {
-  const imageUrl = getBigImageUrl(artikul);
-
   return (
     <Modal
       visible={visible}
@@ -55,12 +52,11 @@ export function ArtImageModal({
                 />
               </TouchableOpacity>
 
-              <Image
-                source={{ uri: imageUrl }}
+              <SharikImage
+                artikul={artikul}
+                size="big"
                 style={{ width: "100%", aspectRatio: 1, borderRadius: 12 }}
                 contentFit="contain"
-                placeholder={{ blurhash: "LGF5]+Yk^6#M@-5c,1J5@[or[Q6." }}
-                transition={200}
               />
             </View>
           </TouchableWithoutFeedback>

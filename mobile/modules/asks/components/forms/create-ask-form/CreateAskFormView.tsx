@@ -12,11 +12,10 @@ import {
 import { sklads } from "@/constants/sklad";
 import { SemanticColors } from "@/constants/theme";
 import { useIconColor } from "@/hooks/use-icon-color";
+import { SharikImage } from "@/components/shared/sharik-image";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
-import { getSmallImageUrl } from "@/modules/arts/constants/art-image-url";
 import type { CreateAskFormData } from "@/modules/asks/components/forms/create-ask-form/schema";
 import { useTheme } from "@/providers/theme-provider";
-import { Image } from "expo-image";
 import type { UseFormReturn } from "react-hook-form";
 import { Controller } from "react-hook-form";
 import { ActivityIndicator } from "react-native";
@@ -56,17 +55,13 @@ export function CreateAskFormView({
   const renderArtInfo = () => {
     if (!artData) return null;
 
-    const imageUrl = getSmallImageUrl(artikul);
-
     return (
       <ThemedBox className="rounded-lg border border-outline-50 bg-background-50 p-3">
         <ThemedHStack className="items-center gap-3">
-          <Image
-            source={{ uri: imageUrl }}
+          <SharikImage
+            artikul={artikul}
+            size="prev"
             style={{ width: 60, height: 60, borderRadius: 8 }}
-            contentFit="cover"
-            placeholder={{ blurhash: "LGF5]+Yk^6#M@-5c,1J5@[or[Q6." }}
-            transition={200}
           />
           <ThemedBox className="flex-1">
             <ThemedText type="defaultSemiBold" className="text-sm">

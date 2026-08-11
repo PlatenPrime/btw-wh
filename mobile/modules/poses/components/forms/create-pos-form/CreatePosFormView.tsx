@@ -13,10 +13,9 @@ import { sklads } from "@/constants/sklad";
 import { SemanticColors } from "@/constants/theme";
 import { useIconColor } from "@/hooks/use-icon-color";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
-import { getSmallImageUrl } from "@/modules/arts/constants/art-image-url";
+import { SharikImage } from "@/components/shared/sharik-image";
 import type { IPos } from "@/modules/poses/api/types";
 import { useTheme } from "@/providers/theme-provider";
-import { Image } from "expo-image";
 import type { UseFormReturn } from "react-hook-form";
 import { Controller } from "react-hook-form";
 import { ActivityIndicator } from "react-native";
@@ -106,8 +105,6 @@ export function CreatePosFormView({
 
   // Информация об артикуле — место резервируется всегда, чтобы разметка не дергалась
   const renderArtInfo = () => {
-    const imageUrl = getSmallImageUrl(artikul);
-
     return (
       <ThemedBox
         className="rounded-lg border border-outline-50 bg-background-50 p-3"
@@ -115,12 +112,10 @@ export function CreatePosFormView({
       >
         {artData ? (
           <ThemedHStack className="items-center gap-3">
-            <Image
-              source={{ uri: imageUrl }}
+            <SharikImage
+              artikul={artikul}
+              size="prev"
               style={{ width: 60, height: 60, borderRadius: 8 }}
-              contentFit="cover"
-              placeholder={{ blurhash: "LGF5]+Yk^6#M@-5c,1J5@[or[Q6." }}
-              transition={200}
             />
             <ThemedBox className="flex-1">
               <ThemedText type="defaultSemiBold" className="text-sm">

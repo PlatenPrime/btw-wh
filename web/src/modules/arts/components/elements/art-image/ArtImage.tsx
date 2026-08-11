@@ -1,16 +1,14 @@
-import { Image } from "@/components/shared/media/image/Image";
-import { getSmallImageUrl } from "@/constants/art-image-url";
+import { SharikImage } from "@/components/shared/media/sharik-image";
 
 interface ArtImageProps {
   artikul: string;
 }
 
 export function ArtImage({ artikul }: ArtImageProps) {
-  const imageUrl = getSmallImageUrl(artikul);
   return (
-    <Image
-      src={imageUrl}
-      alt={artikul}
+    <SharikImage
+      artikul={artikul}
+      size="prev"
       className="shadow-muted-foreground aspect-square w-full max-w-[6rem] rounded-lg object-cover shadow-md"
     />
   );
