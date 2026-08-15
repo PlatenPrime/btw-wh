@@ -1,6 +1,7 @@
-import { SummaryField } from "@/components/shared/elements/summary-field";
+import { MetricChip } from "@/components/shared/elements";
 import { cn } from "@/lib/utils";
 import { BtradeArtDataPanel } from "@/modules/arts/components/elements/btrade-art-data-panel";
+import { CircleIcon, MessageSquareMore } from "lucide-react";
 
 interface AskDetailsPanelsSectionProps {
   artikul: string;
@@ -29,14 +30,21 @@ export function AskDetailsPanelsSection({
           <span className="text-muted-foreground text-sm font-semibold tracking-wider uppercase">
             Запит
           </span>
-          <div className="grid grid-cols-2 gap-x-4 gap-y-2.5">
-            {hasQuant ? <SummaryField label="Кількість" value={quant} /> : null}
+          <div className="flex flex-wrap gap-2">
+            {hasQuant ? (
+              <MetricChip
+                icon={CircleIcon}
+                tone="info"
+                label="Кількість"
+                value={quant}
+              />
+            ) : null}
             {hasCom ? (
-              <SummaryField
+              <MetricChip
+                icon={MessageSquareMore}
+                tone="edit"
                 label="Коментар"
                 value={com}
-                valueClassName="font-normal"
-                className="col-span-2"
               />
             ) : null}
           </div>

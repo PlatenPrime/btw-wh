@@ -42,7 +42,7 @@ export function AsksListCardView({ ask, statusText }: AsksListCardViewProps) {
       </div>
 
       {hasDetails ? (
-        <div className="grid">
+        <div className="grid gap-2">
           <AskQuant quant={ask.quant || 0} />
           <AskCom com={ask.com || ""} />
         </div>

@@ -1,25 +1,22 @@
-import { SummaryField } from "@/components/shared/elements/summary-field";
-import { cn } from "@/lib/utils";
+import {
+  MetricChip,
+  type IconWellTone,
+} from "@/components/shared/elements";
 import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
 
 interface ArtMetricFieldRowProps {
   icon: LucideIcon;
-  iconClassName: string;
+  tone?: IconWellTone;
   label: string;
   value: ReactNode;
 }
 
 export function ArtMetricFieldRow({
-  icon: Icon,
-  iconClassName,
+  icon,
+  tone = "muted",
   label,
   value,
 }: ArtMetricFieldRowProps) {
-  return (
-    <div className="flex items-start gap-2">
-      <Icon className={cn("mt-0.5 size-4 shrink-0", iconClassName)} />
-      <SummaryField label={label} value={value} className="min-w-0 flex-1" />
-    </div>
-  );
+  return <MetricChip icon={icon} tone={tone} label={label} value={value} />;
 }

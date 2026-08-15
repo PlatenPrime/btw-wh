@@ -21,15 +21,15 @@ export function DefCardSkeleton() {
         <div className="min-w-0 flex-1">
           <div className="flex flex-col gap-1 px-2 pb-2">
             <div className="flex items-center justify-start gap-2 text-xs">
-              <Skeleton className="size-4 shrink-0" />
+              <Skeleton className="size-6 shrink-0 rounded-md" />
               <Skeleton className="h-3 w-8" />
             </div>
             <div className="flex items-center justify-start gap-2 text-xs">
-              <Skeleton className="size-4 shrink-0" />
+              <Skeleton className="size-6 shrink-0 rounded-md" />
               <Skeleton className="h-3 w-8" />
             </div>
             <div className="flex items-center justify-start gap-2 text-xs">
-              <Skeleton className="size-4 shrink-0" />
+              <Skeleton className="size-6 shrink-0 rounded-md" />
               <Skeleton className="h-3 w-8" />
             </div>
           </div>

@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { iconSize, typography } from "@/lib/typography";
+import { typography } from "@/lib/typography";
+import { IconWell } from "@/components/shared/elements";
 import type { PalletShortDto } from "@/modules/pallet-groups/api/types";
 import { ListOrdered } from "lucide-react";
 import { Link } from "react-router";
@@ -29,8 +30,8 @@ export function PalletCard({ pallet, onUnlink }: PalletCardProps) {
         <PalletCardActions pallet={pallet} onUnlink={onUnlink} />
       </CardHeader>
       <CardContent className={cn("p-0 pt-2", typography.gridSubtitle)}>
-        <div className="flex items-center gap-2">
-          <ListOrdered className={iconSize.ui} aria-label="Сектор" />
+        <div className="flex items-center gap-2" aria-label="Сектор">
+          <IconWell icon={ListOrdered} tone="edit" size="sm" />
           <span className="font-mono">{pallet.sector}</span>
         </div>
       </CardContent>

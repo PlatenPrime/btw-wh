@@ -16,15 +16,15 @@ export function PalletInRowCardSkeleton() {
       </CardHeader>
       <CardContent className="grid gap-2 p-0">
         <div className="flex items-center justify-start gap-2">
-          <Skeleton className="size-3.5 shrink-0" />
+          <Skeleton className="size-6 shrink-0 rounded-md" />
           <Skeleton className="h-3 w-16" />
         </div>
         <div className="flex items-center justify-start gap-2">
-          <Skeleton className="size-3.5 shrink-0" />
+          <Skeleton className="size-6 shrink-0 rounded-md" />
           <Skeleton className="h-3 w-8" />
         </div>
         <div className="flex items-center justify-start gap-2">
-          <Skeleton className="size-3.5 shrink-0" />
+          <Skeleton className="size-6 shrink-0 rounded-md" />
           <Skeleton className="h-3 w-24" />
         </div>
       </CardContent>

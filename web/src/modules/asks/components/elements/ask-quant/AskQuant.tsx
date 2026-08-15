@@ -1,3 +1,4 @@
+import { IconWell } from "@/components/shared/elements";
 import { CircleIcon } from "lucide-react";
 
 interface AskQuantProps {
@@ -8,7 +9,7 @@ export function AskQuant({ quant }: AskQuantProps) {
   if (!quant) return null;
   return (
     <div className="text-foreground flex items-center gap-2 text-sm">
-      <CircleIcon className="h-4 w-4" />
+      <IconWell icon={CircleIcon} tone="info" size="sm" />
       <span>{quant}</span>
     </div>
   );

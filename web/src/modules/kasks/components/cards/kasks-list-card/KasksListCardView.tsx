@@ -1,9 +1,10 @@
-import { iconSize, typography } from "@/lib/typography";
+import { typography } from "@/lib/typography";
 import { cn } from "@/lib/utils";
 import { ArtikulImageLink } from "@/components/shared/media/artikul-image-link/ArtikulImageLink";
 import { CardActionsMenu } from "@/components/shared/actions/card-actions";
 import type { CardAction } from "@/components/shared/actions/card-actions";
 import { CalendarDate } from "@/components/shared/date/calendar-date/CalendarDate";
+import { IconWell } from "@/components/shared/elements";
 import { Button } from "@/components/ui/button";
 import { ListRowCard } from "@/components/shared/cards";
 import type { KaskDto } from "@/modules/kasks/api/types/dto";
@@ -54,17 +55,17 @@ export function KasksListCardView({
       <div className="grid gap-2 pl-12">
         {kask.quant != null ? (
           <div className={cn("text-foreground flex items-center gap-2", typography.body)}>
-            <CircleIcon className={iconSize.ui} />
+            <IconWell icon={CircleIcon} tone="info" size="sm" />
             <span>{kask.quant}</span>
           </div>
         ) : null}
         <div className={cn("text-foreground flex items-center gap-2", typography.body)}>
-          <MapPin className={iconSize.ui} />
+          <IconWell icon={MapPin} tone="warning" size="sm" />
           <span>{kask.zone}</span>
         </div>
         {comText ? (
           <div className={cn("text-foreground flex items-start gap-2", typography.body)}>
-            <MessageSquareMore className={cn(iconSize.ui, "mt-0.5")} />
+            <IconWell icon={MessageSquareMore} tone="edit" size="sm" />
             <span className="italic">{comText}</span>
           </div>
         ) : null}

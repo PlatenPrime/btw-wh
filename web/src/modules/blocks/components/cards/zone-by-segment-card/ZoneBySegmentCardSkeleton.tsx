@@ -16,7 +16,7 @@ export function ZoneBySegmentCardSkeleton() {
         </CardTitle>
         <CardDescription>
           <div className="flex items-center gap-2">
-            <Skeleton className="size-4 shrink-0" />
+            <Skeleton className="size-6 shrink-0 rounded-md" />
             <Skeleton className="h-3.5 w-20" />
           </div>
         </CardDescription>

@@ -1,4 +1,8 @@
-import { iconSize, typography } from "@/lib/typography";
+import {
+  IconWell,
+  type IconWellTone,
+} from "@/components/shared/elements";
+import { typography, iconSize } from "@/lib/typography";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -10,6 +14,8 @@ import { RoleType, getRoleLabel } from "@/constants/roles";
 import { RoleGuard } from "@/modules/auth/components/elements/RoleGuard";
 import type { User } from "@/modules/auth/api/types";
 import { formatDate } from "@/utils/formatDate";
+import type { LucideIcon } from "lucide-react";
+import type { ReactNode } from "react";
 import {
   Calendar,
   Edit,
@@ -26,21 +32,23 @@ interface UserDetailsCardProps {
 }
 
 function MetadataItem({
-  icon: Icon,
+  icon,
   label,
+  tone = "muted",
   children,
 }: {
-  icon: React.ElementType;
+  icon: LucideIcon;
   label: string;
-  children: React.ReactNode;
+  tone?: IconWellTone;
+  children: ReactNode;
 }) {
   return (
-    <div className="grid gap-1">
-      <span className={cn("flex items-center gap-1.5", typography.detailSubtitle)}>
-        <Icon className={iconSize.ui} />
-        {label}
-      </span>
-      {children}
+    <div className="flex items-start gap-2">
+      <IconWell icon={icon} tone={tone} size="sm" />
+      <div className="grid min-w-0 gap-1">
+        <span className={typography.detailSubtitle}>{label}</span>
+        {children}
+      </div>
     </div>
   );
 }
@@ -79,11 +87,11 @@ export function UserDetailsCard({ user, onEdit }: UserDetailsCardProps) {
       <Separator />
 
       <CardContent className="grid grid-cols-2 gap-4 p-6">
-        <MetadataItem icon={UserIcon} label="Логін">
+        <MetadataItem icon={UserIcon} tone="primary" label="Логін">
           <span>{user.username}</span>
         </MetadataItem>
 
-        <MetadataItem icon={Shield} label="Роль">
+        <MetadataItem icon={Shield} tone="info" label="Роль">
           {user.role ? (
             <Badge variant="secondary">{getRoleLabel(user.role)}</Badge>
           ) : (
@@ -92,13 +100,13 @@ export function UserDetailsCard({ user, onEdit }: UserDetailsCardProps) {
         </MetadataItem>
 
         {user.telegram && (
-          <MetadataItem icon={Send} label="Telegram">
+          <MetadataItem icon={Send} tone="edit" label="Telegram">
             <span>{user.telegram}</span>
           </MetadataItem>
         )}
 
         {user.photo && (
-          <MetadataItem icon={Image} label="Фото">
+          <MetadataItem icon={Image} tone="muted" label="Фото">
             <a
               href={user.photo}
               target="_blank"
@@ -116,11 +124,11 @@ export function UserDetailsCard({ user, onEdit }: UserDetailsCardProps) {
 
       <CardFooter className={cn("flex flex-wrap gap-x-6 gap-y-1 border-t-0 p-6 pt-4", typography.detailSubtitle)}>
         <span className={cn("flex items-center gap-1.5", typography.body)}>
-          <Calendar className={iconSize.ui} />
+          <IconWell icon={Calendar} tone="muted" size="sm" />
           Створено: {formatDate(user.createdAt)}
         </span>
         <span className={cn("flex items-center gap-1.5", typography.body)}>
-          <Calendar className={iconSize.ui} />
+          <IconWell icon={Calendar} tone="muted" size="sm" />
           Оновлено: {formatDate(user.updatedAt)}
         </span>
       </CardFooter>

@@ -1,9 +1,6 @@
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { ArtMetricFieldRow } from "@/modules/arts/components/elements/art-metric-field-row";
-import {
-  ChevronsLeftRightEllipsis,
-  MapPin
-} from "lucide-react";
+import { ChevronsLeftRightEllipsis, MapPin } from "lucide-react";
 
 interface ArtDetailMetricsPanelProps {
   artData: ArtDto;
@@ -17,22 +14,21 @@ export function ArtDetailMetricsPanel({ artData }: ArtDetailMetricsPanelProps) {
   const hasLimit = artData.limit != null;
 
   return (
-    <div className="grid gap-3">
+    <div className="flex flex-wrap gap-2">
       <ArtMetricFieldRow
         icon={MapPin}
-        iconClassName="text-orange-500"
+        tone="warning"
         label="Зона"
         value={artData.zone}
       />
       {hasLimit ? (
         <ArtMetricFieldRow
           icon={ChevronsLeftRightEllipsis}
-          iconClassName="text-rose-500"
+          tone="destructive"
           label="Ліміт"
           value={formatLimit(artData.limit!)}
         />
       ) : null}
-      
     </div>
   );
 }

@@ -1,10 +1,10 @@
 import { CardActionsMenu } from "@/components/shared/actions/card-actions";
 import { ListRowCard } from "@/components/shared/cards";
-import { cn } from "@/lib/utils";
+import { IconWell } from "@/components/shared/elements";
 import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RoleType } from "@/constants/roles";
 import { RoleGuard } from "@/modules/auth/components/elements/RoleGuard";
-import { iconSize, typography } from "@/lib/typography";
+import { typography } from "@/lib/typography";
 import type { ZoneDto } from "@/modules/zones/api/types";
 import { ZoneBarcode } from "@/modules/zones/components/elements/zone-barcode";
 import { ZoneLink } from "@/modules/zones/components/elements/zone-link";
@@ -55,11 +55,11 @@ export function ZonesGridCard({ zone, onEdit, onDelete }: ZonesGridCardProps) {
       </CardHeader>
       <CardContent className="grid gap-2 p-0">
         <div className="flex items-center gap-2">
-          <Barcode className={cn(iconSize.inline, "text-muted-foreground")} aria-hidden />
+          <IconWell icon={Barcode} tone="warning" size="sm" />
           <ZoneBarcode zone={zone} className={typography.listSubtitle} />
         </div>
         <div className="flex items-center gap-2">
-          <LayoutGrid className={cn(iconSize.inline, "text-muted-foreground")} aria-hidden />
+          <IconWell icon={LayoutGrid} tone="edit" size="sm" />
           <ZoneSector zone={zone} className={typography.listSubtitle} />
         </div>
       </CardContent>

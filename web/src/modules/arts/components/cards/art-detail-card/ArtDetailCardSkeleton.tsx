@@ -1,4 +1,5 @@
 import { DetailPanelCard } from "@/components/shared/cards";
+import { MetricChipSkeleton } from "@/components/shared/elements";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { BtradeArtDataPanelEmbeddedSkeleton } from "@/modules/arts/components/elements/btrade-art-data-panel";
@@ -24,21 +25,9 @@ export function ArtDetailCardSkeleton() {
 
         <section className="grid shrink-0 gap-3 self-start p-4 sm:p-5 lg:w-44 xl:w-48">
           <Skeleton className="h-3 w-12" />
-          <div className="grid gap-3">
-            <div className="flex items-start gap-2">
-              <Skeleton className="mt-0.5 size-4 shrink-0 rounded-sm" />
-              <div className="grid min-w-0 flex-1 gap-1">
-                <Skeleton className="h-3 w-10" />
-                <Skeleton className="h-4 w-14" />
-              </div>
-            </div>
-            <div className="flex items-start gap-2">
-              <Skeleton className="mt-0.5 size-4 shrink-0 rounded-sm" />
-              <div className="grid min-w-0 flex-1 gap-1">
-                <Skeleton className="h-3 w-10" />
-                <Skeleton className="h-4 w-16" />
-              </div>
-            </div>
+          <div className="flex flex-wrap gap-2">
+            <MetricChipSkeleton />
+            <MetricChipSkeleton />
           </div>
         </section>
 

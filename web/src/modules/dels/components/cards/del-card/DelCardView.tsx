@@ -1,6 +1,7 @@
 import { CardActionsMenu } from "@/components/shared/actions/card-actions";
 import type { CardAction } from "@/components/shared/actions/card-actions";
 import { ListRowCard } from "@/components/shared/cards";
+import { IconWell } from "@/components/shared/elements";
 import { CardContent, CardTitle } from "@/components/ui/card";
 import { Image } from "@/components/shared/media/image/Image";
 import { cn } from "@/lib/utils";
@@ -50,7 +51,7 @@ export function DelCardView({ del, actions }: DelCardViewProps) {
             </Link>
           </CardTitle>
           <div className="flex items-center gap-2">
-            <Package className={cn(iconSize.inline, "text-muted-foreground")} aria-hidden />
+            <IconWell icon={Package} tone="muted" size="sm" />
             <span className={typography.listSubtitle}>{formatDate(del.createdAt)}</span>
           </div>
         </div>

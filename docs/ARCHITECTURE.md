@@ -298,7 +298,7 @@ export function useArtsQuery({ page, limit, search, ... }: UseArtsQueryParams) {
 | `date/` | `CalendarDate`, `DateNavigation` |
 | `dialogs/` | `DialogActions`, `UrlDialogImage` |
 | `domain/` | Cross-module domain widgets (`konk-banner`, `sklad-list-pos`) |
-| `elements/` | `FetchIndicator`, `ModeToggle`, `Status`, `AnimatedMood`, `SummaryField` |
+| `elements/` | `FetchIndicator`, `ModeToggle`, `Status`, `AnimatedMood`, `SummaryField`, `IconWell`, `MetricChip` |
 | `entities/` | `EntityLabel`, `EntityNotFound`, `UserAvatarName` |
 | `errors/` | `ErrorDisplay`, `ErrorBoundary`, `FormErrorDisplay`, … |
 | `feedback/` | `loading-states/`, `DataRefetchOverlay`, `UploadProgressBar` |

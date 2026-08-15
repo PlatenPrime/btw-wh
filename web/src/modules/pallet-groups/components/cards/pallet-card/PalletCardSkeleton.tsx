@@ -10,7 +10,7 @@ export function PalletCardSkeleton() {
       </CardHeader>
       <CardContent className="p-0 pt-2">
         <div className="flex items-center gap-2">
-          <Skeleton className="size-4 shrink-0" />
+          <Skeleton className="size-6 shrink-0 rounded-md" />
           <Skeleton className="h-3 w-10" />
         </div>
       </CardContent>

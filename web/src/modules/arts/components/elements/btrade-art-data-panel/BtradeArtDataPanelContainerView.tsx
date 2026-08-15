@@ -16,13 +16,13 @@ function BtradeArtDataPanelSummary({ data }: BtradeArtDataPanelSummaryProps) {
     <>
       <ArtMetricFieldRow
         icon={Warehouse}
-        iconClassName="text-primary"
+        tone="primary"
         label="Залишок"
         value={formatQuantity(data.quantity)}
       />
       <ArtMetricFieldRow
         icon={Banknote}
-        iconClassName="text-success"
+        tone="success"
         label="Ціна"
         value={`${data.price} грн`}
       />

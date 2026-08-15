@@ -30,10 +30,12 @@ export function PosInPalletCardView({
         <div className="grid grid-cols-3 gap-1.5">
           <PosInfoItem
             icon={Warehouse}
+            tone="primary"
             value={sklads[pos.sklad as keyof ISklads] || pos.sklad}
           />
           <PosInfoItem
             icon={Package}
+            tone={pos.boxes === 0 ? "destructive" : "info"}
             value={pos.boxes || 0}
             className={cn(
               pos.boxes === 0 &&
@@ -42,6 +44,7 @@ export function PosInPalletCardView({
           />
           <PosInfoItem
             icon={Circle}
+            tone={pos.quant === 0 ? "destructive" : "success"}
             value={pos.quant || 0}
             className={cn(
               pos.quant === 0 &&

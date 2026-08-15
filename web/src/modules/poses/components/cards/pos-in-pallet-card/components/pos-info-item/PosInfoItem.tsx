@@ -1,16 +1,22 @@
+import {
+  IconWell,
+  type IconWellTone,
+} from "@/components/shared/elements";
 import { cn } from "@/lib/utils";
-import { iconSize, typography } from "@/lib/typography";
+import { typography } from "@/lib/typography";
 import { type LucideIcon } from "lucide-react";
 
 interface StatItemProps {
   icon: LucideIcon;
   value: string | number;
+  tone?: IconWellTone;
   className?: string;
 }
 
 export const PosInfoItem = ({
-  icon: Icon,
+  icon,
   value,
+  tone = "muted",
   className = "",
 }: StatItemProps) => {
   return (
@@ -20,7 +26,7 @@ export const PosInfoItem = ({
         className,
       )}
     >
-      <Icon className={iconSize.inline} />
+      <IconWell icon={icon} tone={tone} size="sm" />
       <span className={cn("truncate font-medium", typography.caption)}>
         {value}
       </span>

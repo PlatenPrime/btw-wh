@@ -1,6 +1,7 @@
 import { GridTileCard } from "@/components/shared/cards";
+import { IconWell } from "@/components/shared/elements";
 import { CardAction, CardContent, CardHeader } from "@/components/ui/card";
-import { iconSize, typography } from "@/lib/typography";
+import { typography } from "@/lib/typography";
 import { cn } from "@/lib/utils";
 import type { PalletShortDto } from "@/modules/pallets/api/types";
 import { Calculator, Layers, LayoutGrid } from "lucide-react";
@@ -41,18 +42,22 @@ export function PalletInRowCardView({ pallet, rowId }: PalletInRowCardProps) {
 
       <CardContent className="grid gap-2 p-0">
         <div className="flex items-center justify-start gap-2 border-border">
-          <LayoutGrid className={cn(iconSize.inline, "text-muted-foreground")} aria-hidden />
+          <IconWell icon={LayoutGrid} tone="edit" size="sm" />
           <span className={typography.caption}>{pallet.sector ?? "Немає"}</span>
         </div>
 
         <div className="flex items-center justify-start gap-2 border-border">
-          <Calculator className={cn(iconSize.inline, "text-muted-foreground")} aria-hidden />
+          <IconWell
+            icon={Calculator}
+            tone={pallet.isDef ? "warning" : "muted"}
+            size="sm"
+          />
           <span className={typography.caption}>{pallet.isDef ? "Так" : "Ні"}</span>
         </div>
 
         {pallet.palgrId && pallet.palgrTitle ? (
           <div className="flex items-center justify-start gap-2 border-border">
-            <Layers className={cn(iconSize.inline, "text-muted-foreground")} aria-hidden />
+            <IconWell icon={Layers} tone="primary" size="sm" />
             <Link
               to={`/wh/pallet-groups/${pallet.palgrId}`}
               className={cn("hover:underline", typography.caption)}

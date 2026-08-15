@@ -10,7 +10,7 @@ export function BtradeArtDataPanelView({ children }: BtradeArtDataPanelViewProps
       <span className="text-muted-foreground text-sm font-semibold tracking-wider uppercase">
         Sharik.ua
       </span>
-      <div className="flex flex-wrap gap-6">{children}</div>
+      <div className="flex flex-wrap gap-2">{children}</div>
     </div>
   );
 }

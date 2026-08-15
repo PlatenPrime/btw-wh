@@ -7,5 +7,5 @@ interface BtradeArtDataPanelEmbeddedViewProps {
 export function BtradeArtDataPanelEmbeddedView({
   children,
 }: BtradeArtDataPanelEmbeddedViewProps) {
-  return <div className="grid gap-3">{children}</div>;
+  return <div className="flex flex-wrap gap-2">{children}</div>;
 }

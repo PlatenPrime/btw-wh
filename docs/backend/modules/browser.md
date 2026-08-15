@@ -7,7 +7,7 @@
 - **прямые API-эндпоинты** для запроса stock/price по URL или артикулу;
 - **библиотеки парсинга**, которые вызывают cron-задачи срезов, модули `analogs`, `skus`, `arts`, `skugrs` и компенсирующие срезы.
 
-Организация кода — **по конкуренту** (`air/`, `balun/`, `perfect/`, …) плюс общие утилиты в `browser/utils/`.
+Организация кода — **по конкуренту** (`air/`, `balun/`, `perfect/`, …), плюс производитель Grabo в `browser/grabo/` и общие утилиты в `browser/utils/`.
 
 ## Поддерживаемые конкуренты
 
@@ -29,6 +29,7 @@
 - **sku-slices / skus:** опрос SKU (air, balun, yumi, yumin, sharte, perfect); для Air дополнительно доступен параллельный client-ingestion HTML как ручной/компенсирующий канал.
 - **btrade-slices / arts / dels / defs:** остатки sharik через bulk `product_rests` (`actualQuantity` для live, `sliceQuantity` для daily btrade-slice).
 - **skugrs:** обход страниц групп для наполнения SKU (`group-products`), в т.ч. Air listing.
+- **grabo-skus:** полный обход каталога производителя Grabo (sitemap → категории → карточки) через `browser/grabo`.
 - **slice-compensation:** повторный опрос через stock-утилиты analog/sku (Air включён в server scrape).
 
 ## Концепции и принятые решения
@@ -39,15 +40,15 @@
 
 ### Air: dual-path (server + client)
 
-**Primary:** серверный scrape через `getAirStockData` → `fetchPageHtml` с transport `impit` (Chrome TLS/HTTP fingerprint + `tough-cookie` jar), origin warm-up и Referer на product GET; при ответе WAF adm.tools («Захищена сторінка») Impit сам POST’ит `___ack` и повторяет GET. Опциональный `AIR_HTTP_PROXY_URL`. Публичный `GET /api/browser/air/stock`, live stock sku/analog, cron срезов и compensation используют этот путь. Парсер HTML — [`readAirProductFromHtml`](../../src/modules/browser/air/utils/air-product-page-from-html/readAirProductFromHtml.ts).
+**Primary:** серверный scrape через `getAirStockData` → `fetchPageHtml` с transport `impit` (Chrome TLS/HTTP fingerprint + `tough-cookie` jar), origin warm-up и Referer на product GET; при ответе WAF adm.tools («Захищена сторінка», в т.ч. HTTP 200 с HTML-заглушкой) Impit сам POST’ит ack — актуальный JSON `__ack` или legacy FormData `___ack` — и повторяет GET. Опциональный `AIR_HTTP_PROXY_URL`. Публичный `GET /api/browser/air/stock`, live stock sku/analog, cron срезов и compensation используют этот путь. Парсер HTML — [`readAirProductFromHtml`](../../src/modules/browser/air/utils/air-product-page-from-html/readAirProductFromHtml.ts).
 
 **Secondary:** client-ingestion в [sku-slices](sku-slices.md) — расширение/браузер открывает first-party страницу, frontend шлёт HTML на backend; тот же парсер. Канал остаётся доступным всегда для ручного/компенсирующего дозаполнения, если серверный опрос не дал валидных данных.
 
-Air **group listing** (наполнение SKU) идёт через тот же Impit-путь (`fetchPageHtml` + cookie jar + adm.tools `___ack` solver): один origin warm-up, затем страницы листинга с Referer; опциональный `AIR_HTTP_PROXY_URL`.
+Air **group listing** (наполнение SKU) идёт через тот же Impit-путь (`fetchPageHtml` + cookie jar + adm.tools ack solver): один origin warm-up, затем страницы листинга с Referer; опциональный `AIR_HTTP_PROXY_URL`.
 
-### Sharik: product_rests без прокси
+### Sharik: product_rests через HTTP-прокси
 
-Единый источник остатков/цен sharik.ua — страница `product_rests/{seed}/` (формат строки `artikul = actualQuantity; sliceQuantity; price`). Парсинг, fetch и in-memory cache TTL ~1ч — в `browser/sharik/utils/product-rests`. `getSharikStockData` читает `actualQuantity` из кэша; `nameukr` для single lookup — из Art. Geo-block снят: `SHARIK_HTTP_PROXY_ENABLED = false`, прокси не используется даже если задан `SHARIK_HTTP_PROXY_URL`.
+Единый источник остатков/цен sharik.ua — страница `product_rests/{seed}/` (формат строки `artikul = actualQuantity; sliceQuantity; price`). Парсинг, fetch и in-memory cache TTL ~1ч — в `browser/sharik/utils/product-rests`. `getSharikStockData` читает `actualQuantity` из кэша; `nameukr` для single lookup — из Art. Запросы идут через `SHARIK_HTTP_PROXY_URL` при `SHARIK_HTTP_PROXY_ENABLED = true`; без env — прямой egress.
 
 Результаты stock-scrape пишутся в info-лог (`browser stock result`: konk, link, stock, price, ok) с лимитом ≤20 сообщений в минуту на process; ошибки fetch — отдельно через `logBrowserError`.
 
@@ -56,7 +57,7 @@ Air **group listing** (наполнение SKU) идёт через тот же
 Общая точка входа — [`fetchPageHtml`](../../src/modules/browser/utils/fetchPageHtml.ts):
 
 - транспорт `http` — axios (`browserGet`);
-- транспорт `impit` — HTTP-клиент с browser TLS/HTTP fingerprint (`impitGet`), cookie jar между запросами одного клиента, без Chromium; при challenge adm.tools — solver `___ack` + retry;
+- транспорт `impit` — HTTP-клиент с browser TLS/HTTP fingerprint (`impitGet`), cookie jar между запросами одного клиента, без Chromium; при challenge adm.tools — solver ack (`__ack` JSON / legacy `___ack` FormData) + retry;
 - транспорт `playwright` — headless Chromium (`page.goto` → HTML), lazy singleton, лимит параллелизма.
 
 Приоритет выбора транспорта: явный параметр вызова → карта env `BROWSER_TRANSPORT_BY_KONK` по `konkName` → `http`. Формат карты: пары `konk:transport` через запятую (например `air:impit,balun:http`). Невалидные значения игнорируются с предупреждением в лог. Лимит параллельных Playwright-страниц — `BROWSER_PLAYWRIGHT_CONCURRENCY` (по умолчанию 2). Режим headless — `BROWSER_PLAYWRIGHT_HEADLESS` (`true` / `false` / `shell`).
@@ -88,7 +89,7 @@ Air stock явно задаёт `transport: "impit"`, origin warm-up и Referer/
 - `parsePromUaGroupListingProducts` — Prom.ua-совместимый парсер;
 - throttle 800–1600 мс между страницами.
 
-Per-competitor обёртки: `get*GroupPagesProducts` + Zod-схема (`groupUrl`, `maxPages`).
+Per-competitor обёртки: `get*GroupPagesProducts` + Zod-схема (`groupUrl`, `maxPages`). Grabo listing — `getGraboListingProducts`: пагинация только по `rel="next"` в `nav.archive-links.pages` (`rel="last"` на сайте врёт). Категории каталога — `parseGraboSitemapCategoryUrls` из `.site-map li.nav900`. Сбор URL карточек — `collectGraboCatalogProductUrls`.
 
 ### Group products (диспетчер)
 

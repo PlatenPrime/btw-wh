@@ -22,15 +22,15 @@ export function PosInPalletCardSkeleton() {
       <CardContent className="shrink-0 p-0">
         <div className="grid grid-cols-3 gap-1.5">
           <div className="flex min-h-8 items-center justify-center gap-1 rounded-lg bg-muted/30 px-2 py-1">
-            <Skeleton className="size-3" />
+            <Skeleton className="size-6 shrink-0 rounded-md" />
             <Skeleton className="h-3 w-12" />
           </div>
           <div className="flex min-h-8 items-center justify-center gap-1 rounded-lg bg-muted/30 px-2 py-1">
-            <Skeleton className="size-3" />
+            <Skeleton className="size-6 shrink-0 rounded-md" />
             <Skeleton className="h-3 w-8" />
           </div>
           <div className="flex min-h-8 items-center justify-center gap-1 rounded-lg bg-muted/30 px-2 py-1">
-            <Skeleton className="size-3" />
+            <Skeleton className="size-6 shrink-0 rounded-md" />
             <Skeleton className="h-3 w-8" />
           </div>
         </div>

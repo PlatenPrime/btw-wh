@@ -13,8 +13,14 @@ export function DelArtikulCardSkeleton() {
       </div>
       <div className="flex w-full shrink-0 items-center justify-between gap-2 sm:w-auto">
         <div className="flex gap-3">
-          <Skeleton className="h-4 w-8" />
-          <Skeleton className="h-4 w-8" />
+          <div className="flex items-center gap-1">
+            <Skeleton className="size-6 shrink-0 rounded-md" />
+            <Skeleton className="h-4 w-6" />
+          </div>
+          <div className="flex items-center gap-1">
+            <Skeleton className="size-6 shrink-0 rounded-md" />
+            <Skeleton className="h-4 w-6" />
+          </div>
         </div>
         <Skeleton className="size-8 rounded-md" />
       </div>

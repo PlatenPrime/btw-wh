@@ -3,6 +3,7 @@ import { CardActionsMenu } from "@/components/shared/actions/card-actions";
 import { Dialog } from "@/components/ui/dialog";
 import { SurfaceSection } from "@/components/shared/layout";
 import { ListRowCard } from "@/components/shared/cards";
+import { IconWell } from "@/components/shared/elements";
 import {
   CardAction,
   CardDescription,
@@ -51,7 +52,7 @@ export function ZoneBySegmentCard({ segment, zone }: ZoneBySegmentCardProps) {
             <CardTitle>Зона {zone.title}</CardTitle>
             <CardDescription>
               <span className="text-muted-foreground flex items-center gap-2 text-xs">
-                <ScanBarcode className="size-4 shrink-0" aria-hidden />
+                <IconWell icon={ScanBarcode} tone="warning" size="sm" />
                 {zone.bar}
               </span>
             </CardDescription>

@@ -159,6 +159,16 @@ const CompetitorSkus = lazyWithRetry(() =>
     default: module.CompetitorSkus,
   })),
 );
+const GraboSkus = lazyWithRetry(() =>
+  import("./modules/grabo-skus/pages/grabo-skus").then((module) => ({
+    default: module.GraboSkus,
+  })),
+);
+const GraboSku = lazyWithRetry(() =>
+  import("./modules/grabo-skus/pages/grabo-sku").then((module) => ({
+    default: module.GraboSku,
+  })),
+);
 const SkuSlices = lazyWithRetry(() =>
   import("./modules/sku-analytics/pages/sku-slices").then((module) => ({
     default: module.SkuSlices,
@@ -514,6 +524,24 @@ export const router = createHashRouter([
             element: (
               <ProtectedRoute>
                 <CompetitorSkus />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "grabo",
+            element: (
+              <ProtectedRoute allowedRoles={[RoleType.ADMIN]}>
+                <GraboSkus />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "grabo/:id",
+            element: (
+              <ProtectedRoute allowedRoles={[RoleType.ADMIN]}>
+                <GraboSku />
               </ProtectedRoute>
             ),
             errorElement: <RouteErrorBoundary />,

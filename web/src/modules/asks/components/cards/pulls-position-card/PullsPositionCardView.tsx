@@ -1,7 +1,8 @@
 import { ArtikulImageLink } from "@/components/shared/media/artikul-image-link/ArtikulImageLink";
+import { IconWell } from "@/components/shared/elements";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { iconSize, typography } from "@/lib/typography";
+import { typography } from "@/lib/typography";
 import { cn } from "@/lib/utils";
 import type { IPositionForPullsPage } from "@/modules/asks/api/types/dto";
 import { AskPosEditDialog } from "@/modules/asks/components/dialogs/ask-pos-edit-dialog/AskPosEditDialog";
@@ -55,7 +56,7 @@ export function PullsPositionCardView({
             typography.body,
           )}
         >
-          <MapPin className={cn(iconSize.inline, "text-warning shrink-0")} />
+          <IconWell icon={MapPin} tone="warning" size="sm" />
           <span className="min-w-0 truncate">{zoneLabel}</span>
         </div>
 
@@ -70,10 +71,7 @@ export function PullsPositionCardView({
             title="Є на палеті"
             aria-label={`Є на палеті: ${position.quant}`}
           >
-            <Package
-              className={cn(iconSize.inline, "text-info")}
-              aria-hidden
-            />
+            <IconWell icon={Package} tone="info" size="sm" />
             {position.quant}
           </span>
           {position.plannedQuant !== null ? (
@@ -82,10 +80,7 @@ export function PullsPositionCardView({
               title="Зняти"
               aria-label={`Зняти: ${position.plannedQuant}`}
             >
-              <ArrowDownToLine
-                className={cn(iconSize.inline, "text-success")}
-                aria-hidden
-              />
+              <IconWell icon={ArrowDownToLine} tone="success" size="sm" />
               {position.plannedQuant}
             </span>
           ) : null}
@@ -95,10 +90,7 @@ export function PullsPositionCardView({
               title="Залишок по заявці"
               aria-label={`Залишок по заявці: ${position.askRemainingQuantity}`}
             >
-              <Circle
-                className={cn(iconSize.inline, "text-warning")}
-                aria-hidden
-              />
+              <IconWell icon={Circle} tone="warning" size="sm" />
               {position.askRemainingQuantity}
             </span>
           ) : null}
