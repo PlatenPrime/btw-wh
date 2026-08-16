@@ -44,6 +44,8 @@ export function GraboSkuDetailCardView({
 }: GraboSkuDetailCardViewProps) {
   const primaryImage = imageUrls[0];
 
+  const hasExtraImages = imageUrls.length > 1;
+
   return (
     <DetailPanelCard className="overflow-hidden p-0">
       <CardHeader className="flex flex-col gap-4 p-6 sm:flex-row sm:items-start">
@@ -76,6 +78,15 @@ export function GraboSkuDetailCardView({
               <Badge variant="info">На сайті</Badge>
             ) : null}
           </div>
+          {tags.length > 0 ? (
+            <div className="flex flex-wrap gap-1">
+              {tags.map((tag) => (
+                <Badge key={tag} variant="secondary">
+                  {tag}
+                </Badge>
+              ))}
+            </div>
+          ) : null}
           {sku.url.trim() ? (
             <a
               href={sku.url}
@@ -98,22 +109,13 @@ export function GraboSkuDetailCardView({
         </div>
       </CardHeader>
 
-      {imageUrls.length > 1 ? (
-        <div className="flex flex-wrap justify-center gap-3 px-6 pb-4 sm:justify-start">
-          {imageUrls.slice(1).map((src) => (
-            <UrlDialogImage
-              key={src}
-              imageUrl={src}
-              alt={sku.title}
-              fallbackSrc={URL_DIALOG_IMAGE_FALLBACK}
-              previewClassName="bg-muted size-40 shrink-0 overflow-hidden rounded-lg"
-            />
-          ))}
-        </div>
-      ) : null}
-
       {attributes.length > 0 ? (
-        <div className="flex flex-wrap gap-2 px-6 pb-4">
+        <div
+          className={cn(
+            "flex flex-wrap gap-2 px-6",
+            hasExtraImages ? "pb-4" : "pb-6",
+          )}
+        >
           {attributes.map((attr) => (
             <MetricChip
               key={attr.key}
@@ -126,12 +128,16 @@ export function GraboSkuDetailCardView({
         </div>
       ) : null}
 
-      {tags.length > 0 ? (
-        <div className="flex flex-wrap gap-1 px-6 pb-6">
-          {tags.map((tag) => (
-            <Badge key={tag} variant="secondary">
-              {tag}
-            </Badge>
+      {hasExtraImages ? (
+        <div className="flex flex-wrap justify-center gap-3 px-6 pb-6 sm:justify-start">
+          {imageUrls.slice(1).map((src) => (
+            <UrlDialogImage
+              key={src}
+              imageUrl={src}
+              alt={sku.title}
+              fallbackSrc={URL_DIALOG_IMAGE_FALLBACK}
+              previewClassName="bg-muted size-40 shrink-0 overflow-hidden rounded-lg"
+            />
           ))}
         </div>
       ) : null}

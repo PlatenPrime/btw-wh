@@ -15,20 +15,24 @@ export function GraboSkuDetailCardSkeleton() {
             <Skeleton className="h-5 w-20 rounded-full" />
             <Skeleton className="h-5 w-24 rounded-full" />
           </div>
+          <div className="flex gap-1">
+            <Skeleton className="h-5 w-14 rounded-full" />
+            <Skeleton className="h-5 w-16 rounded-full" />
+          </div>
           <Skeleton className="h-4 w-48" />
           <Skeleton className="h-4 w-40" />
         </div>
       </CardHeader>
-      <div className="flex flex-wrap justify-center gap-3 px-6 pb-4 sm:justify-start">
-        <Skeleton className="size-40 rounded-lg" />
-        <Skeleton className="size-40 rounded-lg" />
-        <Skeleton className="size-40 rounded-lg" />
+      <div className="flex flex-wrap gap-2 px-6 pb-4">
+        <MetricChipSkeleton />
+        <MetricChipSkeleton />
+        <MetricChipSkeleton />
+        <MetricChipSkeleton />
       </div>
-      <div className="flex flex-wrap gap-2 px-6 pb-6">
-        <MetricChipSkeleton />
-        <MetricChipSkeleton />
-        <MetricChipSkeleton />
-        <MetricChipSkeleton />
+      <div className="flex flex-wrap justify-center gap-3 px-6 pb-6 sm:justify-start">
+        <Skeleton className="size-40 rounded-lg" />
+        <Skeleton className="size-40 rounded-lg" />
+        <Skeleton className="size-40 rounded-lg" />
       </div>
     </DetailPanelCard>
   );

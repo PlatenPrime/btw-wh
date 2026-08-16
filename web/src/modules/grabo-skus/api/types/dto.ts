@@ -26,7 +26,19 @@ export interface GraboSkuFilterOptionsDto {
   material: string[];
   gas: string[];
   language: string[];
+  gasCapacity: string[];
+  tags: string[];
 }
+
+export const EMPTY_GRABO_SKU_FILTER_OPTIONS: GraboSkuFilterOptionsDto = {
+  color: [],
+  size: [],
+  material: [],
+  gas: [],
+  language: [],
+  gasCapacity: [],
+  tags: [],
+};
 
 export interface GraboSkusResponseDto extends PaginatedResponse<GraboSkuDto> {
   filterOptions?: GraboSkuFilterOptionsDto;
@@ -48,6 +60,8 @@ export interface GetGraboSkusParams {
   material?: string;
   gas?: string;
   language?: string;
+  gasCapacity?: string;
+  tag?: string;
   isOnSite?: GraboBooleanFilter;
   isNewProduct?: GraboBooleanFilter;
   includeFilterOptions?: boolean;

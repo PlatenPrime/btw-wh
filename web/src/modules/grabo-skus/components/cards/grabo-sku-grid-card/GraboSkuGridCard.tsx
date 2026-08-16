@@ -23,21 +23,7 @@ export function GraboSkuGridCard({ sku }: GraboSkuGridCardProps) {
 
   return (
     <GridTileCard className="flex flex-col gap-2 overflow-hidden p-0">
-      {(sku.isNewProduct === true || sku.isOnSite === false) && (
-        <div className="flex flex-wrap gap-1 px-2 pt-2">
-          {sku.isNewProduct === true ? (
-            <Badge variant="success" className="text-xs">
-              Новинка
-            </Badge>
-          ) : null}
-          {sku.isOnSite === false ? (
-            <Badge variant="destructive" className="text-xs">
-              Не на сайті
-            </Badge>
-          ) : null}
-        </div>
-      )}
-      <div className="flex flex-col gap-2 px-2 pb-2">
+      <div className="flex flex-col gap-2 px-2 py-2">
         <div className="flex min-h-0 min-w-0 items-start gap-3">
           {hasImage ? (
             <UrlDialogImage
@@ -73,6 +59,20 @@ export function GraboSkuGridCard({ sku }: GraboSkuGridCardProps) {
               </span>
             </Link>
             <span className={typography.gridSubtitle}>{sku.productId}</span>
+            {sku.isNewProduct === true || sku.isOnSite === false ? (
+              <div className="flex flex-wrap gap-1">
+                {sku.isNewProduct === true ? (
+                  <Badge variant="success" className="text-xs">
+                    Новинка
+                  </Badge>
+                ) : null}
+                {sku.isOnSite === false ? (
+                  <Badge variant="destructive" className="text-xs">
+                    Не на сайті
+                  </Badge>
+                ) : null}
+              </div>
+            ) : null}
           </div>
         </div>
       </div>

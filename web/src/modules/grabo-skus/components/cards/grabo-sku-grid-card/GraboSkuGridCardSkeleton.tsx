@@ -12,6 +12,7 @@ export function GraboSkuGridCardSkeleton() {
             <Skeleton className="h-4 w-11/12" />
             <Skeleton className="h-4 w-3/4" />
             <Skeleton className="mt-1 h-3 w-2/3" />
+            <Skeleton className="mt-1 h-5 w-16 rounded-full" />
           </div>
         </div>
       </div>

@@ -14,6 +14,8 @@ interface GraboSkusFetcherParams {
   material?: string;
   gas?: string;
   language?: string;
+  gasCapacity?: string;
+  tag?: string;
   isOnSite?: boolean;
   isNewProduct?: boolean;
 }
@@ -38,6 +40,8 @@ export function GraboSkusFetcher({
     material: params.material,
     gas: params.gas,
     language: params.language,
+    gasCapacity: params.gasCapacity,
+    tag: params.tag,
     isOnSite: params.isOnSite,
     isNewProduct: params.isNewProduct,
   });

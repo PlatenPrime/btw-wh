@@ -15,6 +15,8 @@ export interface UseGraboSkusQueryParams {
   material?: string;
   gas?: string;
   language?: string;
+  gasCapacity?: string;
+  tag?: string;
   isOnSite?: boolean;
   isNewProduct?: boolean;
   enabled?: boolean;
@@ -29,6 +31,8 @@ export function useGraboSkusQuery({
   material,
   gas,
   language,
+  gasCapacity,
+  tag,
   isOnSite,
   isNewProduct,
   enabled = true,
@@ -44,6 +48,8 @@ export function useGraboSkusQuery({
     material: material?.trim() || undefined,
     gas: gas?.trim() || undefined,
     language: language?.trim() || undefined,
+    gasCapacity: gasCapacity?.trim() || undefined,
+    tag: tag?.trim() || undefined,
     isOnSite,
     isNewProduct,
   };
@@ -60,6 +66,8 @@ export function useGraboSkusQuery({
         material: material ?? "",
         gas: gas ?? "",
         language: language ?? "",
+        gasCapacity: gasCapacity ?? "",
+        tag: tag ?? "",
         isOnSite,
         isNewProduct,
       },

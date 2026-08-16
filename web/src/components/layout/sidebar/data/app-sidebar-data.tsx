@@ -58,59 +58,36 @@ type SidebarIconName = keyof typeof icons;
 
 const iconColorClasses: Record<SidebarIconName, string> = {
   // Артикули — синий
-  StickyNote:
-    "text-[oklch(0.6_0.16_250)] dark:text-[oklch(0.74_0.18_250)]",
-    Upload:
-    "text-[oklch(0.62_0.09_260)] dark:text-[oklch(0.78_0.07_260)]",
-  Settings:
-    "text-[oklch(0.6_0.16_250)] dark:text-[oklch(0.74_0.18_250)]",
-  Warehouse:
-    "text-[oklch(0.56_0.12_210)] dark:text-[oklch(0.72_0.12_210)]",
+  StickyNote: "text-[oklch(0.6_0.16_250)] dark:text-[oklch(0.74_0.18_250)]",
+  Upload: "text-[oklch(0.62_0.09_260)] dark:text-[oklch(0.78_0.07_260)]",
+  Settings: "text-[oklch(0.6_0.16_250)] dark:text-[oklch(0.74_0.18_250)]",
+  Warehouse: "text-[oklch(0.56_0.12_210)] dark:text-[oklch(0.72_0.12_210)]",
   // Ряди — серый, низкая насыщенность
-  Rows4:
-    "text-[oklch(0.65_0.02_260)] dark:text-[oklch(0.8_0.02_260)]",
-  ScrollText:
-    "text-[oklch(0.6_0.14_25)] dark:text-[oklch(0.74_0.16_25)]",
-  MapPin:
-    "text-[oklch(0.67_0.15_35)] dark:text-[oklch(0.78_0.16_35)]",
+  Rows4: "text-[oklch(0.65_0.02_260)] dark:text-[oklch(0.8_0.02_260)]",
+  ScrollText: "text-[oklch(0.6_0.14_25)] dark:text-[oklch(0.74_0.16_25)]",
+  MapPin: "text-[oklch(0.67_0.15_35)] dark:text-[oklch(0.78_0.16_35)]",
   // Запити — фиолетовый
-  FileQuestion:
-    "text-[oklch(0.6_0.19_290)] dark:text-[oklch(0.75_0.2_290)]",
+  FileQuestion: "text-[oklch(0.6_0.19_290)] dark:text-[oklch(0.75_0.2_290)]",
   // Дефіцити — розовый
-  AlertTriangle:
-    "text-[oklch(0.7_0.21_350)] dark:text-[oklch(0.8_0.22_350)]",
-  Route:
-    "text-[oklch(0.56_0.16_277)] dark:text-[oklch(0.7_0.18_277)]",
+  AlertTriangle: "text-[oklch(0.7_0.21_350)] dark:text-[oklch(0.8_0.22_350)]",
+  Route: "text-[oklch(0.56_0.16_277)] dark:text-[oklch(0.7_0.18_277)]",
   LayoutTemplate:
     "text-[oklch(0.62_0.11_260)] dark:text-[oklch(0.76_0.09_260)]",
-  PackageSearch:
-    "text-[oklch(0.58_0.14_195)] dark:text-[oklch(0.72_0.16_195)]",
-  Truck:
-    "text-[oklch(0.58_0.16_25)] dark:text-[oklch(0.72_0.18_25)]",
-  Factory:
-    "text-[oklch(0.6_0.14_305)] dark:text-[oklch(0.74_0.16_305)]",
-  Users:
-    "text-[oklch(0.58_0.11_260)] dark:text-[oklch(0.74_0.1_260)]",
-  Building2:
-    "text-[oklch(0.56_0.1_235)] dark:text-[oklch(0.7_0.11_235)]",
-  Bookmark:
-    "text-[oklch(0.64_0.13_70)] dark:text-[oklch(0.78_0.15_70)]",
+  PackageSearch: "text-[oklch(0.58_0.14_195)] dark:text-[oklch(0.72_0.16_195)]",
+  Truck: "text-[oklch(0.58_0.16_25)] dark:text-[oklch(0.72_0.18_25)]",
+  Factory: "text-[oklch(0.6_0.14_305)] dark:text-[oklch(0.74_0.16_305)]",
+  Users: "text-[oklch(0.58_0.11_260)] dark:text-[oklch(0.74_0.1_260)]",
+  Building2: "text-[oklch(0.56_0.1_235)] dark:text-[oklch(0.7_0.11_235)]",
+  Bookmark: "text-[oklch(0.64_0.13_70)] dark:text-[oklch(0.78_0.15_70)]",
   // Аналоги — лавандовый
-  Link2:
-    "text-[oklch(0.68_0.18_285)] dark:text-[oklch(0.8_0.2_285)]",
-  Projector:
-    "text-[oklch(0.58_0.16_325)] dark:text-[oklch(0.72_0.18_325)]",
-  ShoppingCart:
-    "text-[oklch(0.6_0.15_145)] dark:text-[oklch(0.74_0.16_145)]",
-  PieChart:
-    "text-[oklch(0.62_0.17_180)] dark:text-[oklch(0.76_0.18_180)]",
+  Link2: "text-[oklch(0.68_0.18_285)] dark:text-[oklch(0.8_0.2_285)]",
+  Projector: "text-[oklch(0.58_0.16_325)] dark:text-[oklch(0.72_0.18_325)]",
+  ShoppingCart: "text-[oklch(0.6_0.15_145)] dark:text-[oklch(0.74_0.16_145)]",
+  PieChart: "text-[oklch(0.62_0.17_180)] dark:text-[oklch(0.76_0.18_180)]",
   // Продажі — зелёный
-  TrendingUp:
-    "text-[oklch(0.62_0.18_145)] dark:text-[oklch(0.76_0.2_145)]",
-  Boxes:
-    "text-[oklch(0.58_0.12_200)] dark:text-[oklch(0.72_0.14_200)]",
-  Sparkles:
-    "text-[oklch(0.64_0.16_55)] dark:text-[oklch(0.78_0.16_55)]",
+  TrendingUp: "text-[oklch(0.62_0.18_145)] dark:text-[oklch(0.76_0.2_145)]",
+  Boxes: "text-[oklch(0.58_0.12_200)] dark:text-[oklch(0.72_0.14_200)]",
+  Sparkles: "text-[oklch(0.64_0.16_55)] dark:text-[oklch(0.78_0.16_55)]",
 };
 
 export interface AppSidebarNavItem {
@@ -133,8 +110,7 @@ export function filterVisibleSidebarNavItems(
   hasAnyRole: (roles: RoleType[]) => boolean,
 ): AppSidebarNavItem[] {
   return items.filter(
-    (navItem) =>
-      !navItem.allowedRoles || hasAnyRole(navItem.allowedRoles),
+    (navItem) => !navItem.allowedRoles || hasAnyRole(navItem.allowedRoles),
   );
 }
 
@@ -160,8 +136,7 @@ export function isSidebarGroupActiveForPathname(
   visibleItems: AppSidebarNavItem[],
 ): boolean {
   const itemMatch = visibleItems.some(
-    (nav) =>
-      pathname === nav.url || pathname.startsWith(`${nav.url}/`),
+    (nav) => pathname === nav.url || pathname.startsWith(`${nav.url}/`),
   );
   if (itemMatch) {
     return true;
@@ -184,11 +159,7 @@ const getIcon = (iconName: string) => {
   const IconComponent = icons[iconName as SidebarIconName];
   const colorClass = iconColorClasses[iconName as SidebarIconName];
 
-  return (
-    <IconComponent
-      className={`h-4 w-4 shrink-0 ${colorClass}`}
-    />
-  );
+  return <IconComponent className={`h-4 w-4 shrink-0 ${colorClass}`} />;
 };
 
 export const appSidebarData: { navMain: AppSidebarNavGroup[] } = {
@@ -235,12 +206,7 @@ export const appSidebarData: { navMain: AppSidebarNavGroup[] } = {
           iconName: "Boxes",
           allowedRoles: [RoleType.ADMIN],
         },
-        {
-          title: "Грабо",
-          url: "/sku/grabo",
-          iconName: "Sparkles",
-          allowedRoles: [RoleType.ADMIN],
-        },
+
         {
           title: "Продажі",
           url: "/sku/sales",
@@ -269,6 +235,12 @@ export const appSidebarData: { navMain: AppSidebarNavGroup[] } = {
           title: "Зрізи Btrade",
           url: "/sku/btrade-slices",
           iconName: "Projector",
+          allowedRoles: [RoleType.ADMIN],
+        },
+        {
+          title: "Грабо",
+          url: "/sku/grabo",
+          iconName: "Sparkles",
           allowedRoles: [RoleType.ADMIN],
         },
       ],
@@ -376,7 +348,7 @@ export const appSidebarData: { navMain: AppSidebarNavGroup[] } = {
       ],
     },
     // Аналітика
- 
+
     {
       title: "Довідники",
       url: "/wh/prods",
@@ -419,4 +391,3 @@ export const appSidebarData: { navMain: AppSidebarNavGroup[] } = {
 };
 
 export { getIcon };
-

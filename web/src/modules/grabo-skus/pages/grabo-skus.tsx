@@ -16,6 +16,8 @@ export function GraboSkus() {
     material,
     gas,
     language,
+    gasCapacity,
+    tag,
     isOnSite,
     isNewProduct,
     listQuery,
@@ -27,6 +29,8 @@ export function GraboSkus() {
     setMaterial,
     setGas,
     setLanguage,
+    setGasCapacity,
+    setTag,
     setIsOnSite,
     setIsNewProduct,
   } = useGraboSkusParams();
@@ -50,6 +54,10 @@ export function GraboSkus() {
           setGas={setGas}
           language={language}
           setLanguage={setLanguage}
+          gasCapacity={gasCapacity}
+          setGasCapacity={setGasCapacity}
+          tag={tag}
+          setTag={setTag}
           isOnSite={isOnSite}
           setIsOnSite={setIsOnSite}
           isNewProduct={isNewProduct}
@@ -66,6 +74,8 @@ export function GraboSkus() {
             material: material || undefined,
             gas: gas || undefined,
             language: language || undefined,
+            gasCapacity: gasCapacity || undefined,
+            tag: tag || undefined,
             isOnSite: listQuery.isOnSite,
             isNewProduct: listQuery.isNewProduct,
           }}

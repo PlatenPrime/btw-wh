@@ -24,6 +24,8 @@ export const getGraboSkus = async ({
   material,
   gas,
   language,
+  gasCapacity,
+  tag,
   isOnSite,
   isNewProduct,
   includeFilterOptions,
@@ -40,6 +42,8 @@ export const getGraboSkus = async ({
   setOptionalParam(params, "material", material);
   setOptionalParam(params, "gas", gas);
   setOptionalParam(params, "language", language);
+  setOptionalParam(params, "gasCapacity", gasCapacity);
+  setOptionalParam(params, "tag", tag);
 
   if (typeof isOnSite === "boolean") {
     params.set("isOnSite", String(isOnSite));

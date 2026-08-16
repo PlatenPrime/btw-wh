@@ -106,6 +106,10 @@ export interface GraboSkusControlsViewProps {
   setGas: (v: string) => void;
   language: string;
   setLanguage: (v: string) => void;
+  gasCapacity: string;
+  setGasCapacity: (v: string) => void;
+  tag: string;
+  setTag: (v: string) => void;
   isOnSite: GraboTriStateFilter;
   setIsOnSite: (v: GraboTriStateFilter) => void;
   isNewProduct: GraboTriStateFilter;
@@ -128,6 +132,10 @@ export function GraboSkusControlsView({
   setGas,
   language,
   setLanguage,
+  gasCapacity,
+  setGasCapacity,
+  tag,
+  setTag,
   isOnSite,
   setIsOnSite,
   isNewProduct,
@@ -195,6 +203,22 @@ export function GraboSkusControlsView({
               onValueChange={setLanguage}
               options={filterOptions.language}
               allLabel="Усі мови"
+            />
+            <GraboFilterSelect
+              id="grabo-skus-gas-capacity"
+              ariaLabel="Обʼєм газу"
+              value={gasCapacity}
+              onValueChange={setGasCapacity}
+              options={filterOptions.gasCapacity}
+              allLabel="Усі обʼєми"
+            />
+            <GraboFilterSelect
+              id="grabo-skus-tag"
+              ariaLabel="Тег"
+              value={tag}
+              onValueChange={setTag}
+              options={filterOptions.tags}
+              allLabel="Усі теги"
             />
             <GraboTriStateSelect
               id="grabo-skus-on-site"

@@ -28,6 +28,8 @@ export function useGraboSkusParams() {
   const material = getParam(params, "material", "");
   const gas = getParam(params, "gas", "");
   const language = getParam(params, "language", "");
+  const gasCapacity = getParam(params, "gasCapacity", "");
+  const tag = getParam(params, "tag", "");
   const isOnSite = parseTriState(getParam(params, "isOnSite", ""));
   const isNewProduct = parseTriState(getParam(params, "isNewProduct", ""));
 
@@ -59,6 +61,12 @@ export function useGraboSkusParams() {
   const setLanguage = (value: string) =>
     updateSearchParams(params, { language: value, page: "1" }, setParams);
 
+  const setGasCapacity = (value: string) =>
+    updateSearchParams(params, { gasCapacity: value, page: "1" }, setParams);
+
+  const setTag = (value: string) =>
+    updateSearchParams(params, { tag: value, page: "1" }, setParams);
+
   const setIsOnSite = (value: GraboTriStateFilter) =>
     updateSearchParams(params, { isOnSite: value, page: "1" }, setParams);
 
@@ -74,6 +82,8 @@ export function useGraboSkusParams() {
     material,
     gas,
     language,
+    gasCapacity,
+    tag,
     isOnSite,
     isNewProduct,
     listQuery: {
@@ -88,6 +98,8 @@ export function useGraboSkusParams() {
     setMaterial,
     setGas,
     setLanguage,
+    setGasCapacity,
+    setTag,
     setIsOnSite,
     setIsNewProduct,
   };
