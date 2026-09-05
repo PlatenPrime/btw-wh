@@ -1,25 +1,17 @@
 import { Dialog } from "@/components/ui/dialog";
 import { useFillSkugrSkusMutation } from "@/modules/skugrs/api/hooks/mutations/useFillSkugrSkusMutation";
-import { FillAirSkugrSkusDialogView } from "@/modules/skugrs/components/dialogs/fill-skugr-skus-dialog/FillAirSkugrSkusDialogView";
 import { FillSkugrSkusDialogView } from "@/modules/skugrs/components/dialogs/fill-skugr-skus-dialog/FillSkugrSkusDialogView";
-import { useAirSkugrSingleFill } from "@/modules/skugrs/hooks/useAirSkugrSingleFill";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { toast } from "sonner";
 
 interface FillSkugrSkusDialogProps {
   skugrId: string;
-  skugrUrl: string;
-  skugrTitle?: string;
   konkName: string;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
-function isAirKonk(konkName: string): boolean {
-  return konkName.toLowerCase() === "air";
-}
-
-function FillServerSkugrSkusDialog({
+export function FillSkugrSkusDialog({
   skugrId,
   konkName,
   open,
@@ -70,57 +62,4 @@ function FillServerSkugrSkusDialog({
       />
     </Dialog>
   );
-}
-
-function FillAirSkugrSkusDialog({
-  skugrId,
-  skugrUrl,
-  skugrTitle,
-  open,
-  onOpenChange,
-}: FillSkugrSkusDialogProps) {
-  const { state, isRunning, extensionAvailable, run, stop, reset, recheckExtension } =
-    useAirSkugrSingleFill(
-      {
-        skugrId,
-        url: skugrUrl,
-        title: skugrTitle,
-      },
-      { enabled: open },
-    );
-
-  useEffect(() => {
-    if (!open) {
-      reset();
-    }
-  }, [open, reset]);
-
-  const handleOpenChange = (next: boolean) => {
-    if (!next && isRunning) {
-      stop();
-    }
-    onOpenChange(next);
-  };
-
-  return (
-    <Dialog open={open} onOpenChange={handleOpenChange}>
-      <FillAirSkugrSkusDialogView
-        skugrUrl={skugrUrl}
-        extensionAvailable={extensionAvailable}
-        isRunning={isRunning}
-        state={state}
-        onRecheckExtension={() => void recheckExtension()}
-        onCancel={() => handleOpenChange(false)}
-        onSubmit={() => void run()}
-        onStop={stop}
-      />
-    </Dialog>
-  );
-}
-
-export function FillSkugrSkusDialog(props: FillSkugrSkusDialogProps) {
-  if (isAirKonk(props.konkName)) {
-    return <FillAirSkugrSkusDialog {...props} />;
-  }
-  return <FillServerSkugrSkusDialog {...props} />;
 }

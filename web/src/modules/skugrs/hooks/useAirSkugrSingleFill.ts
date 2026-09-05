@@ -8,10 +8,23 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
+export interface AirSkugrFillPageLogEntry {
+  pageIndex: number;
+  pageUrl: string;
+  productsOnPage: number;
+  clientNextPageUrl: string | null;
+  serverNextPageUrl: string | null;
+}
+
 export interface AirSkugrSingleFillState {
   status: AirClientSkugrRowStatus;
   pageIndex: number;
+  pageUrl?: string;
+  productsOnPage?: number;
+  clientNextPageUrl?: string | null;
+  serverNextPageUrl?: string | null;
   stats: FillSkugrSkusStats;
+  pages: AirSkugrFillPageLogEntry[];
   message?: string;
   code?: string;
 }
@@ -20,6 +33,7 @@ const IDLE_STATE: AirSkugrSingleFillState = {
   status: "pending",
   pageIndex: 0,
   stats: EMPTY_FILL_SKUGR_SKUS_STATS,
+  pages: [],
 };
 
 export function useAirSkugrSingleFill(
@@ -87,15 +101,54 @@ export function useAirSkugrSingleFill(
       status: "capturing",
       pageIndex: 0,
       stats: EMPTY_FILL_SKUGR_SKUS_STATS,
+      pages: [],
     });
 
     const result = await runAirSkugrFillPages({
       group: { skugrId: group.skugrId, url: group.url },
       fillPage: fillMutation.mutateAsync,
       shouldStop: () => stopRef.current || runIdRef.current !== runId,
-      onProgress: ({ pageIndex, phase }) => {
+      onProgress: (progress) => {
         if (runIdRef.current !== runId) return;
-        setState((curr) => ({ ...curr, status: phase, pageIndex }));
+        setState((curr) => {
+          const next: AirSkugrSingleFillState = {
+            ...curr,
+            status: progress.phase,
+            pageIndex: progress.pageIndex,
+            pageUrl: progress.pageUrl,
+            productsOnPage: progress.productsOnPage ?? curr.productsOnPage,
+            stats: progress.stats ?? curr.stats,
+            clientNextPageUrl:
+              progress.clientNextPageUrl !== undefined
+                ? progress.clientNextPageUrl
+                : curr.clientNextPageUrl,
+            serverNextPageUrl:
+              progress.serverNextPageUrl !== undefined
+                ? progress.serverNextPageUrl
+                : curr.serverNextPageUrl,
+          };
+
+          if (
+            progress.stats &&
+            typeof progress.productsOnPage === "number"
+          ) {
+            const entry: AirSkugrFillPageLogEntry = {
+              pageIndex: progress.pageIndex,
+              pageUrl: progress.pageUrl,
+              productsOnPage: progress.productsOnPage,
+              clientNextPageUrl: progress.clientNextPageUrl ?? null,
+              serverNextPageUrl: progress.serverNextPageUrl ?? null,
+            };
+            const pages = curr.pages.filter(
+              (page) => page.pageIndex !== progress.pageIndex,
+            );
+            pages.push(entry);
+            pages.sort((a, b) => a.pageIndex - b.pageIndex);
+            next.pages = pages;
+          }
+
+          return next;
+        });
       },
     });
 
@@ -107,11 +160,12 @@ export function useAirSkugrSingleFill(
     queryClient.invalidateQueries({ queryKey: ["skusBySkugr"] });
 
     if (result.status === "completed") {
-      setState({
+      setState((curr) => ({
+        ...curr,
         status: "done",
         pageIndex: result.pagesFilled,
         stats: result.stats,
-      });
+      }));
       toast.success("Групу заповнено з клієнта", {
         description: `Сторінок: ${result.pagesFilled}, створено: ${result.stats.created}, додано існуючих: ${result.stats.linkedExisting}`,
       });
@@ -119,21 +173,23 @@ export function useAirSkugrSingleFill(
     }
 
     if (result.status === "stopped") {
-      setState({
+      setState((curr) => ({
+        ...curr,
         status: "pending",
         pageIndex: result.pagesFilled,
         stats: result.stats,
-      });
+      }));
       return;
     }
 
-    setState({
+    setState((curr) => ({
+      ...curr,
       status: "error",
       pageIndex: result.pagesFilled,
       stats: result.stats,
       code: result.code,
       message: result.message,
-    });
+    }));
     toast.error(group.title ? `${group.title}: помилка refill` : "Помилка refill", {
       description: result.message,
     });

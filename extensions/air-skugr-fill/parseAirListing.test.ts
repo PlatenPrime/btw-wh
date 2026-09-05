@@ -1,7 +1,7 @@
 import * as cheerio from "cheerio";
 import type { AnyNode } from "domhandler";
 import { describe, expect, it } from "vitest";
-import { parseAirListingFromDocument, isAirListingPayload } from "./parseAirListing.js";
+import { parseAirListingFromDocument, isAirListingPayload, isSameAirCategoryUrl } from "./parseAirListing.js";
 
 const PAGE_URL =
   "https://air.example.test/ua/index.php?route=product/category&path=1";
@@ -280,6 +280,75 @@ describe("parseAirListingFromDocument", () => {
         nextPageUrl: null,
         hasListingMarkup: true,
       })
+    ).toBe(false);
+  });
+
+  it("falls back to pagination when rel=next is a different category route", () => {
+    const seoUrl = "https://air.example.test/ua/shariki/latex";
+    const seoPage2 = `${seoUrl}?page=2`;
+    const routePage2 =
+      "https://air.example.test/ua/index.php?route=product/category&path=20&page=2";
+    const html = airPageHtml({
+      cards: [
+        airProductCard({
+          pid: "1",
+          productPath: "/ua/product/p",
+          imageUrl: "https://air.example.test/p.jpg",
+          title: "P",
+        }),
+      ],
+      nextHref: routePage2,
+      paginationHref: seoPage2,
+    });
+    const result = parseAirListingFromDocument(
+      cheerioDocument(html),
+      seoUrl
+    );
+    expect(result.nextPageUrl).toBe(seoPage2);
+  });
+
+  it("drops next URL when neither rel=next nor pagination match the category", () => {
+    const seoUrl = "https://air.example.test/ua/shariki/latex";
+    const routePage2 =
+      "https://air.example.test/ua/index.php?route=product/category&path=20&page=2";
+    const html = airPageHtml({
+      cards: [
+        airProductCard({
+          pid: "1",
+          productPath: "/ua/product/p",
+          imageUrl: "https://air.example.test/p.jpg",
+          title: "P",
+        }),
+      ],
+      nextHref: routePage2,
+    });
+    const result = parseAirListingFromDocument(
+      cheerioDocument(html),
+      seoUrl
+    );
+    expect(result.nextPageUrl).toBeNull();
+  });
+});
+
+describe("isSameAirCategoryUrl", () => {
+  it("treats page query as the only allowed difference", () => {
+    const base =
+      "https://air.example.test/ua/index.php?route=product/category&path=1";
+    expect(isSameAirCategoryUrl(base, `${base}&page=2`)).toBe(true);
+    expect(
+      isSameAirCategoryUrl(
+        "https://air.example.test/ua/shariki/latex",
+        "https://air.example.test/ua/shariki/latex?page=2"
+      )
+    ).toBe(true);
+  });
+
+  it("rejects a different pathname", () => {
+    expect(
+      isSameAirCategoryUrl(
+        "https://air.example.test/ua/shariki/latex",
+        "https://air.example.test/ua/index.php?route=product/category&path=20&page=2"
+      )
     ).toBe(false);
   });
 });

@@ -10,7 +10,7 @@ const GRID_SEL = "#us-category-products, .us-category-products";
 const CARD_SEL =
   "div.product-layout[data-pid], div.product-layout[data-product-id]";
 const PAGINATION_NEXT_SEL =
-  ".pagination li.active + li a, .us-pagination li.active + li a, a[rel='next']";
+  ".pagination li.active + li a, .us-pagination li.active + li a";
 
 export interface AirListingProduct {
   productId: string;
@@ -114,19 +114,62 @@ function cardTitleLink(card: Element): Element | null {
   );
 }
 
+function queryWithoutPage(url: URL): string {
+  const params = new URLSearchParams(url.search);
+  params.delete("page");
+  const normalized = new URLSearchParams();
+  for (const key of [...new Set(params.keys())].sort()) {
+    for (const value of [...params.getAll(key)].sort()) {
+      normalized.append(key, value);
+    }
+  }
+  return normalized.toString();
+}
+
+/**
+ * Дзеркало контракту fill-page: origin + pathname, query збігається крім `page`.
+ */
+export function isSameAirCategoryUrl(
+  baseUrl: string,
+  candidateUrl: string,
+): boolean {
+  try {
+    const base = new URL(baseUrl);
+    const candidate = new URL(candidateUrl);
+    if (base.origin !== candidate.origin) {
+      return false;
+    }
+    if (base.pathname !== candidate.pathname) {
+      return false;
+    }
+    return queryWithoutPage(base) === queryWithoutPage(candidate);
+  } catch {
+    return false;
+  }
+}
+
 function getNextPageUrl(doc: ParentNode, pageUrl: string): string | null {
   const relNext = doc.querySelector('link[rel="next"]');
   const fromRel = relNext
     ? resolveHref(relNext.getAttribute("href"), pageUrl)
     : null;
-  if (fromRel) {
-    return fromRel;
-  }
 
   const paginationNext = doc.querySelector(PAGINATION_NEXT_SEL);
-  return paginationNext
+  const fromPagination = paginationNext
     ? resolveHref(paginationNext.getAttribute("href"), pageUrl)
     : null;
+
+  const aRelNext = doc.querySelector("a[rel='next']");
+  const fromAnchorRel = aRelNext
+    ? resolveHref(aRelNext.getAttribute("href"), pageUrl)
+    : null;
+
+  for (const candidate of [fromRel, fromPagination, fromAnchorRel]) {
+    if (candidate && isSameAirCategoryUrl(pageUrl, candidate)) {
+      return candidate;
+    }
+  }
+  return null;
 }
 
 /** Нет карточек и нет сетки категории — WAF/чужая страница, не пустой листинг. */

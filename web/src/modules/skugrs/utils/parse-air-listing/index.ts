@@ -1,6 +1,7 @@
 export {
   isAirListingParseFailed,
   isAirListingPayload,
+  isSameAirCategoryUrl,
   parseAirListingFromDocument,
   parseAirListingFromHtml,
   type AirListingPayload,

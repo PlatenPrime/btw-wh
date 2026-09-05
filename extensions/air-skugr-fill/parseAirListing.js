@@ -10,7 +10,7 @@ const GRID_SEL = "#us-category-products, .us-category-products";
 const CARD_SEL =
   "div.product-layout[data-pid], div.product-layout[data-product-id]";
 const PAGINATION_NEXT_SEL =
-  ".pagination li.active + li a, .us-pagination li.active + li a, a[rel='next']";
+  ".pagination li.active + li a, .us-pagination li.active + li a";
 
 function resolveHref(href, pageUrl) {
   const trimmed = String(href || "").trim();
@@ -98,19 +98,59 @@ function cardTitleLink(card) {
   );
 }
 
+function queryWithoutPage(url) {
+  const params = new URLSearchParams(url.search);
+  params.delete("page");
+  const normalized = new URLSearchParams();
+  const keys = [...new Set(params.keys())].sort();
+  for (const key of keys) {
+    const values = params.getAll(key).slice().sort();
+    for (const value of values) {
+      normalized.append(key, value);
+    }
+  }
+  return normalized.toString();
+}
+
+/** Origin + pathname, query збігається крім `page` — як fill-page. */
+export function isSameAirCategoryUrl(baseUrl, candidateUrl) {
+  try {
+    const base = new URL(baseUrl);
+    const candidate = new URL(candidateUrl);
+    if (base.origin !== candidate.origin) {
+      return false;
+    }
+    if (base.pathname !== candidate.pathname) {
+      return false;
+    }
+    return queryWithoutPage(base) === queryWithoutPage(candidate);
+  } catch {
+    return false;
+  }
+}
+
 function getNextPageUrl(doc, pageUrl) {
   const relNext = doc.querySelector('link[rel="next"]');
   const fromRel = relNext
     ? resolveHref(relNext.getAttribute("href"), pageUrl)
     : null;
-  if (fromRel) {
-    return fromRel;
-  }
 
   const paginationNext = doc.querySelector(PAGINATION_NEXT_SEL);
-  return paginationNext
+  const fromPagination = paginationNext
     ? resolveHref(paginationNext.getAttribute("href"), pageUrl)
     : null;
+
+  const aRelNext = doc.querySelector("a[rel='next']");
+  const fromAnchorRel = aRelNext
+    ? resolveHref(aRelNext.getAttribute("href"), pageUrl)
+    : null;
+
+  for (const candidate of [fromRel, fromPagination, fromAnchorRel]) {
+    if (candidate && isSameAirCategoryUrl(pageUrl, candidate)) {
+      return candidate;
+    }
+  }
+  return null;
 }
 
 /**

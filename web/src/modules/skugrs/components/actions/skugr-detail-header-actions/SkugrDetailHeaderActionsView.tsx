@@ -17,6 +17,7 @@ interface SkugrDetailHeaderActionsViewProps {
   onEditDialogOpenChange: (open: boolean) => void;
   fillDialogOpen: boolean;
   onFillDialogOpenChange: (open: boolean) => void;
+  showFillDialog: boolean;
   deleteDialogOpen: boolean;
   onDeleteDialogOpenChange: (open: boolean) => void;
   clearSkusDialogOpen: boolean;
@@ -36,6 +37,7 @@ export function SkugrDetailHeaderActionsView({
   onEditDialogOpenChange,
   fillDialogOpen,
   onFillDialogOpenChange,
+  showFillDialog,
   deleteDialogOpen,
   onDeleteDialogOpenChange,
   clearSkusDialogOpen,
@@ -61,14 +63,14 @@ export function SkugrDetailHeaderActionsView({
         open={editDialogOpen}
         onOpenChange={onEditDialogOpenChange}
       />
-      <FillSkugrSkusDialog
-        skugrId={skugr._id}
-        skugrUrl={skugr.url}
-        skugrTitle={skugr.title}
-        konkName={skugr.konkName}
-        open={fillDialogOpen}
-        onOpenChange={onFillDialogOpenChange}
-      />
+      {showFillDialog ? (
+        <FillSkugrSkusDialog
+          skugrId={skugr._id}
+          konkName={skugr.konkName}
+          open={fillDialogOpen}
+          onOpenChange={onFillDialogOpenChange}
+        />
+      ) : null}
       <DeleteSkugrDialog
         skugr={skugr}
         open={deleteDialogOpen}

@@ -25,6 +25,8 @@ export function SkugrDetailHeaderActions({ skugr }: SkugrDetailHeaderActionsProp
   const canExportExcel = hasRole(RoleType.USER);
   const canAdmin = hasRole(RoleType.ADMIN);
   const canDelete = hasRole(RoleType.PRIME);
+  const isAirKonk = skugr.konkName.toLowerCase() === "air";
+  const showServerFill = canAdmin && !isAirKonk;
 
   const openEditDialog = useCallback(() => {
     setEditDialogOpen(true);
@@ -81,32 +83,32 @@ export function SkugrDetailHeaderActions({ skugr }: SkugrDetailHeaderActionsProp
       );
     }
     if (canAdmin) {
-      actions.push(
-        {
-          id: "edit-skugr",
-          label: "Редагувати",
-          icon: Pencil,
-          iconColor: "sky",
-          variant: "default",
-          onClick: openEditDialog,
-        },
-        {
+      actions.push({
+        id: "edit-skugr",
+        label: "Редагувати",
+        icon: Pencil,
+        iconColor: "sky",
+        variant: "default",
+        onClick: openEditDialog,
+      });
+      if (showServerFill) {
+        actions.push({
           id: "fill-skugr-skus",
           label: "Заповнити товарами",
           icon: RefreshCw,
           iconColor: "emerald",
           variant: "default",
           onClick: openFillDialog,
-        },
-        {
-          id: "clear-skugr-skus",
-          label: "Очистити від товарів",
-          icon: Eraser,
-          iconColor: "amber",
-          variant: "destructive",
-          onClick: openClearSkusDialog,
-        },
-      );
+        });
+      }
+      actions.push({
+        id: "clear-skugr-skus",
+        label: "Очистити від товарів",
+        icon: Eraser,
+        iconColor: "amber",
+        variant: "destructive",
+        onClick: openClearSkusDialog,
+      });
     }
     if (canDelete) {
       actions.push(
@@ -133,6 +135,7 @@ export function SkugrDetailHeaderActions({ skugr }: SkugrDetailHeaderActionsProp
     canExportExcel,
     canAdmin,
     canDelete,
+    showServerFill,
     openSliceExcelDialog,
     openSalesExcelDialog,
     openEditDialog,
@@ -155,6 +158,7 @@ export function SkugrDetailHeaderActions({ skugr }: SkugrDetailHeaderActionsProp
       onEditDialogOpenChange={setEditDialogOpen}
       fillDialogOpen={fillDialogOpen}
       onFillDialogOpenChange={setFillDialogOpen}
+      showFillDialog={showServerFill}
       deleteDialogOpen={deleteDialogOpen}
       onDeleteDialogOpenChange={setDeleteDialogOpen}
       clearSkusDialogOpen={clearSkusDialogOpen}

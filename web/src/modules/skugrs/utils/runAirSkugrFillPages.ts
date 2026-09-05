@@ -32,6 +32,10 @@ export interface AirSkugrFillPageProgress {
   pageUrl: string;
   phase: "capturing" | "saving";
   productsOnPage?: number;
+  /** Накопичені stats після успішного fill-page. */
+  stats?: FillSkugrSkusStats;
+  clientNextPageUrl?: string | null;
+  serverNextPageUrl?: string | null;
 }
 
 export interface AirSkugrFillPagesCompleted {
@@ -267,6 +271,9 @@ export async function runAirSkugrFillPages({
         pageUrl: currentUrl,
         phase: "saving",
         productsOnPage: response.data.productsOnPage,
+        stats,
+        clientNextPageUrl: listing.nextPageUrl,
+        serverNextPageUrl: response.data.nextPageUrl,
       });
       pageUrl = response.data.nextPageUrl;
       if (pageUrl) {
