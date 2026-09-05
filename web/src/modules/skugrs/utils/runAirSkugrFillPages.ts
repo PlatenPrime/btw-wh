@@ -15,6 +15,11 @@ import {
   delayMs,
   jitterMs,
 } from "@/modules/skugrs/utils/airSkugrFillTiming";
+import {
+  isAirListingParseFailed,
+  parseAirListingFromHtml,
+  type AirListingPayload,
+} from "@/modules/skugrs/utils/parse-air-listing/parseAirListing";
 import type { AxiosError } from "axios";
 
 export interface AirSkugrFillGroup {
@@ -132,10 +137,15 @@ async function captureListingHtml(pageUrl: string): Promise<string> {
   return capture.html;
 }
 
-async function fillCapturedPage(params: {
+async function captureAndParseListing(pageUrl: string): Promise<AirListingPayload> {
+  const html = await captureListingHtml(pageUrl);
+  return parseAirListingFromHtml(html, pageUrl);
+}
+
+async function fillParsedPage(params: {
   group: AirSkugrFillGroup;
   pageUrl: string;
-  html: string;
+  listing: AirListingPayload;
   fillPage: RunAirSkugrFillPagesParams["fillPage"];
 }): Promise<FillAirClientSkugrPageResponseDto> {
   return params.fillPage({
@@ -143,14 +153,16 @@ async function fillCapturedPage(params: {
     body: {
       sourceUrl: params.group.url,
       pageUrl: params.pageUrl,
-      html: params.html,
+      products: params.listing.products,
+      nextPageUrl: params.listing.nextPageUrl,
+      hasListingMarkup: params.listing.hasListingMarkup,
     },
   });
 }
 
 /**
- * Посторінковий refill однієї Air-групи: capture HTML → fill-page → nextPageUrl.
- * 422 — один retry сторінки з jitter 3–6 s.
+ * Посторінковий refill однієї Air-групи: capture HTML → parse на клієнті → fill-page.
+ * Немає сітки лістингу або 422 — один retry сторінки з jitter 3–6 s.
  */
 export async function runAirSkugrFillPages({
   group,
@@ -168,18 +180,42 @@ export async function runAirSkugrFillPages({
 
     try {
       onProgress?.({ pageIndex, pageUrl: currentUrl, phase: "capturing" });
-      let html = await captureListingHtml(currentUrl);
+      let listing = await captureAndParseListing(currentUrl);
       if (shouldStop()) {
         return { status: "stopped", stats, pagesFilled: pageIndex - 1 };
+      }
+
+      if (isAirListingParseFailed(listing)) {
+        await delayMs(
+          jitterMs(AIR_SKUGR_RETRY_JITTER_MS.min, AIR_SKUGR_RETRY_JITTER_MS.max),
+        );
+        if (shouldStop()) {
+          return { status: "stopped", stats, pagesFilled: pageIndex - 1 };
+        }
+        onProgress?.({ pageIndex, pageUrl: currentUrl, phase: "capturing" });
+        listing = await captureAndParseListing(currentUrl);
+        if (shouldStop()) {
+          return { status: "stopped", stats, pagesFilled: pageIndex - 1 };
+        }
+        if (isAirListingParseFailed(listing)) {
+          return {
+            status: "error",
+            stats,
+            pagesFilled: pageIndex - 1,
+            code: "PARSE_FAILED",
+            message: "HTML без сітки лістингу. Спробуйте пізніше.",
+            stopQueue: false,
+          };
+        }
       }
 
       onProgress?.({ pageIndex, pageUrl: currentUrl, phase: "saving" });
       let response: FillAirClientSkugrPageResponseDto;
       try {
-        response = await fillCapturedPage({
+        response = await fillParsedPage({
           group,
           pageUrl: currentUrl,
-          html,
+          listing,
           fillPage,
         });
       } catch (error) {
@@ -202,15 +238,25 @@ export async function runAirSkugrFillPages({
         }
 
         onProgress?.({ pageIndex, pageUrl: currentUrl, phase: "capturing" });
-        html = await captureListingHtml(currentUrl);
+        listing = await captureAndParseListing(currentUrl);
         if (shouldStop()) {
           return { status: "stopped", stats, pagesFilled: pageIndex - 1 };
         }
+        if (isAirListingParseFailed(listing)) {
+          return {
+            status: "error",
+            stats,
+            pagesFilled: pageIndex - 1,
+            code: "PARSE_FAILED",
+            message: "HTML без сітки лістингу. Спробуйте пізніше.",
+            stopQueue: false,
+          };
+        }
         onProgress?.({ pageIndex, pageUrl: currentUrl, phase: "saving" });
-        response = await fillCapturedPage({
+        response = await fillParsedPage({
           group,
           pageUrl: currentUrl,
-          html,
+          listing,
           fillPage,
         });
       }

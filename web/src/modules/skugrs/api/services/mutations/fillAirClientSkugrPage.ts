@@ -4,7 +4,7 @@ import type {
   FillAirClientSkugrPageResponseDto,
 } from "@/modules/skugrs/api/types";
 
-/** POST /api/skugrs/client/air/id/:id/fill-page — одна сторінка Air-лістингу. */
+/** POST /api/skugrs/client/air/id/:id/fill-page — картки однієї сторінки Air-лістингу. */
 export async function fillAirClientSkugrPage({
   skugrId,
   body,

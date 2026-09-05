@@ -153,11 +153,20 @@ export interface AirClientSkugrPendingResponseDto {
   data: AirClientSkugrPendingPayload;
 }
 
-/** Body для POST /skugrs/client/air/id/:id/fill-page. */
+export interface FillAirClientSkugrPageProductDto {
+  productId: string;
+  title: string;
+  url: string;
+  imageUrl: string;
+}
+
+/** Body для POST /skugrs/client/air/id/:id/fill-page — вже розібрані картки. */
 export interface FillAirClientSkugrPageBodyDto {
   sourceUrl: string;
   pageUrl: string;
-  html: string;
+  products: FillAirClientSkugrPageProductDto[];
+  nextPageUrl: string | null;
+  hasListingMarkup: boolean;
 }
 
 export interface FillAirClientSkugrPageDataDto {

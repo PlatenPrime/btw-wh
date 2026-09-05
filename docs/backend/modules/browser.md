@@ -28,7 +28,7 @@
 - **analog-slices / analogs:** опрос остатков аналогов (air, balun, yumi, yumin, sharte).
 - **sku-slices / skus:** опрос SKU (air, balun, yumi, yumin, sharte, perfect); для Air — client-ingestion HTML как канал дозаполнения после abort/`-1` (server compensation для Air выключена).
 - **btrade-slices / arts / dels / defs:** остатки sharik через bulk `product_rests` (`actualQuantity` для live, `sliceQuantity` для daily btrade-slice).
-- **skugrs:** обход страниц групп для наполнения SKU (`group-products`); Air listing при `AIR_IDLE_MODE` с сервера не ходит — client-ingest HTML.
+- **skugrs:** обход страниц групп для наполнения SKU (`group-products`); Air listing при `AIR_IDLE_MODE` с сервера не ходит — client-ingest карточек листинга.
 - **grabo-skus:** полный обход каталога производителя Grabo (sitemap → категории → карточки) через `browser/grabo`.
 - **slice-compensation:** повторный опрос через stock-утилиты analog/sku; Air из compensation исключён.
 
@@ -44,7 +44,7 @@
 
 **Secondary:** client-ingestion в [sku-slices](sku-slices.md) — расширение/браузер открывает first-party страницу, frontend шлёт HTML на backend; тот же парсер. Канал — основной способ дозаполнить хвост после `ORIGIN_BLOCKED` или missing/`-1`, без повторного серверного молотка.
 
-Air **group listing** (наполнение SKU) при выключенном idle идёт через тот же Impit-путь (`fetchPageHtml` + cookie jar + adm.tools ack solver): один origin warm-up, затем страницы листинга с Referer; прокси выключен тем же флагом. Warm-up с `ORIGIN_BLOCKED` прерывает crawl. При `AIR_IDLE_MODE` `getAirGroupPagesProducts` бросает `AirServerIdleError` без сети; refill — [клиентский канал skugrs](../frontend/air-client-skugr-fill.md).
+Air **group listing** (наполнение SKU) при выключенном idle идёт через тот же Impit-путь (`fetchPageHtml` + cookie jar + adm.tools ack solver): один origin warm-up, затем страницы листинга с Referer; прокси выключен тем же флагом. Warm-up с `ORIGIN_BLOCKED` прерывает crawl. Парсер серверного crawl — [`parseAirGroupListingPage`](../../src/modules/browser/air/group-pages/utils/parseAirGroupListingPage.ts). При `AIR_IDLE_MODE` `getAirGroupPagesProducts` бросает `AirServerIdleError` без сети; refill — [клиентский канал skugrs](../frontend/air-client-skugr-fill.md): клиент шлёт JSON карточек (`products`, `nextPageUrl`, `hasListingMarkup`), fill-page cheerio не зовёт.
 
 ### Sharik: product_rests через HTTP-прокси
 

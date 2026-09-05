@@ -1,6 +1,6 @@
 # BTW Air Capture (Chrome extension)
 
-Мінімальне MV3-розширення для клієнтського захоплення HTML сторінок Airballoons. Обходить WAF: відкриває **first-party** вкладку, знімає `outerHTML` і повертає його у веб-застосунок BTW-WH. Сам застосунок (з JWT) відправляє HTML на backend.
+Мінімальне MV3-розширення для клієнтського захоплення HTML сторінок Airballoons. Обходить WAF: відкриває **first-party** вкладку, знімає `outerHTML` і повертає його у веб-застосунок BTW-WH. Сам застосунок (з JWT) відправляє дані на backend: для зрізів — HTML картки товару, для товарних груп — вже розібрані картки лістингу.
 
 Два сценарії SPA:
 
@@ -46,7 +46,7 @@
 
 1. SPA завантажує чергу `GET /api/skugrs/client/air/pending`.
 2. Для кожної групи SPA послідовно захоплює сторінки лістингу (`group.url`, далі `nextPageUrl` з відповіді fill-page).
-3. SPA робить `POST .../skugrs/client/air/id/:id/fill-page { sourceUrl, pageUrl, html }`.
+3. SPA парсить HTML і робить `POST .../skugrs/client/air/id/:id/fill-page { sourceUrl, pageUrl, products, nextPageUrl, hasListingMarkup }`.
 4. Після серії SPA інвалідовує кеш `skugrs` / `skusBySkugr`.
 
 Вкладки відкриваються **послідовно** (черга керується у SPA) — без паралельного шторму.
