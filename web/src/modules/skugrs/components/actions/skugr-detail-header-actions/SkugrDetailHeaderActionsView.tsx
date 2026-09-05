@@ -63,6 +63,8 @@ export function SkugrDetailHeaderActionsView({
       />
       <FillSkugrSkusDialog
         skugrId={skugr._id}
+        skugrUrl={skugr.url}
+        skugrTitle={skugr.title}
         konkName={skugr.konkName}
         open={fillDialogOpen}
         onOpenChange={onFillDialogOpenChange}

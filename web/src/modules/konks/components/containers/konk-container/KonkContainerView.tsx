@@ -8,6 +8,7 @@ import { KonkDetailsCard } from "@/modules/konks/components/cards/konk-details-c
 import { KonkSkusControls } from "@/modules/konks/components/controls/konk-skus-controls";
 import type { ProdDto } from "@/modules/prods/api/types/dto";
 import { AirClientSlicesContainer } from "@/modules/sku-analytics/components/containers/air-client-slices-container";
+import { AirClientSkugrFillContainer } from "@/modules/skugrs/components/containers/air-client-skugr-fill-container";
 import {
   SkusByKonkContainer,
   SkusContainerSkeleton,
@@ -20,6 +21,8 @@ interface KonkContainerViewProps {
   showSkuCatalogSection?: boolean;
   /** Секція клієнтського дозаповнення Air-зрізів — лише для konk.name === "air", ≥ ADMIN */
   showAirClientSlices?: boolean;
+  /** Секція клієнтського refill товарних груп Air — лише для konk.name === "air", ≥ ADMIN */
+  showAirClientSkugrFill?: boolean;
   prods: ProdDto[];
   skuPage: number;
   skuLimit: number;
@@ -35,6 +38,7 @@ export function KonkContainerView({
   konk,
   showSkuCatalogSection = true,
   showAirClientSlices = false,
+  showAirClientSkugrFill = false,
   prods,
   skuPage,
   skuLimit,
@@ -52,6 +56,7 @@ export function KonkContainerView({
         <KonkDetailsCard konk={konk} />
 
         {showAirClientSlices ? <AirClientSlicesContainer /> : null}
+        {showAirClientSkugrFill ? <AirClientSkugrFillContainer /> : null}
 
         {showSkuCatalogSection ? (
         <SurfaceSection className="grid gap-2">

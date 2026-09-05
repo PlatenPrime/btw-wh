@@ -9,10 +9,12 @@ import {
 import { Progress } from "@/components/ui/progress";
 import { iconSize, typography } from "@/lib/typography";
 import { cn } from "@/lib/utils";
-import type { AirClientPendingItemDto } from "@/modules/sku-analytics/api/types";
-import { AirClientPendingList } from "@/modules/sku-analytics/components/lists/air-client-pending-list";
-import type { AirClientSlicesSummary } from "@/modules/sku-analytics/hooks/useAirClientSlices";
-import type { AirClientRowState } from "@/modules/sku-analytics/types";
+import type { AirClientSkugrPendingItemDto } from "@/modules/skugrs/api/types";
+import { AirClientSkugrPendingList } from "@/modules/skugrs/components/lists/air-client-skugr-pending-list";
+import type {
+  AirClientSkugrFillSummary,
+  AirClientSkugrRowState,
+} from "@/modules/skugrs/types/air-client-skugr-fill";
 import {
   ChevronDown,
   CloudDownload,
@@ -23,16 +25,15 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 
-interface AirClientSlicesContainerViewProps {
-  items: AirClientPendingItemDto[];
-  rowStates: Record<string, AirClientRowState>;
-  summary: AirClientSlicesSummary;
-  sliceDate?: string;
+interface AirClientSkugrFillContainerViewProps {
+  items: AirClientSkugrPendingItemDto[];
+  rowStates: Record<string, AirClientSkugrRowState>;
+  summary: AirClientSkugrFillSummary;
   isRunning: boolean;
   extensionAvailable: boolean | null;
   onRun: () => void;
   onStop: () => void;
-  onRetry: (skuId: string) => void;
+  onRetry: (skugrId: string) => void;
   onRefresh: () => void;
   onRecheckExtension: () => void;
 }
@@ -74,7 +75,7 @@ function ExtensionStatus({
   );
 }
 
-export function AirClientSlicesContainerView({
+export function AirClientSkugrFillContainerView({
   items,
   rowStates,
   summary,
@@ -85,7 +86,7 @@ export function AirClientSlicesContainerView({
   onRetry,
   onRefresh,
   onRecheckExtension,
-}: AirClientSlicesContainerViewProps) {
+}: AirClientSkugrFillContainerViewProps) {
   const [listOpen, setListOpen] = useState(false);
 
   const progress = summary.total > 0 ? summary.done : 0;
@@ -96,7 +97,9 @@ export function AirClientSlicesContainerView({
     <SurfaceSection className="grid gap-3">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="grid gap-1">
-          <h3 className={typography.sectionTitle}>Дозаповнення Air сьогодні</h3>
+          <h3 className={typography.sectionTitle}>
+            Оновлення товарних груп Air
+          </h3>
         </div>
         <ExtensionStatus
           extensionAvailable={extensionAvailable}
@@ -108,7 +111,7 @@ export function AirClientSlicesContainerView({
         <p className={cn(typography.caption, "text-destructive")}>
           Встановіть розширення «BTW Air Capture» (Load unpacked із теки
           extensions/air-capture) і оновіть сторінку. Без нього браузер не зможе
-          зняти HTML сторінки Air через WAF.
+          зняти HTML лістингу Air через WAF.
         </p>
       ) : null}
 
@@ -117,8 +120,8 @@ export function AirClientSlicesContainerView({
           <span className="font-medium">
             {summary.done}/{summary.total}
           </span>
-          <Badge variant="success">записано {summary.saved}</Badge>
-          <Badge variant="secondary">пропущено {summary.skipped}</Badge>
+          <Badge variant="success">створено {summary.created}</Badge>
+          <Badge variant="secondary">додано {summary.linkedExisting}</Badge>
           {summary.error > 0 ? (
             <Badge variant="destructive">помилок {summary.error}</Badge>
           ) : null}
@@ -139,7 +142,7 @@ export function AirClientSlicesContainerView({
         ) : (
           <Button variant="default" disabled={!canRun} onClick={onRun}>
             <PlayCircle className={iconSize.ui} />
-            Дозаповнити Air
+            Оновити групи Air
           </Button>
         )}
         <Button variant="outline" disabled={isRunning} onClick={onRefresh}>
@@ -162,7 +165,7 @@ export function AirClientSlicesContainerView({
           </Button>
         </CollapsibleTrigger>
         <CollapsibleContent className="pt-2">
-          <AirClientPendingList
+          <AirClientSkugrPendingList
             items={items}
             rowStates={rowStates}
             isRunning={isRunning}

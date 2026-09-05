@@ -1,25 +1,25 @@
-import { DialogActions } from "@/components/shared/dialogs";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Dialog } from "@/components/ui/dialog";
 import { useFillSkugrSkusMutation } from "@/modules/skugrs/api/hooks/mutations/useFillSkugrSkusMutation";
-import { useCallback, useState } from "react";
+import { FillAirSkugrSkusDialogView } from "@/modules/skugrs/components/dialogs/fill-skugr-skus-dialog/FillAirSkugrSkusDialogView";
+import { FillSkugrSkusDialogView } from "@/modules/skugrs/components/dialogs/fill-skugr-skus-dialog/FillSkugrSkusDialogView";
+import { useAirSkugrSingleFill } from "@/modules/skugrs/hooks/useAirSkugrSingleFill";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 interface FillSkugrSkusDialogProps {
   skugrId: string;
+  skugrUrl: string;
+  skugrTitle?: string;
   konkName: string;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
-export function FillSkugrSkusDialog({
+function isAirKonk(konkName: string): boolean {
+  return konkName.toLowerCase() === "air";
+}
+
+function FillServerSkugrSkusDialog({
   skugrId,
   konkName,
   open,
@@ -60,43 +60,67 @@ export function FillSkugrSkusDialog({
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="sm:max-w-md">
-        <div className="grid gap-4">
-          <DialogHeader>
-            <DialogTitle>Заповнити групу товарами</DialogTitle>
-            <DialogDescription>
-              Запит до парсера браузера для конкурента{" "}
-              <span className="font-medium">{konkName}.</span> URL групи має вказувати на першу сторінку
-              категорії.
-            </DialogDescription>
-          </DialogHeader>
-
-          <div className="grid gap-2">
-            <Label htmlFor="fill-max-pages">Макс. сторінок (необов&apos;язково)</Label>
-            <Input
-              id="fill-max-pages"
-              type="number"
-              min={1}
-              max={20}
-              inputMode="numeric"
-              placeholder="1–20, порожньо = за замовчуванням"
-              value={maxPagesInput}
-              onChange={(e) => setMaxPagesInput(e.target.value)}
-              disabled={fillMutation.isPending}
-            />
-          </div>
-
-          <DialogActions
-            onCancel={() => handleOpenChange(false)}
-            onSubmit={submitFill}
-            cancelText="Скасувати"
-            submitText="Запустити"
-            submitLoadingText="Завантаження..."
-            isSubmitting={fillMutation.isPending}
-            className="w-full"
-          />
-        </div>
-      </DialogContent>
+      <FillSkugrSkusDialogView
+        konkName={konkName}
+        maxPagesInput={maxPagesInput}
+        isSubmitting={fillMutation.isPending}
+        onMaxPagesChange={setMaxPagesInput}
+        onCancel={() => handleOpenChange(false)}
+        onSubmit={submitFill}
+      />
     </Dialog>
   );
+}
+
+function FillAirSkugrSkusDialog({
+  skugrId,
+  skugrUrl,
+  skugrTitle,
+  open,
+  onOpenChange,
+}: FillSkugrSkusDialogProps) {
+  const { state, isRunning, extensionAvailable, run, stop, reset, recheckExtension } =
+    useAirSkugrSingleFill(
+      {
+        skugrId,
+        url: skugrUrl,
+        title: skugrTitle,
+      },
+      { enabled: open },
+    );
+
+  useEffect(() => {
+    if (!open) {
+      reset();
+    }
+  }, [open, reset]);
+
+  const handleOpenChange = (next: boolean) => {
+    if (!next && isRunning) {
+      stop();
+    }
+    onOpenChange(next);
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={handleOpenChange}>
+      <FillAirSkugrSkusDialogView
+        skugrUrl={skugrUrl}
+        extensionAvailable={extensionAvailable}
+        isRunning={isRunning}
+        state={state}
+        onRecheckExtension={() => void recheckExtension()}
+        onCancel={() => handleOpenChange(false)}
+        onSubmit={() => void run()}
+        onStop={stop}
+      />
+    </Dialog>
+  );
+}
+
+export function FillSkugrSkusDialog(props: FillSkugrSkusDialogProps) {
+  if (isAirKonk(props.konkName)) {
+    return <FillAirSkugrSkusDialog {...props} />;
+  }
+  return <FillServerSkugrSkusDialog {...props} />;
 }
