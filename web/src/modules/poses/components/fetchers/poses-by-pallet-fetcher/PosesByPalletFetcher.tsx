@@ -40,7 +40,7 @@ export function PosesByPalletFetcher({
     return <LoadingNoData description="Позиції не знайдено" />;
 
   return (
-    <ContentReveal>
+    <ContentReveal lockMotion={posesQuery.isFetching && !posesQuery.isLoading}>
       <ContainerComponent poses={poses} />
     </ContentReveal>
   );

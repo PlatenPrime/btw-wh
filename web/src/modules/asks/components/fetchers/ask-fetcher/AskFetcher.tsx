@@ -40,7 +40,9 @@ export function AskFetcher({
     );
 
   return (
-    <ContentReveal>
+    <ContentReveal
+      lockMotion={askQuery.isFetching && !askQuery.isLoading}
+    >
       <ContainerComponent askData={askResponse.data!} />
     </ContentReveal>
   );

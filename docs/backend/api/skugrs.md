@@ -78,7 +78,7 @@
 
 ### POST `/api/skugrs/id/:id/fill-skus`
 
-Заполнение массива `skus` группы по данным парсера страниц группы в модуле `browser`. Для `konkName` выбирается реализация: `yumi`, `yumin`, `air`, `sharte`, `balun`, `perfect`; для неподдерживаемого конкурента — **400**. Для **air** при активном `AIR_IDLE_MODE` — **400** `{ code: "CLIENT_INGEST_REQUIRED" }`; refill через `POST /api/skugrs/client/air/id/:id/fill-page`.
+Заполнение массива `skus` группы по данным парсера страниц группы в модуле `browser`. Для `konkName` выбирается реализация: `yumi`, `yumin`, `air`, `sharte`, `balun`, `perfect`, `svbum`; для неподдерживаемого конкурента — **400**. Для **air** при активном `AIR_IDLE_MODE` — **400** `{ code: "CLIENT_INGEST_REQUIRED" }`; refill через `POST /api/skugrs/client/air/id/:id/fill-page`. Для **svbum** `url` группы должен сохранять query-фильтр `ocf`, иначе пагинация уйдёт на нефильтрованный листинг.
 
 **Доступ:** checkAuth + checkRoles(ADMIN).
 
@@ -86,7 +86,7 @@
 
 **Body (JSON, опционально):**
 
-- `maxPages?: number` — лимит страниц пагинации для парсера (1–200), для конкурентов с постраничным обходом листинга (в т.ч. Yumi, Balun, Perfect и др.).
+- `maxPages?: number` — лимит страниц пагинации для парсера (1–200), для конкурентов с постраничным обходом листинга (в т.ч. Yumi, Balun, Perfect, Svbum и др.).
 
 **Ответ 200:**
 
@@ -146,7 +146,7 @@
 
 ### POST `/api/skugrs/client/air/id/:id/fill-page`
 
-Одна страница Air-листинга: клиент **сам** разбирает first-party HTML/DOM и присылает уже готовые карточки; сервер HTML листинга не парсит, только валидирует URL и аддитивно пишет состав группы. `nextPageUrl` в ответе — следующая страница той же категории или `null` (пустая сетка, конец, либо next не той категории).
+Одна страница Air-листинга: клиент присылает уже разобранные карточки, сервер аддитивно пишет состав группы. `nextPageUrl` в ответе — следующая страница той же категории или `null` (пустая сетка, конец, либо next не той категории).
 
 **Доступ:** checkAuth + checkRoles(ADMIN).
 
@@ -157,7 +157,7 @@
 - `sourceUrl`: string (URL) — должен совпадать с `skugr.url`
 - `pageUrl`: string (URL) — та же категория: origin и pathname как у группы, query совпадает кроме `page`
 - `products`: массив до 200 элементов `{ productId, title, url, imageUrl }` (все строки, `url` и `imageUrl` — абсолютные URL)
-- `nextPageUrl`: string (URL) или `null` — кандидат следующей страницы с клиента (`link[rel=next]`, иначе OpenCart `.pagination li.active + li a`)
+- `nextPageUrl`: string (URL) или `null` — кандидат следующей страницы с клиента (`link[rel=next]`)
 - `hasListingMarkup`: boolean — на странице была сетка `#us-category-products` / `.us-category-products`
 
 **Ответ 200:**

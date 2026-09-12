@@ -19,6 +19,7 @@ export function PosFetcher({
   const {
     data: posResponse,
     isLoading,
+    isFetching,
     error,
     refetch,
   } = usePosByIdQuery(posId);
@@ -44,7 +45,7 @@ export function PosFetcher({
     );
 
   return (
-    <ContentReveal>
+    <ContentReveal lockMotion={isFetching && !isLoading}>
       <ContainerComponent pos={posResponse.data!} />
     </ContentReveal>
   );

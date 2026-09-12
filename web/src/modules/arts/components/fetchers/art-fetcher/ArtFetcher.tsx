@@ -19,6 +19,7 @@ export function ArtFetcher({
   const {
     data: artResponse,
     isLoading,
+    isFetching,
     error,
     refetch,
   } = useOneArtQuery(artikul);
@@ -44,7 +45,7 @@ export function ArtFetcher({
     );
 
   return (
-    <ContentReveal>
+    <ContentReveal lockMotion={isFetching && !isLoading}>
       <ContainerComponent artData={artResponse.data!} />
     </ContentReveal>
   );

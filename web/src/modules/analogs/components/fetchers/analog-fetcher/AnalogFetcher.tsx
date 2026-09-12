@@ -15,7 +15,9 @@ export function AnalogFetcher({
   ContainerComponent,
   SkeletonComponent,
 }: AnalogFetcherProps) {
-  const { data, isLoading, error, refetch } = useAnalogByIdQuery({ id });
+  const { data, isLoading, isFetching, error, refetch } = useAnalogByIdQuery({
+    id,
+  });
 
   if (isLoading) {
     return <SkeletonComponent />;
@@ -42,7 +44,7 @@ export function AnalogFetcher({
   }
 
   return (
-    <ContentReveal>
+    <ContentReveal lockMotion={isFetching && !isLoading}>
       <ContainerComponent analog={data.data} />
     </ContentReveal>
   );

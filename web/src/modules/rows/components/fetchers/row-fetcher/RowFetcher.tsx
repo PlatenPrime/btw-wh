@@ -19,6 +19,7 @@ export function RowFetcher({
   const {
     data: rowResponse,
     isLoading,
+    isFetching,
     error,
     refetch,
   } = useRowByTitleQuery(rowTitle);
@@ -44,7 +45,7 @@ export function RowFetcher({
     );
 
   return (
-    <ContentReveal>
+    <ContentReveal lockMotion={isFetching && !isLoading}>
       <ContainerComponent row={rowResponse.data!} />
     </ContentReveal>
   );

@@ -22,6 +22,7 @@ export function PalletFetcher({
   const {
     data: palletResponse,
     isLoading,
+    isFetching,
     error,
     refetch,
   } = usePalletByTitleQuery(palletTitle);
@@ -51,7 +52,7 @@ export function PalletFetcher({
     );
 
   return (
-    <ContentReveal>
+    <ContentReveal lockMotion={isFetching && !isLoading}>
       <ContainerComponent
         pallet={palletResponse}
         onPosCreated={handlePosCreated}

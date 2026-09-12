@@ -46,7 +46,9 @@ export function AnalogSliceFetcher({ konkName, date }: AnalogSliceFetcherProps) 
   }
 
   return (
-    <ContentReveal>
+    <ContentReveal
+      lockMotion={sliceQuery.isFetching && !sliceQuery.isLoading}
+    >
       <AnalogSliceTableContainer data={data} />
     </ContentReveal>
   );

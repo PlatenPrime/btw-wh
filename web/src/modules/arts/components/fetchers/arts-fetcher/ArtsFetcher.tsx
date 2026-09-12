@@ -57,7 +57,7 @@ export function ArtsFetcher({
     return <LoadingNoData description="Немає даних для відображення" />;
 
   return (
-    <ContentReveal>
+    <ContentReveal lockMotion={isFetching && !isLoading}>
       <ContainerComponent
         data={data}
         arts={data.data}

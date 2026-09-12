@@ -57,7 +57,9 @@ export function UserFetcher({
   return (
     <SidebarInsetLayout headerText={user.fullname}>
       <main className="p-4">
-        <ContentReveal>
+        <ContentReveal
+          lockMotion={userQuery.isFetching && !userQuery.isLoading}
+        >
           <ContainerComponent user={user} />
         </ContentReveal>
       </main>

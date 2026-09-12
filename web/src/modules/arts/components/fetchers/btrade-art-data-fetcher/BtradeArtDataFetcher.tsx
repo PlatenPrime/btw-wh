@@ -33,6 +33,7 @@ export function BtradeArtDataFetcher({
   const {
     data: btradeArtResponse,
     isLoading,
+    isFetching,
     error,
     refetch,
   } = useBtradeArtDataQuery(artikul);
@@ -74,7 +75,7 @@ export function BtradeArtDataFetcher({
   };
 
   return wrapChrome(
-    <ContentReveal>
+    <ContentReveal lockMotion={isFetching && !isLoading}>
       <ContainerComponent {...containerProps} />
     </ContentReveal>,
   );

@@ -21,7 +21,7 @@ export function AsksListCardView({ ask, statusText }: AsksListCardViewProps) {
   const hasDetails = Boolean(ask.quant || ask.com);
 
   return (
-    <ListRowCard className="group hover:bg-muted/30 grid gap-3 transition-colors">
+    <ListRowCard className="group grid gap-3 hover:bg-muted/30">
       <div className="flex items-start justify-between gap-2">
         <div className="flex min-w-0 flex-1 items-start gap-3">
           <ArtDialogImage artikul={ask.artikul} />

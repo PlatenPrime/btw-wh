@@ -15,7 +15,9 @@ export function DelFetcher({
   ContainerComponent,
   SkeletonComponent,
 }: DelFetcherProps) {
-  const { data, isLoading, error, refetch } = useDelByIdQuery({ id });
+  const { data, isLoading, isFetching, error, refetch } = useDelByIdQuery({
+    id,
+  });
 
   if (isLoading) {
     return <SkeletonComponent />;
@@ -42,7 +44,7 @@ export function DelFetcher({
   }
 
   return (
-    <ContentReveal>
+    <ContentReveal lockMotion={isFetching && !isLoading}>
       <ContainerComponent del={data.data} />
     </ContentReveal>
   );

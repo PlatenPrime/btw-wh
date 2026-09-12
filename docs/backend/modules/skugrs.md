@@ -28,7 +28,7 @@
 
 ### Изменение состава `skus` после создания
 
-Ручное добавление id в `skus` по-прежнему только при `POST /api/skugrs`. Дополнительно есть **POST `/api/skugrs/id/:id/fill-skus`** (роль ADMIN): по `konkName` вызывается парсер страниц группы в модуле `browser` (поддерживаются `yumi`, `yumin`, `air`, `sharte`, `balun`, `perfect`; поле `url` группы — URL первой страницы категории или листинга). Пока включён `AIR_IDLE_MODE`, серверный fill для **air** не выполняется: cron пропускает air-группы, ручной `fill-skus` отвечает `CLIENT_INGEST_REQUIRED`. Состав air-групп обновляется клиентским каналом (карточки first-party листинга постранично, тот же apply, что у серверного fill). Создаются недостающие `Sku` (уникальность по `url` глобально). Существующие по `url` добавляются в массив `skus` группы; поля карточки при этом обычно не трогаются, **за исключением** SKU с временным производителем `newsku`: при заполнении группы с реальным `prodName` таким SKU сразу проставляется производитель этой группы. Если заполняется группа с `prodName: newsku`, существующий по URL SKU с уже назначенным **другим** производителем в состав этой группы **не** включается. У новых SKU поля `title`, `url` и `imageUrl` берутся из выдачи парсера. Подробности, счётчики `stats` и тело запроса — в [API Skugrs](../api/skugrs.md).
+Ручное добавление id в `skus` по-прежнему только при `POST /api/skugrs`. Дополнительно есть **POST `/api/skugrs/id/:id/fill-skus`** (роль ADMIN): по `konkName` вызывается парсер страниц группы в модуле `browser` (поддерживаются `yumi`, `yumin`, `air`, `sharte`, `balun`, `perfect`, `svbum`; поле `url` группы — URL первой страницы категории или листинга, для svbum вместе с query-фильтром `ocf`). Пока включён `AIR_IDLE_MODE`, серверный fill для **air** не выполняется: cron пропускает air-группы, ручной `fill-skus` отвечает `CLIENT_INGEST_REQUIRED`. Состав air-групп обновляется клиентским каналом (карточки first-party листинга постранично, тот же apply, что у серверного fill). Создаются недостающие `Sku` (уникальность по `url` глобально). Существующие по `url` добавляются в массив `skus` группы; поля карточки при этом обычно не трогаются, **за исключением** SKU с временным производителем `newsku`: при заполнении группы с реальным `prodName` таким SKU сразу проставляется производитель этой группы. Если заполняется группа с `prodName: newsku`, существующий по URL SKU с уже назначенным **другим** производителем в состав этой группы **не** включается. У новых SKU поля `title`, `url` и `imageUrl` берутся из выдачи парсера. Подробности, счётчики `stats` и тело запроса — в [API Skugrs](../api/skugrs.md). Гайд UI для СвятоБум — [frontend: svbum](../frontend/svbum.md).
 
 **Очистка состава без удаления карточек SKU:** **POST `/api/skugrs/id/:id/clear-skus`** обнуляет массив `skus` у одной группы, чтобы затем заново наполнить его (например, через `fill-skus`).
 
@@ -51,7 +51,7 @@
 
 `startFillSkugrSkusCron` последовательно обходит все группы, кроме тех, для кого серверный fill выключен (`isServerSkugrFillDisabled`: air при `AIR_IDLE_MODE` — скип, не ошибка). Throttle из `slices/config/competitorScrapeProfiles` (`runKind: groupPagesFill` / `groupPagesPage`): между страницами листинга — jitter (дефолт 800–1600 ms; **air** 2000–4000 ms, актуален когда idle выключен); между группами **air** — inter-unit 45–90 s и cluster каждые 5 групп 20–40 s. При `ORIGIN_BLOCKED` на air-группе (idle выключен) cron **не обрабатывает оставшиеся air-группы** в этом run; группы других конкурентов продолжают.
 
-Air refill при idle — SPA на странице конкурента Air (`air-capture` снимает HTML, SPA парсит карточки) или unpacked-расширение [`extensions/air-skugr-fill`](../../extensions/air-skugr-fill): очередь `GET /api/skugrs/client/air/pending`, по страницам `POST /api/skugrs/client/air/id/:id/fill-page` с JSON карточек. Контракт: [клиентский refill Air](../frontend/air-client-skugr-fill.md).
+Air refill при idle — unpacked-расширение [`chrome-extensions/air-skugr-fill`](../../chrome-extensions/air-skugr-fill): очередь `GET /api/skugrs/client/air/pending`, по страницам `POST /api/skugrs/client/air/id/:id/fill-page`. Контракт: [клиентский refill Air](../frontend/air-client-skugr-fill.md).
 
 ### Роли доступа
 
@@ -68,7 +68,7 @@ Air refill при idle — SPA на странице конкурента Air (`
 - `GET /api/skugrs/id/:id` — одна группа: метаданные без поля `skus` в ответе
 - `POST /api/skugrs` — создание группы
 - `POST /api/skugrs/set-is-sliced` — единоразовый backfill `isSliced=true` для старых документов
-- `POST /api/skugrs/id/:id/fill-skus` — заполнение группы SKU из парсера browser по `konkName` (для air при idle — 400 `CLIENT_INGEST_REQUIRED`)
+- `POST /api/skugrs/id/:id/fill-skus` — заполнение группы SKU из парсера browser по `konkName` (для air при idle — 400 `CLIENT_INGEST_REQUIRED`; svbum — серверный crawl листинга)
 - `GET /api/skugrs/client/air/pending` — очередь Air-групп для клиентского refill
 - `POST /api/skugrs/client/air/id/:id/fill-page` — карточки одной страницы Air-листинга → additive fill
 - `POST /api/skugrs/id/:id/clear-skus` — обнулить массив `skus` у группы

@@ -7,10 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { GridTileCard } from "@/components/shared/cards";
 import { cn } from "@/lib/utils";
 import { iconSize, typography } from "@/lib/typography";
-import {
-  getKonkTheme,
-  KonkBanner,
-} from "@/components/shared/domain/konk-banner";
+import { KonkBanner } from "@/components/shared/domain/konk-banner";
 import { EntityLabel } from "@/components/shared/entities/entity-label";
 import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
@@ -26,13 +23,10 @@ interface SkuGridCardViewProps {
 }
 
 export function SkuGridCardView({ sku, prod, konk }: SkuGridCardViewProps) {
-  const theme = getKonkTheme(sku.konkName);
   const hasImage = Boolean(sku.imageUrl?.trim());
 
   return (
-    <GridTileCard
-      className={cn("flex flex-col gap-2 overflow-hidden p-0", theme.shadow)}
-    >
+    <GridTileCard className="flex flex-col gap-2 overflow-hidden p-0">
       <KonkBanner
         konkName={sku.konkName}
         imageUrl={konk?.imageUrl}

@@ -15,7 +15,9 @@ export function ProdFetcher({
   ContainerComponent,
   SkeletonComponent,
 }: ProdFetcherProps) {
-  const { data, isLoading, error, refetch } = useProdByIdQuery({ id });
+  const { data, isLoading, isFetching, error, refetch } = useProdByIdQuery({
+    id,
+  });
 
   if (isLoading) {
     return <SkeletonComponent />;
@@ -42,7 +44,7 @@ export function ProdFetcher({
   }
 
   return (
-    <ContentReveal>
+    <ContentReveal lockMotion={isFetching && !isLoading}>
       <ContainerComponent prod={data.data} />
     </ContentReveal>
   );

@@ -1,7 +1,1 @@
-export {
-  KonkBanner,
-  getKonkTheme,
-  type KonkBannerProps,
-  type KonkThemeClasses,
-  type KonkThemeKey,
-} from "./KonkBanner";
+export { KonkBanner, type KonkBannerProps } from "./KonkBanner";

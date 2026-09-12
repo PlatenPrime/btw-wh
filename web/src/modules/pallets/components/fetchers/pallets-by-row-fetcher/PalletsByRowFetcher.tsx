@@ -33,7 +33,9 @@ export function PalletsByRowFetcher({
     return <LoadingNoData description="Палети не знайдено" />;
 
   return (
-    <ContentReveal>
+    <ContentReveal
+      lockMotion={palletsQuery.isFetching && !palletsQuery.isLoading}
+    >
       <ContainerComponent pallets={palletsQuery.data} rowId={rowId || ""} />
     </ContentReveal>
   );

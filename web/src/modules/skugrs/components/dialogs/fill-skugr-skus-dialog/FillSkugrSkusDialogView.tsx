@@ -7,6 +7,9 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { typography } from "@/lib/typography";
+
+const FILL_MAX_PAGES = 200;
 
 interface FillSkugrSkusDialogViewProps {
   konkName: string;
@@ -25,6 +28,8 @@ export function FillSkugrSkusDialogView({
   onCancel,
   onSubmit,
 }: FillSkugrSkusDialogViewProps) {
+  const isSvbum = konkName.trim().toLowerCase() === "svbum";
+
   return (
     <DialogContent className="sm:max-w-md">
       <div className="grid gap-4">
@@ -33,9 +38,16 @@ export function FillSkugrSkusDialogView({
           <DialogDescription>
             Запит до парсера браузера для конкурента{" "}
             <span className="font-medium">{konkName}.</span> URL групи має вказувати на першу сторінку
-            категорії.
+            категорії, зі збереженими query-фільтрами.
           </DialogDescription>
         </DialogHeader>
+
+        {isSvbum ? (
+          <p className={typography.formHint}>
+            Для СвятоБум залиште в URL параметр ocf. Без нього fill обійде весь
+            розділ, а не вибрану підбірку.
+          </p>
+        ) : null}
 
         <div className="grid gap-2">
           <Label htmlFor="fill-max-pages">Макс. сторінок (необов&apos;язково)</Label>
@@ -43,9 +55,9 @@ export function FillSkugrSkusDialogView({
             id="fill-max-pages"
             type="number"
             min={1}
-            max={20}
+            max={FILL_MAX_PAGES}
             inputMode="numeric"
-            placeholder="1–20, порожньо = за замовчуванням"
+            placeholder="1–200, порожньо = за замовчуванням"
             value={maxPagesInput}
             onChange={(e) => onMaxPagesChange(e.target.value)}
             disabled={isSubmitting}

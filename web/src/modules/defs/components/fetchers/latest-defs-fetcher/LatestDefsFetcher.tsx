@@ -40,7 +40,7 @@ export function LatestDefsFetcher({
     );
 
   return (
-    <ContentReveal>
+    <ContentReveal lockMotion={defsQuery.isFetching && !defsQuery.isLoading}>
       <ContainerComponent defsData={defsQuery.data.data} />
     </ContentReveal>
   );

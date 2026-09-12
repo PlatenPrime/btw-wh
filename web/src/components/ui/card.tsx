@@ -17,16 +17,16 @@ const cardTitleVariants = cva("leading-none font-semibold", {
 })
 
 const cardVariants = cva(
-  "flex flex-col text-card-foreground border border-card-border transition-all duration-300",
+  "flex flex-col text-card-foreground border border-card-border",
   {
     variants: {
       variant: {
         default:
-          "gap-6 rounded-xl glass-card py-6",
+          "gap-6 rounded-xl glass-card card-3d py-6",
         elevated:
-          "gap-6 rounded-xl glass-card py-6 hover:-translate-y-0.5 hover:shadow-elevation-2",
+          "gap-6 rounded-xl glass-card card-3d py-6",
         compact:
-          "gap-2 rounded-xl glass-card p-3 hover:-translate-y-0.5 hover:shadow-elevation-2",
+          "gap-2 rounded-xl glass-card card-3d p-3",
         ghost: "gap-2 rounded-xl border-transparent bg-transparent shadow-none",
         inset:
           "gap-4 rounded-lg glass-inset py-4 shadow-none",

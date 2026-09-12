@@ -155,6 +155,13 @@ export function CreateSkugrFormView<TFormData extends BaseSkugrFormData>({
               className={errors.url ? "border-destructive" : ""}
               placeholder="https://..."
             />
+            <p className={typography.formHint}>
+              Повний URL лістингу категорії, не картки товару. Не обрізайте
+              query-фільтри.
+              {watchedValues.konkName?.trim().toLowerCase() === "svbum"
+                ? " Для СвятоБум обов'язковий параметр ocf — без нього fill обійде весь розділ."
+                : null}
+            </p>
             {urlError && <p className={typography.formError}>{urlError}</p>}
           </div>
 

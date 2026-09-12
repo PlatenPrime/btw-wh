@@ -5,10 +5,7 @@ import { GridTileCard } from "@/components/shared/cards";
 import { cn } from "@/lib/utils";
 import { typography } from "@/lib/typography";
 import type { AnalogDto } from "@/modules/analogs/api/types";
-import {
-  getKonkTheme,
-  KonkBanner,
-} from "@/components/shared/domain/konk-banner";
+import { KonkBanner } from "@/components/shared/domain/konk-banner";
 import { EntityLabel } from "@/components/shared/entities/entity-label";
 import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
@@ -26,15 +23,8 @@ export function AnalogGridCardView({
   prod,
   actions,
 }: AnalogGridCardViewProps) {
-  const theme = getKonkTheme(analog.konkName);
-
   return (
-    <GridTileCard
-      className={cn(
-        "flex flex-col gap-2 overflow-hidden p-0",
-        theme.shadow,
-      )}
-    >
+    <GridTileCard className="flex flex-col gap-2 overflow-hidden p-0">
       <KonkBanner
         konkName={analog.konkName}
         imageUrl={konk?.imageUrl}

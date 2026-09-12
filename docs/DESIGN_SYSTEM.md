@@ -16,14 +16,14 @@
 
 | Компонент / token | Когда |
 | ----------------- | ----- |
-| [`ContentReveal`](web/src/components/shared/motion/ContentReveal.tsx) | Блок после загрузки: внутри `DataRefetchOverlay`, в fetcher'ах без overlay, Suspense fallback→content |
+| [`ContentReveal`](web/src/components/shared/motion/ContentReveal.tsx) | Блок после загрузки: внутри `DataRefetchOverlay`, в fetcher'ах без overlay, Suspense fallback→content. `lockMotion` — глушит stagger на refetch/пагинации |
 | [`ContentRevealStagger`](web/src/components/shared/motion/ContentReveal.tsx) | Grid/list: прямые дети (карточки) с каскадом 50 ms, cap на 12+ элементов |
 | `motion.revealBlock` / `motion.revealItem` | [`web/src/lib/motion.ts`](web/src/lib/motion.ts) — классы для кастомных обёрток |
 | `content-reveal-stagger` | CSS utility в [`index.css`](web/src/index.css) — nth-child delays |
 
 **Правила:**
 
-- Анимация только при **первом mount** (skeleton → data). Background refetch не размонтирует контент — повторной анимации нет.
+- Анимация только при **первом mount** (skeleton → data). Background refetch, пагинация и `keepPreviousData` не переигрывают stagger: `lockMotion` на overlay / refetch глушит каскад, новые карточки появляются сразу.
 - `prefers-reduced-motion: reduce` → `motion-reduce:animate-none` (мгновенное появление).
 - **Anti-pattern:** `animate-in` на отдельных `GridTileCard` / `ListRowCard` — каскад задаётся на контейнере списка.
 
@@ -83,10 +83,12 @@ Glass читается на **surface-0 с ambient-градиентом**, не 
 
 | Utility | Использование |
 | ------- | ------------- |
-| `shadow-elevation-1` | Card default |
-| `shadow-elevation-2` | Card hover, dropdown |
+| `shadow-elevation-1` | Dropdown, `card-3d` hover (тень приглушается) |
+| `shadow-elevation-2` | `card-3d` rest — объём сразу |
 | `shadow-elevation-3` | Sticky panels |
 | `shadow-elevation-4` | Dialog, sheet |
+
+Все `Card` variants `default` / `elevated` / `compact` (`GridTileCard`, `ListRowCard`, `DetailPanelCard`) используют `card-3d`: в покое elevation-2 + inset (плитка), hover — тень слабеет до elevation-1, без `translate`/`scale`. Transition `box-shadow` + `background-color` 200ms. `prefers-reduced-motion: reduce` — без transition. `ghost` / `inset` без объёма. Формы с `shadow-none` остаются плоскими.
 
 ## Typography
 
@@ -182,7 +184,7 @@ Glass читается на **surface-0 с ambient-градиентом**, не 
 | `list-row` | `ListRowCard` | Списки konks, asks, kasks |
 | `detail-panel` | `DetailPanelCard` | Детали сущности |
 
-Все pattern-карточки наследуют `glass-card` из [`card.tsx`](../web/src/components/ui/card.tsx). Overlay-формы — `glass-overlay` в `dialog` / `sheet` / `popover`.
+Все pattern-карточки наследуют `glass-card` + `card-3d` из [`card.tsx`](../web/src/components/ui/card.tsx) (`default` / `elevated` / `compact`). Overlay-формы — `glass-overlay` в `dialog` / `sheet` / `popover`.
 
 ## Семантика кнопок
 

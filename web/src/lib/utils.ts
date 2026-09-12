@@ -10,5 +10,5 @@ export function surfaceCardClassName() {
 }
 
 export function interactiveCardClassName() {
-  return "border-border/70 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-elevation-2"
+  return "card-3d border-border/70 transition-[box-shadow,background-color] duration-200 ease-out"
 }

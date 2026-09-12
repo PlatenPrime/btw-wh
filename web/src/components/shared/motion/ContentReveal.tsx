@@ -1,14 +1,38 @@
 import { cn } from "@/lib/utils";
 import { motion } from "@/lib/motion";
-import type { ComponentPropsWithoutRef, ElementType } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  type ComponentPropsWithoutRef,
+  type ElementType,
+} from "react";
+
+const RevealMotionContext = createContext(true);
 
 interface ContentRevealProps {
   children: React.ReactNode;
   className?: string;
+  /** When true (overlay / refetch), stagger locks off and stays off. */
+  lockMotion?: boolean;
 }
 
-export function ContentReveal({ children, className }: ContentRevealProps) {
-  return <div className={cn(motion.revealBlock, className)}>{children}</div>;
+export function ContentReveal({
+  children,
+  className,
+  lockMotion = false,
+}: ContentRevealProps) {
+  const [wasLocked, setWasLocked] = useState(false);
+  if (lockMotion && !wasLocked) {
+    setWasLocked(true);
+  }
+  const playMotion = !wasLocked && !lockMotion;
+
+  return (
+    <RevealMotionContext.Provider value={playMotion}>
+      <div className={cn(motion.revealBlock, className)}>{children}</div>
+    </RevealMotionContext.Provider>
+  );
 }
 
 type ContentRevealStaggerProps<T extends ElementType = "div"> = {
@@ -22,11 +46,17 @@ export function ContentRevealStagger<T extends ElementType = "div">({
   children,
   ...props
 }: ContentRevealStaggerProps<T>) {
+  const playMotion = useContext(RevealMotionContext);
+  const [lockedOff, setLockedOff] = useState(!playMotion);
+  if (!playMotion && !lockedOff) {
+    setLockedOff(true);
+  }
+  const shouldAnimate = playMotion && !lockedOff;
   const Component = as ?? "div";
 
   return (
     <Component
-      className={cn("content-reveal-stagger", className)}
+      className={cn(shouldAnimate && "content-reveal-stagger", className)}
       {...props}
     >
       {children}

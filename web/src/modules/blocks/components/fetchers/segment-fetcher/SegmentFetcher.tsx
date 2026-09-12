@@ -24,6 +24,7 @@ export function SegmentFetcher({
   const {
     data: segmentData,
     isLoading: isSegmentLoading,
+    isFetching: isSegmentFetching,
     error: segmentError,
   } = useSegmentQuery({
     id: segId,
@@ -67,7 +68,7 @@ export function SegmentFetcher({
     zonesData?.exists && zonesData?.data ? zonesData.data : [];
 
   return (
-    <ContentReveal>
+    <ContentReveal lockMotion={isSegmentFetching && !isSegmentLoading}>
       <ContainerComponent
         segment={segmentData.data}
         zones={zones}

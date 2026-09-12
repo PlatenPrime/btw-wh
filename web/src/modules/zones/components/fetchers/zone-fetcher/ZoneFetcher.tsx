@@ -18,6 +18,7 @@ export function ZoneFetcher({
   const {
     data: zoneResponse,
     isLoading,
+    isFetching,
     error,
     refetch,
   } = useZoneByTitleQuery({ title: zoneTitle });
@@ -47,7 +48,7 @@ export function ZoneFetcher({
   }
 
   return (
-    <ContentReveal>
+    <ContentReveal lockMotion={isFetching && !isLoading}>
       <ContainerComponent zone={zoneResponse.data!} />
     </ContentReveal>
   );

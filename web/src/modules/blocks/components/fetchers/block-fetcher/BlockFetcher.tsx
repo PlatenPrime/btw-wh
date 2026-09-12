@@ -18,6 +18,7 @@ export function BlockFetcher({
   const {
     data: blockResponse,
     isLoading,
+    isFetching,
     error,
     refetch,
   } = useBlockQuery({ id: blockId });
@@ -47,7 +48,7 @@ export function BlockFetcher({
   }
 
   return (
-    <ContentReveal>
+    <ContentReveal lockMotion={isFetching && !isLoading}>
       <ContainerComponent block={blockResponse.data!} />
     </ContentReveal>
   );

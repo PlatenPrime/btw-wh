@@ -3,10 +3,7 @@ import {
   URL_DIALOG_IMAGE_FALLBACK,
   UrlDialogImage,
 } from "@/components/shared/dialogs";
-import {
-  getKonkTheme,
-  KonkBanner,
-} from "@/components/shared/domain/konk-banner";
+import { KonkBanner } from "@/components/shared/domain/konk-banner";
 import { EntityLabel } from "@/components/shared/entities/entity-label";
 import { Image } from "@/components/shared/media/image/Image";
 import { CardHeader, CardTitle } from "@/components/ui/card";
@@ -30,7 +27,6 @@ interface SkuDetailCardProps {
 }
 
 export function SkuDetailCard({ sku, konk, prod, skugrs }: SkuDetailCardProps) {
-  const theme = getKonkTheme(sku.konkName);
   const hasImage = Boolean(sku.imageUrl?.trim());
   const hasBtradeAnalog = Boolean(sku.btradeAnalog?.trim());
   const hasSkugrs = skugrs.length > 0;
@@ -72,7 +68,7 @@ export function SkuDetailCard({ sku, konk, prod, skugrs }: SkuDetailCardProps) {
   }
 
   return (
-    <DetailPanelCard className={cn("overflow-hidden p-0", theme.shadow)}>
+    <DetailPanelCard className="overflow-hidden p-0">
       <KonkBanner
         konkName={sku.konkName}
         imageUrl={konk?.imageUrl}

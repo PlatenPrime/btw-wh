@@ -17,7 +17,9 @@ export function VariantFetcher({
   ContainerComponent,
   SkeletonComponent,
 }: VariantFetcherProps) {
-  const { data, isLoading, error, refetch } = useVariantByIdQuery({ id });
+  const { data, isLoading, isFetching, error, refetch } = useVariantByIdQuery({
+    id,
+  });
 
   if (isLoading) {
     return <SkeletonComponent />;
@@ -44,7 +46,7 @@ export function VariantFetcher({
   }
 
   return (
-    <ContentReveal>
+    <ContentReveal lockMotion={isFetching && !isLoading}>
       <ContainerComponent variant={data.data} />
     </ContentReveal>
   );

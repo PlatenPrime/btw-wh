@@ -2,10 +2,7 @@ import { DetailPanelCard } from "@/components/shared/cards";
 import { CardHeader, CardTitle } from "@/components/ui/card";
 import { iconSize, typography } from "@/lib/typography";
 import { cn } from "@/lib/utils";
-import {
-  getKonkTheme,
-  KonkBanner,
-} from "@/components/shared/domain/konk-banner";
+import { KonkBanner } from "@/components/shared/domain/konk-banner";
 import { EntityLabel } from "@/components/shared/entities/entity-label";
 import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
@@ -23,12 +20,8 @@ export function SkugrDetailCardView({
   konk,
   prod,
 }: SkugrDetailCardViewProps) {
-  const theme = getKonkTheme(skugr.konkName);
-
   return (
-    <DetailPanelCard
-      className={cn("gap-2 overflow-hidden p-0", theme.shadow)}
-    >
+    <DetailPanelCard className="gap-2 overflow-hidden p-0">
       <KonkBanner
         konkName={skugr.konkName}
         imageUrl={konk?.imageUrl}

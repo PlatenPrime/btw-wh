@@ -16,7 +16,7 @@ export const AsksByArtikulCardView = memo(function AsksByArtikulCardView({
 }: AsksByArtikulCardViewProps) {
   return (
     <Link to={`/refiling/asks/${ask._id}`} className="block">
-      <ListRowCard className="grid gap-2 transition-colors hover:bg-muted/30">
+      <ListRowCard className="grid gap-2 hover:bg-muted/30">
         <div className="flex items-start justify-between gap-2">
           <div className="grid flex-1 gap-2">
             <div className="grid gap-2">

@@ -20,13 +20,14 @@
 | sharik (Btrade) | [`src/modules/browser/sharik/`](../../src/modules/browser/sharik/) | `GET /api/browser/sharik/stock/:artikul` |
 | yumi | [`src/modules/browser/yumi/`](../../src/modules/browser/yumi/) | `GET /api/browser/yumi/stock` |
 | yumin | [`src/modules/browser/yumin/`](../../src/modules/browser/yumin/) | `GET /api/browser/yumin/stock` |
+| svbum | [`src/modules/browser/svbum/`](../../src/modules/browser/svbum/) | `GET /api/browser/svbum/stock` |
 
 Каждая папка конкурента содержит `controllers/` и `utils/get*StockData.ts` с логикой разбора HTML/DOM/JSON конкретного сайта.
 
 ## Связи между модулями
 
-- **analog-slices / analogs:** опрос остатков аналогов (air, balun, yumi, yumin, sharte).
-- **sku-slices / skus:** опрос SKU (air, balun, yumi, yumin, sharte, perfect); для Air — client-ingestion HTML как канал дозаполнения после abort/`-1` (server compensation для Air выключена).
+- **analog-slices / analogs:** live-опрос аналогов (air, balun, yumi, yumin, sharte, svbum). Ежедневный analog-slices cron — только `ANALOG_SLICE_KONK_NAMES` (air, balun, sharte, yumi, yumin), без svbum.
+- **sku-slices / skus:** опрос SKU (air, balun, yumi, yumin, sharte, perfect, svbum); для Air — client-ingestion HTML как канал дозаполнения после abort/`-1` (server compensation для Air выключена).
 - **btrade-slices / arts / dels / defs:** остатки sharik через bulk `product_rests` (`actualQuantity` для live, `sliceQuantity` для daily btrade-slice).
 - **skugrs:** обход страниц групп для наполнения SKU (`group-products`); Air listing при `AIR_IDLE_MODE` с сервера не ходит — client-ingest карточек листинга.
 - **grabo-skus:** полный обход каталога производителя Grabo (sitemap → категории → карточки) через `browser/grabo`.
@@ -36,7 +37,7 @@
 
 ### Общий HTTP-клиент
 
-[`browserRequest.ts`](../../src/modules/browser/utils/browserRequest.ts) — singleton axios с browser-like заголовками и таймаутом 30 с. Большинство конкурентных парсеров (кроме Air stock и сложных потоков вроде Perfect) вызывают его напрямую.
+[`browserRequest.ts`](../../src/modules/browser/utils/browserRequest.ts) — singleton axios с browser-like заголовками и таймаутом 30 с. Большинство конкурентных парсеров (кроме Air stock и сложных потоков вроде Perfect и Balun) вызывают его напрямую.
 
 ### Air: dual-path (server + client)
 
@@ -44,13 +45,35 @@
 
 **Secondary:** client-ingestion в [sku-slices](sku-slices.md) — расширение/браузер открывает first-party страницу, frontend шлёт HTML на backend; тот же парсер. Канал — основной способ дозаполнить хвост после `ORIGIN_BLOCKED` или missing/`-1`, без повторного серверного молотка.
 
-Air **group listing** (наполнение SKU) при выключенном idle идёт через тот же Impit-путь (`fetchPageHtml` + cookie jar + adm.tools ack solver): один origin warm-up, затем страницы листинга с Referer; прокси выключен тем же флагом. Warm-up с `ORIGIN_BLOCKED` прерывает crawl. Парсер серверного crawl — [`parseAirGroupListingPage`](../../src/modules/browser/air/group-pages/utils/parseAirGroupListingPage.ts). При `AIR_IDLE_MODE` `getAirGroupPagesProducts` бросает `AirServerIdleError` без сети; refill — [клиентский канал skugrs](../frontend/air-client-skugr-fill.md): клиент шлёт JSON карточек (`products`, `nextPageUrl`, `hasListingMarkup`), fill-page cheerio не зовёт.
+Air **group listing** (наполнение SKU) при выключенном idle идёт через тот же Impit-путь (`fetchPageHtml` + cookie jar + adm.tools ack solver): один origin warm-up, затем страницы листинга с Referer; прокси выключен тем же флагом. Warm-up с `ORIGIN_BLOCKED` прерывает crawl. При `AIR_IDLE_MODE` `getAirGroupPagesProducts` бросает `AirServerIdleError` без сети; refill — [клиентский канал skugrs](../frontend/air-client-skugr-fill.md).
 
 ### Sharik: product_rests через HTTP-прокси
 
 Единый источник остатков/цен sharik.ua — страница `product_rests/{seed}/` (формат строки `artikul = actualQuantity; sliceQuantity; price`). Парсинг, fetch и in-memory cache TTL ~1ч — в `browser/sharik/utils/product-rests`. `getSharikStockData` читает `actualQuantity` из кэша; `nameukr` для single lookup — из Art. Запросы идут через `SHARIK_HTTP_PROXY_URL` при `SHARIK_HTTP_PROXY_ENABLED = true`; без env — прямой egress.
 
 Результаты stock-scrape пишутся в info-лог (`browser stock result`: konk, link, stock, price, ok) с лимитом ≤20 сообщений в минуту на process; ошибки fetch — отдельно через `logBrowserError`.
+
+### Balun: остаток через GraphQL корзины Prom
+
+Число остатка на карточке Balun (company site Prom.ua) больше не лежит в HTML-аналитике Facebook (`data-advtracking-fb-product-data`). Актуальный источник — GraphQL `/bfg/graphql`: анонимная сессия с GET карточки (`Set-Cookie`), `AddProductToCart`, затем `CartChangeProductQuantity` с заведомо большим qty. Prom отвечает union `RequestedQuantityRecalculatedType` и клампит qty до склада (`recalculatedQuantity`, reason `EXCEEDS_AMOUNT_OF_PRODUCT_IN_STOCK`). Если qty приняли как есть (`RequestedQuantitySet`), точное число склада неизвестно — сентинель `-1`, чтобы не записать probe в срезы. Товар, который нельзя заказать (`ProductNotOrderableError` / удалён), даёт stock `0` при живой цене.
+
+Цена по-прежнему с HTML `data-analytics` (`clerk.price_original`); если атрибута нет — unit selling из ответа корзины. CSRF для add: токен из HTML, иначе cookie `csrf_token_company_site` в заголовок `x-csrftoken`. Сессия эфемерная (cookie только этого запроса), корзину после замера не чистим.
+
+`getBalunStockData` ходит через `getBrowserAxios` + merge `Set-Cookie`, как Perfect, а не через `browserGet` (тот не отдаёт заголовки).
+
+### Perfect: остаток без удержания склада
+
+Карточка PerfectParty — PrestaShop 1.7. Add-to-cart пишет гостевую корзину и **глобально** уменьшает `StockAvailable`, пока запись в `ps_cart` жива. Cookies запроса эфемерны, поэтому чужой зависший резерв после деплоя снять нельзя — только не создавать новый.
+
+Порядок опроса: `data-product.quantity` текущей комбинации на GET карточки; если quantity нет и страница не OOS — ajax `action=refresh` на URL карточки (склад не трогает); add-to-cart только если refresh не отдал quantity, сразу `delete=1` в той же сессии. `html-oos` — когда quantity нет и карточка реально распродана. OOS у related-миниатюр не затирает живой остаток основной позиции.
+
+### Svbum: цена за штуку с карточки OpenCart
+
+Источник — HTML главной карточки `sviatobum.ua` (`#product` + `h1.page-title`). JSON-LD не используется: на скидке он отдаёт старую цену выбранного по умолчанию варианта, на soldout врёт `InStock`. Блоки рекомендаций игнорируются.
+
+Если на карточке есть radio-варианты упаковки (`упаковка (Nшт)`), цена — минимум цены за штуку среди вариантов с остатком > 0, остаток — сумма `qty пачек × N` по тем же in-stock вариантам. Если все варианты OOS — stock `0`, цена с самого дешёвого OOS. Без вариантов: `data-product-quantity` и `.price-new` (`data-special` иначе `data-price`); фасовка `N шт` из заголовка делит цену и умножает остаток, только когда вариантов нет.
+
+`getSvbumStockData` ходит через `fetchPageHtml` с `konkName: "svbum"` — транспорт можно сменить через `BROWSER_TRANSPORT_BY_KONK` без правки кода. Обход товарных групп (`getSvbumGroupPagesProducts`) тем же транспортом: карточки `li.product-layout`, `productId` с `button[data-p_id]`; пагинация по `rel=next` или «Вперед», query-фильтр `ocf` с первой страницы группы мержится на следующие (сайт его выкидывает из `rel=next`). Гайд для UI: [frontend: svbum](../frontend/svbum.md).
 
 ### Multi-transport (`http` | `impit` | `playwright`)
 
@@ -64,7 +87,7 @@ Air **group listing** (наполнение SKU) при выключенном i
 
 На машине/сервере, где реально используется transport `playwright`, нужен установленный Chromium: `npx playwright install chromium`. Обычный boot и тесты без вызова Playwright-пути браузер не поднимают. Пакет `impit` тянет prebuilt native binary под платформу.
 
-Air stock явно задаёт `transport: "impit"`, origin warm-up и Referer/`Sec-Fetch-Site` (session soft-block WAF). Остальные `get*StockData` и default crawl листингов по-прежнему идут через `browserGet`; env на них **не влияет**, пока getter не переведён на `fetchPageHtml`. Cron срезов и контракт `{ stock, price }` / `-1` не меняются.
+Air stock явно задаёт `transport: "impit"`, origin warm-up и Referer/`Sec-Fetch-Site` (session soft-block WAF). Perfect и Balun stock используют `getBrowserAxios` напрямую (cookie jar). Svbum stock и crawl листинга групп — `fetchPageHtml` (`konkName: "svbum"`), на них влияет `BROWSER_TRANSPORT_BY_KONK`. Остальные `get*StockData` и default crawl листингов по-прежнему идут через `browserGet`; env на них **не влияет**, пока getter не переведён на `fetchPageHtml`. Cron срезов и контракт `{ stock, price }` / `-1` не меняются.
 
 ### Сентинельные значения
 
@@ -93,7 +116,7 @@ Per-competitor обёртки: `get*GroupPagesProducts` + Zod-схема (`group
 
 ### Group products (диспетчер)
 
-[`group-products/fetchGroupProductsByKonkName`](../../src/modules/browser/group-products/fetchGroupProductsByKonkName.ts) маршрутизирует запрос к нужному конкуренту. Поддерживаются: yumi, yumin, air, sharte, balun, perfect. Sharik не поддерживается для group-products.
+[`group-products/fetchGroupProductsByKonkName`](../../src/modules/browser/group-products/fetchGroupProductsByKonkName.ts) маршрутизирует запрос к нужному конкуренту. Поддерживаются: yumi, yumin, air, sharte, balun, perfect, svbum. Sharik не поддерживается для group-products.
 
 Возвращает `GroupBrowserProduct[]`: `{ title, url, imageUrl, productId }` — для создания SKU в `skugrs`.
 

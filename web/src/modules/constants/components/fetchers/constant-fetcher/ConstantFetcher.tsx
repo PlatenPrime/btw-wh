@@ -15,7 +15,9 @@ export function ConstantFetcher({
   ContainerComponent,
   SkeletonComponent,
 }: ConstantFetcherProps) {
-  const { data, isLoading, error, refetch } = useConstantByIdQuery({ id });
+  const { data, isLoading, isFetching, error, refetch } = useConstantByIdQuery({
+    id,
+  });
 
   if (isLoading) {
     return <SkeletonComponent />;
@@ -42,7 +44,7 @@ export function ConstantFetcher({
   }
 
   return (
-    <ContentReveal>
+    <ContentReveal lockMotion={isFetching && !isLoading}>
       <ContainerComponent constant={data.data} />
     </ContentReveal>
   );

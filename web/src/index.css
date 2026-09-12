@@ -401,13 +401,39 @@
 }
 
 @utility glass-card {
+  --card-elevation: var(--shadow-elevation-1);
   background: var(--glass-card-bg);
   border-color: var(--glass-card-border);
   box-shadow:
-    var(--shadow-elevation-1),
+    var(--card-elevation),
     inset 0 1px 0 0 var(--glass-card-highlight);
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
   backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+}
+
+@utility card-3d {
+  position: relative;
+  transition-property: box-shadow, background-color, border-color;
+  transition-duration: 200ms;
+  transition-timing-function: ease-out;
+
+  &:not(.shadow-none) {
+    box-shadow:
+      var(--shadow-elevation-2),
+      inset 0 1px 0 0 var(--glass-card-highlight),
+      inset 0 -10px 16px -12px color-mix(in oklch, var(--shadow-color) 28%, transparent);
+
+    &:hover {
+      box-shadow:
+        var(--shadow-elevation-1),
+        inset 0 1px 0 0 var(--glass-card-highlight),
+        inset 0 -4px 8px -8px color-mix(in oklch, var(--shadow-color) 12%, transparent);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
 }
 
 @utility glass-inset {

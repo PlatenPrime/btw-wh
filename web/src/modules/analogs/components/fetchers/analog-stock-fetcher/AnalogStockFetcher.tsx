@@ -23,7 +23,13 @@ export function AnalogStockFetcher({
   ContainerComponent,
   SkeletonComponent,
 }: AnalogStockFetcherProps) {
-  const { data: response, isLoading, error, refetch } = useAnalogStockQuery({
+  const {
+    data: response,
+    isLoading,
+    isFetching,
+    error,
+    refetch,
+  } = useAnalogStockQuery({
     id: analogId,
   });
 
@@ -54,7 +60,7 @@ export function AnalogStockFetcher({
   };
 
   return (
-    <ContentReveal>
+    <ContentReveal lockMotion={isFetching && !isLoading}>
       <ContainerComponent {...containerProps} />
     </ContentReveal>
   );

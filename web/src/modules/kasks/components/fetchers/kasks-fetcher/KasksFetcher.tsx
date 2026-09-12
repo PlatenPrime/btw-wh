@@ -45,7 +45,7 @@ export function KasksFetcher({
   }
 
   return (
-    <ContentReveal>
+    <ContentReveal lockMotion={query.isFetching && !query.isLoading}>
       <ContainerComponent
         data={query.data}
         isFetching={query.isFetching}

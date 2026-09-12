@@ -8,10 +8,7 @@ import { Link } from "react-router";
 import type { VariantDto } from "@/modules/variants/api/types";
 import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
-import {
-  getKonkTheme,
-  KonkBanner,
-} from "@/components/shared/domain/konk-banner";
+import { KonkBanner } from "@/components/shared/domain/konk-banner";
 import { EntityLabel } from "@/components/shared/entities/entity-label";
 
 interface VariantGridCardViewProps {
@@ -27,12 +24,8 @@ export function VariantGridCardView({
   prod,
   actions,
 }: VariantGridCardViewProps) {
-  const theme = getKonkTheme(variant.konkName);
-
   return (
-    <GridTileCard
-      className={cn("flex flex-col gap-2 overflow-hidden p-0", theme.shadow)}
-    >
+    <GridTileCard className="flex flex-col gap-2 overflow-hidden p-0">
       <KonkBanner
         konkName={variant.konkName}
         imageUrl={konk?.imageUrl}
