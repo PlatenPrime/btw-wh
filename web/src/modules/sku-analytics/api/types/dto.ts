@@ -153,3 +153,42 @@ export interface PutAirClientSkuSliceParams {
   body: PutAirClientSkuSliceBodyDto;
   signal?: AbortSignal;
 }
+
+export interface PackFlipPointDto {
+  stock: number;
+  price: number;
+}
+
+export type PackFlipFindingKind = "inverse" | "price-only" | "ambiguous";
+
+export interface PackFlipFindingDto {
+  productId: string;
+  title: string;
+  url: string;
+  kind: PackFlipFindingKind;
+  date: string;
+  neighborDate: string;
+  factor: number;
+  from: PackFlipPointDto;
+  patched?: PackFlipPointDto;
+}
+
+export interface PackFlipsPayload {
+  konkName: string;
+  dates: string[];
+  patched: PackFlipFindingDto[];
+  priceOnly: PackFlipFindingDto[];
+  ambiguous: PackFlipFindingDto[];
+}
+
+export interface PackFlipsResponseDto {
+  message: string;
+  data: PackFlipsPayload;
+}
+
+export interface GetPackFlipsParams {
+  konkName: string;
+  dateFrom: string;
+  dateTo: string;
+  signal?: AbortSignal;
+}

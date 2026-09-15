@@ -174,6 +174,11 @@ const SkuSlices = lazyWithRetry(() =>
     default: module.SkuSlices,
   })),
 );
+const SkuPackFlips = lazyWithRetry(() =>
+  import("./modules/sku-analytics/pages/sku-pack-flips").then((module) => ({
+    default: module.SkuPackFlips,
+  })),
+);
 const BtradeSlices = lazyWithRetry(() =>
   import("./modules/btrade-slices/pages/btrade-slices").then((module) => ({
     default: module.BtradeSlices,
@@ -452,6 +457,15 @@ export const router = createHashRouter([
             element: (
               <ProtectedRoute>
                 <SkuSlices />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "pack-flips",
+            element: (
+              <ProtectedRoute allowedRoles={[RoleType.ADMIN]}>
+                <SkuPackFlips />
               </ProtectedRoute>
             ),
             errorElement: <RouteErrorBoundary />,

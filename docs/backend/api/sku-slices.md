@@ -114,12 +114,70 @@
 
 ### GET `/api/sku-slices/sku/:skuId/range`
 
-Массив точек среза по SKU за период (сырые значения из документов среза).
+Плотный массив точек среза по SKU за период: по каждому UTC-дню от `dateFrom` до `dateTo` включительно. Пропуски ключа в `data`, а также `-1` в stock/price заполняются forward-fill из последнего валидного значения (warm-start — день до `dateFrom`). До первого валидного среза в периоде — `stock: 0`, `price: 0`. Расчёт продаж не выполняется (см. sales-range).
 
 **Path:** `skuId` — валидный ObjectId.
 
 **Query:** `dateFrom`, `dateTo` (YYYY-MM-DD, обязательно), `dateFrom` ≤ `dateTo`.
 
-**Ответ 200:** `{ message: string, data: Array<{ date: string (ISO), stock: number, price: number }> }`.
+**Ответ 200:** `{ message: string, data: Array<{ date: string (ISO), stock: number, price: number }> }` — длина массива = число календарных дней в диапазоне.
 
 **Ошибки:** 400, 401, 403, 404, 500.
+
+---
+
+### GET `/api/sku-slices/pack-flips`
+
+Проверка кратных инверсий `stock`/`price` по конкуренту за период. Срезы не изменяются. Детектор общий для конкурентов; auto-apply после ночного cron — только konk из конфига `packFlipAutoApplyKonks`.
+
+**Query:**
+
+- `konkName` (string, обязательно) — нормализуется (trim + lowercase)
+- `dateFrom`, `dateTo` (YYYY-MM-DD, обязательно), `dateFrom` ≤ `dateTo`
+
+**Ответ 200:**
+
+```text
+{
+  message: string,
+  data: {
+    konkName: string,
+    dates: string[],
+    patched: Array<{
+      productId: string,
+      title: string,
+      url: string,
+      kind: "inverse",
+      date: string,
+      neighborDate: string,
+      factor: number,
+      from: { stock: number, price: number },
+      patched?: { stock: number, price: number }
+    }>,
+    priceOnly: Array<{
+      productId: string,
+      title: string,
+      url: string,
+      kind: "price-only",
+      date: string,
+      neighborDate: string,
+      factor: number,
+      from: { stock: number, price: number }
+    }>,
+    ambiguous: Array<{
+      productId: string,
+      title: string,
+      url: string,
+      kind: "ambiguous",
+      date: string,
+      neighborDate: string,
+      factor: number,
+      from: { stock: number, price: number }
+    }>
+  }
+}
+```
+
+`dates` — UTC YYYY-MM-DD, inclusive. Пустые массивы findings — скачков нет, не ошибка. Поле `patched` у finding — предлагаемый рескейл, не записан.
+
+**Ошибки:** 400, 401, 403, 500.

@@ -1,5 +1,6 @@
 import {
   AlertTriangle,
+  ArrowLeftRight,
   Bookmark,
   Boxes,
   Building2,
@@ -32,6 +33,7 @@ const icons = {
   Settings,
   Warehouse,
   Rows4,
+  ArrowLeftRight,
   ScrollText,
   MapPin,
   FileQuestion,
@@ -82,6 +84,8 @@ const iconColorClasses: Record<SidebarIconName, string> = {
   // Аналоги — лавандовый
   Link2: "text-[oklch(0.68_0.18_285)] dark:text-[oklch(0.8_0.2_285)]",
   Projector: "text-[oklch(0.58_0.16_325)] dark:text-[oklch(0.72_0.18_325)]",
+  ArrowLeftRight:
+    "text-[oklch(0.65_0.16_45)] dark:text-[oklch(0.78_0.16_45)]",
   ShoppingCart: "text-[oklch(0.6_0.15_145)] dark:text-[oklch(0.74_0.16_145)]",
   PieChart: "text-[oklch(0.62_0.17_180)] dark:text-[oklch(0.76_0.18_180)]",
   // Продажі — зелёный
@@ -229,6 +233,12 @@ export const appSidebarData: { navMain: AppSidebarNavGroup[] } = {
           title: "Зрізи конкуренти",
           url: "/sku/sku-slices",
           iconName: "Projector",
+          allowedRoles: [RoleType.ADMIN],
+        },
+        {
+          title: "Скачки цін",
+          url: "/sku/pack-flips",
+          iconName: "ArrowLeftRight",
           allowedRoles: [RoleType.ADMIN],
         },
         {

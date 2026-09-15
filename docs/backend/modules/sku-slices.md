@@ -20,13 +20,15 @@
 
 ## Сбор данных
 
-Cron ежедневно 20:00 Europe/Kiev; конкуренты из `slices/config/excludedCompetitors` (сейчас из sku-cron исключён `yumi`). Jitter из `sku-reporting/constants`. Ключ даты — `toNextKyivSliceDate`.
+Cron ежедневно 20:00 Europe/Kiev; конкуренты из `slices/config/excludedCompetitors` (сейчас из sku-cron исключён `yumi`; Air в primary cron остаётся). Rotation в `sliceRotationByKonk` сейчас пустая: Air берёт полный sliced-каталог за день (не ⅓). Jitter из `resolveSkuSliceRequestJitterMs` / `competitorScrapeProfiles` (дефолт 500–1500 мс; для `air` — 2000–5000 мс). Для Air — ярусы пауз без сложения: каждые 10 fetch кластер 20–40 с; каждые 100 — блок 4–6 мин; **чанки по 1000 HTTP fetch** с паузой 45–60 мин и `resetImpitClientCache` (на границе чанка jitter/cluster/block не ставятся). Следующий чанк только по pending (valid `data[productId]` skip без fetch). Несколько чанков подряд, пока не обработаны все pending или abort. Proactive chunk stop не увеличивает `errors`. Abort причины: Cloudflare `ORIGIN_BLOCKED` (520–526), unsupported konk, либо **15 подряд** soft-invalid (`-1`/null) — уже записанные ключи сохраняются, хвост не пишется как `-1` (pending видит missing). Soft-invalid и abort пишутся в Railway как warn/error; прогресс пауз — info. TG-итог по konk включает `abortReason`, если срез оборван. Ключ даты — `toNextKyivSliceDate`. После завершения среза **каждого** конкурента — отдельное Telegram-сообщение в analytics chat (ночное окно 20:00–05:59 откладывает отправку до 06:00 Kyiv); список excluded — отдельным сообщением в начале.
+
+После срезов всех конкурентов крон прогоняет pack-flip review по списку `packFlipAutoApplyKonks` (сейчас `perfect`): для каждого konk поднимает документы среза за день ключа и два предыдущих, в памяти ищет кратную инверсию `stock`/`price` (детектор в [slices](slices.md)). Аномальную точку рескейлят к масштабу соседа и пишут обратно в `data`. Скачок только цены и неоднозначные серии — только отчёт. Ошибка review одного konk не откатывает уже записанные срезы и не прерывает остальных. Ручная проверка за произвольный период — `GET /api/sku-slices/pack-flips` (без записи) или скрипт `src/modules/sku-slices/scripts/runPackFlipReview.ts` (`--apply` пишет, без флага — отчёт; `--konk` иначе первый из auto-apply). Гайд для UI: [frontend: pack-flip-review](../frontend/pack-flip-review.md).
 
 ### Client-ingestion для Air
 
-Параллельный канал к server scrape: срезы Air за **сегодня** (`toSliceDate`) можно дозаполнить с клиента через ADMIN API, если серверный опрос не дал валидных данных или оператор запускает ручной прогон:
+Параллельный канал к server scrape и **основной** способ дозаполнить хвост после abort/`-1` (server compensation для Air выключена): срезы Air за **сегодня** (`toSliceDate`) через ADMIN API. Pending — все sliced Air без валидной точки:
 
-1. `GET /client/air/pending` — очередь missing/`-1` среди sliced Air SKU;
+1. `GET /client/air/pending` — очередь missing/`-1` среди sliced Air SKU; `rotation: null` (цикл выключен);
 2. `PUT /client/air/sku/:skuId` — HTML first-party страницы → `readAirProductFromHtml` → атомарный `$set` только если ключ отсутствует или содержит `-1` (иначе `skipped`).
 
 Гайд для UI/расширения: [frontend: air-client-sku-slices](../frontend/air-client-sku-slices.md).
@@ -34,8 +36,9 @@ Cron ежедневно 20:00 Europe/Kiev; конкуренты из `slices/con
 ## HTTP
 
 - `GET /api/sku-slices` — срез по konk+date с пагинацией
+- `GET /api/sku-slices/pack-flips` — проверка pack-flip за диапазон (без записи)
 - `GET /api/sku-slices/sku/:skuId` — точка на дату
-- `GET /api/sku-slices/sku/:skuId/range` — ряд stock/price без нормализации для продаж
+- `GET /api/sku-slices/sku/:skuId/range` — плотный ряд stock/price с forward-fill (без расчёта sales)
 - `GET /api/sku-slices/client/air/pending` — очередь client-ingest
 - `PUT /api/sku-slices/client/air/sku/:skuId` — запись точки из HTML
 
