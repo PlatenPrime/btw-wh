@@ -1,5 +1,6 @@
-import { Progress } from "@/components/ui/progress";
+import { ListRowCard } from "@/components/shared/cards";
 import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
 import type { TrackedExcelJob } from "@/modules/excel-jobs/types/tracked-job";
 import {
   formatExcelFileSize,
@@ -41,16 +42,18 @@ export function ExcelJobCardView({
     job.status === "running" && job.phase === "building";
 
   return (
-    <div
+    <ListRowCard
       className={cn(
-        "flex flex-col gap-2 rounded-lg border border-border bg-card/80 p-3",
+        "flex-row items-center justify-between gap-3",
         isFailed && "border-destructive/40",
         isReady && downloaded && "border-success/40",
       )}
     >
-      <div className="flex items-start justify-between gap-2">
-        <div className="min-w-0 flex flex-col gap-0.5">
-          <p className={cn(typography.gridTitle, "truncate")}>{title}</p>
+      <div className="min-w-0 flex flex-1 flex-col gap-1.5">
+        <div className="flex min-w-0 flex-col gap-0.5">
+          <p className={cn(typography.listTitleEmphasized, "truncate")}>
+            {title}
+          </p>
           <p className="text-muted-foreground flex items-center gap-1.5 text-xs">
             {isActive ? (
               <Loader2 className="size-3.5 shrink-0 animate-spin" />
@@ -58,38 +61,26 @@ export function ExcelJobCardView({
             <span>{statusLabel}</span>
           </p>
         </div>
-        {!isActive ? (
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon"
-            className="size-7 shrink-0"
-            onClick={onDismiss}
-            aria-label="Закрити"
-          >
-            <X className="size-3.5" />
-          </Button>
+
+        {showBuildingProgress ? (
+          <Progress value={job.progress} className="h-2 max-w-md" />
+        ) : null}
+
+        {isFailed && job.error ? (
+          <p className="text-destructive truncate text-xs">{job.error}</p>
+        ) : null}
+
+        {isReady && job.fileName ? (
+          <p className="text-muted-foreground truncate text-xs">
+            {job.fileName}
+            {job.sizeBytes != null
+              ? ` · ${formatExcelFileSize(job.sizeBytes)}`
+              : ""}
+          </p>
         ) : null}
       </div>
 
-      {showBuildingProgress ? (
-        <Progress value={job.progress} className="h-2" />
-      ) : null}
-
-      {isFailed && job.error ? (
-        <p className="text-destructive text-xs">{job.error}</p>
-      ) : null}
-
-      {isReady && job.fileName ? (
-        <p className="text-muted-foreground truncate text-xs">
-          {job.fileName}
-          {job.sizeBytes != null
-            ? ` · ${formatExcelFileSize(job.sizeBytes)}`
-            : ""}
-        </p>
-      ) : null}
-
-      <div className="flex flex-wrap justify-end gap-2">
+      <div className="flex shrink-0 items-center gap-2">
         {isActive ? (
           <Button
             type="button"
@@ -111,7 +102,19 @@ export function ExcelJobCardView({
             {downloaded ? "Завантажити ще" : "Завантажити"}
           </Button>
         ) : null}
+        {!isActive ? (
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            className="size-8 shrink-0"
+            onClick={onDismiss}
+            aria-label="Закрити"
+          >
+            <X className="size-3.5" />
+          </Button>
+        ) : null}
       </div>
-    </div>
+    </ListRowCard>
   );
 }

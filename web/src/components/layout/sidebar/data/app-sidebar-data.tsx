@@ -6,6 +6,7 @@ import {
   Building2,
   Factory,
   FileQuestion,
+  FileSpreadsheet,
   LayoutTemplate,
   Link2,
   MapPin,
@@ -37,6 +38,7 @@ const icons = {
   ScrollText,
   MapPin,
   FileQuestion,
+  FileSpreadsheet,
   AlertTriangle,
   Route,
   LayoutTemplate,
@@ -92,6 +94,8 @@ const iconColorClasses: Record<SidebarIconName, string> = {
   TrendingUp: "text-[oklch(0.62_0.18_145)] dark:text-[oklch(0.76_0.2_145)]",
   Boxes: "text-[oklch(0.58_0.12_200)] dark:text-[oklch(0.72_0.14_200)]",
   Sparkles: "text-[oklch(0.64_0.16_55)] dark:text-[oklch(0.78_0.16_55)]",
+  FileSpreadsheet:
+    "text-[oklch(0.58_0.14_150)] dark:text-[oklch(0.74_0.16_150)]",
 };
 
 export interface AppSidebarNavItem {
@@ -251,6 +255,12 @@ export const appSidebarData: { navMain: AppSidebarNavGroup[] } = {
           title: "Грабо",
           url: "/sku/grabo",
           iconName: "Sparkles",
+          allowedRoles: [RoleType.ADMIN],
+        },
+        {
+          title: "Excel звіти",
+          url: "/sku/excel-reports",
+          iconName: "FileSpreadsheet",
           allowedRoles: [RoleType.ADMIN],
         },
       ],

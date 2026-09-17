@@ -169,6 +169,11 @@ const GraboSku = lazyWithRetry(() =>
     default: module.GraboSku,
   })),
 );
+const ExcelReportsPage = lazyWithRetry(() =>
+  import("./modules/excel-jobs/pages/excel-reports").then((module) => ({
+    default: module.ExcelReportsPage,
+  })),
+);
 const SkuSlices = lazyWithRetry(() =>
   import("./modules/sku-analytics/pages/sku-slices").then((module) => ({
     default: module.SkuSlices,
@@ -556,6 +561,15 @@ export const router = createHashRouter([
             element: (
               <ProtectedRoute allowedRoles={[RoleType.ADMIN]}>
                 <GraboSku />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "excel-reports",
+            element: (
+              <ProtectedRoute allowedRoles={[RoleType.ADMIN]}>
+                <ExcelReportsPage />
               </ProtectedRoute>
             ),
             errorElement: <RouteErrorBoundary />,

@@ -19,9 +19,7 @@ export interface TrackedExcelJob {
 
 export interface ExcelJobsContextValue {
   jobs: TrackedExcelJob[];
-  isPanelOpen: boolean;
   isStarting: boolean;
-  setPanelOpen: (open: boolean) => void;
   startJob: (input: StartExcelJobInput) => Promise<ExcelJobDto | null>;
   cancelJob: (jobId: string) => Promise<void>;
   retryJob: (jobId: string) => Promise<void>;

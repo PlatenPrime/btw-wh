@@ -28,12 +28,14 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { toast } from "sonner";
 
 const ExcelJobsContext = createContext<ExcelJobsContextValue | null>(null);
 
 const DEFAULT_POLL_MS = 1000;
 const TOKEN_REFRESH_MS = 4 * 60 * 1000;
 const ACTIVE_STATUSES = ["queued", "running", "ready"] as const;
+const EXCEL_REPORTS_PATH = "/sku/excel-reports";
 
 function toTracked(
   job: ExcelJobDto,
@@ -78,6 +80,16 @@ function withLocalError(
   };
 }
 
+function toastGoToReports() {
+  return {
+    label: "До звітів",
+    onClick: () => {
+      // HashRouter: path lives in hash, not pathname
+      window.location.hash = EXCEL_REPORTS_PATH;
+    },
+  };
+}
+
 interface ExcelJobsProviderProps {
   children: ReactNode;
 }
@@ -88,8 +100,6 @@ export function ExcelJobsProvider({ children }: ExcelJobsProviderProps) {
     isAuthenticated && !isAuthLoading && hasRole(RoleType.ADMIN);
 
   const [jobs, setJobs] = useState<TrackedExcelJob[]>([]);
-  /** Always open when jobs appear; user may collapse, but init/start opens it. */
-  const [isPanelOpen, setPanelOpen] = useState(true);
   const [isStarting, setIsStarting] = useState(false);
 
   const jobsRef = useRef(jobs);
@@ -125,10 +135,13 @@ export function ExcelJobsProvider({ children }: ExcelJobsProviderProps) {
     });
   }, []);
 
-  const removeJob = useCallback((jobId: string) => {
-    clearPoll(jobId);
-    setJobs((prev) => prev.filter((item) => item.job.jobId !== jobId));
-  }, [clearPoll]);
+  const removeJob = useCallback(
+    (jobId: string) => {
+      clearPoll(jobId);
+      setJobs((prev) => prev.filter((item) => item.job.jobId !== jobId));
+    },
+    [clearPoll],
+  );
 
   const triggerDownload = useCallback(
     async (tracked: TrackedExcelJob, forceRefreshToken: boolean) => {
@@ -166,6 +179,10 @@ export function ExcelJobsProvider({ children }: ExcelJobsProviderProps) {
             "Немає токена для завантаження. Спробуйте ще раз.",
           ),
         );
+        toast.error("Немає токена для завантаження", {
+          description: fileName ?? tracked.title,
+          action: toastGoToReports(),
+        });
         return;
       }
 
@@ -177,6 +194,10 @@ export function ExcelJobsProvider({ children }: ExcelJobsProviderProps) {
         job: { ...job, downloadToken: token, fileName, sizeBytes },
         downloaded: true,
         readyAt: tracked.readyAt ?? Date.now(),
+      });
+
+      toast.success("Завантаження розпочато", {
+        description: fileName ?? tracked.title,
       });
     },
     [upsertJob],
@@ -218,6 +239,12 @@ export function ExcelJobsProvider({ children }: ExcelJobsProviderProps) {
             job.status === "expired"
           ) {
             clearPoll(jobId);
+            if (job.status === "failed") {
+              toast.error("Помилка формування Excel", {
+                description: job.error ?? next.title,
+                action: toastGoToReports(),
+              });
+            }
             return;
           }
 
@@ -234,6 +261,10 @@ export function ExcelJobsProvider({ children }: ExcelJobsProviderProps) {
           if (currentJob) {
             upsertJob(withLocalError(currentJob, getErrorMessage(error)));
           }
+          toast.error("Помилка опитування Excel job", {
+            description: getErrorMessage(error),
+            action: toastGoToReports(),
+          });
         }
       };
 
@@ -250,11 +281,11 @@ export function ExcelJobsProvider({ children }: ExcelJobsProviderProps) {
   const startJob = useCallback(
     async (input: StartExcelJobInput): Promise<ExcelJobDto | null> => {
       if (!canUseExcelJobs) {
+        toast.error("Недостатньо прав для Excel");
         return null;
       }
 
       setIsStarting(true);
-      setPanelOpen(true);
       try {
         const created = await createExcelJob({
           kind: input.kind,
@@ -267,10 +298,13 @@ export function ExcelJobsProvider({ children }: ExcelJobsProviderProps) {
         });
         upsertJob(tracked);
         schedulePoll(created.jobId);
+        toast.success("Excel поставлено в чергу", {
+          description: tracked.title,
+          action: toastGoToReports(),
+        });
         return created;
       } catch (error) {
         if (axios.isAxiosError(error) && error.response?.status === 429) {
-          setPanelOpen(true);
           try {
             const active = await listExcelJobs({
               status: [...ACTIVE_STATUSES],
@@ -291,11 +325,18 @@ export function ExcelJobsProvider({ children }: ExcelJobsProviderProps) {
               }
             }
           } catch {
-            // panel may already have jobs
+            // list may already be in store
           }
+          toast.error("Ліміт активних Excel (2)", {
+            description: "Скасуйте одну задачу або дочекайтесь завершення",
+            action: toastGoToReports(),
+          });
           return null;
         }
 
+        toast.error("Не вдалося поставити Excel", {
+          description: getErrorMessage(error),
+        });
         throw error;
       } finally {
         setIsStarting(false);
@@ -316,10 +357,14 @@ export function ExcelJobsProvider({ children }: ExcelJobsProviderProps) {
             params: existing?.params,
           }),
         );
+        toast.success("Excel задачу скасовано");
       } catch (error) {
         if (existing) {
           upsertJob(withLocalError(existing, getErrorMessage(error)));
         }
+        toast.error("Не вдалося скасувати", {
+          description: getErrorMessage(error),
+        });
       }
     },
     [clearPoll, upsertJob],
@@ -357,7 +402,6 @@ export function ExcelJobsProvider({ children }: ExcelJobsProviderProps) {
     [triggerDownload],
   );
 
-  // Restore active jobs after F5 / login — panel opens with jobs
   useEffect(() => {
     if (!canUseExcelJobs) {
       clearAllPolls();
@@ -372,10 +416,6 @@ export function ExcelJobsProvider({ children }: ExcelJobsProviderProps) {
       try {
         const active = await listExcelJobs({ status: [...ACTIVE_STATUSES] });
         if (cancelled) return;
-
-        if (active.length > 0) {
-          setPanelOpen(true);
-        }
 
         for (const job of active) {
           const tracked = toTracked(job);
@@ -400,9 +440,7 @@ export function ExcelJobsProvider({ children }: ExcelJobsProviderProps) {
   const value = useMemo<ExcelJobsContextValue>(
     () => ({
       jobs,
-      isPanelOpen,
       isStarting,
-      setPanelOpen,
       startJob,
       cancelJob,
       retryJob,
@@ -411,7 +449,6 @@ export function ExcelJobsProvider({ children }: ExcelJobsProviderProps) {
     }),
     [
       jobs,
-      isPanelOpen,
       isStarting,
       startJob,
       cancelJob,
@@ -437,6 +474,6 @@ export function useExcelJobs(): ExcelJobsContextValue {
 }
 
 export function useStartExcelJob() {
-  const { startJob, isStarting, setPanelOpen } = useExcelJobs();
-  return { startJob, isStarting, setPanelOpen };
+  const { startJob, isStarting } = useExcelJobs();
+  return { startJob, isStarting };
 }
