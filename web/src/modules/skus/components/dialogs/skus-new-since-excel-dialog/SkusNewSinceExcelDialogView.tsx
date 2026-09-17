@@ -94,7 +94,7 @@ export function SkusNewSinceExcelDialogView({
           onSubmit={onDownload}
           isSubmitting={isDownloading}
           submitText="Скачати"
-          submitLoadingText="Завантаження..."
+          submitLoadingText="Постановка..."
           isDisabled={!selectedDate || !isKonkOk}
           variant="default"
           className="justify-end"

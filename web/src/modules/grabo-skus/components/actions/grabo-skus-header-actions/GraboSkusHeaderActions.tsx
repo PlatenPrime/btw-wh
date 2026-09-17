@@ -1,11 +1,11 @@
 import type { HeaderAction } from "@/components/layout/header-actions";
 import { useRegisterHeaderActions } from "@/components/layout/header-actions";
-import { useDownloadGraboSkusExcelMutation } from "@/modules/grabo-skus/api/hooks/mutations/useDownloadGraboSkusExcelMutation";
+import { useStartExcelJob } from "@/modules/excel-jobs";
 import { FileSpreadsheet } from "lucide-react";
 import { useMemo } from "react";
 
 export function GraboSkusHeaderActions() {
-  const { mutate, isPending } = useDownloadGraboSkusExcelMutation();
+  const { startJob, isStarting } = useStartExcelJob();
 
   const headerActions = useMemo<HeaderAction[]>(
     () => [
@@ -16,12 +16,12 @@ export function GraboSkusHeaderActions() {
         iconColor: "emerald",
         variant: "default",
         onClick: () => {
-          if (isPending) return;
-          mutate();
+          if (isStarting) return;
+          void startJob({ kind: "grabo-skus", title: "Grabo каталог" });
         },
       },
     ],
-    [mutate, isPending],
+    [startJob, isStarting],
   );
 
   useRegisterHeaderActions(headerActions);

@@ -50,7 +50,7 @@ export function SkuSalesExcelDialogView({
           onSubmit={onDownload}
           isSubmitting={isExporting}
           submitText="Скачати"
-          submitLoadingText="Формування..."
+          submitLoadingText="Постановка..."
           isDisabled={!isRangeValid}
           variant="default"
           className="justify-end"

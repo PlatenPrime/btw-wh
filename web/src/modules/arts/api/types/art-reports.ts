@@ -38,8 +38,3 @@ export interface ArtSalesChartData {
 }
 
 export type ArtSalesChartResponse = EntityResponse<ArtSalesChartData>;
-
-export interface DownloadArtExcelResult {
-  blob: Blob;
-  filename: string;
-}

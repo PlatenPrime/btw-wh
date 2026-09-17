@@ -1,5 +1,5 @@
 import { Dialog } from "@/components/ui/dialog";
-import { useDownloadInvalidSkusExcelMutation } from "@/modules/skus/api/hooks/mutations/useDownloadInvalidSkusExcelMutation";
+import { useStartExcelJob } from "@/modules/excel-jobs";
 import type { KonkDto } from "@/modules/konks/api/types";
 import { SKUS_EXCEL_ALL_KONKS_VALUE } from "@/modules/skus/components/dialogs/skus-excel-konk-scope";
 import { useCallback, useEffect, useState } from "react";
@@ -26,7 +26,7 @@ export function SkusInvalidExcelDialog({
   const [selectedKonkOrAll, setSelectedKonkOrAll] = useState(
     () => defaultKonkSelection(filterKonkName),
   );
-  const mutation = useDownloadInvalidSkusExcelMutation();
+  const { startJob, isStarting } = useStartExcelJob();
 
   useEffect(() => {
     if (open) {
@@ -37,12 +37,16 @@ export function SkusInvalidExcelDialog({
   const handleDownload = useCallback(async () => {
     if (!selectedKonkOrAll) return;
     try {
-      await mutation.mutateAsync({ konkName: selectedKonkOrAll });
-      onOpenChange(false);
+      const job = await startJob({
+        kind: "sku-catalog-invalid",
+        params: { konk: selectedKonkOrAll },
+        title: "SKU: невалідні",
+      });
+      if (job) onOpenChange(false);
     } catch {
-      // toast у мутації
+      // toast in provider
     }
-  }, [selectedKonkOrAll, mutation, onOpenChange]);
+  }, [selectedKonkOrAll, startJob, onOpenChange]);
 
   const handleCancel = useCallback(() => {
     onOpenChange(false);
@@ -54,7 +58,7 @@ export function SkusInvalidExcelDialog({
         konks={konks}
         selectedKonkOrAll={selectedKonkOrAll}
         onSelectedKonkOrAllChange={setSelectedKonkOrAll}
-        isDownloading={mutation.isPending}
+        isDownloading={isStarting}
         onDownload={handleDownload}
         onCancel={handleCancel}
       />

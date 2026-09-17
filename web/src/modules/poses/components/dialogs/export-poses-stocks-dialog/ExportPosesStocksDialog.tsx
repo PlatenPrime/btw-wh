@@ -18,7 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { handleExportPosesStocks } from "@/modules/poses/utils/handle-export-poses-stocks/handleExportPosesStocks";
+import { useStartExcelJob } from "@/modules/excel-jobs";
 
 interface ExportPosesStocksDialogProps {
   open: boolean;
@@ -30,28 +30,32 @@ export function ExportPosesStocksDialog({
   onOpenChange,
 }: ExportPosesStocksDialogProps) {
   const [selectedSklad, setSelectedSklad] = useState<SkladCode | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { startJob, isStarting } = useStartExcelJob();
 
   useEffect(() => {
     if (!open) {
       setSelectedSklad(null);
-      setIsSubmitting(false);
     }
   }, [open]);
 
   const handleClose = () => {
-    if (!isSubmitting) {
+    if (!isStarting) {
       onOpenChange(false);
     }
   };
 
   const handleSubmit = async () => {
     try {
-      setIsSubmitting(true);
-      await handleExportPosesStocks(selectedSklad ?? undefined);
-      onOpenChange(false);
-    } finally {
-      setIsSubmitting(false);
+      const job = await startJob({
+        kind: "poses-export-stocks",
+        params: selectedSklad ? { sklad: selectedSklad } : {},
+        title: selectedSklad
+          ? `Залишки позицій · ${sklads[selectedSklad]}`
+          : "Залишки позицій",
+      });
+      if (job) onOpenChange(false);
+    } catch {
+      // toast in provider
     }
   };
 
@@ -79,7 +83,7 @@ export function ExportPosesStocksDialog({
                 variant="ghost"
                 size="sm"
                 onClick={handleReset}
-                disabled={!selectedSklad || isSubmitting}
+                disabled={!selectedSklad || isStarting}
               >
                 Очистити
               </Button>
@@ -87,7 +91,7 @@ export function ExportPosesStocksDialog({
             <Select
               value={selectedSklad ?? undefined}
               onValueChange={(value) => setSelectedSklad(value as SkladCode)}
-              disabled={isSubmitting}
+              disabled={isStarting}
             >
               <SelectTrigger id="sklad-select" className="w-full">
                 <SelectValue placeholder="Всі склади" />
@@ -105,16 +109,15 @@ export function ExportPosesStocksDialog({
             type="button"
             variant="outline"
             onClick={handleClose}
-            disabled={isSubmitting}
+            disabled={isStarting}
           >
             Скасувати
           </Button>
-          <Button type="button" onClick={handleSubmit} disabled={isSubmitting}>
-            {isSubmitting ? "Завантаження..." : "Скачати"}
+          <Button type="button" onClick={handleSubmit} disabled={isStarting}>
+            {isStarting ? "Постановка..." : "Скачати"}
           </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
   );
 }
-

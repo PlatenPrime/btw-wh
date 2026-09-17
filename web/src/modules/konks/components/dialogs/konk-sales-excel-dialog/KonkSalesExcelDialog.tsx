@@ -1,5 +1,5 @@
 import { Dialog } from "@/components/ui/dialog";
-import { useDownloadKonkSalesExcelMutation } from "@/modules/konks/api/hooks/mutations/useDownloadKonkSalesExcelMutation";
+import { useStartExcelJob } from "@/modules/excel-jobs";
 import { useKonksQuery } from "@/modules/konks/api/hooks/queries/useKonksQuery";
 import type { KonkDto } from "@/modules/konks/api/types";
 import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
@@ -48,14 +48,13 @@ export function KonkSalesExcelDialog({
   const showKonkSelect = !konk;
   const resolvedKonkName = konk?.name ?? selectedKonkName;
 
-  const mutation = useDownloadKonkSalesExcelMutation();
+  const { startJob, isStarting } = useStartExcelJob();
   const prodsQuery = useProdsQuery();
   const konksQuery = useKonksQuery();
   const prods = (prodsQuery.data?.data ?? []).filter(
     (p) => p.name !== SKU_KONK_PROD_QUERY_ALL,
   );
   const konks = konksQuery.data?.data ?? [];
-  const isExporting = mutation.isPending;
 
   const handleDownload = useCallback(async () => {
     const from = dateRange?.from;
@@ -71,24 +70,28 @@ export function KonkSalesExcelDialog({
           ? ("revenue" as const)
           : undefined;
     try {
-      await mutation.mutateAsync({
-        konk: resolvedKonkName,
-        prod: selectedProd,
-        dateFrom,
-        dateTo,
-        ...(sortBy ? { sortBy } : {}),
-        ...(selectedSkugrIds.length ? { skugrIds: selectedSkugrIds } : {}),
+      const job = await startJob({
+        kind: "sku-konk-sales",
+        params: {
+          konk: resolvedKonkName,
+          prod: selectedProd,
+          dateFrom,
+          dateTo,
+          ...(sortBy ? { sortBy } : {}),
+          ...(selectedSkugrIds.length ? { skugrIds: selectedSkugrIds } : {}),
+        },
+        title: `Konk продажі · ${resolvedKonkName}`,
       });
-      handleOpenChange(false);
+      if (job) handleOpenChange(false);
     } catch {
-      // toast handled in mutation onError
+      // toast in provider
     }
   }, [
     dateRange,
     selectedProd,
     selectedSkugrIds,
     exportSort,
-    mutation,
+    startJob,
     resolvedKonkName,
     handleOpenChange,
   ]);
@@ -147,7 +150,7 @@ export function KonkSalesExcelDialog({
         onSelectedSkugrIdsChange={setSelectedSkugrIds}
         exportSort={exportSort}
         onExportSortChange={setExportSort}
-        isExporting={isExporting}
+        isExporting={isStarting}
         onDownload={handleDownload}
         onCancel={handleCancel}
       />

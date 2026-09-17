@@ -1,5 +1,5 @@
 import { Dialog } from "@/components/ui/dialog";
-import { useExportSkuSalesExcelMutation } from "@/modules/skus/api/hooks/mutations/useExportSkuSalesExcelMutation";
+import { useStartExcelJob } from "@/modules/excel-jobs";
 import type { SkuDto } from "@/modules/skus/api/types";
 import { format } from "date-fns";
 import type { DateRange } from "react-day-picker";
@@ -34,8 +34,7 @@ export function SkuSalesExcelDialog({
   const handleOpenChange: (open: boolean) => void =
     isControlled && onOpenChange ? onOpenChange : setInternalOpen;
 
-  const mutation = useExportSkuSalesExcelMutation();
-  const isExporting = mutation.isPending;
+  const { startJob, isStarting } = useStartExcelJob();
 
   const handleDownload = useCallback(async () => {
     const from = dateRange?.from;
@@ -44,16 +43,16 @@ export function SkuSalesExcelDialog({
     const dateFrom = format(from, "yyyy-MM-dd");
     const dateTo = format(to, "yyyy-MM-dd");
     try {
-      await mutation.mutateAsync({
-        skuId: sku._id,
-        dateFrom,
-        dateTo,
+      const job = await startJob({
+        kind: "sku-one-sales",
+        params: { skuId: sku._id, dateFrom, dateTo },
+        title: `SKU продажі · ${sku.title || sku._id}`,
       });
-      handleOpenChange(false);
+      if (job) handleOpenChange(false);
     } catch {
-      // toast handled in mutation onError
+      // toast in provider
     }
-  }, [sku._id, dateRange, mutation, handleOpenChange]);
+  }, [sku._id, sku.title, dateRange, startJob, handleOpenChange]);
 
   const handleCancel = useCallback(() => {
     handleOpenChange(false);
@@ -70,7 +69,7 @@ export function SkuSalesExcelDialog({
       <SkuSalesExcelDialogView
         dateRange={dateRange}
         onDateRangeChange={setDateRange}
-        isExporting={isExporting}
+        isExporting={isStarting}
         onDownload={handleDownload}
         onCancel={handleCancel}
       />

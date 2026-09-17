@@ -1,5 +1,5 @@
 import { Dialog } from "@/components/ui/dialog";
-import { useExportArtStockExcelMutation } from "@/modules/arts/api/hooks/mutations/useExportArtStockExcelMutation";
+import { useStartExcelJob } from "@/modules/excel-jobs";
 import { format } from "date-fns";
 import type { DateRange } from "react-day-picker";
 import { useCallback, useEffect, useState } from "react";
@@ -33,8 +33,7 @@ export function ArtStockExcelDialog({
   const handleOpenChange: (open: boolean) => void =
     isControlled && onOpenChange ? onOpenChange : setInternalOpen;
 
-  const mutation = useExportArtStockExcelMutation();
-  const isExporting = mutation.isPending;
+  const { startJob, isStarting } = useStartExcelJob();
 
   const handleDownload = useCallback(async () => {
     const from = dateRange?.from;
@@ -43,16 +42,16 @@ export function ArtStockExcelDialog({
     const dateFrom = format(from, "yyyy-MM-dd");
     const dateTo = format(to, "yyyy-MM-dd");
     try {
-      await mutation.mutateAsync({
-        artikul,
-        dateFrom,
-        dateTo,
+      const job = await startJob({
+        kind: "art-stock",
+        params: { artikul, dateFrom, dateTo },
+        title: `Залишки · ${artikul}`,
       });
-      handleOpenChange(false);
+      if (job) handleOpenChange(false);
     } catch {
-      // toast handled in mutation onError
+      // toast in provider
     }
-  }, [artikul, dateRange, mutation, handleOpenChange]);
+  }, [artikul, dateRange, startJob, handleOpenChange]);
 
   const handleCancel = useCallback(() => {
     handleOpenChange(false);
@@ -69,7 +68,7 @@ export function ArtStockExcelDialog({
       <ArtStockExcelDialogView
         dateRange={dateRange}
         onDateRangeChange={setDateRange}
-        isExporting={isExporting}
+        isExporting={isStarting}
         onDownload={handleDownload}
         onCancel={handleCancel}
       />

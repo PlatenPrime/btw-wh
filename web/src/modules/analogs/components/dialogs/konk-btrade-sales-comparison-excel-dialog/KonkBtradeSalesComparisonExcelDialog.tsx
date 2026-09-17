@@ -1,6 +1,6 @@
 import { Dialog } from "@/components/ui/dialog";
-import { useDownloadKonkSalesComparisonExcelMutation } from "@/modules/analogs/api/hooks/mutations/useDownloadKonkSalesComparisonExcelMutation";
 import { KonkBtradeSalesComparisonExcelDialogView } from "@/modules/analogs/components/dialogs/konk-btrade-sales-comparison-excel-dialog/KonkBtradeSalesComparisonExcelDialogView";
+import { useStartExcelJob } from "@/modules/excel-jobs";
 import { useKonksQuery } from "@/modules/konks/api/hooks/queries/useKonksQuery";
 import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
 import { format } from "date-fns";
@@ -42,8 +42,7 @@ export function KonkBtradeSalesComparisonExcelDialog({
   const konks = konksQuery.data?.data ?? [];
   const prods = prodsQuery.data?.data ?? [];
 
-  const mutation = useDownloadKonkSalesComparisonExcelMutation();
-  const isDownloading = mutation.isPending;
+  const { startJob, isStarting } = useStartExcelJob();
 
   const handleDownload = useCallback(async () => {
     const from = dateRange?.from;
@@ -56,21 +55,25 @@ export function KonkBtradeSalesComparisonExcelDialog({
     const dateTo = format(to, "yyyy-MM-dd");
 
     try {
-      await mutation.mutateAsync({
-        konk: selectedKonk,
-        prod: selectedProd,
-        dateFrom,
-        dateTo,
-        ...(selectedAbc && { abc: selectedAbc }),
-        ...(sortByAbc && { sortBy: "abc" as const }),
+      const job = await startJob({
+        kind: "konk-btrade-sales-comparison",
+        params: {
+          konk: selectedKonk,
+          prod: selectedProd,
+          dateFrom,
+          dateTo,
+          ...(selectedAbc ? { abc: selectedAbc } : {}),
+          ...(sortByAbc ? { sortBy: "abc" } : {}),
+        },
+        title: "Konk vs Btrade: продажі",
       });
-      handleOpenChange(false);
+      if (job) handleOpenChange(false);
     } catch {
-      // toast handled in mutation onError
+      // toast in provider
     }
   }, [
     dateRange,
-    mutation,
+    startJob,
     selectedKonk,
     selectedProd,
     selectedAbc,
@@ -107,7 +110,7 @@ export function KonkBtradeSalesComparisonExcelDialog({
         onSelectedAbcChange={setSelectedAbc}
         sortByAbc={sortByAbc}
         onSortByAbcChange={setSortByAbc}
-        isDownloading={isDownloading}
+        isDownloading={isStarting}
         onDownload={handleDownload}
         onCancel={handleCancel}
       />

@@ -50,7 +50,7 @@ export function SkugrSliceExcelDialogView({
           onSubmit={onDownload}
           isSubmitting={isDownloading}
           submitText="Скачати"
-          submitLoadingText="Завантаження..."
+          submitLoadingText="Постановка..."
           isDisabled={!isRangeValid}
           variant="default"
           className="justify-end"

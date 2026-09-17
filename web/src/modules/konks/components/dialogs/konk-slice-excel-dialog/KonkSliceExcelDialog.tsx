@@ -1,5 +1,5 @@
 import { Dialog } from "@/components/ui/dialog";
-import { useDownloadKonkSliceExcelMutation } from "@/modules/konks/api/hooks/mutations/useDownloadKonkSliceExcelMutation";
+import { useStartExcelJob } from "@/modules/excel-jobs";
 import { useKonksQuery } from "@/modules/konks/api/hooks/queries/useKonksQuery";
 import type { KonkDto } from "@/modules/konks/api/types";
 import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
@@ -43,14 +43,13 @@ export function KonkSliceExcelDialog({
   const showKonkSelect = !konk;
   const resolvedKonkName = konk?.name ?? selectedKonkName;
 
-  const mutation = useDownloadKonkSliceExcelMutation();
+  const { startJob, isStarting } = useStartExcelJob();
   const prodsQuery = useProdsQuery();
   const konksQuery = useKonksQuery();
   const prods = (prodsQuery.data?.data ?? []).filter(
     (p) => p.name !== SKU_KONK_PROD_QUERY_ALL,
   );
   const konks = konksQuery.data?.data ?? [];
-  const isDownloading = mutation.isPending;
 
   const handleDownload = useCallback(async () => {
     const from = dateRange?.from;
@@ -60,22 +59,26 @@ export function KonkSliceExcelDialog({
     const dateFrom = format(from, "yyyy-MM-dd");
     const dateTo = format(to, "yyyy-MM-dd");
     try {
-      await mutation.mutateAsync({
-        konk: resolvedKonkName,
-        prod: selectedProd,
-        dateFrom,
-        dateTo,
-        ...(selectedSkugrIds.length ? { skugrIds: selectedSkugrIds } : {}),
+      const job = await startJob({
+        kind: "sku-konk-stock",
+        params: {
+          konk: resolvedKonkName,
+          prod: selectedProd,
+          dateFrom,
+          dateTo,
+          ...(selectedSkugrIds.length ? { skugrIds: selectedSkugrIds } : {}),
+        },
+        title: `Konk залишки · ${resolvedKonkName}`,
       });
-      handleOpenChange(false);
+      if (job) handleOpenChange(false);
     } catch {
-      // toast handled in mutation onError
+      // toast in provider
     }
   }, [
     dateRange,
     selectedProd,
     selectedSkugrIds,
-    mutation,
+    startJob,
     resolvedKonkName,
     handleOpenChange,
   ]);
@@ -131,7 +134,7 @@ export function KonkSliceExcelDialog({
         prods={prods}
         selectedSkugrIds={selectedSkugrIds}
         onSelectedSkugrIdsChange={setSelectedSkugrIds}
-        isDownloading={isDownloading}
+        isDownloading={isStarting}
         onDownload={handleDownload}
         onCancel={handleCancel}
       />

@@ -52,7 +52,7 @@ export function ComparisonExcelDialogView({
           onSubmit={onDownload}
           isSubmitting={isDownloading}
           submitText="Скачати"
-          submitLoadingText="Обчислення..."
+          submitLoadingText="Постановка..."
           isDisabled={!isRangeValid}
           variant="default"
           className="justify-end"

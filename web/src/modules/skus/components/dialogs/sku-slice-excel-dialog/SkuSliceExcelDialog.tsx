@@ -1,6 +1,6 @@
 import { Dialog } from "@/components/ui/dialog";
+import { useStartExcelJob } from "@/modules/excel-jobs";
 import type { SkuDto } from "@/modules/skus/api/types";
-import { useDownloadSkuSliceExcelMutation } from "@/modules/skus/api/hooks/mutations/useDownloadSkuSliceExcelMutation";
 import { format } from "date-fns";
 import type { DateRange } from "react-day-picker";
 import { useCallback, useEffect, useState } from "react";
@@ -34,8 +34,7 @@ export function SkuSliceExcelDialog({
   const handleOpenChange: (open: boolean) => void =
     isControlled && onOpenChange ? onOpenChange : setInternalOpen;
 
-  const mutation = useDownloadSkuSliceExcelMutation();
-  const isDownloading = mutation.isPending;
+  const { startJob, isStarting } = useStartExcelJob();
 
   const handleDownload = useCallback(async () => {
     const from = dateRange?.from;
@@ -44,16 +43,16 @@ export function SkuSliceExcelDialog({
     const dateFrom = format(from, "yyyy-MM-dd");
     const dateTo = format(to, "yyyy-MM-dd");
     try {
-      await mutation.mutateAsync({
-        skuId: sku._id,
-        dateFrom,
-        dateTo,
+      const job = await startJob({
+        kind: "sku-one-stock",
+        params: { skuId: sku._id, dateFrom, dateTo },
+        title: `SKU залишки · ${sku.title || sku._id}`,
       });
-      handleOpenChange(false);
+      if (job) handleOpenChange(false);
     } catch {
-      // toast handled in mutation onError
+      // toast in provider
     }
-  }, [sku._id, dateRange, mutation, handleOpenChange]);
+  }, [sku._id, sku.title, dateRange, startJob, handleOpenChange]);
 
   const handleCancel = useCallback(() => {
     handleOpenChange(false);
@@ -70,7 +69,7 @@ export function SkuSliceExcelDialog({
       <SkuSliceExcelDialogView
         dateRange={dateRange}
         onDateRangeChange={setDateRange}
-        isDownloading={isDownloading}
+        isDownloading={isStarting}
         onDownload={handleDownload}
         onCancel={handleCancel}
       />

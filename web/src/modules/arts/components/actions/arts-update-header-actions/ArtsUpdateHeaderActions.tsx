@@ -1,13 +1,19 @@
 import type { HeaderAction } from "@/components/layout/header-actions";
 import { useRegisterHeaderActions } from "@/components/layout/header-actions";
-import { handleExportArtsKeys } from "@/modules/arts/utils/handle-export-arts-keys/handleExportArtsKeys";
+import { useStartExcelJob } from "@/modules/excel-jobs";
 import { FileSpreadsheet } from "lucide-react";
 import { useCallback, useMemo } from "react";
 
 export function ArtsUpdateHeaderActions() {
+  const { startJob, isStarting } = useStartExcelJob();
+
   const handleExportKeys = useCallback(() => {
-    handleExportArtsKeys();
-  }, []);
+    if (isStarting) return;
+    void startJob({
+      kind: "arts-export-keys",
+      title: "Ключі артикулів",
+    });
+  }, [isStarting, startJob]);
 
   const headerActions = useMemo<HeaderAction[]>(
     () => [

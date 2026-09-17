@@ -1,10 +1,10 @@
 import { Dialog } from "@/components/ui/dialog";
 import type { AnalogDto } from "@/modules/analogs/api/types";
+import { useStartExcelJob } from "@/modules/excel-jobs";
 import { format } from "date-fns";
 import type { DateRange } from "react-day-picker";
 import { useCallback, useEffect, useState } from "react";
 import { SalesComparisonExcelDialogView } from "./SalesComparisonExcelDialogView";
-import { useDownloadAnalogSalesComparisonExcelMutation } from "@/modules/analogs/api/hooks/mutations/useDownloadAnalogSalesComparisonExcelMutation";
 
 function getDefaultDateRange(): DateRange {
   const now = new Date();
@@ -34,8 +34,7 @@ export function SalesComparisonExcelDialog({
   const handleOpenChange: (open: boolean) => void =
     isControlled && onOpenChange ? onOpenChange : setInternalOpen;
 
-  const mutation = useDownloadAnalogSalesComparisonExcelMutation();
-  const isDownloading = mutation.isPending;
+  const { startJob, isStarting } = useStartExcelJob();
 
   const handleDownload = useCallback(async () => {
     const from = dateRange?.from;
@@ -44,16 +43,16 @@ export function SalesComparisonExcelDialog({
     const dateFrom = format(from, "yyyy-MM-dd");
     const dateTo = format(to, "yyyy-MM-dd");
     try {
-      await mutation.mutateAsync({
-        analogId: analog._id,
-        dateFrom,
-        dateTo,
+      const job = await startJob({
+        kind: "analog-sales-comparison",
+        params: { analogId: analog._id, dateFrom, dateTo },
+        title: "Аналог: продажі",
       });
-      handleOpenChange(false);
+      if (job) handleOpenChange(false);
     } catch {
-      // toast handled in mutation onError
+      // toast in provider
     }
-  }, [analog._id, dateRange, mutation, handleOpenChange]);
+  }, [analog._id, dateRange, startJob, handleOpenChange]);
 
   const handleCancel = useCallback(() => {
     handleOpenChange(false);
@@ -70,7 +69,7 @@ export function SalesComparisonExcelDialog({
       <SalesComparisonExcelDialogView
         dateRange={dateRange}
         onDateRangeChange={setDateRange}
-        isDownloading={isDownloading}
+        isDownloading={isStarting}
         onDownload={handleDownload}
         onCancel={handleCancel}
       />

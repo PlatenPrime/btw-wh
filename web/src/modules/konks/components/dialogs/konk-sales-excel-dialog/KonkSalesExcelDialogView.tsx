@@ -153,7 +153,7 @@ export function KonkSalesExcelDialogView({
           onSubmit={onDownload}
           isSubmitting={isExporting}
           submitText="Скачати"
-          submitLoadingText="Формування..."
+          submitLoadingText="Постановка..."
           isDisabled={isDownloadDisabled}
           variant="default"
           className="justify-end"

@@ -122,7 +122,7 @@ export function KonkSliceExcelDialogView({
           onSubmit={onDownload}
           isSubmitting={isDownloading}
           submitText="Скачати"
-          submitLoadingText="Формування..."
+          submitLoadingText="Постановка..."
           isDisabled={isDownloadDisabled}
           variant="default"
           className="justify-end"

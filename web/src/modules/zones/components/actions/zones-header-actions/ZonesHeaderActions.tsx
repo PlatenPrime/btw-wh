@@ -1,13 +1,14 @@
 import type { HeaderAction } from "@/components/layout/header-actions";
 import { useRegisterHeaderActions } from "@/components/layout/header-actions";
+import { useStartExcelJob } from "@/modules/excel-jobs";
 import { ZonesHeaderActionsView } from "@/modules/zones/components/actions/zones-header-actions/ZonesHeaderActionsView";
-import { handleExportZones } from "@/modules/zones/utils/handle-export-zones/handleExportZones";
 import { Download, FileSpreadsheet, Plus } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 
 export function ZonesHeaderActions() {
   const navigate = useNavigate();
+  const { startJob, isStarting } = useStartExcelJob();
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
 
   const openCreateDialog = useCallback(() => {
@@ -15,8 +16,9 @@ export function ZonesHeaderActions() {
   }, []);
 
   const handleExport = useCallback(() => {
-    handleExportZones();
-  }, []);
+    if (isStarting) return;
+    void startJob({ kind: "zones-export", title: "Експорт зон" });
+  }, [isStarting, startJob]);
 
   const handleImport = useCallback(() => {
     navigate("/wh/zones-import-export");
@@ -61,4 +63,3 @@ export function ZonesHeaderActions() {
     />
   );
 }
-

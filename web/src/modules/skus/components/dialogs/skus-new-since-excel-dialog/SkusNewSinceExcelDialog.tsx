@@ -1,5 +1,5 @@
 import { Dialog } from "@/components/ui/dialog";
-import { useDownloadNewSinceSkusExcelMutation } from "@/modules/skus/api/hooks/mutations/useDownloadNewSinceSkusExcelMutation";
+import { useStartExcelJob } from "@/modules/excel-jobs";
 import type { KonkDto } from "@/modules/konks/api/types";
 import { format } from "date-fns";
 import { useCallback, useEffect, useState } from "react";
@@ -35,7 +35,7 @@ export function SkusNewSinceExcelDialog({
   const [selectedKonkOrAll, setSelectedKonkOrAll] = useState(
     () => defaultKonkSelection(filterKonkName),
   );
-  const mutation = useDownloadNewSinceSkusExcelMutation();
+  const { startJob, isStarting } = useStartExcelJob();
 
   useEffect(() => {
     if (open) {
@@ -48,12 +48,16 @@ export function SkusNewSinceExcelDialog({
     if (!selectedDate || !selectedKonkOrAll) return;
     const since = format(selectedDate, "yyyy-MM-dd");
     try {
-      await mutation.mutateAsync({ konkName: selectedKonkOrAll, since });
-      onOpenChange(false);
+      const job = await startJob({
+        kind: "sku-catalog-new-since",
+        params: { konk: selectedKonkOrAll, since },
+        title: "SKU: нові з дати",
+      });
+      if (job) onOpenChange(false);
     } catch {
-      // toast у мутації
+      // toast in provider
     }
-  }, [selectedDate, selectedKonkOrAll, mutation, onOpenChange]);
+  }, [selectedDate, selectedKonkOrAll, startJob, onOpenChange]);
 
   const handleCancel = useCallback(() => {
     onOpenChange(false);
@@ -67,7 +71,7 @@ export function SkusNewSinceExcelDialog({
         onSelectedKonkOrAllChange={setSelectedKonkOrAll}
         selectedDate={selectedDate}
         onSelectDate={setSelectedDate}
-        isDownloading={mutation.isPending}
+        isDownloading={isStarting}
         onDownload={handleDownload}
         onCancel={handleCancel}
       />

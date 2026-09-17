@@ -1,9 +1,8 @@
 import type { HeaderAction } from "@/components/layout/header-actions";
 import { useRegisterHeaderActions } from "@/components/layout/header-actions";
 import { ArtsHeaderActionsView } from "@/modules/arts/components/actions/arts-header-actions/ArtsHeaderActionsView";
-import { handleExportArtsWithStocks } from "@/modules/arts/utils/handle-export-arts-with-stocks/handleExportArtsWithStocks";
-import { handleExportArts } from "@/modules/arts/utils/handle-export-arts/handleExportArts";
 import { useRole } from "@/modules/auth/hooks/useRole";
+import { useStartExcelJob } from "@/modules/excel-jobs";
 import { ArrowDown, FileSpreadsheet, Play, Trash2 } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
@@ -13,18 +12,24 @@ export function ArtsHeaderActions() {
   const { isPrime, isAdmin } = useRole();
   const canDelete = isPrime();
   const canUpdateBtradeStocks = isAdmin();
+  const { startJob, isStarting } = useStartExcelJob();
 
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [updateBtradeStocksDialogOpen, setUpdateBtradeStocksDialogOpen] =
     useState(false);
 
   const handleExport = useCallback(() => {
-    handleExportArts();
-  }, []);
+    if (isStarting) return;
+    void startJob({ kind: "arts-export", title: "Експорт артикулів" });
+  }, [isStarting, startJob]);
 
   const handleExportWithStocks = useCallback(() => {
-    handleExportArtsWithStocks();
-  }, []);
+    if (isStarting) return;
+    void startJob({
+      kind: "arts-export-with-stocks",
+      title: "Артикули з залишками",
+    });
+  }, [isStarting, startJob]);
 
   const openUpdateBtradeStocksDialog = useCallback(() => {
     setUpdateBtradeStocksDialogOpen(true);

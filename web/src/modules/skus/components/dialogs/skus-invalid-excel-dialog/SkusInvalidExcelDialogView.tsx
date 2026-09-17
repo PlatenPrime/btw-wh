@@ -81,7 +81,7 @@ export function SkusInvalidExcelDialogView({
           onSubmit={onDownload}
           isSubmitting={isDownloading}
           submitText="Скачати"
-          submitLoadingText="Завантаження..."
+          submitLoadingText="Постановка..."
           isDisabled={!isKonkOk}
           variant="default"
           className="justify-end"

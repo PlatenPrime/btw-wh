@@ -1,5 +1,5 @@
 import { Dialog } from "@/components/ui/dialog";
-import { useDownloadSkugrSliceExcelMutation } from "@/modules/skugrs/api/hooks/mutations/useDownloadSkugrSliceExcelMutation";
+import { useStartExcelJob } from "@/modules/excel-jobs";
 import { format } from "date-fns";
 import type { DateRange } from "react-day-picker";
 import { useCallback, useEffect, useState } from "react";
@@ -33,8 +33,7 @@ export function SkugrSliceExcelDialog({
   const handleOpenChange: (open: boolean) => void =
     isControlled && onOpenChange ? onOpenChange : setInternalOpen;
 
-  const mutation = useDownloadSkugrSliceExcelMutation();
-  const isDownloading = mutation.isPending;
+  const { startJob, isStarting } = useStartExcelJob();
 
   const handleDownload = useCallback(async () => {
     const from = dateRange?.from;
@@ -43,16 +42,16 @@ export function SkugrSliceExcelDialog({
     const dateFrom = format(from, "yyyy-MM-dd");
     const dateTo = format(to, "yyyy-MM-dd");
     try {
-      await mutation.mutateAsync({
-        skugrId,
-        dateFrom,
-        dateTo,
+      const job = await startJob({
+        kind: "sku-skugr-stock",
+        params: { skugrId, dateFrom, dateTo },
+        title: "Skugr: залишки",
       });
-      handleOpenChange(false);
+      if (job) handleOpenChange(false);
     } catch {
-      // toast handled in mutation onError
+      // toast in provider
     }
-  }, [skugrId, dateRange, mutation, handleOpenChange]);
+  }, [skugrId, dateRange, startJob, handleOpenChange]);
 
   const handleCancel = useCallback(() => {
     handleOpenChange(false);
@@ -69,7 +68,7 @@ export function SkugrSliceExcelDialog({
       <SkugrSliceExcelDialogView
         dateRange={dateRange}
         onDateRangeChange={setDateRange}
-        isDownloading={isDownloading}
+        isDownloading={isStarting}
         onDownload={handleDownload}
         onCancel={handleCancel}
       />
