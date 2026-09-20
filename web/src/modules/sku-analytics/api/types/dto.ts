@@ -163,8 +163,10 @@ export type PackFlipFindingKind = "inverse" | "price-only" | "ambiguous";
 
 export interface PackFlipFindingDto {
   productId: string;
+  skuId: string;
   title: string;
   url: string;
+  imageUrl: string;
   kind: PackFlipFindingKind;
   date: string;
   neighborDate: string;

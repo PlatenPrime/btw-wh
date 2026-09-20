@@ -240,7 +240,7 @@ export const appSidebarData: { navMain: AppSidebarNavGroup[] } = {
           allowedRoles: [RoleType.ADMIN],
         },
         {
-          title: "Скачки цін",
+          title: "Скачки фасовки",
           url: "/sku/pack-flips",
           iconName: "ArrowLeftRight",
           allowedRoles: [RoleType.ADMIN],

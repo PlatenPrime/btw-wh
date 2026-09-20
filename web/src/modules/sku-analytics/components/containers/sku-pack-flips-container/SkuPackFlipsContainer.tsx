@@ -1,22 +1,29 @@
-import type { PackFlipsPayload } from "@/modules/sku-analytics/api/types";
+import type {
+  PackFlipFindingDto,
+  PackFlipsPayload,
+} from "@/modules/sku-analytics/api/types";
 import { SkuPackFlipsContainerView } from "@/modules/sku-analytics/components/containers/sku-pack-flips-container/SkuPackFlipsContainerView";
+import type { SkuPackFlipsTableVariant } from "@/modules/sku-analytics/components/tables/sku-pack-flips-table";
 
 export interface SkuPackFlipsContainerProps {
   data: PackFlipsPayload;
 }
 
-function buildDateLabel(dates: string[]): string {
-  if (dates.length === 0) {
-    return "немає дат у відповіді";
-  }
-  if (dates.length === 1) {
-    return dates[0];
-  }
-  return `${dates[0]} — ${dates[dates.length - 1]} · ${dates.length} днів`;
+function buildVisibleSections(data: PackFlipsPayload) {
+  const sections: Array<{
+    variant: SkuPackFlipsTableVariant;
+    items: PackFlipFindingDto[];
+  }> = [
+    { variant: "patched", items: data.patched },
+    { variant: "priceOnly", items: data.priceOnly },
+    { variant: "ambiguous", items: data.ambiguous },
+  ];
+
+  return sections.filter((section) => section.items.length > 0);
 }
 
 export function SkuPackFlipsContainer({ data }: SkuPackFlipsContainerProps) {
-  const dateLabel = buildDateLabel(data.dates);
-
-  return <SkuPackFlipsContainerView data={data} dateLabel={dateLabel} />;
+  return (
+    <SkuPackFlipsContainerView sections={buildVisibleSections(data)} />
+  );
 }

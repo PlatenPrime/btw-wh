@@ -50,15 +50,9 @@ export function SkuPackFlipsControlsView({
           disabled={!isSubmitReady || isFetching}
           onClick={onSubmit}
         >
-          {isFetching ? "Перевірка…" : "Запустити перевірку"}
+          {isFetching ? "Шукаю…" : "Знайти скачки"}
         </Button>
       </div>
-
-      <p className="text-muted-foreground text-sm">
-        Діагностика масштабу pack vs piece: кратна інверсія залишку й ціни. Це не
-        продажі і не компенсуючий зріз — зрізи SkuSlice не змінюються.
-        Колонка «після» — пропонований рескейл, не записаний.
-      </p>
     </SurfaceSection>
   );
 }

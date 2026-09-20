@@ -1,3 +1,4 @@
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Table,
   TableBody,
@@ -6,7 +7,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { iconSize } from "@/lib/typography";
 import type { PackFlipFindingDto } from "@/modules/sku-analytics/api/types";
+import { ExternalLink } from "lucide-react";
+import { Link } from "react-router";
 
 export type SkuPackFlipsTableVariant = "patched" | "priceOnly" | "ambiguous";
 
@@ -23,6 +27,53 @@ function formatPoint(stock: number, price: number): string {
   return `${numberFormat.format(stock)} / ${numberFormat.format(price)}`;
 }
 
+function PackFlipProductCell({ item }: { item: PackFlipFindingDto }) {
+  const skuId = item.skuId?.trim() ?? "";
+  const imageUrl = item.imageUrl?.trim() ?? "";
+  const competitorUrl = item.url?.trim() ?? "";
+  const title = item.title || item.productId;
+  const fallback = title.slice(0, 2).toUpperCase();
+
+  return (
+    <div className="flex min-w-0 items-center gap-3">
+      <Avatar className="h-10 w-10 shrink-0 rounded-md">
+        {imageUrl ? (
+          <AvatarImage src={imageUrl} alt="" className="object-contain" />
+        ) : null}
+        <AvatarFallback className="rounded-md text-xs">{fallback}</AvatarFallback>
+      </Avatar>
+      <div className="grid min-w-0 gap-1">
+        {skuId ? (
+          <Link
+            to={`/sku/skus/${skuId}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="min-w-0 truncate font-medium hover:underline"
+          >
+            {title}
+          </Link>
+        ) : (
+          <span className="truncate font-medium">{title}</span>
+        )}
+        <span className="text-muted-foreground truncate font-mono text-xs">
+          {item.productId}
+        </span>
+        {competitorUrl ? (
+          <a
+            href={competitorUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-primary inline-flex min-w-0 items-center gap-1 truncate hover:underline"
+          >
+            <ExternalLink className={iconSize.ui} />
+            На сайті
+          </a>
+        ) : null}
+      </div>
+    </div>
+  );
+}
+
 export function SkuPackFlipsTable({ variant, items }: SkuPackFlipsTableProps) {
   const showPatched = variant === "patched";
   const colSpan = showPatched ? 6 : 5;
@@ -34,16 +85,14 @@ export function SkuPackFlipsTable({ variant, items }: SkuPackFlipsTableProps) {
           <TableRow>
             <TableHead>Товар</TableHead>
             <TableHead className="whitespace-nowrap">Дата</TableHead>
-            <TableHead className="whitespace-nowrap">Сусід</TableHead>
+            <TableHead className="whitespace-nowrap">Порівняно з</TableHead>
             <TableHead className="w-[1%] whitespace-nowrap text-right">
-              Множник
+              ×
             </TableHead>
-            <TableHead className="whitespace-nowrap text-right">
-              Було (залишок / ціна)
-            </TableHead>
+            <TableHead className="whitespace-nowrap text-right">Було</TableHead>
             {showPatched ? (
               <TableHead className="whitespace-nowrap text-right">
-                Після (залишок / ціна)
+                Як має бути
               </TableHead>
             ) : null}
           </TableRow>
@@ -64,25 +113,7 @@ export function SkuPackFlipsTable({ variant, items }: SkuPackFlipsTableProps) {
                 key={`${item.productId}-${item.date}-${item.neighborDate}-${item.kind}`}
               >
                 <TableCell className="max-w-[360px]">
-                  <div className="grid gap-1">
-                    {item.url ? (
-                      <a
-                        href={item.url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="truncate font-medium underline-offset-4 hover:underline"
-                      >
-                        {item.title || item.productId}
-                      </a>
-                    ) : (
-                      <span className="truncate font-medium">
-                        {item.title || item.productId}
-                      </span>
-                    )}
-                    <span className="text-muted-foreground truncate text-xs">
-                      {item.productId}
-                    </span>
-                  </div>
+                  <PackFlipProductCell item={item} />
                 </TableCell>
                 <TableCell className="whitespace-nowrap tabular-nums">
                   {item.date}

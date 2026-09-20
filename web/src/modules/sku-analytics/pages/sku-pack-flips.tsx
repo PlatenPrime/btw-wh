@@ -45,7 +45,7 @@ export function SkuPackFlips() {
   }, [isFiltersReady, hasRun, isFetching, refetchPackFlips, markRun]);
 
   return (
-    <SidebarInsetLayout headerText="Перевірка скачків цін і залишків">
+    <SidebarInsetLayout headerText="Скачки фасовки">
       <div className="grid gap-4 p-2">
         <SkuPackFlipsControls
           konk={konk}
@@ -60,7 +60,7 @@ export function SkuPackFlips() {
 
         {!canFetch ? (
           <p className="text-muted-foreground text-sm">
-            Оберіть конкурента, період і запустіть перевірку.
+            Обери конкурента й період.
           </p>
         ) : (
           <SkuPackFlipsFetcher

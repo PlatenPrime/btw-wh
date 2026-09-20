@@ -1,57 +1,52 @@
 import { SurfaceSection } from "@/components/shared/layout";
-import type { PackFlipsPayload } from "@/modules/sku-analytics/api/types";
+import { typography } from "@/lib/typography";
+import { cn } from "@/lib/utils";
+import type { PackFlipFindingDto } from "@/modules/sku-analytics/api/types";
 import { SkuPackFlipsTable } from "@/modules/sku-analytics/components/tables/sku-pack-flips-table";
+import type { SkuPackFlipsTableVariant } from "@/modules/sku-analytics/components/tables/sku-pack-flips-table";
 
-export interface SkuPackFlipsContainerViewProps {
-  data: PackFlipsPayload;
-  dateLabel: string;
+export interface SkuPackFlipsSection {
+  variant: SkuPackFlipsTableVariant;
+  items: PackFlipFindingDto[];
 }
 
+export interface SkuPackFlipsContainerViewProps {
+  sections: SkuPackFlipsSection[];
+}
+
+const SECTION_TITLE: Record<SkuPackFlipsTableVariant, string> = {
+  patched: "Кратні стрибки",
+  priceOnly: "Стрибнула лише ціна",
+  ambiguous: "Дивні стрибки",
+};
+
 export function SkuPackFlipsContainerView({
-  data,
-  dateLabel,
+  sections,
 }: SkuPackFlipsContainerViewProps) {
+  if (sections.length === 0) {
+    return (
+      <p className={cn(typography.body, "text-muted-foreground")}>
+        За ці дні все рівно — скачків немає.
+      </p>
+    );
+  }
+
   return (
     <div className="grid gap-4">
-      <p className="text-muted-foreground text-sm">
-        {data.konkName} · {dateLabel}
-      </p>
-
-      <SurfaceSection className="grid gap-3 p-0">
-        <div className="grid gap-1 px-3 pt-3">
-          <h2 className="text-base font-semibold">
-            Кратна інверсія ({data.patched.length})
+      {sections.map((section) => (
+        <SurfaceSection key={section.variant} className="grid gap-3 p-0">
+          <h2
+            className={cn(
+              typography.sectionTitle,
+              "flex items-baseline gap-2 px-3 pt-3",
+            )}
+          >
+            {SECTION_TITLE[section.variant]}
+            <span className={typography.caption}>{section.items.length}</span>
           </h2>
-          <p className="text-muted-foreground text-sm">
-            Пропонований рескейл, зрізи не змінюються
-          </p>
-        </div>
-        <SkuPackFlipsTable variant="patched" items={data.patched} />
-      </SurfaceSection>
-
-      <SurfaceSection className="grid gap-3 p-0">
-        <div className="grid gap-1 px-3 pt-3">
-          <h2 className="text-base font-semibold">
-            Скачок лише ціни ({data.priceOnly.length})
-          </h2>
-          <p className="text-muted-foreground text-sm">
-            Залишок у межах ±10%, рескейл не пропонується
-          </p>
-        </div>
-        <SkuPackFlipsTable variant="priceOnly" items={data.priceOnly} />
-      </SurfaceSection>
-
-      <SurfaceSection className="grid gap-3 p-0">
-        <div className="grid gap-1 px-3 pt-3">
-          <h2 className="text-base font-semibold">
-            Неоднозначні серії ({data.ambiguous.length})
-          </h2>
-          <p className="text-muted-foreground text-sm">
-            Немає однозначного повернення до одного масштабу
-          </p>
-        </div>
-        <SkuPackFlipsTable variant="ambiguous" items={data.ambiguous} />
-      </SurfaceSection>
+          <SkuPackFlipsTable variant={section.variant} items={section.items} />
+        </SurfaceSection>
+      ))}
     </div>
   );
 }

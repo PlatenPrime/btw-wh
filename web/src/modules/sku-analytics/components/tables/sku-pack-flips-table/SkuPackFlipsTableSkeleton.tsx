@@ -25,13 +25,25 @@ export function SkuPackFlipsTableSkeleton({
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Товар</TableHead>
-            <TableHead>Дата</TableHead>
-            <TableHead>Сусід</TableHead>
-            <TableHead className="text-right">Множник</TableHead>
-            <TableHead className="text-right">Було</TableHead>
+            <TableHead>
+              <Skeleton className="h-3 w-16" />
+            </TableHead>
+            <TableHead>
+              <Skeleton className="h-3 w-12" />
+            </TableHead>
+            <TableHead>
+              <Skeleton className="h-3 w-12" />
+            </TableHead>
+            <TableHead className="text-right">
+              <Skeleton className="ml-auto h-3 w-16" />
+            </TableHead>
+            <TableHead className="text-right">
+              <Skeleton className="ml-auto h-3 w-20" />
+            </TableHead>
             {showPatched ? (
-              <TableHead className="text-right">Після</TableHead>
+              <TableHead className="text-right">
+                <Skeleton className="ml-auto h-3 w-20" />
+              </TableHead>
             ) : null}
           </TableRow>
         </TableHeader>
@@ -39,9 +51,13 @@ export function SkuPackFlipsTableSkeleton({
           {Array.from({ length: ROWS }).map((_, index) => (
             <TableRow key={index}>
               <TableCell>
-                <div className="grid gap-1">
-                  <Skeleton className="h-4 w-48" />
-                  <Skeleton className="h-3 w-24" />
+                <div className="flex items-center gap-3">
+                  <Skeleton className="h-10 w-10 shrink-0 rounded-md" />
+                  <div className="grid gap-1">
+                    <Skeleton className="h-4 w-48" />
+                    <Skeleton className="h-3 w-24" />
+                    <Skeleton className="h-3 w-36" />
+                  </div>
                 </div>
               </TableCell>
               <TableCell>
