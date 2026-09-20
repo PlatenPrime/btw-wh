@@ -1,4 +1,5 @@
 import type { SkuDto } from "@/modules/skus/api/types";
+import { PatchSkuSliceDialog } from "@/modules/skus/components/dialogs/patch-sku-slice-dialog";
 import { SkuSalesExcelDialog } from "@/modules/skus/components/dialogs/sku-sales-excel-dialog";
 import { SkuSliceExcelDialog } from "@/modules/skus/components/dialogs/sku-slice-excel-dialog";
 
@@ -8,6 +9,8 @@ interface SkuDetailHeaderActionsViewProps {
   onSliceExcelDialogOpenChange: (open: boolean) => void;
   salesExcelDialogOpen: boolean;
   onSalesExcelDialogOpenChange: (open: boolean) => void;
+  patchSliceDialogOpen: boolean;
+  onPatchSliceDialogOpenChange: (open: boolean) => void;
 }
 
 export function SkuDetailHeaderActionsView({
@@ -16,6 +19,8 @@ export function SkuDetailHeaderActionsView({
   onSliceExcelDialogOpenChange,
   salesExcelDialogOpen,
   onSalesExcelDialogOpenChange,
+  patchSliceDialogOpen,
+  onPatchSliceDialogOpenChange,
 }: SkuDetailHeaderActionsViewProps) {
   return (
     <>
@@ -28,6 +33,11 @@ export function SkuDetailHeaderActionsView({
         sku={sku}
         open={salesExcelDialogOpen}
         onOpenChange={onSalesExcelDialogOpenChange}
+      />
+      <PatchSkuSliceDialog
+        sku={sku}
+        open={patchSliceDialogOpen}
+        onOpenChange={onPatchSliceDialogOpenChange}
       />
     </>
   );

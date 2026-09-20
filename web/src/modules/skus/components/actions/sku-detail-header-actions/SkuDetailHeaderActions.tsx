@@ -4,7 +4,7 @@ import { RoleType } from "@/constants/roles";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 import type { SkuDto } from "@/modules/skus/api/types";
 import { SkuDetailHeaderActionsView } from "./SkuDetailHeaderActionsView";
-import { FileDown, TrendingUp } from "lucide-react";
+import { FileDown, Pencil, TrendingUp } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 
 interface SkuDetailHeaderActionsProps {
@@ -15,8 +15,10 @@ export function SkuDetailHeaderActions({ sku }: SkuDetailHeaderActionsProps) {
   const { hasRole } = useAuth();
   const [sliceExcelDialogOpen, setSliceExcelDialogOpen] = useState(false);
   const [salesExcelDialogOpen, setSalesExcelDialogOpen] = useState(false);
+  const [patchSliceDialogOpen, setPatchSliceDialogOpen] = useState(false);
 
   const canExportExcel = hasRole(RoleType.USER);
+  const canPatchSlice = hasRole(RoleType.ADMIN);
 
   const openSliceExcelDialog = useCallback(() => {
     setSliceExcelDialogOpen(true);
@@ -24,6 +26,10 @@ export function SkuDetailHeaderActions({ sku }: SkuDetailHeaderActionsProps) {
 
   const openSalesExcelDialog = useCallback(() => {
     setSalesExcelDialogOpen(true);
+  }, []);
+
+  const openPatchSliceDialog = useCallback(() => {
+    setPatchSliceDialogOpen(true);
   }, []);
 
   const headerActions = useMemo<HeaderAction[]>(() => {
@@ -46,8 +52,24 @@ export function SkuDetailHeaderActions({ sku }: SkuDetailHeaderActionsProps) {
         onClick: openSalesExcelDialog,
       });
     }
+    if (canPatchSlice) {
+      actions.push({
+        id: "patch-sku-slice",
+        label: "Виправити зріз",
+        icon: Pencil,
+        iconColor: "blue",
+        variant: "edit",
+        onClick: openPatchSliceDialog,
+      });
+    }
     return actions;
-  }, [canExportExcel, openSliceExcelDialog, openSalesExcelDialog]);
+  }, [
+    canExportExcel,
+    canPatchSlice,
+    openSliceExcelDialog,
+    openSalesExcelDialog,
+    openPatchSliceDialog,
+  ]);
 
   useRegisterHeaderActions(headerActions);
 
@@ -58,6 +80,8 @@ export function SkuDetailHeaderActions({ sku }: SkuDetailHeaderActionsProps) {
       onSliceExcelDialogOpenChange={setSliceExcelDialogOpen}
       salesExcelDialogOpen={salesExcelDialogOpen}
       onSalesExcelDialogOpenChange={setSalesExcelDialogOpen}
+      patchSliceDialogOpen={patchSliceDialogOpen}
+      onPatchSliceDialogOpenChange={setPatchSliceDialogOpen}
     />
   );
 }

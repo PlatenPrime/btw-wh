@@ -104,6 +104,35 @@ export interface SkuSliceRangeResponseDto {
   data: SkuSliceRangeItem[];
 }
 
+export interface SkuSlicePointDto {
+  stock: number;
+  price: number;
+}
+
+export interface SkuSlicePointResponseDto {
+  message: string;
+  data: SkuSlicePointDto;
+}
+
+export interface PatchSkuSliceBodyDto {
+  date: string;
+  stock: number;
+  price: number;
+}
+
+export interface PatchSkuSliceResultDto {
+  productId: string;
+  date: string;
+  stock: number;
+  price: number;
+  previous: SkuSlicePointDto | null;
+}
+
+export interface PatchSkuSliceResponseDto {
+  message: string;
+  data: PatchSkuSliceResultDto;
+}
+
 export interface SkuSalesRangeItem {
   date: string;
   sales: number;
