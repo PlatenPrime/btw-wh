@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
 import type { SkuDto, SkuSkugrDto } from "@/modules/skus/api/types";
+import { SkuLiveStockContainer } from "@/modules/skus/components/containers/sku-live-stock-container";
 import { ExternalLink } from "lucide-react";
 import type { ReactNode } from "react";
 import { Link } from "react-router";
@@ -76,7 +77,7 @@ export function SkuDetailCard({ sku, konk, prod, skugrs }: SkuDetailCardProps) {
       />
       <CardHeader className="flex flex-col gap-4 pb-6 sm:flex-row sm:items-start">
         {skuImageContent}
-        <div className="grid min-w-0 flex-1 gap-2">
+        <div className="grid min-w-0 flex-1 gap-3">
           <CardTitle className={typography.detailTitle}>{sku.title}</CardTitle>
           <div
             className={cn(
@@ -87,18 +88,6 @@ export function SkuDetailCard({ sku, konk, prod, skugrs }: SkuDetailCardProps) {
             {prodLabelContent}
             {hasBtradeAnalog && <span>Аналог БТрейд: {sku.btradeAnalog}</span>}
           </div>
-          <a
-            href={sku.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={cn(
-              "text-primary inline-flex items-center gap-1 hover:underline",
-              typography.body,
-            )}
-          >
-            <ExternalLink className={iconSize.ui} />
-            Відкрити на сайті конкурента
-          </a>
           <div className="grid gap-2">
             {hasSkugrs ? (
               <div className="flex flex-wrap gap-2">
@@ -121,6 +110,19 @@ export function SkuDetailCard({ sku, konk, prod, skugrs }: SkuDetailCardProps) {
               </span>
             )}
           </div>
+          <SkuLiveStockContainer sku={sku} />
+          <a
+            href={sku.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cn(
+              "text-primary inline-flex items-center gap-1 hover:underline",
+              typography.body,
+            )}
+          >
+            <ExternalLink className={iconSize.ui} />
+            Відкрити на сайті конкурента
+          </a>
         </div>
       </CardHeader>
     </DetailPanelCard>

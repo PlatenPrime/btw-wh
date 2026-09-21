@@ -2,9 +2,10 @@ import { RoleType } from "@/constants/roles";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 import { useSkuStockQuery } from "@/modules/skus/api/hooks/queries/useSkuStockQuery";
 import type { SkuDto } from "@/modules/skus/api/types";
+import { SkuLiveStockContainerSkeleton } from "./SkuLiveStockContainerSkeleton";
 import { SkuLiveStockContainerView } from "./SkuLiveStockContainerView";
 import type { AxiosError } from "axios";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { toast } from "sonner";
 
 interface SkuLiveStockContainerProps {
@@ -17,18 +18,21 @@ interface StockErrorBody {
 
 export function SkuLiveStockContainer({ sku }: SkuLiveStockContainerProps) {
   const { hasRole } = useAuth();
-  const [requested, setRequested] = useState(false);
   const lastToastedError = useRef<unknown>(null);
 
   const canView = hasRole(RoleType.ADMIN);
 
   const query = useSkuStockQuery({
     id: sku._id,
-    enabled: requested && canView,
+    enabled: canView,
   });
 
   useEffect(() => {
-    if (!query.isError || !query.error) return;
+    if (!query.isError) {
+      lastToastedError.current = null;
+      return;
+    }
+    if (!query.error) return;
     if (lastToastedError.current === query.error) return;
     lastToastedError.current = query.error;
 
@@ -47,17 +51,17 @@ export function SkuLiveStockContainer({ sku }: SkuLiveStockContainerProps) {
 
   if (!canView) return null;
 
+  if (query.isLoading) {
+    return <SkuLiveStockContainerSkeleton />;
+  }
+
   return (
     <SkuLiveStockContainerView
-      hasRequested={requested}
-      isLoading={query.isFetching}
+      isRefreshing={query.isFetching}
       isError={query.isError}
       data={query.data?.data ?? null}
-      onRequest={() => {
-        setRequested(true);
-        if (requested) {
-          void query.refetch();
-        }
+      onRefresh={() => {
+        void query.refetch();
       }}
     />
   );

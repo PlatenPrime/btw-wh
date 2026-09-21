@@ -3,19 +3,18 @@ import { useQuery } from "@tanstack/react-query";
 
 export interface UseSkuStockQueryParams {
   id: string | undefined;
-  /** Live-scrape дорогий — вмикається лише за явним запитом (кнопка). */
   enabled?: boolean;
 }
 
 export function useSkuStockQuery({
   id,
-  enabled = false,
+  enabled = true,
 }: UseSkuStockQueryParams) {
   return useQuery({
     queryKey: ["skus", "id", id, "stock"],
     queryFn: ({ signal }) => getSkuStock(id!, signal),
     enabled: !!id && enabled,
-    // Кожен виклик — окремий scrape; не тримаємо як свіже, не рефетчимо у фоні.
+    // Live-scrape: не рефетчимо у фоні, повтор — лише явне оновлення.
     staleTime: 0,
     gcTime: 0,
     retry: false,

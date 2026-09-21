@@ -1,64 +1,63 @@
+import { MetricChip } from "@/components/shared/elements";
 import { Button } from "@/components/ui/button";
 import { iconSize, typography } from "@/lib/typography";
 import { cn } from "@/lib/utils";
 import type { SkuStockDto } from "@/modules/skus/api/types";
-import {
-  DollarSign,
-  Loader2,
-  RefreshCw,
-  Warehouse,
-} from "lucide-react";
+import { Banknote, Loader2, RefreshCw, Warehouse } from "lucide-react";
 
 interface SkuLiveStockContainerViewProps {
-  hasRequested: boolean;
-  isLoading: boolean;
+  isRefreshing: boolean;
   isError: boolean;
   data: SkuStockDto | null;
-  onRequest: () => void;
+  onRefresh: () => void;
 }
 
 export function SkuLiveStockContainerView({
-  hasRequested,
-  isLoading,
+  isRefreshing,
   isError,
   data,
-  onRequest,
+  onRefresh,
 }: SkuLiveStockContainerViewProps) {
   return (
-    <div className="grid gap-2">
-      <Button
-        variant="info"
-        size="sm"
-        className="w-fit"
-        disabled={isLoading}
-        onClick={onRequest}
-      >
-        {isLoading ? (
-          <Loader2 className={cn(iconSize.ui, "animate-spin")} />
-        ) : (
-          <RefreshCw className={iconSize.ui} />
-        )}
-        {hasRequested ? "Оновити залишок" : "Актуальний залишок"}
-      </Button>
-
+    <div className="flex w-fit flex-wrap items-center gap-2">
       {data ? (
-        <div className="text-foreground grid gap-2 text-sm">
-          <p className="flex items-center gap-2 text-nowrap">
-            <Warehouse className="h-4 w-4 text-sky-500" />
-            <span>{data.stock}</span>
-          </p>
-          <p className="flex items-center gap-2 text-nowrap">
-            <DollarSign className="h-4 w-4 text-emerald-500" />
-            <span>{data.price} грн</span>
-          </p>
-        </div>
+        <>
+          <MetricChip
+            icon={Warehouse}
+            tone="info"
+            label="Залишок"
+            value={data.stock}
+          />
+          <MetricChip
+            icon={Banknote}
+            tone="success"
+            label="Ціна"
+            value={`${data.price} грн`}
+          />
+        </>
       ) : null}
 
-      {isError && !isLoading ? (
+      {isError && !data ? (
         <p className={cn(typography.caption, "text-destructive")}>
           Не вдалося отримати залишок. Спробуйте пізніше.
         </p>
       ) : null}
+
+      <Button
+        type="button"
+        variant="ghost"
+        size="icon-sm"
+        className="text-muted-foreground"
+        disabled={isRefreshing}
+        onClick={onRefresh}
+        aria-label={isRefreshing ? "Оновлення залишку…" : "Оновити залишок"}
+      >
+        {isRefreshing ? (
+          <Loader2 className={cn(iconSize.ui, "animate-spin")} />
+        ) : (
+          <RefreshCw className={iconSize.ui} />
+        )}
+      </Button>
     </div>
   );
 }
