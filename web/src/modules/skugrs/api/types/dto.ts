@@ -74,6 +74,18 @@ export interface ClearSkugrSkusResponseDto {
   data: SkugrDto;
 }
 
+export interface PurgePromotedFromNewskuDataDto {
+  groupsTotal: number;
+  groupsModified: number;
+  uniqueSkusRemoved: number;
+  linksRemoved: number;
+}
+
+export interface PurgePromotedFromNewskuResponseDto {
+  message: string;
+  data: PurgePromotedFromNewskuDataDto;
+}
+
 export interface DeleteSkugrWithSkusResponseDto {
   message: string;
   data: { deletedSkusCount: number; modifiedSkugrsCount: number };

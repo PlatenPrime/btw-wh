@@ -2,8 +2,9 @@ import type { HeaderAction } from "@/components/layout/header-actions";
 import { useRegisterHeaderActions } from "@/components/layout/header-actions";
 import { RoleType } from "@/constants/roles";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
-import { Plus } from "lucide-react";
-import { useCallback, useMemo } from "react";
+import { PurgePromotedFromNewskuDialog } from "@/modules/skugrs/components/dialogs/purge-promoted-from-newsku-dialog";
+import { Eraser, Plus } from "lucide-react";
+import { useCallback, useMemo, useState } from "react";
 
 interface SkugrsHeaderActionsProps {
   onCreateDialogOpenChange?: (open: boolean) => void;
@@ -13,14 +14,19 @@ export function SkugrsHeaderActions({
   onCreateDialogOpenChange,
 }: SkugrsHeaderActionsProps) {
   const { hasRole } = useAuth();
-  const canCreate = hasRole(RoleType.ADMIN);
+  const canAdmin = hasRole(RoleType.ADMIN);
+  const [purgeDialogOpen, setPurgeDialogOpen] = useState(false);
 
   const openCreateDialog = useCallback(() => {
     onCreateDialogOpenChange?.(true);
   }, [onCreateDialogOpenChange]);
 
+  const openPurgeDialog = useCallback(() => {
+    setPurgeDialogOpen(true);
+  }, []);
+
   const headerActions = useMemo<HeaderAction[]>(() => {
-    if (!canCreate) return [];
+    if (!canAdmin) return [];
     return [
       {
         id: "create-skugr",
@@ -30,10 +36,23 @@ export function SkugrsHeaderActions({
         variant: "default",
         onClick: openCreateDialog,
       },
+      {
+        id: "purge-promoted-from-newsku",
+        label: "Очистити Новинки від дублікатів",
+        icon: Eraser,
+        iconColor: "rose",
+        variant: "destructive",
+        onClick: openPurgeDialog,
+      },
     ];
-  }, [canCreate, openCreateDialog]);
+  }, [canAdmin, openCreateDialog, openPurgeDialog]);
 
   useRegisterHeaderActions(headerActions);
 
-  return null;
+  return (
+    <PurgePromotedFromNewskuDialog
+      open={purgeDialogOpen}
+      onOpenChange={setPurgeDialogOpen}
+    />
+  );
 }
