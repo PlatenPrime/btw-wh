@@ -141,13 +141,15 @@ export function KonkSalesExcelDialogView({
             </SelectContent>
           </Select>
         </div>
-        <Calendar
-          mode="range"
-          selected={dateRange}
-          onSelect={onDateRangeChange}
-          disabled={(date) => date > new Date()}
-          numberOfMonths={1}
-        />
+        <div className="flex justify-center">
+          <Calendar
+            mode="range"
+            selected={dateRange}
+            onSelect={onDateRangeChange}
+            disabled={(date) => date > new Date()}
+            numberOfMonths={1}
+          />
+        </div>
         <DialogActions
           onCancel={onCancel}
           onSubmit={onDownload}

@@ -40,13 +40,15 @@ export function ComparisonExcelDialogView({
           Оберіть період дат для формування звіту. Файл міститиме зрізи аналога
           та Btrade по датах, різницю та різницю у відсотках.
         </p>
-        <Calendar
-          mode="range"
-          selected={dateRange}
-          onSelect={onDateRangeChange}
-          disabled={(date) => date > new Date()}
-          numberOfMonths={1}
-        />
+        <div className="flex justify-center">
+          <Calendar
+            mode="range"
+            selected={dateRange}
+            onSelect={onDateRangeChange}
+            disabled={(date) => date > new Date()}
+            numberOfMonths={1}
+          />
+        </div>
         <DialogActions
           onCancel={onCancel}
           onSubmit={onDownload}

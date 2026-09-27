@@ -166,15 +166,17 @@ export function KonkBtradeExcelDialogLayout({
           </div>
         </div>
 
-        <div className="grid gap-2 w-full justify-center">
+        <div className="grid w-full gap-2">
           <span className={typography.formLabel}>Період дат</span>
-          <Calendar
-            mode="range"
-            selected={dateRange}
-            onSelect={onDateRangeChange}
-            disabled={(date) => date > new Date()}
-            numberOfMonths={1}
-          />
+          <div className="flex justify-center">
+            <Calendar
+              mode="range"
+              selected={dateRange}
+              onSelect={onDateRangeChange}
+              disabled={(date) => date > new Date()}
+              numberOfMonths={1}
+            />
+          </div>
         </div>
 
         <DialogActions

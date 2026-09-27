@@ -38,13 +38,15 @@ export function SkugrSalesExcelDialogView({
           Файл з усіма SKU групи: рядки «Продажі», «Ціна», «Виручка» та загальні
           підсумки за період.
         </p>
-        <Calendar
-          mode="range"
-          selected={dateRange}
-          onSelect={onDateRangeChange}
-          disabled={(date) => date > new Date()}
-          numberOfMonths={1}
-        />
+        <div className="flex justify-center">
+          <Calendar
+            mode="range"
+            selected={dateRange}
+            onSelect={onDateRangeChange}
+            disabled={(date) => date > new Date()}
+            numberOfMonths={1}
+          />
+        </div>
         <DialogActions
           onCancel={onCancel}
           onSubmit={onDownload}

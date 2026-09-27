@@ -82,13 +82,15 @@ export function SkusNewSinceExcelDialogView({
             </SelectContent>
           </Select>
         </div>
-        <Calendar
-          mode="single"
-          selected={selectedDate}
-          onSelect={onSelectDate}
-          disabled={(date) => date > new Date()}
-          numberOfMonths={1}
-        />
+        <div className="flex justify-center">
+          <Calendar
+            mode="single"
+            selected={selectedDate}
+            onSelect={onSelectDate}
+            disabled={(date) => date > new Date()}
+            numberOfMonths={1}
+          />
+        </div>
         <DialogActions
           onCancel={onCancel}
           onSubmit={onDownload}

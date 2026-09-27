@@ -38,13 +38,15 @@ export function SkuSliceExcelDialogView({
           Оберіть період дат. У файлі — метадані товару та колонки по датах: рядки
           «Залишок» і «Ціна».
         </p>
-        <Calendar
-          mode="range"
-          selected={dateRange}
-          onSelect={onDateRangeChange}
-          disabled={(date) => date > new Date()}
-          numberOfMonths={1}
-        />
+        <div className="flex justify-center">
+          <Calendar
+            mode="range"
+            selected={dateRange}
+            onSelect={onDateRangeChange}
+            disabled={(date) => date > new Date()}
+            numberOfMonths={1}
+          />
+        </div>
         <DialogActions
           onCancel={onCancel}
           onSubmit={onDownload}

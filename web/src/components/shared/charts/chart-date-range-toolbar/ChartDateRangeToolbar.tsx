@@ -89,13 +89,15 @@ export function ChartDateRangeToolbar({
         <DialogHeader>
           <DialogTitle>Оберіть період</DialogTitle>
         </DialogHeader>
-        <Calendar
-          mode="range"
-          selected={pendingRange}
-          onSelect={setPendingRange}
-          disabled={(date) => date > new Date()}
-          numberOfMonths={2}
-        />
+        <div className="flex justify-center">
+          <Calendar
+            mode="range"
+            selected={pendingRange}
+            onSelect={setPendingRange}
+            disabled={(date) => date > new Date()}
+            numberOfMonths={2}
+          />
+        </div>
         <DialogFooter className={cn(!isInline && "gap-2 sm:gap-0")}>
           <Button
             type="button"

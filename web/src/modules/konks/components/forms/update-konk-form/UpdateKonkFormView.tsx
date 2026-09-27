@@ -126,13 +126,15 @@ export function UpdateKonkFormView({
                 Очистити всі
               </Button>
             </div>
-            <Calendar
-              mode="multiple"
-              selected={selectedCalendarDays}
-              onSelect={handleCalendarSelect}
-              disabled={isLoading}
-              numberOfMonths={1}
-            />
+            <div className="flex justify-center">
+              <Calendar
+                mode="multiple"
+                selected={selectedCalendarDays}
+                onSelect={handleCalendarSelect}
+                disabled={isLoading}
+                numberOfMonths={1}
+              />
+            </div>
             <div className="flex flex-wrap gap-2">
               {recountDays.length > 0 ? (
                 recountDays.map((day) => (

@@ -38,13 +38,15 @@ export function SkugrSliceExcelDialogView({
           У файлі — усі SKU групи з метаданими та колонками по датах: рядки «Залишок»
           і «Ціна», підсумковий рядок за групою.
         </p>
-        <Calendar
-          mode="range"
-          selected={dateRange}
-          onSelect={onDateRangeChange}
-          disabled={(date) => date > new Date()}
-          numberOfMonths={1}
-        />
+        <div className="flex justify-center">
+          <Calendar
+            mode="range"
+            selected={dateRange}
+            onSelect={onDateRangeChange}
+            disabled={(date) => date > new Date()}
+            numberOfMonths={1}
+          />
+        </div>
         <DialogActions
           onCancel={onCancel}
           onSubmit={onDownload}
