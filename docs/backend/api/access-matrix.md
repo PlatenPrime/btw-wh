@@ -1,6 +1,6 @@
 # Матрица доступа API
 
-Полный перечень HTTP-маршрутов и условий доступа по состоянию роутеров в `src/modules/*/router.ts` и монтированию в `src/index.ts`.
+Полный перечень HTTP-маршрутов и условий доступа по состоянию роутеров в `src/modules/*/router.ts` и монтированию в `src/registerRoutes.ts`.
 
 ## Как читать таблицы
 
@@ -415,6 +415,7 @@
 | GET | `/sku/:skuId/range` | JWT | ≥ ADMIN |
 | GET | `/sku/:skuId` | JWT | ≥ ADMIN |
 | PATCH | `/sku/:skuId` | JWT | ≥ ADMIN |
+| POST | `/skugr/:skugrId/run-today` | JWT | ≥ ADMIN |
 
 ---
 

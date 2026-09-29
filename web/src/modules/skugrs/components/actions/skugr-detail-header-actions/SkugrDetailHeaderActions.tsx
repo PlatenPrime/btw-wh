@@ -4,7 +4,16 @@ import { RoleType } from "@/constants/roles";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 import type { SkugrPageDto } from "@/modules/skugrs/api/types";
 import { SkugrDetailHeaderActionsView } from "@/modules/skugrs/components/actions/skugr-detail-header-actions/SkugrDetailHeaderActionsView";
-import { Eraser, FileDown, Pencil, RefreshCw, Trash, Trash2, TrendingUp } from "lucide-react";
+import {
+  DatabaseZap,
+  Eraser,
+  FileDown,
+  Pencil,
+  RefreshCw,
+  Trash,
+  Trash2,
+  TrendingUp,
+} from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 
@@ -12,16 +21,21 @@ interface SkugrDetailHeaderActionsProps {
   skugr: SkugrPageDto;
 }
 
-export function SkugrDetailHeaderActions({ skugr }: SkugrDetailHeaderActionsProps) {
+export function SkugrDetailHeaderActions({
+  skugr,
+}: SkugrDetailHeaderActionsProps) {
   const navigate = useNavigate();
   const { hasRole } = useAuth();
   const [sliceExcelDialogOpen, setSliceExcelDialogOpen] = useState(false);
   const [salesExcelDialogOpen, setSalesExcelDialogOpen] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [fillDialogOpen, setFillDialogOpen] = useState(false);
+  const [runSlicesTodayDialogOpen, setRunSlicesTodayDialogOpen] =
+    useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [clearSkusDialogOpen, setClearSkusDialogOpen] = useState(false);
-  const [deleteWithSkusDialogOpen, setDeleteWithSkusDialogOpen] = useState(false);
+  const [deleteWithSkusDialogOpen, setDeleteWithSkusDialogOpen] =
+    useState(false);
   const canExportExcel = hasRole(RoleType.USER);
   const canAdmin = hasRole(RoleType.ADMIN);
   const canDelete = hasRole(RoleType.PRIME);
@@ -34,6 +48,10 @@ export function SkugrDetailHeaderActions({ skugr }: SkugrDetailHeaderActionsProp
 
   const openFillDialog = useCallback(() => {
     setFillDialogOpen(true);
+  }, []);
+
+  const openRunSlicesTodayDialog = useCallback(() => {
+    setRunSlicesTodayDialogOpen(true);
   }, []);
 
   const openDeleteDialog = useCallback(() => {
@@ -102,6 +120,14 @@ export function SkugrDetailHeaderActions({ skugr }: SkugrDetailHeaderActionsProp
         });
       }
       actions.push({
+        id: "run-skugr-slices-today",
+        label: "Провести зрізи на сьогодні",
+        icon: DatabaseZap,
+        iconColor: "violet",
+        variant: "default",
+        onClick: openRunSlicesTodayDialog,
+      });
+      actions.push({
         id: "clear-skugr-skus",
         label: "Очистити від товарів",
         icon: Eraser,
@@ -140,6 +166,7 @@ export function SkugrDetailHeaderActions({ skugr }: SkugrDetailHeaderActionsProp
     openSalesExcelDialog,
     openEditDialog,
     openFillDialog,
+    openRunSlicesTodayDialog,
     openClearSkusDialog,
     openDeleteDialog,
     openDeleteWithSkusDialog,
@@ -159,6 +186,8 @@ export function SkugrDetailHeaderActions({ skugr }: SkugrDetailHeaderActionsProp
       fillDialogOpen={fillDialogOpen}
       onFillDialogOpenChange={setFillDialogOpen}
       showFillDialog={showServerFill}
+      runSlicesTodayDialogOpen={runSlicesTodayDialogOpen}
+      onRunSlicesTodayDialogOpenChange={setRunSlicesTodayDialogOpen}
       deleteDialogOpen={deleteDialogOpen}
       onDeleteDialogOpenChange={setDeleteDialogOpen}
       clearSkusDialogOpen={clearSkusDialogOpen}

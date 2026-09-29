@@ -114,19 +114,51 @@ export interface SkuSlicePointResponseDto {
   data: SkuSlicePointDto;
 }
 
-export interface PatchSkuSliceBodyDto {
+export interface PatchSkuSliceDayBodyDto {
   date: string;
   stock: number;
   price: number;
 }
 
-export interface PatchSkuSliceResultDto {
+export interface PatchSkuSliceRangeBodyDto {
+  dateFrom: string;
+  dateTo: string;
+  stock: number;
+  price: number;
+}
+
+export type PatchSkuSliceBodyDto =
+  | PatchSkuSliceDayBodyDto
+  | PatchSkuSliceRangeBodyDto;
+
+export interface PatchSkuSliceDayResultDto {
   productId: string;
   date: string;
   stock: number;
   price: number;
   previous: SkuSlicePointDto | null;
+  created: boolean;
 }
+
+export interface PatchSkuSliceRangeDayDto {
+  date: string;
+  previous: SkuSlicePointDto | null;
+  created: boolean;
+}
+
+export interface PatchSkuSliceRangeResultDto {
+  productId: string;
+  stock: number;
+  price: number;
+  dateFrom: string;
+  dateTo: string;
+  updatedCount: number;
+  days: PatchSkuSliceRangeDayDto[];
+}
+
+export type PatchSkuSliceResultDto =
+  | PatchSkuSliceDayResultDto
+  | PatchSkuSliceRangeResultDto;
 
 export interface PatchSkuSliceResponseDto {
   message: string;

@@ -3,6 +3,7 @@ import { ClearSkugrSkusDialog } from "@/modules/skugrs/components/dialogs/clear-
 import { DeleteSkugrDialog } from "@/modules/skugrs/components/dialogs/delete-skugr-dialog/DeleteSkugrDialog";
 import { DeleteSkugrWithSkusDialog } from "@/modules/skugrs/components/dialogs/delete-skugr-with-skus-dialog/DeleteSkugrWithSkusDialog";
 import { FillSkugrSkusDialog } from "@/modules/skugrs/components/dialogs/fill-skugr-skus-dialog/FillSkugrSkusDialog";
+import { RunSkugrSlicesTodayDialog } from "@/modules/skugrs/components/dialogs/run-skugr-slices-today-dialog";
 import { SkugrSalesExcelDialog } from "@/modules/skugrs/components/dialogs/skugr-sales-excel-dialog";
 import { SkugrSliceExcelDialog } from "@/modules/skugrs/components/dialogs/skugr-slice-excel-dialog";
 import { UpdateSkugrDialog } from "@/modules/skugrs/components/dialogs/update-skugr-dialog/UpdateSkugrDialog";
@@ -18,6 +19,8 @@ interface SkugrDetailHeaderActionsViewProps {
   fillDialogOpen: boolean;
   onFillDialogOpenChange: (open: boolean) => void;
   showFillDialog: boolean;
+  runSlicesTodayDialogOpen: boolean;
+  onRunSlicesTodayDialogOpenChange: (open: boolean) => void;
   deleteDialogOpen: boolean;
   onDeleteDialogOpenChange: (open: boolean) => void;
   clearSkusDialogOpen: boolean;
@@ -38,6 +41,8 @@ export function SkugrDetailHeaderActionsView({
   fillDialogOpen,
   onFillDialogOpenChange,
   showFillDialog,
+  runSlicesTodayDialogOpen,
+  onRunSlicesTodayDialogOpenChange,
   deleteDialogOpen,
   onDeleteDialogOpenChange,
   clearSkusDialogOpen,
@@ -71,6 +76,12 @@ export function SkugrDetailHeaderActionsView({
           onOpenChange={onFillDialogOpenChange}
         />
       ) : null}
+      <RunSkugrSlicesTodayDialog
+        skugrId={skugr._id}
+        skugrTitle={skugr.title}
+        open={runSlicesTodayDialogOpen}
+        onOpenChange={onRunSlicesTodayDialogOpenChange}
+      />
       <DeleteSkugrDialog
         skugr={skugr}
         open={deleteDialogOpen}

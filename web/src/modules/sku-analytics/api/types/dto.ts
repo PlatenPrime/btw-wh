@@ -109,6 +109,26 @@ export interface RunCompensatingSliceParams {
   signal?: AbortSignal;
 }
 
+export interface RunSkugrSlicesTodayDataDto {
+  skugrId: string;
+  konkName: string;
+  sliceDate: string;
+  total: number;
+  count: number;
+  invalid: number;
+  errors: number;
+}
+
+export interface RunSkugrSlicesTodayResponseDto {
+  message: string;
+  data: RunSkugrSlicesTodayDataDto;
+}
+
+export interface RunSkugrSlicesTodayParams {
+  skugrId: string;
+  signal?: AbortSignal;
+}
+
 /** Позиція черги клієнтського дозаповнення Air-зрізу (GET client/air/pending). */
 export interface AirClientPendingItemDto {
   skuId: string;
