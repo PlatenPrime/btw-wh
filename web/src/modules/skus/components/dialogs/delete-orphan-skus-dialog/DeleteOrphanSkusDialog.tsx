@@ -1,7 +1,7 @@
 import { Dialog } from "@/components/ui/dialog";
+import { useStartApiTask } from "@/modules/apitasks";
 import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
-import { useDeleteOrphanSkusMutation } from "@/modules/skus/api/hooks/mutations/useDeleteOrphanSkusMutation";
 import type { DeleteOrphanSkusQueryDto } from "@/modules/skus/api/types";
 import { DeleteOrphanSkusDialogView } from "@/modules/skus/components/dialogs/delete-orphan-skus-dialog/DeleteOrphanSkusDialogView";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -47,7 +47,7 @@ export function DeleteOrphanSkusDialog({
   open,
   onOpenChange,
 }: DeleteOrphanSkusDialogProps) {
-  const mutation = useDeleteOrphanSkusMutation();
+  const { startTask, isStarting } = useStartApiTask();
 
   const hasPageFilters = useMemo(() => {
     return Boolean(
@@ -74,14 +74,20 @@ export function DeleteOrphanSkusDialog({
 
   const handleSubmit = useCallback(async () => {
     const payload =
-      hasPageFilters && applyPageFilters ? filters : ({} as DeleteOrphanSkusQueryDto);
+      hasPageFilters && applyPageFilters
+        ? filters
+        : ({} as DeleteOrphanSkusQueryDto);
     try {
-      await mutation.mutateAsync(payload);
-      onOpenChange(false);
+      const task = await startTask({
+        kind: "skus.delete-not-in-any-skugr",
+        params: { ...payload },
+        title: "Видалення SKU без групи",
+      });
+      if (task) onOpenChange(false);
     } catch {
-      // toast у мутації
+      // toast у provider
     }
-  }, [applyPageFilters, filters, hasPageFilters, mutation, onOpenChange]);
+  }, [applyPageFilters, filters, hasPageFilters, onOpenChange, startTask]);
 
   const handleCancel = useCallback(() => {
     onOpenChange(false);
@@ -94,7 +100,7 @@ export function DeleteOrphanSkusDialog({
         applyPageFilters={applyPageFilters}
         onApplyPageFiltersChange={setApplyPageFilters}
         filterSummaryLines={filterSummaryLines}
-        isDeleting={mutation.isPending}
+        isDeleting={isStarting}
         onSubmit={handleSubmit}
         onCancel={handleCancel}
       />

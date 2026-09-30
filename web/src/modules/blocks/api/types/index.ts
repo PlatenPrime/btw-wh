@@ -8,7 +8,6 @@ export type {
   BlockResponse,
   DeleteBlockResponse,
   ZoneWithBlockDto,
-  RecalculateZonesSectorsResponse,
   ResetZonesSectorsResponse,
   SegmentDto,
   CreateSegmentDto,

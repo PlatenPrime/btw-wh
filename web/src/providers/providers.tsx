@@ -1,5 +1,6 @@
 import { AppVersionWatcherContainer } from "@/components/shared/app-version";
 import { Toaster } from "@/components/ui/sonner";
+import { ApiTasksProvider } from "@/modules/apitasks/providers";
 import { AuthProvider } from "@/modules/auth/providers/auth-provider/auth-provider";
 import { ExcelJobsProvider } from "@/modules/excel-jobs/providers";
 import { QueryProvider } from "./query-provider";
@@ -11,9 +12,11 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
       <QueryProvider>
         <ThemeProvider>
           <ExcelJobsProvider>
-            <AppVersionWatcherContainer />
-            {children}
-            <Toaster />
+            <ApiTasksProvider>
+              <AppVersionWatcherContainer />
+              {children}
+              <Toaster />
+            </ApiTasksProvider>
           </ExcelJobsProvider>
         </ThemeProvider>
       </QueryProvider>

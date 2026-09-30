@@ -174,6 +174,16 @@ const ExcelReportsPage = lazyWithRetry(() =>
     default: module.ExcelReportsPage,
   })),
 );
+const ApiTasksPage = lazyWithRetry(() =>
+  import("./modules/apitasks/pages/api-tasks").then((module) => ({
+    default: module.ApiTasksPage,
+  })),
+);
+const ApiTaskPage = lazyWithRetry(() =>
+  import("./modules/apitasks/pages/api-task").then((module) => ({
+    default: module.ApiTaskPage,
+  })),
+);
 const SkuSlices = lazyWithRetry(() =>
   import("./modules/sku-analytics/pages/sku-slices").then((module) => ({
     default: module.SkuSlices,
@@ -833,6 +843,24 @@ export const router = createHashRouter([
             errorElement: <RouteErrorBoundary />,
           },
         ],
+      },
+      {
+        path: "api-tasks",
+        element: (
+          <ProtectedRoute allowedRoles={[RoleType.EDITOR]}>
+            <ApiTasksPage />
+          </ProtectedRoute>
+        ),
+        errorElement: <RouteErrorBoundary />,
+      },
+      {
+        path: "api-tasks/:taskId",
+        element: (
+          <ProtectedRoute allowedRoles={[RoleType.EDITOR]}>
+            <ApiTaskPage />
+          </ProtectedRoute>
+        ),
+        errorElement: <RouteErrorBoundary />,
       },
 
       // 404 route - must be last in children array

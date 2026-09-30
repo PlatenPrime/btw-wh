@@ -142,12 +142,6 @@ export interface FillSkugrSkusBody {
   maxPages?: number;
 }
 
-export interface FillSkugrSkusResponseDto {
-  message: string;
-  data: SkugrDto;
-  stats: FillSkugrSkusStats;
-}
-
 /** Позиція черги клієнтського refill Air-групи (GET /skugrs/client/air/pending). */
 export interface AirClientSkugrPendingItemDto {
   skugrId: string;

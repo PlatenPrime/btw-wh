@@ -1,5 +1,4 @@
-import { useRunCompensatingSliceMutation } from "@/modules/sku-analytics/api/hooks/mutations/useRunCompensatingSliceMutation";
-import { toast } from "sonner";
+import { useStartApiTask } from "@/modules/apitasks";
 
 interface UseRunCompensatingSliceDialogProps {
   onSuccess?: () => void;
@@ -7,38 +6,38 @@ interface UseRunCompensatingSliceDialogProps {
 
 interface UseRunCompensatingSliceDialogReturn {
   isRunning: boolean;
-  /** Fire-and-forget: стартує scrape і одразу повертає, чи старт прийнято. */
+  /** Fire-and-forget: ставить задачу і одразу повертає, чи старт прийнято. */
   handleRun: (konkName: string) => boolean;
 }
 
 export function useRunCompensatingSliceDialog({
   onSuccess,
 }: UseRunCompensatingSliceDialogProps = {}): UseRunCompensatingSliceDialogReturn {
-  const mutation = useRunCompensatingSliceMutation();
-
-  const isRunning = mutation.isPending;
+  const { startTask, isStarting } = useStartApiTask();
 
   const handleRun = (konkName: string): boolean => {
     const trimmed = konkName.trim();
-    if (isRunning || !trimmed) {
+    if (isStarting || !trimmed) {
       return false;
     }
 
-    toast.info("Компенсуючий зріз запущено", {
-      description: `${trimmed}: опитування може зайняти кілька хвилин. Результат з'явиться в сповіщенні.`,
-    });
-
-    mutation.mutate(trimmed, {
-      onSuccess: () => {
-        onSuccess?.();
-      },
-    });
+    void startTask({
+      kind: "slice-compensation.run",
+      params: { konkName: trimmed },
+      title: `Компенсуючий зріз · ${trimmed}`,
+    })
+      .then((task) => {
+        if (task) onSuccess?.();
+      })
+      .catch(() => {
+        // toast у provider
+      });
 
     return true;
   };
 
   return {
-    isRunning,
+    isRunning: isStarting,
     handleRun,
   };
 }

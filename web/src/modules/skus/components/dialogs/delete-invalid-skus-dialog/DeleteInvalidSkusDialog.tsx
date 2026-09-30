@@ -1,5 +1,5 @@
 import { Dialog } from "@/components/ui/dialog";
-import { useDeleteInvalidSkusMutation } from "@/modules/skus/api/hooks/mutations/useDeleteInvalidSkusMutation";
+import { useStartApiTask } from "@/modules/apitasks";
 import type { KonkDto } from "@/modules/konks/api/types";
 import { SKUS_EXCEL_ALL_KONKS_VALUE } from "@/modules/skus/components/dialogs/skus-excel-konk-scope";
 import { useCallback, useEffect, useState } from "react";
@@ -26,7 +26,7 @@ export function DeleteInvalidSkusDialog({
   const [selectedKonkOrAll, setSelectedKonkOrAll] = useState(
     () => defaultKonkSelection(filterKonkName),
   );
-  const mutation = useDeleteInvalidSkusMutation();
+  const { startTask, isStarting } = useStartApiTask();
 
   useEffect(() => {
     if (open) {
@@ -37,12 +37,19 @@ export function DeleteInvalidSkusDialog({
   const handleDelete = useCallback(async () => {
     if (!selectedKonkOrAll) return;
     try {
-      await mutation.mutateAsync({ konkName: selectedKonkOrAll });
-      onOpenChange(false);
+      const task = await startTask({
+        kind: "skus.delete-konk-invalid",
+        params: { konkName: selectedKonkOrAll },
+        title:
+          selectedKonkOrAll === SKUS_EXCEL_ALL_KONKS_VALUE
+            ? "Видалення невалідних SKU · всі"
+            : `Видалення невалідних SKU · ${selectedKonkOrAll}`,
+      });
+      if (task) onOpenChange(false);
     } catch {
-      // toast у мутації
+      // toast у provider
     }
-  }, [selectedKonkOrAll, mutation, onOpenChange]);
+  }, [selectedKonkOrAll, startTask, onOpenChange]);
 
   const handleCancel = useCallback(() => {
     onOpenChange(false);
@@ -54,7 +61,7 @@ export function DeleteInvalidSkusDialog({
         konks={konks}
         selectedKonkOrAll={selectedKonkOrAll}
         onSelectedKonkOrAllChange={setSelectedKonkOrAll}
-        isDeleting={mutation.isPending}
+        isDeleting={isStarting}
         onDelete={handleDelete}
         onCancel={handleCancel}
       />

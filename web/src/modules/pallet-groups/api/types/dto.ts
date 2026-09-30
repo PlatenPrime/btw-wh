@@ -56,15 +56,6 @@ export interface UnlinkPalletDto {
   palletId: string;
 }
 
-/** Ответ: пересчёт секторов. */
-export interface RecalculatePalletsSectorsResponseDto {
-  message: string;
-  data: {
-    updatedPallets: number;
-    groupsProcessed: number;
-  };
-}
-
 /** Ответ: сброс секторов. */
 export interface ResetPalletsSectorsResponseDto {
   message: string;

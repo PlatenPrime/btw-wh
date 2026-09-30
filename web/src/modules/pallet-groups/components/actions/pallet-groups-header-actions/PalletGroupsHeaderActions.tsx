@@ -1,6 +1,6 @@
 import type { HeaderAction } from "@/components/layout/header-actions";
 import { useRegisterHeaderActions } from "@/components/layout/header-actions";
-import { useRecalculatePalletsSectorsMutation } from "@/modules/pallet-groups/api/hooks/mutations/useRecalculatePalletsSectorsMutation";
+import { useStartApiTask } from "@/modules/apitasks";
 import { useResetPalletsSectorsMutation } from "@/modules/pallet-groups/api/hooks/mutations/useResetPalletsSectorsMutation";
 import { PalletGroupsHeaderActionsView } from "@/modules/pallet-groups/components/actions/pallet-groups-header-actions/PalletGroupsHeaderActionsView";
 import { Plus, RefreshCw, RotateCcw } from "lucide-react";
@@ -10,7 +10,7 @@ export function PalletGroupsHeaderActions() {
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const [isResetConfirmOpen, setIsResetConfirmOpen] = useState(false);
 
-  const recalculateMutation = useRecalculatePalletsSectorsMutation();
+  const { startTask } = useStartApiTask();
   const resetMutation = useResetPalletsSectorsMutation();
 
   const openCreateDialog = useCallback(() => {
@@ -18,8 +18,12 @@ export function PalletGroupsHeaderActions() {
   }, []);
 
   const handleRecalculate = useCallback(() => {
-    recalculateMutation.mutate();
-  }, [recalculateMutation]);
+    void startTask({
+      kind: "pallet-groups.recalculate-pallets-sectors",
+      params: {},
+      title: "Перерахунок секторів палет",
+    });
+  }, [startTask]);
 
   const openResetConfirm = useCallback(() => {
     setIsResetConfirmOpen(true);

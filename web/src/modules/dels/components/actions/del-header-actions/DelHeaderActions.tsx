@@ -5,22 +5,16 @@ import { ListOrdered, RefreshCw } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 interface DelHeaderActionsProps {
-  refetch: () => void;
-  updateAllMutation: {
-    isPending: boolean;
-    mutate: (
-      vars?: void,
-      opts?: { onSettled?: () => void },
-    ) => void;
-  };
+  onUpdateAll: () => Promise<boolean>;
+  updateAllIsPending: boolean;
   onRunChain: () => void;
   hasArtikuls: boolean;
   isChainRunning: boolean;
 }
 
 export function DelHeaderActions({
-  refetch,
-  updateAllMutation,
+  onUpdateAll,
+  updateAllIsPending,
   onRunChain,
   hasArtikuls,
   isChainRunning,
@@ -50,14 +44,16 @@ export function DelHeaderActions({
     setRunChainConfirmOpen(false);
   }, []);
 
-  const handleUpdateAllConfirm = useCallback(() => {
-    updateAllMutation.mutate(undefined, {
-      onSettled: () => {
-        refetch();
+  const handleUpdateAllConfirm = useCallback(async () => {
+    try {
+      const accepted = await onUpdateAll();
+      if (accepted) {
         setUpdateAllConfirmOpen(false);
-      },
-    });
-  }, [updateAllMutation, refetch]);
+      }
+    } catch {
+      // toast у provider
+    }
+  }, [onUpdateAll]);
 
   const handleRunChainConfirm = useCallback(() => {
     onRunChain();
@@ -95,7 +91,7 @@ export function DelHeaderActions({
       onUpdateAllConfirmOpenChange={setUpdateAllConfirmOpen}
       onUpdateAllConfirm={handleUpdateAllConfirm}
       onUpdateAllCancel={closeUpdateAllConfirm}
-      updateAllIsPending={updateAllMutation.isPending}
+      updateAllIsPending={updateAllIsPending}
       runChainConfirmOpen={runChainConfirmOpen}
       onRunChainConfirmOpenChange={setRunChainConfirmOpen}
       onRunChainConfirm={handleRunChainConfirm}

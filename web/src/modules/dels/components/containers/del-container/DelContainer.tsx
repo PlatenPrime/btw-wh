@@ -1,7 +1,7 @@
 import { useQueryClient } from "@tanstack/react-query";
+import { useStartApiTask } from "@/modules/apitasks";
 import { patchDelArtikul } from "@/modules/dels/api/services/mutations/patchDelArtikul";
 import { useDelByIdQuery } from "@/modules/dels/api/hooks/queries/useDelByIdQuery";
-import { useUpdateAllDelArtikulsMutation } from "@/modules/dels/api/hooks/mutations/useUpdateAllDelArtikulsMutation";
 import type { DelDto } from "@/modules/dels/api/types";
 import { DelHeaderActions } from "@/modules/dels/components/actions/del-header-actions";
 import { DelContainerView } from "@/modules/dels/components/containers/del-container/DelContainerView";
@@ -22,7 +22,7 @@ interface DelContainerProps {
 export function DelContainer({ del }: DelContainerProps) {
   const queryClient = useQueryClient();
   const { refetch } = useDelByIdQuery({ id: del._id });
-  const updateAllMutation = useUpdateAllDelArtikulsMutation({ delId: del._id });
+  const { startTask, isStarting } = useStartApiTask();
 
   const [isChainRunning, setIsChainRunning] = useState(false);
   const [chainSteps, setChainSteps] = useState<ChainStep[]>([]);
@@ -71,16 +71,25 @@ export function DelContainer({ del }: DelContainerProps) {
     refetch();
   }, [del._id, del.artikuls, queryClient, refetch]);
 
+  const handleUpdateAll = useCallback(async () => {
+    const task = await startTask({
+      kind: "dels.artikuls-update-all",
+      params: { delId: del._id },
+      title: "Оновлення артикулів поставки",
+    });
+    if (task) {
+      void refetch();
+    }
+    return task != null;
+  }, [del._id, refetch, startTask]);
+
   const hasArtikuls = Object.keys(del.artikuls ?? {}).length > 0;
 
   return (
     <>
       <DelHeaderActions
-        refetch={refetch}
-        updateAllMutation={{
-          isPending: updateAllMutation.isPending,
-          mutate: updateAllMutation.mutate,
-        }}
+        onUpdateAll={handleUpdateAll}
+        updateAllIsPending={isStarting}
         onRunChain={runChain}
         hasArtikuls={hasArtikuls}
         isChainRunning={isChainRunning}

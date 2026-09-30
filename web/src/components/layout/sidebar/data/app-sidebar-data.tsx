@@ -9,6 +9,7 @@ import {
   FileSpreadsheet,
   LayoutTemplate,
   Link2,
+  ListTodo,
   MapPin,
   PackageSearch,
   PieChart,
@@ -56,6 +57,7 @@ const icons = {
   Boxes,
   Sparkles,
   Upload,
+  ListTodo,
 } as const;
 
 type SidebarIconName = keyof typeof icons;
@@ -96,6 +98,7 @@ const iconColorClasses: Record<SidebarIconName, string> = {
   Sparkles: "text-[oklch(0.64_0.16_55)] dark:text-[oklch(0.78_0.16_55)]",
   FileSpreadsheet:
     "text-[oklch(0.58_0.14_150)] dark:text-[oklch(0.74_0.16_150)]",
+  ListTodo: "text-[oklch(0.6_0.14_250)] dark:text-[oklch(0.74_0.16_250)]",
 };
 
 export interface AppSidebarNavItem {
@@ -387,6 +390,12 @@ export const appSidebarData: { navMain: AppSidebarNavGroup[] } = {
       url: "/admin/events",
       pathOpenPrefix: "/admin",
       items: [
+        {
+          title: "Задачі",
+          url: "/api-tasks",
+          iconName: "ListTodo",
+          allowedRoles: [RoleType.EDITOR],
+        },
         {
           title: "Користувачі",
           url: "/admin/users",

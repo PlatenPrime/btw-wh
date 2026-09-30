@@ -1,4 +1,4 @@
-import { useUpdateAllBtradeStocksMutation } from "@/modules/arts/api/hooks/mutations/useUpdateAllBtradeStocksMutation";
+import { useStartApiTask } from "@/modules/apitasks";
 
 interface UseUpdateAllBtradeStocksDialogProps {
   onSuccess?: () => void;
@@ -12,26 +12,25 @@ interface UseUpdateAllBtradeStocksDialogReturn {
 export function useUpdateAllBtradeStocksDialog({
   onSuccess,
 }: UseUpdateAllBtradeStocksDialogProps): UseUpdateAllBtradeStocksDialogReturn {
-  const mutation = useUpdateAllBtradeStocksMutation();
-
-  const isUpdating = mutation.isPending;
+  const { startTask, isStarting } = useStartApiTask();
 
   const handleUpdate = async () => {
-    if (isUpdating) {
-      return;
-    }
+    if (isStarting) return;
 
     try {
-      await mutation.mutateAsync();
-      onSuccess?.();
-    } catch (error) {
-      console.error("Помилка оновлення залишків Btrade:", error);
+      const task = await startTask({
+        kind: "arts.btrade-stock-update-all",
+        params: {},
+        title: "Оновлення залишків Btrade",
+      });
+      if (task) onSuccess?.();
+    } catch {
+      // toast у provider
     }
   };
 
   return {
-    isUpdating,
+    isUpdating: isStarting,
     handleUpdate,
   };
 }
-

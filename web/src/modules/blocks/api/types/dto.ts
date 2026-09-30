@@ -75,17 +75,6 @@ export interface ZoneWithBlockDto {
 }
 
 /**
- * Ответ API для пересчета секторов зон
- */
-export interface RecalculateZonesSectorsResponse {
-  message: string;
-  data: {
-    updatedZones: number;
-    blocksProcessed: number;
-  };
-}
-
-/**
  * Ответ API для сброса секторов зон (утилитарный эндпоинт)
  */
 export interface ResetZonesSectorsResponse {

@@ -50,10 +50,6 @@ export interface UpdateBtradeStockResponse {
   data: ArtDto;
 }
 
-export interface UpdateAllBtradeStocksResponse {
-  message: string;
-}
-
 export interface ExportArtsResponse {
   blob: Blob;
   filename: string;
@@ -67,14 +63,4 @@ export interface ExportArtsWithStocksResponse {
 export interface ExportArtsKeysResponse {
   blob: Blob;
   filename: string;
-}
-
-export interface DeleteArtsWithoutLatestMarkerResult {
-  deletedCount: number;
-  latestMarker: string | null;
-}
-
-export interface DeleteArtsWithoutLatestMarkerResponse {
-  message: string;
-  result: DeleteArtsWithoutLatestMarkerResult;
 }

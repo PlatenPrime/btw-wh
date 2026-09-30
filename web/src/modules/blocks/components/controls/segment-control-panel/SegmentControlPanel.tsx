@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
+import { useStartApiTask } from "@/modules/apitasks";
 import { Edit, Plus, RefreshCw, Save, X } from "lucide-react";
-import { useRecalculateZonesSectorsMutation } from "@/modules/blocks/api/hooks/mutations/useRecalculateZonesSectorsMutation";
 
 interface SegmentControlPanelProps {
   isEditMode: boolean;
@@ -19,10 +19,14 @@ export function SegmentControlPanel({
   onSave,
   isSaving = false,
 }: SegmentControlPanelProps) {
-  const recalculateMutation = useRecalculateZonesSectorsMutation();
+  const { startTask, isStarting } = useStartApiTask();
 
   const handleRecalculate = () => {
-    recalculateMutation.mutate();
+    void startTask({
+      kind: "blocks.recalculate-zones-sectors",
+      params: {},
+      title: "Перерахунок секторів зон",
+    });
   };
 
   if (isEditMode) {
@@ -39,12 +43,12 @@ export function SegmentControlPanel({
         <Button
           onClick={handleRecalculate}
           variant="outline"
-          disabled={recalculateMutation.isPending || isSaving}
+          disabled={isStarting || isSaving}
         >
           <RefreshCw
-            className={`mr-2 size-4 ${recalculateMutation.isPending ? "animate-spin" : ""}`}
+            className={`mr-2 size-4 ${isStarting ? "animate-spin" : ""}`}
           />
-          {recalculateMutation.isPending ? "Перерахунок..." : "Перерахувати сектора"}
+          {isStarting ? "Перерахунок..." : "Перерахувати сектора"}
         </Button>
       </div>
     );
@@ -63,14 +67,11 @@ export function SegmentControlPanel({
       <Button
         onClick={handleRecalculate}
         variant="outline"
-        disabled={recalculateMutation.isPending}
+        disabled={isStarting}
       >
-        <RefreshCw
-          className={`size-4 ${recalculateMutation.isPending ? "animate-spin" : ""}`}
-        />
-        {recalculateMutation.isPending ? "Перерахунок..." : "Перерахувати сектора"}
+        <RefreshCw className={`size-4 ${isStarting ? "animate-spin" : ""}`} />
+        {isStarting ? "Перерахунок..." : "Перерахувати сектора"}
       </Button>
     </div>
   );
 }
-

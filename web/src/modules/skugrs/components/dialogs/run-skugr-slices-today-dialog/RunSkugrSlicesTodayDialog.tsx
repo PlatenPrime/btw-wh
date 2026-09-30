@@ -1,5 +1,5 @@
 import { Dialog } from "@/components/ui/dialog";
-import { useRunSkugrSlicesTodayMutation } from "@/modules/sku-analytics/api/hooks/mutations/useRunSkugrSlicesTodayMutation";
+import { useStartApiTask } from "@/modules/apitasks";
 import { RunSkugrSlicesTodayDialogView } from "@/modules/skugrs/components/dialogs/run-skugr-slices-today-dialog/RunSkugrSlicesTodayDialogView";
 import { useCallback } from "react";
 
@@ -16,36 +16,40 @@ export function RunSkugrSlicesTodayDialog({
   open,
   onOpenChange,
 }: RunSkugrSlicesTodayDialogProps) {
-  const mutation = useRunSkugrSlicesTodayMutation();
+  const { startTask, isStarting } = useStartApiTask();
 
   const handleConfirm = useCallback(async () => {
-    if (mutation.isPending) return;
+    if (isStarting) return;
     try {
-      await mutation.mutateAsync(skugrId);
-      onOpenChange(false);
+      const task = await startTask({
+        kind: "sku-slices.skugr-run-today",
+        params: { skugrId },
+        title: `Зрізи групи · ${skugrTitle}`,
+      });
+      if (task) onOpenChange(false);
     } catch {
-      // toast у мутації
+      // toast у provider
     }
-  }, [mutation, onOpenChange, skugrId]);
+  }, [isStarting, onOpenChange, skugrId, skugrTitle, startTask]);
 
   const handleCancel = useCallback(() => {
-    if (mutation.isPending) return;
+    if (isStarting) return;
     onOpenChange(false);
-  }, [mutation.isPending, onOpenChange]);
+  }, [isStarting, onOpenChange]);
 
   const handleOpenChange = useCallback(
     (next: boolean) => {
-      if (!next && mutation.isPending) return;
+      if (!next && isStarting) return;
       onOpenChange(next);
     },
-    [mutation.isPending, onOpenChange],
+    [isStarting, onOpenChange],
   );
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <RunSkugrSlicesTodayDialogView
         skugrTitle={skugrTitle}
-        isRunning={mutation.isPending}
+        isRunning={isStarting}
         onConfirm={handleConfirm}
         onCancel={handleCancel}
       />

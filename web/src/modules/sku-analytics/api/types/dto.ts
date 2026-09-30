@@ -83,52 +83,6 @@ export interface SkuSkugrSkusSalesResponseDto {
   all: SkuSkugrSkusSalesTotalDto;
 }
 
-export interface CompensatingSliceRefetchStatsDto {
-  refetched: number;
-  updated: number;
-}
-
-export interface RunCompensatingSliceBodyDto {
-  konkName: string;
-}
-
-export interface RunCompensatingSliceDataDto {
-  konkName: string;
-  sliceDate: string;
-  analog: CompensatingSliceRefetchStatsDto;
-  sku: CompensatingSliceRefetchStatsDto;
-}
-
-export interface RunCompensatingSliceResponseDto {
-  message: string;
-  data: RunCompensatingSliceDataDto;
-}
-
-export interface RunCompensatingSliceParams {
-  konkName: string;
-  signal?: AbortSignal;
-}
-
-export interface RunSkugrSlicesTodayDataDto {
-  skugrId: string;
-  konkName: string;
-  sliceDate: string;
-  total: number;
-  count: number;
-  invalid: number;
-  errors: number;
-}
-
-export interface RunSkugrSlicesTodayResponseDto {
-  message: string;
-  data: RunSkugrSlicesTodayDataDto;
-}
-
-export interface RunSkugrSlicesTodayParams {
-  skugrId: string;
-  signal?: AbortSignal;
-}
-
 /** Позиція черги клієнтського дозаповнення Air-зрізу (GET client/air/pending). */
 export interface AirClientPendingItemDto {
   skuId: string;

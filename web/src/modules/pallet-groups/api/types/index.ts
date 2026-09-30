@@ -5,7 +5,6 @@ export type {
   PalletGroupResponseDto,
   PalletGroupsResponseDto,
   PalletShortDto,
-  RecalculatePalletsSectorsResponseDto,
   ReorderPalletGroupItemDto,
   ReorderPalletGroupsDto,
   ReorderPalletGroupsResponseDto,

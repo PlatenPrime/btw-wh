@@ -1,25 +1,27 @@
 import type { HeaderAction } from "@/components/layout/header-actions";
 import { useRegisterHeaderActions } from "@/components/layout/header-actions";
-import { useRecalculateZonesSectorsMutation } from "@/modules/blocks/api/hooks/mutations/useRecalculateZonesSectorsMutation";
+import { useStartApiTask } from "@/modules/apitasks";
 import { BlocksHeaderActionsView } from "@/modules/blocks/components/actions/blocks-header-actions/BlocksHeaderActionsView";
 import { RefreshCw } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 
 export function BlocksHeaderActions() {
   const [recalculateDialogOpen, setRecalculateDialogOpen] = useState(false);
-  const recalculateMutation = useRecalculateZonesSectorsMutation();
+  const { startTask, isStarting } = useStartApiTask();
 
   const openRecalculateDialog = useCallback(() => {
     setRecalculateDialogOpen(true);
   }, []);
 
   const handleRecalculateConfirm = useCallback(() => {
-    recalculateMutation.mutate(undefined, {
-      onSuccess: () => {
-        setRecalculateDialogOpen(false);
-      },
+    void startTask({
+      kind: "blocks.recalculate-zones-sectors",
+      params: {},
+      title: "Перерахунок секторів зон",
+    }).then((task) => {
+      if (task) setRecalculateDialogOpen(false);
     });
-  }, [recalculateMutation]);
+  }, [startTask]);
 
   const handleRecalculateCancel = useCallback(() => {
     setRecalculateDialogOpen(false);
@@ -36,7 +38,7 @@ export function BlocksHeaderActions() {
         onClick: openRecalculateDialog,
       },
     ],
-    [openRecalculateDialog]
+    [openRecalculateDialog],
   );
 
   useRegisterHeaderActions(headerActions);
@@ -47,7 +49,7 @@ export function BlocksHeaderActions() {
       onRecalculateDialogOpenChange={setRecalculateDialogOpen}
       onRecalculateConfirm={handleRecalculateConfirm}
       onRecalculateCancel={handleRecalculateCancel}
-      isRecalculatePending={recalculateMutation.isPending}
+      isRecalculatePending={isStarting}
     />
   );
 }

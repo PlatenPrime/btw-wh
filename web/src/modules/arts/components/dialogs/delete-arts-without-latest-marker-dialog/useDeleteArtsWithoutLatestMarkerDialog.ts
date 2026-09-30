@@ -1,5 +1,4 @@
-import { useDeleteArtsWithoutLatestMarkerMutation } from "@/modules/arts/api/hooks/mutations/useDeleteArtsWithoutLatestMarkerMutation";
-import { toast } from "sonner";
+import { useStartApiTask } from "@/modules/apitasks";
 
 interface UseDeleteArtsWithoutLatestMarkerDialogProps {
   onSuccess?: () => void;
@@ -13,35 +12,25 @@ interface UseDeleteArtsWithoutLatestMarkerDialogReturn {
 export function useDeleteArtsWithoutLatestMarkerDialog({
   onSuccess,
 }: UseDeleteArtsWithoutLatestMarkerDialogProps): UseDeleteArtsWithoutLatestMarkerDialogReturn {
-  const mutation = useDeleteArtsWithoutLatestMarkerMutation();
-
-  const isDeleting = mutation.isPending;
+  const { startTask, isStarting } = useStartApiTask();
 
   const handleDelete = async () => {
-    if (isDeleting) {
-      return;
-    }
+    if (isStarting) return;
 
     try {
-      const result = await mutation.mutateAsync();
-      toast.success(
-        `Успішно видалено ${result.deletedCount} артикулів. Останній маркер: ${
-          result.latestMarker || "не знайдено"
-        }`,
-      );
-      onSuccess?.();
-    } catch (error) {
-      console.error("Помилка видалення артикулів:", error);
-      toast.error("Помилка видалення артикулів", {
-        description:
-          error instanceof Error ? error.message : "Невідома помилка",
+      const task = await startTask({
+        kind: "arts.delete-without-latest-marker",
+        params: {},
+        title: "Видалення артикулів без маркера",
       });
+      if (task) onSuccess?.();
+    } catch {
+      // toast у provider
     }
   };
 
   return {
-    isDeleting,
+    isDeleting: isStarting,
     handleDelete,
   };
 }
-

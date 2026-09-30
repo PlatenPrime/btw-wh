@@ -33,6 +33,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [hasHydrated, setHasHydrated] = useState(false);
   const isLoggingOut = useRef(false);
 
   // Load token from localStorage on mount and validate
@@ -54,11 +55,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         setUser(storedUser);
       }
     }
+    setHasHydrated(true);
     setIsLoading(false);
   }, []);
 
-  // Save token/user to localStorage
+  // Save token/user to localStorage — only after hydrate, never wipe on mount nulls
   useEffect(() => {
+    if (!hasHydrated) return;
     if (isLoggingOut.current) return;
     if (token && user) {
       setItem("auth_token", token);
@@ -67,7 +70,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       removeItem("auth_token");
       removeItem("auth_user");
     }
-  }, [token, user]);
+  }, [token, user, hasHydrated]);
 
   const login = useCallback(async (username: string, password: string) => {
     setIsLoading(true);
