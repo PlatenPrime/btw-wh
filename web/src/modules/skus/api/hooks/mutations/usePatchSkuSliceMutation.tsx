@@ -2,6 +2,7 @@ import { patchSkuSlice } from "@/modules/skus/api/services/mutations/patchSkuSli
 import type {
   PatchSkuSliceBodyDto,
   PatchSkuSliceDayResultDto,
+  PatchSkuSlicePeriodsResultDto,
   PatchSkuSliceRangeResultDto,
   PatchSkuSliceResponseDto,
 } from "@/modules/skus/api/types";
@@ -29,13 +30,19 @@ function formatPoint(stock: number, price: number): string {
 function isDayResult(
   data: PatchSkuSliceResponseDto["data"],
 ): data is PatchSkuSliceDayResultDto {
-  return "date" in data && !("dateFrom" in data);
+  return "date" in data && !("dateFrom" in data) && !("periods" in data);
 }
 
 function isRangeResult(
   data: PatchSkuSliceResponseDto["data"],
 ): data is PatchSkuSliceRangeResultDto {
-  return "dateFrom" in data && "dateTo" in data;
+  return "dateFrom" in data && "dateTo" in data && !("periods" in data);
+}
+
+function isPeriodsResult(
+  data: PatchSkuSliceResponseDto["data"],
+): data is PatchSkuSlicePeriodsResultDto {
+  return "periods" in data;
 }
 
 function toDateLabel(value: string): string {
@@ -73,6 +80,13 @@ export function usePatchSkuSliceMutation() {
       if (isRangeResult(data)) {
         toast.success("Зріз оновлено за період", {
           description: `${toDateLabel(data.dateFrom)}–${toDateLabel(data.dateTo)}: ${nextPoint} · днів ${data.updatedCount}`,
+        });
+        return;
+      }
+
+      if (isPeriodsResult(data)) {
+        toast.success("Зріз оновлено за періоди", {
+          description: `${data.periods.length} період(ів): ${nextPoint} · днів ${data.updatedCount}`,
         });
       }
     },

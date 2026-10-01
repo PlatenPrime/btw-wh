@@ -3,12 +3,16 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { PatchSkuSliceForm } from "@/modules/skus/components/forms/patch-sku-slice-form";
+import {
+  PatchSkuSliceForm,
+  type PatchSkuSliceFormInitialValues,
+} from "@/modules/skus/components/forms/patch-sku-slice-form";
 
 interface PatchSkuSliceDialogViewProps {
   skuId: string;
   skuTitle: string;
   isActive: boolean;
+  initialValues?: PatchSkuSliceFormInitialValues;
   onSuccess: () => void;
   onCancel: () => void;
 }
@@ -17,11 +21,12 @@ export function PatchSkuSliceDialogView({
   skuId,
   skuTitle,
   isActive,
+  initialValues,
   onSuccess,
   onCancel,
 }: PatchSkuSliceDialogViewProps) {
   return (
-    <DialogContent className="sm:max-w-[425px]">
+    <DialogContent className="sm:max-w-[480px]">
       <DialogHeader>
         <DialogTitle>Виправити зріз</DialogTitle>
       </DialogHeader>
@@ -29,6 +34,7 @@ export function PatchSkuSliceDialogView({
         skuId={skuId}
         skuTitle={skuTitle}
         isActive={isActive}
+        initialValues={initialValues}
         onSuccess={onSuccess}
         onCancel={onCancel}
       />

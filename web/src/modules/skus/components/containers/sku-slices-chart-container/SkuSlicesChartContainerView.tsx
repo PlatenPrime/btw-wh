@@ -9,8 +9,12 @@ export interface SkuSlicesChartContainerViewProps {
   onShowPriceChange: (value: boolean) => void;
   isFetching: boolean;
   isLoading: boolean;
+  canPatchSlice?: boolean;
+  onPatchSlice?: () => void;
 }
 
-export function SkuSlicesChartContainerView(props: SkuSlicesChartContainerViewProps) {
+export function SkuSlicesChartContainerView(
+  props: SkuSlicesChartContainerViewProps,
+) {
   return <SkuSlicesChartView {...props} />;
 }

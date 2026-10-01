@@ -127,9 +127,21 @@ export interface PatchSkuSliceRangeBodyDto {
   price: number;
 }
 
+export interface PatchSkuSlicePeriodDto {
+  dateFrom: string;
+  dateTo: string;
+}
+
+export interface PatchSkuSlicePeriodsBodyDto {
+  periods: PatchSkuSlicePeriodDto[];
+  stock: number;
+  price: number;
+}
+
 export type PatchSkuSliceBodyDto =
   | PatchSkuSliceDayBodyDto
-  | PatchSkuSliceRangeBodyDto;
+  | PatchSkuSliceRangeBodyDto
+  | PatchSkuSlicePeriodsBodyDto;
 
 export interface PatchSkuSliceDayResultDto {
   productId: string;
@@ -156,9 +168,19 @@ export interface PatchSkuSliceRangeResultDto {
   days: PatchSkuSliceRangeDayDto[];
 }
 
+export interface PatchSkuSlicePeriodsResultDto {
+  productId: string;
+  stock: number;
+  price: number;
+  periods: PatchSkuSlicePeriodDto[];
+  updatedCount: number;
+  days: PatchSkuSliceRangeDayDto[];
+}
+
 export type PatchSkuSliceResultDto =
   | PatchSkuSliceDayResultDto
-  | PatchSkuSliceRangeResultDto;
+  | PatchSkuSliceRangeResultDto
+  | PatchSkuSlicePeriodsResultDto;
 
 export interface PatchSkuSliceResponseDto {
   message: string;

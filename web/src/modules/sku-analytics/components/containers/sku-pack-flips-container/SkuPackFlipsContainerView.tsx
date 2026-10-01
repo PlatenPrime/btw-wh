@@ -12,6 +12,8 @@ export interface SkuPackFlipsSection {
 
 export interface SkuPackFlipsContainerViewProps {
   sections: SkuPackFlipsSection[];
+  canPatchSlice?: boolean;
+  onPatchSlice?: (item: PackFlipFindingDto) => void;
 }
 
 const SECTION_TITLE: Record<SkuPackFlipsTableVariant, string> = {
@@ -22,6 +24,8 @@ const SECTION_TITLE: Record<SkuPackFlipsTableVariant, string> = {
 
 export function SkuPackFlipsContainerView({
   sections,
+  canPatchSlice = false,
+  onPatchSlice,
 }: SkuPackFlipsContainerViewProps) {
   if (sections.length === 0) {
     return (
@@ -44,7 +48,12 @@ export function SkuPackFlipsContainerView({
             {SECTION_TITLE[section.variant]}
             <span className={typography.caption}>{section.items.length}</span>
           </h2>
-          <SkuPackFlipsTable variant={section.variant} items={section.items} />
+          <SkuPackFlipsTable
+            variant={section.variant}
+            items={section.items}
+            canPatchSlice={canPatchSlice}
+            onPatchSlice={onPatchSlice}
+          />
         </SurfaceSection>
       ))}
     </div>

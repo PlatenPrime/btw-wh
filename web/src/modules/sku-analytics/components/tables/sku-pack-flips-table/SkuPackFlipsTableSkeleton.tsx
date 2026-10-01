@@ -45,6 +45,9 @@ export function SkuPackFlipsTableSkeleton({
                 <Skeleton className="ml-auto h-3 w-20" />
               </TableHead>
             ) : null}
+            <TableHead className="text-right">
+              <Skeleton className="ml-auto h-3 w-16" />
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -77,6 +80,9 @@ export function SkuPackFlipsTableSkeleton({
                   <Skeleton className="ml-auto h-4 w-24" />
                 </TableCell>
               ) : null}
+              <TableCell className="text-right">
+                <Skeleton className="ml-auto h-8 w-28" />
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

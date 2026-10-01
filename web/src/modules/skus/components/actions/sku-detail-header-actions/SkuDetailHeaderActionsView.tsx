@@ -35,7 +35,8 @@ export function SkuDetailHeaderActionsView({
         onOpenChange={onSalesExcelDialogOpenChange}
       />
       <PatchSkuSliceDialog
-        sku={sku}
+        skuId={sku._id}
+        skuTitle={sku.title}
         open={patchSliceDialogOpen}
         onOpenChange={onPatchSliceDialogOpenChange}
       />

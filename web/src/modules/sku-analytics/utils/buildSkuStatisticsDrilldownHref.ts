@@ -44,9 +44,3 @@ export function buildSkuStatisticsSkugrHref({
   if (prod) params.set("prod", prod);
   return `/sku/statistics/skugr?${params.toString()}`;
 }
-
-/** Відкриває hash-router шлях (`/sku/...`) у новій вкладці. */
-export function openSkuStatisticsDrilldownInNewTab(href: string): void {
-  const hashPath = href.startsWith("/") ? href : `/${href}`;
-  window.open(`#${hashPath}`, "_blank", "noopener,noreferrer");
-}

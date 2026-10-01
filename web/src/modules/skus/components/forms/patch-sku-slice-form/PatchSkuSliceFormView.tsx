@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils";
 import { typography } from "@/lib/typography";
 import { format, parse } from "date-fns";
 import { uk } from "date-fns/locale";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, Plus, Trash2 } from "lucide-react";
 import type { DateRange } from "react-day-picker";
 import type { UseFormReturn } from "react-hook-form";
 import { PatchSkuSliceFormSkeleton } from "./PatchSkuSliceFormSkeleton";
@@ -28,6 +28,7 @@ interface PatchSkuSliceFormViewProps {
   skuTitle: string;
   mode: PatchSkuSliceFormMode;
   dateRange: DateRange | undefined;
+  periodRanges: Array<DateRange | undefined>;
   isPreviewLoading: boolean;
   showMissingPointHint: boolean;
   previewErrorMessage: string | null;
@@ -38,6 +39,9 @@ interface PatchSkuSliceFormViewProps {
   onModeChange: (mode: PatchSkuSliceFormMode) => void;
   onDateChange: (date: string) => void;
   onDateRangeChange: (range: DateRange | undefined) => void;
+  onPeriodRangeChange: (index: number, range: DateRange | undefined) => void;
+  onAddPeriod: () => void;
+  onRemovePeriod: (index: number) => void;
   onSubmit: (data: PatchSkuSliceFormData) => void;
   onCancel?: () => void;
 }
@@ -51,11 +55,20 @@ function parseDate(value: string): Date | undefined {
   }
 }
 
+function formatRangeLabel(range: DateRange | undefined): string {
+  if (!range?.from) return "Оберіть період";
+  if (!range.to) {
+    return format(range.from, "d MMM yyyy", { locale: uk });
+  }
+  return `${format(range.from, "d MMM yyyy", { locale: uk })} – ${format(range.to, "d MMM yyyy", { locale: uk })}`;
+}
+
 export function PatchSkuSliceFormView({
   form,
   skuTitle,
   mode,
   dateRange,
+  periodRanges,
   isPreviewLoading,
   showMissingPointHint,
   previewErrorMessage,
@@ -66,6 +79,9 @@ export function PatchSkuSliceFormView({
   onModeChange,
   onDateChange,
   onDateRangeChange,
+  onPeriodRangeChange,
+  onAddPeriod,
+  onRemovePeriod,
   onSubmit,
   onCancel,
 }: PatchSkuSliceFormViewProps) {
@@ -78,10 +94,15 @@ export function PatchSkuSliceFormView({
   const date = watch("date");
   const selectedDate = parseDate(date);
   const isDateMode = mode === "date";
+  const isPeriodMode = mode === "period";
+  const isPeriodsMode = mode === "periods";
   const hasCurrentPoint = currentStock !== null && currentPrice !== null;
   const showStockPriceFields =
-    !isDateMode ||
-    (!isPreviewLoading && !previewErrorMessage);
+    !isDateMode || (!isPreviewLoading && !previewErrorMessage);
+  const periodsError =
+    typeof errors.periods?.message === "string"
+      ? errors.periods.message
+      : null;
 
   return (
     <form
@@ -90,8 +111,8 @@ export function PatchSkuSliceFormView({
     >
       <p className={typography.pageDescription}>
         Сирий запис у SkuSlice, не live-scrape і не compensating. Нічний
-        pack-flip орієнтується на ці значення. Для періоду — однакові stock/price
-        на всі дні одним запитом.
+        pack-flip орієнтується на ці значення. Для періоду або кількох періодів —
+        однакові stock/price на всі дні одним запитом.
       </p>
       {skuTitle ? (
         <p className={typography.caption}>{skuTitle}</p>
@@ -100,7 +121,7 @@ export function PatchSkuSliceFormView({
       <div className="flex flex-col gap-2">
         <Label id="patch-sku-slice-mode-label">Режим</Label>
         <div
-          className="flex gap-2"
+          className="flex flex-wrap gap-2"
           role="group"
           aria-labelledby="patch-sku-slice-mode-label"
         >
@@ -115,12 +136,21 @@ export function PatchSkuSliceFormView({
           </Button>
           <Button
             type="button"
-            variant={!isDateMode ? "default" : "outline"}
+            variant={isPeriodMode ? "default" : "outline"}
             size="sm"
             disabled={isSubmitting}
             onClick={() => onModeChange("period")}
           >
             Період
+          </Button>
+          <Button
+            type="button"
+            variant={isPeriodsMode ? "default" : "outline"}
+            size="sm"
+            disabled={isSubmitting}
+            onClick={() => onModeChange("periods")}
+          >
+            Періоди
           </Button>
         </div>
       </div>
@@ -166,7 +196,9 @@ export function PatchSkuSliceFormView({
             <p className={typography.formError}>{errors.date.message}</p>
           ) : null}
         </div>
-      ) : (
+      ) : null}
+
+      {isPeriodMode ? (
         <div className="flex flex-col gap-2">
           <Label id="patch-sku-slice-range-label">Період</Label>
           <div className="flex justify-center">
@@ -186,7 +218,94 @@ export function PatchSkuSliceFormView({
             <p className={typography.formError}>{errors.dateTo.message}</p>
           ) : null}
         </div>
-      )}
+      ) : null}
+
+      {isPeriodsMode ? (
+        <div className="flex flex-col gap-3">
+          <Label id="patch-sku-slice-periods-label">Періоди</Label>
+          <div
+            className="flex flex-col gap-3"
+            role="group"
+            aria-labelledby="patch-sku-slice-periods-label"
+          >
+            {periodRanges.map((range, index) => {
+              const periodErrors = errors.periods?.[index];
+              return (
+                <div
+                  key={`period-${index}`}
+                  className="flex flex-col gap-2 rounded-md border p-3"
+                >
+                  <div className="flex items-center justify-between gap-2">
+                    <p className={typography.caption}>Період {index + 1}</p>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      disabled={isSubmitting}
+                      onClick={() => onRemovePeriod(index)}
+                      aria-label={`Видалити період ${index + 1}`}
+                    >
+                      <Trash2 className="size-4" />
+                    </Button>
+                  </div>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        disabled={isSubmitting}
+                        className={cn(
+                          "flex justify-start gap-2 text-left font-normal",
+                          !range?.from && "text-muted-foreground",
+                        )}
+                      >
+                        <CalendarIcon className="size-4 shrink-0" />
+                        {formatRangeLabel(range)}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="range"
+                        selected={range}
+                        onSelect={(nextRange) =>
+                          onPeriodRangeChange(index, nextRange)
+                        }
+                        disabled={(d) => d > new Date() || isSubmitting}
+                        numberOfMonths={1}
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
+                  {periodErrors?.dateFrom ? (
+                    <p className={typography.formError}>
+                      {periodErrors.dateFrom.message}
+                    </p>
+                  ) : null}
+                  {periodErrors?.dateTo ? (
+                    <p className={typography.formError}>
+                      {periodErrors.dateTo.message}
+                    </p>
+                  ) : null}
+                </div>
+              );
+            })}
+          </div>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            disabled={isSubmitting}
+            onClick={onAddPeriod}
+            className="self-start"
+          >
+            <Plus className="size-4" />
+            Додати період
+          </Button>
+          {periodsError ? (
+            <p className={typography.formError}>{periodsError}</p>
+          ) : null}
+        </div>
+      ) : null}
 
       {isPreviewLoading ? <PatchSkuSliceFormSkeleton /> : null}
 

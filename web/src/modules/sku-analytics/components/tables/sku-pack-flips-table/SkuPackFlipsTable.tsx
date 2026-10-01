@@ -1,4 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -17,6 +18,8 @@ export type SkuPackFlipsTableVariant = "patched" | "priceOnly" | "ambiguous";
 interface SkuPackFlipsTableProps {
   variant: SkuPackFlipsTableVariant;
   items: PackFlipFindingDto[];
+  canPatchSlice?: boolean;
+  onPatchSlice?: (item: PackFlipFindingDto) => void;
 }
 
 const numberFormat = new Intl.NumberFormat("uk-UA", {
@@ -74,9 +77,15 @@ function PackFlipProductCell({ item }: { item: PackFlipFindingDto }) {
   );
 }
 
-export function SkuPackFlipsTable({ variant, items }: SkuPackFlipsTableProps) {
+export function SkuPackFlipsTable({
+  variant,
+  items,
+  canPatchSlice = false,
+  onPatchSlice,
+}: SkuPackFlipsTableProps) {
   const showPatched = variant === "patched";
-  const colSpan = showPatched ? 6 : 5;
+  const showActions = canPatchSlice && Boolean(onPatchSlice);
+  const colSpan = (showPatched ? 6 : 5) + (showActions ? 1 : 0);
 
   return (
     <div className="overflow-x-auto">
@@ -95,6 +104,11 @@ export function SkuPackFlipsTable({ variant, items }: SkuPackFlipsTableProps) {
                 Як має бути
               </TableHead>
             ) : null}
+            {showActions ? (
+              <TableHead className="w-[1%] whitespace-nowrap text-right">
+                Дія
+              </TableHead>
+            ) : null}
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -108,34 +122,55 @@ export function SkuPackFlipsTable({ variant, items }: SkuPackFlipsTableProps) {
               </TableCell>
             </TableRow>
           ) : (
-            items.map((item) => (
-              <TableRow
-                key={`${item.productId}-${item.date}-${item.neighborDate}-${item.kind}`}
-              >
-                <TableCell className="max-w-[360px]">
-                  <PackFlipProductCell item={item} />
-                </TableCell>
-                <TableCell className="whitespace-nowrap tabular-nums">
-                  {item.date}
-                </TableCell>
-                <TableCell className="whitespace-nowrap tabular-nums">
-                  {item.neighborDate}
-                </TableCell>
-                <TableCell className="text-right tabular-nums">
-                  ×{item.factor}
-                </TableCell>
-                <TableCell className="whitespace-nowrap text-right tabular-nums">
-                  {formatPoint(item.from.stock, item.from.price)}
-                </TableCell>
-                {showPatched ? (
-                  <TableCell className="whitespace-nowrap text-right tabular-nums">
-                    {item.patched
-                      ? formatPoint(item.patched.stock, item.patched.price)
-                      : "—"}
+            items.map((item) => {
+              const skuId = item.skuId?.trim() ?? "";
+              const canPatchItem = showActions && Boolean(skuId);
+
+              return (
+                <TableRow
+                  key={`${item.productId}-${item.date}-${item.neighborDate}-${item.kind}`}
+                >
+                  <TableCell className="max-w-[360px]">
+                    <PackFlipProductCell item={item} />
                   </TableCell>
-                ) : null}
-              </TableRow>
-            ))
+                  <TableCell className="whitespace-nowrap tabular-nums">
+                    {item.date}
+                  </TableCell>
+                  <TableCell className="whitespace-nowrap tabular-nums">
+                    {item.neighborDate}
+                  </TableCell>
+                  <TableCell className="text-right tabular-nums">
+                    ×{item.factor}
+                  </TableCell>
+                  <TableCell className="whitespace-nowrap text-right tabular-nums">
+                    {formatPoint(item.from.stock, item.from.price)}
+                  </TableCell>
+                  {showPatched ? (
+                    <TableCell className="whitespace-nowrap text-right tabular-nums">
+                      {item.patched
+                        ? formatPoint(item.patched.stock, item.patched.price)
+                        : "—"}
+                    </TableCell>
+                  ) : null}
+                  {showActions ? (
+                    <TableCell className="text-right">
+                      {canPatchItem ? (
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => onPatchSlice?.(item)}
+                        >
+                          Виправити зріз
+                        </Button>
+                      ) : (
+                        <span className="text-muted-foreground text-xs">—</span>
+                      )}
+                    </TableCell>
+                  ) : null}
+                </TableRow>
+              );
+            })
           )}
         </TableBody>
       </Table>

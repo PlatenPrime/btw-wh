@@ -9,16 +9,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type { SkuStatisticsMetric, SkuStatisticsRow } from "@/modules/sku-analytics/types";
-import {
-  buildSkuStatisticsProdHref,
-  openSkuStatisticsDrilldownInNewTab,
-} from "@/modules/sku-analytics/utils/buildSkuStatisticsDrilldownHref";
+import { buildSkuStatisticsProdHref } from "@/modules/sku-analytics/utils/buildSkuStatisticsDrilldownHref";
 import {
   buildSkuStatisticsManufacturersExportFilename,
   exportSalesShareTableToXlsx,
 } from "@/utils/export-sales-share-table-xlsx";
 import { Download } from "lucide-react";
 import { useCallback, useMemo } from "react";
+import { Link } from "react-router-dom";
 
 interface SkuStatisticsTableProps {
   rows: SkuStatisticsRow[];
@@ -122,23 +120,17 @@ export function SkuStatisticsTable({
               dateFrom,
               dateTo,
             });
-            const openRow = () => openSkuStatisticsDrilldownInNewTab(href);
             return (
-              <TableRow
-                key={item.prodName}
-                role="link"
-                tabIndex={0}
-                className="cursor-pointer transition-colors hover:bg-accent/70 focus-visible:bg-accent/70 focus-visible:outline-none"
-                onClick={openRow}
-                onKeyDown={(event) => {
-                  if (event.key === "Enter" || event.key === " ") {
-                    event.preventDefault();
-                    openRow();
-                  }
-                }}
-              >
-                <TableCell className="max-w-[320px] truncate font-medium">
-                  {item.title}
+              <TableRow key={item.prodName}>
+                <TableCell className="max-w-[320px]">
+                  <Link
+                    to={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block truncate font-medium hover:underline"
+                  >
+                    {item.title}
+                  </Link>
                 </TableCell>
                 <TableCell className="text-right tabular-nums">
                   {unitsFormat.format(item.salesPcs)}

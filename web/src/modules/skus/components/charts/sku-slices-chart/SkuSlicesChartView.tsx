@@ -1,6 +1,7 @@
 import { DataRefetchOverlay } from "@/components/shared/feedback/data-refetch-overlay/DataRefetchOverlay";
 import { SliceRangeChartView } from "@/components/shared/charts/slice-range-chart";
 import type { SliceRangeChartPoint } from "@/types/charts-range";
+import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 
@@ -12,6 +13,8 @@ export interface SkuSlicesChartViewProps {
   onShowPriceChange: (value: boolean) => void;
   isFetching: boolean;
   isLoading: boolean;
+  canPatchSlice?: boolean;
+  onPatchSlice?: () => void;
 }
 
 export function SkuSlicesChartView({
@@ -22,6 +25,8 @@ export function SkuSlicesChartView({
   onShowPriceChange,
   isFetching,
   isLoading,
+  canPatchSlice = false,
+  onPatchSlice,
 }: SkuSlicesChartViewProps) {
   const showChart = showStock || showPrice;
 
@@ -56,6 +61,11 @@ export function SkuSlicesChartView({
             Ціна
           </Label>
         </div>
+        {canPatchSlice && onPatchSlice ? (
+          <Button type="button" variant="outline" size="sm" onClick={onPatchSlice}>
+            Виправити зріз
+          </Button>
+        ) : null}
       </div>
       <DataRefetchOverlay isFetching={isFetching} isLoading={isLoading}>
         {showChart ? (

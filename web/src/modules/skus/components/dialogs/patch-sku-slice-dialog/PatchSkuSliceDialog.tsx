@@ -1,19 +1,23 @@
 import { Dialog } from "@/components/ui/dialog";
-import type { SkuDto } from "@/modules/skus/api/types";
+import type { PatchSkuSliceFormInitialValues } from "@/modules/skus/components/forms/patch-sku-slice-form";
 import { useState } from "react";
 import { PatchSkuSliceDialogView } from "./PatchSkuSliceDialogView";
 import { usePatchSkuSliceDialog } from "./usePatchSkuSliceDialog";
 
 interface PatchSkuSliceDialogProps {
-  sku: SkuDto;
+  skuId: string;
+  skuTitle: string;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
+  initialValues?: PatchSkuSliceFormInitialValues;
 }
 
 export function PatchSkuSliceDialog({
-  sku,
+  skuId,
+  skuTitle,
   open: controlledOpen,
   onOpenChange,
+  initialValues,
 }: PatchSkuSliceDialogProps) {
   const [internalOpen, setInternalOpen] = useState(false);
 
@@ -29,9 +33,10 @@ export function PatchSkuSliceDialog({
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <PatchSkuSliceDialogView
-        skuId={sku._id}
-        skuTitle={sku.title}
+        skuId={skuId}
+        skuTitle={skuTitle}
         isActive={open}
+        initialValues={initialValues}
         onSuccess={handleSuccess}
         onCancel={handleCancel}
       />
