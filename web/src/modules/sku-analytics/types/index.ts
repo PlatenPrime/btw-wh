@@ -25,6 +25,23 @@ export interface SkuStatisticsRow {
   share: number;
 }
 
+/** Рядок pie/таблиці порівняння конкурентів (+ btrade) для одного виробника. */
+export interface SkuComparisonRow {
+  konkName: string;
+  title: string;
+  salesPcs: number;
+  salesUah: number;
+  share: number;
+}
+
+/** Мінімальний shape для кругової діаграми статистики/порівняння. */
+export interface SkuPieShareRow {
+  title: string;
+  salesPcs: number;
+  salesUah: number;
+  share: number;
+}
+
 export interface SkuStatisticsSkuRow {
   skuId: string;
   title: string;

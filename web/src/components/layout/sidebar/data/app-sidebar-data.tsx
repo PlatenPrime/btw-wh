@@ -7,6 +7,7 @@ import {
   Factory,
   FileQuestion,
   FileSpreadsheet,
+  GitCompare,
   LayoutTemplate,
   Link2,
   ListTodo,
@@ -53,6 +54,7 @@ const icons = {
   Projector,
   ShoppingCart,
   PieChart,
+  GitCompare,
   TrendingUp,
   Boxes,
   Sparkles,
@@ -92,6 +94,7 @@ const iconColorClasses: Record<SidebarIconName, string> = {
     "text-[oklch(0.65_0.16_45)] dark:text-[oklch(0.78_0.16_45)]",
   ShoppingCart: "text-[oklch(0.6_0.15_145)] dark:text-[oklch(0.74_0.16_145)]",
   PieChart: "text-[oklch(0.62_0.17_180)] dark:text-[oklch(0.76_0.18_180)]",
+  GitCompare: "text-[oklch(0.6_0.16_210)] dark:text-[oklch(0.74_0.17_210)]",
   // Продажі — зелёный
   TrendingUp: "text-[oklch(0.62_0.18_145)] dark:text-[oklch(0.76_0.2_145)]",
   Boxes: "text-[oklch(0.58_0.12_200)] dark:text-[oklch(0.72_0.14_200)]",
@@ -237,8 +240,20 @@ export const appSidebarData: { navMain: AppSidebarNavGroup[] } = {
           allowedRoles: [RoleType.ADMIN],
         },
         {
+          title: "Порівняння",
+          url: "/sku/comparison",
+          iconName: "GitCompare",
+          allowedRoles: [RoleType.ADMIN],
+        },
+        {
           title: "Зрізи конкуренти",
           url: "/sku/sku-slices",
+          iconName: "Projector",
+          allowedRoles: [RoleType.ADMIN],
+        },
+        {
+          title: "Зрізи Btrade",
+          url: "/sku/btrade-slices",
           iconName: "Projector",
           allowedRoles: [RoleType.ADMIN],
         },
@@ -246,12 +261,6 @@ export const appSidebarData: { navMain: AppSidebarNavGroup[] } = {
           title: "Скачки фасовки",
           url: "/sku/pack-flips",
           iconName: "ArrowLeftRight",
-          allowedRoles: [RoleType.ADMIN],
-        },
-        {
-          title: "Зрізи Btrade",
-          url: "/sku/btrade-slices",
-          iconName: "Projector",
           allowedRoles: [RoleType.ADMIN],
         },
         {

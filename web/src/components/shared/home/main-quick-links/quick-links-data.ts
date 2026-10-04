@@ -16,6 +16,7 @@ export const quickLinkDescriptionByUrl: Record<string, string> = {
   "/sku/sales": "Продажі товарів конкурентів",
   "/sku/stock-comparison": "Залишки та порівняння по SKU",
   "/sku/statistics": "Статистика продажів по виробниках",
+  "/sku/comparison": "Порівняння продажів по конкурентах",
   "/wh/rows": "Складські ряди та палети",
   "/wh/zones": "Зони зберігання",
   "/wh/blocks": "Блоки та сегменти",

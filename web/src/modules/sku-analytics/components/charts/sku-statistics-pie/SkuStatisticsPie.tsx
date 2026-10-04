@@ -1,13 +1,13 @@
 import { SurfaceSection } from "@/components/shared/layout";
 import { ChartContainer, type ChartConfig } from "@/components/ui/chart";
 import type {
+  SkuPieShareRow,
   SkuStatisticsMetric,
-  SkuStatisticsRow,
 } from "@/modules/sku-analytics/types";
 import { Cell, Pie, PieChart, Tooltip } from "recharts";
 
 interface SkuStatisticsPieProps {
-  rows: SkuStatisticsRow[];
+  rows: SkuPieShareRow[];
   metric: SkuStatisticsMetric;
 }
 

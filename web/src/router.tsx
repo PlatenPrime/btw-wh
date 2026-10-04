@@ -218,6 +218,11 @@ const SkuStatistics = lazyWithRetry(() =>
     default: module.SkuStatistics,
   })),
 );
+const SkuComparison = lazyWithRetry(() =>
+  import("./modules/sku-analytics/pages/sku-comparison").then((module) => ({
+    default: module.SkuComparison,
+  })),
+);
 const SkuStatisticsProd = lazyWithRetry(() =>
   import("./modules/sku-analytics/pages/sku-statistics-prod").then((module) => ({
     default: module.SkuStatisticsProd,
@@ -517,6 +522,15 @@ export const router = createHashRouter([
             element: (
               <ProtectedRoute>
                 <SkuStatistics />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "comparison",
+            element: (
+              <ProtectedRoute>
+                <SkuComparison />
               </ProtectedRoute>
             ),
             errorElement: <RouteErrorBoundary />,

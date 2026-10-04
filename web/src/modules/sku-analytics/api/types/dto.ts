@@ -42,6 +42,26 @@ export interface SkuManufacturersPieResponseDto {
   data: SkuManufacturersPiePayload;
 }
 
+export interface SkuKonksPieItemDto {
+  title: string;
+  salesPcs: number;
+  salesUah: number;
+}
+
+export type SkuKonksPiePayload = Record<string, SkuKonksPieItemDto>;
+
+export interface SkuKonksPieTotalDto {
+  title: string;
+  salesPcs: number;
+  salesUah: number;
+}
+
+export interface SkuKonksPieResponseDto {
+  message: string;
+  data: SkuKonksPiePayload;
+  all?: SkuKonksPieTotalDto;
+}
+
 export interface SkuKonkProdSkugrGroupSalesItemDto {
   skugrId: string;
   title: string;

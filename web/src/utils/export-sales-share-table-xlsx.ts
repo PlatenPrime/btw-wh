@@ -96,6 +96,14 @@ export function buildSkuStatisticsManufacturersExportFilename(
   return `sku_statistics_manufacturers_${sanitizeFilenamePart(konk)}_${sanitizeFilenamePart(dateFrom)}_${sanitizeFilenamePart(dateTo)}.xlsx`;
 }
 
+export function buildSkuComparisonKonksExportFilename(
+  prod: string,
+  dateFrom: string,
+  dateTo: string,
+): string {
+  return `sku_comparison_konks_${sanitizeFilenamePart(prod)}_${sanitizeFilenamePart(dateFrom)}_${sanitizeFilenamePart(dateTo)}.xlsx`;
+}
+
 export function buildSkuKonkProdSkugrGroupsExportFilename(
   konk: string,
   prod: string,
