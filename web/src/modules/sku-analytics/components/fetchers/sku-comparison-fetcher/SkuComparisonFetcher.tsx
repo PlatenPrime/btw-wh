@@ -12,17 +12,20 @@ interface SkuComparisonFetcherProps {
   prod: string;
   dateFrom: string;
   dateTo: string;
+  excludeKonks: string[];
 }
 
 export function SkuComparisonFetcher({
   prod,
   dateFrom,
   dateTo,
+  excludeKonks,
 }: SkuComparisonFetcherProps) {
   const comparisonQuery = useSkuKonksPieQuery({
     prod,
     dateFrom,
     dateTo,
+    excludeKonks,
   });
 
   if (comparisonQuery.isLoading && !comparisonQuery.data) {

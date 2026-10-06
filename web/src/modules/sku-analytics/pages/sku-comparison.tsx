@@ -4,8 +4,15 @@ import { SkuComparisonFetcher } from "@/modules/sku-analytics/components/fetcher
 import { useSkuComparisonParams } from "@/modules/sku-analytics/hooks/useSkuComparisonParams";
 
 export function SkuComparison() {
-  const { prod, dateFrom, dateTo, setProd, setDateRange } =
-    useSkuComparisonParams();
+  const {
+    prod,
+    dateFrom,
+    dateTo,
+    excludeKonks,
+    setProd,
+    setDateRange,
+    setExcludeKonks,
+  } = useSkuComparisonParams();
 
   const isFiltersReady = Boolean(prod && dateFrom && dateTo);
 
@@ -16,8 +23,10 @@ export function SkuComparison() {
           prod={prod}
           dateFrom={dateFrom}
           dateTo={dateTo}
+          excludeKonks={excludeKonks}
           onProdChange={setProd}
           onDateRangeChange={setDateRange}
+          onExcludeKonksChange={setExcludeKonks}
         />
 
         {!isFiltersReady && (
@@ -31,6 +40,7 @@ export function SkuComparison() {
             prod={prod}
             dateFrom={dateFrom}
             dateTo={dateTo}
+            excludeKonks={excludeKonks}
           />
         ) : null}
       </div>

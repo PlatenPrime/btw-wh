@@ -2,21 +2,26 @@ import { ChartDateRangeToolbar } from "@/components/shared/charts/chart-date-ran
 import { ProdEntitySelect } from "@/components/shared/controls";
 import { SurfaceSection } from "@/components/shared/layout";
 import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
+import { SkuComparisonKonksFilter } from "@/modules/sku-analytics/components/controls/sku-comparison-konks-filter";
 
 interface SkuComparisonControlsProps {
   prod: string;
   dateFrom: string;
   dateTo: string;
+  excludeKonks: string[];
   onProdChange: (value: string) => void;
   onDateRangeChange: (from: string, to: string) => void;
+  onExcludeKonksChange: (names: string[]) => void;
 }
 
 export function SkuComparisonControls({
   prod,
   dateFrom,
   dateTo,
+  excludeKonks,
   onProdChange,
   onDateRangeChange,
+  onExcludeKonksChange,
 }: SkuComparisonControlsProps) {
   const prodsQuery = useProdsQuery();
   const prods = prodsQuery.data?.data ?? [];
@@ -37,6 +42,11 @@ export function SkuComparisonControls({
           dateFrom={dateFrom}
           dateTo={dateTo}
           onDateRangeChange={onDateRangeChange}
+        />
+
+        <SkuComparisonKonksFilter
+          excludeKonks={excludeKonks}
+          onExcludeKonksChange={onExcludeKonksChange}
         />
       </div>
     </SurfaceSection>
