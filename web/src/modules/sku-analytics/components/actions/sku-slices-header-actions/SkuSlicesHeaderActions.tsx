@@ -3,7 +3,7 @@ import { useRegisterHeaderActions } from "@/components/layout/header-actions";
 import { useRole } from "@/modules/auth/hooks/useRole";
 import { SkuSlicesHeaderActionsView } from "@/modules/sku-analytics/components/actions/sku-slices-header-actions/SkuSlicesHeaderActionsView";
 import { useSkuSlicesParams } from "@/modules/sku-analytics/hooks/useSkuSlicesParams";
-import { ArrowLeftRight, RefreshCw } from "lucide-react";
+import { ArrowLeftRight, RefreshCw, Wrench } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 
@@ -14,9 +14,15 @@ export function SkuSlicesHeaderActions() {
   const { konk } = useSkuSlicesParams();
 
   const [compensatingDialogOpen, setCompensatingDialogOpen] = useState(false);
+  const [postCorrectionsDialogOpen, setPostCorrectionsDialogOpen] =
+    useState(false);
 
   const openCompensatingDialog = useCallback(() => {
     setCompensatingDialogOpen(true);
+  }, []);
+
+  const openPostCorrectionsDialog = useCallback(() => {
+    setPostCorrectionsDialogOpen(true);
   }, []);
 
   const openPackFlips = useCallback(() => {
@@ -50,8 +56,21 @@ export function SkuSlicesHeaderActions() {
         variant: "default",
         onClick: openCompensatingDialog,
       },
+      {
+        id: "run-post-corrections",
+        label: "Коригування залишків",
+        icon: Wrench,
+        iconColor: "violet",
+        variant: "default",
+        onClick: openPostCorrectionsDialog,
+      },
     ];
-  }, [canRun, openCompensatingDialog, openPackFlips]);
+  }, [
+    canRun,
+    openCompensatingDialog,
+    openPackFlips,
+    openPostCorrectionsDialog,
+  ]);
 
   useRegisterHeaderActions(headerActions);
 
@@ -59,6 +78,8 @@ export function SkuSlicesHeaderActions() {
     <SkuSlicesHeaderActionsView
       compensatingDialogOpen={compensatingDialogOpen}
       onCompensatingDialogOpenChange={setCompensatingDialogOpen}
+      postCorrectionsDialogOpen={postCorrectionsDialogOpen}
+      onPostCorrectionsDialogOpenChange={setPostCorrectionsDialogOpen}
       canRun={canRun}
     />
   );

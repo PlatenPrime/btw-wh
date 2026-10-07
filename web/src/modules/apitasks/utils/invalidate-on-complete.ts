@@ -14,6 +14,7 @@ export function getInvalidateQueryKeys(
 ): QueryKey[] {
   switch (kind) {
     case "sku-slices.skugr-run-today":
+    case "sku-slices.post-corrections.run":
     case "slice-compensation.run":
       return [["sku-slices"]];
 
