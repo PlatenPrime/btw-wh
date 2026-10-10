@@ -23,6 +23,9 @@ export function SkuSliceTableSkeleton() {
             <TableHead className="w-[1%] whitespace-nowrap text-right">
               Ціна
             </TableHead>
+            <TableHead className="w-[1%] whitespace-nowrap text-right">
+              Дія
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -42,6 +45,9 @@ export function SkuSliceTableSkeleton() {
               </TableCell>
               <TableCell className="text-right">
                 <Skeleton className="ml-auto h-4 w-14" />
+              </TableCell>
+              <TableCell className="text-right">
+                <Skeleton className="ml-auto h-8 w-28" />
               </TableCell>
             </TableRow>
           ))}

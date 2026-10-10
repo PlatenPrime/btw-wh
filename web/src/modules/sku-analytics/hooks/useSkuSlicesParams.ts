@@ -18,7 +18,6 @@ export function useSkuSlicesParams() {
   const konk = getParam(params, "konk", "");
   const dateParam = getParam(params, "date", "");
   const page = Number(getParam(params, "page", "1")) || 1;
-  const showInvalidOnly = getParam(params, "invalid", "") === "1";
 
   const date = useMemo(() => {
     const parsed = parseApiDate(dateParam);
@@ -34,21 +33,12 @@ export function useSkuSlicesParams() {
   const setPage = (newPage: number) =>
     updateSearchParams(params, { page: String(newPage) }, setParams);
 
-  const setShowInvalidOnly = (value: boolean) =>
-    updateSearchParams(
-      params,
-      { invalid: value ? "1" : "", page: "1" },
-      setParams,
-    );
-
   return {
     konk,
     date,
     page,
-    showInvalidOnly,
     setKonk,
     setDate,
     setPage,
-    setShowInvalidOnly,
   };
 }

@@ -2,7 +2,7 @@
 
 ## Описание модуля
 
-Модуль `slice-compensation` выполняет **повторный опрос** позиций в сегодняшних документах `AnalogSlice` и `SkuSlice`, где первичный скрапинг вернул недостоверные данные. Новые документы срезов не создаются — обновляются отдельные ключи в поле `data` существующего документа на текущую дату.
+Модуль `slice-compensation` выполняет **повторный опрос** позиций в сегодняшних `AnalogSlice` и точках `SkuSliceMonth`, где первичный скрапинг вернул недостоверные данные. Новые day-meta/month документы при необходимости upsert'ятся точечно — обновляется день `YYYY-MM-DD` у productId (SKU) или ключ в `AnalogSlice.data`.
 
 Тип модуля: **cron + thin HTTP** — ежедневный cron и один ADMIN POST для внеочередного запуска по одному конкуренту.
 
@@ -11,30 +11,31 @@
 | Целевая коллекция | Условие попадания в очередь | Источник refetch | Обновление |
 |-------------------|----------------------------|------------------|------------|
 | **AnalogSlice** | `stock === -1 && price === -1` | `getAnalogStockDataUtil` по `_id` аналога | если ответ не полный `-1/-1` |
-| **SkuSlice** | полный `-1/-1` **или** невалидная цена | `getSkuStockDataUtil` по `_id` SKU | если ответ не полный `-1/-1` |
+| **SkuSliceMonth** | полный `-1/-1` **или** невалидная цена | `getSkuStockDataUtil` по `_id` SKU | если ответ не полный `-1/-1` |
 
-Пропускаются: конкуренты из [`excludedCompetitors`](slices.md), отсутствующие Analog/Sku, неподдерживаемый konk. Air участвует в server compensation; дополнительно SKU Air можно дозаполнить через client-ingestion в [sku-slices](sku-slices.md).
+Пропускаются: конкуренты из `getCompensationExcludedCompetitorSet` (union [`excludedCompetitors`](slices.md) и `compensationExcludedCompetitors`), отсутствующие Analog/Sku, неподдерживаемый konk. **Air исключён из server compensation** (и cron 10:30, и ручной POST по `konkName=air` дают пустую очередь). Дозаполнение Air SKU — только client-ingestion в [sku-slices](sku-slices.md).
 
 ## Связи между модулями
 
-- **analog-slices / sku-slices** — целевые коллекции `AnalogSlice`, `SkuSlice` на `sliceDate = toSliceDate(new Date())`.
+- **analog-slices / sku-slices** — `AnalogSlice` и `SkuSliceMonth` на `sliceDate = toSliceDate(new Date())`.
 - **analogs / skus** — lookup сущностей и stock-утилиты (которые вызывают **browser**).
-- **slices** — конфиг исключений и семантика `-1`.
-- **sku-reporting** — jitter между запросами (`skuSliceRequestJitterMs`).
+- **slices** — конфиг исключений (cron + compensation-only) и семантика `-1`.
+- **sku-reporting** — jitter между запросами (`resolveSkuSliceRequestJitterMs`: дефолт 500–1500 мс, для `air` — 2000–5000 мс; на compensation air не попадает).
+- **analog-slices** — пауза первичного сбора analog (`resolveAnalogSliceRequestDelayMs`: дефолт 1000 мс, для `air` — 2000 мс); compensating analog/sku используют sku jitter-резолвер по `konkName` следующего item.
 
 ## Концепции и принятые решения
 
 ### Частичное обновление MongoDB
 
-Каждая успешная компенсация делает `$set: { [`data.${key}`]: { stock, price } }` — без перезаписи всего документа среза.
+Analog: `$set` ключа в `data`. SKU: upsert дня в `SkuSliceMonth.days.YYYY-MM-DD` — без перезаписи всего month-документа.
 
 ### Параллельность и последовательность
 
-В одном cron-tick (и в ручном запуске) analog и sku runs выполняются через `Promise.all`. Внутри каждого run позиции обрабатываются **последовательно** с jitter (как при первичном сборе SKU-срезов). По каждой позиции в лог пишется start/done цикла и результат refetch (`stock`, `price`, `updated`) — одинаково для cron и ручного запуска.
+В одном cron-tick (и в ручном запуске) analog и sku runs выполняются через `Promise.all`. Внутри каждого run позиции обрабатываются **последовательно** с jitter (как при первичном сборе SKU-срезов; диапазон зависит от `konkName` следующего item). По каждой позиции в лог пишется start/done цикла и результат refetch (`stock`, `price`, `updated`) — одинаково для cron и ручного запуска.
 
 ### Фильтр по конкуренту
 
-Утилиты принимают опциональный `konkName`: cron вызывает без фильтра (все документы дня), HTTP — только выбранный конкурент. Исключения из `excludedCompetitors` по-прежнему дают пустую очередь.
+Утилиты принимают опциональный `konkName`: cron вызывает без фильтра (все документы дня), HTTP — только выбранный конкурент. Исключения из `getCompensationExcludedCompetitorSet` дают пустую очередь (в т.ч. `air`).
 
 ### Ручной запуск и lock
 
@@ -60,8 +61,8 @@
 ### Контекст пайплайна срезов
 
 ```
-00:00  btrade-slices     → BtradeSlice
-~20:00 sku-slices cron   → SkuSlice (следующий киевский день)
+00:00  btrade-slices     → BtradeSliceMonth
+~20:00 sku-slices cron   → SkuSliceMonth + DayMeta (следующий киевский день)
          analog-slices   → AnalogSlice
 10:30  slice-compensation → повторный опрос -1/-1 в сегодняшних срезах
 ```

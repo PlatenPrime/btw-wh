@@ -7,25 +7,59 @@ export interface SkuSliceRowDto {
   sku: SkuDto | null;
 }
 
-export interface SkuSlicePagePayload {
+export interface SkuSliceRotationMetaDto {
+  cycleDays: number;
+  dayIndex: number;
+  dueCount: number;
+}
+
+export interface SkuSliceDayStatsDto {
+  filled: number;
+  invalid: number;
+  errorCount: number;
+  dueTotal?: number;
+  abortReason?: string;
+}
+
+export interface SkuSliceDayStatusDto {
+  konkName: string;
+  date: string;
+  rotationMeta: SkuSliceRotationMetaDto | null;
+  stats: SkuSliceDayStatsDto | null;
+  pointsTotal: number;
+  pointsInvalid: number;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface SkuSliceDayStatusResponseDto {
+  message: string;
+  data: SkuSliceDayStatusDto;
+}
+
+export interface GetSkuSliceDayStatusParams {
+  konkName: string;
+  date: string;
+  signal?: AbortSignal;
+}
+
+export interface SkuSliceDayInvalidPayload {
   konkName: string;
   date: string;
   items: SkuSliceRowDto[];
 }
 
-export interface SkuSlicePageResponseDto {
+export interface SkuSliceDayInvalidResponseDto {
   message: string;
-  data: SkuSlicePagePayload;
+  data: SkuSliceDayInvalidPayload;
   pagination: SkusPagination;
 }
 
-export interface GetSkuSlicePageParams {
+export interface GetSkuSliceDayInvalidParams {
   konkName: string;
   date: string;
   page: number;
   limit: number;
-  /** Якщо true — у запит додається isInvalid=true (лише проблемні позиції зрізу). */
-  showInvalidOnly?: boolean;
   signal?: AbortSignal;
 }
 

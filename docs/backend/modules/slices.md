@@ -14,6 +14,8 @@
 | [`config/sliceRotationByKonk.ts`](../../src/modules/slices/config/sliceRotationByKonk.ts) | Per-konk цикл среза (rotation): сколько дней и какой bucket сегодня |
 | [`config/competitorScrapeProfiles.ts`](../../src/modules/slices/config/competitorScrapeProfiles.ts) | Throttle-профили скрапинга по konk и типу run |
 | [`config/packFlipAutoApplyKonks.ts`](../../src/modules/slices/config/packFlipAutoApplyKonks.ts) | Конкуренты, для которых sku-slices cron делает pack-flip review с записью |
+| [`config/balunFakeStockSentinel.ts`](../../src/modules/slices/config/balunFakeStockSentinel.ts) | Inclusive диапазоны фейкового остатка balun (`4990–5000`, `9950–10000`), lookback и имя konk для post-pass коррекции |
+| [`config/svbumFakeStockThreshold.ts`](../../src/modules/slices/config/svbumFakeStockThreshold.ts) | Порог фейкового остатка svbum (`> 900000`), trailing grace, lookback и имя konk |
 | [`utils/sliceRotation.ts`](../../src/modules/slices/utils/sliceRotation.ts) | Bucket по `productId`, dayIndex по дате среза |
 | [`utils/competitorScrapeThrottle.ts`](../../src/modules/slices/utils/competitorScrapeThrottle.ts) | Resolve профилей и задержки между unit/page/group |
 | [`utils/enumerateSliceDates.ts`](../../src/modules/slices/utils/enumerateSliceDates.ts) | Перечисление UTC-дней в диапазоне `from…to` |
@@ -54,7 +56,7 @@
 
 ### Rotation server-срезов (SKU)
 
-Per-konk цикл в `sliceRotationByKonk` (сейчас пусто: Air без rotation, полный каталог за день). Bucket товара: `stableStringBucket(productId) % cycleDays`. Day index: календарный день Kyiv `% cycleDays`. Если у konk задан цикл — cron пишет в `SkuSlice.data` только due-bucket, `rotationMeta` на документе — observability, client-ingest фильтрует pending по тому же правилу.
+Per-konk цикл в `sliceRotationByKonk` (сейчас пусто: Air без rotation, полный каталог за день). Bucket товара: `stableStringBucket(productId) % cycleDays`. Day index: календарный день Kyiv `% cycleDays`. Если у konk задан цикл — cron пишет в `SkuSliceMonth` только due-bucket, `rotationMeta` на `SkuSliceDayMeta` — observability, client-ingest фильтрует pending по тому же правилу.
 
 ### Throttle скрапинга конкурентов
 
@@ -64,7 +66,7 @@ Per-konk цикл в `sliceRotationByKonk` (сейчас пусто: Air без 
 
 Детектор `detectPackFlipSpike` ищет кратную инверсию остатка и цены: произведение почти константа, скачки в противоположные стороны, целочисленный фактор ≥ 2. Множители остатка и цены могут разъехаться на округлении копеек — канонический фактор берётся с остатка, с цены только если у остатка нет целого. Это сбой единицы (фасовка vs штука), не продажа. Скачок только цены при остатке в пределах ±10% помечается отдельно без патча. Неоднозначные серии без возврата к одному масштабу не трогают.
 
-Конфиг `packFlipAutoApplyKonks` — кто получает авто-рескейл после ночных sku-срезов. Сейчас там `perfect`. Новый конкурент — строка в массиве, не копия runner'а. I/O документов `SkuSlice` живёт в sku-slices (`reviewPackFlipsUtil`); HTTP-проверка не пишет в Mongo.
+Конфиг `packFlipAutoApplyKonks` — кто получает авто-рескейл после ночных sku-срезов. Сейчас там `perfect`. Новый конкурент — строка в массиве, не копия runner'а. I/O точек `SkuSliceMonth` живёт в sku-slices (`reviewPackFlipsUtil`); HTTP-проверка не пишет в Mongo.
 
 ## Связи между модулями
 

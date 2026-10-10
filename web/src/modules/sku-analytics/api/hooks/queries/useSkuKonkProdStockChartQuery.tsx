@@ -33,8 +33,8 @@ export function useSkuKonkProdStockChartQuery({
 
   return useQuery({
     queryKey: [
-      "sku-slices",
-      "konk-prod-stock-chart",
+      "sku-chart-reports",
+      "konk-prod-stock",
       konk,
       prod,
       dateFrom,

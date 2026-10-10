@@ -18,7 +18,7 @@ export function useSkuKonkProdSkugrGroupsSalesQuery({
 }: UseSkuKonkProdSkugrGroupsSalesQueryParams) {
   return useQuery({
     queryKey: [
-      "sku-slices",
+      "sku-sales-reports",
       "konk-prod-skugr-groups-sales",
       konk,
       prod,

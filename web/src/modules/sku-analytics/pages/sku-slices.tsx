@@ -2,40 +2,41 @@ import { SidebarInsetLayout } from "@/components/layout/sidebar-inset-layout/Sid
 import { DataRefetchOverlay } from "@/components/shared/feedback/data-refetch-overlay/DataRefetchOverlay";
 import { PaginationControls } from "@/components/shared/controls";
 import { ErrorDisplay } from "@/components/shared/errors";
-import { LoadingNoData } from "@/components/shared/feedback/loading-states";
 import { SkuSlicesHeaderActions } from "@/modules/sku-analytics/components/actions/sku-slices-header-actions";
 import { SkuSlicesControls } from "@/modules/sku-analytics/components/controls/sku-slices-controls/SkuSlicesControls";
+import {
+  SkuSliceDayStatusContainer,
+  SkuSliceDayStatusSkeleton,
+} from "@/modules/sku-analytics/components/containers/sku-slice-day-status-container";
 import {
   SkuSliceTableContainer,
   SkuSliceTableSkeleton,
 } from "@/modules/sku-analytics/components/containers/sku-slice-table-container";
-import { useSkuSlicePageQuery } from "@/modules/sku-analytics/api/hooks/queries/useSkuSlicePageQuery";
+import { useSkuSliceDayInvalidQuery } from "@/modules/sku-analytics/api/hooks/queries/useSkuSliceDayInvalidQuery";
+import { useSkuSliceDayStatusQuery } from "@/modules/sku-analytics/api/hooks/queries/useSkuSliceDayStatusQuery";
 import { useSkuSlicesParams } from "@/modules/sku-analytics/hooks/useSkuSlicesParams";
-import { isAxiosError } from "axios";
+import { typography } from "@/lib/typography";
 
 const PAGE_LIMIT = 20;
 
 export function SkuSlices() {
-  const {
-    konk,
-    date,
-    page,
-    showInvalidOnly,
-    setKonk,
-    setDate,
-    setPage,
-    setShowInvalidOnly,
-  } = useSkuSlicesParams();
+  const { konk, date, page, setKonk, setDate, setPage } = useSkuSlicesParams();
 
-  const sliceQuery = useSkuSlicePageQuery({
+  const statusQuery = useSkuSliceDayStatusQuery({
+    konkName: konk,
+    date,
+  });
+
+  const invalidQuery = useSkuSliceDayInvalidQuery({
     konkName: konk,
     date,
     page,
     limit: PAGE_LIMIT,
-    showInvalidOnly,
   });
 
   const showForm = Boolean(konk);
+  const isStatusLoading = statusQuery.isLoading && !statusQuery.data;
+  const isInvalidLoading = invalidQuery.isLoading && !invalidQuery.data;
 
   return (
     <SidebarInsetLayout headerText="Зрізи конкурентів">
@@ -46,8 +47,6 @@ export function SkuSlices() {
           onKonkNameChange={setKonk}
           date={date}
           onDateChange={setDate}
-          showInvalidOnly={showInvalidOnly}
-          onShowInvalidOnlyChange={setShowInvalidOnly}
         />
 
         {!showForm && (
@@ -56,46 +55,58 @@ export function SkuSlices() {
           </p>
         )}
 
-        {showForm && sliceQuery.isLoading && !sliceQuery.data && (
-          <SkuSliceTableSkeleton />
+        {showForm && isStatusLoading && <SkuSliceDayStatusSkeleton />}
+
+        {showForm && statusQuery.isError && !statusQuery.data && (
+          <ErrorDisplay
+            error={statusQuery.error}
+            title="Помилка завантаження статусу"
+            description="Не вдалося завантажити статус денного прогону"
+          />
         )}
 
-        {showForm &&
-          sliceQuery.isError &&
-          !sliceQuery.data &&
-          isAxiosError(sliceQuery.error) &&
-          sliceQuery.error.response?.status === 404 && (
-            <LoadingNoData description="Зріз не знайдено" />
-          )}
-
-        {showForm &&
-          sliceQuery.isError &&
-          !sliceQuery.data &&
-          !(
-            isAxiosError(sliceQuery.error) &&
-            sliceQuery.error.response?.status === 404
-          ) && (
-            <ErrorDisplay
-              error={sliceQuery.error}
-              title="Помилка завантаження зрізу"
-              description="Не вдалося завантажити зріз SKU"
-            />
-          )}
-
-        {showForm && sliceQuery.data && (
+        {showForm && statusQuery.data && (
           <DataRefetchOverlay
-            isFetching={sliceQuery.isFetching}
-            isLoading={sliceQuery.isLoading}
+            isFetching={statusQuery.isFetching}
+            isLoading={statusQuery.isLoading}
           >
-            <div className="grid gap-2">
-              <PaginationControls
-                currentPage={sliceQuery.data.pagination.page}
-                totalPages={sliceQuery.data.pagination.totalPages}
-                onPageChange={setPage}
-              />
-              <SkuSliceTableContainer items={sliceQuery.data.data.items} />
-            </div>
+            <SkuSliceDayStatusContainer data={statusQuery.data.data} />
           </DataRefetchOverlay>
+        )}
+
+        {showForm && (
+          <div className="grid gap-2">
+            <h2 className={typography.sectionTitle}>Невалідні точки</h2>
+
+            {isInvalidLoading && <SkuSliceTableSkeleton />}
+
+            {invalidQuery.isError && !invalidQuery.data && (
+              <ErrorDisplay
+                error={invalidQuery.error}
+                title="Помилка завантаження invalid"
+                description="Не вдалося завантажити невалідні точки зрізу"
+              />
+            )}
+
+            {invalidQuery.data && (
+              <DataRefetchOverlay
+                isFetching={invalidQuery.isFetching}
+                isLoading={invalidQuery.isLoading}
+              >
+                <div className="grid gap-2">
+                  <PaginationControls
+                    currentPage={invalidQuery.data.pagination.page}
+                    totalPages={invalidQuery.data.pagination.totalPages}
+                    onPageChange={setPage}
+                  />
+                  <SkuSliceTableContainer
+                    items={invalidQuery.data.data.items}
+                    date={date}
+                  />
+                </div>
+              </DataRefetchOverlay>
+            )}
+          </div>
         )}
       </div>
     </SidebarInsetLayout>
