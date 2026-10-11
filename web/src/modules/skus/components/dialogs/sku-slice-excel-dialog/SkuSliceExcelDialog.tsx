@@ -1,5 +1,9 @@
 import { Dialog } from "@/components/ui/dialog";
-import { useStartExcelJob } from "@/modules/excel-jobs";
+import {
+  DEFAULT_SKU_STOCK_EXCEL_METRICS,
+  useStartExcelJob,
+  type SkuStockExcelMetric,
+} from "@/modules/excel-jobs";
 import type { SkuDto } from "@/modules/skus/api/types";
 import { format } from "date-fns";
 import type { DateRange } from "react-day-picker";
@@ -28,6 +32,9 @@ export function SkuSliceExcelDialog({
   const [dateRange, setDateRange] = useState<DateRange | undefined>(
     getDefaultDateRange,
   );
+  const [selectedMetrics, setSelectedMetrics] = useState<SkuStockExcelMetric[]>(
+    () => [...DEFAULT_SKU_STOCK_EXCEL_METRICS],
+  );
 
   const isControlled = controlledOpen !== undefined;
   const open = isControlled ? controlledOpen : internalOpen;
@@ -39,20 +46,32 @@ export function SkuSliceExcelDialog({
   const handleDownload = useCallback(async () => {
     const from = dateRange?.from;
     const to = dateRange?.to;
-    if (!from || !to || from > to) return;
+    if (!from || !to || from > to || selectedMetrics.length === 0) return;
     const dateFrom = format(from, "yyyy-MM-dd");
     const dateTo = format(to, "yyyy-MM-dd");
     try {
       const job = await startJob({
         kind: "sku-one-stock",
-        params: { skuId: sku._id, dateFrom, dateTo },
+        params: {
+          skuId: sku._id,
+          dateFrom,
+          dateTo,
+          metrics: selectedMetrics,
+        },
         title: `SKU залишки · ${sku.title || sku._id}`,
       });
       if (job) handleOpenChange(false);
     } catch {
       // toast in provider
     }
-  }, [sku._id, sku.title, dateRange, startJob, handleOpenChange]);
+  }, [
+    sku._id,
+    sku.title,
+    dateRange,
+    selectedMetrics,
+    startJob,
+    handleOpenChange,
+  ]);
 
   const handleCancel = useCallback(() => {
     handleOpenChange(false);
@@ -61,6 +80,7 @@ export function SkuSliceExcelDialog({
   useEffect(() => {
     if (open) {
       setDateRange(getDefaultDateRange());
+      setSelectedMetrics([...DEFAULT_SKU_STOCK_EXCEL_METRICS]);
     }
   }, [open]);
 
@@ -69,6 +89,8 @@ export function SkuSliceExcelDialog({
       <SkuSliceExcelDialogView
         dateRange={dateRange}
         onDateRangeChange={setDateRange}
+        selectedMetrics={selectedMetrics}
+        onSelectedMetricsChange={setSelectedMetrics}
         isDownloading={isStarting}
         onDownload={handleDownload}
         onCancel={handleCancel}

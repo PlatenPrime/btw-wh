@@ -5,12 +5,18 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Calendar } from "@/components/ui/calendar";
+import {
+  SkuStockExcelMetricsControl,
+  type SkuStockExcelMetric,
+} from "@/modules/excel-jobs";
 import type { DateRange } from "react-day-picker";
 import { typography } from "@/lib/typography";
 
 interface SkugrSliceExcelDialogViewProps {
   dateRange: DateRange | undefined;
   onDateRangeChange: (range: DateRange | undefined) => void;
+  selectedMetrics: readonly SkuStockExcelMetric[];
+  onSelectedMetricsChange: (metrics: SkuStockExcelMetric[]) => void;
   isDownloading: boolean;
   onDownload: () => void;
   onCancel: () => void;
@@ -19,6 +25,8 @@ interface SkugrSliceExcelDialogViewProps {
 export function SkugrSliceExcelDialogView({
   dateRange,
   onDateRangeChange,
+  selectedMetrics,
+  onSelectedMetricsChange,
   isDownloading,
   onDownload,
   onCancel,
@@ -27,6 +35,7 @@ export function SkugrSliceExcelDialogView({
   const to = dateRange?.to;
   const isRangeValid =
     from !== undefined && to !== undefined && from <= to;
+  const hasMetrics = selectedMetrics.length > 0;
 
   return (
     <DialogContent className="sm:max-w-[425px]">
@@ -35,9 +44,14 @@ export function SkugrSliceExcelDialogView({
       </DialogHeader>
       <div className="flex flex-col gap-4">
         <p className={typography.pageDescription}>
-          У файлі — усі SKU групи з метаданими та колонками по датах: рядки «Залишок»
-          і «Ціна», підсумковий рядок за групою.
+          Файл з усіма SKU групи за обраний період. Рядки метрик та підсумки —
+          згідно з вибраними метриками.
         </p>
+        <SkuStockExcelMetricsControl
+          value={selectedMetrics}
+          onChange={onSelectedMetricsChange}
+          disabled={isDownloading}
+        />
         <div className="flex justify-center">
           <Calendar
             mode="range"
@@ -53,7 +67,7 @@ export function SkugrSliceExcelDialogView({
           isSubmitting={isDownloading}
           submitText="Скачати"
           submitLoadingText="Постановка..."
-          isDisabled={!isRangeValid}
+          isDisabled={!isRangeValid || !hasMetrics}
           variant="default"
           className="justify-end"
         />

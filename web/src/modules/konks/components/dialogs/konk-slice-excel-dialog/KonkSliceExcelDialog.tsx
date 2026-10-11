@@ -1,5 +1,9 @@
 import { Dialog } from "@/components/ui/dialog";
-import { useStartExcelJob } from "@/modules/excel-jobs";
+import {
+  DEFAULT_SKU_STOCK_EXCEL_METRICS,
+  useStartExcelJob,
+  type SkuStockExcelMetric,
+} from "@/modules/excel-jobs";
 import { useKonksQuery } from "@/modules/konks/api/hooks/queries/useKonksQuery";
 import type { KonkDto } from "@/modules/konks/api/types";
 import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
@@ -34,6 +38,9 @@ export function KonkSliceExcelDialog({
   const [selectedProd, setSelectedProd] = useState("");
   const [selectedKonkName, setSelectedKonkName] = useState("");
   const [selectedSkugrIds, setSelectedSkugrIds] = useState<string[]>([]);
+  const [selectedMetrics, setSelectedMetrics] = useState<SkuStockExcelMetric[]>(
+    () => [...DEFAULT_SKU_STOCK_EXCEL_METRICS],
+  );
 
   const isControlled = controlledOpen !== undefined;
   const open = isControlled ? controlledOpen : internalOpen;
@@ -54,7 +61,16 @@ export function KonkSliceExcelDialog({
   const handleDownload = useCallback(async () => {
     const from = dateRange?.from;
     const to = dateRange?.to;
-    if (!from || !to || from > to || !selectedProd || !resolvedKonkName) return;
+    if (
+      !from ||
+      !to ||
+      from > to ||
+      !selectedProd ||
+      !resolvedKonkName ||
+      selectedMetrics.length === 0
+    ) {
+      return;
+    }
 
     const dateFrom = format(from, "yyyy-MM-dd");
     const dateTo = format(to, "yyyy-MM-dd");
@@ -66,6 +82,7 @@ export function KonkSliceExcelDialog({
           prod: selectedProd,
           dateFrom,
           dateTo,
+          metrics: selectedMetrics,
           ...(selectedSkugrIds.length ? { skugrIds: selectedSkugrIds } : {}),
         },
         title: `Konk залишки · ${resolvedKonkName}`,
@@ -78,6 +95,7 @@ export function KonkSliceExcelDialog({
     dateRange,
     selectedProd,
     selectedSkugrIds,
+    selectedMetrics,
     startJob,
     resolvedKonkName,
     handleOpenChange,
@@ -93,6 +111,7 @@ export function KonkSliceExcelDialog({
       setSelectedProd("");
       setSelectedKonkName("");
       setSelectedSkugrIds([]);
+      setSelectedMetrics([...DEFAULT_SKU_STOCK_EXCEL_METRICS]);
     }
   }, [open]);
 
@@ -134,6 +153,8 @@ export function KonkSliceExcelDialog({
         prods={prods}
         selectedSkugrIds={selectedSkugrIds}
         onSelectedSkugrIdsChange={setSelectedSkugrIds}
+        selectedMetrics={selectedMetrics}
+        onSelectedMetricsChange={setSelectedMetrics}
         isDownloading={isStarting}
         onDownload={handleDownload}
         onCancel={handleCancel}

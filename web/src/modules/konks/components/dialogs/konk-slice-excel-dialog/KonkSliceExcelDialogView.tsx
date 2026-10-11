@@ -9,6 +9,10 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Calendar } from "@/components/ui/calendar";
+import {
+  SkuStockExcelMetricsControl,
+  type SkuStockExcelMetric,
+} from "@/modules/excel-jobs";
 import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
 import { SKU_KONK_PROD_QUERY_ALL } from "@/modules/sku-analytics/constants";
@@ -29,6 +33,8 @@ interface KonkSliceExcelDialogViewProps {
   prods: ProdDto[];
   selectedSkugrIds: string[];
   onSelectedSkugrIdsChange: (ids: string[]) => void;
+  selectedMetrics: readonly SkuStockExcelMetric[];
+  onSelectedMetricsChange: (metrics: SkuStockExcelMetric[]) => void;
   isDownloading: boolean;
   onDownload: () => void;
   onCancel: () => void;
@@ -47,6 +53,8 @@ export function KonkSliceExcelDialogView({
   prods,
   selectedSkugrIds,
   onSelectedSkugrIdsChange,
+  selectedMetrics,
+  onSelectedMetricsChange,
   isDownloading,
   onDownload,
   onCancel,
@@ -55,7 +63,9 @@ export function KonkSliceExcelDialogView({
   const to = dateRange?.to;
   const isRangeValid = from !== undefined && to !== undefined && from <= to;
   const isKonkOk = !showKonkSelect || Boolean(selectedKonkName);
-  const isDownloadDisabled = !isRangeValid || !selectedProd || !isKonkOk;
+  const hasMetrics = selectedMetrics.length > 0;
+  const isDownloadDisabled =
+    !isRangeValid || !selectedProd || !isKonkOk || !hasMetrics;
 
   const skugrListReady = Boolean(resolvedKonkName);
   const prodNameForSkugrList =
@@ -69,8 +79,8 @@ export function KonkSliceExcelDialogView({
       <div className="flex flex-col gap-4">
         <p className={typography.pageDescription}>
           {showKonkSelect
-            ? "Оберіть конкурента, виробника та період. Файл буде сформований з endpoint sku-excel-reports/konk/stock."
-            : "Оберіть виробника та період. Файл буде сформований з endpoint sku-excel-reports/konk/stock."}
+            ? "Оберіть конкурента, виробника, метрики та період. Файл формується на backend."
+            : "Оберіть виробника, метрики та період. Файл формується на backend."}
         </p>
         {showKonkSelect ? (
           <div className="grid gap-2">
@@ -110,6 +120,11 @@ export function KonkSliceExcelDialogView({
             searchInputId="konk-slice-excel-skugr-search"
           />
         </div>
+        <SkuStockExcelMetricsControl
+          value={selectedMetrics}
+          onChange={onSelectedMetricsChange}
+          disabled={isDownloading}
+        />
         <div className="flex justify-center">
           <Calendar
             mode="range"
