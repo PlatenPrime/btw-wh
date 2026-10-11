@@ -16,6 +16,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Calendar } from "@/components/ui/calendar";
+import {
+  SkuSalesExcelMetricsControl,
+  type SkuSalesExcelMetric,
+} from "@/modules/excel-jobs";
 import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
 import { SKU_KONK_PROD_QUERY_ALL } from "@/modules/sku-analytics/constants";
@@ -40,6 +44,8 @@ interface KonkSalesExcelDialogViewProps {
   onSelectedSkugrIdsChange: (ids: string[]) => void;
   exportSort: KonkSalesExcelExportSort;
   onExportSortChange: (value: KonkSalesExcelExportSort) => void;
+  selectedMetrics: readonly SkuSalesExcelMetric[];
+  onSelectedMetricsChange: (metrics: SkuSalesExcelMetric[]) => void;
   isExporting: boolean;
   onDownload: () => void;
   onCancel: () => void;
@@ -60,6 +66,8 @@ export function KonkSalesExcelDialogView({
   onSelectedSkugrIdsChange,
   exportSort,
   onExportSortChange,
+  selectedMetrics,
+  onSelectedMetricsChange,
   isExporting,
   onDownload,
   onCancel,
@@ -68,7 +76,9 @@ export function KonkSalesExcelDialogView({
   const to = dateRange?.to;
   const isRangeValid = from !== undefined && to !== undefined && from <= to;
   const isKonkOk = !showKonkSelect || Boolean(selectedKonkName);
-  const isDownloadDisabled = !isRangeValid || !selectedProd || !isKonkOk;
+  const hasMetrics = selectedMetrics.length > 0;
+  const isDownloadDisabled =
+    !isRangeValid || !selectedProd || !isKonkOk || !hasMetrics;
 
   const skugrListReady = Boolean(resolvedKonkName);
   const prodNameForSkugrList =
@@ -141,6 +151,11 @@ export function KonkSalesExcelDialogView({
             </SelectContent>
           </Select>
         </div>
+        <SkuSalesExcelMetricsControl
+          value={selectedMetrics}
+          onChange={onSelectedMetricsChange}
+          disabled={isExporting}
+        />
         <div className="flex justify-center">
           <Calendar
             mode="range"

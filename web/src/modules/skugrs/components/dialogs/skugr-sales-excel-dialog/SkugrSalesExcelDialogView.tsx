@@ -5,12 +5,18 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Calendar } from "@/components/ui/calendar";
+import {
+  SkuSalesExcelMetricsControl,
+  type SkuSalesExcelMetric,
+} from "@/modules/excel-jobs";
 import type { DateRange } from "react-day-picker";
 import { typography } from "@/lib/typography";
 
 interface SkugrSalesExcelDialogViewProps {
   dateRange: DateRange | undefined;
   onDateRangeChange: (range: DateRange | undefined) => void;
+  selectedMetrics: readonly SkuSalesExcelMetric[];
+  onSelectedMetricsChange: (metrics: SkuSalesExcelMetric[]) => void;
   isExporting: boolean;
   onDownload: () => void;
   onCancel: () => void;
@@ -19,6 +25,8 @@ interface SkugrSalesExcelDialogViewProps {
 export function SkugrSalesExcelDialogView({
   dateRange,
   onDateRangeChange,
+  selectedMetrics,
+  onSelectedMetricsChange,
   isExporting,
   onDownload,
   onCancel,
@@ -27,6 +35,7 @@ export function SkugrSalesExcelDialogView({
   const to = dateRange?.to;
   const isRangeValid =
     from !== undefined && to !== undefined && from <= to;
+  const hasMetrics = selectedMetrics.length > 0;
 
   return (
     <DialogContent className="sm:max-w-[425px]">
@@ -35,9 +44,14 @@ export function SkugrSalesExcelDialogView({
       </DialogHeader>
       <div className="flex flex-col gap-4">
         <p className={typography.pageDescription}>
-          Файл з усіма SKU групи: рядки «Продажі», «Ціна», «Виручка» та загальні
-          підсумки за період.
+          Файл з усіма SKU групи за обраний період. Рядки метрик та підсумки —
+          згідно з вибраними метриками.
         </p>
+        <SkuSalesExcelMetricsControl
+          value={selectedMetrics}
+          onChange={onSelectedMetricsChange}
+          disabled={isExporting}
+        />
         <div className="flex justify-center">
           <Calendar
             mode="range"
@@ -53,7 +67,7 @@ export function SkugrSalesExcelDialogView({
           isSubmitting={isExporting}
           submitText="Скачати"
           submitLoadingText="Постановка..."
-          isDisabled={!isRangeValid}
+          isDisabled={!isRangeValid || !hasMetrics}
           variant="default"
           className="justify-end"
         />

@@ -5,12 +5,18 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Calendar } from "@/components/ui/calendar";
+import {
+  SkuSalesExcelMetricsControl,
+  type SkuSalesExcelMetric,
+} from "@/modules/excel-jobs";
 import type { DateRange } from "react-day-picker";
 import { typography } from "@/lib/typography";
 
 interface SkuSalesExcelDialogViewProps {
   dateRange: DateRange | undefined;
   onDateRangeChange: (range: DateRange | undefined) => void;
+  selectedMetrics: readonly SkuSalesExcelMetric[];
+  onSelectedMetricsChange: (metrics: SkuSalesExcelMetric[]) => void;
   isExporting: boolean;
   onDownload: () => void;
   onCancel: () => void;
@@ -19,6 +25,8 @@ interface SkuSalesExcelDialogViewProps {
 export function SkuSalesExcelDialogView({
   dateRange,
   onDateRangeChange,
+  selectedMetrics,
+  onSelectedMetricsChange,
   isExporting,
   onDownload,
   onCancel,
@@ -27,6 +35,7 @@ export function SkuSalesExcelDialogView({
   const to = dateRange?.to;
   const isRangeValid =
     from !== undefined && to !== undefined && from <= to;
+  const hasMetrics = selectedMetrics.length > 0;
 
   return (
     <DialogContent className="sm:max-w-[425px]">
@@ -38,6 +47,11 @@ export function SkuSalesExcelDialogView({
           Файл формується на backend та завантажується готовим Excel за обраний
           період.
         </p>
+        <SkuSalesExcelMetricsControl
+          value={selectedMetrics}
+          onChange={onSelectedMetricsChange}
+          disabled={isExporting}
+        />
         <div className="flex justify-center">
           <Calendar
             mode="range"
@@ -53,7 +67,7 @@ export function SkuSalesExcelDialogView({
           isSubmitting={isExporting}
           submitText="Скачати"
           submitLoadingText="Постановка..."
-          isDisabled={!isRangeValid}
+          isDisabled={!isRangeValid || !hasMetrics}
           variant="default"
           className="justify-end"
         />

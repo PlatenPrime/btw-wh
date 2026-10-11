@@ -1,5 +1,9 @@
 import { Dialog } from "@/components/ui/dialog";
-import { useStartExcelJob } from "@/modules/excel-jobs";
+import {
+  DEFAULT_SKU_SALES_EXCEL_METRICS,
+  useStartExcelJob,
+  type SkuSalesExcelMetric,
+} from "@/modules/excel-jobs";
 import { useKonksQuery } from "@/modules/konks/api/hooks/queries/useKonksQuery";
 import type { KonkDto } from "@/modules/konks/api/types";
 import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
@@ -39,6 +43,9 @@ export function KonkSalesExcelDialog({
   const [selectedSkugrIds, setSelectedSkugrIds] = useState<string[]>([]);
   const [exportSort, setExportSort] =
     useState<KonkSalesExcelExportSort>("default");
+  const [selectedMetrics, setSelectedMetrics] = useState<SkuSalesExcelMetric[]>(
+    () => [...DEFAULT_SKU_SALES_EXCEL_METRICS],
+  );
 
   const isControlled = controlledOpen !== undefined;
   const open = isControlled ? controlledOpen : internalOpen;
@@ -59,7 +66,16 @@ export function KonkSalesExcelDialog({
   const handleDownload = useCallback(async () => {
     const from = dateRange?.from;
     const to = dateRange?.to;
-    if (!from || !to || from > to || !selectedProd || !resolvedKonkName) return;
+    if (
+      !from ||
+      !to ||
+      from > to ||
+      !selectedProd ||
+      !resolvedKonkName ||
+      selectedMetrics.length === 0
+    ) {
+      return;
+    }
 
     const dateFrom = format(from, "yyyy-MM-dd");
     const dateTo = format(to, "yyyy-MM-dd");
@@ -77,6 +93,7 @@ export function KonkSalesExcelDialog({
           prod: selectedProd,
           dateFrom,
           dateTo,
+          metrics: selectedMetrics,
           ...(sortBy ? { sortBy } : {}),
           ...(selectedSkugrIds.length ? { skugrIds: selectedSkugrIds } : {}),
         },
@@ -90,6 +107,7 @@ export function KonkSalesExcelDialog({
     dateRange,
     selectedProd,
     selectedSkugrIds,
+    selectedMetrics,
     exportSort,
     startJob,
     resolvedKonkName,
@@ -107,6 +125,7 @@ export function KonkSalesExcelDialog({
       setSelectedKonkName("");
       setSelectedSkugrIds([]);
       setExportSort("default");
+      setSelectedMetrics([...DEFAULT_SKU_SALES_EXCEL_METRICS]);
     }
   }, [open]);
 
@@ -150,6 +169,8 @@ export function KonkSalesExcelDialog({
         onSelectedSkugrIdsChange={setSelectedSkugrIds}
         exportSort={exportSort}
         onExportSortChange={setExportSort}
+        selectedMetrics={selectedMetrics}
+        onSelectedMetricsChange={setSelectedMetrics}
         isExporting={isStarting}
         onDownload={handleDownload}
         onCancel={handleCancel}
