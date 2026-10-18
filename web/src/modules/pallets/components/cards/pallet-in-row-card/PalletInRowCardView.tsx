@@ -18,9 +18,7 @@ export function PalletInRowCardView({ pallet, rowId }: PalletInRowCardProps) {
     <GridTileCard
       className={cn(
         "h-full w-full gap-2 p-2",
-        pallet.isEmpty
-          ? "border-destructive/30 bg-destructive/10"
-          : "border-warning/30 bg-warning/10",
+        pallet.isEmpty && "border-destructive/40",
       )}
     >
       <CardHeader className="p-0">
@@ -30,7 +28,12 @@ export function PalletInRowCardView({ pallet, rowId }: PalletInRowCardProps) {
         >
           <span className={typography.gridTitle}>{pallet.title}</span>
           {pallet.isEmpty ? (
-            <span className={cn("rounded-md border border-muted-foreground bg-muted-foreground/10 px-1 font-semibold", typography.caption)}>
+            <span
+              className={cn(
+                "shrink-0 rounded-md border border-destructive/40 bg-destructive/10 px-1 font-semibold text-destructive",
+                typography.caption,
+              )}
+            >
               порожня
             </span>
           ) : null}
@@ -52,7 +55,9 @@ export function PalletInRowCardView({ pallet, rowId }: PalletInRowCardProps) {
             tone={pallet.isDef ? "warning" : "muted"}
             size="sm"
           />
-          <span className={typography.caption}>{pallet.isDef ? "Так" : "Ні"}</span>
+          <span className={typography.caption}>
+            {pallet.isDef ? "Так" : "Ні"}
+          </span>
         </div>
 
         {pallet.palgrId && pallet.palgrTitle ? (

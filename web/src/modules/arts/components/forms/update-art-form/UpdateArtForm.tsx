@@ -1,5 +1,7 @@
 import { DialogActions } from "@/components/shared/dialogs";
 import { FormErrorDisplay } from "@/components/shared/errors";
+import { EntityLabel } from "@/components/shared/entities/entity-label";
+import { Input } from "@/components/ui/input";
 import { InputQuant } from "@/components/ui/input-quant";
 import { Label } from "@/components/ui/label";
 import {
@@ -9,15 +11,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { typography } from "@/lib/typography";
 import { usePatchArtMutation } from "@/modules/arts/api/hooks/mutations/usePatchArtMutation";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
-import { EntityLabel } from "@/components/shared/entities/entity-label";
 import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { updateArtSchema, type UpdateArtFormData } from "./schema";
-import { typography } from "@/lib/typography";
 
 /** Значення Select для порожнього prodName (скидання в БД) */
 const CLEAR_PROD_SELECT_VALUE = "__clear__";
@@ -40,6 +41,8 @@ export function UpdateArtForm({
     defaultValues: {
       limit: artData.limit ?? 0,
       prodName: artData.prodName ?? "",
+      bar: artData.bar ?? "",
+      boxbar: artData.boxbar ?? "",
     },
   });
 
@@ -55,7 +58,12 @@ export function UpdateArtForm({
     try {
       await patchMutation.mutateAsync({
         id: artData._id,
-        data: { limit: data.limit, prodName: data.prodName },
+        data: {
+          limit: data.limit,
+          prodName: data.prodName,
+          bar: data.bar,
+          boxbar: data.boxbar,
+        },
       });
       onSuccess();
     } catch (error) {
@@ -69,6 +77,7 @@ export function UpdateArtForm({
 
   const {
     handleSubmit,
+    register,
     setValue,
     watch,
     formState: { errors },
@@ -163,6 +172,34 @@ export function UpdateArtForm({
         {errors.prodName && (
           <p className={typography.formError}>{errors.prodName.message}</p>
         )}
+      </div>
+
+      <div className="grid gap-2">
+        <Label htmlFor="art-bar">Штрихкод</Label>
+        <Input
+          id="art-bar"
+          placeholder="Штрихкод артикула"
+          aria-invalid={!!errors.bar}
+          disabled={isSubmitting}
+          {...register("bar")}
+        />
+        {errors.bar ? (
+          <p className={typography.formError}>{errors.bar.message}</p>
+        ) : null}
+      </div>
+
+      <div className="grid gap-2">
+        <Label htmlFor="art-boxbar">Штрихкод коробки</Label>
+        <Input
+          id="art-boxbar"
+          placeholder="Штрихкод коробки"
+          aria-invalid={!!errors.boxbar}
+          disabled={isSubmitting}
+          {...register("boxbar")}
+        />
+        {errors.boxbar ? (
+          <p className={typography.formError}>{errors.boxbar.message}</p>
+        ) : null}
       </div>
 
       {errors.root && (

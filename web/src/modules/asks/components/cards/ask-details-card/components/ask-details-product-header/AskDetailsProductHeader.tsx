@@ -1,7 +1,9 @@
-import { ArtDialogImage } from "@/modules/arts/components/dialogs/art-dialog-image/ArtDialogImage";
+import { CardTitle } from "@/components/ui/card";
+import { typography } from "@/lib/typography";
 import type { AskDto } from "@/modules/asks/api/types/dto";
+import { ArtDialogImage } from "@/modules/arts/components/dialogs/art-dialog-image/ArtDialogImage";
 import { AskStatusBage } from "@/modules/asks/components/elements/ask-status-bage/AskStatusBage";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 interface AskDetailsProductHeaderProps {
   artikul: string;
@@ -9,32 +11,44 @@ interface AskDetailsProductHeaderProps {
   status: AskDto["status"];
 }
 
+function getAskDisplayName(artikul: string, nameukr?: string): string | null {
+  const trimmed = nameukr?.trim();
+  if (!trimmed) return null;
+
+  if (trimmed.startsWith(artikul)) {
+    const rest = trimmed.slice(artikul.length).trim();
+    return rest.length > 0 ? rest : null;
+  }
+
+  return trimmed;
+}
+
 export function AskDetailsProductHeader({
   artikul,
   nameukr,
   status,
 }: AskDetailsProductHeaderProps) {
-  const productName = nameukr ? nameukr.slice(10) : artikul;
+  const displayName = getAskDisplayName(artikul, nameukr);
 
   return (
-    <div className="flex items-start justify-between gap-3 p-4">
-      <div className="flex min-w-0 flex-1 items-start gap-3">
-        <div className="border-border/60 bg-muted ring-border/40 flex size-14 shrink-0 items-center justify-center overflow-hidden rounded-lg border ring-1 [&_img]:size-12">
-          <ArtDialogImage artikul={artikul} />
-        </div>
-        <div className="grid min-w-0 flex-1 gap-1">
-          <Link
-            to={`/arts/${artikul}`}
-            className="text-sm font-semibold tracking-tight hover:underline"
-          >
-            {artikul}
+    <div className="flex min-w-0 items-start justify-between gap-3">
+      <div className="flex min-w-0 flex-1 items-start gap-4">
+        <ArtDialogImage
+          artikul={artikul}
+          imageClassName="size-16 shrink-0 rounded-lg border border-border sm:size-20"
+        />
+        <div className="grid min-w-0 flex-1 gap-2">
+          <Link to={`/arts/${artikul}`} className="hover:underline">
+            <CardTitle className={typography.detailTitle}>{artikul}</CardTitle>
           </Link>
-          <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
-            {productName}
-          </p>
+          {displayName ? (
+            <p className={typography.detailSubtitle}>{displayName}</p>
+          ) : null}
         </div>
       </div>
-      <AskStatusBage statusText={status} />
+      <div className="shrink-0">
+        <AskStatusBage statusText={status} />
+      </div>
     </div>
   );
 }

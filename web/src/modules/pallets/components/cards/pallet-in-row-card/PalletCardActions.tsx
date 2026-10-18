@@ -2,9 +2,11 @@ import {
   CardActionsMenu,
   type CardAction,
 } from "@/components/shared/actions/card-actions";
+import { useRole } from "@/modules/auth/hooks/useRole";
 import type { PalletShortDto } from "@/modules/pallets/api/types";
+import { ChangePalletGroupDialog } from "@/modules/pallets/components/dialogs/change-pallet-group-dialog/ChangePalletGroupDialog";
 import { UpdatePalletDialogView } from "@/modules/pallets/components/dialogs/update-pallet-dialog/UpdatePalletDialogView";
-import { Edit } from "lucide-react";
+import { Edit, Layers } from "lucide-react";
 import { useState } from "react";
 
 interface PalletCardActionsProps {
@@ -13,7 +15,10 @@ interface PalletCardActionsProps {
 }
 
 export function PalletCardActions({ pallet, rowId }: PalletCardActionsProps) {
+  const { isAdmin } = useRole();
+  const canChangeGroup = isAdmin();
   const [isEditOpen, setIsEditOpen] = useState(false);
+  const [isChangeGroupOpen, setIsChangeGroupOpen] = useState(false);
 
   const handleEditSuccess = () => {
     setIsEditOpen(false);
@@ -31,9 +36,17 @@ export function PalletCardActions({ pallet, rowId }: PalletCardActionsProps) {
       variant: "default",
       onClick: () => setIsEditOpen(true),
     },
-    // Пока оставляем только редактирование, остальные действия можно добавить позже
-    // если потребуется
   ];
+
+  if (canChangeGroup) {
+    actions.push({
+      id: "change-group",
+      label: "Змінити групу",
+      icon: Layers,
+      variant: "default",
+      onClick: () => setIsChangeGroupOpen(true),
+    });
+  }
 
   return (
     <>
@@ -44,7 +57,6 @@ export function PalletCardActions({ pallet, rowId }: PalletCardActionsProps) {
         align="end"
       />
 
-      {/* Controlled dialog */}
       <UpdatePalletDialogView
         open={isEditOpen}
         setOpen={setIsEditOpen}
@@ -53,6 +65,16 @@ export function PalletCardActions({ pallet, rowId }: PalletCardActionsProps) {
         onSuccess={handleEditSuccess}
         onCancel={handleEditCancel}
       />
+
+      {canChangeGroup ? (
+        <ChangePalletGroupDialog
+          open={isChangeGroupOpen}
+          onOpenChange={setIsChangeGroupOpen}
+          palletId={pallet._id}
+          palletTitle={pallet.title}
+          currentGroupId={pallet.palgrId}
+        />
+      ) : null}
     </>
   );
 }

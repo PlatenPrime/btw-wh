@@ -7,7 +7,6 @@ import { PosCardActions } from "@/modules/poses/components/cards/pos-in-pallet-c
 import { PosInfoItem } from "@/modules/poses/components/cards/pos-in-pallet-card/components/pos-info-item/PosInfoItem";
 
 import { ArtikulImageLink } from "@/components/shared/media/artikul-image-link/ArtikulImageLink";
-import { cn } from "@/lib/utils";
 import type { IPos } from "@/modules/poses/api/types";
 
 interface PosInPalletCardProps {
@@ -37,19 +36,11 @@ export function PosInPalletCardView({
             icon={Package}
             tone={pos.boxes === 0 ? "destructive" : "info"}
             value={pos.boxes || 0}
-            className={cn(
-              pos.boxes === 0 &&
-                "bg-destructive/10 text-destructive hover:bg-destructive/20",
-            )}
           />
           <PosInfoItem
             icon={Circle}
             tone={pos.quant === 0 ? "destructive" : "success"}
             value={pos.quant || 0}
-            className={cn(
-              pos.quant === 0 &&
-                "bg-destructive/10 text-destructive hover:bg-destructive/20",
-            )}
           />
         </div>
       </CardContent>

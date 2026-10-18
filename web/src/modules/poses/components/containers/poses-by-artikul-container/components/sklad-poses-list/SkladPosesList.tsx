@@ -1,7 +1,9 @@
-import { memo } from "react";
-import { Virtuoso } from "react-virtuoso";
+import { DetailPanelCard } from "@/components/shared/cards";
+import { typography } from "@/lib/typography";
 import type { PosResponse, WarehouseData } from "@/modules/poses/api/types";
 import { Circle, Package } from "lucide-react";
+import { memo } from "react";
+import { Virtuoso } from "react-virtuoso";
 
 interface SkladPosesListProps {
   skladData: WarehouseData;
@@ -19,58 +21,58 @@ export const SkladPosesList = memo(function SkladPosesList({
   renderPos,
   additionalProps,
 }: SkladPosesListProps) {
-  if (!skladData.poses?.length)
+  if (!skladData.poses?.length) {
     return (
-      <p className="text-muted-foreground text-center font-semibold">
-        На складі {title} немає позицій з цим артикулом
-      </p>
+      <DetailPanelCard className="grid gap-2 p-4 sm:p-5">
+        <h3 className={typography.sectionTitle}>{title}</h3>
+        <p className="text-muted-foreground text-center text-sm font-medium">
+          На складі {title} немає позицій з цим артикулом
+        </p>
+      </DetailPanelCard>
     );
+  }
 
   const shouldVirtualize = skladData.poses.length >= 50;
 
   return (
-    <div className="grid gap-2">
-      <div className="grid grid-cols-3">
-        <h3 className="pl-4 font-semibold">{title}</h3>
+    <DetailPanelCard className="grid gap-3 p-4 sm:p-5">
+      <div className="grid grid-cols-3 items-center gap-2">
+        <h3 className={typography.sectionTitle}>{title}</h3>
         <div className="flex items-center justify-center gap-1 font-semibold">
-          <Package className="h-3 w-3" />
+          <Package className="size-3" />
           <span>{skladData.boxes || 0}</span>
         </div>
-        <div className="flex items-center justify-end gap-1 pr-2 font-semibold">
-          <Circle className="h-3 w-3" />
+        <div className="flex items-center justify-end gap-1 font-semibold">
+          <Circle className="size-3" />
           <span>{skladData.quant || 0}</span>
         </div>
       </div>
 
-      {skladData.poses?.length > 0 && (
-        <>
-          {shouldVirtualize ? (
-            <Virtuoso
-              data={skladData.poses}
-              itemContent={(_index, pos) => (
-                <div className="mb-4">
-                  {renderPos(
-                    { exists: true, message: "", data: pos },
-                    additionalProps,
-                  )}
-                </div>
+      {shouldVirtualize ? (
+        <Virtuoso
+          data={skladData.poses}
+          itemContent={(_index, pos) => (
+            <div className="mb-4">
+              {renderPos(
+                { exists: true, message: "", data: pos },
+                additionalProps,
               )}
-              style={{ height: "400px" }}
-            />
-          ) : (
-            <div className="grid gap-4">
-              {skladData.poses?.map((pos) => (
-                <div key={pos._id}>
-                  {renderPos(
-                    { exists: true, message: "", data: pos },
-                    additionalProps,
-                  )}
-                </div>
-              ))}
             </div>
           )}
-        </>
+          style={{ height: "400px" }}
+        />
+      ) : (
+        <div className="grid gap-4">
+          {skladData.poses.map((pos) => (
+            <div key={pos._id}>
+              {renderPos(
+                { exists: true, message: "", data: pos },
+                additionalProps,
+              )}
+            </div>
+          ))}
+        </div>
       )}
-    </div>
+    </DetailPanelCard>
   );
 });

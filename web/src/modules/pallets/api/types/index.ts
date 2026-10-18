@@ -20,18 +20,34 @@ export interface PalletRowData {
   title: string;
 }
 
+export interface PalletGroupRef {
+  id: string;
+  title: string;
+}
+
 export interface IPallet {
   _id: string;
   title: string;
   row: string;
   rowData: PalletRowData;
   poses: IPos[];
-  sector?: string;
+  sector?: string | number;
   isDef: boolean;
   /** Приходить з API для коротких списків (наприклад pallet-groups); у повному GET /pallets може бути відсутнє */
   isEmpty?: boolean;
+  /** Кешована паллетна група (GET паллети / PATCH pallet-group) */
+  palgr?: PalletGroupRef;
   createdAt?: string;
   updatedAt?: string;
+}
+
+export interface SetPalletGroupDto {
+  groupId: string;
+}
+
+export interface SetPalletGroupResponse {
+  message: string;
+  data: IPallet;
 }
 
 export interface RowData {

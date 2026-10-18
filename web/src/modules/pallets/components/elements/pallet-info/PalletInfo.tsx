@@ -13,7 +13,19 @@ export function PalletInfo({ pallet }: PalletInfoProps) {
     0,
   );
 
+  const palgrId =
+    typeof pallet.palgr?.id === "string"
+      ? pallet.palgr.id
+      : pallet.palgr?.id != null
+        ? String(pallet.palgr.id)
+        : undefined;
+
   return (
-    <PalletInfoView totalPositions={totalPositions} totalBoxes={totalBoxes} />
+    <PalletInfoView
+      totalPositions={totalPositions}
+      totalBoxes={totalBoxes}
+      palgrId={palgrId}
+      palgrTitle={pallet.palgr?.title}
+    />
   );
 }

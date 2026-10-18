@@ -1,4 +1,4 @@
-import { SurfaceSection } from "@/components/shared/layout";
+import { DetailPanelCard } from "@/components/shared/cards";
 import { Button } from "@/components/ui/button";
 import type { PalletResponse } from "@/modules/pallets/api/types";
 import { PalletInfo } from "@/modules/pallets/components/elements/pallet-info/PalletInfo";
@@ -26,28 +26,34 @@ export function PalletContainerView({
 }: PalletContainerViewProps) {
   return (
     <div className="grid gap-2">
-      <SurfaceSection className="grid gap-2">
-        <div className="grid place-content-center gap-2 md:grid-cols-3">
-          <PalletSortControls
-            sortParams={sortParams}
-            onSortParamsChange={onSortParamsChange}
-          />
-          <PalletInfo pallet={pallet.data!} />
+      <DetailPanelCard className="p-3 sm:p-4">
+        <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
+          <div className="flex w-full justify-start sm:order-2 sm:min-w-0 sm:w-auto sm:flex-1 sm:justify-center">
+            <PalletInfo pallet={pallet.data!} />
+          </div>
 
-          <CreatePosDialog
-            pallet={pallet.data!}
-            onSuccess={handlePosCreated}
-            trigger={
-              <Button
-                variant="outline"
-                className="w-fit justify-self-center md:justify-self-end"
-              >
-                + Додати позицію
-              </Button>
-            }
-          />
+          <div className="flex w-full items-center justify-between gap-3 sm:contents">
+            <div className="sm:order-1">
+              <PalletSortControls
+                sortParams={sortParams}
+                onSortParamsChange={onSortParamsChange}
+              />
+            </div>
+
+            <div className="shrink-0 sm:order-3">
+              <CreatePosDialog
+                pallet={pallet.data!}
+                onSuccess={handlePosCreated}
+                trigger={
+                  <Button variant="outline" className="w-fit shrink-0">
+                    + Додати позицію
+                  </Button>
+                }
+              />
+            </div>
+          </div>
         </div>
-      </SurfaceSection>
+      </DetailPanelCard>
 
       <PosesByPalletFetcher
         palletId={pallet.data!._id}

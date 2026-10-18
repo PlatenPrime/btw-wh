@@ -46,6 +46,10 @@
 
 Операции создания, обновления и перемещения паллет выполняются в рамках MongoDB транзакций. Это гарантирует целостность данных между рядами, паллетами и позициями.
 
+### Принадлежность к паллетной группе
+
+Принадлежность паллеты к группе можно менять не только со стороны модуля `pallet-groups`, но и со стороны паллеты: эндпоинт `PATCH /api/pallets/:id/pallet-group` принимает `groupId`, отвязывает паллету от прежней группы (если была), добавляет в конец списка целевой группы и пересчитывает сектора. Это нужно для UI страницы ряда, где правка идёт по id паллеты.
+
 ## API эндпоинты
 
 ### GET `/api/pallets`
@@ -53,9 +57,11 @@
 Получение всех паллет.
 
 **Запрос:**
+
 - Query параметры отсутствуют
 
 **Ответ:**
+
 - 200: `Array<Pallet>`
 - 500: `{ message: string, error?: any }` - ошибка сервера
 
@@ -66,9 +72,11 @@
 Получение всех пустых паллет (без позиций).
 
 **Запрос:**
+
 - Query параметры отсутствуют
 
 **Ответ:**
+
 - 200: `Array<Pallet>`
 - 500: `{ message: string, error?: any }` - ошибка сервера
 
@@ -79,9 +87,11 @@
 Получение всех паллет ряда.
 
 **Запрос:**
+
 - Path параметры: `rowId` (MongoDB ObjectId)
 
 **Ответ:**
+
 - 200: `Array<Pallet>`
 - 400: `{ message: string, errors?: array }` - неверный формат ID
 - 500: `{ message: string, error?: any }` - ошибка сервера
@@ -93,9 +103,11 @@
 Получение паллеты по названию.
 
 **Запрос:**
+
 - Path параметры: `title` (string)
 
 **Ответ:**
+
 - 200: `Pallet`
 - 400: `{ message: string, errors?: array }` - название не указано
 - 404: `{ message: string }` - паллета не найдена
@@ -108,9 +120,11 @@
 Получение паллеты по идентификатору.
 
 **Запрос:**
+
 - Path параметры: `id` (MongoDB ObjectId)
 
 **Ответ:**
+
 - 200: `Pallet`
 - 400: `{ message: string, errors?: array }` - неверный формат ID
 - 404: `{ message: string }` - паллета не найдена
@@ -123,9 +137,11 @@
 Создание новой паллеты.
 
 **Запрос:**
+
 - Body: `{ title: string, rowData: { _id: string, title: string }, sector?: string, isDef?: boolean }`
 
 **Ответ:**
+
 - 201: `Pallet`
 - 400: `{ message: string, errors?: array }` - ошибка валидации
 - 404: `{ message: string }` - ряд не найден
@@ -139,9 +155,11 @@
 Перемещение всех позиций с одной паллеты на другую.
 
 **Запрос:**
+
 - Body: `{ sourcePalletId: string, targetPalletId: string }`
 
 **Ответ:**
+
 - 200: `{ message: string, targetPallet: Pallet }`
 - 400: `{ message: string, errors?: array }` - ошибка валидации или целевая паллета не пуста, или исходная паллета пуста
 - 404: `{ message: string }` - паллета или ряд не найдены
@@ -154,14 +172,34 @@
 Обновление паллеты.
 
 **Запрос:**
+
 - Path параметры: `id` (MongoDB ObjectId)
 - Body: `{ title?: string, rowData?: { _id: string, title: string }, sector?: string, isDef?: boolean }` (все поля опциональны)
 
 **Ответ:**
+
 - 200: `Pallet`
 - 400: `{ message: string, errors?: array }` - ошибка валидации
 - 404: `{ message: string }` - паллета или ряд не найдены
 - 409: `{ message: string }` - паллета с таким названием уже существует
+- 500: `{ message: string, error?: any }` - ошибка сервера
+
+**Доступ:** Требует роль ADMIN
+
+### PATCH `/api/pallets/:id/pallet-group`
+
+Привязка или перенос паллеты в паллетную группу (append в конец списка группы, пересчёт секторов).
+
+**Запрос:**
+
+- Path параметры: `id` (MongoDB ObjectId паллеты)
+- Body: `{ groupId: string }` (MongoDB ObjectId группы)
+
+**Ответ:**
+
+- 200: `{ message: string, data: Pallet }`
+- 400: `{ message: string, errors?: array }` - ошибка валидации
+- 404: `{ message: string }` - паллета или группа не найдены
 - 500: `{ message: string, error?: any }` - ошибка сервера
 
 **Доступ:** Требует роль ADMIN
@@ -171,9 +209,11 @@
 Удаление паллеты.
 
 **Запрос:**
+
 - Path параметры: `id` (MongoDB ObjectId)
 
 **Ответ:**
+
 - 200: `Pallet`
 - 400: `{ message: string, errors?: array }` - неверный формат ID
 - 404: `{ message: string }` - паллета не найдена
@@ -188,9 +228,11 @@
 Удаление всех позиций паллеты.
 
 **Запрос:**
+
 - Path параметры: `id` (MongoDB ObjectId)
 
 **Ответ:**
+
 - 200: `{ message: string, deletedCount: number }`
 - 400: `{ message: string, errors?: array }` - неверный формат ID
 - 404: `{ message: string }` - паллета не найдена
@@ -203,9 +245,11 @@
 Удаление всех пустых позиций паллеты (с количеством 0).
 
 **Запрос:**
+
 - Path параметры: `id` (MongoDB ObjectId)
 
 **Ответ:**
+
 - 200: `{ message: string, deletedCount: number }`
 - 400: `{ message: string, errors?: array }` - неверный формат ID
 - 404: `{ message: string }` - паллета не найдена
@@ -249,4 +293,3 @@
   palgrTitle?: string;            // название группы паллет
 }
 ```
-

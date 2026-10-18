@@ -16,7 +16,7 @@ alwaysApply: false
 - Градиенты: `color-mix(in oklch, var(--token) …)` или CSS vars `--gradient-*`.
 - Кнопки: бизнес-действия — semantic filled (`default`, `success`, `edit`, `info`, `destructive`); `ghost` только toolbar.
 - Карточки: паттерны `GridTileCard`, `ListRowCard`, `DetailPanelCard` из `@/components/shared/cards/`.
-- Layout: контент в `Page` / `PageSection`; секции списков — `SurfaceSection` (бывший `Wrapper`).
+- Layout: контент в `Page` / `PageSection`; секции списков — `SurfaceSection` (layout-only по умолчанию, без glass; визуал у карточек).
 
 ## Скелетоны
 

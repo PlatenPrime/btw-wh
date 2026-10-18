@@ -1,14 +1,15 @@
+import { DetailPanelCard } from "@/components/shared/cards";
 import { Skeleton } from "@/components/ui/skeleton";
 
 function SkladPosesListSkeleton({ rows }: { rows: number }) {
   return (
-    <div className="grid gap-2">
-      <div className="grid grid-cols-3">
-        <Skeleton className="h-5 w-16 pl-4" />
+    <DetailPanelCard className="grid gap-3 p-4 sm:p-5">
+      <div className="grid grid-cols-3 items-center gap-2">
+        <Skeleton className="h-5 w-16" />
         <div className="flex items-center justify-center">
           <Skeleton className="h-5 w-8" />
         </div>
-        <div className="flex items-center justify-end pr-2">
+        <div className="flex items-center justify-end">
           <Skeleton className="h-5 w-8" />
         </div>
       </div>
@@ -17,7 +18,7 @@ function SkladPosesListSkeleton({ rows }: { rows: number }) {
           <Skeleton key={index} className="h-8 w-full rounded-md" />
         ))}
       </div>
-    </div>
+    </DetailPanelCard>
   );
 }
 

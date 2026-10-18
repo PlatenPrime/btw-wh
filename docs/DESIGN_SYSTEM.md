@@ -56,9 +56,9 @@ Frosted glass: полупрозрачный фон + `backdrop-filter` + тон�
 | `glass-inset` | Вложенные панели в карточке |
 | `glass-overlay` | Modal / popover / menu |
 | `glass-panel` | Filter bar, toolbar-панели |
-| `glass-section` | `SurfaceSection` (`default`, `subtle`) |
+| `glass-section` | Opt-in оболочка `SurfaceSection` (`variant="default"` / `"subtle"`) |
 
-**Правила:** не дублировать `backdrop-blur` в модулях — только utilities. `Card variant="ghost"` — без glass. `SurfaceSection variant="none"` — без оболочки (чистая grid).
+**Правила:** не дублировать `backdrop-blur` в модулях — только utilities. `Card variant="ghost"` — без glass. `SurfaceSection` по умолчанию — **layout-only** (`variant="none"`): только grid/flex/gap, без glass/border/padding; визуал у `*Card` / `DetailPanelCard`. Opt-in shell — явно `variant="default"` или `"subtle"`.
 
 **Доступность:** `@media (prefers-reduced-transparency: reduce)` и `@supports not (backdrop-filter)` — непрозрачный fallback на `var(--card)` / `var(--popover)`. Вторичный текст на overlay — `--muted-foreground` (light L≈0.37, dark L≈0.80); не ослаблять непрозрачность `--glass-overlay-bg` без проверки контраста на модалах.
 
@@ -171,9 +171,10 @@ Glass читается на **surface-0 с ambient-градиентом**, не 
 
 ### `SurfaceSection` и grid
 
-- `className` (в т.ч. `grid`, `grid-cols-*`, `flex`, `gap-*`) применяется к **content-layer** (внутренний `z-10`), не к декоративной оболочке — дочерние карточки становятся grid-items.
-- Оболочку (border, padding секции) переопределять через `surfaceClassName`, вариант — `variant` (`default` | `subtle` | `none`).
-- Сетка **без** glass-фона: `variant="none"` или grid на отдельном элементе (`<ul className="grid ...">` + `<li className="flex">` + `GridTileCard className="h-full w-full"`), как в `RowsGridView`.
+- **По умолчанию layout-only** (`none`): без glass, border, padding и glow — секция организует layout, не рисует «коробку».
+- `className` (в т.ч. `grid`, `grid-cols-*`, `flex`, `gap-*`) применяется к **content-layer** (внутренний `z-10`) — дочерние карточки становятся grid-items.
+- Визуальную оболочку включать явно: `variant="default"` | `"subtle"`; переопределение shell — `surfaceClassName`.
+- Сетка карточек: `SurfaceSection` + `grid` или отдельный элемент (`<ul className="grid ...">` + `<li className="flex">` + `GridTileCard className="h-full w-full"`), как в `RowsGridView`. Контент, который иначе «висит», оборачивать в `DetailPanelCard` / pattern-карточки.
 - Паллеты / poses в ряду: `grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4`.
 
 ## Card patterns (`components/shared/cards/`)
@@ -214,7 +215,7 @@ Glass читается на **surface-0 с ambient-градиентом**, не 
 
 Hardcoded gray/white — **устранены** (2025-05). При добавлении UI сверяться с lint gate выше.
 
-`SurfaceSection` используется в модульных списках/контейнерах — единая точка для section-background. Импорт: `@/components/shared/wrappers/SurfaceSection`.
+`SurfaceSection` — layout-обёртка модульных списков/контейнеров (по умолчанию без фона). Импорт: `@/components/shared/layout`.
 
 ## Импорты
 

@@ -4,6 +4,8 @@ import type { ArtDto } from "@/modules/arts/api/types/dto";
 export interface PatchArtRequest {
   limit?: number;
   prodName?: string;
+  bar?: string;
+  boxbar?: string;
 }
 
 export const patchArtById = async (

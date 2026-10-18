@@ -10,6 +10,7 @@ interface ArtMetricFieldRowProps {
   tone?: IconWellTone;
   label: string;
   value: ReactNode;
+  className?: string;
 }
 
 export function ArtMetricFieldRow({
@@ -17,6 +18,15 @@ export function ArtMetricFieldRow({
   tone = "muted",
   label,
   value,
+  className,
 }: ArtMetricFieldRowProps) {
-  return <MetricChip icon={icon} tone={tone} label={label} value={value} />;
+  return (
+    <MetricChip
+      icon={icon}
+      tone={tone}
+      label={label}
+      value={value}
+      className={className}
+    />
+  );
 }

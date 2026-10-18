@@ -7,4 +7,8 @@ export interface UploadingArt {
   limit?: number;
   marker?: string;
   abc?: string;
+  /** Штрихкод артикула */
+  bar?: string;
+  /** Штрихкод коробки */
+  boxbar?: string;
 }

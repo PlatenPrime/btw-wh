@@ -85,6 +85,16 @@ const ArtsExcelUploader = () => {
                 baseData.prodName = prodNameValue;
               }
 
+              const barValue = row.bar?.toString().trim();
+              if (barValue) {
+                baseData.bar = barValue;
+              }
+
+              const boxbarValue = row.boxbar?.toString().trim();
+              if (boxbarValue) {
+                baseData.boxbar = boxbarValue;
+              }
+
               return baseData;
             })
             .filter((row) => row.artikul);

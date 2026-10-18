@@ -37,7 +37,7 @@ export function PalletSortControls({
         value={sortParams.sortBy || "updatedAt"}
         onValueChange={handleSortByChange}
       >
-        <SelectTrigger className=":w-fit">
+        <SelectTrigger className="w-fit">
           <SelectValue placeholder="Сортувати по" />
         </SelectTrigger>
         <SelectContent>

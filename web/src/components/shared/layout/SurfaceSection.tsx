@@ -8,15 +8,15 @@ const surfaceSectionVariants = cva(
   {
     variants: {
       variant: {
-        default:
-          "glass-section border-border/60 shadow-elevation-2",
-        subtle:
-          "glass-section border-border/50 shadow-elevation-1",
+        /** Opt-in section shell (glass + border + padding) */
+        default: "glass-section border-border/60 shadow-elevation-2",
+        subtle: "glass-section border-border/50 shadow-elevation-1",
+        /** Layout-only: grid/gap wrapper without visual chrome */
         none: "border-transparent bg-transparent p-0 shadow-none",
       },
     },
     defaultVariants: {
-      variant: "default",
+      variant: "none",
     },
   },
 );
@@ -36,12 +36,18 @@ export function SurfaceSection({
   variant,
   ...rest
 }: SurfaceSectionProps) {
+  const resolvedVariant = variant ?? "none";
+  const showShellChrome = resolvedVariant !== "none";
+
   return (
     <div
       {...rest}
-      className={cn(surfaceSectionVariants({ variant }), surfaceClassName)}
+      className={cn(
+        surfaceSectionVariants({ variant: resolvedVariant }),
+        surfaceClassName,
+      )}
     >
-      {variant !== "none" ? (
+      {showShellChrome ? (
         <>
           <div
             className="pointer-events-none absolute -top-32 -left-16 h-64 w-64 rounded-full opacity-80 blur-3xl motion-reduce:opacity-40"

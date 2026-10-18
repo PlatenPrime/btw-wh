@@ -1,4 +1,5 @@
 import type { IPallet } from "@/modules/pallets/api/types";
+import { ChangePalletGroupDialog } from "@/modules/pallets/components/dialogs/change-pallet-group-dialog/ChangePalletGroupDialog";
 import { ClearPalletDialog } from "@/modules/pallets/components/dialogs/clear-pallet-dialog/ClearPalletDialog";
 import { DeletePalletDialog } from "@/modules/pallets/components/dialogs/delete-pallet-dialog/DeletePalletDialog";
 import { DeletePalletEmptyPosesDialog } from "@/modules/pallets/components/dialogs/delete-pallet-empty-poses-dialog/DeletePalletEmptyPosesDialog";
@@ -8,6 +9,7 @@ interface PalletHeaderActionsViewProps {
   pallet: IPallet;
   showEditorDialogs?: boolean;
   showDeletePalletDialog?: boolean;
+  showChangeGroupDialog?: boolean;
   clearDialogOpen: boolean;
   onClearDialogOpenChange: (open: boolean) => void;
   deleteEmptyPosesDialogOpen: boolean;
@@ -16,6 +18,8 @@ interface PalletHeaderActionsViewProps {
   onMoveDialogOpenChange: (open: boolean) => void;
   deleteDialogOpen: boolean;
   onDeleteDialogOpenChange: (open: boolean) => void;
+  changeGroupDialogOpen: boolean;
+  onChangeGroupDialogOpenChange: (open: boolean) => void;
   onDeleteSuccess: () => void;
 }
 
@@ -23,6 +27,7 @@ export function PalletHeaderActionsView({
   pallet,
   showEditorDialogs = true,
   showDeletePalletDialog = true,
+  showChangeGroupDialog = false,
   clearDialogOpen,
   onClearDialogOpenChange,
   deleteEmptyPosesDialogOpen,
@@ -31,10 +36,28 @@ export function PalletHeaderActionsView({
   onMoveDialogOpenChange,
   deleteDialogOpen,
   onDeleteDialogOpenChange,
+  changeGroupDialogOpen,
+  onChangeGroupDialogOpenChange,
   onDeleteSuccess,
 }: PalletHeaderActionsViewProps) {
+  const currentGroupId =
+    typeof pallet.palgr?.id === "string"
+      ? pallet.palgr.id
+      : pallet.palgr?.id != null
+        ? String(pallet.palgr.id)
+        : undefined;
+
   return (
     <>
+      {showChangeGroupDialog ? (
+        <ChangePalletGroupDialog
+          open={changeGroupDialogOpen}
+          onOpenChange={onChangeGroupDialogOpenChange}
+          palletId={pallet._id}
+          palletTitle={pallet.title}
+          currentGroupId={currentGroupId}
+        />
+      ) : null}
       {showEditorDialogs ? (
         <>
           <ClearPalletDialog
@@ -67,4 +90,3 @@ export function PalletHeaderActionsView({
     </>
   );
 }
-
