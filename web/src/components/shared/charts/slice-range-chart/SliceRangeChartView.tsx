@@ -74,7 +74,7 @@ export function SliceRangeChartView({
   return (
     <ChartContainer
       config={chartConfig}
-      className="slice-range-chart aspect-auto h-[clamp(160px,32vh,260px)] min-h-[160px] w-full max-w-full sm:h-[clamp(180px,35vh,280px)] sm:min-h-[180px] sm:max-w-xl lg:max-w-2xl [&_.recharts-wrapper]:!block [&_.recharts-wrapper]:h-full"
+      className="slice-range-chart aspect-auto h-[clamp(160px,32vh,260px)] min-h-[160px] w-full max-w-full sm:h-[clamp(180px,35vh,280px)] sm:min-h-[180px] [&_.recharts-wrapper]:!block [&_.recharts-wrapper]:h-full"
     >
       <ComposedChart
         data={data}

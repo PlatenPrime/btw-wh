@@ -26,10 +26,12 @@ export function SkuChartsSectionLayout({
         onDateRangeChange={onDateRangeChange}
       />
       <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
-        <ChartSection title="Динаміка залишків та ціни">
+        <ChartSection title="Динаміка залишків та ціни" className="min-w-0">
           {slicesChart}
         </ChartSection>
-        <ChartSection title="Динаміка продаж">{salesChart}</ChartSection>
+        <ChartSection title="Динаміка продаж" className="min-w-0">
+          {salesChart}
+        </ChartSection>
       </div>
     </div>
   );

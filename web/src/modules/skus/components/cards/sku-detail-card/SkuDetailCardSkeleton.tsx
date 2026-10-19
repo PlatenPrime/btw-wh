@@ -1,28 +1,25 @@
 import { DetailPanelCard } from "@/components/shared/cards";
-import { CardHeader } from "@/components/ui/card";
+import { MetricChipSkeleton } from "@/components/shared/elements";
 import { Skeleton } from "@/components/ui/skeleton";
 import { SkuLiveStockContainerSkeleton } from "@/modules/skus/components/containers/sku-live-stock-container";
 
 export function SkuDetailCardSkeleton() {
   return (
-    <DetailPanelCard className="overflow-hidden p-0">
+    <DetailPanelCard className="gap-0 overflow-hidden p-0">
       <Skeleton className="h-10 w-full rounded-none" />
-      <CardHeader className="flex flex-col gap-4 pb-6 sm:flex-row sm:items-start">
-        <Skeleton className="size-40 shrink-0 rounded-lg" />
-        <div className="grid min-w-0 flex-1 gap-3">
-          <Skeleton className="h-6 w-full max-w-xl" />
-          <div className="grid gap-2">
-            <Skeleton className="h-4 w-52" />
-            <Skeleton className="h-4 w-40" />
-          </div>
-          <div className="flex flex-wrap gap-2">
-            <Skeleton className="h-7 w-28 rounded-md" />
-            <Skeleton className="h-7 w-24 rounded-md" />
-          </div>
-          <SkuLiveStockContainerSkeleton />
-          <Skeleton className="h-4 w-48" />
+      <div className="grid gap-3 p-4 sm:p-5">
+        <div className="flex min-w-0 items-start gap-4">
+          <Skeleton className="size-16 shrink-0 rounded-lg sm:size-20" />
+          <Skeleton className="h-5 w-full max-w-xl" />
         </div>
-      </CardHeader>
+        <div className="grid gap-2 sm:grid-cols-2">
+          <MetricChipSkeleton className="w-full" />
+          <MetricChipSkeleton className="w-full" />
+          <MetricChipSkeleton className="w-full" />
+          <SkuLiveStockContainerSkeleton />
+          <MetricChipSkeleton className="w-full" />
+        </div>
+      </div>
     </DetailPanelCard>
   );
 }

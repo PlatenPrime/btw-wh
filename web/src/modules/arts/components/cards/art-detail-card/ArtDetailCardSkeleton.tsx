@@ -7,16 +7,15 @@ export function ArtDetailCardSkeleton() {
   return (
     <DetailPanelCard className="gap-0 overflow-hidden p-0">
       <div className="grid lg:grid-cols-3 lg:items-stretch">
-        <section className="flex min-w-0 items-start gap-4 border-border p-4 sm:p-5 lg:border-r">
-          <Skeleton className="size-16 shrink-0 rounded-lg sm:size-20" />
-          <div className="grid min-w-0 flex-1 gap-2">
-            <Skeleton className="h-5 w-28" />
-            <Skeleton className="h-4 w-full max-w-md" />
-            <div className="flex items-center gap-2">
-              <Skeleton className="size-6 shrink-0 rounded-md" />
-              <Skeleton className="h-4 w-32" />
+        <section className="grid min-w-0 gap-3 self-start border-border p-4 sm:p-5 lg:border-r">
+          <div className="flex min-w-0 items-start gap-4">
+            <Skeleton className="size-16 shrink-0 rounded-lg sm:size-20" />
+            <div className="grid min-w-0 flex-1 gap-2">
+              <Skeleton className="h-5 w-28" />
+              <Skeleton className="h-4 w-full max-w-md" />
             </div>
           </div>
+          <MetricChipSkeleton className="w-full" />
         </section>
 
         <section className="grid min-w-0 gap-3 self-start border-t border-border p-4 sm:p-5 lg:border-t-0 lg:border-r">

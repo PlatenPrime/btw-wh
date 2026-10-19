@@ -4,16 +4,16 @@ import {
   UrlDialogImage,
 } from "@/components/shared/dialogs";
 import { KonkBanner } from "@/components/shared/domain/konk-banner";
-import { EntityLabel } from "@/components/shared/entities/entity-label";
+import { MetricChip } from "@/components/shared/elements";
 import { Image } from "@/components/shared/media/image/Image";
-import { CardHeader, CardTitle } from "@/components/ui/card";
-import { iconSize, typography } from "@/lib/typography";
+import { CardTitle } from "@/components/ui/card";
+import { typography } from "@/lib/typography";
 import { cn } from "@/lib/utils";
 import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
 import type { SkuDto, SkuSkugrDto } from "@/modules/skus/api/types";
 import { SkuLiveStockContainer } from "@/modules/skus/components/containers/sku-live-stock-container";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Factory, Link2, Tags } from "lucide-react";
 import type { ReactNode } from "react";
 import { Link } from "react-router";
 
@@ -31,6 +31,7 @@ export function SkuDetailCard({ sku, konk, prod, skugrs }: SkuDetailCardProps) {
   const hasImage = Boolean(sku.imageUrl?.trim());
   const hasBtradeAnalog = Boolean(sku.btradeAnalog?.trim());
   const hasSkugrs = skugrs.length > 0;
+  const prodValue = prod?.title ?? sku.prodName;
 
   let skuImageContent: ReactNode;
   if (hasImage) {
@@ -39,12 +40,12 @@ export function SkuDetailCard({ sku, konk, prod, skugrs }: SkuDetailCardProps) {
         imageUrl={sku.imageUrl}
         alt={sku.title}
         fallbackSrc={URL_DIALOG_IMAGE_FALLBACK}
-        previewClassName="bg-muted size-40 shrink-0 overflow-hidden rounded-lg"
+        previewClassName="bg-muted size-16 shrink-0 overflow-hidden rounded-lg border border-border sm:size-20"
       />
     );
   } else {
     skuImageContent = (
-      <div className="bg-muted size-40 shrink-0 overflow-hidden rounded-lg">
+      <div className="bg-muted size-16 shrink-0 overflow-hidden rounded-lg border border-border sm:size-20">
         <Image
           src={SKU_DETAIL_PLACEHOLDER}
           alt=""
@@ -54,77 +55,81 @@ export function SkuDetailCard({ sku, konk, prod, skugrs }: SkuDetailCardProps) {
     );
   }
 
-  let prodLabelContent: ReactNode;
-  if (prod) {
-    prodLabelContent = (
-      <EntityLabel
-        imageUrl={prod.imageUrl}
-        title={prod.title}
-        fallbackLabel={sku.prodName}
-        imageSize="sm"
-      />
-    );
-  } else {
-    prodLabelContent = <span>{sku.prodName}</span>;
-  }
-
   return (
-    <DetailPanelCard className="overflow-hidden p-0">
+    <DetailPanelCard className="gap-0 overflow-hidden p-0">
       <KonkBanner
         konkName={sku.konkName}
         imageUrl={konk?.imageUrl}
         title={konk?.title}
       />
-      <CardHeader className="flex flex-col gap-4 pb-6 sm:flex-row sm:items-start">
-        {skuImageContent}
-        <div className="grid min-w-0 flex-1 gap-3">
+      <div className="grid gap-3 p-4 sm:p-5">
+        <div className="flex min-w-0 items-start gap-4">
+          {skuImageContent}
           <CardTitle className={typography.detailTitle}>{sku.title}</CardTitle>
-          <div
-            className={cn(
-              "flex flex-wrap items-center gap-3",
-              typography.detailSubtitle,
-            )}
-          >
-            {prodLabelContent}
-            {hasBtradeAnalog && <span>Аналог БТрейд: {sku.btradeAnalog}</span>}
-          </div>
-          <div className="grid gap-2">
-            {hasSkugrs ? (
-              <div className="flex flex-wrap gap-2">
-                {skugrs.map((skugr) => (
+        </div>
+
+        <div className="grid gap-2 sm:grid-cols-2">
+          {prodValue ? (
+            <MetricChip
+              icon={Factory}
+              imageUrl={prod?.imageUrl}
+              tone="muted"
+              label="Виробник"
+              value={prodValue}
+              className="w-full"
+            />
+          ) : null}
+          {hasBtradeAnalog ? (
+            <MetricChip
+              icon={Link2}
+              tone="info"
+              label="Аналог БТрейд"
+              value={sku.btradeAnalog}
+              className="w-full"
+            />
+          ) : null}
+          {hasSkugrs ? (
+            skugrs.map((skugr) => (
+              <MetricChip
+                key={skugr._id}
+                icon={Tags}
+                tone="primary"
+                label="Група"
+                value={
                   <Link
-                    key={skugr._id}
                     to={`/sku/skugrs/${skugr._id}`}
-                    className={cn(
-                      "bg-muted hover:bg-muted/80 rounded-md px-2 py-1 transition-colors",
-                      typography.body,
-                    )}
+                    className="text-primary hover:underline"
                   >
                     {skugr.title}
                   </Link>
-                ))}
-              </div>
-            ) : (
-              <span className={typography.detailSubtitle}>
-                Не входить до жодної товарної групи
-              </span>
-            )}
-          </div>
+                }
+                className="w-full"
+              />
+            ))
+          ) : (
+            <span className={cn(typography.detailSubtitle, "sm:col-span-2")}>
+              Не входить до жодної товарної групи
+            </span>
+          )}
           <SkuLiveStockContainer sku={sku} />
-          <a
-            href={sku.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={cn(
-              "text-primary inline-flex items-center gap-1 hover:underline",
-              typography.body,
-            )}
-          >
-            <ExternalLink className={iconSize.ui} />
-            Відкрити на сайті конкурента
-          </a>
+          <MetricChip
+            icon={ExternalLink}
+            tone="primary"
+            label="Сайт конкурента"
+            value={
+              <a
+                href={sku.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline"
+              >
+                Відкрити
+              </a>
+            }
+            className="w-full"
+          />
         </div>
-      </CardHeader>
+      </div>
     </DetailPanelCard>
   );
 }

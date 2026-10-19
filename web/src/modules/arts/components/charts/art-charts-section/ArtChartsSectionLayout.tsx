@@ -26,10 +26,10 @@ export function ArtChartsSectionLayout({
         onDateRangeChange={onDateRangeChange}
       />
       <div className="grid grid-cols-1 items-stretch gap-2 lg:grid-cols-2">
-        <ChartSection title="Динаміка залишків" className="h-full">
+        <ChartSection title="Динаміка залишків" className="h-full min-w-0">
           {stockChart}
         </ChartSection>
-        <ChartSection title="Динаміка продаж" className="h-full">
+        <ChartSection title="Динаміка продаж" className="h-full min-w-0">
           {salesChart}
         </ChartSection>
       </div>

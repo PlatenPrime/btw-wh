@@ -13,7 +13,7 @@ function formatQuantity(quantity: number): string {
 
 function BtradeArtDataPanelSummary({ data }: BtradeArtDataPanelSummaryProps) {
   return (
-    <>
+    <div className="grid gap-2">
       <ArtMetricFieldRow
         icon={Warehouse}
         tone="primary"
@@ -28,7 +28,7 @@ function BtradeArtDataPanelSummary({ data }: BtradeArtDataPanelSummaryProps) {
         value={`${data.price} грн`}
         className="w-full"
       />
-    </>
+    </div>
   );
 }
 
