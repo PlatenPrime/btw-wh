@@ -8,6 +8,8 @@ interface RunPostCorrectionsParams {
   dateFrom: string;
   dateTo: string;
   apply: boolean;
+  /** Empty / omitted — full cron-like run without RTL band. */
+  konkName?: string;
 }
 
 interface UseRunPostCorrectionsDialogReturn {
@@ -25,17 +27,25 @@ export function useRunPostCorrectionsDialog({
     dateFrom,
     dateTo,
     apply,
+    konkName,
   }: RunPostCorrectionsParams): boolean => {
     if (isStarting || !dateFrom || !dateTo) {
       return false;
     }
 
+    const trimmedKonk = konkName?.trim() ?? "";
     const modeLabel = apply ? "apply" : "dry-run";
+    const scopeLabel = trimmedKonk || "all";
+
+    const params: Record<string, unknown> = { dateFrom, dateTo, apply };
+    if (trimmedKonk) {
+      params.konkName = trimmedKonk;
+    }
 
     void startTask({
       kind: "sku-slices.post-corrections.run",
-      params: { dateFrom, dateTo, apply },
-      title: `Коригування залишків · ${dateFrom}…${dateTo} · ${modeLabel}`,
+      params,
+      title: `Коригування залишків · ${scopeLabel} · ${dateFrom}…${dateTo} · ${modeLabel}`,
     })
       .then((task) => {
         if (task) onSuccess?.();

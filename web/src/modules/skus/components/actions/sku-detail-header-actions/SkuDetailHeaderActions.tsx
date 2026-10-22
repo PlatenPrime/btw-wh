@@ -4,7 +4,7 @@ import { RoleType } from "@/constants/roles";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 import type { SkuDto } from "@/modules/skus/api/types";
 import { SkuDetailHeaderActionsView } from "./SkuDetailHeaderActionsView";
-import { FileDown, Pencil, TrendingUp } from "lucide-react";
+import { FileDown, Pencil, TrendingUp, WandSparkles } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 
 interface SkuDetailHeaderActionsProps {
@@ -16,9 +16,12 @@ export function SkuDetailHeaderActions({ sku }: SkuDetailHeaderActionsProps) {
   const [sliceExcelDialogOpen, setSliceExcelDialogOpen] = useState(false);
   const [salesExcelDialogOpen, setSalesExcelDialogOpen] = useState(false);
   const [patchSliceDialogOpen, setPatchSliceDialogOpen] = useState(false);
+  const [bandSpikeDialogOpen, setBandSpikeDialogOpen] = useState(false);
 
   const canExportExcel = hasRole(RoleType.USER);
   const canPatchSlice = hasRole(RoleType.ADMIN);
+  const canCorrectBandSpike =
+    canPatchSlice && sku.konkName.trim().toLowerCase() === "balun";
 
   const openSliceExcelDialog = useCallback(() => {
     setSliceExcelDialogOpen(true);
@@ -30,6 +33,10 @@ export function SkuDetailHeaderActions({ sku }: SkuDetailHeaderActionsProps) {
 
   const openPatchSliceDialog = useCallback(() => {
     setPatchSliceDialogOpen(true);
+  }, []);
+
+  const openBandSpikeDialog = useCallback(() => {
+    setBandSpikeDialogOpen(true);
   }, []);
 
   const headerActions = useMemo<HeaderAction[]>(() => {
@@ -62,13 +69,25 @@ export function SkuDetailHeaderActions({ sku }: SkuDetailHeaderActionsProps) {
         onClick: openPatchSliceDialog,
       });
     }
+    if (canCorrectBandSpike) {
+      actions.push({
+        id: "correct-balun-band-spike",
+        label: "Виправити band-spike",
+        icon: WandSparkles,
+        iconColor: "violet",
+        variant: "edit",
+        onClick: openBandSpikeDialog,
+      });
+    }
     return actions;
   }, [
     canExportExcel,
     canPatchSlice,
+    canCorrectBandSpike,
     openSliceExcelDialog,
     openSalesExcelDialog,
     openPatchSliceDialog,
+    openBandSpikeDialog,
   ]);
 
   useRegisterHeaderActions(headerActions);
@@ -82,6 +101,9 @@ export function SkuDetailHeaderActions({ sku }: SkuDetailHeaderActionsProps) {
       onSalesExcelDialogOpenChange={setSalesExcelDialogOpen}
       patchSliceDialogOpen={patchSliceDialogOpen}
       onPatchSliceDialogOpenChange={setPatchSliceDialogOpen}
+      bandSpikeDialogOpen={bandSpikeDialogOpen}
+      onBandSpikeDialogOpenChange={setBandSpikeDialogOpen}
+      canCorrectBandSpike={canCorrectBandSpike}
     />
   );
 }

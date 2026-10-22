@@ -1,4 +1,10 @@
 export type {
+  CorrectBalunBandSpikeBodyDto,
+  CorrectBalunBandSpikePatchDto,
+  CorrectBalunBandSpikeResponseDto,
+  CorrectBalunBandSpikeResultDto,
+  CorrectBalunBandSpikeSkipReason,
+  CorrectBalunBandSpikeSkippedDto,
   DeleteOrphanSkusQueryDto,
   DeleteOrphanSkusResponseDto,
   GetSkusBySkugrParams,

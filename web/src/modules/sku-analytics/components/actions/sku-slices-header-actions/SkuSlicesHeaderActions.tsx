@@ -80,6 +80,7 @@ export function SkuSlicesHeaderActions() {
       onCompensatingDialogOpenChange={setCompensatingDialogOpen}
       postCorrectionsDialogOpen={postCorrectionsDialogOpen}
       onPostCorrectionsDialogOpenChange={setPostCorrectionsDialogOpen}
+      initialPostCorrectionsKonk={konk || undefined}
       canRun={canRun}
     />
   );

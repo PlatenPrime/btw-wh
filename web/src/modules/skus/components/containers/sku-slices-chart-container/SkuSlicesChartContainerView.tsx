@@ -11,6 +11,8 @@ export interface SkuSlicesChartContainerViewProps {
   isLoading: boolean;
   canPatchSlice?: boolean;
   onPatchSlice?: () => void;
+  canCorrectBandSpike?: boolean;
+  onCorrectBandSpike?: () => void;
 }
 
 export function SkuSlicesChartContainerView(

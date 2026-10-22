@@ -187,6 +187,44 @@ export interface PatchSkuSliceResponseDto {
   data: PatchSkuSliceResultDto;
 }
 
+export interface CorrectBalunBandSpikeBodyDto {
+  dateFrom: string;
+  dateTo: string;
+  apply?: boolean;
+}
+
+export type CorrectBalunBandSpikeSkipReason =
+  | "missing-left"
+  | "missing-right"
+  | "not-sandwich-left"
+  | "not-sandwich-right";
+
+export interface CorrectBalunBandSpikePatchDto {
+  date: string;
+  from: number;
+  to: number;
+}
+
+export interface CorrectBalunBandSpikeSkippedDto {
+  dateFrom: string;
+  dateTo: string;
+  reason: CorrectBalunBandSpikeSkipReason;
+}
+
+export interface CorrectBalunBandSpikeResultDto {
+  productId: string;
+  window: { dateFrom: string; dateTo: string };
+  band: { min: number; max: number };
+  patches: CorrectBalunBandSpikePatchDto[];
+  skipped: CorrectBalunBandSpikeSkippedDto[];
+  applied: boolean;
+}
+
+export interface CorrectBalunBandSpikeResponseDto {
+  message: string;
+  data: CorrectBalunBandSpikeResultDto;
+}
+
 export interface SkuSalesRangeItem {
   date: string;
   sales: number;

@@ -4,6 +4,7 @@ import { SliceRangeChartSkeleton } from "@/components/shared/charts/slice-range-
 import { RoleType } from "@/constants/roles";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 import { useSkuSliceRangeQuery } from "@/modules/skus/api/hooks/queries/useSkuSliceRangeQuery";
+import { CorrectBalunBandSpikeDialog } from "@/modules/skus/components/dialogs/correct-balun-band-spike-dialog";
 import { PatchSkuSliceDialog } from "@/modules/skus/components/dialogs/patch-sku-slice-dialog";
 import type { SliceRangeChartPoint } from "@/types/charts-range";
 import { useMemo, useState } from "react";
@@ -12,6 +13,7 @@ import { SkuSlicesChartContainerView } from "./SkuSlicesChartContainerView";
 interface SkuSlicesChartContainerProps {
   skuId: string | undefined;
   skuTitle: string;
+  konkName?: string;
   dateFrom: string;
   dateTo: string;
 }
@@ -19,14 +21,18 @@ interface SkuSlicesChartContainerProps {
 export function SkuSlicesChartContainer({
   skuId,
   skuTitle,
+  konkName,
   dateFrom,
   dateTo,
 }: SkuSlicesChartContainerProps) {
   const { hasRole } = useAuth();
   const canPatchSlice = hasRole(RoleType.ADMIN);
+  const canCorrectBandSpike =
+    canPatchSlice && (konkName?.trim().toLowerCase() ?? "") === "balun";
   const [showStock, setShowStock] = useState(true);
   const [showPrice, setShowPrice] = useState(true);
   const [patchDialogOpen, setPatchDialogOpen] = useState(false);
+  const [bandSpikeDialogOpen, setBandSpikeDialogOpen] = useState(false);
 
   const { data, isLoading, isFetching, error, refetch } = useSkuSliceRangeQuery({
     skuId,
@@ -84,6 +90,8 @@ export function SkuSlicesChartContainer({
         isLoading={isLoading}
         canPatchSlice={canPatchSlice}
         onPatchSlice={() => setPatchDialogOpen(true)}
+        canCorrectBandSpike={canCorrectBandSpike}
+        onCorrectBandSpike={() => setBandSpikeDialogOpen(true)}
       />
       {canPatchSlice ? (
         <PatchSkuSliceDialog
@@ -93,6 +101,17 @@ export function SkuSlicesChartContainer({
           open={patchDialogOpen}
           onOpenChange={setPatchDialogOpen}
           initialValues={patchInitialValues}
+        />
+      ) : null}
+      {canCorrectBandSpike ? (
+        <CorrectBalunBandSpikeDialog
+          key={`band-${skuId}-${dateFrom}-${dateTo}`}
+          skuId={skuId}
+          skuTitle={skuTitle}
+          open={bandSpikeDialogOpen}
+          onOpenChange={setBandSpikeDialogOpen}
+          initialDateFrom={dateFrom}
+          initialDateTo={dateTo}
         />
       ) : null}
     </>

@@ -6,6 +6,7 @@ interface SkuSlicesHeaderActionsViewProps {
   onCompensatingDialogOpenChange: (open: boolean) => void;
   postCorrectionsDialogOpen: boolean;
   onPostCorrectionsDialogOpenChange: (open: boolean) => void;
+  initialPostCorrectionsKonk?: string;
   canRun: boolean;
 }
 
@@ -14,6 +15,7 @@ export function SkuSlicesHeaderActionsView({
   onCompensatingDialogOpenChange,
   postCorrectionsDialogOpen,
   onPostCorrectionsDialogOpenChange,
+  initialPostCorrectionsKonk,
   canRun,
 }: SkuSlicesHeaderActionsViewProps) {
   if (!canRun) {
@@ -29,6 +31,7 @@ export function SkuSlicesHeaderActionsView({
       <RunPostCorrectionsDialog
         open={postCorrectionsDialogOpen}
         onOpenChange={onPostCorrectionsDialogOpenChange}
+        initialKonkName={initialPostCorrectionsKonk}
       />
     </>
   );

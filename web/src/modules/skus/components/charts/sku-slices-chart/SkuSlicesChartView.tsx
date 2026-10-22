@@ -15,6 +15,8 @@ export interface SkuSlicesChartViewProps {
   isLoading: boolean;
   canPatchSlice?: boolean;
   onPatchSlice?: () => void;
+  canCorrectBandSpike?: boolean;
+  onCorrectBandSpike?: () => void;
 }
 
 export function SkuSlicesChartView({
@@ -27,6 +29,8 @@ export function SkuSlicesChartView({
   isLoading,
   canPatchSlice = false,
   onPatchSlice,
+  canCorrectBandSpike = false,
+  onCorrectBandSpike,
 }: SkuSlicesChartViewProps) {
   const showChart = showStock || showPrice;
 
@@ -64,6 +68,16 @@ export function SkuSlicesChartView({
         {canPatchSlice && onPatchSlice ? (
           <Button type="button" variant="outline" size="sm" onClick={onPatchSlice}>
             Виправити зріз
+          </Button>
+        ) : null}
+        {canCorrectBandSpike && onCorrectBandSpike ? (
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={onCorrectBandSpike}
+          >
+            Виправити band-spike
           </Button>
         ) : null}
       </div>
