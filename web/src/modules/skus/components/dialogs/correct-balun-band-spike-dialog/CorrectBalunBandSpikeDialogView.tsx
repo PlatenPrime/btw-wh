@@ -82,7 +82,7 @@ export function CorrectBalunBandSpikeDialogView({
       <DialogHeader>
         <DialogTitle>Виправити band-spike</DialogTitle>
         <DialogDescription>
-          RTL sandwich для balun: невелике → [9000, 10000] → невелике. Спочатку
+          RTL sandwich для balun: невелике → [9000, 11000] → невелике. Спочатку
           preview, потім запис. Товар: {skuTitle}.
         </DialogDescription>
       </DialogHeader>

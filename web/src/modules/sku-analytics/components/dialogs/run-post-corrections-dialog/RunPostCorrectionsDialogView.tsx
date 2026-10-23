@@ -71,7 +71,7 @@ export function RunPostCorrectionsDialogView({
   const isScoped = Boolean(konkName) && konkName !== POST_CORRECTIONS_ALL_KONKS;
 
   const description = isBalun
-    ? "Скоуп balun: LTR fake-stock (4990–5000 ∪ 9950–10000) + один RTL sandwich [9000,10000] по всіх balun productId + rollup. Без галочки — лише звіт (dry-run)."
+    ? "Скоуп balun: LTR fake-stock (4990–5000 ∪ 9950–10050) + один RTL sandwich [9000,11000] по всіх balun productId + rollup. Без галочки — лише звіт (dry-run)."
     : isScoped
       ? `Скоуп ${konkName}: лише кроки цього конкурента (без RTL band). Без галочки — dry-run.`
       : "Повний post-pass: fake stock balun/svbum, pack-flip auto-apply, manufacturer rollup — без RTL band. Без галочки — лише звіт (dry-run).";
@@ -142,7 +142,7 @@ export function RunPostCorrectionsDialogView({
         {isBalun ? (
           <p className="text-sm text-muted-foreground">
             Для balun додатково запуститься RTL-корекція sandwich band-spike
-            [9000, 10000] за весь обраний період.
+            [9000, 11000] за весь обраний період.
           </p>
         ) : null}
 
