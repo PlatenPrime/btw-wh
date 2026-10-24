@@ -1,7 +1,7 @@
-import { correctBalunBandSpike } from "@/modules/skus/api/services/mutations/correctBalunBandSpike";
+import { correctBandSpike } from "@/modules/skus/api/services/mutations/correctBandSpike";
 import type {
-  CorrectBalunBandSpikeBodyDto,
-  CorrectBalunBandSpikeResponseDto,
+  CorrectBandSpikeBodyDto,
+  CorrectBandSpikeResponseDto,
 } from "@/modules/skus/api/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
@@ -15,24 +15,24 @@ interface ApiErrorResponse {
   }>;
 }
 
-interface CorrectBalunBandSpikeVariables {
+interface CorrectBandSpikeVariables {
   skuId: string;
-  body: CorrectBalunBandSpikeBodyDto;
+  body: CorrectBandSpikeBodyDto;
 }
 
 function toDateLabel(value: string): string {
   return value.slice(0, 10);
 }
 
-export function useCorrectBalunBandSpikeMutation() {
+export function useCorrectBandSpikeMutation() {
   const queryClient = useQueryClient();
 
   return useMutation<
-    CorrectBalunBandSpikeResponseDto,
+    CorrectBandSpikeResponseDto,
     AxiosError<ApiErrorResponse>,
-    CorrectBalunBandSpikeVariables
+    CorrectBandSpikeVariables
   >({
-    mutationFn: ({ skuId, body }) => correctBalunBandSpike(skuId, body),
+    mutationFn: ({ skuId, body }) => correctBandSpike(skuId, body),
     onSuccess: (response, { skuId, body }) => {
       const { data } = response;
       const apply = body.apply === true;
@@ -86,13 +86,13 @@ export function useCorrectBalunBandSpikeMutation() {
           toast.error(`Помилка валідації: ${validationMessages}`);
           return;
         }
-        toast.error(errorData?.message || "Помилка валідації / не balun SKU");
+        toast.error(errorData?.message || "Помилка валідації");
         return;
       }
 
       if (status === 404) {
         toast.error(
-          errorData?.message || "Немає SKU або порожній productId",
+          errorData?.message || "Немає SKU / konkName / productId",
         );
         return;
       }

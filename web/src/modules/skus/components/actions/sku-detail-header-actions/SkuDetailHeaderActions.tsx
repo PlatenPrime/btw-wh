@@ -20,8 +20,7 @@ export function SkuDetailHeaderActions({ sku }: SkuDetailHeaderActionsProps) {
 
   const canExportExcel = hasRole(RoleType.USER);
   const canPatchSlice = hasRole(RoleType.ADMIN);
-  const canCorrectBandSpike =
-    canPatchSlice && sku.konkName.trim().toLowerCase() === "balun";
+  const canCorrectBandSpike = canPatchSlice;
 
   const openSliceExcelDialog = useCallback(() => {
     setSliceExcelDialogOpen(true);
@@ -71,7 +70,7 @@ export function SkuDetailHeaderActions({ sku }: SkuDetailHeaderActionsProps) {
     }
     if (canCorrectBandSpike) {
       actions.push({
-        id: "correct-balun-band-spike",
+        id: "correct-band-spike",
         label: "Виправити band-spike",
         icon: WandSparkles,
         iconColor: "violet",

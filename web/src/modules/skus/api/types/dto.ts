@@ -187,42 +187,45 @@ export interface PatchSkuSliceResponseDto {
   data: PatchSkuSliceResultDto;
 }
 
-export interface CorrectBalunBandSpikeBodyDto {
+export interface CorrectBandSpikeBodyDto {
   dateFrom: string;
   dateTo: string;
+  stockMin: number;
+  stockMax: number;
   apply?: boolean;
 }
 
-export type CorrectBalunBandSpikeSkipReason =
+export type CorrectBandSpikeSkipReason =
   | "missing-left"
   | "missing-right"
   | "not-sandwich-left"
   | "not-sandwich-right";
 
-export interface CorrectBalunBandSpikePatchDto {
+export interface CorrectBandSpikePatchDto {
   date: string;
   from: number;
   to: number;
 }
 
-export interface CorrectBalunBandSpikeSkippedDto {
+export interface CorrectBandSpikeSkippedDto {
   dateFrom: string;
   dateTo: string;
-  reason: CorrectBalunBandSpikeSkipReason;
+  reason: CorrectBandSpikeSkipReason;
 }
 
-export interface CorrectBalunBandSpikeResultDto {
+export interface CorrectBandSpikeResultDto {
+  konkName: string;
   productId: string;
   window: { dateFrom: string; dateTo: string };
   band: { min: number; max: number };
-  patches: CorrectBalunBandSpikePatchDto[];
-  skipped: CorrectBalunBandSpikeSkippedDto[];
+  patches: CorrectBandSpikePatchDto[];
+  skipped: CorrectBandSpikeSkippedDto[];
   applied: boolean;
 }
 
-export interface CorrectBalunBandSpikeResponseDto {
+export interface CorrectBandSpikeResponseDto {
   message: string;
-  data: CorrectBalunBandSpikeResultDto;
+  data: CorrectBandSpikeResultDto;
 }
 
 export interface SkuSalesRangeItem {

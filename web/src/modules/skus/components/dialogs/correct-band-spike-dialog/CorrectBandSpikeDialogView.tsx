@@ -7,6 +7,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Table,
   TableBody,
@@ -17,26 +19,30 @@ import {
 } from "@/components/ui/table";
 import { typography } from "@/lib/typography";
 import type {
-  CorrectBalunBandSpikeResultDto,
-  CorrectBalunBandSpikeSkipReason,
+  CorrectBandSpikeResultDto,
+  CorrectBandSpikeSkipReason,
 } from "@/modules/skus/api/types";
 import { differenceInCalendarDays } from "date-fns";
 import type { DateRange } from "react-day-picker";
 
-export const BALUN_BAND_SPIKE_MAX_RANGE_DAYS = 366;
+export const BAND_SPIKE_MAX_RANGE_DAYS = 366;
 
-const SKIP_REASON_LABELS: Record<CorrectBalunBandSpikeSkipReason, string> = {
+const SKIP_REASON_LABELS: Record<CorrectBandSpikeSkipReason, string> = {
   "missing-left": "Немає сусіда зліва",
   "missing-right": "Немає сусіда справа",
   "not-sandwich-left": "Лівий сусід не «невеликий»",
   "not-sandwich-right": "Правий сусід не «невеликий»",
 };
 
-interface CorrectBalunBandSpikeDialogViewProps {
+interface CorrectBandSpikeDialogViewProps {
   skuTitle: string;
   dateRange: DateRange | undefined;
   onDateRangeChange: (range: DateRange | undefined) => void;
-  preview: CorrectBalunBandSpikeResultDto | null;
+  stockMin: string;
+  stockMax: string;
+  onStockMinChange: (value: string) => void;
+  onStockMaxChange: (value: string) => void;
+  preview: CorrectBandSpikeResultDto | null;
   isPreviewing: boolean;
   isApplying: boolean;
   onPreview: () => void;
@@ -48,51 +54,108 @@ function toDateLabel(value: string): string {
   return value.slice(0, 10);
 }
 
-export function CorrectBalunBandSpikeDialogView({
+function parseNonNegativeNumber(value: string): number | null {
+  const trimmed = value.trim();
+  if (!trimmed) return null;
+  const parsed = Number(trimmed);
+  if (!Number.isFinite(parsed) || parsed < 0) return null;
+  return parsed;
+}
+
+export function CorrectBandSpikeDialogView({
   skuTitle,
   dateRange,
   onDateRangeChange,
+  stockMin,
+  stockMax,
+  onStockMinChange,
+  onStockMaxChange,
   preview,
   isPreviewing,
   isApplying,
   onPreview,
   onApply,
   onCancel,
-}: CorrectBalunBandSpikeDialogViewProps) {
+}: CorrectBandSpikeDialogViewProps) {
   const from = dateRange?.from;
   const to = dateRange?.to;
   const daySpan =
     from !== undefined && to !== undefined
       ? differenceInCalendarDays(to, from) + 1
       : 0;
+  const parsedMin = parseNonNegativeNumber(stockMin);
+  const parsedMax = parseNonNegativeNumber(stockMax);
+  const isBandValid =
+    parsedMin !== null && parsedMax !== null && parsedMin <= parsedMax;
   const isRangeValid =
     from !== undefined &&
     to !== undefined &&
     from <= to &&
-    daySpan <= BALUN_BAND_SPIKE_MAX_RANGE_DAYS;
+    daySpan <= BAND_SPIKE_MAX_RANGE_DAYS;
   const isOverMax =
     from !== undefined &&
     to !== undefined &&
-    daySpan > BALUN_BAND_SPIKE_MAX_RANGE_DAYS;
+    daySpan > BAND_SPIKE_MAX_RANGE_DAYS;
   const isBusy = isPreviewing || isApplying;
-  const canApply = Boolean(preview && preview.patches.length > 0 && !preview.applied);
+  const canSubmit = isRangeValid && isBandValid && !isBusy;
+  const canApply = Boolean(
+    preview && preview.patches.length > 0 && !preview.applied,
+  );
 
   return (
     <DialogContent className="sm:max-w-[560px]">
       <DialogHeader>
         <DialogTitle>Виправити band-spike</DialogTitle>
         <DialogDescription>
-          RTL sandwich для balun: невелике → [9000, 11000] → невелике. Спочатку
-          preview, потім запис. Товар: {skuTitle}.
+          RTL sandwich: невелике (&lt; stockMin) → [stockMin, stockMax] →
+          невелике. Спочатку preview, потім запис. Товар: {skuTitle}.
         </DialogDescription>
       </DialogHeader>
 
       <div className="grid gap-4">
         <p className={typography.pageDescription}>
-          Оберіть період спалаху. Сервер підвантажить сусідів ±1 день; продажі
-          всередині смуги зберігаються. Діапазон ≤{" "}
-          {BALUN_BAND_SPIKE_MAX_RANGE_DAYS} днів.
+          Оберіть період і смугу залишку. Сервер підвантажить сусідів ±1 день;
+          продажі всередині смуги зберігаються. Діапазон ≤{" "}
+          {BAND_SPIKE_MAX_RANGE_DAYS} днів. Підказки: svbum часто мільйони;
+          balun ~5k / 9–11k — числа завжди вводить адмін.
         </p>
+
+        <div className="grid gap-3 sm:grid-cols-2">
+          <div className="grid gap-2">
+            <Label htmlFor="band-spike-stock-min">stockMin</Label>
+            <Input
+              id="band-spike-stock-min"
+              type="number"
+              min={0}
+              inputMode="decimal"
+              value={stockMin}
+              onChange={(event) => onStockMinChange(event.target.value)}
+              disabled={isBusy}
+              placeholder="напр. 9000"
+            />
+          </div>
+          <div className="grid gap-2">
+            <Label htmlFor="band-spike-stock-max">stockMax</Label>
+            <Input
+              id="band-spike-stock-max"
+              type="number"
+              min={0}
+              inputMode="decimal"
+              value={stockMax}
+              onChange={(event) => onStockMaxChange(event.target.value)}
+              disabled={isBusy}
+              placeholder="напр. 11000"
+            />
+          </div>
+        </div>
+
+        {stockMin.trim() || stockMax.trim() ? (
+          !isBandValid ? (
+            <p className="text-destructive text-sm">
+              stockMin і stockMax мають бути ≥ 0, finite, і min ≤ max.
+            </p>
+          ) : null
+        ) : null}
 
         <div className="flex justify-center">
           <Calendar
@@ -106,7 +169,7 @@ export function CorrectBalunBandSpikeDialogView({
 
         {isOverMax ? (
           <p className="text-destructive text-sm">
-            Максимум {BALUN_BAND_SPIKE_MAX_RANGE_DAYS} календарних днів.
+            Максимум {BAND_SPIKE_MAX_RANGE_DAYS} календарних днів.
           </p>
         ) : null}
 
@@ -120,6 +183,9 @@ export function CorrectBalunBandSpikeDialogView({
               <span>
                 Band: {preview.band.min}–{preview.band.max}
               </span>
+              {preview.konkName ? (
+                <span>Konk: {preview.konkName}</span>
+              ) : null}
               {preview.applied ? (
                 <span className="text-foreground font-medium">Застосовано</span>
               ) : null}
@@ -189,7 +255,7 @@ export function CorrectBalunBandSpikeDialogView({
           type="button"
           variant="secondary"
           onClick={onPreview}
-          disabled={!isRangeValid || isBusy}
+          disabled={!canSubmit}
         >
           {isPreviewing ? "Перегляд..." : "Переглянути"}
         </Button>

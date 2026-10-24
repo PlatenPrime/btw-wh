@@ -4,7 +4,7 @@ import { SliceRangeChartSkeleton } from "@/components/shared/charts/slice-range-
 import { RoleType } from "@/constants/roles";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 import { useSkuSliceRangeQuery } from "@/modules/skus/api/hooks/queries/useSkuSliceRangeQuery";
-import { CorrectBalunBandSpikeDialog } from "@/modules/skus/components/dialogs/correct-balun-band-spike-dialog";
+import { CorrectBandSpikeDialog } from "@/modules/skus/components/dialogs/correct-band-spike-dialog";
 import { PatchSkuSliceDialog } from "@/modules/skus/components/dialogs/patch-sku-slice-dialog";
 import type { SliceRangeChartPoint } from "@/types/charts-range";
 import { useMemo, useState } from "react";
@@ -13,7 +13,6 @@ import { SkuSlicesChartContainerView } from "./SkuSlicesChartContainerView";
 interface SkuSlicesChartContainerProps {
   skuId: string | undefined;
   skuTitle: string;
-  konkName?: string;
   dateFrom: string;
   dateTo: string;
 }
@@ -21,14 +20,12 @@ interface SkuSlicesChartContainerProps {
 export function SkuSlicesChartContainer({
   skuId,
   skuTitle,
-  konkName,
   dateFrom,
   dateTo,
 }: SkuSlicesChartContainerProps) {
   const { hasRole } = useAuth();
   const canPatchSlice = hasRole(RoleType.ADMIN);
-  const canCorrectBandSpike =
-    canPatchSlice && (konkName?.trim().toLowerCase() ?? "") === "balun";
+  const canCorrectBandSpike = canPatchSlice;
   const [showStock, setShowStock] = useState(true);
   const [showPrice, setShowPrice] = useState(true);
   const [patchDialogOpen, setPatchDialogOpen] = useState(false);
@@ -104,7 +101,7 @@ export function SkuSlicesChartContainer({
         />
       ) : null}
       {canCorrectBandSpike ? (
-        <CorrectBalunBandSpikeDialog
+        <CorrectBandSpikeDialog
           key={`band-${skuId}-${dateFrom}-${dateTo}`}
           skuId={skuId}
           skuTitle={skuTitle}

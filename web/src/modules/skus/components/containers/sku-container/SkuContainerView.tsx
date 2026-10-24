@@ -40,7 +40,6 @@ export function SkuContainerView({
             <SkuSlicesChartContainer
               skuId={sku._id}
               skuTitle={sku.title}
-              konkName={sku.konkName}
               dateFrom={dateFrom}
               dateTo={dateTo}
             />

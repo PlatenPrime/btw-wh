@@ -26,6 +26,7 @@ import {
   Truck,
   Upload,
   Users,
+  WandSparkles,
   Warehouse,
 } from "lucide-react";
 
@@ -58,6 +59,7 @@ const icons = {
   TrendingUp,
   Boxes,
   Sparkles,
+  WandSparkles,
   Upload,
   ListTodo,
 } as const;
@@ -99,6 +101,7 @@ const iconColorClasses: Record<SidebarIconName, string> = {
   TrendingUp: "text-[oklch(0.62_0.18_145)] dark:text-[oklch(0.76_0.2_145)]",
   Boxes: "text-[oklch(0.58_0.12_200)] dark:text-[oklch(0.72_0.14_200)]",
   Sparkles: "text-[oklch(0.64_0.16_55)] dark:text-[oklch(0.78_0.16_55)]",
+  WandSparkles: "text-[oklch(0.6_0.19_290)] dark:text-[oklch(0.75_0.2_290)]",
   FileSpreadsheet:
     "text-[oklch(0.58_0.14_150)] dark:text-[oklch(0.74_0.16_150)]",
   ListTodo: "text-[oklch(0.6_0.14_250)] dark:text-[oklch(0.74_0.16_250)]",
@@ -261,6 +264,12 @@ export const appSidebarData: { navMain: AppSidebarNavGroup[] } = {
           title: "Скачки фасовки",
           url: "/sku/pack-flips",
           iconName: "ArrowLeftRight",
+          allowedRoles: [RoleType.ADMIN],
+        },
+        {
+          title: "Band-spike",
+          url: "/sku/band-spike",
+          iconName: "WandSparkles",
           allowedRoles: [RoleType.ADMIN],
         },
         {

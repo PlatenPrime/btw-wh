@@ -67,14 +67,11 @@ export function RunPostCorrectionsDialogView({
     to !== undefined &&
     daySpan > POST_CORRECTIONS_MAX_RANGE_DAYS;
 
-  const isBalun = konkName === "balun";
   const isScoped = Boolean(konkName) && konkName !== POST_CORRECTIONS_ALL_KONKS;
 
-  const description = isBalun
-    ? "Скоуп balun: LTR fake-stock (4990–5000 ∪ 9950–10050) + один RTL sandwich [9000,11000] по всіх balun productId + rollup. Без галочки — лише звіт (dry-run)."
-    : isScoped
-      ? `Скоуп ${konkName}: лише кроки цього конкурента (без RTL band). Без галочки — dry-run.`
-      : "Повний post-pass: fake stock balun/svbum, pack-flip auto-apply, manufacturer rollup — без RTL band. Без галочки — лише звіт (dry-run).";
+  const description = isScoped
+    ? `Скоуп ${konkName}: pack-flip (якщо konk у auto-apply) + manufacturer rollup цього конкурента. Band-spike сюди не входить. Без галочки — dry-run.`
+    : "Повний post-pass: pack-flip auto-apply (perfect) + manufacturer rollup по всіх konk. Band-spike лише вручну (сторінка /sku/band-spike або картка SKU). Без галочки — dry-run.";
 
   return (
     <DialogContent className="sm:max-w-[480px]">
@@ -87,8 +84,8 @@ export function RunPostCorrectionsDialogView({
         <p className={typography.pageDescription}>
           Після запуску вікно закриється одразу — коригування йде у фоні.
           Результат прийде сповіщенням. Діапазон включно, максимум{" "}
-          {POST_CORRECTIONS_MAX_RANGE_DAYS} днів. RTL band-spike лише при
-          конкуренті balun.
+          {POST_CORRECTIONS_MAX_RANGE_DAYS} днів. Авто RTL band-spike
+          вимкнено.
         </p>
 
         <div className="flex flex-col gap-2">
@@ -136,13 +133,6 @@ export function RunPostCorrectionsDialogView({
         {isOverMax ? (
           <p className="text-destructive text-sm">
             Максимум {POST_CORRECTIONS_MAX_RANGE_DAYS} календарних днів.
-          </p>
-        ) : null}
-
-        {isBalun ? (
-          <p className="text-sm text-muted-foreground">
-            Для balun додатково запуститься RTL-корекція sandwich band-spike
-            [9000, 11000] за весь обраний період.
           </p>
         ) : null}
 

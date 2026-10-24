@@ -3,7 +3,7 @@ import { useRegisterHeaderActions } from "@/components/layout/header-actions";
 import { useRole } from "@/modules/auth/hooks/useRole";
 import { SkuSlicesHeaderActionsView } from "@/modules/sku-analytics/components/actions/sku-slices-header-actions/SkuSlicesHeaderActionsView";
 import { useSkuSlicesParams } from "@/modules/sku-analytics/hooks/useSkuSlicesParams";
-import { ArrowLeftRight, RefreshCw, Wrench } from "lucide-react";
+import { ArrowLeftRight, RefreshCw, WandSparkles, Wrench } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 
@@ -34,6 +34,15 @@ export function SkuSlicesHeaderActions() {
     navigate(query ? `/sku/pack-flips?${query}` : "/sku/pack-flips");
   }, [konk, navigate]);
 
+  const openBandSpike = useCallback(() => {
+    const params = new URLSearchParams();
+    if (konk) {
+      params.set("konk", konk);
+    }
+    const query = params.toString();
+    navigate(query ? `/sku/band-spike?${query}` : "/sku/band-spike");
+  }, [konk, navigate]);
+
   const headerActions = useMemo<HeaderAction[]>(() => {
     if (!canRun) {
       return [];
@@ -47,6 +56,14 @@ export function SkuSlicesHeaderActions() {
         iconColor: "amber",
         variant: "default",
         onClick: openPackFlips,
+      },
+      {
+        id: "band-spike-discover",
+        label: "Band-spike",
+        icon: WandSparkles,
+        iconColor: "violet",
+        variant: "default",
+        onClick: openBandSpike,
       },
       {
         id: "run-compensating-slice",
@@ -69,6 +86,7 @@ export function SkuSlicesHeaderActions() {
     canRun,
     openCompensatingDialog,
     openPackFlips,
+    openBandSpike,
     openPostCorrectionsDialog,
   ]);
 

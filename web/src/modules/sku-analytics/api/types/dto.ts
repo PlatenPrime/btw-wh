@@ -222,3 +222,40 @@ export interface GetPackFlipsParams {
   dateTo: string;
   signal?: AbortSignal;
 }
+
+export interface DiscoverBandSpikeBodyDto {
+  konkName: string;
+  stockMin: number;
+  stockMax: number;
+  dateFrom: string;
+  dateTo: string;
+}
+
+export interface DiscoverBandSpikeRunDto {
+  dateFrom: string;
+  dateTo: string;
+  peakStock: number;
+}
+
+export interface DiscoverBandSpikeItemDto {
+  skuId: string | null;
+  productId: string;
+  title: string | null;
+  runs: DiscoverBandSpikeRunDto[];
+}
+
+export interface DiscoverBandSpikePayload {
+  konkName: string;
+  window: { dateFrom: string; dateTo: string };
+  band: { min: number; max: number };
+  items: DiscoverBandSpikeItemDto[];
+}
+
+export interface DiscoverBandSpikeResponseDto {
+  message: string;
+  data: DiscoverBandSpikePayload;
+}
+
+export interface DiscoverBandSpikeParams extends DiscoverBandSpikeBodyDto {
+  signal?: AbortSignal;
+}

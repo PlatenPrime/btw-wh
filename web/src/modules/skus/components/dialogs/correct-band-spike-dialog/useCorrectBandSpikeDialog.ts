@@ -1,34 +1,41 @@
-import { useCorrectBalunBandSpikeMutation } from "@/modules/skus/api/hooks/mutations/useCorrectBalunBandSpikeMutation";
-import type { CorrectBalunBandSpikeResultDto } from "@/modules/skus/api/types";
+import { useCorrectBandSpikeMutation } from "@/modules/skus/api/hooks/mutations/useCorrectBandSpikeMutation";
+import type { CorrectBandSpikeResultDto } from "@/modules/skus/api/types";
 import { useCallback, useEffect, useState } from "react";
 
-interface UseCorrectBalunBandSpikeDialogProps {
+interface UseCorrectBandSpikeDialogProps {
   skuId: string;
   isOpen: boolean;
   onApplied?: () => void;
 }
 
-interface UseCorrectBalunBandSpikeDialogReturn {
-  preview: CorrectBalunBandSpikeResultDto | null;
+interface CorrectBandSpikeParams {
+  dateFrom: string;
+  dateTo: string;
+  stockMin: number;
+  stockMax: number;
+}
+
+interface UseCorrectBandSpikeDialogReturn {
+  preview: CorrectBandSpikeResultDto | null;
   isPreviewing: boolean;
   isApplying: boolean;
-  handlePreview: (dateFrom: string, dateTo: string) => void;
-  handleApply: (dateFrom: string, dateTo: string) => void;
+  handlePreview: (params: CorrectBandSpikeParams) => void;
+  handleApply: (params: CorrectBandSpikeParams) => void;
   clearPreview: () => void;
 }
 
-export function useCorrectBalunBandSpikeDialog({
+export function useCorrectBandSpikeDialog({
   skuId,
   isOpen,
   onApplied,
-}: UseCorrectBalunBandSpikeDialogProps): UseCorrectBalunBandSpikeDialogReturn {
-  const [preview, setPreview] = useState<CorrectBalunBandSpikeResultDto | null>(
+}: UseCorrectBandSpikeDialogProps): UseCorrectBandSpikeDialogReturn {
+  const [preview, setPreview] = useState<CorrectBandSpikeResultDto | null>(
     null,
   );
   const [pendingMode, setPendingMode] = useState<"preview" | "apply" | null>(
     null,
   );
-  const { mutate } = useCorrectBalunBandSpikeMutation();
+  const { mutate } = useCorrectBandSpikeMutation();
 
   useEffect(() => {
     if (!isOpen) {
@@ -42,10 +49,13 @@ export function useCorrectBalunBandSpikeDialog({
   }, []);
 
   const handlePreview = useCallback(
-    (dateFrom: string, dateTo: string) => {
+    ({ dateFrom, dateTo, stockMin, stockMax }: CorrectBandSpikeParams) => {
       setPendingMode("preview");
       mutate(
-        { skuId, body: { dateFrom, dateTo, apply: false } },
+        {
+          skuId,
+          body: { dateFrom, dateTo, stockMin, stockMax, apply: false },
+        },
         {
           onSuccess: (response) => {
             setPreview(response.data);
@@ -60,10 +70,13 @@ export function useCorrectBalunBandSpikeDialog({
   );
 
   const handleApply = useCallback(
-    (dateFrom: string, dateTo: string) => {
+    ({ dateFrom, dateTo, stockMin, stockMax }: CorrectBandSpikeParams) => {
       setPendingMode("apply");
       mutate(
-        { skuId, body: { dateFrom, dateTo, apply: true } },
+        {
+          skuId,
+          body: { dateFrom, dateTo, stockMin, stockMax, apply: true },
+        },
         {
           onSuccess: (response) => {
             setPreview(response.data);

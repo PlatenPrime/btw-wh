@@ -194,6 +194,11 @@ const SkuPackFlips = lazyWithRetry(() =>
     default: module.SkuPackFlips,
   })),
 );
+const SkuBandSpike = lazyWithRetry(() =>
+  import("./modules/sku-analytics/pages/sku-band-spike").then((module) => ({
+    default: module.SkuBandSpike,
+  })),
+);
 const BtradeSlices = lazyWithRetry(() =>
   import("./modules/btrade-slices/pages/btrade-slices").then((module) => ({
     default: module.BtradeSlices,
@@ -486,6 +491,15 @@ export const router = createHashRouter([
             element: (
               <ProtectedRoute allowedRoles={[RoleType.ADMIN]}>
                 <SkuPackFlips />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "band-spike",
+            element: (
+              <ProtectedRoute allowedRoles={[RoleType.ADMIN]}>
+                <SkuBandSpike />
               </ProtectedRoute>
             ),
             errorElement: <RouteErrorBoundary />,

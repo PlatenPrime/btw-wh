@@ -1,5 +1,5 @@
 import type { SkuDto } from "@/modules/skus/api/types";
-import { CorrectBalunBandSpikeDialog } from "@/modules/skus/components/dialogs/correct-balun-band-spike-dialog";
+import { CorrectBandSpikeDialog } from "@/modules/skus/components/dialogs/correct-band-spike-dialog";
 import { PatchSkuSliceDialog } from "@/modules/skus/components/dialogs/patch-sku-slice-dialog";
 import { SkuSalesExcelDialog } from "@/modules/skus/components/dialogs/sku-sales-excel-dialog";
 import { SkuSliceExcelDialog } from "@/modules/skus/components/dialogs/sku-slice-excel-dialog";
@@ -48,7 +48,7 @@ export function SkuDetailHeaderActionsView({
         onOpenChange={onPatchSliceDialogOpenChange}
       />
       {canCorrectBandSpike ? (
-        <CorrectBalunBandSpikeDialog
+        <CorrectBandSpikeDialog
           skuId={sku._id}
           skuTitle={sku.title}
           open={bandSpikeDialogOpen}
