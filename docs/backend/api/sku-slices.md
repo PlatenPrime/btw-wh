@@ -93,7 +93,7 @@
 
 ### GET `/api/sku-slices/client/air/pending`
 
-Очередь Air SKU для клиентского дозаполнения сегодняшнего среза (календарный день `Europe/Kiev`). В выборку попадают только SKU из групп `Skugr` с `isSliced: true`. Позиция pending, если в `SkuSliceMonth` за сегодня нет ключа дня или `stock === -1` / `price === -1`.
+Очередь Air SKU для клиентского дозаполнения открытого среза. Ключ дня — `toOpenKyivSliceDate` (`Europe/Kiev`): до 20:00 это сегодняшний календарный день, с 20:00 — следующий. В выборку попадают только SKU из групп `Skugr` с `isSliced: true`. Позиция pending, если в `SkuSliceMonth` за этот ключ нет дня или `stock === -1` / `price === -1`.
 
 **Ответ 200:**
 
@@ -118,7 +118,7 @@
 
 ### PUT `/api/sku-slices/client/air/sku/:skuId`
 
-Идемпотентная запись точки сегодняшнего Air в `SkuSliceMonth` из HTML first-party страницы товара. Backend парсит HTML тем же контрактом, что `readAirProductFromHtml`. Канал параллелен серверному scrape: сервер к сайту Air при этом PUT не ходит.
+Идемпотентная запись точки открытого Air-среза в `SkuSliceMonth` из HTML first-party страницы товара. Дата совпадает с `GET client/air/pending` (`toOpenKyivSliceDate`: с 20:00 Europe/Kiev — следующий календарный день). Backend парсит HTML тем же контрактом, что `readAirProductFromHtml`. Канал параллелен серверному scrape: сервер к сайту Air при этом PUT не ходит.
 
 **Path:** `skuId` — валидный ObjectId.
 

@@ -13,6 +13,8 @@ import type { AirClientPendingItemDto } from "@/modules/sku-analytics/api/types"
 import { AirClientPendingList } from "@/modules/sku-analytics/components/lists/air-client-pending-list";
 import type { AirClientSlicesSummary } from "@/modules/sku-analytics/hooks/useAirClientSlices";
 import type { AirClientRowState } from "@/modules/sku-analytics/types";
+import { format, isValid, parse } from "date-fns";
+import { uk } from "date-fns/locale";
 import {
   ChevronDown,
   CloudDownload,
@@ -22,6 +24,15 @@ import {
   StopCircle,
 } from "lucide-react";
 import { useState } from "react";
+
+const SLICE_DAY_FORMAT = "yyyy-MM-dd";
+
+function formatSliceDayLabel(value?: string): string | null {
+  if (!value) return null;
+  const parsed = parse(value.slice(0, 10), SLICE_DAY_FORMAT, new Date());
+  if (!isValid(parsed)) return null;
+  return format(parsed, "d MMM yyyy", { locale: uk });
+}
 
 interface AirClientSlicesContainerViewProps {
   items: AirClientPendingItemDto[];
@@ -78,6 +89,7 @@ export function AirClientSlicesContainerView({
   items,
   rowStates,
   summary,
+  sliceDate,
   isRunning,
   extensionAvailable,
   onRun,
@@ -87,6 +99,7 @@ export function AirClientSlicesContainerView({
   onRecheckExtension,
 }: AirClientSlicesContainerViewProps) {
   const [listOpen, setListOpen] = useState(false);
+  const sliceDateLabel = formatSliceDayLabel(sliceDate);
 
   const progress = summary.total > 0 ? summary.done : 0;
   const hasItems = summary.total > 0;
@@ -96,7 +109,10 @@ export function AirClientSlicesContainerView({
     <SurfaceSection className="grid gap-3">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="grid gap-1">
-          <h3 className={typography.sectionTitle}>Дозаповнення Air сьогодні</h3>
+          <h3 className={typography.sectionTitle}>Дозаповнення Air</h3>
+          {sliceDateLabel ? (
+            <p className={typography.detailSubtitle}>{sliceDateLabel}</p>
+          ) : null}
         </div>
         <ExtensionStatus
           extensionAvailable={extensionAvailable}

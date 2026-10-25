@@ -20,6 +20,7 @@ import { Label } from "@/components/ui/label";
 import { useKonksQuery } from "@/modules/konks/api/hooks/queries/useKonksQuery";
 import { EntityLabel } from "@/components/shared/entities/entity-label";
 import { cn } from "@/lib/utils";
+import { openKyivSliceYmd } from "@/utils/sliceDate";
 
 const DATE_API_FORMAT = "yyyy-MM-dd";
 
@@ -48,6 +49,7 @@ export function SkuSlicesControls({
   const konksQuery = useKonksQuery();
   const konks = konksQuery.data?.data ?? [];
   const selectedDate = parseDate(date);
+  const latestSliceYmd = openKyivSliceYmd();
 
   const handleSelect = (d: Date | undefined) => {
     onDateChange(d ? format(d, DATE_API_FORMAT) : "");
@@ -110,7 +112,7 @@ export function SkuSlicesControls({
               mode="single"
               selected={selectedDate}
               onSelect={handleSelect}
-              disabled={(d) => d > new Date()}
+              disabled={(d) => format(d, DATE_API_FORMAT) > latestSliceYmd}
               initialFocus
             />
           </PopoverContent>

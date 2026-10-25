@@ -44,8 +44,8 @@ Cron ежедневно 20:00 Europe/Kiev; конкуренты из `slices/con
 
 ### Client-ingestion для Air
 
-1. `GET /client/air/pending` — очередь missing/`-1` среди sliced Air SKU по сегодняшним точкам в months;
-2. `PUT /client/air/sku/:skuId` — HTML → запись в months только если ключ отсутствует или `-1`; rollup manufacturer sales после `saved` — асинхронный coalesce (ответ PUT не ждёт full-day rematerialize).
+1. `GET /client/air/pending` — очередь missing/`-1` среди sliced Air SKU по точкам открытого дня в months. Ключ — `toOpenKyivSliceDate`: до 20:00 Europe/Kiev это сегодняшний календарный день, с 20:00 — следующий (тот же день, что вечерний cron).
+2. `PUT /client/air/sku/:skuId` — HTML → запись в months на тот же открытый ключ, только если ключ отсутствует или `-1`; rollup manufacturer sales после `saved` — асинхронный coalesce (ответ PUT не ждёт full-day rematerialize).
 
 Гайд: [frontend: air-client-sku-slices](../frontend/air-client-sku-slices.md).
 
