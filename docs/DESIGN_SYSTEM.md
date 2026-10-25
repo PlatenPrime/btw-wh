@@ -116,6 +116,7 @@ Glass читается на **surface-0 с ambient-градиентом**, не 
 | `body` | `text-sm` | Обычный текст, footer meta |
 | `caption` | `text-xs muted` | Даты, badges, KonkBanner |
 | `label` / `value` | xs / sm medium | `SummaryField` |
+| `metric` | `text-lg font-semibold` | Chart KPI / summary stats на detail (остатки, продажи) |
 | `formLabel` | `text-sm font-medium` | `Label`, подписи полей в формах и excel-dialog |
 | `formHint` | `text-xs muted` | `FormDescription`, helper-текст, preview labels |
 | `formError` | `text-destructive text-sm font-medium` | `FormMessage`, inline-ошибки полей (**только sm**, без xs) |
@@ -159,7 +160,7 @@ Glass читается на **surface-0 с ambient-градиентом**, не 
 ### Исключения
 
 - **Hero / auth landing:** `MainHero`, login — `font-display` + `text-3xl`…`text-5xl`
-- **Chart KPI / summary stats:** могут быть `text-lg`+ (не card typography)
+- **Chart KPI / summary stats:** токен `metric` (`text-lg font-semibold`); не смешивать с `value` / card typography
 - **Shadcn primitives:** не переписывать; `size-4` = UI icon default
 
 ## Spacing & layout
@@ -202,6 +203,8 @@ Glass читается на **surface-0 с ambient-градиентом**, не 
 | Toolbar (свернуть, theme) | `ghost` |
 
 **Правила:** минимум одна filled semantic CTA на экран с мутацией; в диалогах не две outline; icon-actions в списках — `*-soft`, не серый ghost.
+
+**Preview → apply в диалоге:** `outline` (Скасувати) / `info` (Переглянути) / `default` или `edit`/`success` (Застосувати — запись). Не ставить `secondary` на «Переглянути»: secondary — мягкое вторичное рядом с CTA, не semantic preview.
 
 ## Градиенты
 

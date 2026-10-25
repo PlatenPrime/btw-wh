@@ -1,4 +1,6 @@
 import { SurfaceSection } from "@/components/shared/layout";
+import { typography } from "@/lib/typography";
+import { cn } from "@/lib/utils";
 import type { DiscoverBandSpikePayload } from "@/modules/sku-analytics/api/types";
 import {
   SkuBandSpikeTable,
@@ -11,6 +13,10 @@ export interface SkuBandSpikeContainerViewProps {
   onCorrect: (target: SkuBandSpikeCorrectTarget) => void;
 }
 
+const numberFormat = new Intl.NumberFormat("uk-UA", {
+  maximumFractionDigits: 0,
+});
+
 export function SkuBandSpikeContainerView({
   data,
   canCorrect,
@@ -18,17 +24,14 @@ export function SkuBandSpikeContainerView({
 }: SkuBandSpikeContainerViewProps) {
   return (
     <SurfaceSection className="grid gap-3 p-0">
-      <div className="flex flex-wrap items-baseline gap-2 px-3 pt-3 text-sm text-muted-foreground">
-        <span className="text-foreground font-medium">
-          Кандидати · {data.items.length}
-        </span>
-        <span>
-          {data.konkName} · band {data.band.min}–{data.band.max}
-        </span>
-        <span>
-          {data.window.dateFrom.slice(0, 10)}–{data.window.dateTo.slice(0, 10)}
-        </span>
-      </div>
+      <h2
+        className={cn(
+          typography.sectionTitle,
+          "flex items-baseline gap-2 px-3 pt-3 tabular-nums",
+        )}
+      >
+        {numberFormat.format(data.items.length)} артикулів
+      </h2>
       <SkuBandSpikeTable
         items={data.items}
         stockMin={data.band.min}

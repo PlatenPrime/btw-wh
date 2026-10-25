@@ -110,9 +110,9 @@ export function PatchSkuSliceFormView({
       className="flex flex-col gap-4"
     >
       <p className={typography.pageDescription}>
-        Сирий запис у SkuSlice, не live-scrape і не compensating. Нічний
-        pack-flip орієнтується на ці значення. Для періоду або кількох періодів —
-        однакові stock/price на всі дні одним запитом.
+        Ручне виправлення залишку й ціни в історії. Не знімає дані з сайту.
+        Нічні автокоректи орієнтуються на ці числа. Для періоду або кількох
+        періодів — однакові значення на всі дні одним збереженням.
       </p>
       {skuTitle ? (
         <p className={typography.caption}>{skuTitle}</p>
@@ -311,8 +311,7 @@ export function PatchSkuSliceFormView({
 
       {!isPreviewLoading && showMissingPointHint ? (
         <p className={typography.formHint}>
-          Точки на цю дату ще немає — документ дня створиться при збереженні
-          (upsert).
+          Точки на цю дату ще немає — день створиться при збереженні.
         </p>
       ) : null}
 

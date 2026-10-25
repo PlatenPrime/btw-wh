@@ -77,7 +77,7 @@ export function SkuSlicesChartView({
             size="sm"
             onClick={onCorrectBandSpike}
           >
-            Виправити band-spike
+            Виправити стрибок
           </Button>
         ) : null}
       </div>

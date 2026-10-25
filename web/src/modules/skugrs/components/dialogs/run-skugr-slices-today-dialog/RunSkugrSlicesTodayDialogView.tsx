@@ -27,7 +27,7 @@ export function RunSkugrSlicesTodayDialogView({
       <DialogHeader>
         <DialogTitle>Провести зрізи на сьогодні</DialogTitle>
         <DialogDescription>
-          Серверний scrape усіх SKU групи за поточний календарний день
+          Зібрати залишки всіх товарів групи за сьогодні з сайту.
         </DialogDescription>
       </DialogHeader>
       <div className="grid gap-4">
@@ -35,14 +35,13 @@ export function RunSkugrSlicesTodayDialogView({
           <AlertTriangle />
           <AlertTitle>Повний перезапис</AlertTitle>
           <AlertDescription>
-            Точки зрізу групи <strong>{skugrTitle}</strong> за сьогодні будуть
-            перезаписані (включно з уже заповненими). Запит синхронний і може
-            тривати кілька хвилин при великій групі.
+            Залишки групи <strong>{skugrTitle}</strong> за сьогодні будуть
+            перезаписані, навіть якщо вже зібрані. Може тривати кілька хвилин
+            при великій групі.
           </AlertDescription>
         </Alert>
         <p className={typography.pageDescription}>
-          Не плутати з компенсуючим зрізом (лише значення -1) і з Air
-          client-ingest.
+          Не плутати з дозаповненням помилок і з оновленням з Air.
         </p>
         <DialogActions
           onCancel={onCancel}

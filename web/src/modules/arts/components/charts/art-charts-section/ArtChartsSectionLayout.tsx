@@ -18,14 +18,14 @@ export function ArtChartsSectionLayout({
   salesChart,
 }: ArtChartsSectionLayoutProps) {
   return (
-    <div className="grid gap-3">
+    <div className="grid gap-4">
       <ChartDateRangeToolbar
         idPrefix="art-charts"
         dateFrom={dateFrom}
         dateTo={dateTo}
         onDateRangeChange={onDateRangeChange}
       />
-      <div className="grid grid-cols-1 items-stretch gap-2 lg:grid-cols-2">
+      <div className="grid grid-cols-1 items-stretch gap-4 lg:grid-cols-2">
         <ChartSection title="Динаміка залишків" className="h-full min-w-0">
           {stockChart}
         </ChartSection>

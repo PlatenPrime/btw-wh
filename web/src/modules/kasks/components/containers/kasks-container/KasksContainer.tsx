@@ -6,23 +6,25 @@ interface KasksContainerProps {
   data: GetKasksByDateResponse;
   isFetching: boolean;
   selectedDate: Date;
-  setSelectedDate: React.Dispatch<React.SetStateAction<Date>>;
+  setDate: (date: Date) => void;
 }
 
 export function KasksContainer({
   data,
   isFetching,
   selectedDate,
-  setSelectedDate,
+  setDate,
 }: KasksContainerProps) {
   return (
     <KasksContainerView
       selectedDate={selectedDate}
       data={data}
       isFetching={isFetching}
-      onPreviousDay={() => setSelectedDate((d) => subDays(d, 1))}
-      onNextDay={() => setSelectedDate((d) => addDays(d, 1))}
-      onDateSelect={(date) => date && setSelectedDate(date)}
+      onPreviousDay={() => setDate(subDays(selectedDate, 1))}
+      onNextDay={() => setDate(addDays(selectedDate, 1))}
+      onDateSelect={(date) => {
+        if (date) setDate(date);
+      }}
     />
   );
 }

@@ -35,9 +35,8 @@ export function SalesComparisonExcelDialogView({
       </DialogHeader>
       <div className="flex flex-col gap-4">
         <p className={typography.pageDescription}>
-          Оберіть період дат для формування звіту. Файл міститиме продажі
-          (різницю залишків по днях), ціни та виручку аналога та Btrade по
-          датах, колонку «Всього» та дельти (Δ Продажі, Δ Виручка).
+          Оберіть період. У файлі — продажі, ціни й виручка аналога та Btrade
+          по днях, підсумки «Всього» і різниця продажів / виручки.
         </p>
         <div className="flex justify-center">
           <Calendar
@@ -53,7 +52,7 @@ export function SalesComparisonExcelDialogView({
           onSubmit={onDownload}
           isSubmitting={isDownloading}
           submitText="Скачати"
-          submitLoadingText="Постановка..."
+          submitLoadingText="Готуємо..."
           isDisabled={!isRangeValid}
           variant="default"
           className="justify-end"

@@ -9,7 +9,7 @@ export function Art() {
 
   return (
     <SidebarInsetLayout headerText={`Артикул: ${artikul || "невідомий"}`}>
-      <div className="flex min-h-screen w-full flex-col gap-2 p-2">
+      <div className="flex min-h-screen w-full flex-col gap-4 p-4 md:p-6">
         <ArtFetcher
           artikul={artikul || ""}
           ContainerComponent={ArtContainer}

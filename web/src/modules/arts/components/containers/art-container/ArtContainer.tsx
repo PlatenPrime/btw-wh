@@ -31,7 +31,6 @@ export function ArtContainer({ artData }: ArtContainerProps) {
       <ArtContainerView
         artData={artData}
         showCharts={showAdminExtras}
-        showAnalogs={showAdminExtras}
         dateFrom={dateFrom}
         dateTo={dateTo}
         onDateRangeChange={onDateRangeChange}

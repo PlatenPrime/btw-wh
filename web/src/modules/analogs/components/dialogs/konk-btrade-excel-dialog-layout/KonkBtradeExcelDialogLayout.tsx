@@ -184,7 +184,7 @@ export function KonkBtradeExcelDialogLayout({
           onSubmit={onDownload}
           isSubmitting={isDownloading}
           submitText="Скачати"
-          submitLoadingText="Постановка..."
+          submitLoadingText="Готуємо..."
           isDisabled={!isFormValid}
           variant="default"
           className="justify-end w-full max-w-sm"

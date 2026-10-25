@@ -28,12 +28,9 @@ export function PurgePromotedFromNewskuDialogView({
           <AlertTriangle />
           <AlertTitle>Небезпечна дія</AlertTitle>
           <AlertDescription>
-            З усіх товарних груп з виробником <strong>newsku</strong>{" "}
-            (Новинки) будуть прибрані посилання на SKU, у яких уже інший{" "}
-            <code className="text-xs">prodName</code>. Документи товарів у
-            колекції <code className="text-xs">skus</code> не видаляються і не
-            змінюються — у групах Новинок залишаться лише ще не присвоєні
-            картки.
+            З усіх груп «Новинки» будуть прибрані товари, яким уже призначено
+            іншого виробника. Картки товарів не видаляються — у Новинках
+            залишаться лише ще не розподілені.
           </AlertDescription>
         </Alert>
         <DialogActions

@@ -1,4 +1,5 @@
 import { Card } from "@/components/ui";
+import { typography } from "@/lib/typography";
 import { cn } from "@/lib/utils";
 import type { PosResponse } from "@/modules/poses/api/types";
 
@@ -18,9 +19,9 @@ export function SkladListPos({ pos, onClick }: SkladListPosProps) {
       )}
       onClick={onClick}
     >
-      <div className="grid grid-cols-3 text-sm">
+      <div className="grid grid-cols-3 items-center gap-2">
         <div className="min-w-0 flex-1">
-          <h4 className="truncate font-bold text-base">
+          <h4 className={typography.listTitleCompact}>
             {pos.data?.palletData?.title || "Невідома палета"}
           </h4>
         </div>
@@ -28,6 +29,7 @@ export function SkladListPos({ pos, onClick }: SkladListPosProps) {
         <span
           className={cn(
             "flex items-center justify-center gap-1",
+            typography.value,
             isBoxesEmpty ? "text-destructive" : "",
           )}
         >
@@ -36,6 +38,7 @@ export function SkladListPos({ pos, onClick }: SkladListPosProps) {
         <span
           className={cn(
             "flex items-center justify-end gap-1",
+            typography.value,
             isQuantEmpty ? "text-destructive" : "",
           )}
         >

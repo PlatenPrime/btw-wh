@@ -3,12 +3,10 @@ import { AsksByArtikulCardSkeleton } from "@/modules/asks/components/cards/asks-
 
 export function AsksByArtikulContainerSkeleton() {
   return (
-    <main className="grid gap-2">
-      {/* Скелетон заголовка */}
-      <Skeleton className="h-7 w-24 mx-auto" />
+    <main className="grid gap-3">
+      <Skeleton className="h-5 w-24" />
 
-      {/* Скелетоны карточек */}
-      <div className="grid gap-2">
+      <div className="grid gap-3">
         {Array.from({ length: 5 }).map((_, index) => (
           <AsksByArtikulCardSkeleton key={index} />
         ))}

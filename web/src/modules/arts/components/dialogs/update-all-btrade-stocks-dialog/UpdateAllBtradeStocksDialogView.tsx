@@ -23,15 +23,14 @@ export function UpdateAllBtradeStocksDialogView({
       <DialogHeader>
         <DialogTitle>Оновити залишки Btrade</DialogTitle>
         <DialogDescription>
-          Ви впевнені, що хочете запустити оновлення залишків Btrade для всіх
-          артикулів? Процес виконується асинхронно і може зайняти тривалий час.
+          Оновити залишки Btrade для всіх артикулів? Робота йде у фоні і може
+          зайняти тривалий час.
         </DialogDescription>
       </DialogHeader>
       <div className="grid gap-4">
         <p className={typography.pageDescription}>
-          Після підтвердження буде запущено процес оновлення залишків Btrade для
-          всіх артикулів у системі. Оновлення виконується в фоновому режимі, і
-          ви отримаєте сповіщення після запуску процесу.
+          Після підтвердження оновлення стартує у фоні. Сповіщення прийде, коли
+          процес буде запущено.
         </p>
         <DialogActions
           onCancel={onCancel}

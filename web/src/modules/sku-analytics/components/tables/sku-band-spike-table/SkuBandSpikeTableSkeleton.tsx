@@ -20,13 +20,10 @@ export function SkuBandSpikeTableSkeleton() {
               <Skeleton className="h-3 w-16" />
             </TableHead>
             <TableHead>
-              <Skeleton className="h-3 w-20" />
-            </TableHead>
-            <TableHead>
               <Skeleton className="h-3 w-16" />
             </TableHead>
-            <TableHead className="text-right">
-              <Skeleton className="ml-auto h-3 w-12" />
+            <TableHead className="text-center">
+              <Skeleton className="mx-auto h-3 w-12" />
             </TableHead>
           </TableRow>
         </TableHeader>
@@ -34,13 +31,13 @@ export function SkuBandSpikeTableSkeleton() {
           {Array.from({ length: ROWS }).map((_, index) => (
             <TableRow key={index}>
               <TableCell>
-                <div className="grid gap-1">
-                  <Skeleton className="h-4 w-48" />
-                  <Skeleton className="h-3 w-24" />
+                <div className="flex items-center gap-3">
+                  <Skeleton className="h-10 w-10 shrink-0 rounded-md" />
+                  <div className="grid gap-1">
+                    <Skeleton className="h-4 w-48" />
+                    <Skeleton className="h-3 w-24" />
+                  </div>
                 </div>
-              </TableCell>
-              <TableCell>
-                <Skeleton className="h-4 w-28" />
               </TableCell>
               <TableCell>
                 <div className="grid gap-1">
@@ -48,8 +45,8 @@ export function SkuBandSpikeTableSkeleton() {
                   <Skeleton className="h-4 w-36" />
                 </div>
               </TableCell>
-              <TableCell className="text-right">
-                <Skeleton className="ml-auto h-8 w-20" />
+              <TableCell className="text-center">
+                <Skeleton className="mx-auto h-8 w-20" />
               </TableCell>
             </TableRow>
           ))}

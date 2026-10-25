@@ -85,7 +85,7 @@ export function DeleteOrphanSkusDialogView({
           onCancel={onCancel}
           onSubmit={onSubmit}
           isSubmitting={isDeleting}
-          submitText="Видалити сиріт"
+          submitText="Видалити без групи"
           submitLoadingText="Видалення..."
           variant="destructive"
           className="justify-end"

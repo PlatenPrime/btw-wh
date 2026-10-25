@@ -3,8 +3,7 @@ import { ErrorDisplay } from "@/components/shared/errors";
 import { LoadingNoData } from "@/components/shared/feedback/loading-states";
 import { useKasksByDateQuery } from "@/modules/kasks/api/hooks/queries/useKasksByDateQuery";
 import type { GetKasksByDateResponse } from "@/modules/kasks/api/types/dto";
-import { format } from "date-fns";
-import { useState } from "react";
+import { useKasksParams } from "@/modules/kasks/hooks/useKasksParams";
 import type { ComponentType } from "react";
 
 interface KasksFetcherProps {
@@ -12,19 +11,16 @@ interface KasksFetcherProps {
     data: GetKasksByDateResponse;
     isFetching: boolean;
     selectedDate: Date;
-    setSelectedDate: React.Dispatch<React.SetStateAction<Date>>;
+    setDate: (date: Date) => void;
   }>;
   SkeletonComponent: ComponentType;
-  initialDate?: Date;
 }
 
 export function KasksFetcher({
   ContainerComponent,
   SkeletonComponent,
-  initialDate = new Date(),
 }: KasksFetcherProps) {
-  const [selectedDate, setSelectedDate] = useState<Date>(initialDate);
-  const dateString = format(selectedDate, "yyyy-MM-dd");
+  const { selectedDate, dateString, setDate } = useKasksParams();
 
   const query = useKasksByDateQuery({ date: dateString });
 
@@ -50,7 +46,7 @@ export function KasksFetcher({
         data={query.data}
         isFetching={query.isFetching}
         selectedDate={selectedDate}
-        setSelectedDate={setSelectedDate}
+        setDate={setDate}
       />
     </ContentReveal>
   );

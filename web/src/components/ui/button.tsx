@@ -33,7 +33,7 @@ const buttonVariants = cva(
         "info-soft":
           "bg-info/5 text-info  shadow-xs hover:bg-info/25 hover:border-info/45 focus-visible:ring-info/30 dark:bg-info/20 dark:hover:bg-info/30",
         edit:
-          "bg-edit text-foreground tracking-tight shadow-[0_2px_4px_-1px_var(--shadow-color)/0.12,0_4px_8px_-2px_var(--shadow-color)/0.08] hover:bg-edit/90 hover:shadow-elevation-2 focus-visible:ring-edit/40 dark:text-foreground",
+          "bg-edit text-edit-foreground tracking-tight shadow-[0_2px_4px_-1px_var(--shadow-color)/0.12,0_4px_8px_-2px_var(--shadow-color)/0.08] hover:bg-edit/90 hover:shadow-elevation-2 focus-visible:ring-edit/40",
         "edit-soft":
           "bg-edit/15 text-edit border border-edit/35 shadow-xs hover:bg-edit/25 hover:border-edit/50 focus-visible:ring-edit/30 dark:bg-edit/20 dark:hover:bg-edit/30",
       },

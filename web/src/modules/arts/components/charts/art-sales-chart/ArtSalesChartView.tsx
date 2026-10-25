@@ -28,7 +28,7 @@ export function ArtSalesChartView({
   const showChart = showSales || showRevenue;
 
   return (
-    <div className="grid h-full min-h-0 grid-rows-[auto_1fr] gap-3">
+    <div className="grid gap-3">
       <div className="flex flex-wrap items-center gap-4">
         <div className="flex items-center gap-2">
           <Switch
@@ -59,26 +59,20 @@ export function ArtSalesChartView({
           </Label>
         </div>
       </div>
-      <DataRefetchOverlay
-        isFetching={isFetching}
-        isLoading={isLoading}
-        className="flex min-h-0 flex-1 flex-col"
-      >
+      <DataRefetchOverlay isFetching={isFetching} isLoading={isLoading}>
         {showChart ? (
+          <SalesRangeChartView
+            data={items}
+            showSales={showSales}
+            showRevenue={showRevenue}
+          />
+        ) : (
           <div
             className={cn(
-              "flex min-h-0 flex-1 flex-col [&_.sales-range-chart]:!h-full [&_.sales-range-chart]:!max-h-none [&_.sales-range-chart]:!max-w-none [&_.sales-range-chart]:!min-h-0",
               ART_CHART_PLOT_CLASS,
+              "flex items-center justify-center rounded-md border border-dashed p-4 text-center text-sm text-muted-foreground",
             )}
           >
-            <SalesRangeChartView
-              data={items}
-              showSales={showSales}
-              showRevenue={showRevenue}
-            />
-          </div>
-        ) : (
-          <div className="flex min-h-0 flex-1 items-center justify-center rounded-md border border-dashed p-4 text-center text-sm text-muted-foreground">
             Увімкніть хоча б одну серію: Продажі або Виручка.
           </div>
         )}

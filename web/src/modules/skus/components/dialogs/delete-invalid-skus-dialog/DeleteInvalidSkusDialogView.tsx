@@ -46,10 +46,9 @@ export function DeleteInvalidSkusDialogView({
       </DialogHeader>
       <div className="grid gap-4">
         <p className={typography.pageDescription}>
-          Оберіть конкурента або «усі конкуренти». Після підтвердження буде
-          видалено відповідні записи з позначкою невалідності (
-          <code className="text-xs">isInvalid: true</code>). Інші SKU не
-          зміняться. Цю дію неможливо скасувати.
+          Оберіть конкурента або «усі конкуренти». Буде видалено товари,
+          позначені як невалідні. Інші не зміняться. Цю дію неможливо
+          скасувати.
         </p>
         <div className="grid gap-2">
           <p className={typography.formLabel}>Конкурент</p>

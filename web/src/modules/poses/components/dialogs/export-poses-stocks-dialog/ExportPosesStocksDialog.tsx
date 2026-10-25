@@ -114,7 +114,7 @@ export function ExportPosesStocksDialog({
             Скасувати
           </Button>
           <Button type="button" onClick={handleSubmit} disabled={isStarting}>
-            {isStarting ? "Постановка..." : "Скачати"}
+            {isStarting ? "Готуємо..." : "Скачати"}
           </Button>
         </DialogFooter>
       </DialogContent>

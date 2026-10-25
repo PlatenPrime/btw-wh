@@ -30,11 +30,10 @@ export function DeleteSkugrWithSkusDialogView({
           <AlertTriangle />
           <AlertTitle>Небезпечна дія</AlertTitle>
           <AlertDescription>
-            Буде видалено товарну групу <strong>{skugrTitle}</strong> та{" "}
-            <strong>усі</strong> SKU, перелічені в її складі. Якщо ці ж товари
-            ще фігурують в інших групах — посилання на них буде прибрано з
-            тих груп, після чого відповідні документи <code className="text-xs">Sku</code>{" "}
-            будуть видалені з бази. Цю дію неможливо скасувати.
+            Буде видалено групу <strong>{skugrTitle}</strong> і{" "}
+            <strong>усі</strong> товари з її складу. Якщо ті самі товари ще є в
+            інших групах — їх приберуть і звідти, а картки товарів видалять.
+            Цю дію неможливо скасувати.
           </AlertDescription>
         </Alert>
         <DialogActions

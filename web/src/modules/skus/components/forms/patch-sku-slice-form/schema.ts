@@ -74,7 +74,7 @@ function refinePeriodBounds(
   if (from > to) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
-      message: "dateFrom має бути ≤ dateTo",
+      message: "Початок має бути не пізніше кінця",
       path: toPath,
     });
     return;

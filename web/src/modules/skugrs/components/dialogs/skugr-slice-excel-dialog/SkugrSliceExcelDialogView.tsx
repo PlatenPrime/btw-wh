@@ -66,7 +66,7 @@ export function SkugrSliceExcelDialogView({
           onSubmit={onDownload}
           isSubmitting={isDownloading}
           submitText="Скачати"
-          submitLoadingText="Постановка..."
+          submitLoadingText="Готуємо..."
           isDisabled={!isRangeValid || !hasMetrics}
           variant="default"
           className="justify-end"

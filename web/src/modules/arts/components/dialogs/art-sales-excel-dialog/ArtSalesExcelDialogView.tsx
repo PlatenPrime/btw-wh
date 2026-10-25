@@ -35,7 +35,7 @@ export function ArtSalesExcelDialogView({
       </DialogHeader>
       <div className="flex flex-col gap-4">
         <p className={typography.pageDescription}>
-          Файл формується на backend та завантажується готовим Excel за обраний
+          Файл готується на сервері за обраний
           період.
         </p>
         <div className="flex justify-center">
@@ -52,7 +52,7 @@ export function ArtSalesExcelDialogView({
           onSubmit={onDownload}
           isSubmitting={isExporting}
           submitText="Скачати"
-          submitLoadingText="Постановка..."
+          submitLoadingText="Готуємо..."
           isDisabled={!isRangeValid}
           variant="default"
           className="justify-end"

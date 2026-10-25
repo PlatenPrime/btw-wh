@@ -71,7 +71,7 @@ export function SkuBandSpike() {
   }, [isFiltersReady, hasRun, isFetching, refetchDiscover, markRun]);
 
   return (
-    <SidebarInsetLayout headerText="Band-spike">
+    <SidebarInsetLayout headerText="Корегування">
       <div className="grid gap-4 p-2">
         <SkuBandSpikeControls
           konk={konk}
@@ -89,8 +89,7 @@ export function SkuBandSpike() {
 
         {!canFetch ? (
           <p className="text-muted-foreground text-sm">
-            Обери конкурента, смугу залишку й період (≤{" "}
-            {BAND_SPIKE_DISCOVER_MAX_RANGE_DAYS} днів).
+            Обери конкурента, смугу залишку й період.
           </p>
         ) : (
           <SkuBandSpikeFetcher

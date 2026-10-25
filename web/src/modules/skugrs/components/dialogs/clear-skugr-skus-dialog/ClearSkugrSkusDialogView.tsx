@@ -30,11 +30,9 @@ export function ClearSkugrSkusDialogView({
           <AlertTriangle />
           <AlertTitle>Небезпечна дія</AlertTitle>
           <AlertDescription>
-            Усі прив&apos;язки SKU до групи <strong>{skugrTitle}</strong> будуть
-            видалені з масиву складу групи. Документи товарів у колекції{" "}
-            <code className="text-xs">skus</code> залишаться; зміниться лише
-            склад цієї групи. Після очищення можна знову заповнити групу
-            (наприклад, через «Заповнити товарами»).
+            З групи <strong>{skugrTitle}</strong> зникнуть усі товари в складі.
+            Самі картки товарів залишаться — зміниться лише ця група. Після
+            очищення її можна знову заповнити через «Заповнити товарами».
           </AlertDescription>
         </Alert>
         <DialogActions

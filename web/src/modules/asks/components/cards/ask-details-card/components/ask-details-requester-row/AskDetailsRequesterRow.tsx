@@ -1,5 +1,6 @@
-import { CalendarDate } from "@/components/shared/date/calendar-date/CalendarDate";
-import { UserAvatarName } from "@/components/shared/entities/user/UserAvatarName";
+import { MetricChip } from "@/components/shared/elements";
+import { formatDate } from "@/utils/formatDate";
+import { Calendar, User } from "lucide-react";
 
 interface AskDetailsRequesterRowProps {
   fullname?: string | null;
@@ -20,15 +21,26 @@ export function AskDetailsRequesterRow({
   }
 
   return (
-    <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
+    <div className="grid gap-2 sm:grid-cols-2">
       {hasAuthor ? (
-        <UserAvatarName
-          photoUrl={photo ?? undefined}
-          fullname={fullname!}
-          size="xs"
+        <MetricChip
+          icon={User}
+          imageUrl={photo}
+          tone="muted"
+          label="Автор"
+          value={fullname}
+          className="w-full"
         />
       ) : null}
-      {hasDate ? <CalendarDate date={createdAt!} /> : null}
+      {hasDate ? (
+        <MetricChip
+          icon={Calendar}
+          tone="info"
+          label="Створено"
+          value={formatDate(createdAt!)}
+          className="w-full"
+        />
+      ) : null}
     </div>
   );
 }

@@ -34,8 +34,8 @@ export function useRunPostCorrectionsDialog({
     }
 
     const trimmedKonk = konkName?.trim() ?? "";
-    const modeLabel = apply ? "apply" : "dry-run";
-    const scopeLabel = trimmedKonk || "all";
+    const modeLabel = apply ? "запис" : "перегляд";
+    const scopeLabel = trimmedKonk || "усі";
 
     const params: Record<string, unknown> = { dateFrom, dateTo, apply };
     if (trimmedKonk) {

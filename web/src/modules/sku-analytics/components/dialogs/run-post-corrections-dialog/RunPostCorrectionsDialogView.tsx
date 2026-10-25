@@ -70,8 +70,8 @@ export function RunPostCorrectionsDialogView({
   const isScoped = Boolean(konkName) && konkName !== POST_CORRECTIONS_ALL_KONKS;
 
   const description = isScoped
-    ? `Скоуп ${konkName}: pack-flip (якщо konk у auto-apply) + manufacturer rollup цього конкурента. Band-spike сюди не входить. Без галочки — dry-run.`
-    : "Повний post-pass: pack-flip auto-apply (perfect) + manufacturer rollup по всіх konk. Band-spike лише вручну (сторінка /sku/band-spike або картка SKU). Без галочки — dry-run.";
+    ? `Для ${konkName}: виправлення кратності упаковки (якщо увімкнено для цього конкурента) і зведення залишків по виробнику. Сплески залишків сюди не входять — лише вручну на сторінці «Корегування».`
+    : "Для всіх конкурентів: виправлення кратності упаковки (де увімкнено) і зведення залишків по виробнику. Сплески залишків — лише вручну на сторінці «Корегування» або в картці товару.";
 
   return (
     <DialogContent className="sm:max-w-[480px]">
@@ -82,10 +82,8 @@ export function RunPostCorrectionsDialogView({
 
       <div className="grid gap-4">
         <p className={typography.pageDescription}>
-          Після запуску вікно закриється одразу — коригування йде у фоні.
-          Результат прийде сповіщенням. Діапазон включно, максимум{" "}
-          {POST_CORRECTIONS_MAX_RANGE_DAYS} днів. Авто RTL band-spike
-          вимкнено.
+          Після запуску вікно закриється одразу — робота йде у фоні. Результат
+          прийде сповіщенням. Період — до {POST_CORRECTIONS_MAX_RANGE_DAYS} днів.
         </p>
 
         <div className="flex flex-col gap-2">
@@ -148,8 +146,8 @@ export function RunPostCorrectionsDialogView({
               Застосувати зміни
             </Label>
             <p className={typography.pageDescription}>
-              Без галочки — dry-run (зрізів не змінює). З галочкою — запис у
-              SkuSlice і rollup.
+              Без галочки — лише перегляд, зрізи не змінюються. З галочкою —
+              записати зміни.
             </p>
           </div>
         </div>
@@ -159,7 +157,7 @@ export function RunPostCorrectionsDialogView({
           onSubmit={onRun}
           isSubmitting={isRunning}
           isDisabled={!isRangeValid}
-          submitText={apply ? "Запустити" : "Dry-run"}
+          submitText={apply ? "Запустити" : "Переглянути"}
           submitLoadingText="Запуск..."
           variant="default"
           className="justify-end"

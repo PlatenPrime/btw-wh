@@ -19,7 +19,7 @@ export function CreateKaskArtColumn({
   zoneValue,
 }: CreateKaskArtColumnProps) {
   return (
-    <aside className="mx-auto flex w-full max-w-[15.5rem] flex-col items-stretch gap-4 md:mx-0">
+    <aside className="mx-auto flex w-full max-w-[14rem] flex-col items-stretch gap-3 md:mx-0">
       <CreateKaskArtPreviewCard
         artikul={artikul}
         isArtLoading={isArtLoading}
@@ -31,15 +31,15 @@ export function CreateKaskArtColumn({
         artData={artData}
         zoneValue={zoneValue}
       />
-      {artikul.length === 9 && (
-        <div className="bg-muted/40 border-border w-full rounded-lg border p-3">
+      {artikul.length === 9 ? (
+        <div className="bg-muted/30 border-border w-full rounded-lg border p-3">
           <BtradeArtDataFetcher
             artikul={artikul}
             ContainerComponent={BtradeArtDataContainer}
             SkeletonComponent={BtradeArtDataSkeleton}
           />
         </div>
-      )}
+      ) : null}
     </aside>
   );
 }

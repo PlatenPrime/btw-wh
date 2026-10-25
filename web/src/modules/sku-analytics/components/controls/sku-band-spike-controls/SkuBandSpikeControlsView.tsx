@@ -3,10 +3,8 @@ import { KonkEntitySelect } from "@/components/shared/controls";
 import { SurfaceSection } from "@/components/shared/layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { typography } from "@/lib/typography";
 import type { KonkDto } from "@/modules/konks/api/types";
-import { differenceInCalendarDays, parseISO, isValid } from "date-fns";
+import { differenceInCalendarDays, isValid, parseISO } from "date-fns";
 
 export const BAND_SPIKE_DISCOVER_MAX_RANGE_DAYS = 93;
 
@@ -53,12 +51,6 @@ export function SkuBandSpikeControlsView({
 
   return (
     <SurfaceSection className="grid gap-3">
-      <p className={typography.pageDescription}>
-        Пошук кандидатів: contiguous run у [stockMin, stockMax] з виходом з
-        смуги після. Вікно ≤ {BAND_SPIKE_DISCOVER_MAX_RANGE_DAYS} днів.
-        Підказки: svbum — часто мільйони; balun ~5k / 9–11k.
-      </p>
-
       <div className="flex min-w-0 flex-wrap items-end gap-3">
         <KonkEntitySelect
           value={konk}
@@ -68,7 +60,6 @@ export function SkuBandSpikeControlsView({
         />
 
         <div className="grid gap-2">
-          <Label htmlFor="band-spike-discover-stock-min">stockMin</Label>
           <Input
             id="band-spike-discover-stock-min"
             type="number"
@@ -84,7 +75,6 @@ export function SkuBandSpikeControlsView({
         </div>
 
         <div className="grid gap-2">
-          <Label htmlFor="band-spike-discover-stock-max">stockMax</Label>
           <Input
             id="band-spike-discover-stock-max"
             type="number"
@@ -112,7 +102,7 @@ export function SkuBandSpikeControlsView({
           disabled={!isSubmitReady || isFetching || isOverMax}
           onClick={onSubmit}
         >
-          {isFetching ? "Шукаю…" : "Знайти кандидатів"}
+          {isFetching ? "Шукаю…" : "Знайти"}
         </Button>
       </div>
 

@@ -16,6 +16,7 @@ export const typography = {
   caption: "text-xs text-muted-foreground",
   label: "text-xs text-muted-foreground leading-none",
   value: "text-sm font-medium leading-snug text-foreground",
+  metric: "text-lg font-semibold leading-tight",
   formLabel: "text-sm font-medium leading-tight",
   formHint: "text-xs text-muted-foreground leading-snug",
   formError: "text-destructive text-sm font-medium leading-5",

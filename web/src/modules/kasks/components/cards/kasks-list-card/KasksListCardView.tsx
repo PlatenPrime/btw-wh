@@ -24,8 +24,24 @@ export function KasksListCardView({
   const comText = kask.com?.trim();
 
   return (
-    <ListRowCard className="grid gap-2 hover:bg-muted/30">
-      <div className="flex items-start gap-2">
+    <ListRowCard
+      className={cn(
+        "group relative grid gap-3 overflow-hidden border-l-4",
+      )}
+      style={{
+        borderLeftColor:
+          "color-mix(in oklch, var(--chart-6) 55%, var(--primary))",
+      }}
+    >
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100 motion-reduce:transition-none"
+        style={{
+          background:
+            "linear-gradient(120deg, color-mix(in oklch, var(--chart-6) 10%, transparent), color-mix(in oklch, var(--primary) 8%, transparent))",
+        }}
+      />
+      <div className="relative flex items-start gap-2">
         <div className="min-w-0 flex-1">
           <ArtikulImageLink
             artikul={kask.artikul}
@@ -52,23 +68,42 @@ export function KasksListCardView({
           }
         />
       </div>
-      <div className="grid gap-2 pl-12">
-        {kask.quant != null ? (
-          <div className={cn("text-foreground flex items-center gap-2", typography.body)}>
-            <IconWell icon={CircleIcon} tone="info" size="sm" />
-            <span>{kask.quant}</span>
-          </div>
-        ) : null}
-        <div className={cn("text-foreground flex items-center gap-2", typography.body)}>
-          <IconWell icon={MapPin} tone="warning" size="sm" />
-          <span>{kask.zone}</span>
+
+      {comText ? (
+        <div
+          className={cn(
+            "text-foreground relative flex items-start gap-2",
+            typography.body,
+          )}
+        >
+          <IconWell icon={MessageSquareMore} tone="edit" size="sm" />
+          <span className="italic">{comText}</span>
         </div>
-        {comText ? (
-          <div className={cn("text-foreground flex items-start gap-2", typography.body)}>
-            <IconWell icon={MessageSquareMore} tone="edit" size="sm" />
-            <span className="italic">{comText}</span>
+      ) : null}
+
+      <div className="border-border/40 relative flex flex-wrap items-center justify-between gap-2 border-t pt-2">
+        <div className="flex flex-wrap items-center gap-3">
+          {kask.quant != null ? (
+            <div
+              className={cn(
+                "text-foreground flex items-center gap-2",
+                typography.body,
+              )}
+            >
+              <IconWell icon={CircleIcon} tone="info" size="sm" />
+              <span>{kask.quant}</span>
+            </div>
+          ) : null}
+          <div
+            className={cn(
+              "text-foreground flex items-center gap-2",
+              typography.body,
+            )}
+          >
+            <IconWell icon={MapPin} tone="warning" size="sm" />
+            <span>{kask.zone}</span>
           </div>
-        ) : null}
+        </div>
         <CalendarDate date={kask.createdAt} />
       </div>
     </ListRowCard>

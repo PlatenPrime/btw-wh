@@ -36,16 +36,17 @@ export function FillSkugrSkusDialogView({
         <DialogHeader>
           <DialogTitle>Заповнити групу товарами</DialogTitle>
           <DialogDescription>
-            Запит до парсера браузера для конкурента{" "}
-            <span className="font-medium">{konkName}.</span> URL групи має вказувати на першу сторінку
-            категорії, зі збереженими query-фільтрами.
+            Підтягнути товари з сайту конкурента{" "}
+            <span className="font-medium">{konkName}</span>. У групі має бути
+            посилання на першу сторінку категорії з потрібними фільтрами в
+            адресі.
           </DialogDescription>
         </DialogHeader>
 
         {isSvbum ? (
           <p className={typography.formHint}>
-            Для СвятоБум залиште в URL параметр ocf. Без нього fill обійде весь
-            розділ, а не вибрану підбірку.
+            Для СвятоБум не прибирайте з адреси параметр ocf — інакше підтягне
+            весь розділ, а не вибрану підбірку.
           </p>
         ) : null}
 

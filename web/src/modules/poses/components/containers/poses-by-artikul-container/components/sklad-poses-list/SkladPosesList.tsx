@@ -1,5 +1,6 @@
 import { DetailPanelCard } from "@/components/shared/cards";
-import { typography } from "@/lib/typography";
+import { iconSize, typography } from "@/lib/typography";
+import { cn } from "@/lib/utils";
 import type { PosResponse, WarehouseData } from "@/modules/poses/api/types";
 import { Circle, Package } from "lucide-react";
 import { memo } from "react";
@@ -23,9 +24,9 @@ export const SkladPosesList = memo(function SkladPosesList({
 }: SkladPosesListProps) {
   if (!skladData.poses?.length) {
     return (
-      <DetailPanelCard className="grid gap-2 p-4 sm:p-5">
+      <DetailPanelCard className="grid gap-3 p-4 sm:p-5">
         <h3 className={typography.sectionTitle}>{title}</h3>
-        <p className="text-muted-foreground text-center text-sm font-medium">
+        <p className={cn(typography.body, "text-center text-muted-foreground")}>
           На складі {title} немає позицій з цим артикулом
         </p>
       </DetailPanelCard>
@@ -38,12 +39,12 @@ export const SkladPosesList = memo(function SkladPosesList({
     <DetailPanelCard className="grid gap-3 p-4 sm:p-5">
       <div className="grid grid-cols-3 items-center gap-2">
         <h3 className={typography.sectionTitle}>{title}</h3>
-        <div className="flex items-center justify-center gap-1 font-semibold">
-          <Package className="size-3" />
+        <div className={cn("flex items-center justify-center gap-1", typography.value)}>
+          <Package className={iconSize.inline} />
           <span>{skladData.boxes || 0}</span>
         </div>
-        <div className="flex items-center justify-end gap-1 font-semibold">
-          <Circle className="size-3" />
+        <div className={cn("flex items-center justify-end gap-1", typography.value)}>
+          <Circle className={iconSize.inline} />
           <span>{skladData.quant || 0}</span>
         </div>
       </div>
@@ -52,7 +53,7 @@ export const SkladPosesList = memo(function SkladPosesList({
         <Virtuoso
           data={skladData.poses}
           itemContent={(_index, pos) => (
-            <div className="mb-4">
+            <div className="mb-3">
               {renderPos(
                 { exists: true, message: "", data: pos },
                 additionalProps,
@@ -62,7 +63,7 @@ export const SkladPosesList = memo(function SkladPosesList({
           style={{ height: "400px" }}
         />
       ) : (
-        <div className="grid gap-4">
+        <div className="grid gap-3">
           {skladData.poses.map((pos) => (
             <div key={pos._id}>
               {renderPos(

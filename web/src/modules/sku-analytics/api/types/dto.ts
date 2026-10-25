@@ -241,6 +241,7 @@ export interface DiscoverBandSpikeItemDto {
   skuId: string | null;
   productId: string;
   title: string | null;
+  imageUrl: string | null;
   runs: DiscoverBandSpikeRunDto[];
 }
 

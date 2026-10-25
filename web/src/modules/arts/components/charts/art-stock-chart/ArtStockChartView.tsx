@@ -53,50 +53,50 @@ export function ArtStockChartView({ data }: ArtStockChartViewProps) {
   }
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col">
+    <div className={cn(ART_CHART_PLOT_CLASS)}>
       <ChartContainer
         config={chartConfig}
-        className={cn("art-stock-chart", ART_CHART_PLOT_CLASS)}
+        className="art-stock-chart h-full min-h-0 !aspect-auto"
       >
-      <ComposedChart
-        data={data}
-        margin={{ top: 8, right: 8, bottom: 8, left: 8 }}
-      >
-        <CartesianGrid strokeDasharray="3 3" vertical={false} />
-        <XAxis
-          dataKey="date"
-          tickFormatter={formatDateTick}
-          tickLine={false}
-          axisLine={false}
-        />
-        <YAxis
-          tickLine={false}
-          axisLine={false}
-          tickFormatter={(v) => String(v)}
-        />
-        <ChartTooltip
-          content={
-            <ChartTooltipContent
-              labelFormatter={(_, payload) => {
-                const p = payload?.[0]?.payload as ArtStockChartDay | undefined;
-                return p ? format(parseISO(p.date), "dd.MM.yyyy") : "";
-              }}
-              formatter={(value) => [
-                chartConfig.quantity.label,
-                `${value} шт`,
-              ]}
-            />
-          }
-        />
-        <Line
-          type="monotone"
-          dataKey="quantity"
-          stroke={color}
-          strokeWidth={2}
-          dot={false}
-        />
-      </ComposedChart>
-    </ChartContainer>
+        <ComposedChart
+          data={data}
+          margin={{ top: 8, right: 8, bottom: 8, left: 8 }}
+        >
+          <CartesianGrid strokeDasharray="3 3" vertical={false} />
+          <XAxis
+            dataKey="date"
+            tickFormatter={formatDateTick}
+            tickLine={false}
+            axisLine={false}
+          />
+          <YAxis
+            tickLine={false}
+            axisLine={false}
+            tickFormatter={(v) => String(v)}
+          />
+          <ChartTooltip
+            content={
+              <ChartTooltipContent
+                labelFormatter={(_, payload) => {
+                  const p = payload?.[0]?.payload as ArtStockChartDay | undefined;
+                  return p ? format(parseISO(p.date), "dd.MM.yyyy") : "";
+                }}
+                formatter={(value) => [
+                  chartConfig.quantity.label,
+                  `${value} шт`,
+                ]}
+              />
+            }
+          />
+          <Line
+            type="monotone"
+            dataKey="quantity"
+            stroke={color}
+            strokeWidth={2}
+            dot={false}
+          />
+        </ComposedChart>
+      </ChartContainer>
     </div>
   );
 }

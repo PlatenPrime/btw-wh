@@ -4,7 +4,6 @@ import { ArtDetailCard } from "@/modules/arts/components/cards/art-detail-card/A
 import { ArtChartsSectionLayout } from "@/modules/arts/components/charts/art-charts-section";
 import { ArtSalesChartContainer } from "@/modules/arts/components/containers/art-sales-chart-container";
 import { ArtStockChartContainer } from "@/modules/arts/components/containers/art-stock-chart-container";
-import { ArtAnalogsByArtikulSection } from "@/modules/arts/components/containers/art-container/ArtAnalogsByArtikulSection";
 import { PosesByArtikulContainer } from "@/modules/arts/components/containers/poses-by-artikul-container";
 import {
   AsksByArtikulContainer,
@@ -16,7 +15,6 @@ import { memo } from "react";
 interface ArtContainerViewProps {
   artData: ArtDto;
   showCharts?: boolean;
-  showAnalogs?: boolean;
   dateFrom: string;
   dateTo: string;
   onDateRangeChange: (from: string, to: string) => void;
@@ -25,13 +23,12 @@ interface ArtContainerViewProps {
 export const ArtContainerView = memo(function ArtContainerView({
   artData,
   showCharts = false,
-  showAnalogs = false,
   dateFrom,
   dateTo,
   onDateRangeChange,
 }: ArtContainerViewProps) {
   return (
-    <section className="grid gap-2">
+    <section className="grid gap-4">
       <SurfaceSection>
         <ArtDetailCard artData={artData} />
       </SurfaceSection>
@@ -39,7 +36,6 @@ export const ArtContainerView = memo(function ArtContainerView({
       <SurfaceSection>
         <PosesByArtikulContainer artikul={artData.artikul} />
       </SurfaceSection>
-
 
       {showCharts ? (
         <SurfaceSection>
@@ -63,10 +59,6 @@ export const ArtContainerView = memo(function ArtContainerView({
             }
           />
         </SurfaceSection>
-      ) : null}
-
-      {showAnalogs ? (
-        <ArtAnalogsByArtikulSection artikul={artData.artikul} />
       ) : null}
 
       <SurfaceSection>

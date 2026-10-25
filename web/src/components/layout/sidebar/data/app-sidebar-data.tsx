@@ -267,7 +267,7 @@ export const appSidebarData: { navMain: AppSidebarNavGroup[] } = {
           allowedRoles: [RoleType.ADMIN],
         },
         {
-          title: "Band-spike",
+          title: "Корегування",
           url: "/sku/band-spike",
           iconName: "WandSparkles",
           allowedRoles: [RoleType.ADMIN],

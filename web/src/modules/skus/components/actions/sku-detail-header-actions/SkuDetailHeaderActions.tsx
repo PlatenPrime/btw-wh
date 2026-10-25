@@ -71,7 +71,7 @@ export function SkuDetailHeaderActions({ sku }: SkuDetailHeaderActionsProps) {
     if (canCorrectBandSpike) {
       actions.push({
         id: "correct-band-spike",
-        label: "Виправити band-spike",
+        label: "Виправити стрибок",
         icon: WandSparkles,
         iconColor: "violet",
         variant: "edit",

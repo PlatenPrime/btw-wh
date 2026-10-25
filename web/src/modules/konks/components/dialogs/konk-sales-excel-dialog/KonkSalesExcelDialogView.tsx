@@ -92,8 +92,8 @@ export function KonkSalesExcelDialogView({
       <div className="flex flex-col gap-4">
         <p className={typography.pageDescription}>
           {showKonkSelect
-            ? "Оберіть конкурента, виробника та період. Файл формується на backend та завантажується готовим Excel."
-            : "Оберіть виробника та період. Файл формується на backend та завантажується готовим Excel."}
+            ? "Оберіть конкурента, виробника та період. Файл готується на сервері."
+            : "Оберіть виробника та період. Файл готується на сервері."}
         </p>
         {showKonkSelect ? (
           <div className="grid gap-2">
@@ -170,7 +170,7 @@ export function KonkSalesExcelDialogView({
           onSubmit={onDownload}
           isSubmitting={isExporting}
           submitText="Скачати"
-          submitLoadingText="Постановка..."
+          submitLoadingText="Готуємо..."
           isDisabled={isDownloadDisabled}
           variant="default"
           className="justify-end"

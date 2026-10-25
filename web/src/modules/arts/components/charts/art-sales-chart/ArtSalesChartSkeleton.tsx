@@ -1,5 +1,4 @@
 import { ART_CHART_PLOT_CLASS } from "@/modules/arts/components/charts/art-chart-plot-height";
-import { ArtChartCard } from "@/modules/arts/components/charts/art-chart-card";
 import { ArtMetricCardSkeleton } from "@/modules/arts/components/charts/art-metric-card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
@@ -21,17 +20,15 @@ function ArtSalesChartLegendSkeleton() {
 
 export function ArtSalesChartSkeleton() {
   return (
-    <div className="grid h-full gap-3 grid-rows-[auto_1fr]">
-      <div className="grid gap-4 sm:grid-cols-2 sm:items-stretch">
+    <div className="grid gap-3">
+      <div className="flex flex-wrap items-start gap-3">
         <ArtMetricCardSkeleton valueWidthClassName="w-28" />
         <ArtMetricCardSkeleton valueWidthClassName="w-32" />
       </div>
-      <ArtChartCard>
-        <div className="grid h-full min-h-0 grid-rows-[auto_1fr] gap-3">
-          <ArtSalesChartLegendSkeleton />
-          <Skeleton className={cn("min-h-0 flex-1", ART_CHART_PLOT_CLASS)} />
-        </div>
-      </ArtChartCard>
+      <div className="grid gap-3">
+        <ArtSalesChartLegendSkeleton />
+        <Skeleton className={cn(ART_CHART_PLOT_CLASS)} />
+      </div>
     </div>
   );
 }

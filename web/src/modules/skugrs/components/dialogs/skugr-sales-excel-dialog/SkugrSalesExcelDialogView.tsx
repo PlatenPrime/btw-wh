@@ -66,7 +66,7 @@ export function SkugrSalesExcelDialogView({
           onSubmit={onDownload}
           isSubmitting={isExporting}
           submitText="Скачати"
-          submitLoadingText="Постановка..."
+          submitLoadingText="Готуємо..."
           isDisabled={!isRangeValid || !hasMetrics}
           variant="default"
           className="justify-end"

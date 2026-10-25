@@ -47,9 +47,8 @@ export function SkusNewSinceExcelDialogView({
       </DialogHeader>
       <div className="flex flex-col gap-4">
         <p className={typography.pageDescription}>
-          У файл потрапляють SKU з датою створення не раніше обраного календарного
-          дня (за правилами зрізів на сервері) — для одного конкурента або для
-          усіх.
+          У файл потрапляють товари, створені не раніше обраного дня — для
+          одного конкурента або для всіх.
         </p>
         <div className="grid gap-2">
           <p className={typography.formLabel}>Конкурент</p>
@@ -96,7 +95,7 @@ export function SkusNewSinceExcelDialogView({
           onSubmit={onDownload}
           isSubmitting={isDownloading}
           submitText="Скачати"
-          submitLoadingText="Постановка..."
+          submitLoadingText="Готуємо..."
           isDisabled={!selectedDate || !isKonkOk}
           variant="default"
           className="justify-end"

@@ -23,15 +23,14 @@ export function DeleteArtsWithoutLatestMarkerDialogView({
       <DialogHeader>
         <DialogTitle>Видалити неактуальні артикули</DialogTitle>
         <DialogDescription>
-          Ви впевнені, що хочете видалити всі артикули без останнього
-          актуального маркера? Цю дію неможливо скасувати.
+          Видалити артикули, які не з останнього імпорту каталогу? Цю дію
+          неможливо скасувати.
         </DialogDescription>
       </DialogHeader>
       <div className="grid gap-4">
         <p className={typography.pageDescription}>
-          Будуть видалені всі артикули, у яких маркер відсутній або менший за
-          максимальний знайдений маркер. Артикули з максимальним маркером
-          залишаться в базі.
+          Залишаться лише артикули з останнього оновлення каталогу. Усі
+          застарілі після попередніх імпортів будуть видалені.
         </p>
         <DialogActions
           onCancel={onCancel}

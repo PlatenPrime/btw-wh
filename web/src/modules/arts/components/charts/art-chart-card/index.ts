@@ -1,1 +1,0 @@
-export { ArtChartCard } from "./ArtChartCard";

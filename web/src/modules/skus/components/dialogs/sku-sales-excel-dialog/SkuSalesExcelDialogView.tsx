@@ -44,7 +44,7 @@ export function SkuSalesExcelDialogView({
       </DialogHeader>
       <div className="flex flex-col gap-4">
         <p className={typography.pageDescription}>
-          Файл формується на backend та завантажується готовим Excel за обраний
+          Файл готується на сервері за обраний
           період.
         </p>
         <SkuSalesExcelMetricsControl
@@ -66,7 +66,7 @@ export function SkuSalesExcelDialogView({
           onSubmit={onDownload}
           isSubmitting={isExporting}
           submitText="Скачати"
-          submitLoadingText="Постановка..."
+          submitLoadingText="Готуємо..."
           isDisabled={!isRangeValid || !hasMetrics}
           variant="default"
           className="justify-end"

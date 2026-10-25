@@ -34,6 +34,10 @@ const SKIP_REASON_LABELS: Record<CorrectBandSpikeSkipReason, string> = {
   "not-sandwich-right": "Правий сусід не «невеликий»",
 };
 
+const numberFormat = new Intl.NumberFormat("uk-UA", {
+  maximumFractionDigits: 0,
+});
+
 interface CorrectBandSpikeDialogViewProps {
   skuTitle: string;
   dateRange: DateRange | undefined;
@@ -50,8 +54,10 @@ interface CorrectBandSpikeDialogViewProps {
   onCancel: () => void;
 }
 
-function toDateLabel(value: string): string {
-  return value.slice(0, 10);
+function toUaDate(value: string): string {
+  const [year, month, day] = value.slice(0, 10).split("-");
+  if (!year || !month || !day) return value.slice(0, 10);
+  return `${day}.${month}.${year}`;
 }
 
 function parseNonNegativeNumber(value: string): number | null {
@@ -105,24 +111,19 @@ export function CorrectBandSpikeDialogView({
   return (
     <DialogContent className="sm:max-w-[560px]">
       <DialogHeader>
-        <DialogTitle>Виправити band-spike</DialogTitle>
-        <DialogDescription>
-          RTL sandwich: невелике (&lt; stockMin) → [stockMin, stockMax] →
-          невелике. Спочатку preview, потім запис. Товар: {skuTitle}.
-        </DialogDescription>
+        <DialogTitle>Виправити збільшення залишку</DialogTitle>
+        <DialogDescription>Товар: {skuTitle}</DialogDescription>
       </DialogHeader>
 
       <div className="grid gap-4">
         <p className={typography.pageDescription}>
-          Оберіть період і смугу залишку. Сервер підвантажить сусідів ±1 день;
-          продажі всередині смуги зберігаються. Діапазон ≤{" "}
-          {BAND_SPIKE_MAX_RANGE_DAYS} днів. Підказки: svbum часто мільйони;
-          balun ~5k / 9–11k — числа завжди вводить адмін.
+          Спочатку перегляньте зміни, потім застосуйте. Продажі всередині смуги
+          зберігаються. Період — до {BAND_SPIKE_MAX_RANGE_DAYS} днів.
         </p>
 
         <div className="grid gap-3 sm:grid-cols-2">
           <div className="grid gap-2">
-            <Label htmlFor="band-spike-stock-min">stockMin</Label>
+            <Label htmlFor="band-spike-stock-min">Мін. залишок</Label>
             <Input
               id="band-spike-stock-min"
               type="number"
@@ -135,7 +136,7 @@ export function CorrectBandSpikeDialogView({
             />
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="band-spike-stock-max">stockMax</Label>
+            <Label htmlFor="band-spike-stock-max">Макс. залишок</Label>
             <Input
               id="band-spike-stock-max"
               type="number"
@@ -152,7 +153,7 @@ export function CorrectBandSpikeDialogView({
         {stockMin.trim() || stockMax.trim() ? (
           !isBandValid ? (
             <p className="text-destructive text-sm">
-              stockMin і stockMax мають бути ≥ 0, finite, і min ≤ max.
+              Мін. і макс. мають бути ≥ 0, і мін. ≤ макс.
             </p>
           ) : null
         ) : null}
@@ -175,16 +176,17 @@ export function CorrectBandSpikeDialogView({
 
         {preview ? (
           <div className="grid gap-3">
-            <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+            <div className="text-muted-foreground flex flex-wrap items-center gap-2 text-sm">
               <span>
-                Вікно: {toDateLabel(preview.window.dateFrom)}–
-                {toDateLabel(preview.window.dateTo)}
+                Вікно: {toUaDate(preview.window.dateFrom)} —{" "}
+                {toUaDate(preview.window.dateTo)}
               </span>
               <span>
-                Band: {preview.band.min}–{preview.band.max}
+                Смуга: {numberFormat.format(preview.band.min)}–
+                {numberFormat.format(preview.band.max)}
               </span>
               {preview.konkName ? (
-                <span>Konk: {preview.konkName}</span>
+                <span>Конкурент: {preview.konkName}</span>
               ) : null}
               {preview.applied ? (
                 <span className="text-foreground font-medium">Застосовано</span>
@@ -204,12 +206,14 @@ export function CorrectBandSpikeDialogView({
                   <TableBody>
                     {preview.patches.map((patch) => (
                       <TableRow key={patch.date}>
-                        <TableCell>{toDateLabel(patch.date)}</TableCell>
-                        <TableCell className="text-right tabular-nums">
-                          {patch.from}
+                        <TableCell className="tabular-nums">
+                          {toUaDate(patch.date)}
                         </TableCell>
                         <TableCell className="text-right tabular-nums">
-                          {patch.to}
+                          {numberFormat.format(patch.from)}
+                        </TableCell>
+                        <TableCell className="text-right tabular-nums">
+                          {numberFormat.format(patch.to)}
                         </TableCell>
                       </TableRow>
                     ))}
@@ -217,21 +221,21 @@ export function CorrectBandSpikeDialogView({
                 </Table>
               </div>
             ) : (
-              <p className="text-sm text-muted-foreground">
-                Патчів немає — sandwich у періоді не знайдено або всі вікна
-                пропущені.
+              <p className="text-muted-foreground text-sm">
+                Змін немає — у періоді немає коректного сплеску або всі
+                вікна пропущені.
               </p>
             )}
 
             {preview.skipped.length > 0 ? (
               <div className="grid gap-1">
                 <p className="text-sm font-medium">Пропущено</p>
-                <ul className="grid gap-1 text-sm text-muted-foreground">
+                <ul className="text-muted-foreground grid gap-1 text-sm">
                   {preview.skipped.map((item) => (
                     <li
                       key={`${item.dateFrom}-${item.dateTo}-${item.reason}`}
                     >
-                      {toDateLabel(item.dateFrom)}–{toDateLabel(item.dateTo)}:{" "}
+                      {toUaDate(item.dateFrom)} — {toUaDate(item.dateTo)}:{" "}
                       {SKIP_REASON_LABELS[item.reason] ?? item.reason}
                     </li>
                   ))}
@@ -253,7 +257,7 @@ export function CorrectBandSpikeDialogView({
         </Button>
         <Button
           type="button"
-          variant="secondary"
+          variant="info"
           onClick={onPreview}
           disabled={!canSubmit}
         >

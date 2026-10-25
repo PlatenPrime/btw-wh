@@ -9,8 +9,8 @@ interface ArtMetricCardProps {
 
 export function ArtMetricCard({ children, className }: ArtMetricCardProps) {
   return (
-    <Card variant="compact" className={cn("h-full min-h-[5rem]", className)}>
-      <CardContent className="flex h-full min-h-[5rem] items-center">
+    <Card variant="compact" className={cn("w-fit gap-0 p-0", className)}>
+      <CardContent className="flex items-center px-3 py-2">
         {children}
       </CardContent>
     </Card>

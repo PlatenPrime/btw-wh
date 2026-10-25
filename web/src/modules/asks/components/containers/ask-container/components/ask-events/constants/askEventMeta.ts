@@ -1,3 +1,4 @@
+import type { IconWellTone } from "@/components/shared/elements/icon-well";
 import type { AskEvent, AskEventName } from "@/modules/asks/api/types/dto";
 import {
   CalendarClock,
@@ -10,25 +11,20 @@ import {
 export const ASK_EVENT_META: Record<
   AskEventName,
   {
-    iconClass: string;
     icon: typeof CalendarClock;
-    accentClass: string;
+    tone: IconWellTone;
     buildDescription: (event: AskEvent) => string;
   }
 > = {
   create: {
     icon: PlusCircle,
-    iconClass: "text-emerald-500 dark:text-emerald-300",
-    accentClass:
-      "border-emerald-200 bg-emerald-50 dark:border-emerald-500/60 dark:bg-emerald-900/40",
+    tone: "success",
     buildDescription: (event) =>
       `Запит створив ${event.userData?.fullname ?? "користувач"}.`,
   },
   pull: {
     icon: Download,
-    iconClass: "text-yellow-500 dark:text-yellow-300",
-    accentClass:
-      "border-yellow-200 bg-yellow-50 dark:border-yellow-500/60 dark:bg-yellow-900/40",
+    tone: "warning",
     buildDescription: (event) => {
       const { pullDetails, userData } = event;
       if (!pullDetails) {
@@ -51,17 +47,13 @@ export const ASK_EVENT_META: Record<
   },
   complete: {
     icon: CheckCircle2,
-    iconClass: "text-blue-500 dark:text-blue-300",
-    accentClass:
-      "border-blue-200 bg-blue-50 dark:border-blue-500/60 dark:bg-blue-900/40",
+    tone: "info",
     buildDescription: (event) =>
       `${event.userData?.fullname ?? "користувач"} виконав запит.`,
   },
   reject: {
     icon: OctagonAlert,
-    iconClass: "text-rose-500 dark:text-rose-300",
-    accentClass:
-      "border-rose-200 bg-rose-50 dark:border-rose-500/60 dark:bg-rose-900/40",
+    tone: "destructive",
     buildDescription: (event) =>
       `${event.userData?.fullname ?? "користувач"} відхилив запит.`,
   },

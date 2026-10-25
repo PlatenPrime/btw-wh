@@ -42,8 +42,8 @@ export function SkusInvalidExcelDialogView({
       </DialogHeader>
       <div className="flex flex-col gap-4">
         <p className={typography.pageDescription}>
-          Оберіть конкурента або «усі конкуренти». У файл потрапляють SKU з
-          позначкою невалідності згідно з правилами модуля.
+          Оберіть конкурента або «усі конкуренти». У файл потрапляють товари,
+          позначені як невалідні.
         </p>
         <div className="grid gap-2">
           <p className={typography.formLabel}>Конкурент</p>
@@ -81,7 +81,7 @@ export function SkusInvalidExcelDialogView({
           onSubmit={onDownload}
           isSubmitting={isDownloading}
           submitText="Скачати"
-          submitLoadingText="Постановка..."
+          submitLoadingText="Готуємо..."
           isDisabled={!isKonkOk}
           variant="default"
           className="justify-end"
