@@ -42,7 +42,7 @@ Frosted glass: полупрозрачный фон + `backdrop-filter` + тон�
 
 | Token | Назначение |
 | ----- | ---------- |
-| `--glass-card-bg` / `--glass-card-border` / `--glass-card-highlight` | Карточки (~48% mix light / ~50% dark — иначе на почти белом `--card` glass не читается) |
+| `--glass-card-bg` / `--glass-card-border` / `--glass-card-highlight` | Карточки (~64% mix light и dark — лицо держит световой градиент, холст ещё просвечивает) |
 | `--glass-inset-bg` | Variant `inset` в `Card` |
 | `--glass-overlay-bg` | Dialog, sheet, popover, dropdown, select (~92% popover light / ~82% dark — почти непрозрачно, чтобы `text-muted-foreground` проходил WCAG на модалах) |
 | `--glass-overlay-border` | Граница overlay (~70% border light / ~60% dark) |
@@ -83,12 +83,18 @@ Glass читается на **surface-0 с ambient-градиентом**, не 
 
 | Utility | Использование |
 | ------- | ------------- |
-| `shadow-elevation-1` | Dropdown, `card-3d` hover (тень приглушается) |
-| `shadow-elevation-2` | `card-3d` rest — объём сразу |
+| `shadow-elevation-1` | Dropdown, мелкие панели |
+| `shadow-elevation-2` | Панели вне карточек |
 | `shadow-elevation-3` | Sticky panels |
 | `shadow-elevation-4` | Dialog, sheet |
 
-Все `Card` variants `default` / `elevated` / `compact` (`GridTileCard`, `ListRowCard`, `DetailPanelCard`) используют `card-3d`: в покое elevation-2 + inset (плитка), hover — тень слабеет до elevation-1, без `translate`/`scale`. Transition `box-shadow` + `background-color` 200ms. `prefers-reduced-motion: reduce` — без transition. `ghost` / `inset` без объёма. Формы с `shadow-none` остаются плоскими.
+Объём карточек — не эти утилиты. `default` / `compact` / `elevated` (`GridTileCard`, `ListRowCard`, `DetailPanelCard`) используют `card-3d`. Стек один и тот же в покое и под курсором, без `translate` / `scale`:
+
+- лицо — `--card-volume-face`: светлая шапка сверху, тень плоскости снизу
+- кант — inset в `--card-volume-shadow`: светлая верхняя кромка, тёмная нижняя, мягкая толщина вдоль низа
+- тень — контакт, форма, воздух в том же токене
+
+`elevated` добавляет `card-volume-raised`: тот же свет и кант, глубже воздух (`--card-volume-shadow-raised`). `ghost` / `inset` и `shadow-none` без объёма. `prefers-reduced-transparency` и отсутствие `backdrop-filter` оставляют лицо и тень, фон карточки становится `var(--card)`.
 
 ## Typography
 
@@ -186,7 +192,7 @@ Glass читается на **surface-0 с ambient-градиентом**, не 
 | `list-row` | `ListRowCard` | Списки konks, asks, kasks |
 | `detail-panel` | `DetailPanelCard` | Детали сущности |
 
-Все pattern-карточки наследуют `glass-card` + `card-3d` из [`card.tsx`](../web/src/components/ui/card.tsx) (`default` / `elevated` / `compact`). Overlay-формы — `glass-overlay` в `dialog` / `sheet` / `popover`.
+Все pattern-карточки наследуют `glass-card` + `card-3d` из [`card.tsx`](../web/src/components/ui/card.tsx) (`default` / `compact`; `elevated` ещё `card-volume-raised`). Overlay-формы — `glass-overlay` в `dialog` / `sheet` / `popover`.
 
 ## Семантика кнопок
 

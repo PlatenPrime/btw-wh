@@ -207,9 +207,34 @@
     0 12px 32px -8px color-mix(in oklch, var(--shadow-color) calc(var(--shadow-opacity) * 120%), transparent);
   --shadow-elevation-4: 0 8px 24px color-mix(in oklch, var(--shadow-color) calc(var(--shadow-opacity) * 160%), transparent),
     0 24px 48px -12px color-mix(in oklch, var(--shadow-color) calc(var(--shadow-opacity) * 140%), transparent);
-  --glass-card-bg: color-mix(in oklch, var(--card) 48%, transparent);
+  --glass-card-bg: color-mix(in oklch, var(--card) 64%, transparent);
   --glass-card-border: color-mix(in oklch, var(--card-border) 45%, transparent);
   --glass-card-highlight: color-mix(in oklch, var(--primary-foreground) 55%, transparent);
+  --card-volume-face:
+    linear-gradient(
+      180deg,
+      color-mix(in oklch, white 62%, transparent) 0%,
+      transparent 38%
+    ),
+    linear-gradient(
+      180deg,
+      transparent 70%,
+      color-mix(in oklch, var(--shadow-color) 10%, transparent) 100%
+    );
+  --card-volume-shadow:
+    0 1px 1px color-mix(in oklch, var(--shadow-color) 18%, transparent),
+    0 8px 16px -6px color-mix(in oklch, var(--shadow-color) 16%, transparent),
+    0 22px 40px -16px color-mix(in oklch, var(--shadow-color) 14%, transparent),
+    inset 0 1px 0 0 color-mix(in oklch, white 75%, transparent),
+    inset 0 -1px 0 0 color-mix(in oklch, var(--shadow-color) 20%, transparent),
+    inset 0 -16px 20px -18px color-mix(in oklch, var(--shadow-color) 22%, transparent);
+  --card-volume-shadow-raised:
+    0 1px 2px color-mix(in oklch, var(--shadow-color) 20%, transparent),
+    0 10px 22px -6px color-mix(in oklch, var(--shadow-color) 18%, transparent),
+    0 32px 56px -14px color-mix(in oklch, var(--shadow-color) 18%, transparent),
+    inset 0 1px 0 0 color-mix(in oklch, white 75%, transparent),
+    inset 0 -1px 0 0 color-mix(in oklch, var(--shadow-color) 20%, transparent),
+    inset 0 -16px 20px -18px color-mix(in oklch, var(--shadow-color) 22%, transparent);
   --glass-inset-bg: color-mix(in oklch, var(--surface-2) 58%, transparent);
   --glass-overlay-bg: color-mix(
     in oklch,
@@ -347,9 +372,34 @@
     0 14px 36px -8px color-mix(in oklch, var(--shadow-color) 14%, transparent);
   --shadow-elevation-4: 0 8px 28px color-mix(in oklch, var(--shadow-color) 20%, transparent),
     0 28px 56px -12px color-mix(in oklch, var(--shadow-color) 18%, transparent);
-  --glass-card-bg: color-mix(in oklch, var(--card) 50%, transparent);
+  --glass-card-bg: color-mix(in oklch, var(--card) 64%, transparent);
   --glass-card-border: color-mix(in oklch, var(--card-border) 42%, transparent);
   --glass-card-highlight: color-mix(in oklch, var(--primary-foreground) 12%, transparent);
+  --card-volume-face:
+    linear-gradient(
+      180deg,
+      color-mix(in oklch, white 18%, transparent) 0%,
+      transparent 38%
+    ),
+    linear-gradient(
+      180deg,
+      transparent 70%,
+      color-mix(in oklch, black 32%, transparent) 100%
+    );
+  --card-volume-shadow:
+    0 1px 1px color-mix(in oklch, black 55%, transparent),
+    0 8px 16px -6px color-mix(in oklch, black 48%, transparent),
+    0 22px 40px -16px color-mix(in oklch, black 55%, transparent),
+    inset 0 1px 0 0 color-mix(in oklch, white 20%, transparent),
+    inset 0 -1px 0 0 color-mix(in oklch, black 60%, transparent),
+    inset 0 -16px 20px -18px color-mix(in oklch, black 45%, transparent);
+  --card-volume-shadow-raised:
+    0 1px 2px color-mix(in oklch, black 60%, transparent),
+    0 12px 24px -6px color-mix(in oklch, black 52%, transparent),
+    0 36px 64px -14px color-mix(in oklch, black 62%, transparent),
+    inset 0 1px 0 0 color-mix(in oklch, white 20%, transparent),
+    inset 0 -1px 0 0 color-mix(in oklch, black 60%, transparent),
+    inset 0 -16px 20px -18px color-mix(in oklch, black 45%, transparent);
   --glass-inset-bg: color-mix(in oklch, var(--surface-2) 55%, transparent);
   --glass-overlay-bg: color-mix(in oklch, var(--popover) 82%, transparent);
   --glass-overlay-border: color-mix(in oklch, var(--border) 60%, transparent);
@@ -417,27 +467,21 @@
 
 @utility card-3d {
   position: relative;
-  transition-property: box-shadow, background-color, border-color;
-  transition-duration: 200ms;
-  transition-timing-function: ease-out;
+  --card-cast: var(--card-volume-shadow);
 
   &:not(.shadow-none) {
-    box-shadow:
-      var(--shadow-elevation-2),
-      inset 0 1px 0 0 var(--glass-card-highlight),
-      inset 0 -10px 16px -12px color-mix(in oklch, var(--shadow-color) 28%, transparent);
-
-    &:hover {
-      box-shadow:
-        var(--shadow-elevation-1),
-        inset 0 1px 0 0 var(--glass-card-highlight),
-        inset 0 -4px 8px -8px color-mix(in oklch, var(--shadow-color) 12%, transparent);
-    }
+    background-image: var(--card-volume-face);
+    box-shadow: var(--card-cast);
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    transition: none;
+  &.shadow-none {
+    background-image: none;
+    box-shadow: none;
   }
+}
+
+@utility card-volume-raised {
+  --card-cast: var(--card-volume-shadow-raised);
 }
 
 @utility glass-inset {
@@ -470,7 +514,7 @@
 
 @media (prefers-reduced-transparency: reduce) {
   .glass-card {
-    background: var(--card);
+    background-color: var(--card);
     border-color: var(--card-border);
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
@@ -503,7 +547,7 @@
   (-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))
 ) {
   .glass-card {
-    background: var(--card);
+    background-color: var(--card);
     border-color: var(--card-border);
   }
 

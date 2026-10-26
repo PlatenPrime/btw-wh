@@ -24,7 +24,7 @@ const cardVariants = cva(
         default:
           "gap-6 rounded-xl glass-card card-3d py-6",
         elevated:
-          "gap-6 rounded-xl glass-card card-3d py-6",
+          "gap-6 rounded-xl glass-card card-3d card-volume-raised py-6",
         compact:
           "gap-2 rounded-xl glass-card card-3d p-3",
         ghost: "gap-2 rounded-xl border-transparent bg-transparent shadow-none",
