@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -6,13 +5,7 @@ import type { CreateKaskFormData } from "@/modules/kasks/components/forms/create
 import type { FieldErrors, UseFormRegister } from "react-hook-form";
 import { typography } from "@/lib/typography";
 import { cn } from "@/lib/utils";
-import {
-  Hash,
-  MessageCircle,
-  ScanBarcode,
-  Send,
-  type LucideIcon,
-} from "lucide-react";
+import { Hash, MessageCircle, ScanBarcode, type LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
 
 interface CreateKaskFormFieldsProps {
@@ -20,7 +13,6 @@ interface CreateKaskFormFieldsProps {
   errors: FieldErrors<CreateKaskFormData>;
   onArtikulChange: (value: string) => void;
   isSubmitting: boolean;
-  canSubmit: boolean;
 }
 
 function FieldLabel({
@@ -50,12 +42,19 @@ function FieldLabel({
   );
 }
 
+function FieldError({ message }: { message?: string }) {
+  return (
+    <p className={cn(typography.formError, "min-h-5")} aria-live="polite">
+      {message || "\u00a0"}
+    </p>
+  );
+}
+
 export function CreateKaskFormFields({
   register,
   errors,
   onArtikulChange,
   isSubmitting,
-  canSubmit,
 }: CreateKaskFormFieldsProps) {
   return (
     <div className="grid w-full gap-4 sm:grid-cols-2">
@@ -78,9 +77,7 @@ export function CreateKaskFormFields({
           )}
           disabled={isSubmitting}
         />
-        {errors.artikul ? (
-          <p className={typography.formError}>{errors.artikul.message}</p>
-        ) : null}
+        <FieldError message={errors.artikul?.message} />
       </div>
 
       <div className="grid gap-2">
@@ -106,12 +103,10 @@ export function CreateKaskFormFields({
           )}
           disabled={isSubmitting}
         />
-        {errors.quant ? (
-          <p className={typography.formError}>{errors.quant.message}</p>
-        ) : null}
+        <FieldError message={errors.quant?.message} />
       </div>
 
-      <div className="grid gap-2">
+      <div className="grid gap-2 sm:col-span-2">
         <div className="flex flex-wrap items-baseline justify-between gap-2">
           <FieldLabel htmlFor="kask-com" icon={MessageCircle}>
             Коментар
@@ -126,34 +121,12 @@ export function CreateKaskFormFields({
           rows={3}
           {...register("com")}
           className={cn(
-            "min-h-[4.5rem] h-full resize-y text-sm",
+            "min-h-[4.5rem] resize-y text-sm",
             errors.com && "border-destructive",
           )}
           disabled={isSubmitting}
         />
-        {errors.com ? (
-          <p className={typography.formError}>{errors.com.message}</p>
-        ) : null}
-      </div>
-
-      <div className="flex flex-col justify-end gap-2">
-        <span className={cn("invisible leading-none", typography.formLabel)}>
-          Дія
-        </span>
-        <Button
-          type="submit"
-          disabled={isSubmitting || !canSubmit}
-          size="lg"
-          className={cn(
-            "min-h-[4.5rem] w-full gap-2 text-primary-foreground",
-            "bg-[linear-gradient(135deg,color-mix(in_oklch,var(--primary)_92%,var(--chart-6)),color-mix(in_oklch,var(--chart-6)_55%,var(--primary)))]",
-            "hover:brightness-[1.06] hover:shadow-md",
-            "disabled:hover:brightness-100",
-          )}
-        >
-          <Send className="size-4" aria-hidden />
-          {isSubmitting ? "Відправка…" : "Створити запит"}
-        </Button>
+        <FieldError message={errors.com?.message} />
       </div>
     </div>
   );

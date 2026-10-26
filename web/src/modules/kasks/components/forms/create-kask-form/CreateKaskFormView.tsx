@@ -3,6 +3,7 @@ import { typography } from "@/lib/typography";
 import { cn } from "@/lib/utils";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { CreateKaskArtColumn } from "@/modules/kasks/components/forms/create-kask-form/create-kask-art-column/CreateKaskArtColumn";
+import { CreateKaskArtFactsContainer } from "@/modules/kasks/components/forms/create-kask-form/create-kask-art-facts/CreateKaskArtFactsContainer";
 import { CreateKaskFormFields } from "@/modules/kasks/components/forms/create-kask-form/create-kask-form-fields/CreateKaskFormFields";
 import type { CreateKaskFormData } from "@/modules/kasks/components/forms/create-kask-form/schema";
 import { Sparkles } from "lucide-react";
@@ -85,17 +86,22 @@ export function CreateKaskFormView({
             "linear-gradient(180deg, color-mix(in oklch, var(--chart-6) 7%, transparent) 0%, color-mix(in oklch, var(--primary) 5%, transparent) 100%)",
         }}
       >
-        <div className="grid gap-6 md:grid-cols-[minmax(0,14rem)_minmax(0,1fr)] md:items-start">
+        <div className="grid items-stretch gap-6 lg:grid-cols-[minmax(0,14rem)_minmax(0,1fr)_minmax(0,16rem)]">
           <CreateKaskArtColumn
             artikul={artikul}
             isArtLoading={isArtLoading}
             artData={artData}
-            zoneValue={zoneValue}
           />
           <CreateKaskFormFields
             register={register}
             errors={errors}
             onArtikulChange={onArtikulChange}
+            isSubmitting={isSubmitting}
+          />
+          <CreateKaskArtFactsContainer
+            artikul={artikul}
+            isArtLoading={isArtLoading}
+            zoneValue={zoneValue}
             isSubmitting={isSubmitting}
             canSubmit={canSubmit}
           />

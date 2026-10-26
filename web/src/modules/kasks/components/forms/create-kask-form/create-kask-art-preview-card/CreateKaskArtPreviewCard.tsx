@@ -24,7 +24,7 @@ function renderArtPreviewContent(state: ArtPreviewUiState): ReactNode {
     case "ready":
       return (
         <div className="flex w-full flex-col items-center gap-3">
-          <div className="grid w-full place-items-center overflow-hidden rounded-lg">
+          <div className="grid w-full place-items-center rounded-lg">
             <ArtImage artikul={state.artikul} />
           </div>
           {state.artData.nameukr ? (
