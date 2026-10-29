@@ -4,10 +4,6 @@
 export const quickLinkDescriptionByUrl: Record<string, string> = {
   "/arts/dashboard": "Каталог та перегляд артикулів",
   "/arts/update": "Оновлення артикулів через Excel",
-  "/analogs": "Аналоги артикулів",
-  "/analogs/slices": "Зрізи аналогів",
-  "/analogs/sales": "Продажі за аналогами",
-  "/analogs/stock-comparison": "Залишки та порівняння по аналогах",
   "/sku/konks": "Конкуренти",
   "/sku/skugrs": "Товарні групи конкурентів",
   "/sku/competitor-skus": "Товари конкурентів",

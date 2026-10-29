@@ -4,11 +4,19 @@ import { useSkugrsInfiniteQuery } from "@/modules/skugrs/api/hooks/queries/useSk
 import { useCallback, useMemo, useState } from "react";
 import { SkugrMultiSelectControlView } from "./SkugrMultiSelectControlView";
 
+export interface SkugrToggleItem {
+  id: string;
+  title: string;
+  imageUrl?: string;
+  selected: boolean;
+}
+
 export interface SkugrMultiSelectControlProps {
   konkName: string;
   prodName: string;
   value: string[];
   onChange: (ids: string[]) => void;
+  onToggleItem?: (item: SkugrToggleItem) => void;
   enabled?: boolean;
   limit?: number;
   disabled?: boolean;
@@ -20,6 +28,7 @@ export function SkugrMultiSelectControl({
   prodName,
   value,
   onChange,
+  onToggleItem,
   enabled = true,
   limit = 20,
   disabled = false,
@@ -62,14 +71,23 @@ export function SkugrMultiSelectControl({
   const handleToggle = useCallback(
     (skugrId: string) => {
       const next = new Set(valueIds);
-      if (next.has(skugrId)) {
-        next.delete(skugrId);
-      } else {
+      const selected = !next.has(skugrId);
+      if (selected) {
         next.add(skugrId);
+      } else {
+        next.delete(skugrId);
       }
       onChange(Array.from(next));
+      const skugr = skugrs.find((item) => item._id === skugrId);
+      if (!skugr || !onToggleItem) return;
+      onToggleItem({
+        id: skugr._id,
+        title: skugr.title.trim() || skugr._id,
+        imageUrl: getProdForSkugr(skugr.prodName)?.imageUrl,
+        selected,
+      });
     },
-    [onChange, valueIds],
+    [getProdForSkugr, onChange, onToggleItem, skugrs, valueIds],
   );
 
   const isLoadingFirstPage = infiniteQuery.isPending && skugrs.length === 0;

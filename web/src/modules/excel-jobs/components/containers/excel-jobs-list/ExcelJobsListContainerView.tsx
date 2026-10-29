@@ -1,3 +1,4 @@
+import { DetailPanelCard } from "@/components/shared/cards";
 import { ExcelJobCard } from "@/modules/excel-jobs/components/cards/excel-job-card";
 import type { TrackedExcelJob } from "@/modules/excel-jobs/types/tracked-job";
 import { typography } from "@/lib/typography";
@@ -10,26 +11,28 @@ interface ExcelJobsListContainerViewProps {
 export function ExcelJobsListContainerView({
   jobs,
 }: ExcelJobsListContainerViewProps) {
-  if (jobs.length === 0) {
-    return (
-      <div className="flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-border/70 bg-card/40 px-6 py-16 text-center">
-        <FileSpreadsheet className="text-muted-foreground size-8" />
-        <div className="flex flex-col gap-1">
-          <p className={typography.sectionTitle}>Немає активних Excel задач</p>
-          <p className={typography.pageDescription}>
-            Запустіть експорт з будь-якого екрана — задача зʼявиться тут із
-            прогресом підготовки та кнопкою завантаження.
-          </p>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="grid gap-2">
-      {jobs.map((tracked) => (
-        <ExcelJobCard key={tracked.job.jobId} tracked={tracked} />
-      ))}
-    </div>
+    <DetailPanelCard className="p-4">
+      <div className="grid gap-4">
+        <p className={typography.sectionLabel}>Задачі</p>
+        {jobs.length === 0 ? (
+          <div className="flex flex-col items-center gap-2 px-4 py-8 text-center">
+            <FileSpreadsheet className="size-6 text-muted-foreground" />
+            <div className="grid gap-1">
+              <p className={typography.sectionTitle}>Немає Excel задач</p>
+              <p className={typography.pageDescription}>
+                Замовлений звіт зʼявиться тут із прогресом і кнопкою завантаження.
+              </p>
+            </div>
+          </div>
+        ) : (
+          <div className="grid gap-2">
+            {jobs.map((tracked) => (
+              <ExcelJobCard key={tracked.job.jobId} tracked={tracked} />
+            ))}
+          </div>
+        )}
+      </div>
+    </DetailPanelCard>
   );
 }

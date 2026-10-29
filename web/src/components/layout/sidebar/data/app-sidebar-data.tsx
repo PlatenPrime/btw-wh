@@ -9,7 +9,6 @@ import {
   FileSpreadsheet,
   GitCompare,
   LayoutTemplate,
-  Link2,
   ListTodo,
   MapPin,
   PackageSearch,
@@ -51,7 +50,6 @@ const icons = {
   Users,
   Building2,
   Bookmark,
-  Link2,
   Projector,
   ShoppingCart,
   PieChart,
@@ -89,8 +87,6 @@ const iconColorClasses: Record<SidebarIconName, string> = {
   Users: "text-[oklch(0.58_0.11_260)] dark:text-[oklch(0.74_0.1_260)]",
   Building2: "text-[oklch(0.56_0.1_235)] dark:text-[oklch(0.7_0.11_235)]",
   Bookmark: "text-[oklch(0.64_0.13_70)] dark:text-[oklch(0.78_0.15_70)]",
-  // Аналоги — лавандовый
-  Link2: "text-[oklch(0.68_0.18_285)] dark:text-[oklch(0.8_0.2_285)]",
   Projector: "text-[oklch(0.58_0.16_325)] dark:text-[oklch(0.72_0.18_325)]",
   ArrowLeftRight:
     "text-[oklch(0.65_0.16_45)] dark:text-[oklch(0.78_0.16_45)]",
@@ -356,40 +352,6 @@ export const appSidebarData: { navMain: AppSidebarNavGroup[] } = {
         },
       ],
     },
-    // Аналоги
-    {
-      title: "Аналоги",
-      url: "/analogs",
-      pathOpenPrefix: "/analogs",
-      items: [
-        {
-          title: "Аналоги",
-          url: "/analogs",
-          iconName: "Link2",
-          allowedRoles: [RoleType.ADMIN],
-        },
-        {
-          title: "Зрізи",
-          url: "/analogs/slices",
-          iconName: "Projector",
-          allowedRoles: [RoleType.ADMIN],
-        },
-        {
-          title: "Продажі",
-          url: "/analogs/sales",
-          iconName: "TrendingUp",
-          allowedRoles: [RoleType.ADMIN],
-        },
-        {
-          title: "Залишки",
-          url: "/analogs/stock-comparison",
-          iconName: "Warehouse",
-          allowedRoles: [RoleType.ADMIN],
-        },
-      ],
-    },
-    // Аналітика
-
     {
       title: "Довідники",
       url: "/wh/prods",

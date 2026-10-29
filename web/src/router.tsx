@@ -241,32 +241,6 @@ const SkuStatisticsSkugr = lazyWithRetry(() =>
   ),
 );
 
-const Analogs = lazyWithRetry(() =>
-  import("./modules/analogs/pages/analogs").then((module) => ({
-    default: module.Analogs,
-  })),
-);
-const Analog = lazyWithRetry(() =>
-  import("./modules/analogs/pages/analog").then((module) => ({
-    default: module.Analog,
-  })),
-);
-const AnalogSlices = lazyWithRetry(() =>
-  import("./modules/analog-slices/pages/analog-slices").then((module) => ({
-    default: module.AnalogSlices,
-  })),
-);
-const SalesPage = lazyWithRetry(() =>
-  import("./modules/sales/pages/sales").then((module) => ({
-    default: module.Sales,
-  })),
-);
-const StockComparisonPage = lazyWithRetry(() =>
-  import("./modules/stock-comparison/pages/stock-comparison").then((module) => ({
-    default: module.StockComparison,
-  })),
-);
-
 const Constants = lazyWithRetry(() =>
   import("./modules/constants/pages/constants").then((module) => ({
     default: module.Constants,
@@ -402,50 +376,6 @@ export const router = createHashRouter([
           {
             path: ":artikul",
             element: <Art />,
-            errorElement: <RouteErrorBoundary />,
-          },
-        ],
-      },
-      {
-        path: "analogs",
-        element: (
-          <ProtectedRoute>
-            <Outlet />
-          </ProtectedRoute>
-        ),
-        errorElement: <RouteErrorBoundary />,
-        children: [
-          {
-            index: true,
-            element: <Analogs />,
-            errorElement: <RouteErrorBoundary />,
-          },
-          {
-            path: "slices",
-            element: <AnalogSlices />,
-            errorElement: <RouteErrorBoundary />,
-          },
-          {
-            path: "sales",
-            element: (
-              <ProtectedRoute>
-                <SalesPage />
-              </ProtectedRoute>
-            ),
-            errorElement: <RouteErrorBoundary />,
-          },
-          {
-            path: "stock-comparison",
-            element: (
-              <ProtectedRoute>
-                <StockComparisonPage />
-              </ProtectedRoute>
-            ),
-            errorElement: <RouteErrorBoundary />,
-          },
-          {
-            path: ":id",
-            element: <Analog />,
             errorElement: <RouteErrorBoundary />,
           },
         ],
