@@ -1,3 +1,4 @@
+import { DialogActions } from "@/components/shared/dialogs";
 import { Alert } from "@/components/ui/alert";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -8,12 +9,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { DialogActions } from "@/components/shared/dialogs";
-import { getRoleLabel } from "@/constants/roles";
-import { RoleType } from "@/constants/roles";
-import type { EditUserFormValues } from "@/modules/auth/components/forms/schema";
-import type { UseFormReturn } from "react-hook-form";
+import { getRoleLabel, RoleType } from "@/constants/roles";
 import { typography } from "@/lib/typography";
+import type { EditUserFormValues } from "@/modules/auth/components/forms/schema";
+import { Eye, EyeOff } from "lucide-react";
+import { useState } from "react";
+import type { UseFormReturn } from "react-hook-form";
 
 interface EditUserFormViewProps {
   form: UseFormReturn<EditUserFormValues>;
@@ -43,6 +44,7 @@ export function EditUserFormView({
     formState: { errors },
   } = form;
   const roleValue = watch("role");
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
@@ -66,14 +68,30 @@ export function EditUserFormView({
 
       <div className="flex flex-col gap-2">
         <Label htmlFor="edit-password">Пароль</Label>
-        <Input
-          id="edit-password"
-          type="password"
-          autoComplete="new-password"
-          placeholder="Залишити порожнім, щоб не змінювати"
-          disabled={isLoading}
-          {...register("password")}
-        />
+        <div className="relative">
+          <Input
+            id="edit-password"
+            type={showPassword ? "text" : "password"}
+            autoComplete="new-password"
+            placeholder="Залишити порожнім, щоб не змінювати"
+            disabled={isLoading}
+            className="pr-10"
+            {...register("password")}
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            disabled={isLoading}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-foreground disabled:cursor-not-allowed disabled:opacity-50"
+            aria-label={showPassword ? "Сховати пароль" : "Показати пароль"}
+          >
+            {showPassword ? (
+              <Eye className="h-4 w-4" />
+            ) : (
+              <EyeOff className="h-4 w-4" />
+            )}
+          </button>
+        </div>
         {errors.password && (
           <p className={typography.formError}>{errors.password.message}</p>
         )}
