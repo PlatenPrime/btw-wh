@@ -84,28 +84,6 @@ export function SkuLiveStockContainerView({
           </Button>
         </div>
       ) : null}
-
-      {!data && !isError ? (
-        <div className="flex items-center sm:col-span-2">
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon-sm"
-            className="text-muted-foreground"
-            disabled={isRefreshing}
-            onClick={onRefresh}
-            aria-label={
-              isRefreshing ? "Оновлення залишку…" : "Оновити залишок"
-            }
-          >
-            {isRefreshing ? (
-              <Loader2 className={cn(iconSize.ui, "animate-spin")} />
-            ) : (
-              <RefreshCw className={iconSize.ui} />
-            )}
-          </Button>
-        </div>
-      ) : null}
     </div>
   );
 }

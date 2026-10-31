@@ -13,7 +13,14 @@ import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
 import type { SkuDto, SkuSkugrDto } from "@/modules/skus/api/types";
 import { SkuLiveStockContainer } from "@/modules/skus/components/containers/sku-live-stock-container";
-import { ExternalLink, Factory, Link2, Tags } from "lucide-react";
+import {
+  Barcode,
+  ExternalLink,
+  Factory,
+  Hash,
+  Link2,
+  Tags,
+} from "lucide-react";
 import type { ReactNode } from "react";
 import { Link } from "react-router";
 
@@ -29,6 +36,7 @@ interface SkuDetailCardProps {
 
 export function SkuDetailCard({ sku, konk, prod, skugrs }: SkuDetailCardProps) {
   const hasImage = Boolean(sku.imageUrl?.trim());
+  const artikul = sku.artikul?.trim() ?? "";
   const hasBtradeAnalog = Boolean(sku.btradeAnalog?.trim());
   const hasSkugrs = skugrs.length > 0;
   const prodValue = prod?.title ?? sku.prodName;
@@ -79,6 +87,26 @@ export function SkuDetailCard({ sku, konk, prod, skugrs }: SkuDetailCardProps) {
               className="w-full"
             />
           ) : null}
+          <MetricChip
+            icon={Hash}
+            tone="muted"
+            label="ID лістингу"
+            value={sku.productId}
+            className="w-full"
+          />
+          <MetricChip
+            icon={Barcode}
+            tone="info"
+            label="Артикул конкурента"
+            value={
+              artikul ? (
+                artikul
+              ) : (
+                <span className="text-muted-foreground">не вказано</span>
+              )
+            }
+            className="w-full"
+          />
           {hasBtradeAnalog ? (
             <MetricChip
               icon={Link2}

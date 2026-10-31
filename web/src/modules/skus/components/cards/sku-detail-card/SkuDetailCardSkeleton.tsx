@@ -16,6 +16,8 @@ export function SkuDetailCardSkeleton() {
           <MetricChipSkeleton className="w-full" />
           <MetricChipSkeleton className="w-full" />
           <MetricChipSkeleton className="w-full" />
+          <MetricChipSkeleton className="w-full" />
+          <MetricChipSkeleton className="w-full" />
           <SkuLiveStockContainerSkeleton />
           <MetricChipSkeleton className="w-full" />
         </div>

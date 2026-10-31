@@ -1,9 +1,11 @@
 import { RoleType } from "@/constants/roles";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 import { useSkuStockQuery } from "@/modules/skus/api/hooks/queries/useSkuStockQuery";
+import { getSkuById } from "@/modules/skus/api/services/queries/getSkuById";
 import type { SkuDto } from "@/modules/skus/api/types";
 import { SkuLiveStockContainerSkeleton } from "./SkuLiveStockContainerSkeleton";
 import { SkuLiveStockContainerView } from "./SkuLiveStockContainerView";
+import { useQueryClient } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
 import { useEffect, useRef } from "react";
 import { toast } from "sonner";
@@ -18,7 +20,9 @@ interface StockErrorBody {
 
 export function SkuLiveStockContainer({ sku }: SkuLiveStockContainerProps) {
   const { hasRole } = useAuth();
+  const queryClient = useQueryClient();
   const lastToastedError = useRef<unknown>(null);
+  const lastSyncedAt = useRef(0);
 
   const canView = hasRole(RoleType.ADMIN);
 
@@ -49,6 +53,27 @@ export function SkuLiveStockContainer({ sku }: SkuLiveStockContainerProps) {
     }
   }, [query.isError, query.error]);
 
+  // Silent cache patch: не invalidate — иначе SkuFetcher вешает DataRefetchOverlay на всю карточку.
+  useEffect(() => {
+    if (!query.isSuccess || !query.dataUpdatedAt) return;
+    if (lastSyncedAt.current === query.dataUpdatedAt) return;
+    lastSyncedAt.current = query.dataUpdatedAt;
+
+    let cancelled = false;
+    void getSkuById(sku._id)
+      .then((fresh) => {
+        if (cancelled) return;
+        queryClient.setQueryData(["skus", "id", sku._id], fresh);
+      })
+      .catch(() => {
+        // артикул write-once — best-effort, остаток уже на экране
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [query.isSuccess, query.dataUpdatedAt, queryClient, sku._id]);
+
   if (!canView) return null;
 
   if (query.isLoading) {
@@ -61,6 +86,7 @@ export function SkuLiveStockContainer({ sku }: SkuLiveStockContainerProps) {
       isError={query.isError}
       data={query.data?.data ?? null}
       onRefresh={() => {
+        if (query.isFetching) return;
         void query.refetch();
       }}
     />

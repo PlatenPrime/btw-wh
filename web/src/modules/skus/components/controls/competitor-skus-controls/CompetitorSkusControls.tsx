@@ -86,7 +86,7 @@ export function CompetitorSkusControls({
           <SearchPanel
             search={search}
             onSearchChange={(e) => setSearch(e.target.value)}
-            placeholder="Пошук за назвою товару..."
+            placeholder="Пошук за назвою, ID або артикулом..."
           />
         }
         filtersSlot={

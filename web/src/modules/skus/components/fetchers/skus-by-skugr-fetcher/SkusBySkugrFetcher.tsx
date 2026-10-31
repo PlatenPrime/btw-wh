@@ -80,7 +80,7 @@ export function SkusBySkugrFetcher({ skugrId }: SkusBySkugrFetcherProps) {
             <SearchPanel
               search={grSearch}
               onSearchChange={(e) => setGrSearch(e.target.value)}
-              placeholder="Пошук за назвою товару..."
+              placeholder="Пошук за назвою, ID або артикулом..."
             />
           </div>
         }
