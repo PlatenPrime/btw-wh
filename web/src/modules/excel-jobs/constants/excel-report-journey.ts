@@ -19,10 +19,22 @@ export interface ExcelJourneyOption {
   label: string;
 }
 
+export type ExcelJourneyKonkEntry = "search-skus" | "pick-konk";
+
+export interface ExcelJourneySkuPick {
+  id: string;
+  title: string;
+  imageUrl?: string;
+  konkName?: string;
+  prodName?: string;
+}
+
 export interface ExcelJourneyInput {
   world: ExcelJourneyWorld | "";
   btradeReport: string;
   whReport: string;
+  /** Після world=konk: шукати товари або обрати конкурента. */
+  entry: ExcelJourneyKonkEntry | "";
   konk: string;
   scope: string;
   measure: string;
@@ -30,6 +42,7 @@ export interface ExcelJourneyInput {
   skuId: string;
   skuTitle: string;
   skuImageUrl: string;
+  skuPicks: readonly ExcelJourneySkuPick[];
   skugrId: string;
   skugrTitle: string;
   skugrImageUrl: string;
@@ -75,6 +88,14 @@ type JourneyEntityStep = {
   selectedImageUrl: string;
 };
 
+type JourneySkuMultiStep = {
+  type: "sku-multi";
+  id: "sku-multi";
+  prompt: string;
+  picks: readonly ExcelJourneySkuPick[];
+  acked: boolean;
+};
+
 type JourneyAckStep = {
   type:
     | "period"
@@ -101,6 +122,7 @@ export type ExcelJourneyStep =
   | JourneyKonkStep
   | JourneyProdStep
   | JourneyEntityStep
+  | JourneySkuMultiStep
   | JourneyAckStep
   | JourneyReadyStep;
 
@@ -124,12 +146,19 @@ const WAREHOUSE_REPORTS: readonly ExcelJourneyOption[] = [
   { id: "poses-export-stocks", label: "Залишки позицій" },
 ];
 
+const KONK_ENTRY_OPTIONS: readonly ExcelJourneyOption[] = [
+  { id: "search-skus", label: "Шукаємо товари" },
+  { id: "pick-konk", label: "Обираємо конкурента" },
+];
+
 const NAMED_SCOPES: readonly ExcelJourneyOption[] = [
   { id: "catalog", label: "Каталог" },
   { id: "sku", label: "Один товар" },
   { id: "skugr", label: "Товарна група" },
   { id: "konk-sku", label: "Усі товари цього конкурента" },
 ];
+
+const SKU_SELECTION_MAX = 100;
 
 const CATALOG_ONLY_SCOPES: readonly ExcelJourneyOption[] = [
   { id: "catalog", label: "Каталог" },
@@ -150,6 +179,7 @@ export function createEmptyJourney(): ExcelJourneyInput {
     world: "",
     btradeReport: "",
     whReport: "",
+    entry: "",
     konk: "",
     scope: "",
     measure: "",
@@ -157,6 +187,7 @@ export function createEmptyJourney(): ExcelJourneyInput {
     skuId: "",
     skuTitle: "",
     skuImageUrl: "",
+    skuPicks: [],
     skugrId: "",
     skugrTitle: "",
     skugrImageUrl: "",
@@ -327,6 +358,37 @@ export function resolveExcelJourney(
     return steps;
   }
 
+  steps.push(
+    choice(
+      "entry",
+      "Як шукаємо товари конкурента?",
+      KONK_ENTRY_OPTIONS,
+      input.entry,
+    ),
+  );
+  if (!input.entry) return steps;
+
+  if (input.entry === "search-skus") {
+    steps.push({
+      type: "sku-multi",
+      id: "sku-multi",
+      prompt: "Які товари?",
+      picks: input.skuPicks,
+      acked: input.acked.includes("sku-multi"),
+    });
+    if (
+      input.skuPicks.length < 1 ||
+      input.skuPicks.length > SKU_SELECTION_MAX ||
+      !input.acked.includes("sku-multi")
+    ) {
+      return steps;
+    }
+    pushMeasure(steps, input, "Що порахувати?", STOCK_SALES);
+    if (input.measure !== "stock" && input.measure !== "sales") return steps;
+    pushStockSalesTail(steps, input, input.measure);
+    return steps;
+  }
+
   steps.push({
     type: "konk",
     id: "konk",
@@ -394,6 +456,12 @@ export function isExcelJourneyStepComplete(step: ExcelJourneyStep): boolean {
       return step.value.trim().length > 0;
     case "entity":
       return step.selectedId.trim().length > 0;
+    case "sku-multi":
+      return (
+        step.acked &&
+        step.picks.length >= 1 &&
+        step.picks.length <= SKU_SELECTION_MAX
+      );
     case "period":
     case "stock-metrics":
     case "sales-metrics":
@@ -438,6 +506,15 @@ export function journeyAction(
   ) {
     return "none";
   }
+  if (step.type === "sku-multi") {
+    if (
+      step.picks.length < 1 ||
+      step.picks.length > SKU_SELECTION_MAX
+    ) {
+      return "none";
+    }
+    return "next";
+  }
   return activeIndex === steps.length - 1 ? "submit" : "next";
 }
 
@@ -472,7 +549,16 @@ export function resolveJourneyLeaf(
     }
     return null;
   }
-  if (input.world !== "konk" || !input.scope || !input.measure) return null;
+  if (input.world !== "konk") return null;
+
+  if (input.entry === "search-skus") {
+    if (input.measure === "stock" || input.measure === "sales") {
+      return { objectId: "sku-selection", fileId: input.measure };
+    }
+    return null;
+  }
+
+  if (!input.scope || !input.measure) return null;
 
   if (input.scope === "catalog") {
     if (input.measure === "new-since" || input.measure === "invalid") {
@@ -504,6 +590,7 @@ function withoutEntity(input: ExcelJourneyInput): ExcelJourneyInput {
     skuId: "",
     skuTitle: "",
     skuImageUrl: "",
+    skuPicks: [],
     skugrId: "",
     skugrTitle: "",
     skugrImageUrl: "",
@@ -523,11 +610,21 @@ function clearStep(
   const acked = input.acked.filter((id) => id !== step.id);
   switch (step.id) {
     case "world":
-      return withoutEntity({ ...input, world: "", acked });
+      return withoutEntity({ ...input, world: "", entry: "", acked });
     case "btrade-report":
       return withoutEntity({ ...input, btradeReport: "", acked });
     case "wh-report":
       return { ...input, whReport: "", acked };
+    case "entry":
+      return withoutEntity({
+        ...input,
+        entry: "",
+        konk: "",
+        scope: "",
+        measure: "",
+        prod: "",
+        acked,
+      });
     case "konk":
       return withoutEntity({ ...input, konk: "", acked });
     case "scope":
@@ -538,6 +635,8 @@ function clearStep(
       return { ...input, prod: "", acked };
     case "entity":
       return withoutEntity({ ...input, acked });
+    case "sku-multi":
+      return { ...input, skuPicks: [], acked };
     default:
       return { ...input, acked };
   }
@@ -577,6 +676,14 @@ export function writeJourneyChoice(
       return { ...input, btradeReport: value };
     case "wh-report":
       return { ...input, whReport: value };
+    case "entry":
+      return {
+        ...input,
+        entry:
+          value === "search-skus" || value === "pick-konk"
+            ? value
+            : "",
+      };
     case "scope":
       return { ...input, scope: value };
     case "measure":
@@ -607,7 +714,7 @@ export function acknowledgeJourneyStep(
 }
 
 export function journeyNeedsKonks(input: ExcelJourneyInput): boolean {
-  return input.world === "konk";
+  return input.world === "konk" && input.entry === "pick-konk";
 }
 
 export function journeyNeedsProds(input: ExcelJourneyInput): boolean {

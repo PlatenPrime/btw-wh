@@ -38,6 +38,7 @@ describe("excel report order search", () => {
     const source = state({
       journey: {
         world: "konk",
+        entry: "pick-konk",
         konk: "epicentr",
         scope: "konk-sku",
         measure: "sales",
@@ -79,6 +80,7 @@ describe("excel report order search", () => {
       NOW,
     );
     expect(restored.journey.world).toBe("konk");
+    expect(restored.journey.entry).toBe("pick-konk");
     expect(restored.journey.konk).toBe("epicentr");
     expect(restored.journey.prod).toBe("bosch");
     expect(restored.journey.acked).toEqual([
@@ -106,6 +108,7 @@ describe("excel report order search", () => {
     const stock = state({
       journey: {
         world: "konk",
+        entry: "pick-konk",
         konk: "epicentr",
         scope: "konk-sku",
         measure: "stock",

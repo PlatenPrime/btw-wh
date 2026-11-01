@@ -29,6 +29,7 @@ import { useKonksQuery } from "@/modules/konks/api/hooks/queries/useKonksQuery";
 import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
 import { SKU_KONK_PROD_QUERY_ALL } from "@/modules/sku-analytics/constants";
 import type { SkugrToggleItem } from "@/modules/skugrs/components/controls/skugr-multi-select-control";
+import type { SkuMultiSelectPick } from "@/modules/skus/components/controls/sku-multi-select-control";
 import { format, isValid, parse } from "date-fns";
 import { useCallback, useMemo, useState } from "react";
 import type { DateRange } from "react-day-picker";
@@ -52,15 +53,30 @@ function clearOrderFilters(
   let next = state;
   if (
     ids.some((id) =>
-      ["world", "konk", "scope", "measure", "prod", "skugr-ids"].includes(id),
+      [
+        "world",
+        "entry",
+        "konk",
+        "scope",
+        "measure",
+        "prod",
+        "skugr-ids",
+      ].includes(id),
     )
   ) {
     next = { ...next, skugrPicks: [] };
+  }
+  if (ids.some((id) => ["world", "entry", "sku-multi"].includes(id))) {
+    next = {
+      ...next,
+      journey: { ...next.journey, skuPicks: [] },
+    };
   }
   if (
     ids.some((id) =>
       [
         "world",
+        "entry",
         "btrade-report",
         "konk",
         "scope",
@@ -138,6 +154,7 @@ export function ExcelReportOrderContainer() {
       prod: journey.prod,
       skuId: journey.skuId,
       skuTitle: journey.skuTitle,
+      skuIds: journey.skuPicks.map((pick) => pick.id),
       skugrId: journey.skugrId,
       skugrTitle: journey.skugrTitle,
       analogId: journey.analogId,
@@ -237,6 +254,27 @@ export function ExcelReportOrderContainer() {
         );
       });
       setEditingStepId(null);
+    },
+    [setState],
+  );
+
+  const handleSkuPicksChange = useCallback(
+    (picks: SkuMultiSelectPick[]) => {
+      setState((prev) => ({
+        ...prev,
+        journey: {
+          ...prev.journey,
+          skuPicks: picks.map((pick) => ({
+            id: pick.id,
+            title: pick.title,
+            imageUrl: pick.imageUrl,
+            konkName: pick.konkName,
+            prodName: pick.prodName,
+          })),
+          // Зміна набору скидає ack кроку, щоб користувач знову натиснув «Далі».
+          acked: prev.journey.acked.filter((id) => id !== "sku-multi"),
+        },
+      }));
     },
     [setState],
   );
@@ -377,7 +415,10 @@ export function ExcelReportOrderContainer() {
         ? stockMetrics.length > 0
         : activeStep?.type === "sales-metrics"
           ? salesMetrics.length > 0
-          : true;
+          : activeStep?.type === "sku-multi"
+            ? journey.skuPicks.length >= 1 &&
+              journey.skuPicks.length <= 100
+            : true;
 
   const prods = (prodsQuery.data?.data ?? []).filter(
     (item) => item.name !== SKU_KONK_PROD_QUERY_ALL,
@@ -402,6 +443,8 @@ export function ExcelReportOrderContainer() {
       skugrIds={skugrIds}
       skugrPicks={skugrPicks}
       onSkugrToggle={handleSkugrToggle}
+      skuPicks={journey.skuPicks}
+      onSkuPicksChange={handleSkuPicksChange}
       abc={abc}
       onAbcChange={handleAbc}
       sortByAbc={sortByAbc}

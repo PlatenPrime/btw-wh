@@ -130,3 +130,10 @@ export function buildSkuStatisticsSkusExportFilename(
   ].filter(Boolean);
   return `${parts.join("_")}.xlsx`;
 }
+
+export function buildSkuSelectionComparisonExportFilename(
+  dateFrom: string,
+  dateTo: string,
+): string {
+  return `sku_comparison_selection_${sanitizeFilenamePart(dateFrom)}_${sanitizeFilenamePart(dateTo)}.xlsx`;
+}

@@ -7,6 +7,8 @@ export const EXCEL_JOB_KINDS = [
   "sku-skugr-sales",
   "sku-one-stock",
   "sku-one-sales",
+  "sku-selection-stock",
+  "sku-selection-sales",
   "art-stock",
   "art-sales",
   "analog-comparison",

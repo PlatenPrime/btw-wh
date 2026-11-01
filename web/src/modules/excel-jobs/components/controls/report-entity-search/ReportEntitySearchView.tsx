@@ -1,8 +1,14 @@
+import { Image } from "@/components/shared/media/image/Image";
+import {
+  URL_DIALOG_IMAGE_FALLBACK,
+  UrlDialogImage,
+} from "@/components/shared/dialogs";
+import { KonkBanner } from "@/components/shared/domain/konk-banner";
 import { EntityLabel } from "@/components/shared/entities/entity-label";
 import { Input } from "@/components/ui/input";
 import { useContainerInfiniteScroll } from "@/hooks/useContainerInfiniteScroll";
-import { typography } from "@/lib/typography";
 import { cn } from "@/lib/utils";
+import { iconSize, typography } from "@/lib/typography";
 import { useRef } from "react";
 import { ReportEntitySearchSkeleton } from "./ReportEntitySearchSkeleton";
 
@@ -11,6 +17,13 @@ export interface ReportEntityOption {
   title: string;
   subtitle: string;
   imageUrl?: string;
+  konkName?: string;
+  konkTitle?: string;
+  konkImageUrl?: string;
+  prodName?: string;
+  prodTitle?: string;
+  prodImageUrl?: string;
+  artikul?: string;
 }
 
 interface ReportEntitySearchViewProps {
@@ -30,7 +43,10 @@ interface ReportEntitySearchViewProps {
   fetchNextPage: () => void;
   hasMoreOnServer: boolean;
   disabled?: boolean;
+  richSkuRows?: boolean;
 }
+
+const SKU_ROW_PLACEHOLDER = "https://placehold.co/96x96?text=SKU&font=roboto";
 
 export function ReportEntitySearchView({
   inputId,
@@ -49,6 +65,7 @@ export function ReportEntitySearchView({
   fetchNextPage,
   hasMoreOnServer,
   disabled = false,
+  richSkuRows = false,
 }: ReportEntitySearchViewProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const bottomRef = useContainerInfiniteScroll({
@@ -95,6 +112,75 @@ export function ReportEntitySearchView({
           ) : (
             options.map((option) => {
               const isSelected = option.id === selectedId;
+              if (richSkuRows) {
+                const hasImage = Boolean(option.imageUrl?.trim());
+                return (
+                  <button
+                    key={option.id}
+                    type="button"
+                    disabled={disabled}
+                    onClick={() => onSelect(option)}
+                    className={cn(
+                      "overflow-hidden rounded-md border border-border text-left",
+                      isSelected ? "bg-accent" : "hover:bg-muted",
+                    )}
+                  >
+                    {option.konkName ? (
+                      <KonkBanner
+                        konkName={option.konkName}
+                        imageUrl={option.konkImageUrl}
+                        title={option.konkTitle}
+                      />
+                    ) : null}
+                    <div className="flex items-start gap-2 p-2">
+                      {hasImage ? (
+                        <UrlDialogImage
+                          imageUrl={option.imageUrl!}
+                          alt={option.title}
+                          fallbackSrc={URL_DIALOG_IMAGE_FALLBACK}
+                          previewClassName={cn(
+                            "bg-muted aspect-square rounded-lg object-cover",
+                            iconSize.avatarList,
+                          )}
+                        />
+                      ) : (
+                        <div
+                          className={cn(
+                            "bg-muted aspect-square overflow-hidden rounded-lg",
+                            iconSize.avatarList,
+                          )}
+                        >
+                          <Image
+                            src={SKU_ROW_PLACEHOLDER}
+                            alt=""
+                            className="size-full object-cover"
+                          />
+                        </div>
+                      )}
+                      <div className="grid min-w-0 flex-1 gap-1">
+                        <span
+                          className={cn("line-clamp-2", typography.gridTitle)}
+                        >
+                          {option.title}
+                        </span>
+                        <EntityLabel
+                          imageUrl={option.prodImageUrl}
+                          title={option.prodTitle}
+                          fallbackLabel={option.prodName || option.subtitle}
+                          imageSize="xs"
+                          className="text-xs"
+                        />
+                        {option.artikul ? (
+                          <span className={typography.caption}>
+                            Артикул: {option.artikul}
+                          </span>
+                        ) : null}
+                      </div>
+                    </div>
+                  </button>
+                );
+              }
+
               return (
                 <button
                   key={option.id}

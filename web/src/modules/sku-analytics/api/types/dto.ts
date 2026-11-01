@@ -96,6 +96,36 @@ export interface SkuKonksPieResponseDto {
   all?: SkuKonksPieTotalDto;
 }
 
+export interface SkuSelectionPieItemDto {
+  title: string;
+  konkName: string;
+  productId: string;
+  salesPcs: number;
+  salesUah: number;
+  sharePcs: number;
+  shareUah: number;
+}
+
+export type SkuSelectionPiePayload = Record<string, SkuSelectionPieItemDto>;
+
+export interface SkuSelectionPieTotalDto {
+  title: string;
+  salesPcs: number;
+  salesUah: number;
+}
+
+export interface SkuSelectionPieResponseDto {
+  message: string;
+  data: SkuSelectionPiePayload;
+  all: SkuSelectionPieTotalDto;
+}
+
+export interface PostSkuSelectionPieBody {
+  skuIds: string[];
+  dateFrom: string;
+  dateTo: string;
+}
+
 export interface SkuKonkProdSkugrGroupSalesItemDto {
   skugrId: string;
   title: string;

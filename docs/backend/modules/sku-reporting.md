@@ -8,27 +8,31 @@
 
 ## Содержимое
 
-| Область | Назначение |
-|---------|------------|
-| `schemas/` | Общие Zod-схемы: даты, диапазоны konk+prod, skugrIds, metrics sales/stock Excel |
-| `models/SkuManufacturerDaySales` | Плоский дневной rollup продаж конкурента по `(konkName, date, prodName)` |
-| `models/BtradeManufacturerDaySales` | Плоский дневной rollup продаж Btrade по `(date, prodName)` (prodName lowercased) |
-| `utils/resolveKonkProdSkus` | Выборка SKU для konk-prod отчётов с опциональным skugrIds |
-| `utils/skugrReporting` | Перечисление дат, карты срезов, загрузка Skugr со SKU |
-| `utils/coalesceSkuSliceItemsForReporting` | Forward-fill `-1` для stock/price в Excel/range; helpers дат |
-| `utils/persistedSliceSalesUtils` | Формула sales на write-path rollup: `-1` → 0, delivery → 0, delta |
-| `utils/materializeSkuSliceSalesUtil` | Пересчёт Sku manufacturer rollup за `D`+`D+1` / диапазон |
-| `utils/materializeBtradeManufacturerSalesUtil` | Пересчёт Btrade manufacturer rollup за `D`+`D+1` / диапазон |
-| `utils/stripMixedSliceSalesUtil` | Откат: снять legacy `salesPcs`/`salesUah` из Mixed data срезов |
-| `utils/aggregateDailySkuSliceMetricsForSkus` | Дневные суммы: Node compute из stock (coalesce) |
-| `utils/aggregatePeriodSkuSliceMetricsForSkus` | Периодные итоги по SKU: Node compute из stock |
-| `utils/aggregateBtradeSalesForProdPeriod` | Период Btrade из `BtradeManufacturerDaySales` |
-| `utils/aggregateManufacturerDaySales` | Read-path Sku rollup: by prodName / by konkName / daily |
-| `utils/aggregateBtradeManufacturerDaySales` | Read-path Btrade rollup: period sum / daily |
-| `utils/buildSkuSliceExcel` | Сборка XLSX по срезам |
-| `utils/konkProdSkuChartCore` | Stock из SkuSliceMonth; sales/revenue без skugrIds из Sku+Btrade rollup |
-| `utils/prodDisplayTitles` | Заголовки производителей из Prod |
-| `constants/skuSliceRequestJitterMs` | Пауза между HTTP при сборе/компенсации срезов |
+| Область                                        | Назначение                                                                                                              |
+| ---------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `schemas/`                                     | Общие Zod-схемы: даты, диапазоны konk+prod, skugrIds, metrics sales/stock Excel                                         |
+| `models/SkuManufacturerDaySales`               | Плоский дневной rollup продаж конкурента по `(konkName, date, prodName)`                                                |
+| `models/BtradeManufacturerDaySales`            | Плоский дневной rollup продаж Btrade по `(date, prodName)` (prodName lowercased)                                        |
+| `utils/resolveKonkProdSkus`                    | Выборка SKU для konk-prod отчётов с опциональным skugrIds                                                               |
+| `utils/resolveSkusByIds`                       | Произвольный мультивыбор SKU по `_id` (порядок, dedupe, skugrTitle; multi-konk)                                         |
+| `utils/konkDisplayTitles`                      | Заголовки конкурентов и recountDays из Konk                                                                             |
+| `utils/computeSharePercent`                    | Доля part/total в % (0..100, 2 знака) для pie/Excel часток                                                              |
+| `utils/skugrReporting`                         | Перечисление дат, карты срезов, загрузка Skugr со SKU                                                                   |
+| `utils/coalesceSkuSliceItemsForReporting`      | Forward-fill `-1` для stock/price в Excel/range; helpers дат                                                            |
+| `utils/persistedSliceSalesUtils`               | Формула sales на write-path rollup: `-1` → 0, delivery → 0, delta                                                       |
+| `utils/materializeSkuSliceSalesUtil`           | Пересчёт Sku manufacturer rollup за `D`+`D+1` / диапазон                                                                |
+| `utils/scheduleAfterSkuSliceStockMutation`     | Неблокирующий coalesce full-day rematerialize (dirty + singleflight + trailing); для высокочастотного air client ingest |
+| `utils/materializeBtradeManufacturerSalesUtil` | Пересчёт Btrade manufacturer rollup за `D`+`D+1` / диапазон                                                             |
+| `utils/stripMixedSliceSalesUtil`               | Откат: снять legacy `salesPcs`/`salesUah` из Mixed data срезов                                                          |
+| `utils/aggregateDailySkuSliceMetricsForSkus`   | Дневные суммы: Node compute из stock (coalesce)                                                                         |
+| `utils/aggregatePeriodSkuSliceMetricsForSkus`  | Периодные итоги по SKU: Node compute из stock                                                                           |
+| `utils/aggregateBtradeSalesForProdPeriod`      | Период Btrade из `BtradeManufacturerDaySales`                                                                           |
+| `utils/aggregateManufacturerDaySales`          | Read-path Sku rollup: by prodName / by konkName / daily                                                                 |
+| `utils/aggregateBtradeManufacturerDaySales`    | Read-path Btrade rollup: period sum / daily                                                                             |
+| `utils/buildSkuSliceExcel`                     | Сборка XLSX по срезам                                                                                                   |
+| `utils/konkProdSkuChartCore`                   | Stock из SkuSliceMonth; sales/revenue без skugrIds из Sku+Btrade rollup                                                 |
+| `utils/prodDisplayTitles`                      | Заголовки производителей из Prod                                                                                        |
+| `constants/skuSliceRequestJitterMs`            | Пауза между HTTP при сборе/компенсации срезов                                                                           |
 
 ## Агрегация продаж
 
@@ -49,7 +53,7 @@ CLI:
 
 ## Связи
 
-- **sku-slices** — `SkuSliceMonth` (точки) + `SkuSliceDayMeta` (прогон), хуки `afterSkuSliceStockMutation`
+- **sku-slices** — `SkuSliceMonth` (точки) + `SkuSliceDayMeta` (прогон), хуки `afterSkuSliceStockMutation` / `scheduleAfterSkuSliceStockMutation` (air client PUT)
 - **btrade-slices** — `BtradeSliceMonth` (точки) + хук `afterBtradeSliceStockMutation` → Btrade rollup
 - **skus / skugrs / konks / prods / arts** — доменные сущности для отчётов
 - **slices** — математика продаж (delta / recount / revenue)

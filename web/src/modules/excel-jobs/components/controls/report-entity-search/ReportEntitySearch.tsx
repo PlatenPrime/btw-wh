@@ -1,5 +1,7 @@
 import { useArtsQuery } from "@/modules/arts/api/hooks/queries/useArtsQuery";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
+import { useKonksQuery } from "@/modules/konks/api/hooks/queries/useKonksQuery";
+import type { KonkDto } from "@/modules/konks/api/types";
 import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
 import type { ProdDto } from "@/modules/prods/api/types";
 import { useSkugrsInfiniteQuery } from "@/modules/skugrs/api/hooks/queries/useSkugrsInfiniteQuery";
@@ -13,12 +15,13 @@ import {
 } from "./ReportEntitySearchView";
 
 export type ReportEntitySource = "sku" | "skugr" | "art";
+export type { ReportEntityOption };
 
 const SOURCE_COPY: Record<
   ReportEntitySource,
   { label: string; placeholder: string }
 > = {
-  sku: { label: "SKU", placeholder: "За назвою SKU..." },
+  sku: { label: "SKU", placeholder: "За назвою, ID або артикулом..." },
   skugr: { label: "Товарна група", placeholder: "За назвою групи..." },
   art: { label: "Артикул", placeholder: "За артикулом або назвою..." },
 };
@@ -32,12 +35,28 @@ function joinSubtitle(parts: Array<string | undefined>): string {
     .join(" · ");
 }
 
-function toSkuOption(sku: SkuDto): ReportEntityOption {
+function toSkuOption(
+  sku: SkuDto,
+  konkByName: ReadonlyMap<string, KonkDto>,
+  prodByName: ReadonlyMap<string, ProdDto>,
+): ReportEntityOption {
+  const konk = konkByName.get(sku.konkName);
+  const prod = prodByName.get(sku.prodName);
   return {
     id: sku._id,
     title: sku.title.trim() || sku.productId,
-    subtitle: joinSubtitle([sku.konkName, sku.prodName]),
+    subtitle: joinSubtitle([
+      konk?.title || sku.konkName,
+      prod?.title || sku.prodName,
+    ]),
     imageUrl: sku.imageUrl,
+    konkName: sku.konkName,
+    konkTitle: konk?.title,
+    konkImageUrl: konk?.imageUrl,
+    prodName: sku.prodName,
+    prodTitle: prod?.title,
+    prodImageUrl: prod?.imageUrl,
+    artikul: sku.artikul?.trim() || undefined,
   };
 }
 
@@ -86,10 +105,14 @@ export function ReportEntitySearch({
   disabled = false,
 }: ReportEntitySearchProps) {
   const scopedKonk = source === "art" ? "" : konkName.trim();
-  const needsProdImage = source === "skugr";
+  const needsProdImage = source === "skugr" || source === "sku";
+  const needsKonks = source === "sku";
   const [search, setSearch] = useState("");
   const copy = SOURCE_COPY[source];
-  const prodsQuery = useProdsQuery({ enabled: needsProdImage && !disabled });
+  const prodsQuery = useProdsQuery({
+    enabled: needsProdImage && !disabled,
+  });
+  const konksQuery = useKonksQuery({ enabled: needsKonks && !disabled });
   const prodByName = useMemo(() => {
     const map = new Map<string, ProdDto>();
     for (const prod of prodsQuery.data?.data ?? []) {
@@ -97,6 +120,13 @@ export function ReportEntitySearch({
     }
     return map;
   }, [prodsQuery.data?.data]);
+  const konkByName = useMemo(() => {
+    const map = new Map<string, KonkDto>();
+    for (const konk of konksQuery.data?.data ?? []) {
+      map.set(konk.name, konk);
+    }
+    return map;
+  }, [konksQuery.data?.data]);
 
   const skuQuery = useSkusCatalogQuery({
     page: 1,
@@ -119,7 +149,11 @@ export function ReportEntitySearch({
   });
 
   const options = useMemo(() => {
-    if (source === "sku") return (skuQuery.data?.data ?? []).map(toSkuOption);
+    if (source === "sku") {
+      return (skuQuery.data?.data ?? []).map((sku) =>
+        toSkuOption(sku, konkByName, prodByName),
+      );
+    }
     if (source === "skugr") {
       return (skugrQuery.data?.pages.flatMap((page) => page.data) ?? []).map(
         (skugr) => toSkugrOption(skugr, prodByName),
@@ -128,6 +162,7 @@ export function ReportEntitySearch({
     return (artQuery.data?.data ?? []).map(toArtOption);
   }, [
     artQuery.data?.data,
+    konkByName,
     prodByName,
     skuQuery.data?.data,
     skugrQuery.data?.pages,
@@ -165,6 +200,7 @@ export function ReportEntitySearch({
       }}
       hasMoreOnServer={hasMoreOnServer}
       disabled={disabled}
+      richSkuRows={source === "sku"}
     />
   );
 }

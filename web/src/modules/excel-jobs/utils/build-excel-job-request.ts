@@ -18,6 +18,8 @@ import { getExcelJobKindLabel } from "@/modules/excel-jobs/utils/labels";
 
 export type ExcelSalesSort = "default" | "sales" | "revenue";
 
+export const SKU_SELECTION_EXCEL_MAX = 100;
+
 export interface ExcelReportOrderDraft {
   objectId: ExcelReportObject | "";
   fileId: ExcelReportFileId | "";
@@ -25,6 +27,7 @@ export interface ExcelReportOrderDraft {
   prod: string;
   skuId: string;
   skuTitle: string;
+  skuIds: readonly string[];
   skugrId: string;
   skugrTitle: string;
   analogId: string;
@@ -73,6 +76,11 @@ function identityReady(
       return draft.konk.trim().length > 0 && draft.prod.trim().length > 0;
     case "sku":
       return draft.skuId.trim().length > 0;
+    case "sku-ids":
+      return (
+        draft.skuIds.length >= 1 &&
+        draft.skuIds.length <= SKU_SELECTION_EXCEL_MAX
+      );
     case "skugr":
       return draft.skugrId.trim().length > 0;
     case "art":
@@ -158,6 +166,16 @@ function buildParams(
         skuId: draft.skuId,
         metrics: [...draft.salesMetrics],
       });
+    case "sku-selection-stock":
+      return withRange(draft, {
+        skuIds: [...draft.skuIds],
+        metrics: [...draft.stockMetrics],
+      });
+    case "sku-selection-sales":
+      return withRange(draft, {
+        skuIds: [...draft.skuIds],
+        metrics: [...draft.salesMetrics],
+      });
     case "sku-skugr-stock":
       return withRange(draft, {
         skugrId: draft.skugrId,
@@ -219,6 +237,11 @@ function subjectFor(kind: ExcelJobKind, draft: ExcelReportOrderDraft): string {
     case "sku-one-stock":
     case "sku-one-sales":
       return draft.skuTitle.trim();
+    case "sku-selection-stock":
+    case "sku-selection-sales":
+      return draft.skuIds.length > 0
+        ? `${draft.skuIds.length} SKU`
+        : "";
     case "sku-skugr-stock":
     case "sku-skugr-sales":
       return draft.skugrTitle.trim();

@@ -34,8 +34,14 @@ describe("resolveExcelJourney", () => {
     expect(journeyAction(steps, 1)).toBe("submit");
   });
 
+  it("asks entry before competitor after konk world", () => {
+    const input = answerJourneyChoice(createEmptyJourney(), "world", "konk").input;
+    expect(ids(input)).toEqual(["world", "entry"]);
+  });
+
   it("limits all-competitors to the catalog", () => {
     let input = answerJourneyChoice(createEmptyJourney(), "world", "konk").input;
+    input = answerJourneyChoice(input, "entry", "pick-konk").input;
     input = { ...input, konk: "all" };
     const scope = resolveExcelJourney(input).find((step) => step.id === "scope");
     expect(scope?.type).toBe("choice");
@@ -46,14 +52,23 @@ describe("resolveExcelJourney", () => {
 
   it("asks for the product before the period on a competitor SKU", () => {
     let input = answerJourneyChoice(createEmptyJourney(), "world", "konk").input;
+    input = answerJourneyChoice(input, "entry", "pick-konk").input;
     input = { ...input, konk: "rozetka" };
     input = answerJourneyChoice(input, "scope", "sku").input;
     input = answerJourneyChoice(input, "measure", "sales").input;
-    expect(ids(input)).toEqual(["world", "konk", "scope", "measure", "entity"]);
+    expect(ids(input)).toEqual([
+      "world",
+      "entry",
+      "konk",
+      "scope",
+      "measure",
+      "entity",
+    ]);
 
     input = { ...input, skuId: "sku-1", skuTitle: "Дриль" };
     expect(ids(input)).toEqual([
       "world",
+      "entry",
       "konk",
       "scope",
       "measure",
@@ -72,9 +87,38 @@ describe("resolveExcelJourney", () => {
     expect(journeyAction(steps, steps.length - 1)).toBe("submit");
   });
 
+  it("builds selection leaf after multi sku picks", () => {
+    let input = answerJourneyChoice(createEmptyJourney(), "world", "konk").input;
+    input = answerJourneyChoice(input, "entry", "search-skus").input;
+    expect(ids(input)).toEqual(["world", "entry", "sku-multi"]);
+
+    input = {
+      ...input,
+      skuPicks: [{ id: "aaaaaaaaaaaaaaaaaaaaaaaa", title: "A" }],
+    };
+    expect(ids(input)).toEqual(["world", "entry", "sku-multi"]);
+    expect(journeyAction(resolveExcelJourney(input), 2)).toBe("next");
+
+    input = acknowledgeJourneyStep(input, "sku-multi");
+    input = answerJourneyChoice(input, "measure", "stock").input;
+    expect(resolveJourneyLeaf(input)).toEqual({
+      objectId: "sku-selection",
+      fileId: "stock",
+    });
+    expect(ids(input)).toContain("period");
+    expect(ids(input)).toContain("stock-metrics");
+  });
+
   it("drops the tail when an earlier answer changes", () => {
     let input = answerJourneyChoice(createEmptyJourney(), "world", "konk").input;
-    input = { ...input, konk: "rozetka", scope: "sku", measure: "stock", skuId: "sku-1" };
+    input = answerJourneyChoice(input, "entry", "pick-konk").input;
+    input = {
+      ...input,
+      konk: "rozetka",
+      scope: "sku",
+      measure: "stock",
+      skuId: "sku-1",
+    };
     input = acknowledgeJourneyStep(input, "period");
     const cleared = answerJourneyChoice(input, "scope", "catalog");
     expect(cleared.input.scope).toBe("catalog");

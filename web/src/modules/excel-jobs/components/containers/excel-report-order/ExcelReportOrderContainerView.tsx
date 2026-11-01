@@ -33,7 +33,12 @@ import {
   SkugrMultiSelectControl,
   type SkugrToggleItem,
 } from "@/modules/skugrs/components/controls/skugr-multi-select-control";
+import {
+  SkuMultiSelectControl,
+  type SkuMultiSelectPick,
+} from "@/modules/skus/components/controls/sku-multi-select-control";
 import { SKUS_EXCEL_ALL_KONKS_VALUE } from "@/modules/skus/components/dialogs/skus-excel-konk-scope";
+import type { ExcelJourneySkuPick } from "@/modules/excel-jobs/constants/excel-report-journey";
 import { format } from "date-fns";
 import type { ReactNode } from "react";
 import type { DateRange } from "react-day-picker";
@@ -80,6 +85,8 @@ export interface ExcelReportOrderContainerViewProps {
     imageUrl?: string;
   }[];
   onSkugrToggle: (item: SkugrToggleItem) => void;
+  skuPicks: readonly ExcelJourneySkuPick[];
+  onSkuPicksChange: (picks: SkuMultiSelectPick[]) => void;
   abc: string;
   onAbcChange: (value: string) => void;
   sortByAbc: boolean;
@@ -222,6 +229,16 @@ function CompletedStepValue(
       </span>
     );
   }
+  if (step.type === "sku-multi") {
+    if (props.skuPicks.length === 0) {
+      return <span className={typography.value}>Не обрано</span>;
+    }
+    return (
+      <span className={typography.value}>
+        {props.skuPicks.length} товар(ів)
+      </span>
+    );
+  }
   return (
     <span className={typography.value}>{stepValueLabel(step, props)}</span>
   );
@@ -267,6 +284,10 @@ function stepValueLabel(
       return SALES_SORT_LABELS[props.salesSort];
     case "skugr-ids":
       return "Без обмеження";
+    case "sku-multi":
+      return props.skuPicks.length > 0
+        ? `${props.skuPicks.length} товар(ів)`
+        : "";
     case "abc": {
       const letter = props.abc || "Усі";
       return props.sortByAbc ? `${letter}, сортування по ABC` : letter;
@@ -338,6 +359,20 @@ function ActiveStep(
           onSelect={props.onEntity}
           showFieldLabel={false}
           disabled={isStarting}
+        />
+      ) : null}
+      {step.type === "sku-multi" ? (
+        <SkuMultiSelectControl
+          value={props.skuPicks.map((pick) => ({
+            id: pick.id,
+            title: pick.title,
+            imageUrl: pick.imageUrl,
+            konkName: pick.konkName ?? "",
+            prodName: pick.prodName ?? "",
+          }))}
+          onChange={props.onSkuPicksChange}
+          disabled={isStarting}
+          searchInputId="excel-report-sku-multi-search"
         />
       ) : null}
       {step.type === "period" ? (

@@ -4,6 +4,7 @@ import {
   createEmptyJourney,
   resolveExcelJourney,
   type ExcelJourneyInput,
+  type ExcelJourneySkuPick,
   type ExcelJourneyWorld,
 } from "@/modules/excel-jobs/constants/excel-report-journey";
 import {
@@ -32,12 +33,14 @@ const OWNED_KEYS = [
   "world",
   "btrade",
   "warehouse",
+  "entry",
   "konk",
   "scope",
   "measure",
   "prod",
   "sku",
   "skuTitle",
+  "skus",
   "skugrId",
   "skugrTitle",
   "analog",
@@ -58,6 +61,7 @@ const OWNED_KEYS = [
 ] as const;
 
 const ACK_IDS = [
+  "sku-multi",
   "period",
   "stock-metrics",
   "sales-metrics",
@@ -76,6 +80,8 @@ const BTRADE_REPORTS = new Set([
 ]);
 
 const WAREHOUSE_REPORTS = new Set(["zones-export", "poses-export-stocks"]);
+
+const ENTRIES = new Set(["search-skus", "pick-konk"]);
 
 const SCOPES = new Set([
   "catalog",
@@ -210,12 +216,26 @@ export function writeExcelReportOrderSearch(
   setText(next, "world", journey.world);
   setText(next, "btrade", journey.btradeReport);
   setText(next, "warehouse", journey.whReport);
+  setText(next, "entry", journey.entry);
   setText(next, "konk", journey.konk);
   setText(next, "scope", journey.scope);
   setText(next, "measure", journey.measure);
   setText(next, "prod", journey.prod);
   setText(next, "sku", journey.skuId);
   setText(next, "skuTitle", journey.skuId ? journey.skuTitle : "");
+  if (journey.skuPicks.length > 0) {
+    next.set(
+      "skus",
+      JSON.stringify(
+        journey.skuPicks.map((pick) => ({
+          id: pick.id,
+          title: pick.title,
+          konkName: pick.konkName,
+          prodName: pick.prodName,
+        })),
+      ),
+    );
+  }
   setText(next, "skugrId", journey.skugrId);
   setText(next, "skugrTitle", journey.skugrId ? journey.skugrTitle : "");
   setText(next, "art", journey.artikul);
@@ -284,12 +304,14 @@ function readJourney(params: URLSearchParams): ExcelJourneyInput {
     world,
     btradeReport: readToken(params.get("btrade"), BTRADE_REPORTS),
     whReport: readToken(params.get("warehouse"), WAREHOUSE_REPORTS),
+    entry: readToken(params.get("entry"), ENTRIES) as ExcelJourneyInput["entry"],
     konk: readFreeText(params.get("konk"), 120),
     scope: readToken(params.get("scope"), SCOPES),
     measure: readToken(params.get("measure"), MEASURES),
     prod: readFreeText(params.get("prod"), 120),
     skuId: readFreeText(params.get("sku"), 120),
     skuTitle: readFreeText(params.get("skuTitle"), 300),
+    skuPicks: readSkuPicks(params.get("skus")),
     skugrId: readFreeText(params.get("skugrId"), 120),
     skugrTitle: readFreeText(params.get("skugrTitle"), 300),
     artikul: readFreeText(params.get("art"), 120),
@@ -383,6 +405,44 @@ function readGroups(value: string | null): ExcelReportOrderGroupPick[] {
       const title =
         typeof record.title === "string" ? readFreeText(record.title, 300) : "";
       picks.push({ id, title });
+    }
+    return picks;
+  } catch {
+    return [];
+  }
+}
+
+function readSkuPicks(value: string | null): ExcelJourneySkuPick[] {
+  if (!value) return [];
+  try {
+    const parsed: unknown = JSON.parse(value);
+    if (!Array.isArray(parsed)) return [];
+    const picks: ExcelJourneySkuPick[] = [];
+    for (const item of parsed) {
+      if (!item || typeof item !== "object") continue;
+      const record = item as {
+        id?: unknown;
+        title?: unknown;
+        konkName?: unknown;
+        prodName?: unknown;
+      };
+      const id = typeof record.id === "string" ? readFreeText(record.id, 120) : "";
+      if (!id) continue;
+      const title =
+        typeof record.title === "string" ? readFreeText(record.title, 300) : "";
+      picks.push({
+        id,
+        title: title || id,
+        konkName:
+          typeof record.konkName === "string"
+            ? readFreeText(record.konkName, 120)
+            : undefined,
+        prodName:
+          typeof record.prodName === "string"
+            ? readFreeText(record.prodName, 120)
+            : undefined,
+      });
+      if (picks.length >= 100) break;
     }
     return picks;
   } catch {

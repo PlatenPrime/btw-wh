@@ -17,6 +17,7 @@ function draft(
     prod: "",
     skuId: "",
     skuTitle: "",
+    skuIds: [],
     skugrId: "",
     skugrTitle: "",
     analogId: "",
@@ -38,6 +39,28 @@ function draft(
 }
 
 describe("buildExcelJobRequest", () => {
+  it("builds sku-selection-sales with skuIds", () => {
+    expect(
+      buildExcelJobRequest(
+        draft({
+          objectId: "sku-selection",
+          fileId: "sales",
+          skuIds: ["aaaaaaaaaaaaaaaaaaaaaaaa", "bbbbbbbbbbbbbbbbbbbbbbbb"],
+          salesMetrics: ["sales", "revenue"],
+        }),
+      ),
+    ).toEqual({
+      kind: "sku-selection-sales",
+      params: {
+        skuIds: ["aaaaaaaaaaaaaaaaaaaaaaaa", "bbbbbbbbbbbbbbbbbbbbbbbb"],
+        dateFrom: "2026-10-01",
+        dateTo: "2026-10-29",
+        metrics: ["sales", "revenue"],
+      },
+      title: "SKU (обрані): продажі · 2 SKU",
+    });
+  });
+
   it("sends an empty body for a directory export", () => {
     expect(
       buildExcelJobRequest(

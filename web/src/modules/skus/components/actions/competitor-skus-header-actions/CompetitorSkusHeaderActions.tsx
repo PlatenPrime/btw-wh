@@ -8,6 +8,8 @@ import { useMemo } from "react";
 interface CompetitorSkusHeaderActionsProps {
   onOpenNewSinceExcel: () => void;
   onOpenInvalidExcel: () => void;
+  onOpenSelectionStockExcel: () => void;
+  onOpenSelectionSalesExcel: () => void;
   onOpenDeleteInvalid: () => void;
   onOpenDeleteOrphans: () => void;
 }
@@ -15,14 +17,40 @@ interface CompetitorSkusHeaderActionsProps {
 export function CompetitorSkusHeaderActions({
   onOpenNewSinceExcel,
   onOpenInvalidExcel,
+  onOpenSelectionStockExcel,
+  onOpenSelectionSalesExcel,
   onOpenDeleteInvalid,
   onOpenDeleteOrphans,
 }: CompetitorSkusHeaderActionsProps) {
   const { hasRole } = useRole();
   const canPrime = hasRole(RoleType.PRIME);
+  const canAdmin = hasRole(RoleType.ADMIN);
 
   const headerActions = useMemo<HeaderAction[]>(() => {
-    const actions: HeaderAction[] = [
+    const actions: HeaderAction[] = [];
+
+    if (canAdmin) {
+      actions.push(
+        {
+          id: "comp-skus-selection-stock-excel",
+          label: "Excel залишки (обрані)",
+          icon: FileSpreadsheet,
+          iconColor: "sky",
+          variant: "default",
+          onClick: onOpenSelectionStockExcel,
+        },
+        {
+          id: "comp-skus-selection-sales-excel",
+          label: "Excel продажі (обрані)",
+          icon: FileSpreadsheet,
+          iconColor: "emerald",
+          variant: "default",
+          onClick: onOpenSelectionSalesExcel,
+        },
+      );
+    }
+
+    actions.push(
       {
         id: "comp-skus-invalid-excel",
         label: "Excel невалідні",
@@ -39,7 +67,8 @@ export function CompetitorSkusHeaderActions({
         variant: "default",
         onClick: onOpenNewSinceExcel,
       },
-    ];
+    );
+
     if (canPrime) {
       actions.push(
         {
@@ -62,9 +91,12 @@ export function CompetitorSkusHeaderActions({
     }
     return actions;
   }, [
+    canAdmin,
     canPrime,
     onOpenInvalidExcel,
     onOpenNewSinceExcel,
+    onOpenSelectionSalesExcel,
+    onOpenSelectionStockExcel,
     onOpenDeleteInvalid,
     onOpenDeleteOrphans,
   ]);

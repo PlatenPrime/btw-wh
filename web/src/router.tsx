@@ -223,10 +223,24 @@ const SkuStatistics = lazyWithRetry(() =>
     default: module.SkuStatistics,
   })),
 );
+const SkuComparisonLayout = lazyWithRetry(() =>
+  import("./modules/sku-analytics/pages/sku-comparison-layout").then(
+    (module) => ({
+      default: module.SkuComparisonLayout,
+    }),
+  ),
+);
 const SkuComparison = lazyWithRetry(() =>
   import("./modules/sku-analytics/pages/sku-comparison").then((module) => ({
     default: module.SkuComparison,
   })),
+);
+const SkuSelectionComparison = lazyWithRetry(() =>
+  import("./modules/sku-analytics/pages/sku-selection-comparison").then(
+    (module) => ({
+      default: module.SkuSelectionComparison,
+    }),
+  ),
 );
 const SkuStatisticsProd = lazyWithRetry(() =>
   import("./modules/sku-analytics/pages/sku-statistics-prod").then((module) => ({
@@ -474,10 +488,26 @@ export const router = createHashRouter([
             path: "comparison",
             element: (
               <ProtectedRoute>
-                <SkuComparison />
+                <SkuComparisonLayout />
               </ProtectedRoute>
             ),
             errorElement: <RouteErrorBoundary />,
+            children: [
+              {
+                index: true,
+                element: <Navigate to="konks" replace />,
+              },
+              {
+                path: "konks",
+                element: <SkuComparison />,
+                errorElement: <RouteErrorBoundary />,
+              },
+              {
+                path: "skus",
+                element: <SkuSelectionComparison />,
+                errorElement: <RouteErrorBoundary />,
+              },
+            ],
           },
           {
             path: "statistics/prod",

@@ -34,6 +34,17 @@ export interface SkuComparisonRow {
   share: number;
 }
 
+/** Рядок pie/таблиці порівняння обраних SKU. */
+export interface SkuSelectionComparisonRow {
+  skuId: string;
+  title: string;
+  konkName: string;
+  productId: string;
+  salesPcs: number;
+  salesUah: number;
+  share: number;
+}
+
 /** Мінімальний shape для кругової діаграми статистики/порівняння. */
 export interface SkuPieShareRow {
   title: string;

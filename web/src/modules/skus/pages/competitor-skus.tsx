@@ -5,6 +5,8 @@ import { CompetitorSkusContainerSkeleton } from "@/modules/skus/components/conta
 import { CompetitorSkusControls } from "@/modules/skus/components/controls/competitor-skus-controls/CompetitorSkusControls";
 import { DeleteInvalidSkusDialog } from "@/modules/skus/components/dialogs/delete-invalid-skus-dialog/DeleteInvalidSkusDialog";
 import { DeleteOrphanSkusDialog } from "@/modules/skus/components/dialogs/delete-orphan-skus-dialog/DeleteOrphanSkusDialog";
+import { SkuSelectionSalesExcelDialog } from "@/modules/skus/components/dialogs/sku-selection-sales-excel-dialog";
+import { SkuSelectionStockExcelDialog } from "@/modules/skus/components/dialogs/sku-selection-stock-excel-dialog";
 import { SkusInvalidExcelDialog } from "@/modules/skus/components/dialogs/skus-invalid-excel-dialog/SkusInvalidExcelDialog";
 import { SkusNewSinceExcelDialog } from "@/modules/skus/components/dialogs/skus-new-since-excel-dialog/SkusNewSinceExcelDialog";
 import { CompetitorSkusFetcher } from "@/modules/skus/components/fetchers/competitor-skus-fetcher/CompetitorSkusFetcher";
@@ -39,6 +41,8 @@ export function CompetitorSkus() {
 
   const [newSinceOpen, setNewSinceOpen] = useState(false);
   const [invalidExcelOpen, setInvalidExcelOpen] = useState(false);
+  const [selectionStockOpen, setSelectionStockOpen] = useState(false);
+  const [selectionSalesOpen, setSelectionSalesOpen] = useState(false);
   const [deleteInvalidOpen, setDeleteInvalidOpen] = useState(false);
   const [deleteOrphansOpen, setDeleteOrphansOpen] = useState(false);
 
@@ -55,6 +59,8 @@ export function CompetitorSkus() {
       <CompetitorSkusHeaderActions
         onOpenNewSinceExcel={() => setNewSinceOpen(true)}
         onOpenInvalidExcel={() => setInvalidExcelOpen(true)}
+        onOpenSelectionStockExcel={() => setSelectionStockOpen(true)}
+        onOpenSelectionSalesExcel={() => setSelectionSalesOpen(true)}
         onOpenDeleteInvalid={openDeleteDialog}
         onOpenDeleteOrphans={openDeleteOrphansDialog}
       />
@@ -97,6 +103,14 @@ export function CompetitorSkus() {
         />
       </div>
 
+      <SkuSelectionStockExcelDialog
+        open={selectionStockOpen}
+        onOpenChange={setSelectionStockOpen}
+      />
+      <SkuSelectionSalesExcelDialog
+        open={selectionSalesOpen}
+        onOpenChange={setSelectionSalesOpen}
+      />
       <SkusNewSinceExcelDialog
         konks={konks ?? []}
         filterKonkName={konkName}

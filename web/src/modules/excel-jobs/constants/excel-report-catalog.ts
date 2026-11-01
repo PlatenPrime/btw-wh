@@ -3,6 +3,7 @@ import type { ExcelJobKind } from "@/modules/excel-jobs/api/types";
 export const EXCEL_REPORT_OBJECTS = [
   "catalog",
   "sku",
+  "sku-selection",
   "skugr",
   "konk-sku",
   "art",
@@ -32,6 +33,7 @@ export type ExcelReportIdentity =
   | "konk-or-all"
   | "konk-prod"
   | "sku"
+  | "sku-ids"
   | "skugr"
   | "art"
   | "none";
@@ -108,6 +110,12 @@ export const EXCEL_REPORT_CATALOG: readonly ExcelReportObjectDef[] = [
     label: "Один SKU",
     identity: "sku",
     files: stockSalesFiles("sku-one-stock", "sku-one-sales"),
+  },
+  {
+    id: "sku-selection",
+    label: "Обрані SKU",
+    identity: "sku-ids",
+    files: stockSalesFiles("sku-selection-stock", "sku-selection-sales"),
   },
   {
     id: "skugr",
