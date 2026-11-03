@@ -11,6 +11,7 @@ const KIND_LABELS: Record<ExcelJobKind, string> = {
   "sku-konk-sales": "Konk: продажі",
   "sku-skugr-stock": "Skugr: залишки",
   "sku-skugr-sales": "Skugr: продажі",
+  "sku-skugr-skus-share": "Skugr: частки SKU (з фото)",
   "sku-one-stock": "SKU: залишки",
   "sku-one-sales": "SKU: продажі",
   "sku-selection-stock": "SKU (обрані): залишки",

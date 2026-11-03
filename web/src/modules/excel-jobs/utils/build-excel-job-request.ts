@@ -186,6 +186,11 @@ function buildParams(
         skugrId: draft.skugrId,
         metrics: [...draft.salesMetrics],
       });
+    case "sku-skugr-skus-share":
+      return withRange(draft, {
+        skugrId: draft.skugrId,
+        ...(draft.salesSort === "default" ? {} : { sortBy: draft.salesSort }),
+      });
     case "sku-konk-stock":
       return withOptionalSkugrIds(
         draft,
@@ -244,6 +249,7 @@ function subjectFor(kind: ExcelJobKind, draft: ExcelReportOrderDraft): string {
         : "";
     case "sku-skugr-stock":
     case "sku-skugr-sales":
+    case "sku-skugr-skus-share":
       return draft.skugrTitle.trim();
     case "art-stock":
     case "art-sales":
