@@ -69,7 +69,15 @@ function clearOrderFilters(
   if (ids.some((id) => ["world", "entry", "sku-multi"].includes(id))) {
     next = {
       ...next,
-      journey: { ...next.journey, skuPicks: [] },
+      journey: {
+        ...next.journey,
+        skuPicks: [],
+        skuSelectAll: false,
+        skuSelectionSearch: "",
+        skuSelectionKonkName: "",
+        skuSelectionProdName: "",
+        skuMatchedTotal: 0,
+      },
     };
   }
   if (
@@ -155,6 +163,11 @@ export function ExcelReportOrderContainer() {
       skuId: journey.skuId,
       skuTitle: journey.skuTitle,
       skuIds: journey.skuPicks.map((pick) => pick.id),
+      skuSelectAll: journey.skuSelectAll,
+      skuSelectionSearch: journey.skuSelectionSearch,
+      skuSelectionKonkName: journey.skuSelectionKonkName,
+      skuSelectionProdName: journey.skuSelectionProdName,
+      skuMatchedTotal: journey.skuMatchedTotal,
       skugrId: journey.skugrId,
       skugrTitle: journey.skugrTitle,
       analogId: journey.analogId,
@@ -271,10 +284,71 @@ export function ExcelReportOrderContainer() {
             konkName: pick.konkName,
             prodName: pick.prodName,
           })),
+          skuSelectAll: false,
           // Зміна набору скидає ack кроку, щоб користувач знову натиснув «Далі».
           acked: prev.journey.acked.filter((id) => id !== "sku-multi"),
         },
       }));
+    },
+    [setState],
+  );
+
+  const handleSkuSelectAllChange = useCallback(
+    (nextSelectAll: boolean) => {
+      setState((prev) => {
+        if (prev.journey.skuSelectAll === nextSelectAll && !nextSelectAll) {
+          return prev;
+        }
+        return {
+          ...prev,
+          journey: {
+            ...prev.journey,
+            skuSelectAll: nextSelectAll,
+            skuPicks: nextSelectAll ? [] : prev.journey.skuPicks,
+            acked: prev.journey.acked.filter((id) => id !== "sku-multi"),
+          },
+        };
+      });
+    },
+    [setState],
+  );
+
+  const handleSkuSelectionQueryChange = useCallback(
+    (query: { search: string; konkName: string; prodName: string }) => {
+      setState((prev) => {
+        if (
+          prev.journey.skuSelectionSearch === query.search &&
+          prev.journey.skuSelectionKonkName === query.konkName &&
+          prev.journey.skuSelectionProdName === query.prodName
+        ) {
+          return prev;
+        }
+        return {
+          ...prev,
+          journey: {
+            ...prev.journey,
+            skuSelectionSearch: query.search,
+            skuSelectionKonkName: query.konkName,
+            skuSelectionProdName: query.prodName,
+          },
+        };
+      });
+    },
+    [setState],
+  );
+
+  const handleSkuMatchedTotalChange = useCallback(
+    (total: number) => {
+      setState((prev) => {
+        if (prev.journey.skuMatchedTotal === total) return prev;
+        return {
+          ...prev,
+          journey: {
+            ...prev.journey,
+            skuMatchedTotal: total,
+          },
+        };
+      });
     },
     [setState],
   );
@@ -416,8 +490,7 @@ export function ExcelReportOrderContainer() {
         : activeStep?.type === "sales-metrics"
           ? salesMetrics.length > 0
           : activeStep?.type === "sku-multi"
-            ? journey.skuPicks.length >= 1 &&
-              journey.skuPicks.length <= 100
+            ? journey.skuSelectAll || journey.skuPicks.length >= 1
             : true;
 
   const prods = (prodsQuery.data?.data ?? []).filter(
@@ -445,6 +518,10 @@ export function ExcelReportOrderContainer() {
       onSkugrToggle={handleSkugrToggle}
       skuPicks={journey.skuPicks}
       onSkuPicksChange={handleSkuPicksChange}
+      skuSelectAll={journey.skuSelectAll}
+      onSkuSelectAllChange={handleSkuSelectAllChange}
+      onSkuSelectionQueryChange={handleSkuSelectionQueryChange}
+      onSkuMatchedTotalChange={handleSkuMatchedTotalChange}
       abc={abc}
       onAbcChange={handleAbc}
       sortByAbc={sortByAbc}

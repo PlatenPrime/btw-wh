@@ -9,16 +9,23 @@ import {
   SkuStockExcelMetricsControl,
   type SkuStockExcelMetric,
 } from "@/modules/excel-jobs";
+import { hasSkuSelection } from "@/modules/excel-jobs/utils/build-sku-selection-params";
 import {
   SkuMultiSelectControl,
   type SkuMultiSelectPick,
+  type SkuMultiSelectQuery,
 } from "@/modules/skus/components/controls/sku-multi-select-control";
 import { typography } from "@/lib/typography";
+import { useMemo } from "react";
 import type { DateRange } from "react-day-picker";
 
 interface SkuSelectionStockExcelDialogViewProps {
   picks: readonly SkuMultiSelectPick[];
   onPicksChange: (picks: SkuMultiSelectPick[]) => void;
+  selectAll: boolean;
+  onSelectAllChange: (selectAll: boolean) => void;
+  onSelectionQueryChange: (query: SkuMultiSelectQuery) => void;
+  onMatchedTotalChange: (total: number) => void;
   dateRange: DateRange | undefined;
   onDateRangeChange: (range: DateRange | undefined) => void;
   selectedMetrics: readonly SkuStockExcelMetric[];
@@ -31,6 +38,10 @@ interface SkuSelectionStockExcelDialogViewProps {
 export function SkuSelectionStockExcelDialogView({
   picks,
   onPicksChange,
+  selectAll,
+  onSelectAllChange,
+  onSelectionQueryChange,
+  onMatchedTotalChange,
   dateRange,
   onDateRangeChange,
   selectedMetrics,
@@ -43,7 +54,15 @@ export function SkuSelectionStockExcelDialogView({
   const to = dateRange?.to;
   const isRangeValid = from !== undefined && to !== undefined && from <= to;
   const hasMetrics = selectedMetrics.length > 0;
-  const hasSkus = picks.length > 0;
+  const hasSkus = hasSkuSelection({
+    selectAll,
+    pickCount: picks.length,
+  });
+  const maxSelectableDate = useMemo(() => {
+    const d = new Date();
+    d.setHours(23, 59, 59, 999);
+    return d;
+  }, []);
 
   return (
     <DialogContent className="sm:max-w-lg">
@@ -52,13 +71,18 @@ export function SkuSelectionStockExcelDialogView({
       </DialogHeader>
       <div className="grid gap-4">
         <p className={typography.pageDescription}>
-          Оберіть до 100 товарів (можна з різних конкурентів), метрики і період.
-          Файл готується через excel-jobs.
+          Відфільтруйте за конкурентом/виробником, знайдіть товари (можна з
+          різних конкурентів), оберіть чекбоксами або «Вибрати всі», метрики і
+          період. Файл готується через excel-jobs.
         </p>
 
         <SkuMultiSelectControl
           value={picks}
           onChange={onPicksChange}
+          selectAll={selectAll}
+          onSelectAllChange={onSelectAllChange}
+          onSelectionQueryChange={onSelectionQueryChange}
+          onMatchedTotalChange={onMatchedTotalChange}
           disabled={isDownloading}
           searchInputId="sku-selection-stock-search"
         />
@@ -74,7 +98,7 @@ export function SkuSelectionStockExcelDialogView({
             mode="range"
             selected={dateRange}
             onSelect={onDateRangeChange}
-            disabled={(date) => date > new Date() || isDownloading}
+            disabled={(date) => date > maxSelectableDate || isDownloading}
             numberOfMonths={1}
           />
         </div>

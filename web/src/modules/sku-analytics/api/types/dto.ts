@@ -121,7 +121,12 @@ export interface SkuSelectionPieResponseDto {
 }
 
 export interface PostSkuSelectionPieBody {
-  skuIds: string[];
+  /** Manual picks; omit when selectAll=true. */
+  skuIds?: string[];
+  selectAll?: boolean;
+  search?: string;
+  konkName?: string;
+  prodName?: string;
   dateFrom: string;
   dateTo: string;
 }

@@ -87,6 +87,14 @@ export interface ExcelReportOrderContainerViewProps {
   onSkugrToggle: (item: SkugrToggleItem) => void;
   skuPicks: readonly ExcelJourneySkuPick[];
   onSkuPicksChange: (picks: SkuMultiSelectPick[]) => void;
+  skuSelectAll: boolean;
+  onSkuSelectAllChange: (selectAll: boolean) => void;
+  onSkuSelectionQueryChange: (query: {
+    search: string;
+    konkName: string;
+    prodName: string;
+  }) => void;
+  onSkuMatchedTotalChange: (total: number) => void;
   abc: string;
   onAbcChange: (value: string) => void;
   sortByAbc: boolean;
@@ -230,6 +238,13 @@ function CompletedStepValue(
     );
   }
   if (step.type === "sku-multi") {
+    if (props.skuSelectAll) {
+      return (
+        <span className={typography.value}>
+          Усі · {step.matchedTotal || "…"} товар(ів)
+        </span>
+      );
+    }
     if (props.skuPicks.length === 0) {
       return <span className={typography.value}>Не обрано</span>;
     }
@@ -285,6 +300,9 @@ function stepValueLabel(
     case "skugr-ids":
       return "Без обмеження";
     case "sku-multi":
+      if (props.skuSelectAll) {
+        return `Усі · ${step.matchedTotal || "…"} товар(ів)`;
+      }
       return props.skuPicks.length > 0
         ? `${props.skuPicks.length} товар(ів)`
         : "";
@@ -371,6 +389,10 @@ function ActiveStep(
             prodName: pick.prodName ?? "",
           }))}
           onChange={props.onSkuPicksChange}
+          selectAll={props.skuSelectAll}
+          onSelectAllChange={props.onSkuSelectAllChange}
+          onSelectionQueryChange={props.onSkuSelectionQueryChange}
+          onMatchedTotalChange={props.onSkuMatchedTotalChange}
           disabled={isStarting}
           searchInputId="excel-report-sku-multi-search"
         />

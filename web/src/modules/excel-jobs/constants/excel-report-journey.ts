@@ -43,6 +43,11 @@ export interface ExcelJourneyInput {
   skuTitle: string;
   skuImageUrl: string;
   skuPicks: readonly ExcelJourneySkuPick[];
+  skuSelectAll: boolean;
+  skuSelectionSearch: string;
+  skuSelectionKonkName: string;
+  skuSelectionProdName: string;
+  skuMatchedTotal: number;
   skugrId: string;
   skugrTitle: string;
   skugrImageUrl: string;
@@ -93,6 +98,8 @@ type JourneySkuMultiStep = {
   id: "sku-multi";
   prompt: string;
   picks: readonly ExcelJourneySkuPick[];
+  selectAll: boolean;
+  matchedTotal: number;
   acked: boolean;
 };
 
@@ -158,8 +165,6 @@ const NAMED_SCOPES: readonly ExcelJourneyOption[] = [
   { id: "konk-sku", label: "Усі товари цього конкурента" },
 ];
 
-const SKU_SELECTION_MAX = 100;
-
 const CATALOG_ONLY_SCOPES: readonly ExcelJourneyOption[] = [
   { id: "catalog", label: "Каталог" },
 ];
@@ -188,6 +193,11 @@ export function createEmptyJourney(): ExcelJourneyInput {
     skuTitle: "",
     skuImageUrl: "",
     skuPicks: [],
+    skuSelectAll: false,
+    skuSelectionSearch: "",
+    skuSelectionKonkName: "",
+    skuSelectionProdName: "",
+    skuMatchedTotal: 0,
     skugrId: "",
     skugrTitle: "",
     skugrImageUrl: "",
@@ -199,6 +209,10 @@ export function createEmptyJourney(): ExcelJourneyInput {
     artImageUrl: "",
     acked: [],
   };
+}
+
+function hasSkuMultiSelection(input: ExcelJourneyInput): boolean {
+  return input.skuSelectAll || input.skuPicks.length >= 1;
 }
 
 function choice(
@@ -374,13 +388,11 @@ export function resolveExcelJourney(
       id: "sku-multi",
       prompt: "Які товари?",
       picks: input.skuPicks,
+      selectAll: input.skuSelectAll,
+      matchedTotal: input.skuMatchedTotal,
       acked: input.acked.includes("sku-multi"),
     });
-    if (
-      input.skuPicks.length < 1 ||
-      input.skuPicks.length > SKU_SELECTION_MAX ||
-      !input.acked.includes("sku-multi")
-    ) {
+    if (!hasSkuMultiSelection(input) || !input.acked.includes("sku-multi")) {
       return steps;
     }
     pushMeasure(steps, input, "Що порахувати?", STOCK_SALES);
@@ -457,11 +469,7 @@ export function isExcelJourneyStepComplete(step: ExcelJourneyStep): boolean {
     case "entity":
       return step.selectedId.trim().length > 0;
     case "sku-multi":
-      return (
-        step.acked &&
-        step.picks.length >= 1 &&
-        step.picks.length <= SKU_SELECTION_MAX
-      );
+      return step.acked && (step.selectAll || step.picks.length >= 1);
     case "period":
     case "stock-metrics":
     case "sales-metrics":
@@ -507,10 +515,7 @@ export function journeyAction(
     return "none";
   }
   if (step.type === "sku-multi") {
-    if (
-      step.picks.length < 1 ||
-      step.picks.length > SKU_SELECTION_MAX
-    ) {
+    if (!step.selectAll && step.picks.length < 1) {
       return "none";
     }
     return "next";
@@ -591,6 +596,11 @@ function withoutEntity(input: ExcelJourneyInput): ExcelJourneyInput {
     skuTitle: "",
     skuImageUrl: "",
     skuPicks: [],
+    skuSelectAll: false,
+    skuSelectionSearch: "",
+    skuSelectionKonkName: "",
+    skuSelectionProdName: "",
+    skuMatchedTotal: 0,
     skugrId: "",
     skugrTitle: "",
     skugrImageUrl: "",
@@ -636,7 +646,16 @@ function clearStep(
     case "entity":
       return withoutEntity({ ...input, acked });
     case "sku-multi":
-      return { ...input, skuPicks: [], acked };
+      return {
+        ...input,
+        skuPicks: [],
+        skuSelectAll: false,
+        skuSelectionSearch: "",
+        skuSelectionKonkName: "",
+        skuSelectionProdName: "",
+        skuMatchedTotal: 0,
+        acked,
+      };
     default:
       return { ...input, acked };
   }

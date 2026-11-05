@@ -41,6 +41,11 @@ const OWNED_KEYS = [
   "sku",
   "skuTitle",
   "skus",
+  "skuSelectAll",
+  "skuSearch",
+  "skuKonk",
+  "skuProd",
+  "skuMatched",
   "skugrId",
   "skugrTitle",
   "analog",
@@ -223,7 +228,15 @@ export function writeExcelReportOrderSearch(
   setText(next, "prod", journey.prod);
   setText(next, "sku", journey.skuId);
   setText(next, "skuTitle", journey.skuId ? journey.skuTitle : "");
-  if (journey.skuPicks.length > 0) {
+  if (journey.skuSelectAll) {
+    next.set("skuSelectAll", "1");
+    setText(next, "skuSearch", journey.skuSelectionSearch);
+    setText(next, "skuKonk", journey.skuSelectionKonkName);
+    setText(next, "skuProd", journey.skuSelectionProdName);
+    if (journey.skuMatchedTotal > 0) {
+      next.set("skuMatched", String(journey.skuMatchedTotal));
+    }
+  } else if (journey.skuPicks.length > 0) {
     next.set(
       "skus",
       JSON.stringify(
@@ -312,6 +325,11 @@ function readJourney(params: URLSearchParams): ExcelJourneyInput {
     skuId: readFreeText(params.get("sku"), 120),
     skuTitle: readFreeText(params.get("skuTitle"), 300),
     skuPicks: readSkuPicks(params.get("skus")),
+    skuSelectAll: params.get("skuSelectAll") === "1",
+    skuSelectionSearch: readFreeText(params.get("skuSearch"), 200),
+    skuSelectionKonkName: readFreeText(params.get("skuKonk"), 120),
+    skuSelectionProdName: readFreeText(params.get("skuProd"), 120),
+    skuMatchedTotal: readMatchedTotal(params.get("skuMatched")),
     skugrId: readFreeText(params.get("skugrId"), 120),
     skugrTitle: readFreeText(params.get("skugrTitle"), 300),
     artikul: readFreeText(params.get("art"), 120),
@@ -336,6 +354,13 @@ function readFreeText(value: string | null, max: number): string {
   const text = value?.trim() ?? "";
   if (!text || text.length > max || hasControlChar(text)) return "";
   return text;
+}
+
+function readMatchedTotal(value: string | null): number {
+  const text = value?.trim() ?? "";
+  if (!/^\d+$/.test(text)) return 0;
+  const n = Number(text);
+  return Number.isFinite(n) && n >= 0 ? n : 0;
 }
 
 function readAck(value: string | null): string[] {

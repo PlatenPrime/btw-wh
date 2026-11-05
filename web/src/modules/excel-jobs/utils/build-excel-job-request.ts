@@ -16,9 +16,9 @@ import type { SkuSalesExcelMetric } from "@/modules/excel-jobs/types/sku-sales-e
 import type { SkuStockExcelMetric } from "@/modules/excel-jobs/types/sku-stock-excel-metrics";
 import { getExcelJobKindLabel } from "@/modules/excel-jobs/utils/labels";
 
-export type ExcelSalesSort = "default" | "sales" | "revenue";
+import { buildSkuSelectionScopeParams } from "@/modules/excel-jobs/utils/build-sku-selection-params";
 
-export const SKU_SELECTION_EXCEL_MAX = 100;
+export type ExcelSalesSort = "default" | "sales" | "revenue";
 
 export interface ExcelReportOrderDraft {
   objectId: ExcelReportObject | "";
@@ -28,6 +28,11 @@ export interface ExcelReportOrderDraft {
   skuId: string;
   skuTitle: string;
   skuIds: readonly string[];
+  skuSelectAll: boolean;
+  skuSelectionSearch: string;
+  skuSelectionKonkName: string;
+  skuSelectionProdName: string;
+  skuMatchedTotal: number;
   skugrId: string;
   skugrTitle: string;
   analogId: string;
@@ -77,10 +82,7 @@ function identityReady(
     case "sku":
       return draft.skuId.trim().length > 0;
     case "sku-ids":
-      return (
-        draft.skuIds.length >= 1 &&
-        draft.skuIds.length <= SKU_SELECTION_EXCEL_MAX
-      );
+      return draft.skuSelectAll || draft.skuIds.length >= 1;
     case "skugr":
       return draft.skugrId.trim().length > 0;
     case "art":
@@ -168,12 +170,28 @@ function buildParams(
       });
     case "sku-selection-stock":
       return withRange(draft, {
-        skuIds: [...draft.skuIds],
+        ...buildSkuSelectionScopeParams({
+          selectAll: draft.skuSelectAll,
+          skuIds: draft.skuIds,
+          query: {
+            search: draft.skuSelectionSearch,
+            konkName: draft.skuSelectionKonkName,
+            prodName: draft.skuSelectionProdName,
+          },
+        }),
         metrics: [...draft.stockMetrics],
       });
     case "sku-selection-sales":
       return withRange(draft, {
-        skuIds: [...draft.skuIds],
+        ...buildSkuSelectionScopeParams({
+          selectAll: draft.skuSelectAll,
+          skuIds: draft.skuIds,
+          query: {
+            search: draft.skuSelectionSearch,
+            konkName: draft.skuSelectionKonkName,
+            prodName: draft.skuSelectionProdName,
+          },
+        }),
         metrics: [...draft.salesMetrics],
       });
     case "sku-skugr-stock":
@@ -244,9 +262,12 @@ function subjectFor(kind: ExcelJobKind, draft: ExcelReportOrderDraft): string {
       return draft.skuTitle.trim();
     case "sku-selection-stock":
     case "sku-selection-sales":
-      return draft.skuIds.length > 0
-        ? `${draft.skuIds.length} SKU`
-        : "";
+      if (draft.skuSelectAll) {
+        return draft.skuMatchedTotal > 0
+          ? `усі (${draft.skuMatchedTotal}) SKU`
+          : "усі SKU";
+      }
+      return draft.skuIds.length > 0 ? `${draft.skuIds.length} SKU` : "";
     case "sku-skugr-stock":
     case "sku-skugr-sales":
     case "sku-skugr-skus-share":

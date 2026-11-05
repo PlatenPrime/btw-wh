@@ -8,7 +8,7 @@
 2. Excel продаж с долями каждого SKU от суммы выбранных (шт и выручка);
 3. JSON для двух круговых диаграмм (доля по штукам / доля по выручке).
 
-Это не konk/skugr-отчёт и не single-SKU: scope = явный список `_id`.
+Scope: явный список `_id` **или** флаг `selectAll` + критерии поиска (как `GET /skus`).
 
 ## API
 
@@ -16,60 +16,56 @@ Auth: JWT, роль ≥ ADMIN.
 
 ### Excel (асинхронно)
 
-Поток как в [`excel-jobs-frontend.md`](../api/excel-jobs-frontend.md): `POST /api/excel-jobs` → poll → download по token.
+Поток: `POST /api/excel-jobs` → poll → download по token.
 
-| Действие           | kind                   | params                                                                 |
-| ------------------ | ---------------------- | ---------------------------------------------------------------------- |
-| Остатки            | `sku-selection-stock`  | `skuIds`, `dateFrom`, `dateTo`; опционально `metrics`: `stock`/`price` |
-| Продажи + частки   | `sku-selection-sales`  | `skuIds`, `dateFrom`, `dateTo`; опционально `metrics`: `sales`/`price`/`revenue` |
+| Действие         | kind                  | params |
+| ---------------- | --------------------- | ------ |
+| Остатки          | `sku-selection-stock` | scope + `dateFrom`, `dateTo`; опционально `metrics`: `stock`/`price` |
+| Продажи + частки | `sku-selection-sales` | scope + `dateFrom`, `dateTo`; опционально `metrics`: `sales`/`price`/`revenue` |
 
-- `skuIds`: массив Mongo ObjectId, **1..100**, порядок = порядок в UI.
-- Даты: `YYYY-MM-DD`, `dateFrom` ≤ `dateTo`.
-- Полный контракт jobs: [`excel-jobs.md`](../api/excel-jobs.md).
+**Scope (взаимоисключение):**
 
-В sales xlsx после итогов есть блок «Частки за період» — отдельные колонки % по продажам и выручке. Не парсить xlsx ради pie: для диаграмм есть JSON ниже.
+1. Ручной: `{ skuIds: ObjectId[] }` — **≥ 1, без верхнего лимита**, порядок = UI.
+2. Все по выборке: `{ selectAll: true, search?, konkName?, prodName? }` — те же фильтры, что у каталога SKU; пустые поля не слать. **`skuIds` не слать.**
+
+Даты: `YYYY-MM-DD`, `dateFrom` ≤ `dateTo`.
+
+В sales xlsx после итогов есть блок «Частки за період». Pie из xlsx не строить.
 
 ### Pie (синхронно)
 
-- Метод/путь: `POST /api/sku-chart-reports/selection/skus-pie`
-- Body: `{ skuIds, dateFrom, dateTo }`
-- Контракт: [`sku-chart-reports.md`](../api/sku-chart-reports.md)
-
-Ответ: `data[skuId]` с `salesPcs`, `salesUah`, `sharePcs`, `shareUah` + `all` («Всі обрані»). Две pie на клиенте:
-
-- сегменты по `sharePcs` (или `salesPcs` / `all.salesPcs`);
-- сегменты по `shareUah` (или `salesUah` / `all.salesUah`);
-- label: `title` (+ при желании `konkName` / `productId`).
+- `POST /api/sku-chart-reports/selection/skus-pie`
+- Body: тот же scope (`skuIds` XOR `selectAll`+filters) + `dateFrom`, `dateTo`
+- Ответ: `data[skuId]` с `salesPcs`, `salesUah`, `sharePcs`, `shareUah` + `all`
 
 ## UX
 
 ### Точка входа
 
-Экран/режим «сравнение выбранных» / multi-select в списке SKU: чекбоксы или корзина выбора. Кнопки: «Excel остатки», «Excel продажи», «Круговые диаграммы» (или сразу показать pie после выбора периода).
+- Диалоги Excel на экране товарів конкурентів («Excel залишки/продажі (обрані)»).
+- Wizard excel-report-order (entry `search-skus`).
+- `/sku/comparison/skus` — кругові діаграми.
 
-### Поведение
+### Multi-select
 
-1. Пока `skuIds.length === 0` — кнопки отчётов disabled; при >100 — trim/toast «макс. 100».
-2. Период обязателен (date range picker).
-3. Excel: один job за клик; UI подготовки/polling как у остальных excel-jobs (лимит 2 активных job).
-4. Pie: один POST; loading на блоке диаграмм; при повторном запросе отменять/игнорировать устаревший ответ.
-5. Отсутствующие id бэкенд молча пропускает; если ни одного не найдено — 404 / failed job.
+- Фільтри конкурент / виробник (порожнє = усі).
+- Каталог вантажиться лише після кнопки «Знайти» (локальний `run`).
+- Показувати **Знайдено N** (`pagination.total`).
+- Чекбокси без чипів з ×; ліміту кількості немає.
+- «Вибрати всі» → confirm → `selectAll=true` (у вибірку потрапляють і не завантажені сторінки).
+- На pie-сторінці окремо URL `run=1` + кнопка «Показати» для pie-фетчу.
 
-### После ответа
+### Поведінка
 
-| Источник        | Статус     | UI                                                                 |
-| --------------- | ---------- | ------------------------------------------------------------------ |
-| excel-jobs POST | 202        | Показать прогресс job                                              |
-| excel-jobs job  | failed     | Toast `error`; предложить новый POST                               |
-| excel-jobs file | ready      | Навигационное скачивание по `downloadToken`                        |
-| pie POST        | 200        | Две pie + опционально таблица долей из `data`/`all`                |
-| pie POST        | 400        | Toast валидации (даты / id / лимит)                                |
-| pie POST        | 404        | Toast: выбранные SKU не найдены                                    |
-| любой           | 401/403    | Стандартная сессия/права                                           |
+1. Submit disabled, доки немає `(selectAll || skuIds.length ≥ 1)` і валідного періоду (і metrics для Excel).
+2. Excel: один job за клік; polling як у інших excel-jobs.
+3. Pie: POST після `run=1`; loading на блоці діаграм.
+4. Відсутні id / 0 matches після resolve → 404 / failed job.
 
-### Не делать
+### Не робити
 
-- Не ходить на старые GET `/api/sku-excel-reports/...` — для selection их нет; для прочих kinds они отдают 410.
-- Не строить pie из xlsx на клиенте.
-- Не смешивать этот scope с `sku-konk-*` / `sku-skugr-*`: другой вход (`skuIds`), другой смысл «кучи» для долей.
-- Не слать >100 id; не слать невалидные ObjectId (сразу 400).
+- Не ходити на старі GET `/api/sku-excel-reports/...` для selection.
+- Не будувати pie з xlsx.
+- Не змішувати з `sku-konk-*` / `sku-skugr-*`.
+- Не слати одночасно `selectAll` і `skuIds`.
+- Не обрізати вибірку штучним max (100 знято).

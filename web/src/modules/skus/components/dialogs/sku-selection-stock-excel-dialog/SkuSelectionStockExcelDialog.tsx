@@ -4,7 +4,15 @@ import {
   useStartExcelJob,
   type SkuStockExcelMetric,
 } from "@/modules/excel-jobs";
-import type { SkuMultiSelectPick } from "@/modules/skus/components/controls/sku-multi-select-control";
+import {
+  buildSkuSelectionJobParams,
+  hasSkuSelection,
+  skuSelectionTitleCount,
+} from "@/modules/excel-jobs/utils/build-sku-selection-params";
+import type {
+  SkuMultiSelectPick,
+  SkuMultiSelectQuery,
+} from "@/modules/skus/components/controls/sku-multi-select-control";
 import { format } from "date-fns";
 import type { DateRange } from "react-day-picker";
 import { useCallback, useEffect, useState } from "react";
@@ -17,6 +25,12 @@ function getDefaultDateRange(): DateRange {
   return { from, to };
 }
 
+const EMPTY_QUERY: SkuMultiSelectQuery = {
+  search: "",
+  konkName: "",
+  prodName: "",
+};
+
 interface SkuSelectionStockExcelDialogProps {
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
@@ -28,6 +42,10 @@ export function SkuSelectionStockExcelDialog({
 }: SkuSelectionStockExcelDialogProps) {
   const [internalOpen, setInternalOpen] = useState(false);
   const [picks, setPicks] = useState<SkuMultiSelectPick[]>([]);
+  const [selectAll, setSelectAll] = useState(false);
+  const [selectionQuery, setSelectionQuery] =
+    useState<SkuMultiSelectQuery>(EMPTY_QUERY);
+  const [matchedTotal, setMatchedTotal] = useState(0);
   const [dateRange, setDateRange] = useState<DateRange | undefined>(
     getDefaultDateRange,
   );
@@ -50,39 +68,57 @@ export function SkuSelectionStockExcelDialog({
       !to ||
       from > to ||
       selectedMetrics.length === 0 ||
-      picks.length === 0
+      !hasSkuSelection({ selectAll, pickCount: picks.length })
     ) {
       return;
     }
     const dateFrom = format(from, "yyyy-MM-dd");
     const dateTo = format(to, "yyyy-MM-dd");
+    const countLabel = skuSelectionTitleCount({
+      selectAll,
+      matchedTotal,
+      pickCount: picks.length,
+    });
     try {
       const job = await startJob({
         kind: "sku-selection-stock",
-        params: {
+        params: buildSkuSelectionJobParams({
+          selectAll,
           skuIds: picks.map((pick) => pick.id),
+          query: selectionQuery,
           dateFrom,
           dateTo,
           metrics: selectedMetrics,
-        },
-        title: `SKU (обрані) залишки · ${picks.length}`,
+        }),
+        title: `SKU (обрані) залишки · ${countLabel}`,
       });
       if (job) handleOpenChange(false);
     } catch {
       // toast in provider
     }
-  }, [dateRange, selectedMetrics, picks, startJob, handleOpenChange]);
+  }, [
+    dateRange,
+    selectedMetrics,
+    picks,
+    selectAll,
+    selectionQuery,
+    matchedTotal,
+    startJob,
+    handleOpenChange,
+  ]);
 
   const handleCancel = useCallback(() => {
     handleOpenChange(false);
   }, [handleOpenChange]);
 
   useEffect(() => {
-    if (open) {
-      setPicks([]);
-      setDateRange(getDefaultDateRange());
-      setSelectedMetrics([...DEFAULT_SKU_STOCK_EXCEL_METRICS]);
-    }
+    if (!open) return;
+    setPicks([]);
+    setSelectAll(false);
+    setSelectionQuery(EMPTY_QUERY);
+    setMatchedTotal(0);
+    setDateRange(getDefaultDateRange());
+    setSelectedMetrics([...DEFAULT_SKU_STOCK_EXCEL_METRICS]);
   }, [open]);
 
   return (
@@ -90,6 +126,10 @@ export function SkuSelectionStockExcelDialog({
       <SkuSelectionStockExcelDialogView
         picks={picks}
         onPicksChange={setPicks}
+        selectAll={selectAll}
+        onSelectAllChange={setSelectAll}
+        onSelectionQueryChange={setSelectionQuery}
+        onMatchedTotalChange={setMatchedTotal}
         dateRange={dateRange}
         onDateRangeChange={setDateRange}
         selectedMetrics={selectedMetrics}

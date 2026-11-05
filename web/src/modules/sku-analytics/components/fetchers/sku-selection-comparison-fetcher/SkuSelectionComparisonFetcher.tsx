@@ -6,23 +6,35 @@ import {
   SkuSelectionComparisonContainer,
   SkuSelectionComparisonContainerSkeleton,
 } from "@/modules/sku-analytics/components/containers/sku-selection-comparison-container";
+import type { SkuMultiSelectQuery } from "@/modules/skus/components/controls/sku-multi-select-control";
 import { isAxiosError } from "axios";
 
 interface SkuSelectionComparisonFetcherProps {
   skuIds: string[];
+  selectAll: boolean;
+  selectionQuery: SkuMultiSelectQuery;
   dateFrom: string;
   dateTo: string;
+  enabled?: boolean;
 }
 
 export function SkuSelectionComparisonFetcher({
   skuIds,
+  selectAll,
+  selectionQuery,
   dateFrom,
   dateTo,
+  enabled = true,
 }: SkuSelectionComparisonFetcherProps) {
   const pieQuery = useSkuSelectionPieQuery({
     skuIds,
+    selectAll,
+    search: selectionQuery.search,
+    konkName: selectionQuery.konkName,
+    prodName: selectionQuery.prodName,
     dateFrom,
     dateTo,
+    enabled,
   });
 
   if (pieQuery.isLoading && !pieQuery.data) {
