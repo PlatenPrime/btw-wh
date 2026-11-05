@@ -111,7 +111,8 @@ type JourneyAckStep = {
     | "sales-sort"
     | "skugr-ids"
     | "abc"
-    | "sklad";
+    | "sklad"
+    | "include-images";
   id: string;
   prompt: string;
   mode?: "range" | "since";
@@ -306,7 +307,11 @@ function pushStockSalesTail(
   steps: ExcelJourneyStep[],
   input: ExcelJourneyInput,
   measure: "stock" | "sales",
-  extras?: { skugrIds?: boolean; salesSort?: boolean },
+  extras?: {
+    skugrIds?: boolean;
+    salesSort?: boolean;
+    includeImages?: boolean;
+  },
 ) {
   if (extras?.skugrIds) {
     steps.push(
@@ -321,12 +326,22 @@ function pushStockSalesTail(
   pushPeriod(steps, input, "range");
   if (measure === "stock") {
     steps.push(ack("stock-metrics", "stock-metrics", "Які метрики?", input.acked));
-    return;
+  } else {
+    steps.push(ack("sales-metrics", "sales-metrics", "Які метрики?", input.acked));
+    if (extras?.salesSort) {
+      steps.push(
+        ack("sales-sort", "sales-sort", "Як сортувати товари?", input.acked),
+      );
+    }
   }
-  steps.push(ack("sales-metrics", "sales-metrics", "Які метрики?", input.acked));
-  if (extras?.salesSort) {
+  if (extras?.includeImages) {
     steps.push(
-      ack("sales-sort", "sales-sort", "Як сортувати товари?", input.acked),
+      ack(
+        "include-images",
+        "include-images",
+        "Додати зображення?",
+        input.acked,
+      ),
     );
   }
 }
@@ -397,7 +412,7 @@ export function resolveExcelJourney(
     }
     pushMeasure(steps, input, "Що порахувати?", STOCK_SALES);
     if (input.measure !== "stock" && input.measure !== "sales") return steps;
-    pushStockSalesTail(steps, input, input.measure);
+    pushStockSalesTail(steps, input, input.measure, { includeImages: true });
     return steps;
   }
 
@@ -437,7 +452,9 @@ export function resolveExcelJourney(
     );
     const selectedId = input.scope === "sku" ? input.skuId : input.skugrId;
     if (!selectedId) return steps;
-    pushStockSalesTail(steps, input, input.measure);
+    pushStockSalesTail(steps, input, input.measure, {
+      includeImages: input.scope === "skugr",
+    });
     return steps;
   }
 
@@ -454,6 +471,7 @@ export function resolveExcelJourney(
     pushStockSalesTail(steps, input, input.measure, {
       skugrIds: true,
       salesSort: input.measure === "sales",
+      includeImages: true,
     });
   }
 
@@ -477,6 +495,7 @@ export function isExcelJourneyStepComplete(step: ExcelJourneyStep): boolean {
     case "skugr-ids":
     case "abc":
     case "sklad":
+    case "include-images":
       return step.acked;
     case "ready":
       return false;

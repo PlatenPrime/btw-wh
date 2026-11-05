@@ -13,6 +13,8 @@ const buttonVariants = cva(
           "bg-primary text-primary-foreground tracking-tight shadow-[0_1px_0_0_theme(colors.primary.foreground/0.08)_inset,0_2px_4px_-1px_var(--shadow-color)/0.12,0_4px_8px_-2px_var(--shadow-color)/0.08] hover:bg-primary/95 hover:shadow-[0_1px_0_0_theme(colors.primary.foreground/0.06)_inset,0_4px_12px_-2px_var(--shadow-color)/0.15,0_8px_16px_-4px_var(--shadow-color)/0.1] active:shadow-[0_1px_2px_var(--shadow-color)/0.08]",
         destructive:
           "bg-destructive text-destructive-foreground shadow-[0_2px_4px_-1px_var(--shadow-color)/0.12,0_4px_8px_-2px_var(--shadow-color)/0.08] hover:bg-destructive/90 hover:shadow-md focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/80",
+        "destructive-soft":
+          "bg-destructive/15 text-destructive border border-destructive/30 shadow-xs hover:bg-destructive/25 hover:border-destructive/45 focus-visible:ring-destructive/30 dark:bg-destructive/20 dark:hover:bg-destructive/30",
         "super-destructive":
           "bg-destructive text-destructive-foreground shadow-elevation-2 hover:bg-destructive/90 hover:shadow-elevation-3 focus-visible:ring-destructive/50 focus-visible:ring-[4px] border-2 border-destructive/80 dark:border-destructive/60",
         outline:

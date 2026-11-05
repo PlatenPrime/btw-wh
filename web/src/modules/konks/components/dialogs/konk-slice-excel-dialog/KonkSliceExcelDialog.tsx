@@ -41,6 +41,7 @@ export function KonkSliceExcelDialog({
   const [selectedMetrics, setSelectedMetrics] = useState<SkuStockExcelMetric[]>(
     () => [...DEFAULT_SKU_STOCK_EXCEL_METRICS],
   );
+  const [includeImages, setIncludeImages] = useState(false);
 
   const isControlled = controlledOpen !== undefined;
   const open = isControlled ? controlledOpen : internalOpen;
@@ -84,6 +85,7 @@ export function KonkSliceExcelDialog({
           dateTo,
           metrics: selectedMetrics,
           ...(selectedSkugrIds.length ? { skugrIds: selectedSkugrIds } : {}),
+          ...(includeImages ? { includeImages: true } : {}),
         },
         title: `Konk залишки · ${resolvedKonkName}`,
       });
@@ -96,6 +98,7 @@ export function KonkSliceExcelDialog({
     selectedProd,
     selectedSkugrIds,
     selectedMetrics,
+    includeImages,
     startJob,
     resolvedKonkName,
     handleOpenChange,
@@ -112,6 +115,7 @@ export function KonkSliceExcelDialog({
       setSelectedKonkName("");
       setSelectedSkugrIds([]);
       setSelectedMetrics([...DEFAULT_SKU_STOCK_EXCEL_METRICS]);
+      setIncludeImages(false);
     }
   }, [open]);
 
@@ -155,6 +159,8 @@ export function KonkSliceExcelDialog({
         onSelectedSkugrIdsChange={setSelectedSkugrIds}
         selectedMetrics={selectedMetrics}
         onSelectedMetricsChange={setSelectedMetrics}
+        includeImages={includeImages}
+        onIncludeImagesChange={setIncludeImages}
         isDownloading={isStarting}
         onDownload={handleDownload}
         onCancel={handleCancel}

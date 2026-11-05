@@ -19,6 +19,7 @@ export {
   normalizeSkuStockExcelMetrics,
   SKU_STOCK_EXCEL_METRIC_LABELS,
 } from "./constants/sku-stock-excel-metrics";
+export { IncludeImagesControl } from "./components/controls/include-images-control";
 export { SkuSalesExcelMetricsControl } from "./components/controls/sku-sales-excel-metrics-control";
 export { SkuStockExcelMetricsControl } from "./components/controls/sku-stock-excel-metrics-control";
 export type { SkuSalesExcelMetric } from "./types/sku-sales-excel-metrics";

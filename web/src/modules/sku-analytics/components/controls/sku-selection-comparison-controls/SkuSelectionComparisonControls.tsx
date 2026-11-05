@@ -11,6 +11,7 @@ interface SkuSelectionComparisonControlsProps {
   onSkuPicksChange: (picks: SkuMultiSelectPick[]) => void;
   selectAll: boolean;
   onSelectAllChange: (selectAll: boolean) => void;
+  selectionQuery: SkuMultiSelectQuery;
   onSelectionQueryChange: (query: SkuMultiSelectQuery) => void;
   onMatchedTotalChange: (total: number) => void;
   onReset: () => void;
@@ -24,6 +25,7 @@ export function SkuSelectionComparisonControls({
   onSkuPicksChange,
   selectAll,
   onSelectAllChange,
+  selectionQuery,
   onSelectionQueryChange,
   onMatchedTotalChange,
   onReset,
@@ -34,13 +36,17 @@ export function SkuSelectionComparisonControls({
   return (
     <SurfaceSection className="grid gap-3">
       <SkuMultiSelectControl
+        layout="page"
         value={skuPicks}
         onChange={onSkuPicksChange}
         selectAll={selectAll}
         onSelectAllChange={onSelectAllChange}
+        initialQuery={selectionQuery}
         onSelectionQueryChange={onSelectionQueryChange}
         onMatchedTotalChange={onMatchedTotalChange}
         onReset={onReset}
+        enabled={Boolean(dateFrom && dateTo)}
+        disabledHint="Оберіть період, щоб показати товари."
         searchInputId="sku-selection-comparison-search"
         leadingSlot={
           <ChartDateRangeToolbar

@@ -7,6 +7,7 @@ export interface BuildSkuSelectionParamsInput {
   dateFrom: string;
   dateTo: string;
   metrics: readonly string[];
+  includeImages?: boolean;
 }
 
 /** Params for sku-selection-stock / sku-selection-sales (and pie body without metrics). */
@@ -31,15 +32,26 @@ export function buildSkuSelectionScopeParams({
   return { skuIds: [...skuIds] };
 }
 
+export function withIncludeImages(
+  params: Record<string, unknown>,
+  includeImages: boolean,
+): Record<string, unknown> {
+  if (!includeImages) return params;
+  return { ...params, includeImages: true };
+}
+
 export function buildSkuSelectionJobParams(
   input: BuildSkuSelectionParamsInput,
 ): Record<string, unknown> {
-  return {
-    ...buildSkuSelectionScopeParams(input),
-    dateFrom: input.dateFrom,
-    dateTo: input.dateTo,
-    metrics: [...input.metrics],
-  };
+  return withIncludeImages(
+    {
+      ...buildSkuSelectionScopeParams(input),
+      dateFrom: input.dateFrom,
+      dateTo: input.dateTo,
+      metrics: [...input.metrics],
+    },
+    Boolean(input.includeImages),
+  );
 }
 
 export function skuSelectionTitleCount(opts: {

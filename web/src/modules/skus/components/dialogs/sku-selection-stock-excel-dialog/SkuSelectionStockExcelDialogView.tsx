@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/dialog";
 import { Calendar } from "@/components/ui/calendar";
 import {
+  IncludeImagesControl,
   SkuStockExcelMetricsControl,
   type SkuStockExcelMetric,
 } from "@/modules/excel-jobs";
@@ -30,6 +31,8 @@ interface SkuSelectionStockExcelDialogViewProps {
   onDateRangeChange: (range: DateRange | undefined) => void;
   selectedMetrics: readonly SkuStockExcelMetric[];
   onSelectedMetricsChange: (metrics: SkuStockExcelMetric[]) => void;
+  includeImages: boolean;
+  onIncludeImagesChange: (value: boolean) => void;
   isDownloading: boolean;
   onDownload: () => void;
   onCancel: () => void;
@@ -46,6 +49,8 @@ export function SkuSelectionStockExcelDialogView({
   onDateRangeChange,
   selectedMetrics,
   onSelectedMetricsChange,
+  includeImages,
+  onIncludeImagesChange,
   isDownloading,
   onDownload,
   onCancel,
@@ -77,6 +82,7 @@ export function SkuSelectionStockExcelDialogView({
         </p>
 
         <SkuMultiSelectControl
+          layout="dialog"
           value={picks}
           onChange={onPicksChange}
           selectAll={selectAll}
@@ -87,11 +93,20 @@ export function SkuSelectionStockExcelDialogView({
           searchInputId="sku-selection-stock-search"
         />
 
-        <SkuStockExcelMetricsControl
-          value={selectedMetrics}
-          onChange={onSelectedMetricsChange}
-          disabled={isDownloading}
-        />
+        <div className="grid grid-cols-2 items-start gap-4">
+          <SkuStockExcelMetricsControl
+            value={selectedMetrics}
+            onChange={onSelectedMetricsChange}
+            disabled={isDownloading}
+          />
+          <IncludeImagesControl
+            checked={includeImages}
+            onCheckedChange={onIncludeImagesChange}
+            disabled={isDownloading}
+            id="sku-selection-stock-include-images"
+            label="Додати фото"
+          />
+        </div>
 
         <div className="flex justify-center">
           <Calendar

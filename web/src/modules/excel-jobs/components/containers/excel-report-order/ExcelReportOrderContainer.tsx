@@ -115,6 +115,21 @@ function clearOrderFilters(
   if (ids.some((id) => ["world", "wh-report", "sklad"].includes(id))) {
     next = { ...next, sklad: null };
   }
+  if (
+    ids.some((id) =>
+      [
+        "world",
+        "entry",
+        "konk",
+        "scope",
+        "measure",
+        "sku-multi",
+        "include-images",
+      ].includes(id),
+    )
+  ) {
+    next = { ...next, includeImages: false };
+  }
   return next;
 }
 
@@ -130,6 +145,7 @@ export function ExcelReportOrderContainer() {
     abc,
     sortByAbc,
     sklad,
+    includeImages,
   } = state;
   const skugrIds = useMemo(
     () => skugrPicks.map((pick) => pick.id),
@@ -184,9 +200,11 @@ export function ExcelReportOrderContainer() {
       abc,
       sortByAbc,
       sklad,
+      includeImages,
     };
   }, [
     abc,
+    includeImages,
     journey,
     salesMetrics,
     salesSort,
@@ -455,6 +473,13 @@ export function ExcelReportOrderContainer() {
     [setState],
   );
 
+  const handleIncludeImages = useCallback(
+    (value: boolean) => {
+      setState((prev) => ({ ...prev, includeImages: value }));
+    },
+    [setState],
+  );
+
   const handleSubmit = useCallback(async () => {
     const request = buildExcelJobRequest(draft);
     if (!request) return;
@@ -520,6 +545,9 @@ export function ExcelReportOrderContainer() {
       onSkuPicksChange={handleSkuPicksChange}
       skuSelectAll={journey.skuSelectAll}
       onSkuSelectAllChange={handleSkuSelectAllChange}
+      skuSelectionSearch={journey.skuSelectionSearch}
+      skuSelectionKonkName={journey.skuSelectionKonkName}
+      skuSelectionProdName={journey.skuSelectionProdName}
       onSkuSelectionQueryChange={handleSkuSelectionQueryChange}
       onSkuMatchedTotalChange={handleSkuMatchedTotalChange}
       abc={abc}
@@ -528,6 +556,8 @@ export function ExcelReportOrderContainer() {
       onSortByAbcChange={handleSortByAbc}
       sklad={sklad}
       onSkladChange={handleSklad}
+      includeImages={includeImages}
+      onIncludeImagesChange={handleIncludeImages}
       konkName={journey.konk}
       prodName={journey.prod}
       action={action}

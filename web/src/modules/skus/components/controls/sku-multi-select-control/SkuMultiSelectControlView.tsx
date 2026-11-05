@@ -24,11 +24,17 @@ import { iconSize, typography } from "@/lib/typography";
 import type { KonkDto } from "@/modules/konks/api/types";
 import type { ProdDto } from "@/modules/prods/api/types";
 import type { SkuDto } from "@/modules/skus/api/types";
+import { ListChecks, ListX, RotateCcw, Search } from "lucide-react";
 import type { ReactNode } from "react";
 import { useRef } from "react";
 import { SkuMultiSelectControlSkeleton } from "./SkuMultiSelectControlSkeleton";
 
 const SKU_ROW_PLACEHOLDER = "https://placehold.co/96x96?text=SKU&font=roboto";
+
+const SELECT_TRIGGER_CLASS =
+  "h-8 w-full min-w-0 overflow-hidden text-sm";
+
+export type SkuMultiSelectLayout = "dialog" | "page";
 
 export interface SkuMultiSelectPick {
   id: string;
@@ -45,6 +51,7 @@ export interface SkuMultiSelectQuery {
 }
 
 interface SkuMultiSelectControlViewProps {
+  layout?: SkuMultiSelectLayout;
   leadingSlot?: ReactNode;
   search: string;
   onSearchChange: (value: string) => void;
@@ -55,8 +62,8 @@ interface SkuMultiSelectControlViewProps {
   showKonkFilter: boolean;
   konks: readonly KonkDto[];
   prods: readonly ProdDto[];
-  hasRun: boolean;
-  onRun: () => void;
+  catalogActive: boolean;
+  disabledHint?: string;
   canReset: boolean;
   onReset: () => void;
   skus: SkuDto[];
@@ -78,6 +85,7 @@ interface SkuMultiSelectControlViewProps {
 }
 
 export function SkuMultiSelectControlView({
+  layout = "page",
   leadingSlot,
   search,
   onSearchChange,
@@ -88,8 +96,8 @@ export function SkuMultiSelectControlView({
   showKonkFilter,
   konks,
   prods,
-  hasRun,
-  onRun,
+  catalogActive,
+  disabledHint,
   canReset,
   onReset,
   skus,
@@ -118,156 +126,198 @@ export function SkuMultiSelectControlView({
   });
 
   const showInitialSkeleton = isLoadingFirstPage && skus.length === 0;
-  const canSelectAll = hasRun && matchedTotal > 0 && !disabled;
+  const canSelectAll = catalogActive && matchedTotal > 0 && !disabled;
+
+  const konkSelect = showKonkFilter ? (
+    <Select
+      value={filterKonkName || "all"}
+      onValueChange={(v) => onFilterKonkNameChange(v === "all" ? "" : v)}
+      disabled={disabled}
+    >
+      <SelectTrigger
+        id={`${searchInputId}-konk`}
+        aria-label="Конкурент"
+        className={SELECT_TRIGGER_CLASS}
+      >
+        <SelectValue placeholder="Усі конкуренти" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="all">Усі конкуренти</SelectItem>
+        {konks.map((k) => (
+          <SelectItem key={k._id} value={k.name}>
+            <EntityLabel
+              imageUrl={k.imageUrl}
+              title={k.title}
+              fallbackLabel={k.name}
+              imageSize="xs"
+            />
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  ) : null;
+
+  const prodSelect = (
+    <Select
+      value={filterProdName || "all"}
+      onValueChange={(v) => onFilterProdNameChange(v === "all" ? "" : v)}
+      disabled={disabled}
+    >
+      <SelectTrigger
+        id={`${searchInputId}-prod`}
+        aria-label="Виробник"
+        className={SELECT_TRIGGER_CLASS}
+      >
+        <SelectValue placeholder="Усі виробники" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="all">Усі виробники</SelectItem>
+        {prods.map((p) => (
+          <SelectItem key={p._id} value={p.name}>
+            <EntityLabel
+              imageUrl={p.imageUrl}
+              title={p.title}
+              fallbackLabel={p.name}
+              imageSize="xs"
+            />
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  );
+
+  const searchInput = (
+    <div className="relative min-w-0 w-full">
+      <Search
+        className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2"
+        aria-hidden
+      />
+      <Input
+        id={searchInputId}
+        value={search}
+        onChange={(e) => onSearchChange(e.target.value)}
+        placeholder="За назвою, ID або артикулом..."
+        disabled={disabled}
+        className="h-8 w-full min-w-0 pl-9 text-sm"
+      />
+    </div>
+  );
+
+  const resetButton = (
+    <Button
+      type="button"
+      variant="destructive-soft"
+      size="sm"
+      className="h-8 w-auto shrink-0"
+      onClick={onReset}
+      disabled={disabled || !canReset}
+    >
+      <RotateCcw />
+      Скинути фільтри
+    </Button>
+  );
+
+  const foundBadge = (
+    <Badge
+      variant={catalogActive ? "secondary" : "outline"}
+      className="px-2.5 py-0.5 text-sm tabular-nums"
+    >
+      {catalogActive ? `Знайдено ${matchedTotal}` : "Знайдено —"}
+    </Badge>
+  );
+
+  const selectedBadge = (
+    <Badge
+      variant={selectAll || selectedCount > 0 ? "default" : "outline"}
+      className="px-2.5 py-0.5 text-sm tabular-nums"
+    >
+      {selectAll
+        ? `Обрано всі · ${matchedTotal}`
+        : `Обрано ${selectedCount}`}
+    </Badge>
+  );
+
+  const selectAllButton = selectAll ? (
+    <Button
+      type="button"
+      variant="default"
+      size="sm"
+      className="h-8 w-auto shrink-0"
+      onClick={onClearSelectAll}
+      disabled={disabled}
+    >
+      <ListX />
+      Скасувати «всі»
+    </Button>
+  ) : (
+    <Button
+      type="button"
+      variant="default"
+      size="sm"
+      className="h-8 w-auto shrink-0"
+      onClick={onRequestSelectAll}
+      disabled={!canSelectAll}
+    >
+      <ListChecks />
+      Вибрати всі
+    </Button>
+  );
+
+  const resultsResetRow = (
+    <div className="flex items-center justify-between gap-2">
+      <div className="flex min-w-0 items-center">{foundBadge}</div>
+      {resetButton}
+    </div>
+  );
+
+  const selectedRow = (
+    <div className="flex items-center justify-between gap-2">
+      <div className="flex min-w-0 items-center">{selectedBadge}</div>
+      {selectAllButton}
+    </div>
+  );
+
+  const pageSelectClass = "w-full sm:w-[200px] sm:max-w-[240px] shrink-0";
+
+  const toolbar =
+    layout === "dialog" ? (
+      <div className="grid min-w-0 gap-2">
+        {leadingSlot}
+        {konkSelect}
+        {prodSelect}
+        {searchInput}
+        {resultsResetRow}
+        {selectedRow}
+      </div>
+    ) : (
+      <div className="grid min-w-0 gap-2">
+        <div className="flex min-w-0 flex-wrap items-center gap-2">
+          {leadingSlot ? (
+            <div className="w-full shrink-0 sm:w-auto">{leadingSlot}</div>
+          ) : null}
+          {showKonkFilter ? (
+            <div className={pageSelectClass}>{konkSelect}</div>
+          ) : null}
+          <div className={pageSelectClass}>{prodSelect}</div>
+        </div>
+        {searchInput}
+        {resultsResetRow}
+        {selectedRow}
+      </div>
+    );
 
   return (
     <div className="grid gap-3">
-      <div className="flex min-w-0 flex-wrap items-end gap-3">
-        {leadingSlot}
+      {toolbar}
 
-        {showKonkFilter ? (
-          <Select
-            value={filterKonkName || "all"}
-            onValueChange={(v) => onFilterKonkNameChange(v === "all" ? "" : v)}
-            disabled={disabled}
-          >
-            <SelectTrigger
-              id={`${searchInputId}-konk`}
-              aria-label="Конкурент"
-              className="h-9 min-w-[160px] text-sm sm:min-w-[180px]"
-            >
-              <SelectValue placeholder="Усі конкуренти" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">Усі конкуренти</SelectItem>
-              {konks.map((k) => (
-                <SelectItem key={k._id} value={k.name}>
-                  <EntityLabel
-                    imageUrl={k.imageUrl}
-                    title={k.title}
-                    fallbackLabel={k.name}
-                    imageSize="xs"
-                  />
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        ) : null}
-
-        <Select
-          value={filterProdName || "all"}
-          onValueChange={(v) => onFilterProdNameChange(v === "all" ? "" : v)}
-          disabled={disabled}
-        >
-          <SelectTrigger
-            id={`${searchInputId}-prod`}
-            aria-label="Виробник"
-            className="h-9 min-w-[160px] text-sm sm:min-w-[180px]"
-          >
-            <SelectValue placeholder="Усі виробники" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">Усі виробники</SelectItem>
-            {prods.map((p) => (
-              <SelectItem key={p._id} value={p.name}>
-                <EntityLabel
-                  imageUrl={p.imageUrl}
-                  title={p.title}
-                  fallbackLabel={p.name}
-                  imageSize="xs"
-                />
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-
-        <Input
-          id={searchInputId}
-          value={search}
-          onChange={(e) => onSearchChange(e.target.value)}
-          placeholder="За назвою, ID або артикулом..."
-          disabled={disabled}
-          className="h-9 min-w-[200px] flex-1 text-sm"
-          onKeyDown={(e) => {
-            if (e.key === "Enter" && !disabled) {
-              e.preventDefault();
-              onRun();
-            }
-          }}
-        />
-
-        <Button
-          type="button"
-          variant="info"
-          className="h-9"
-          onClick={onRun}
-          disabled={disabled}
-        >
-          Знайти
-        </Button>
-        <Button
-          type="button"
-          variant="outline"
-          className="h-9"
-          onClick={onReset}
-          disabled={disabled || !canReset}
-        >
-          Скинути фільтри
-        </Button>
-      </div>
-
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <div className="flex flex-wrap items-center gap-2">
-          <Badge
-            variant={selectAll || selectedCount > 0 ? "default" : "outline"}
-            className="px-3 py-1 text-sm tabular-nums"
-          >
-            {selectAll
-              ? `Обрано всі · ${matchedTotal}`
-              : `Обрано ${selectedCount}`}
-          </Badge>
-          {hasRun ? (
-            <Badge
-              variant="secondary"
-              className="px-3 py-1 text-sm tabular-nums"
-            >
-              Знайдено {matchedTotal}
-            </Badge>
-          ) : null}
-        </div>
-        {selectAll ? (
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            className="h-9"
-            onClick={onClearSelectAll}
-            disabled={disabled}
-          >
-            Скасувати «всі»
-          </Button>
-        ) : (
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            className="h-9"
-            onClick={onRequestSelectAll}
-            disabled={!canSelectAll}
-          >
-            Вибрати всі
-          </Button>
-        )}
-      </div>
-
-      {!hasRun ? (
+      {!catalogActive ? (
         <p
           className={cn(
             "rounded-md border border-dashed p-4 text-center",
             typography.pageDescription,
           )}
         >
-          Задайте фільтри та натисніть «Знайти», щоб показати товари.
+          {disabledHint ?? "Оберіть період, щоб показати товари."}
         </p>
       ) : showInitialSkeleton ? (
         <SkuMultiSelectControlSkeleton />

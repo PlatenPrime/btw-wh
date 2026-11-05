@@ -46,6 +46,7 @@ export function KonkSalesExcelDialog({
   const [selectedMetrics, setSelectedMetrics] = useState<SkuSalesExcelMetric[]>(
     () => [...DEFAULT_SKU_SALES_EXCEL_METRICS],
   );
+  const [includeImages, setIncludeImages] = useState(false);
 
   const isControlled = controlledOpen !== undefined;
   const open = isControlled ? controlledOpen : internalOpen;
@@ -96,6 +97,7 @@ export function KonkSalesExcelDialog({
           metrics: selectedMetrics,
           ...(sortBy ? { sortBy } : {}),
           ...(selectedSkugrIds.length ? { skugrIds: selectedSkugrIds } : {}),
+          ...(includeImages ? { includeImages: true } : {}),
         },
         title: `Konk продажі · ${resolvedKonkName}`,
       });
@@ -108,6 +110,7 @@ export function KonkSalesExcelDialog({
     selectedProd,
     selectedSkugrIds,
     selectedMetrics,
+    includeImages,
     exportSort,
     startJob,
     resolvedKonkName,
@@ -126,6 +129,7 @@ export function KonkSalesExcelDialog({
       setSelectedSkugrIds([]);
       setExportSort("default");
       setSelectedMetrics([...DEFAULT_SKU_SALES_EXCEL_METRICS]);
+      setIncludeImages(false);
     }
   }, [open]);
 
@@ -171,6 +175,8 @@ export function KonkSalesExcelDialog({
         onExportSortChange={setExportSort}
         selectedMetrics={selectedMetrics}
         onSelectedMetricsChange={setSelectedMetrics}
+        includeImages={includeImages}
+        onIncludeImagesChange={setIncludeImages}
         isExporting={isStarting}
         onDownload={handleDownload}
         onCancel={handleCancel}

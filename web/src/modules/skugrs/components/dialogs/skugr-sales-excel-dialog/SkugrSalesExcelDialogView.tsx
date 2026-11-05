@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/dialog";
 import { Calendar } from "@/components/ui/calendar";
 import {
+  IncludeImagesControl,
   SkuSalesExcelMetricsControl,
   type SkuSalesExcelMetric,
 } from "@/modules/excel-jobs";
@@ -17,6 +18,8 @@ interface SkugrSalesExcelDialogViewProps {
   onDateRangeChange: (range: DateRange | undefined) => void;
   selectedMetrics: readonly SkuSalesExcelMetric[];
   onSelectedMetricsChange: (metrics: SkuSalesExcelMetric[]) => void;
+  includeImages: boolean;
+  onIncludeImagesChange: (value: boolean) => void;
   isExporting: boolean;
   onDownload: () => void;
   onCancel: () => void;
@@ -27,6 +30,8 @@ export function SkugrSalesExcelDialogView({
   onDateRangeChange,
   selectedMetrics,
   onSelectedMetricsChange,
+  includeImages,
+  onIncludeImagesChange,
   isExporting,
   onDownload,
   onCancel,
@@ -51,6 +56,12 @@ export function SkugrSalesExcelDialogView({
           value={selectedMetrics}
           onChange={onSelectedMetricsChange}
           disabled={isExporting}
+        />
+        <IncludeImagesControl
+          checked={includeImages}
+          onCheckedChange={onIncludeImagesChange}
+          disabled={isExporting}
+          id="skugr-sales-excel-include-images"
         />
         <div className="flex justify-center">
           <Calendar

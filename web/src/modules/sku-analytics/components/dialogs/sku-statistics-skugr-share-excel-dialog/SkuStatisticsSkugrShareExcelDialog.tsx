@@ -24,6 +24,7 @@ export function SkuStatisticsSkugrShareExcelDialog({
   const [internalOpen, setInternalOpen] = useState(false);
   const [exportSort, setExportSort] =
     useState<SkuStatisticsSkugrShareExcelExportSort>("default");
+  const [includeImages, setIncludeImages] = useState(true);
 
   const isControlled = controlledOpen !== undefined;
   const open = isControlled ? controlledOpen : internalOpen;
@@ -52,8 +53,11 @@ export function SkuStatisticsSkugrShareExcelDialog({
           dateFrom,
           dateTo,
           ...(sortBy ? { sortBy } : {}),
+          ...(includeImages ? { includeImages: true } : {}),
         },
-        title: "Статистика SKU: частки з фото",
+        title: includeImages
+          ? "Статистика SKU: частки з фото"
+          : "Статистика SKU: частки",
       });
       if (job) handleOpenChange(false);
     } catch {
@@ -62,6 +66,7 @@ export function SkuStatisticsSkugrShareExcelDialog({
   }, [
     canSubmit,
     exportSort,
+    includeImages,
     skugrId,
     dateFrom,
     dateTo,
@@ -76,6 +81,7 @@ export function SkuStatisticsSkugrShareExcelDialog({
   useEffect(() => {
     if (open) {
       setExportSort("default");
+      setIncludeImages(true);
     }
   }, [open]);
 
@@ -86,6 +92,8 @@ export function SkuStatisticsSkugrShareExcelDialog({
         dateTo={dateTo}
         exportSort={exportSort}
         onExportSortChange={setExportSort}
+        includeImages={includeImages}
+        onIncludeImagesChange={setIncludeImages}
         isExporting={isStarting}
         isDownloadDisabled={!canSubmit}
         onDownload={handleDownload}

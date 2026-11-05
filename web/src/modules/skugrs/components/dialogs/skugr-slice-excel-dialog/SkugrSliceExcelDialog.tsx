@@ -34,6 +34,7 @@ export function SkugrSliceExcelDialog({
   const [selectedMetrics, setSelectedMetrics] = useState<SkuStockExcelMetric[]>(
     () => [...DEFAULT_SKU_STOCK_EXCEL_METRICS],
   );
+  const [includeImages, setIncludeImages] = useState(false);
 
   const isControlled = controlledOpen !== undefined;
   const open = isControlled ? controlledOpen : internalOpen;
@@ -56,6 +57,7 @@ export function SkugrSliceExcelDialog({
           dateFrom,
           dateTo,
           metrics: selectedMetrics,
+          ...(includeImages ? { includeImages: true } : {}),
         },
         title: "Skugr: залишки",
       });
@@ -63,7 +65,14 @@ export function SkugrSliceExcelDialog({
     } catch {
       // toast in provider
     }
-  }, [skugrId, dateRange, selectedMetrics, startJob, handleOpenChange]);
+  }, [
+    skugrId,
+    dateRange,
+    selectedMetrics,
+    includeImages,
+    startJob,
+    handleOpenChange,
+  ]);
 
   const handleCancel = useCallback(() => {
     handleOpenChange(false);
@@ -73,6 +82,7 @@ export function SkugrSliceExcelDialog({
     if (open) {
       setDateRange(getDefaultDateRange());
       setSelectedMetrics([...DEFAULT_SKU_STOCK_EXCEL_METRICS]);
+      setIncludeImages(false);
     }
   }, [open]);
 
@@ -83,6 +93,8 @@ export function SkugrSliceExcelDialog({
         onDateRangeChange={setDateRange}
         selectedMetrics={selectedMetrics}
         onSelectedMetricsChange={setSelectedMetrics}
+        includeImages={includeImages}
+        onIncludeImagesChange={setIncludeImages}
         isDownloading={isStarting}
         onDownload={handleDownload}
         onCancel={handleCancel}

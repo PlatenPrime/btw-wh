@@ -52,6 +52,7 @@ export function SkuSelectionStockExcelDialog({
   const [selectedMetrics, setSelectedMetrics] = useState<SkuStockExcelMetric[]>(
     () => [...DEFAULT_SKU_STOCK_EXCEL_METRICS],
   );
+  const [includeImages, setIncludeImages] = useState(false);
 
   const isControlled = controlledOpen !== undefined;
   const open = isControlled ? controlledOpen : internalOpen;
@@ -89,6 +90,7 @@ export function SkuSelectionStockExcelDialog({
           dateFrom,
           dateTo,
           metrics: selectedMetrics,
+          includeImages,
         }),
         title: `SKU (обрані) залишки · ${countLabel}`,
       });
@@ -103,6 +105,7 @@ export function SkuSelectionStockExcelDialog({
     selectAll,
     selectionQuery,
     matchedTotal,
+    includeImages,
     startJob,
     handleOpenChange,
   ]);
@@ -119,6 +122,7 @@ export function SkuSelectionStockExcelDialog({
     setMatchedTotal(0);
     setDateRange(getDefaultDateRange());
     setSelectedMetrics([...DEFAULT_SKU_STOCK_EXCEL_METRICS]);
+    setIncludeImages(false);
   }, [open]);
 
   return (
@@ -134,6 +138,8 @@ export function SkuSelectionStockExcelDialog({
         onDateRangeChange={setDateRange}
         selectedMetrics={selectedMetrics}
         onSelectedMetricsChange={setSelectedMetrics}
+        includeImages={includeImages}
+        onIncludeImagesChange={setIncludeImages}
         isDownloading={isStarting}
         onDownload={() => {
           void handleDownload();

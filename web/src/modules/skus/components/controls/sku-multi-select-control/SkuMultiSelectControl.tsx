@@ -1,3 +1,4 @@
+import { useDebounce } from "@/hooks/useDebounce";
 import { useKonksQuery } from "@/modules/konks/api/hooks/queries/useKonksQuery";
 import type { KonkDto } from "@/modules/konks/api/types";
 import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
@@ -9,11 +10,24 @@ import type { ReactNode } from "react";
 import { SelectAllSkusConfirmDialog } from "./SelectAllSkusConfirmDialog";
 import {
   SkuMultiSelectControlView,
+  type SkuMultiSelectLayout,
   type SkuMultiSelectPick,
   type SkuMultiSelectQuery,
 } from "./SkuMultiSelectControlView";
 
-export type { SkuMultiSelectPick, SkuMultiSelectQuery };
+export type {
+  SkuMultiSelectLayout,
+  SkuMultiSelectPick,
+  SkuMultiSelectQuery,
+};
+
+function normalizeQuery(query: SkuMultiSelectQuery): SkuMultiSelectQuery {
+  return {
+    search: query.search.trim(),
+    konkName: query.konkName.trim(),
+    prodName: query.prodName.trim(),
+  };
+}
 
 export interface SkuMultiSelectControlProps {
   value: readonly SkuMultiSelectPick[];
@@ -22,15 +36,21 @@ export interface SkuMultiSelectControlProps {
   onSelectAllChange?: (selectAll: boolean) => void;
   onSelectionQueryChange?: (query: SkuMultiSelectQuery) => void;
   onMatchedTotalChange?: (total: number) => void;
-  /** Після повного скидання фільтрів/run каталогу (наприклад зняти pie run у URL). */
+  /** Гідрація search/konk/prod з URL/journey — щоб не затерти на mount. */
+  initialQuery?: SkuMultiSelectQuery;
+  /** Після повного скидання фільтрів (наприклад зняти pie run у URL). */
   onReset?: () => void;
   /** Елементи на початку toolbar (наприклад період). */
   leadingSlot?: ReactNode;
+  /** dialog — вузький Excel-діалог; page — сторінка/майстер. */
+  layout?: SkuMultiSelectLayout;
   /** Обмежити пошук конкурентом ззовні; порожнє = фільтр у контролі. */
   konkName?: string;
   enabled?: boolean;
   disabled?: boolean;
   searchInputId?: string;
+  /** Текст, коли каталог вимкнений (наприклад немає періоду на page). */
+  disabledHint?: string;
 }
 
 function sameQuery(a: SkuMultiSelectQuery, b: SkuMultiSelectQuery): boolean {
@@ -58,50 +78,59 @@ export function SkuMultiSelectControl({
   onSelectAllChange,
   onSelectionQueryChange,
   onMatchedTotalChange,
+  initialQuery,
   onReset,
   leadingSlot,
+  layout = "page",
   konkName: lockedKonkName,
   enabled = true,
   disabled = false,
   searchInputId,
+  disabledHint,
 }: SkuMultiSelectControlProps) {
-  const [search, setSearch] = useState("");
-  const [filterKonkName, setFilterKonkName] = useState("");
-  const [filterProdName, setFilterProdName] = useState("");
-  const [hasRun, setHasRun] = useState(false);
+  const [search, setSearch] = useState(() => initialQuery?.search ?? "");
+  const [filterKonkName, setFilterKonkName] = useState(
+    () => initialQuery?.konkName ?? "",
+  );
+  const [filterProdName, setFilterProdName] = useState(
+    () => initialQuery?.prodName ?? "",
+  );
   const [page, setPage] = useState(1);
   const [accumulated, setAccumulated] = useState<SkuDto[]>([]);
   const [confirmOpen, setConfirmOpen] = useState(false);
+
+  const debouncedSearch = useDebounce(search, 300);
 
   const effectiveKonkName = lockedKonkName?.trim()
     ? lockedKonkName.trim()
     : filterKonkName.trim();
   const showKonkFilter = !lockedKonkName?.trim();
 
-  const konksQuery = useKonksQuery({ enabled: enabled && !disabled });
-  const prodsQuery = useProdsQuery({ enabled: enabled && !disabled });
+  const listEnabled = enabled && !disabled;
+  const konksQuery = useKonksQuery({ enabled: listEnabled });
+  const prodsQuery = useProdsQuery({ enabled: listEnabled });
 
-  const listEnabled = enabled && !disabled && hasRun;
   const catalogQuery = useSkusCatalogQuery({
     page,
     limit: 20,
-    search,
+    search: debouncedSearch,
     konkName: effectiveKonkName,
     prodName: filterProdName.trim(),
     enabled: listEnabled,
+    debounceMs: 0,
   });
 
-  const matchedTotal = hasRun
+  const matchedTotal = listEnabled
     ? (catalogQuery.data?.pagination.total ?? 0)
     : 0;
 
   const selectionQuery = useMemo<SkuMultiSelectQuery>(
     () => ({
-      search: search.trim(),
+      search: debouncedSearch.trim(),
       konkName: effectiveKonkName,
       prodName: filterProdName.trim(),
     }),
-    [effectiveKonkName, filterProdName, search],
+    [debouncedSearch, effectiveKonkName, filterProdName],
   );
 
   const onSelectionQueryChangeRef = useRef(onSelectionQueryChange);
@@ -115,11 +144,16 @@ export function SkuMultiSelectControl({
   onResetRef.current = onReset;
   onChangeRef.current = onChange;
 
-  const lastQueryRef = useRef<SkuMultiSelectQuery | null>(null);
+  const lastQueryRef = useRef<SkuMultiSelectQuery | null>(
+    initialQuery ? normalizeQuery(initialQuery) : null,
+  );
   const lastMatchedTotalRef = useRef<number | null>(null);
+  const prevCatalogKeyRef = useRef<string | null>(null);
+
+  const catalogKey = `${debouncedSearch}\0${effectiveKonkName}\0${filterProdName.trim()}`;
 
   useEffect(() => {
-    if (!hasRun) {
+    if (!listEnabled) {
       lastQueryRef.current = null;
       return;
     }
@@ -131,7 +165,7 @@ export function SkuMultiSelectControl({
     }
     lastQueryRef.current = selectionQuery;
     onSelectionQueryChangeRef.current?.(selectionQuery);
-  }, [hasRun, selectionQuery]);
+  }, [listEnabled, selectionQuery]);
 
   useEffect(() => {
     if (lastMatchedTotalRef.current === matchedTotal) return;
@@ -139,49 +173,49 @@ export function SkuMultiSelectControl({
     onMatchedTotalChangeRef.current?.(matchedTotal);
   }, [matchedTotal]);
 
-  const resetCatalog = useCallback(() => {
-    setHasRun(false);
+  // Скинути пагінацію/selectAll при зміні фільтрів каталогу.
+  useEffect(() => {
+    if (prevCatalogKeyRef.current === null) {
+      prevCatalogKeyRef.current = catalogKey;
+      return;
+    }
+    if (prevCatalogKeyRef.current === catalogKey) return;
+    prevCatalogKeyRef.current = catalogKey;
+    setPage(1);
+    setAccumulated([]);
+    onSelectAllChangeRef.current?.(false);
+  }, [catalogKey]);
+
+  const bumpCatalog = useCallback(() => {
     setPage(1);
     setAccumulated([]);
     onSelectAllChangeRef.current?.(false);
   }, []);
 
-  const handleSearchChange = useCallback(
-    (next: string) => {
-      setSearch(next);
-      resetCatalog();
-    },
-    [resetCatalog],
-  );
+  const handleSearchChange = useCallback((next: string) => {
+    setSearch(next);
+  }, []);
 
   const handleFilterKonkNameChange = useCallback(
     (next: string) => {
       setFilterKonkName(next);
-      resetCatalog();
+      bumpCatalog();
     },
-    [resetCatalog],
+    [bumpCatalog],
   );
 
   const handleFilterProdNameChange = useCallback(
     (next: string) => {
       setFilterProdName(next);
-      resetCatalog();
+      bumpCatalog();
     },
-    [resetCatalog],
+    [bumpCatalog],
   );
-
-  const handleRun = useCallback(() => {
-    setPage(1);
-    setAccumulated([]);
-    onSelectAllChangeRef.current?.(false);
-    setHasRun(true);
-  }, []);
 
   const canReset = Boolean(
     search.trim() ||
       filterKonkName.trim() ||
       filterProdName.trim() ||
-      hasRun ||
       selectAll ||
       value.length > 0,
   );
@@ -190,7 +224,6 @@ export function SkuMultiSelectControl({
     setSearch("");
     setFilterKonkName("");
     setFilterProdName("");
-    setHasRun(false);
     setPage(1);
     setAccumulated([]);
     lastQueryRef.current = null;
@@ -206,8 +239,20 @@ export function SkuMultiSelectControl({
     onResetRef.current?.();
   }, [lockedKonkName]);
 
+  // Немає періоду (enabled=false) — скинути selectAll, щоб pie/job не пішли зі stale flag.
+  // disabled (напр. isStarting) selectAll не чіпаємо.
   useEffect(() => {
-    if (!hasRun) return;
+    if (!enabled) {
+      onSelectAllChangeRef.current?.(false);
+    }
+  }, [enabled]);
+
+  useEffect(() => {
+    if (!listEnabled) {
+      setAccumulated([]);
+      return;
+    }
+    if (catalogQuery.isPlaceholderData) return;
     const pageData = catalogQuery.data?.data;
     if (!pageData) return;
     setAccumulated((prev) => {
@@ -219,7 +264,12 @@ export function SkuMultiSelectControl({
       }
       return next;
     });
-  }, [catalogQuery.data?.data, hasRun, page]);
+  }, [
+    catalogQuery.data?.data,
+    catalogQuery.isPlaceholderData,
+    listEnabled,
+    page,
+  ]);
 
   const konkByName = useMemo(() => {
     const map = new Map<string, KonkDto>();
@@ -266,11 +316,15 @@ export function SkuMultiSelectControl({
 
   const hasNextPage = Boolean(catalogQuery.data?.pagination.hasNext);
   const isLoadingFirstPage =
-    catalogQuery.isPending && accumulated.length === 0 && page === 1;
+    listEnabled &&
+    page === 1 &&
+    accumulated.length === 0 &&
+    (catalogQuery.isPending || catalogQuery.isFetching);
 
   return (
     <>
       <SkuMultiSelectControlView
+        layout={layout}
         leadingSlot={leadingSlot}
         search={search}
         onSearchChange={handleSearchChange}
@@ -281,8 +335,8 @@ export function SkuMultiSelectControl({
         showKonkFilter={showKonkFilter}
         konks={konksQuery.data?.data ?? []}
         prods={prodsQuery.data?.data ?? []}
-        hasRun={hasRun}
-        onRun={handleRun}
+        catalogActive={listEnabled}
+        disabledHint={disabledHint}
         canReset={canReset}
         onReset={handleReset}
         skus={accumulated}

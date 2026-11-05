@@ -104,6 +104,38 @@ describe("excel report order search", () => {
     expect(sameSearchParams(encoded, written)).toBe(true);
   });
 
+  it("roundtrips includeImages and keeps a long sku pick list", () => {
+    const picks = Array.from({ length: 120 }, (_, index) => ({
+      id: `id${String(index).padStart(22, "0")}`,
+      title: `SKU ${index}`,
+    }));
+    const source = state({
+      journey: {
+        world: "konk",
+        entry: "search-skus",
+        measure: "stock",
+        skuPicks: picks,
+        acked: ["sku-multi", "period", "stock-metrics", "include-images"],
+      },
+      includeImages: true,
+      dateFrom: "2026-10-01",
+      dateTo: "2026-10-29",
+    });
+
+    const written = writeExcelReportOrderSearch(new URLSearchParams(), source);
+    expect(written.get("images")).toBe("1");
+    expect(written.get("ack")).toContain("include-images");
+    expect(JSON.parse(written.get("skus") ?? "")).toHaveLength(120);
+
+    const restored = parseExcelReportOrderSearch(
+      new URLSearchParams(written.toString()),
+      NOW,
+    );
+    expect(restored.includeImages).toBe(true);
+    expect(restored.journey.skuPicks).toHaveLength(120);
+    expect(restored.journey.acked).toContain("include-images");
+  });
+
   it("writes none for an empty metric set and drops garbage", () => {
     const stock = state({
       journey: {

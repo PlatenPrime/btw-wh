@@ -39,6 +39,7 @@ function draft(
     abc: "",
     sortByAbc: false,
     sklad: null,
+    includeImages: false,
     ...patch,
   };
 }
@@ -63,6 +64,74 @@ describe("buildExcelJobRequest", () => {
         metrics: ["sales", "revenue"],
       },
       title: "SKU (обрані): продажі · 2 SKU",
+    });
+  });
+
+  it("builds sku-selection-stock selectAll without skuIds and with images", () => {
+    expect(
+      buildExcelJobRequest(
+        draft({
+          objectId: "sku-selection",
+          fileId: "stock",
+          skuSelectAll: true,
+          skuIds: ["aaaaaaaaaaaaaaaaaaaaaaaa"],
+          skuSelectionSearch: "Happy Birthday",
+          skuSelectionKonkName: "ivvo",
+          skuMatchedTotal: 12,
+          stockMetrics: ["stock", "price"],
+          includeImages: true,
+        }),
+      ),
+    ).toEqual({
+      kind: "sku-selection-stock",
+      params: {
+        selectAll: true,
+        search: "Happy Birthday",
+        konkName: "ivvo",
+        dateFrom: "2026-10-01",
+        dateTo: "2026-10-29",
+        metrics: ["stock", "price"],
+        includeImages: true,
+      },
+      title: "SKU (обрані): залишки · усі (12) SKU",
+    });
+  });
+
+  it("omits includeImages when false for konk sales", () => {
+    const params = buildExcelJobRequest(
+      draft({
+        objectId: "konk-sku",
+        fileId: "sales",
+        konk: "ivvo",
+        prod: "APT-SHOW",
+        includeImages: false,
+      }),
+    )?.params;
+
+    expect(params).toEqual({
+      konk: "ivvo",
+      prod: "APT-SHOW",
+      dateFrom: "2026-10-01",
+      dateTo: "2026-10-29",
+      metrics: ["sales", "price", "revenue"],
+    });
+    expect(params).not.toHaveProperty("includeImages");
+  });
+
+  it("sends includeImages for skugr stock when enabled", () => {
+    expect(
+      buildExcelJobRequest(
+        draft({
+          objectId: "skugr",
+          fileId: "stock",
+          skugrId: "cccccccccccccccccccccccc",
+          skugrTitle: "Група",
+          includeImages: true,
+        }),
+      )?.params,
+    ).toMatchObject({
+      skugrId: "cccccccccccccccccccccccc",
+      includeImages: true,
     });
   });
 

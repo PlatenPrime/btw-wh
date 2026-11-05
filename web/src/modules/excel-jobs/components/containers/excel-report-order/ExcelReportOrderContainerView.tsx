@@ -18,6 +18,7 @@ import {
   ReportEntitySearch,
   type ReportEntityOption,
 } from "@/modules/excel-jobs/components/controls/report-entity-search";
+import { IncludeImagesControl } from "@/modules/excel-jobs/components/controls/include-images-control";
 import { SkuSalesExcelMetricsControl } from "@/modules/excel-jobs/components/controls/sku-sales-excel-metrics-control";
 import { SkuStockExcelMetricsControl } from "@/modules/excel-jobs/components/controls/sku-stock-excel-metrics-control";
 import type { ExcelJourneyStep } from "@/modules/excel-jobs/constants/excel-report-journey";
@@ -89,6 +90,9 @@ export interface ExcelReportOrderContainerViewProps {
   onSkuPicksChange: (picks: SkuMultiSelectPick[]) => void;
   skuSelectAll: boolean;
   onSkuSelectAllChange: (selectAll: boolean) => void;
+  skuSelectionSearch: string;
+  skuSelectionKonkName: string;
+  skuSelectionProdName: string;
   onSkuSelectionQueryChange: (query: {
     search: string;
     konkName: string;
@@ -101,6 +105,8 @@ export interface ExcelReportOrderContainerViewProps {
   onSortByAbcChange: (value: boolean) => void;
   sklad: SkladCode | null;
   onSkladChange: (value: SkladCode | null) => void;
+  includeImages: boolean;
+  onIncludeImagesChange: (value: boolean) => void;
   konkName: string;
   prodName: string;
   action: "next" | "submit" | "none";
@@ -312,6 +318,8 @@ function stepValueLabel(
     }
     case "sklad":
       return props.sklad ? sklads[props.sklad] : "Всі склади";
+    case "include-images":
+      return props.includeImages ? "Так" : "Ні";
     case "ready":
       return step.submitLabel;
     default: {
@@ -381,6 +389,7 @@ function ActiveStep(
       ) : null}
       {step.type === "sku-multi" ? (
         <SkuMultiSelectControl
+          layout="page"
           value={props.skuPicks.map((pick) => ({
             id: pick.id,
             title: pick.title,
@@ -391,6 +400,11 @@ function ActiveStep(
           onChange={props.onSkuPicksChange}
           selectAll={props.skuSelectAll}
           onSelectAllChange={props.onSkuSelectAllChange}
+          initialQuery={{
+            search: props.skuSelectionSearch,
+            konkName: props.skuSelectionKonkName,
+            prodName: props.skuSelectionProdName,
+          }}
           onSelectionQueryChange={props.onSkuSelectionQueryChange}
           onMatchedTotalChange={props.onSkuMatchedTotalChange}
           disabled={isStarting}
@@ -514,6 +528,14 @@ function ActiveStep(
             <SelectItem value="merezhi">{sklads.merezhi}</SelectItem>
           </SelectContent>
         </Select>
+      ) : null}
+      {step.type === "include-images" ? (
+        <IncludeImagesControl
+          checked={props.includeImages}
+          onCheckedChange={props.onIncludeImagesChange}
+          disabled={isStarting}
+          id="excel-report-order-include-images"
+        />
       ) : null}
     </div>
   );

@@ -16,7 +16,10 @@ import type { SkuSalesExcelMetric } from "@/modules/excel-jobs/types/sku-sales-e
 import type { SkuStockExcelMetric } from "@/modules/excel-jobs/types/sku-stock-excel-metrics";
 import { getExcelJobKindLabel } from "@/modules/excel-jobs/utils/labels";
 
-import { buildSkuSelectionScopeParams } from "@/modules/excel-jobs/utils/build-sku-selection-params";
+import {
+  buildSkuSelectionScopeParams,
+  withIncludeImages,
+} from "@/modules/excel-jobs/utils/build-sku-selection-params";
 
 export type ExcelSalesSort = "default" | "sales" | "revenue";
 
@@ -49,7 +52,18 @@ export interface ExcelReportOrderDraft {
   abc: string;
   sortByAbc: boolean;
   sklad: SkladCode | null;
+  includeImages: boolean;
 }
+
+const INCLUDE_IMAGES_KINDS = new Set<ExcelJobKind>([
+  "sku-konk-stock",
+  "sku-konk-sales",
+  "sku-skugr-stock",
+  "sku-skugr-sales",
+  "sku-skugr-skus-share",
+  "sku-selection-stock",
+  "sku-selection-sales",
+]);
 
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -149,6 +163,15 @@ function withAbc(
   };
 }
 
+function maybeWithImages(
+  kind: ExcelJobKind,
+  draft: ExcelReportOrderDraft,
+  params: ExcelJobParams,
+): ExcelJobParams {
+  if (!INCLUDE_IMAGES_KINDS.has(kind)) return params;
+  return withIncludeImages(params, draft.includeImages);
+}
+
 function buildParams(
   kind: ExcelJobKind,
   draft: ExcelReportOrderDraft,
@@ -169,64 +192,92 @@ function buildParams(
         metrics: [...draft.salesMetrics],
       });
     case "sku-selection-stock":
-      return withRange(draft, {
-        ...buildSkuSelectionScopeParams({
-          selectAll: draft.skuSelectAll,
-          skuIds: draft.skuIds,
-          query: {
-            search: draft.skuSelectionSearch,
-            konkName: draft.skuSelectionKonkName,
-            prodName: draft.skuSelectionProdName,
-          },
-        }),
-        metrics: [...draft.stockMetrics],
-      });
-    case "sku-selection-sales":
-      return withRange(draft, {
-        ...buildSkuSelectionScopeParams({
-          selectAll: draft.skuSelectAll,
-          skuIds: draft.skuIds,
-          query: {
-            search: draft.skuSelectionSearch,
-            konkName: draft.skuSelectionKonkName,
-            prodName: draft.skuSelectionProdName,
-          },
-        }),
-        metrics: [...draft.salesMetrics],
-      });
-    case "sku-skugr-stock":
-      return withRange(draft, {
-        skugrId: draft.skugrId,
-        metrics: [...draft.stockMetrics],
-      });
-    case "sku-skugr-sales":
-      return withRange(draft, {
-        skugrId: draft.skugrId,
-        metrics: [...draft.salesMetrics],
-      });
-    case "sku-skugr-skus-share":
-      return withRange(draft, {
-        skugrId: draft.skugrId,
-        ...(draft.salesSort === "default" ? {} : { sortBy: draft.salesSort }),
-      });
-    case "sku-konk-stock":
-      return withOptionalSkugrIds(
+      return maybeWithImages(
+        kind,
         draft,
         withRange(draft, {
-          konk: draft.konk,
-          prod: draft.prod,
+          ...buildSkuSelectionScopeParams({
+            selectAll: draft.skuSelectAll,
+            skuIds: draft.skuIds,
+            query: {
+              search: draft.skuSelectionSearch,
+              konkName: draft.skuSelectionKonkName,
+              prodName: draft.skuSelectionProdName,
+            },
+          }),
           metrics: [...draft.stockMetrics],
         }),
       );
-    case "sku-konk-sales":
-      return withOptionalSkugrIds(
+    case "sku-selection-sales":
+      return maybeWithImages(
+        kind,
         draft,
         withRange(draft, {
-          konk: draft.konk,
-          prod: draft.prod,
+          ...buildSkuSelectionScopeParams({
+            selectAll: draft.skuSelectAll,
+            skuIds: draft.skuIds,
+            query: {
+              search: draft.skuSelectionSearch,
+              konkName: draft.skuSelectionKonkName,
+              prodName: draft.skuSelectionProdName,
+            },
+          }),
           metrics: [...draft.salesMetrics],
+        }),
+      );
+    case "sku-skugr-stock":
+      return maybeWithImages(
+        kind,
+        draft,
+        withRange(draft, {
+          skugrId: draft.skugrId,
+          metrics: [...draft.stockMetrics],
+        }),
+      );
+    case "sku-skugr-sales":
+      return maybeWithImages(
+        kind,
+        draft,
+        withRange(draft, {
+          skugrId: draft.skugrId,
+          metrics: [...draft.salesMetrics],
+        }),
+      );
+    case "sku-skugr-skus-share":
+      return maybeWithImages(
+        kind,
+        draft,
+        withRange(draft, {
+          skugrId: draft.skugrId,
           ...(draft.salesSort === "default" ? {} : { sortBy: draft.salesSort }),
         }),
+      );
+    case "sku-konk-stock":
+      return maybeWithImages(
+        kind,
+        draft,
+        withOptionalSkugrIds(
+          draft,
+          withRange(draft, {
+            konk: draft.konk,
+            prod: draft.prod,
+            metrics: [...draft.stockMetrics],
+          }),
+        ),
+      );
+    case "sku-konk-sales":
+      return maybeWithImages(
+        kind,
+        draft,
+        withOptionalSkugrIds(
+          draft,
+          withRange(draft, {
+            konk: draft.konk,
+            prod: draft.prod,
+            metrics: [...draft.salesMetrics],
+            ...(draft.salesSort === "default" ? {} : { sortBy: draft.salesSort }),
+          }),
+        ),
       );
     case "art-stock":
     case "art-sales":

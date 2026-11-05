@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/select";
 import { Calendar } from "@/components/ui/calendar";
 import {
+  IncludeImagesControl,
   SkuSalesExcelMetricsControl,
   type SkuSalesExcelMetric,
 } from "@/modules/excel-jobs";
@@ -46,6 +47,8 @@ interface KonkSalesExcelDialogViewProps {
   onExportSortChange: (value: KonkSalesExcelExportSort) => void;
   selectedMetrics: readonly SkuSalesExcelMetric[];
   onSelectedMetricsChange: (metrics: SkuSalesExcelMetric[]) => void;
+  includeImages: boolean;
+  onIncludeImagesChange: (value: boolean) => void;
   isExporting: boolean;
   onDownload: () => void;
   onCancel: () => void;
@@ -68,6 +71,8 @@ export function KonkSalesExcelDialogView({
   onExportSortChange,
   selectedMetrics,
   onSelectedMetricsChange,
+  includeImages,
+  onIncludeImagesChange,
   isExporting,
   onDownload,
   onCancel,
@@ -155,6 +160,12 @@ export function KonkSalesExcelDialogView({
           value={selectedMetrics}
           onChange={onSelectedMetricsChange}
           disabled={isExporting}
+        />
+        <IncludeImagesControl
+          checked={includeImages}
+          onCheckedChange={onIncludeImagesChange}
+          disabled={isExporting}
+          id="konk-sales-excel-include-images"
         />
         <div className="flex justify-center">
           <Calendar

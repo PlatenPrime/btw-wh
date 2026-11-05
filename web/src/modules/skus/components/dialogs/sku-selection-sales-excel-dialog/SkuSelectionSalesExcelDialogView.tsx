@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/dialog";
 import { Calendar } from "@/components/ui/calendar";
 import {
+  IncludeImagesControl,
   SkuSalesExcelMetricsControl,
   type SkuSalesExcelMetric,
 } from "@/modules/excel-jobs";
@@ -30,6 +31,8 @@ interface SkuSelectionSalesExcelDialogViewProps {
   onDateRangeChange: (range: DateRange | undefined) => void;
   selectedMetrics: readonly SkuSalesExcelMetric[];
   onSelectedMetricsChange: (metrics: SkuSalesExcelMetric[]) => void;
+  includeImages: boolean;
+  onIncludeImagesChange: (value: boolean) => void;
   isExporting: boolean;
   onDownload: () => void;
   onCancel: () => void;
@@ -46,6 +49,8 @@ export function SkuSelectionSalesExcelDialogView({
   onDateRangeChange,
   selectedMetrics,
   onSelectedMetricsChange,
+  includeImages,
+  onIncludeImagesChange,
   isExporting,
   onDownload,
   onCancel,
@@ -77,6 +82,7 @@ export function SkuSelectionSalesExcelDialogView({
         </p>
 
         <SkuMultiSelectControl
+          layout="dialog"
           value={picks}
           onChange={onPicksChange}
           selectAll={selectAll}
@@ -87,11 +93,20 @@ export function SkuSelectionSalesExcelDialogView({
           searchInputId="sku-selection-sales-search"
         />
 
-        <SkuSalesExcelMetricsControl
-          value={selectedMetrics}
-          onChange={onSelectedMetricsChange}
-          disabled={isExporting}
-        />
+        <div className="grid grid-cols-2 items-start gap-4">
+          <SkuSalesExcelMetricsControl
+            value={selectedMetrics}
+            onChange={onSelectedMetricsChange}
+            disabled={isExporting}
+          />
+          <IncludeImagesControl
+            checked={includeImages}
+            onCheckedChange={onIncludeImagesChange}
+            disabled={isExporting}
+            id="sku-selection-sales-include-images"
+            label="Додати фото"
+          />
+        </div>
 
         <div className="flex justify-center">
           <Calendar

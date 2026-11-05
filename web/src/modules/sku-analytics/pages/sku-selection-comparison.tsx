@@ -71,6 +71,7 @@ export function SkuSelectionComparison() {
         onSkuPicksChange={setSkuPicks}
         selectAll={selectAll}
         onSelectAllChange={setSelectAll}
+        selectionQuery={selectionQuery}
         onSelectionQueryChange={setSelectionQuery}
         onMatchedTotalChange={setMatchedTotal}
         onReset={resetSelection}

@@ -107,6 +107,25 @@ describe("resolveExcelJourney", () => {
     });
     expect(ids(input)).toContain("period");
     expect(ids(input)).toContain("stock-metrics");
+    expect(ids(input)).toContain("include-images");
+  });
+
+  it("adds include-images for skugr and konk-sku but not for one sku", () => {
+    let skugr = answerJourneyChoice(createEmptyJourney(), "world", "konk").input;
+    skugr = answerJourneyChoice(skugr, "entry", "pick-konk").input;
+    skugr = { ...skugr, konk: "rozetka" };
+    skugr = answerJourneyChoice(skugr, "scope", "skugr").input;
+    skugr = answerJourneyChoice(skugr, "measure", "stock").input;
+    skugr = { ...skugr, skugrId: "g1", skugrTitle: "Група" };
+    expect(ids(skugr)).toContain("include-images");
+
+    let one = answerJourneyChoice(createEmptyJourney(), "world", "konk").input;
+    one = answerJourneyChoice(one, "entry", "pick-konk").input;
+    one = { ...one, konk: "rozetka" };
+    one = answerJourneyChoice(one, "scope", "sku").input;
+    one = answerJourneyChoice(one, "measure", "sales").input;
+    one = { ...one, skuId: "sku-1", skuTitle: "Дриль" };
+    expect(ids(one)).not.toContain("include-images");
   });
 
   it("drops the tail when an earlier answer changes", () => {

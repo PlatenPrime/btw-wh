@@ -11,6 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { IncludeImagesControl } from "@/modules/excel-jobs";
 import { typography } from "@/lib/typography";
 
 export type SkuStatisticsSkugrShareExcelExportSort =
@@ -23,6 +24,8 @@ interface SkuStatisticsSkugrShareExcelDialogViewProps {
   dateTo: string;
   exportSort: SkuStatisticsSkugrShareExcelExportSort;
   onExportSortChange: (value: SkuStatisticsSkugrShareExcelExportSort) => void;
+  includeImages: boolean;
+  onIncludeImagesChange: (value: boolean) => void;
   isExporting: boolean;
   isDownloadDisabled: boolean;
   onDownload: () => void;
@@ -34,6 +37,8 @@ export function SkuStatisticsSkugrShareExcelDialogView({
   dateTo,
   exportSort,
   onExportSortChange,
+  includeImages,
+  onIncludeImagesChange,
   isExporting,
   isDownloadDisabled,
   onDownload,
@@ -42,12 +47,14 @@ export function SkuStatisticsSkugrShareExcelDialogView({
   return (
     <DialogContent className="sm:max-w-md">
       <DialogHeader>
-        <DialogTitle>Excel з картинками товарів</DialogTitle>
+        <DialogTitle>
+          {includeImages ? "Excel з картинками товарів" : "Excel часток SKU"}
+        </DialogTitle>
       </DialogHeader>
       <div className="flex flex-col gap-4">
         <p className={typography.pageDescription}>
-          Та сама таблиця часток за період на сторінці, з картинками товарів.
-          Файл готується на сервері.
+          Та сама таблиця часток за період на сторінці. Файл готується на
+          сервері.
         </p>
         <div className="grid gap-1">
           <p className={typography.formLabel}>Період</p>
@@ -73,6 +80,12 @@ export function SkuStatisticsSkugrShareExcelDialogView({
             </SelectContent>
           </Select>
         </div>
+        <IncludeImagesControl
+          checked={includeImages}
+          onCheckedChange={onIncludeImagesChange}
+          disabled={isExporting}
+          id="sku-statistics-skugr-share-include-images"
+        />
         <DialogActions
           onCancel={onCancel}
           onSubmit={onDownload}

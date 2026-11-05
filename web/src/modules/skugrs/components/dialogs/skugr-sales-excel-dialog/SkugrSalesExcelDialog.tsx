@@ -34,6 +34,7 @@ export function SkugrSalesExcelDialog({
   const [selectedMetrics, setSelectedMetrics] = useState<SkuSalesExcelMetric[]>(
     () => [...DEFAULT_SKU_SALES_EXCEL_METRICS],
   );
+  const [includeImages, setIncludeImages] = useState(false);
 
   const isControlled = controlledOpen !== undefined;
   const open = isControlled ? controlledOpen : internalOpen;
@@ -56,6 +57,7 @@ export function SkugrSalesExcelDialog({
           dateFrom,
           dateTo,
           metrics: selectedMetrics,
+          ...(includeImages ? { includeImages: true } : {}),
         },
         title: "Skugr: продажі",
       });
@@ -63,7 +65,14 @@ export function SkugrSalesExcelDialog({
     } catch {
       // toast in provider
     }
-  }, [skugrId, dateRange, selectedMetrics, startJob, handleOpenChange]);
+  }, [
+    skugrId,
+    dateRange,
+    selectedMetrics,
+    includeImages,
+    startJob,
+    handleOpenChange,
+  ]);
 
   const handleCancel = useCallback(() => {
     handleOpenChange(false);
@@ -73,6 +82,7 @@ export function SkugrSalesExcelDialog({
     if (open) {
       setDateRange(getDefaultDateRange());
       setSelectedMetrics([...DEFAULT_SKU_SALES_EXCEL_METRICS]);
+      setIncludeImages(false);
     }
   }, [open]);
 
@@ -83,6 +93,8 @@ export function SkugrSalesExcelDialog({
         onDateRangeChange={setDateRange}
         selectedMetrics={selectedMetrics}
         onSelectedMetricsChange={setSelectedMetrics}
+        includeImages={includeImages}
+        onIncludeImagesChange={setIncludeImages}
         isExporting={isStarting}
         onDownload={handleDownload}
         onCancel={handleCancel}

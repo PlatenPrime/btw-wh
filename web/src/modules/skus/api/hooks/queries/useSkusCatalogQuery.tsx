@@ -14,6 +14,8 @@ export interface UseSkusCatalogQueryParams {
   notInAnySkugr?: boolean;
   signal?: AbortSignal;
   enabled?: boolean;
+  /** 0 = без debounce (коли search уже продебаунсений ззовні). Default 500. */
+  debounceMs?: number;
 }
 
 export function useSkusCatalogQuery({
@@ -27,8 +29,9 @@ export function useSkusCatalogQuery({
   notInAnySkugr,
   signal,
   enabled = true,
+  debounceMs = 500,
 }: UseSkusCatalogQueryParams) {
-  const debouncedSearch = useDebounce(search, 500);
+  const debouncedSearch = useDebounce(search, debounceMs);
 
   const request: GetSkusParams = {
     page,

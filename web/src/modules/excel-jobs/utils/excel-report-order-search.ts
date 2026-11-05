@@ -63,6 +63,7 @@ const OWNED_KEYS = [
   "abc",
   "abcSort",
   "sklad",
+  "images",
 ] as const;
 
 const ACK_IDS = [
@@ -74,6 +75,7 @@ const ACK_IDS = [
   "skugr-ids",
   "abc",
   "sklad",
+  "include-images",
 ] as const;
 
 const BTRADE_REPORTS = new Set([
@@ -131,6 +133,7 @@ export interface ExcelReportOrderSearchState {
   abc: string;
   sortByAbc: boolean;
   sklad: SkladCode | null;
+  includeImages: boolean;
 }
 
 export function createDefaultExcelReportOrderSearch(
@@ -150,6 +153,7 @@ export function createDefaultExcelReportOrderSearch(
     abc: "",
     sortByAbc: false,
     sklad: null,
+    includeImages: false,
   };
 }
 
@@ -188,6 +192,7 @@ export function parseExcelReportOrderSearch(
     abc: readAbc(params.get("abc")),
     sortByAbc: params.get("abcSort") === "1",
     sklad: readSklad(params.get("sklad")),
+    includeImages: params.get("images") === "1",
   };
 }
 
@@ -305,6 +310,12 @@ export function writeExcelReportOrderSearch(
   }
   if (steps.some((step) => step.type === "sklad") && state.sklad) {
     next.set("sklad", state.sklad);
+  }
+  if (
+    steps.some((step) => step.type === "include-images") &&
+    state.includeImages
+  ) {
+    next.set("images", "1");
   }
 
   return next;
@@ -467,7 +478,6 @@ function readSkuPicks(value: string | null): ExcelJourneySkuPick[] {
             ? readFreeText(record.prodName, 120)
             : undefined,
       });
-      if (picks.length >= 100) break;
     }
     return picks;
   } catch {

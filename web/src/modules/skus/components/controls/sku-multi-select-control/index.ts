@@ -1,5 +1,6 @@
 export { SkuMultiSelectControl } from "./SkuMultiSelectControl";
 export type {
+  SkuMultiSelectLayout,
   SkuMultiSelectPick,
   SkuMultiSelectQuery,
 } from "./SkuMultiSelectControl";
