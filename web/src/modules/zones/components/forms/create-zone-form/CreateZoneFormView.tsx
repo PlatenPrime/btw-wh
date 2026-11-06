@@ -1,9 +1,10 @@
 import { DialogActions } from "@/components/shared/dialogs";
 import { Input } from "@/components/ui/input";
+import { InputNumeric } from "@/components/ui/input-numeric";
 import { Label } from "@/components/ui/label";
-import type { CreateZoneFormValues } from "@/modules/zones/components/forms/schema";
-import type { UseFormReturn } from "react-hook-form";
 import { typography } from "@/lib/typography";
+import type { CreateZoneFormValues } from "@/modules/zones/components/forms/schema";
+import { Controller, type UseFormReturn } from "react-hook-form";
 
 interface CreateZoneFormViewProps {
   form: UseFormReturn<CreateZoneFormValues>;
@@ -20,6 +21,7 @@ export function CreateZoneFormView({
 }: CreateZoneFormViewProps) {
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors },
   } = form;
@@ -41,12 +43,19 @@ export function CreateZoneFormView({
 
       <div className="flex flex-col gap-2">
         <Label htmlFor="bar">Штрих-код</Label>
-        <Input
-          id="bar"
-          type="number"
-          {...register("bar", { valueAsNumber: true })}
-          placeholder="420502"
-          disabled={isLoading}
+        <Controller
+          control={control}
+          name="bar"
+          render={({ field }) => (
+            <InputNumeric
+              id="bar"
+              value={field.value === 0 ? "" : field.value}
+              onNumberChange={(next) => field.onChange(next ?? 0)}
+              onBlur={field.onBlur}
+              placeholder="420502"
+              disabled={isLoading}
+            />
+          )}
         />
         {errors.bar && (
           <p className={typography.formError}>{errors.bar.message}</p>
@@ -55,12 +64,19 @@ export function CreateZoneFormView({
 
       <div className="flex flex-col gap-2">
         <Label htmlFor="sector">Сектор</Label>
-        <Input
-          id="sector"
-          type="number"
-          {...register("sector", { valueAsNumber: true })}
-          placeholder="0"
-          disabled={isLoading}
+        <Controller
+          control={control}
+          name="sector"
+          render={({ field }) => (
+            <InputNumeric
+              id="sector"
+              value={field.value === 0 ? "" : field.value}
+              onNumberChange={(next) => field.onChange(next ?? 0)}
+              onBlur={field.onBlur}
+              placeholder="0"
+              disabled={isLoading}
+            />
+          )}
         />
         {errors.sector && (
           <p className={typography.formError}>{errors.sector.message}</p>

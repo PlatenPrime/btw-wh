@@ -7,9 +7,14 @@ import {
   ThemedText,
   ThemedView,
 } from "@/components/themed";
+import { NumericDraftField } from "@/components/shared/numeric-draft-field";
 import { SemanticColors } from "@/constants/theme";
 import type { UpdateZoneFormValues } from "@/modules/zones/components/forms/schema";
 import { useTheme } from "@/providers/theme-provider";
+import {
+  filterDigitsInput,
+  normalizeDigitsInput,
+} from "@/utils/quant-input";
 import type { UseFormReturn } from "react-hook-form";
 import { Controller } from "react-hook-form";
 import { ActivityIndicator } from "react-native";
@@ -79,25 +84,24 @@ export function UpdateZoneFormView({
           control={control}
           name="bar"
           render={({ field: { onChange, onBlur, value } }) => (
-            <ThemedInput
-              className={`rounded-lg border bg-background-0 ${
-                errors.bar ? "border-error-500" : "border-outline-50"
-              }`}
-            >
-              <ThemedInputField
-                placeholder="420502"
-                placeholderTextColor={placeholder}
-                value={value ? String(value) : ""}
-                onChangeText={(text) => {
-                  const num = text === "" ? undefined : Number(text);
-                  onChange(isNaN(num as number) ? undefined : num);
-                }}
-                onBlur={onBlur}
-                keyboardType="numeric"
-                editable={!isSubmitting}
-                className="text-typography-900"
-              />
-            </ThemedInput>
+            <NumericDraftField
+              value={value ? String(value) : ""}
+              onChange={(next) => {
+                if (next === "") {
+                  onChange(undefined);
+                  return;
+                }
+                const num = Number.parseInt(next, 10);
+                if (!Number.isNaN(num)) onChange(num);
+              }}
+              onBlur={onBlur}
+              filter={filterDigitsInput}
+              normalize={normalizeDigitsInput}
+              placeholder="420502"
+              placeholderTextColor={placeholder}
+              editable={!isSubmitting}
+              error={!!errors.bar}
+            />
           )}
         />
         {errors.bar && (
@@ -115,25 +119,24 @@ export function UpdateZoneFormView({
           control={control}
           name="sector"
           render={({ field: { onChange, onBlur, value } }) => (
-            <ThemedInput
-              className={`rounded-lg border bg-background-0 ${
-                errors.sector ? "border-error-500" : "border-outline-50"
-              }`}
-            >
-              <ThemedInputField
-                placeholder="0"
-                placeholderTextColor={placeholder}
-                value={value ? String(value) : ""}
-                onChangeText={(text) => {
-                  const num = text === "" ? undefined : Number(text);
-                  onChange(isNaN(num as number) ? undefined : num);
-                }}
-                onBlur={onBlur}
-                keyboardType="numeric"
-                editable={!isSubmitting}
-                className="text-typography-900"
-              />
-            </ThemedInput>
+            <NumericDraftField
+              value={value != null ? String(value) : ""}
+              onChange={(next) => {
+                if (next === "") {
+                  onChange(undefined);
+                  return;
+                }
+                const num = Number.parseInt(next, 10);
+                if (!Number.isNaN(num)) onChange(num);
+              }}
+              onBlur={onBlur}
+              filter={filterDigitsInput}
+              normalize={normalizeDigitsInput}
+              placeholder="0"
+              placeholderTextColor={placeholder}
+              editable={!isSubmitting}
+              error={!!errors.sector}
+            />
           )}
         />
         {errors.sector && (

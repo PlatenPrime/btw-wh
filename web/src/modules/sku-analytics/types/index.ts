@@ -40,6 +40,7 @@ export interface SkuSelectionComparisonRow {
   title: string;
   konkName: string;
   productId: string;
+  imageUrl?: string | null;
   salesPcs: number;
   salesUah: number;
   share: number;

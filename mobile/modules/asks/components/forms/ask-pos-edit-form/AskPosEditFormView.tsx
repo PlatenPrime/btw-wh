@@ -2,15 +2,18 @@ import {
   ThemedBox,
   ThemedButton,
   ThemedHStack,
-  ThemedInput,
-  ThemedInputField,
   ThemedText,
   ThemedVStack,
   ThemedView,
 } from "@/components/themed";
+import { NumericDraftField } from "@/components/shared/numeric-draft-field";
 import { SemanticColors } from "@/constants/theme";
 import type { PosResponse } from "@/modules/poses/api/types";
 import { useTheme } from "@/providers/theme-provider";
+import {
+  filterQuantInput,
+  normalizeQuantInput,
+} from "@/utils/quant-input";
 import { Controller, type UseFormReturn } from "react-hook-form";
 import { ActivityIndicator } from "react-native";
 import type { AskPosEditFormData } from "./schema";
@@ -40,41 +43,15 @@ export function AskPosEditFormView({
 }: AskPosEditFormViewProps) {
   const {
     handleSubmit,
-    watch,
-    formState: { errors, isValid },
+    formState: { errors },
   } = form;
 
-  const removedQuantValue = watch("removedQuant");
   const { resolvedTheme } = useTheme();
   const theme = resolvedTheme === "dark" ? "dark" : "light";
   const placeholder = SemanticColors.placeholder[theme];
 
-  // #region agent log
-  const logData = {
-    removedQuantValue,
-    remainingQuant,
-    remainingBoxes,
-    isSubmitting,
-    errors: Object.keys(errors),
-  };
-  fetch("http://127.0.0.1:7242/ingest/95c9df87-1dd6-4841-9332-e064e1013b10", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      location: "AskPosEditFormView.tsx:48",
-      message: "Form state check",
-      data: logData,
-      timestamp: Date.now(),
-      sessionId: "debug-session",
-      runId: "run1",
-      hypothesisId: "C",
-    }),
-  }).catch(() => {});
-  // #endregion
-
   return (
     <ThemedVStack className="gap-4">
-      {/* Информация о текущих остатках */}
       <ThemedView className="rounded-lg p-3 border bg-background-0 border-outline-100">
         <ThemedVStack className="gap-2">
           <ThemedText type="defaultSemiBold" className="text-sm">
@@ -89,7 +66,6 @@ export function AskPosEditFormView({
         </ThemedVStack>
       </ThemedView>
 
-      {/* Поле для ввода убранного количества товара */}
       <ThemedBox className="gap-2">
         <ThemedText type="defaultSemiBold" className="text-sm">
           Знято товару *
@@ -98,45 +74,20 @@ export function AskPosEditFormView({
           control={form.control}
           name="removedQuant"
           render={({ field: { onChange, onBlur, value } }) => (
-            <ThemedInput
-              className={`rounded-lg border bg-background-0 ${
-                errors.removedQuant ? "border-error-500" : "border-outline-50"
-              }`}
-            >
-              <ThemedInputField
-                placeholder="Введіть кількість"
-                placeholderTextColor={placeholder}
-                value={value === "0" ? "" : value || ""}
-                onChangeText={(text) => {
-                  // Форматируем значение
-                  const cleanValue = text.replace(/[^0-9-]/g, "");
-                  const hasMinus = cleanValue.includes("-");
-                  const numericPart = cleanValue.replace(/-/g, "");
-
-                  let processedValue: string;
-                  if (hasMinus && !cleanValue.startsWith("-")) {
-                    processedValue = numericPart;
-                  } else if (cleanValue === "" || cleanValue === "-") {
-                    processedValue = "";
-                  } else if (numericPart === "0") {
-                    processedValue = hasMinus ? "-0" : "0";
-                  } else {
-                    processedValue = hasMinus
-                      ? `-${numericPart.replace(/^0+/, "") || "0"}`
-                      : numericPart.replace(/^0+/, "") || "0";
-                  }
-
-                  // Вызываем onChange для немедленного обновления watch
-                  onChange(processedValue);
-                  // Также вызываем утилиту для синхронизации через setValue
-                  onRemovedQuantChange(text);
-                }}
-                onBlur={onBlur}
-                keyboardType="numeric"
-                editable={!isSubmitting}
-                className="text-typography-900"
-              />
-            </ThemedInput>
+            <NumericDraftField
+              value={value === "0" ? "" : value || ""}
+              onChange={(next) => {
+                onChange(next);
+                onRemovedQuantChange(next);
+              }}
+              onBlur={onBlur}
+              filter={filterQuantInput}
+              normalize={normalizeQuantInput}
+              placeholder="Введіть кількість"
+              placeholderTextColor={placeholder}
+              editable={!isSubmitting}
+              error={!!errors.removedQuant}
+            />
           )}
         />
         {errors.removedQuant && (
@@ -146,7 +97,6 @@ export function AskPosEditFormView({
         )}
       </ThemedBox>
 
-      {/* Поле для ввода убранного количества коробок */}
       <ThemedBox className="gap-2">
         <ThemedText type="defaultSemiBold" className="text-sm">
           Знято коробок
@@ -155,45 +105,20 @@ export function AskPosEditFormView({
           control={form.control}
           name="removedBoxes"
           render={({ field: { onChange, onBlur, value } }) => (
-            <ThemedInput
-              className={`rounded-lg border bg-background-0 ${
-                errors.removedBoxes ? "border-error-500" : "border-outline-50"
-              }`}
-            >
-              <ThemedInputField
-                placeholder="Введіть кількість коробок"
-                placeholderTextColor={placeholder}
-                value={value === "0" ? "" : value || ""}
-                onChangeText={(text: string) => {
-                  // Форматируем значение
-                  const cleanValue = text.replace(/[^0-9-]/g, "");
-                  const hasMinus = cleanValue.includes("-");
-                  const numericPart = cleanValue.replace(/-/g, "");
-
-                  let processedValue: string;
-                  if (hasMinus && !cleanValue.startsWith("-")) {
-                    processedValue = numericPart;
-                  } else if (cleanValue === "" || cleanValue === "-") {
-                    processedValue = "";
-                  } else if (numericPart === "0") {
-                    processedValue = hasMinus ? "-0" : "0";
-                  } else {
-                    processedValue = hasMinus
-                      ? `-${numericPart.replace(/^0+/, "") || "0"}`
-                      : numericPart.replace(/^0+/, "") || "0";
-                  }
-
-                  // Вызываем onChange для немедленного обновления watch
-                  onChange(processedValue);
-                  // Также вызываем утилиту для синхронизации через setValue
-                  onRemovedBoxesChange(text);
-                }}
-                onBlur={onBlur}
-                keyboardType="numeric"
-                editable={!isSubmitting}
-                className="text-typography-900"
-              />
-            </ThemedInput>
+            <NumericDraftField
+              value={value === "0" ? "" : value || ""}
+              onChange={(next) => {
+                onChange(next);
+                onRemovedBoxesChange(next);
+              }}
+              onBlur={onBlur}
+              filter={filterQuantInput}
+              normalize={normalizeQuantInput}
+              placeholder="Введіть кількість коробок"
+              placeholderTextColor={placeholder}
+              editable={!isSubmitting}
+              error={!!errors.removedBoxes}
+            />
           )}
         />
         {errors.removedBoxes && (
@@ -203,7 +128,6 @@ export function AskPosEditFormView({
         )}
       </ThemedBox>
 
-      {/* Отображение остатков после операции */}
       <ThemedView
         className={`rounded-lg border p-3 ${
           remainingQuant < 0 || remainingBoxes < 0
@@ -256,7 +180,6 @@ export function AskPosEditFormView({
         </ThemedView>
       )}
 
-      {/* Кнопки действий */}
       <ThemedHStack className="gap-2">
         {onCancel && (
           <ThemedButton
@@ -269,10 +192,7 @@ export function AskPosEditFormView({
           </ThemedButton>
         )}
         <ThemedButton
-          onPress={(e) => {
-            console.log("Button pressed, isValid:", isValid, "errors:", errors);
-            handleSubmit(onSubmit)(e);
-          }}
+          onPress={handleSubmit(onSubmit)}
           disabled={isSubmitting}
           className="flex-1"
         >

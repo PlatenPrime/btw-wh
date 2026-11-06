@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import type { KonkDto } from "@/modules/konks/api/types";
 import { differenceInCalendarDays, isValid, parseISO } from "date-fns";
+import { useState } from "react";
 
 export const BAND_SPIKE_DISCOVER_MAX_RANGE_DAYS = 93;
 
@@ -31,6 +32,11 @@ function getDaySpan(dateFrom: string, dateTo: string): number | null {
   return differenceInCalendarDays(to, from) + 1;
 }
 
+/** Mid-edit: только цифры, без нормализации (чтобы не прыгал caret). */
+function filterStockInput(value: string): string {
+  return value.replace(/\D/g, "");
+}
+
 export function SkuBandSpikeControlsView({
   konk,
   dateFrom,
@@ -45,9 +51,28 @@ export function SkuBandSpikeControlsView({
   onStockBandChange,
   onSubmit,
 }: SkuBandSpikeControlsViewProps) {
+  const [minDraft, setMinDraft] = useState<string | null>(null);
+  const [maxDraft, setMaxDraft] = useState<string | null>(null);
+
+  const displayMin = minDraft !== null ? minDraft : stockMinRaw;
+  const displayMax = maxDraft !== null ? maxDraft : stockMaxRaw;
+
   const daySpan = getDaySpan(dateFrom, dateTo);
   const isOverMax =
     daySpan !== null && daySpan > BAND_SPIKE_DISCOVER_MAX_RANGE_DAYS;
+
+  const commitStockBand = (min: string, max: string) => {
+    if (min === stockMinRaw && max === stockMaxRaw) return;
+    onStockBandChange(min, max);
+  };
+
+  const handleSubmit = () => {
+    // Перед поиском фиксируем draft в URL (на случай фокуса без blur)
+    commitStockBand(displayMin, displayMax);
+    setMinDraft(null);
+    setMaxDraft(null);
+    onSubmit();
+  };
 
   return (
     <SurfaceSection className="grid gap-3">
@@ -62,14 +87,21 @@ export function SkuBandSpikeControlsView({
         <div className="grid gap-2">
           <Input
             id="band-spike-discover-stock-min"
-            type="number"
-            min={0}
-            inputMode="decimal"
+            type="text"
+            inputMode="numeric"
+            pattern="[0-9]*"
             className="w-[140px]"
-            value={stockMinRaw}
-            onChange={(event) =>
-              onStockBandChange(event.target.value, stockMaxRaw)
-            }
+            value={displayMin}
+            onFocus={() => setMinDraft(stockMinRaw)}
+            onChange={(event) => {
+              const next = filterStockInput(event.target.value);
+              setMinDraft(next);
+              commitStockBand(next, displayMax);
+            }}
+            onBlur={() => {
+              commitStockBand(displayMin, displayMax);
+              setMinDraft(null);
+            }}
             placeholder="мін."
           />
         </div>
@@ -77,14 +109,21 @@ export function SkuBandSpikeControlsView({
         <div className="grid gap-2">
           <Input
             id="band-spike-discover-stock-max"
-            type="number"
-            min={0}
-            inputMode="decimal"
+            type="text"
+            inputMode="numeric"
+            pattern="[0-9]*"
             className="w-[140px]"
-            value={stockMaxRaw}
-            onChange={(event) =>
-              onStockBandChange(stockMinRaw, event.target.value)
-            }
+            value={displayMax}
+            onFocus={() => setMaxDraft(stockMaxRaw)}
+            onChange={(event) => {
+              const next = filterStockInput(event.target.value);
+              setMaxDraft(next);
+              commitStockBand(displayMin, next);
+            }}
+            onBlur={() => {
+              commitStockBand(displayMin, displayMax);
+              setMaxDraft(null);
+            }}
             placeholder="макс."
           />
         </div>
@@ -100,7 +139,7 @@ export function SkuBandSpikeControlsView({
         <Button
           type="button"
           disabled={!isSubmitReady || isFetching || isOverMax}
-          onClick={onSubmit}
+          onClick={handleSubmit}
         >
           {isFetching ? "Шукаю…" : "Знайти"}
         </Button>

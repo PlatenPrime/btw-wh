@@ -54,15 +54,15 @@ Pie по произвольному списку SKU (в т.ч. разных к�
 
 **Body (XOR):** режим A — `skuIds` (≥1 ObjectId, без upper bound) без `selectAll`; режим B — `selectAll: true` без `skuIds`, опционально `search` / `konkName` / `prodName` (как `GET /skus`). Иначе 400.
 
-| Поле        | Тип      | Обязательно | Описание |
-| ----------- | -------- | ----------- | -------- |
+| Поле        | Тип      | Обязательно | Описание                               |
+| ----------- | -------- | ----------- | -------------------------------------- |
 | `skuIds`    | string[] | режим A     | ≥1 Mongo ObjectId; порядок сохраняется |
-| `selectAll` | boolean  | режим B     | строго `true` |
-| `search`    | string   | нет         | trim; с `selectAll` |
+| `selectAll` | boolean  | режим B     | строго `true`                          |
+| `search`    | string   | нет         | trim; с `selectAll`                    |
 | `konkName`  | string   | нет         | точная назва конкурента; с `selectAll` |
-| `prodName`  | string   | нет         | точна назва виробника; с `selectAll` |
-| `dateFrom`  | string   | да          | `YYYY-MM-DD` |
-| `dateTo`    | string   | да          | `YYYY-MM-DD`, ≥ `dateFrom` |
+| `prodName`  | string   | нет         | точна назва виробника; с `selectAll`   |
+| `dateFrom`  | string   | да          | `YYYY-MM-DD`                           |
+| `dateTo`    | string   | да          | `YYYY-MM-DD`, ≥ `dateFrom`             |
 
 **Ответ 200:**
 
@@ -73,6 +73,7 @@ Pie по произвольному списку SKU (в т.ч. разных к�
     title: string,
     konkName: string,
     productId: string,
+    imageUrl: string,
     salesPcs: number,
     salesUah: number,
     sharePcs: number,

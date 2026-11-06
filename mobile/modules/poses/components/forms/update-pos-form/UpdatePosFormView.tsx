@@ -3,17 +3,20 @@ import {
   ThemedButton,
   ThemedHStack,
   ThemedIcon,
-  ThemedInput,
-  ThemedInputField,
   ThemedPressable,
   ThemedText as ThemedTextButton,
 } from "@/components/themed";
+import { NumericDraftField } from "@/components/shared/numeric-draft-field";
 import { ThemedText } from "@/components/themed/themed-text";
 import { ThemedView } from "@/components/themed/themed-view";
 import { sklads } from "@/constants/sklad";
 import { SemanticColors } from "@/constants/theme";
 import { useIconColor } from "@/hooks/use-icon-color";
 import { useTheme } from "@/providers/theme-provider";
+import {
+  filterDigitsInput,
+  normalizeDigitsInput,
+} from "@/utils/quant-input";
 import type { UseFormReturn } from "react-hook-form";
 import { Controller } from "react-hook-form";
 import { ActivityIndicator } from "react-native";
@@ -52,43 +55,19 @@ export function UpdatePosFormView({
         <Controller
           control={control}
           name="quant"
-          render={({ field: { onChange, onBlur, value } }) => {
-            const handleChange = (text: string) => {
-              // Обрабатываем значение через кастомный обработчик
-              const numericValue = text.replace(/\D/g, "");
-
-              let processedValue: string;
-              if (numericValue === "") {
-                processedValue = "";
-              } else if (numericValue === "0") {
-                processedValue = "0";
-              } else {
-                processedValue = numericValue.replace(/^0+/, "");
-              }
-
-              // Обновляем через field.onChange
-              onChange(processedValue);
-            };
-
-            return (
-              <ThemedInput
-                className={`rounded-lg border bg-background-0 ${
-                  errors.quant ? "border-error-500" : "border-outline-50"
-                }`}
-              >
-                <ThemedInputField
-                  placeholder="Введіть кількість"
-                  placeholderTextColor={placeholder}
-                  value={value || ""}
-                  onChangeText={handleChange}
-                  onBlur={onBlur}
-                  keyboardType="numeric"
-                  editable={!isSubmitting}
-                  className="text-typography-900"
-                />
-              </ThemedInput>
-            );
-          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <NumericDraftField
+              value={value || ""}
+              onChange={onChange}
+              onBlur={onBlur}
+              filter={filterDigitsInput}
+              normalize={normalizeDigitsInput}
+              placeholder="Введіть кількість"
+              placeholderTextColor={placeholder}
+              editable={!isSubmitting}
+              error={!!errors.quant}
+            />
+          )}
         />
         {errors.quant && (
           <ThemedText type="default" className="text-xs text-error-600">
@@ -104,43 +83,19 @@ export function UpdatePosFormView({
         <Controller
           control={control}
           name="boxes"
-          render={({ field: { onChange, onBlur, value } }) => {
-            const handleChange = (text: string) => {
-              // Обрабатываем значение через кастомный обработчик
-              const numericValue = text.replace(/\D/g, "");
-
-              let processedValue: string;
-              if (numericValue === "") {
-                processedValue = "";
-              } else if (numericValue === "0") {
-                processedValue = "0";
-              } else {
-                processedValue = numericValue.replace(/^0+/, "");
-              }
-
-              // Обновляем через field.onChange
-              onChange(processedValue);
-            };
-
-            return (
-              <ThemedInput
-                className={`rounded-lg border bg-background-0 ${
-                  errors.boxes ? "border-error-500" : "border-outline-50"
-                }`}
-              >
-                <ThemedInputField
-                  placeholder="Введіть кількість коробок"
-                  placeholderTextColor={placeholder}
-                  value={value || ""}
-                  onChangeText={handleChange}
-                  onBlur={onBlur}
-                  keyboardType="numeric"
-                  editable={!isSubmitting}
-                  className="text-typography-900"
-                />
-              </ThemedInput>
-            );
-          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <NumericDraftField
+              value={value || ""}
+              onChange={onChange}
+              onBlur={onBlur}
+              filter={filterDigitsInput}
+              normalize={normalizeDigitsInput}
+              placeholder="Введіть кількість коробок"
+              placeholderTextColor={placeholder}
+              editable={!isSubmitting}
+              error={!!errors.boxes}
+            />
+          )}
         />
         {errors.boxes && (
           <ThemedText type="default" className="text-xs text-error-600">

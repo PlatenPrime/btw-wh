@@ -126,11 +126,13 @@ export function CorrectBandSpikeDialogView({
             <Label htmlFor="band-spike-stock-min">Мін. залишок</Label>
             <Input
               id="band-spike-stock-min"
-              type="number"
-              min={0}
-              inputMode="decimal"
+              type="text"
+              inputMode="numeric"
+              pattern="[0-9]*"
               value={stockMin}
-              onChange={(event) => onStockMinChange(event.target.value)}
+              onChange={(event) =>
+                onStockMinChange(event.target.value.replace(/\D/g, ""))
+              }
               disabled={isBusy}
               placeholder="напр. 9000"
             />
@@ -139,11 +141,13 @@ export function CorrectBandSpikeDialogView({
             <Label htmlFor="band-spike-stock-max">Макс. залишок</Label>
             <Input
               id="band-spike-stock-max"
-              type="number"
-              min={0}
-              inputMode="decimal"
+              type="text"
+              inputMode="numeric"
+              pattern="[0-9]*"
               value={stockMax}
-              onChange={(event) => onStockMaxChange(event.target.value)}
+              onChange={(event) =>
+                onStockMaxChange(event.target.value.replace(/\D/g, ""))
+              }
               disabled={isBusy}
               placeholder="напр. 11000"
             />

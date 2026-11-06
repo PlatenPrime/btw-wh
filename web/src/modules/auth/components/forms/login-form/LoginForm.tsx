@@ -29,6 +29,8 @@ export const LoginForm = () => {
   const {
     register,
     handleSubmit,
+    setValue,
+    getValues,
     formState: { errors },
     setError,
     setFocus,
@@ -46,9 +48,19 @@ export const LoginForm = () => {
   const usernameField = register("username");
   const passwordField = register("password");
 
+  const stripFieldOnBlur = (name: keyof LoginFormValues) => {
+    const stripped = stripSpaces(getValues(name));
+    setValue(name, stripped, { shouldValidate: true, shouldDirty: true });
+  };
+
   const onSubmit = async (data: LoginFormValues) => {
+    const username = stripSpaces(data.username);
+    const password = stripSpaces(data.password);
+    setValue("username", username);
+    setValue("password", password);
+
     try {
-      await login(data.username, data.password);
+      await login(username, password);
       navigate("/", { replace: true });
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -81,9 +93,9 @@ export const LoginForm = () => {
             aria-invalid={!!errors.username}
             aria-describedby="username-error"
             {...usernameField}
-            onChange={(event) => {
-              event.target.value = stripSpaces(event.target.value);
-              void usernameField.onChange(event);
+            onBlur={(event) => {
+              usernameField.onBlur(event);
+              stripFieldOnBlur("username");
             }}
             disabled={isLoading}
             className="h-11"
@@ -103,9 +115,9 @@ export const LoginForm = () => {
               aria-invalid={!!errors.password}
               aria-describedby="password-error"
               {...passwordField}
-              onChange={(event) => {
-                event.target.value = stripSpaces(event.target.value);
-                void passwordField.onChange(event);
+              onBlur={(event) => {
+                passwordField.onBlur(event);
+                stripFieldOnBlur("password");
               }}
               disabled={isLoading}
               className="h-11 pr-10"

@@ -9,8 +9,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { typography } from "@/lib/typography";
 
-const FILL_MAX_PAGES = 200;
-
 interface FillSkugrSkusDialogViewProps {
   konkName: string;
   maxPagesInput: string;
@@ -54,13 +52,14 @@ export function FillSkugrSkusDialogView({
           <Label htmlFor="fill-max-pages">Макс. сторінок (необов&apos;язково)</Label>
           <Input
             id="fill-max-pages"
-            type="number"
-            min={1}
-            max={FILL_MAX_PAGES}
+            type="text"
             inputMode="numeric"
+            pattern="[0-9]*"
             placeholder="1–200, порожньо = за замовчуванням"
             value={maxPagesInput}
-            onChange={(e) => onMaxPagesChange(e.target.value)}
+            onChange={(e) =>
+              onMaxPagesChange(e.target.value.replace(/\D/g, ""))
+            }
             disabled={isSubmitting}
           />
         </div>

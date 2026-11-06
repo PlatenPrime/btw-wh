@@ -43,47 +43,13 @@ export function UpdatePosForm({
     }
   }, [isDialogOpen, form, pos]);
 
-  // Обробники для числових полів без провідних нулів
+  // InputQuant уже фильтрует/нормализует — только прокидываем строку
   const handleQuantChange = (value: string) => {
-    // Прибираємо всі нецифрові символи
-    const numericValue = value.replace(/\D/g, "");
-
-    // Якщо поле порожнє, залишаємо порожнім для кращого UX
-    if (numericValue === "") {
-      setValue("quant", "", { shouldValidate: true });
-      return;
-    }
-
-    // Якщо введено тільки 0, залишаємо як є
-    if (numericValue === "0") {
-      setValue("quant", "0", { shouldValidate: true });
-      return;
-    }
-
-    // Прибираємо провідні нулі для ненульових значень
-    const cleanValue = numericValue.replace(/^0+/, "");
-    setValue("quant", cleanValue, { shouldValidate: true });
+    setValue("quant", value, { shouldValidate: true });
   };
 
   const handleBoxesChange = (value: string) => {
-    // Прибираємо всі нецифрові символи
-    const numericValue = value.replace(/\D/g, "");
-
-    // Якщо поле порожнє, залишаємо порожнім для кращого UX
-    if (numericValue === "") {
-      setValue("boxes", "", { shouldValidate: true });
-      return;
-    }
-
-    // Якщо введено тільки 0, залишаємо як є
-    if (numericValue === "0") {
-      setValue("boxes", "0", { shouldValidate: true });
-      return;
-    }
-
-    // Прибираємо провідні нулі для ненульових значень
-    const cleanValue = numericValue.replace(/^0+/, "");
-    setValue("boxes", cleanValue, { shouldValidate: true });
+    setValue("boxes", value, { shouldValidate: true });
   };
 
   const onSubmit = async (data: UpdatePosFormData) => {

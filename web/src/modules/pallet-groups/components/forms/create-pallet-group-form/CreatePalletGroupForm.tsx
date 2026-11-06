@@ -1,6 +1,9 @@
 import { useCreatePalletGroupMutation } from "@/modules/pallet-groups/api/hooks/mutations/useCreatePalletGroupMutation";
-import type { CreatePalletGroupFormValues } from "@/modules/pallet-groups/components/forms/create-pallet-group-form/schema";
-import { createPalletGroupSchema } from "@/modules/pallet-groups/components/forms/create-pallet-group-form/schema";
+import {
+  createPalletGroupSchema,
+  parsePalletGroupOrder,
+  type CreatePalletGroupFormValues,
+} from "@/modules/pallet-groups/components/forms/create-pallet-group-form/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { CreatePalletGroupFormView } from "./CreatePalletGroupFormView";
@@ -18,7 +21,7 @@ export function CreatePalletGroupForm({
     resolver: zodResolver(createPalletGroupSchema),
     defaultValues: {
       title: "",
-      order: 1,
+      order: "1",
     },
   });
 
@@ -27,7 +30,7 @@ export function CreatePalletGroupForm({
   const onSubmit = async (values: CreatePalletGroupFormValues) => {
     await createMutation.mutateAsync({
       title: values.title,
-      order: values.order,
+      order: parsePalletGroupOrder(values.order),
     });
     onSuccess();
   };

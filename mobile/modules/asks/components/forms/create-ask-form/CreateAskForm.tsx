@@ -7,6 +7,11 @@ import {
   type CreateAskFormData,
 } from "@/modules/asks/components/forms/create-ask-form/schema";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
+import {
+  artikulDigits,
+  formatArtikulInput,
+  isCompleteArtikul,
+} from "@/utils/artikul-input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -51,33 +56,42 @@ export function CreateAskForm({
 
   const createMutation = useCreateAskMutation();
 
-  // Поиск артикула при вводе 9 символов или если артикул предзаполнен
-  const shouldSearchArt = artikul.length === 9;
-  const artQuery = useOneArtQuery(shouldSearchArt ? artikul : undefined);
+  // Поиск при полных 8 цифрах (с дефисом или без mid-edit)
+  const shouldSearchArt = isCompleteArtikul(artikul);
+  const searchArtikul = shouldSearchArt
+    ? formatArtikulInput(artikul)
+    : undefined;
+  const artQuery = useOneArtQuery(searchArtikul);
   const artData = artQuery.data?.data || undefined;
   const isArtLoading = artQuery.isPending;
 
-  // Сбрасываем данные артикула при изменении длины (когда пользователь редактирует)
-  const [previousArtikulLength, setPreviousArtikulLength] = useState(
-    artikul.length
+  const artikulDigitCount = artikulDigits(artikul).length;
+  const [previousArtikulDigitCount, setPreviousArtikulDigitCount] = useState(
+    artikulDigitCount,
   );
   const [currentArtData, setCurrentArtData] = useState(artData);
 
-  // Обновляем текущие данные артикула только если артикул изменился
   useEffect(() => {
-    if (artikul.length === 9 && artData) {
+    if (shouldSearchArt && artData) {
       setCurrentArtData(artData);
-    } else if (artikul.length !== 9) {
+    } else if (!shouldSearchArt) {
       setCurrentArtData(undefined);
     }
 
-    // Если длина изменилась и стала меньше 9, сбрасываем данные
-    if (artikul.length < previousArtikulLength && artikul.length < 9) {
+    if (
+      artikulDigitCount < previousArtikulDigitCount &&
+      artikulDigitCount < 8
+    ) {
       setCurrentArtData(undefined);
     }
 
-    setPreviousArtikulLength(artikul.length);
-  }, [artikul.length, artData, previousArtikulLength]);
+    setPreviousArtikulDigitCount(artikulDigitCount);
+  }, [
+    artikulDigitCount,
+    artData,
+    previousArtikulDigitCount,
+    shouldSearchArt,
+  ]);
 
   // Обработка изменения артикула
   const handleArtikulChange = (value: string) => {
@@ -94,7 +108,7 @@ export function CreateAskForm({
 
     try {
       const createData: CreateAskRequest = {
-        artikul: data.artikul.trim(),
+        artikul: formatArtikulInput(data.artikul.trim()),
         nameukr: currentArtData?.nameukr,
         quant: data.quant && data.quant.trim() ? Number(data.quant) : undefined,
         com: data.com && data.com.trim() ? data.com.trim() : undefined,

@@ -9,6 +9,7 @@ import {
   ThemedText,
   ThemedView,
 } from "@/components/themed";
+import { NumericDraftField } from "@/components/shared/numeric-draft-field";
 import { sklads } from "@/constants/sklad";
 import { SemanticColors } from "@/constants/theme";
 import { useIconColor } from "@/hooks/use-icon-color";
@@ -16,6 +17,14 @@ import { SharikImage } from "@/components/shared/sharik-image";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import type { CreateAskFormData } from "@/modules/asks/components/forms/create-ask-form/schema";
 import { useTheme } from "@/providers/theme-provider";
+import {
+  filterArtikulInput,
+  formatArtikulInput,
+} from "@/utils/artikul-input";
+import {
+  filterDigitsInput,
+  normalizeDigitsInput,
+} from "@/utils/quant-input";
 import type { UseFormReturn } from "react-hook-form";
 import { Controller } from "react-hook-form";
 import { ActivityIndicator } from "react-native";
@@ -89,40 +98,24 @@ export function CreateAskFormView({
         <Controller
           control={control}
           name="artikul"
-          render={({ field: { onChange, onBlur, value } }) => {
-            const handleChange = (text: string) => {
-              // Автоматическое добавление дефиса после 4 символов
-              let formattedText = text.replace(/\D/g, "");
-              if (formattedText.length > 4) {
-                formattedText = `${formattedText.slice(
-                  0,
-                  4
-                )}-${formattedText.slice(4, 8)}`;
-              }
-              onChange(formattedText);
-              onArtikulChange(formattedText);
-            };
-
-            return (
-              <ThemedInput
-                className={`rounded-lg border bg-background-0 ${
-                  errors.artikul ? "border-error-500" : "border-outline-50"
-                }`}
-              >
-                <ThemedInputField
-                  placeholder="1111-1111"
-                  placeholderTextColor={placeholder}
-                  value={value || ""}
-                  onChangeText={handleChange}
-                  onBlur={onBlur}
-                  maxLength={9}
-                  autoFocus
-                  editable={!isSubmitting}
-                  className="text-typography-900"
-                />
-              </ThemedInput>
-            );
-          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <NumericDraftField
+              value={value || ""}
+              onChange={(next) => {
+                onChange(next);
+                onArtikulChange(next);
+              }}
+              onBlur={onBlur}
+              filter={filterArtikulInput}
+              normalize={formatArtikulInput}
+              placeholder="1111-1111"
+              placeholderTextColor={placeholder}
+              maxLength={9}
+              autoFocus
+              editable={!isSubmitting}
+              error={!!errors.artikul}
+            />
+          )}
         />
         {errors.artikul && (
           <ThemedText type="default" className="text-xs text-error-600">
@@ -145,22 +138,17 @@ export function CreateAskFormView({
           control={control}
           name="quant"
           render={({ field: { onChange, onBlur, value } }) => (
-            <ThemedInput
-              className={`rounded-lg border bg-background-0 ${
-                errors.quant ? "border-error-500" : "border-outline-50"
-              }`}
-            >
-              <ThemedInputField
-                placeholder="Введіть кількість"
-                placeholderTextColor={placeholder}
-                value={value || ""}
-                onChangeText={onChange}
-                onBlur={onBlur}
-                keyboardType="numeric"
-                editable={!isSubmitting}
-                className="text-typography-900"
-              />
-            </ThemedInput>
+            <NumericDraftField
+              value={value || ""}
+              onChange={onChange}
+              onBlur={onBlur}
+              filter={filterDigitsInput}
+              normalize={normalizeDigitsInput}
+              placeholder="Введіть кількість"
+              placeholderTextColor={placeholder}
+              editable={!isSubmitting}
+              error={!!errors.quant}
+            />
           )}
         />
         {errors.quant && (

@@ -3,19 +3,26 @@ import {
   ThemedButton,
   ThemedHStack,
   ThemedIcon,
-  ThemedInput,
-  ThemedInputField,
   ThemedPressable,
   ThemedText,
   ThemedView,
 } from "@/components/themed";
+import { NumericDraftField } from "@/components/shared/numeric-draft-field";
+import { SharikImage } from "@/components/shared/sharik-image";
 import { sklads } from "@/constants/sklad";
 import { SemanticColors } from "@/constants/theme";
 import { useIconColor } from "@/hooks/use-icon-color";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
-import { SharikImage } from "@/components/shared/sharik-image";
 import type { IPos } from "@/modules/poses/api/types";
 import { useTheme } from "@/providers/theme-provider";
+import {
+  filterArtikulInput,
+  formatArtikulInput,
+} from "@/utils/artikul-input";
+import {
+  filterDigitsInput,
+  normalizeDigitsInput,
+} from "@/utils/quant-input";
 import type { UseFormReturn } from "react-hook-form";
 import { Controller } from "react-hook-form";
 import { ActivityIndicator } from "react-native";
@@ -153,39 +160,23 @@ export function CreatePosFormView({
         <Controller
           control={control}
           name="artikul"
-          render={({ field: { onChange, onBlur, value } }) => {
-            const handleChange = (text: string) => {
-              // Автоматическое добавление дефиса после 4 символов
-              let formattedText = text.replace(/\D/g, "");
-              if (formattedText.length > 4) {
-                formattedText = `${formattedText.slice(
-                  0,
-                  4
-                )}-${formattedText.slice(4, 8)}`;
-              }
-              onChange(formattedText);
-              onArtikulChange(formattedText);
-            };
-
-            return (
-              <ThemedInput
-                className={`rounded-lg border bg-background-0 ${
-                  errors.artikul ? "border-error-500" : "border-outline-50"
-                }`}
-              >
-                <ThemedInputField
-                  placeholder="1111-1111"
-                  placeholderTextColor={placeholder}
-                  value={value || ""}
-                  onChangeText={handleChange}
-                  onBlur={onBlur}
-                  maxLength={9}
-                  editable={!isSubmitting}
-                  className="text-typography-900"
-                />
-              </ThemedInput>
-            );
-          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <NumericDraftField
+              value={value || ""}
+              onChange={(next) => {
+                onChange(next);
+                onArtikulChange(next);
+              }}
+              onBlur={onBlur}
+              filter={filterArtikulInput}
+              normalize={formatArtikulInput}
+              placeholder="1111-1111"
+              placeholderTextColor={placeholder}
+              maxLength={9}
+              editable={!isSubmitting}
+              error={!!errors.artikul}
+            />
+          )}
         />
         {errors.artikul && (
           <ThemedText type="default" className="text-xs text-error-600">
@@ -207,80 +198,29 @@ export function CreatePosFormView({
         <Controller
           control={control}
           name="quant"
-          render={({ field: { onChange, onBlur, value } }) => {
-            const handleChange = (text: string) => {
-              // #region agent log
-              fetch(
-                "http://127.0.0.1:7242/ingest/95c9df87-1dd6-4841-9332-e064e1013b10",
-                {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({
-                    location: "CreatePosFormView.tsx:169",
-                    message: "quant handleChange called",
-                    data: { text, currentValue: value },
-                    timestamp: Date.now(),
-                    sessionId: "debug-session",
-                    runId: "run1",
-                    hypothesisId: "B",
-                  }),
+          render={({ field: { onChange, onBlur, value } }) => (
+            <NumericDraftField
+              value={value === 0 ? "" : value.toString()}
+              onChange={(next) => {
+                onQuantChange(next);
+                if (next === "" || next === "-") {
+                  onChange(0);
+                  return;
                 }
-              ).catch(() => {});
-              // #endregion
-              const numericValue = text.replace(/\D/g, "");
-
-              let processedValue: string;
-              if (numericValue === "") {
-                processedValue = "";
-              } else if (numericValue === "0") {
-                processedValue = "0";
-              } else {
-                processedValue = numericValue.replace(/^0+/, "");
-              }
-
-              const numValue =
-                processedValue === "" ? 0 : parseInt(processedValue, 10);
-              // #region agent log
-              fetch(
-                "http://127.0.0.1:7242/ingest/95c9df87-1dd6-4841-9332-e064e1013b10",
-                {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({
-                    location: "CreatePosFormView.tsx:181",
-                    message: "quant before onChange",
-                    data: { numValue, processedValue },
-                    timestamp: Date.now(),
-                    sessionId: "debug-session",
-                    runId: "run1",
-                    hypothesisId: "B",
-                  }),
+                const numValue = Number.parseInt(next, 10);
+                if (!Number.isNaN(numValue)) {
+                  onChange(numValue);
                 }
-              ).catch(() => {});
-              // #endregion
-              onChange(numValue);
-              onQuantChange(processedValue);
-            };
-
-            return (
-              <ThemedInput
-                className={`rounded-lg border bg-background-0 ${
-                  errors.quant ? "border-error-500" : "border-outline-50"
-                }`}
-              >
-                <ThemedInputField
-                  placeholder="Введіть кількість"
-                  placeholderTextColor={placeholder}
-                  value={value === 0 ? "" : value.toString()}
-                  onChangeText={handleChange}
-                  onBlur={onBlur}
-                  keyboardType="numeric"
-                  editable={!isSubmitting}
-                  className="text-typography-900"
-                />
-              </ThemedInput>
-            );
-          }}
+              }}
+              onBlur={onBlur}
+              filter={filterDigitsInput}
+              normalize={normalizeDigitsInput}
+              placeholder="Введіть кількість"
+              placeholderTextColor={placeholder}
+              editable={!isSubmitting}
+              error={!!errors.quant}
+            />
+          )}
         />
         {errors.quant && (
           <ThemedText type="default" className="text-xs text-error-600">
@@ -297,44 +237,29 @@ export function CreatePosFormView({
         <Controller
           control={control}
           name="boxes"
-          render={({ field: { onChange, onBlur, value } }) => {
-            const handleChange = (text: string) => {
-              const numericValue = text.replace(/\D/g, "");
-
-              let processedValue: string;
-              if (numericValue === "") {
-                processedValue = "";
-              } else if (numericValue === "0") {
-                processedValue = "0";
-              } else {
-                processedValue = numericValue.replace(/^0+/, "");
-              }
-
-              const numValue =
-                processedValue === "" ? 0 : parseInt(processedValue, 10);
-              onChange(numValue);
-              onBoxesChange(processedValue);
-            };
-
-            return (
-              <ThemedInput
-                className={`rounded-lg border bg-background-0 ${
-                  errors.boxes ? "border-error-500" : "border-outline-50"
-                }`}
-              >
-                <ThemedInputField
-                  placeholder="Введіть кількість коробок"
-                  placeholderTextColor={placeholder}
-                  value={value === 0 ? "" : value.toString()}
-                  onChangeText={handleChange}
-                  onBlur={onBlur}
-                  keyboardType="numeric"
-                  editable={!isSubmitting}
-                  className="text-typography-900"
-                />
-              </ThemedInput>
-            );
-          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <NumericDraftField
+              value={value === 0 ? "" : value.toString()}
+              onChange={(next) => {
+                onBoxesChange(next);
+                if (next === "" || next === "-") {
+                  onChange(0);
+                  return;
+                }
+                const numValue = Number.parseInt(next, 10);
+                if (!Number.isNaN(numValue)) {
+                  onChange(numValue);
+                }
+              }}
+              onBlur={onBlur}
+              filter={filterDigitsInput}
+              normalize={normalizeDigitsInput}
+              placeholder="Введіть кількість коробок"
+              placeholderTextColor={placeholder}
+              editable={!isSubmitting}
+              error={!!errors.boxes}
+            />
+          )}
         />
         {errors.boxes && (
           <ThemedText type="default" className="text-xs text-error-600">

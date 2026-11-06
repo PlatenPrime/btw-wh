@@ -30,6 +30,7 @@ export function CreateKaskFormView({
 }: CreateKaskFormViewProps) {
   const {
     register,
+    control,
     handleSubmit,
     watch,
     formState: { errors },
@@ -94,6 +95,7 @@ export function CreateKaskFormView({
           />
           <CreateKaskFormFields
             register={register}
+            control={control}
             errors={errors}
             onArtikulChange={onArtikulChange}
             isSubmitting={isSubmitting}

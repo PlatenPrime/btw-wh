@@ -70,13 +70,9 @@ export function CreateAskForm({
     setPreviousArtikulLength(artikul.length);
   }, [artikul.length, artData, previousArtikulLength]);
 
-  // Обработчики для числовых полей
+  // InputQuant уже фильтрует/нормализует — только прокидываем строку
   const handleQuantChange = (value: string) => {
-    // Убираем все нецифровые символы
-    const numericValue = value.replace(/\D/g, "");
-
-    // Устанавливаем значение как есть (строка)
-    setValue("quant", numericValue, { shouldValidate: true });
+    setValue("quant", value, { shouldValidate: true });
   };
 
   const onSubmit = async (data: CreateAskFormData) => {

@@ -1,4 +1,5 @@
 import { SurfaceSection } from "@/components/shared/layout";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -18,6 +19,7 @@ import {
 } from "@/utils/export-sales-share-table-xlsx";
 import { Download } from "lucide-react";
 import { useCallback, useMemo } from "react";
+import { Link } from "react-router";
 
 interface SkuSelectionComparisonTableProps {
   rows: SkuSelectionComparisonRow[];
@@ -118,8 +120,29 @@ export function SkuSelectionComparisonTable({
           </TableRow>
           {rows.map((item) => (
             <TableRow key={item.skuId}>
-              <TableCell className="max-w-[280px] truncate font-medium">
-                {item.title}
+              <TableCell className="max-w-[280px]">
+                <div className="flex min-w-0 items-center gap-3">
+                  <Avatar className="h-10 w-10 shrink-0 rounded-md">
+                    {item.imageUrl ? (
+                      <AvatarImage
+                        src={item.imageUrl}
+                        alt=""
+                        className="object-contain"
+                      />
+                    ) : null}
+                    <AvatarFallback className="rounded-md text-xs">
+                      {(item.title?.slice(0, 2) ?? "?").toUpperCase()}
+                    </AvatarFallback>
+                  </Avatar>
+                  <Link
+                    to={`/sku/skus/${item.skuId}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="min-w-0 truncate font-medium hover:underline"
+                  >
+                    {item.title}
+                  </Link>
+                </div>
               </TableCell>
               <TableCell className="max-w-[160px] truncate text-muted-foreground">
                 {item.konkName}

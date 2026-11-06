@@ -39,14 +39,26 @@ const percentFormat = new Intl.NumberFormat("uk-UA", {
 });
 
 export function SkuStatisticsPie({ rows, metric }: SkuStatisticsPieProps) {
-  const chartData = rows.map((item) => ({
-    name: item.title,
-    share: item.share,
-    value: metric === "salesUah" ? item.salesUah : item.salesPcs,
-  }));
+  const chartData = rows
+    .map((item) => ({
+      name: item.title,
+      share: item.share,
+      value: metric === "salesUah" ? item.salesUah : item.salesPcs,
+    }))
+    .filter((item) => item.value > 0);
+
+  if (chartData.length === 0) {
+    return (
+      <SurfaceSection className="py-3">
+        <p className="text-center text-sm text-muted-foreground">
+          Немає ненульових продажів для діаграми; див. таблицю нижче.
+        </p>
+      </SurfaceSection>
+    );
+  }
 
   return (
-    <SurfaceSection className="grid gap-3 ">
+    <SurfaceSection className="grid gap-3">
       <ChartContainer
         config={chartConfig}
         className="aspect-auto h-[320px] w-full max-w-full"

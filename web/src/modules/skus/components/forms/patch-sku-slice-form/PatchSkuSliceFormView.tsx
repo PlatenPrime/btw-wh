@@ -1,7 +1,7 @@
 import { DialogActions } from "@/components/shared/dialogs";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import { Input } from "@/components/ui/input";
+import { InputNumeric } from "@/components/ui/input-numeric";
 import { Label } from "@/components/ui/label";
 import {
   Popover,
@@ -14,7 +14,7 @@ import { format, parse } from "date-fns";
 import { uk } from "date-fns/locale";
 import { CalendarIcon, Plus, Trash2 } from "lucide-react";
 import type { DateRange } from "react-day-picker";
-import type { UseFormReturn } from "react-hook-form";
+import { Controller, type UseFormReturn } from "react-hook-form";
 import { PatchSkuSliceFormSkeleton } from "./PatchSkuSliceFormSkeleton";
 import type {
   PatchSkuSliceFormData,
@@ -86,7 +86,7 @@ export function PatchSkuSliceFormView({
   onCancel,
 }: PatchSkuSliceFormViewProps) {
   const {
-    register,
+    control,
     handleSubmit,
     watch,
     formState: { errors },
@@ -329,13 +329,25 @@ export function PatchSkuSliceFormView({
           <div className="grid grid-cols-2 gap-3">
             <div className="flex flex-col gap-2">
               <Label htmlFor="patch-sku-slice-stock">Залишок</Label>
-              <Input
-                id="patch-sku-slice-stock"
-                type="number"
-                step="any"
-                {...register("stock", { valueAsNumber: true })}
-                disabled={isSubmitting}
-                aria-invalid={Boolean(errors.stock)}
+              <Controller
+                control={control}
+                name="stock"
+                render={({ field }) => (
+                  <InputNumeric
+                    id="patch-sku-slice-stock"
+                    allowDecimal
+                    emptyAsNaN
+                    value={field.value}
+                    onNumberChange={(next) =>
+                      field.onChange(
+                        next === undefined ? Number.NaN : next,
+                      )
+                    }
+                    onBlur={field.onBlur}
+                    disabled={isSubmitting}
+                    aria-invalid={Boolean(errors.stock)}
+                  />
+                )}
               />
               {errors.stock ? (
                 <p className={typography.formError}>{errors.stock.message}</p>
@@ -343,13 +355,25 @@ export function PatchSkuSliceFormView({
             </div>
             <div className="flex flex-col gap-2">
               <Label htmlFor="patch-sku-slice-price">Ціна</Label>
-              <Input
-                id="patch-sku-slice-price"
-                type="number"
-                step="any"
-                {...register("price", { valueAsNumber: true })}
-                disabled={isSubmitting}
-                aria-invalid={Boolean(errors.price)}
+              <Controller
+                control={control}
+                name="price"
+                render={({ field }) => (
+                  <InputNumeric
+                    id="patch-sku-slice-price"
+                    allowDecimal
+                    emptyAsNaN
+                    value={field.value}
+                    onNumberChange={(next) =>
+                      field.onChange(
+                        next === undefined ? Number.NaN : next,
+                      )
+                    }
+                    onBlur={field.onBlur}
+                    disabled={isSubmitting}
+                    aria-invalid={Boolean(errors.price)}
+                  />
+                )}
               />
               {errors.price ? (
                 <p className={typography.formError}>{errors.price.message}</p>

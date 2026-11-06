@@ -23,6 +23,7 @@ function buildRows(
     title: value.title || value.productId || skuId,
     konkName: value.konkName || "",
     productId: value.productId || "",
+    imageUrl: value.imageUrl,
     salesPcs: value.salesPcs,
     salesUah: value.salesUah,
     share:

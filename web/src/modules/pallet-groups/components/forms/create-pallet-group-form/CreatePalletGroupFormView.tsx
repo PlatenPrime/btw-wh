@@ -52,15 +52,21 @@ export function CreatePalletGroupFormView({
               <FormLabel>Порядок</FormLabel>
               <FormControl>
                 <Input
-                  type="number"
+                  type="text"
+                  inputMode="numeric"
                   {...field}
-                  onChange={(event) =>
-                    field.onChange(
-                      event.target.value
-                        ? Number.parseInt(event.target.value, 10)
-                        : "",
-                    )
-                  }
+                  value={field.value ?? ""}
+                  onChange={(event) => {
+                    const digits = event.target.value.replace(/\D/g, "");
+                    field.onChange(digits);
+                  }}
+                  onBlur={(event) => {
+                    const digits = event.target.value.replace(/\D/g, "");
+                    const normalized =
+                      digits === "" ? "" : digits.replace(/^0+/, "") || "";
+                    field.onChange(normalized);
+                    field.onBlur();
+                  }}
                 />
               </FormControl>
               <FormMessage />

@@ -52,35 +52,27 @@ export function CreatePosForm({
     (pos) => pos.artikul === artikul && pos.sklad === watch("sklad"),
   );
 
-  // Обработчики для числовых полей без ведущих нулей
+  // InputQuant фильтрует на change / нормализует на blur — парсим в number для схемы
   const handleQuantChange = (value: string) => {
-    // Убираем все нецифровые символы
-    const numericValue = value.replace(/\D/g, "");
-
-    // Если поле пустое, устанавливаем 0
-    if (numericValue === "") {
+    if (value === "" || value === "-") {
       setValue("quant", 0, { shouldValidate: true });
       return;
     }
-
-    // Конвертируем в число и устанавливаем
-    const numValue = parseInt(numericValue, 10);
-    setValue("quant", numValue, { shouldValidate: true });
+    const numValue = Number.parseInt(value, 10);
+    if (!Number.isNaN(numValue)) {
+      setValue("quant", numValue, { shouldValidate: true });
+    }
   };
 
   const handleBoxesChange = (value: string) => {
-    // Убираем все нецифровые символы
-    const numericValue = value.replace(/\D/g, "");
-
-    // Если поле пустое, устанавливаем 0
-    if (numericValue === "") {
+    if (value === "" || value === "-") {
       setValue("boxes", 0, { shouldValidate: true });
       return;
     }
-
-    // Конвертируем в число и устанавливаем
-    const numValue = parseInt(numericValue, 10);
-    setValue("boxes", numValue, { shouldValidate: true });
+    const numValue = Number.parseInt(value, 10);
+    if (!Number.isNaN(numValue)) {
+      setValue("boxes", numValue, { shouldValidate: true });
+    }
   };
 
   const onSubmit = async (data: CreatePosFormData) => {

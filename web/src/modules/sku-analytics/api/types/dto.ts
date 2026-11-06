@@ -100,6 +100,7 @@ export interface SkuSelectionPieItemDto {
   title: string;
   konkName: string;
   productId: string;
+  imageUrl: string;
   salesPcs: number;
   salesUah: number;
   sharePcs: number;

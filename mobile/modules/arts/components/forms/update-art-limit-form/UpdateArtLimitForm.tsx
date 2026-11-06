@@ -1,10 +1,14 @@
-import { ThemedInput, ThemedInputField } from "@/components/themed";
+import { NumericDraftField } from "@/components/shared/numeric-draft-field";
 import { ThemedText } from "@/components/themed/themed-text";
 import { ThemedView } from "@/components/themed/themed-view";
 import { SemanticColors } from "@/constants/theme";
 import { useUpdateArtLimitMutation } from "@/modules/arts/api/hooks/mutations/useUpdateArtLimitMutation";
 import type { ArtDto } from "@/modules/arts/api/types/dto";
 import { useTheme } from "@/providers/theme-provider";
+import {
+  filterDigitsInput,
+  normalizeDigitsInput,
+} from "@/utils/quant-input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { ActivityIndicator, TouchableOpacity, View } from "react-native";
@@ -65,13 +69,6 @@ export function UpdateArtLimitForm({
 
   const limitValue = watch("limit");
 
-  const handleLimitChange = (value: string) => {
-    const numValue = value === "" ? 0 : Number(value);
-    setValue("limit", numValue, {
-      shouldValidate: true,
-    });
-  };
-
   return (
     <View className="gap-4">
       <View className="gap-2">
@@ -81,27 +78,25 @@ export function UpdateArtLimitForm({
         <Controller
           control={control}
           name="limit"
-          render={({ field: { onChange, onBlur, value } }) => (
-            <ThemedInput
-              className={`rounded-lg border bg-background-0 ${
-                errors.limit ? "border-error-500" : "border-outline-50"
-              }`}
-            >
-              <ThemedInputField
-                placeholder="Введіть ліміт"
-                placeholderTextColor={placeholder}
-                keyboardType="numeric"
-                value={limitValue === 0 ? "" : limitValue.toString()}
-                onChangeText={(text) => {
-                  handleLimitChange(text);
-                  onChange(text === "" ? 0 : Number(text));
-                }}
-                onBlur={onBlur}
-                autoFocus
-                editable={!isSubmitting}
-                className="text-typography-900"
-              />
-            </ThemedInput>
+          render={({ field: { onChange, onBlur } }) => (
+            <NumericDraftField
+              value={limitValue === 0 ? "" : limitValue.toString()}
+              onChange={(next) => {
+                const numValue =
+                  next === "" ? 0 : Number.parseInt(next, 10);
+                if (next !== "" && Number.isNaN(numValue)) return;
+                setValue("limit", numValue, { shouldValidate: true });
+                onChange(numValue);
+              }}
+              onBlur={onBlur}
+              filter={filterDigitsInput}
+              normalize={normalizeDigitsInput}
+              placeholder="Введіть ліміт"
+              placeholderTextColor={placeholder}
+              autoFocus
+              editable={!isSubmitting}
+              error={!!errors.limit}
+            />
           )}
         />
         {errors.limit && (

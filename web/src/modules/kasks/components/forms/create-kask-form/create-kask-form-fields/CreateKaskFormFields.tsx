@@ -1,8 +1,14 @@
 import { Input } from "@/components/ui/input";
+import { InputNumeric } from "@/components/ui/input-numeric";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import type { CreateKaskFormData } from "@/modules/kasks/components/forms/create-kask-form/schema";
-import type { FieldErrors, UseFormRegister } from "react-hook-form";
+import type {
+  Control,
+  FieldErrors,
+  UseFormRegister,
+} from "react-hook-form";
+import { Controller } from "react-hook-form";
 import { typography } from "@/lib/typography";
 import { cn } from "@/lib/utils";
 import { Hash, MessageCircle, ScanBarcode, type LucideIcon } from "lucide-react";
@@ -10,6 +16,7 @@ import type { ReactNode } from "react";
 
 interface CreateKaskFormFieldsProps {
   register: UseFormRegister<CreateKaskFormData>;
+  control: Control<CreateKaskFormData>;
   errors: FieldErrors<CreateKaskFormData>;
   onArtikulChange: (value: string) => void;
   isSubmitting: boolean;
@@ -52,6 +59,7 @@ function FieldError({ message }: { message?: string }) {
 
 export function CreateKaskFormFields({
   register,
+  control,
   errors,
   onArtikulChange,
   isSubmitting,
@@ -89,19 +97,23 @@ export function CreateKaskFormFields({
             необов&apos;язково
           </span>
         </div>
-        <Input
-          id="kask-quant"
-          type="number"
-          min={1}
-          step={1}
-          inputMode="numeric"
-          placeholder="—"
-          {...register("quant")}
-          className={cn(
-            "text-sm tabular-nums",
-            errors.quant && "border-destructive",
+        <Controller
+          control={control}
+          name="quant"
+          render={({ field }) => (
+            <InputNumeric
+              id="kask-quant"
+              placeholder="—"
+              value={field.value ?? ""}
+              onNumberChange={(next) => field.onChange(next)}
+              onBlur={field.onBlur}
+              className={cn(
+                "text-sm tabular-nums",
+                errors.quant && "border-destructive",
+              )}
+              disabled={isSubmitting}
+            />
           )}
-          disabled={isSubmitting}
         />
         <FieldError message={errors.quant?.message} />
       </div>
