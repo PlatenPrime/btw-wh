@@ -1,6 +1,4 @@
 export const EVENT_DEPARTMENTS = [
-  "analog-slices",
-  "analogs",
   "arts",
   "asks",
   "auth",

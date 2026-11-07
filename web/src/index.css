@@ -680,7 +680,3 @@
     color-mix(in oklch, var(--border) 32%, var(--background));
 }
 
-/* График динаміки аналога: адаптивність */
-.analog-slices-chart {
-  aspect-ratio: auto !important;
-}

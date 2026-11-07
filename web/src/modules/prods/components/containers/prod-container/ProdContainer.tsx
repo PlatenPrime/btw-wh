@@ -2,11 +2,11 @@ import { RoleType } from "@/constants/roles";
 import type { ProdDto } from "@/modules/prods/api/types";
 import { ProdDetailHeaderActions } from "@/modules/prods/components/actions/prod-detail-header-actions";
 import { ProdContainerView } from "@/modules/prods/components/containers/prod-container/ProdContainerView";
-import { useAnalogsByProdParams } from "@/modules/analogs/hooks/useAnalogsByProdParams";
 import { useAuth } from "@/modules/auth/api/hooks/useAuth";
 import { useKonksQuery } from "@/modules/konks/api/hooks/queries/useKonksQuery";
 import type { KonkDto } from "@/modules/konks/api/types";
 import { useProdsQuery } from "@/modules/prods/api/hooks/queries/useProdsQuery";
+import { useCompetitorSkusParams } from "@/modules/prods/hooks/useCompetitorSkusParams";
 import { CompetitorSkusContainer } from "@/modules/skus/components/containers/competitor-skus-container/CompetitorSkusContainer";
 import { SkusContainerSkeleton } from "@/modules/skus/components/containers/skus-by-konk-container/SkusContainerSkeleton";
 import { CompetitorSkusFetcher } from "@/modules/skus/components/fetchers/competitor-skus-fetcher/CompetitorSkusFetcher";
@@ -29,7 +29,7 @@ export function ProdContainer({ prod }: ProdContainerProps) {
     setSearch,
     setKonkName,
   } =
-    useAnalogsByProdParams();
+    useCompetitorSkusParams();
 
   const konksQuery = useKonksQuery({ enabled: canViewCompetitorSkus });
   const prodsQuery = useProdsQuery({ enabled: canViewCompetitorSkus });

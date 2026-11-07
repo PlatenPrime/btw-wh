@@ -1,18 +1,19 @@
 import { DetailPanelCard } from "@/components/shared/cards";
+import { MetricChipSkeleton } from "@/components/shared/elements";
 import { CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export function VariantDetailsCardSkeleton() {
   return (
-    <DetailPanelCard className="gap-0 overflow-hidden p-0">
-      <Skeleton className="h-8 w-full rounded-none" />
+    <DetailPanelCard className="gap-0 overflow-hidden">
       <CardHeader className="p-6">
         <div className="flex items-start gap-4">
           <Skeleton className="size-20 shrink-0 rounded-lg" />
           <div className="flex min-w-0 flex-1 flex-col gap-2">
             <Skeleton className="h-5 w-48" />
             <Skeleton className="h-4 w-full" />
+            <MetricChipSkeleton className="w-48" />
           </div>
         </div>
       </CardHeader>

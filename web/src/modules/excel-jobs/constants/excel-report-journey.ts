@@ -51,9 +51,6 @@ export interface ExcelJourneyInput {
   skugrId: string;
   skugrTitle: string;
   skugrImageUrl: string;
-  analogId: string;
-  analogTitle: string;
-  analogImageUrl: string;
   artikul: string;
   artTitle: string;
   artImageUrl: string;
@@ -202,9 +199,6 @@ export function createEmptyJourney(): ExcelJourneyInput {
     skugrId: "",
     skugrTitle: "",
     skugrImageUrl: "",
-    analogId: "",
-    analogTitle: "",
-    analogImageUrl: "",
     artikul: "",
     artTitle: "",
     artImageUrl: "",
@@ -623,9 +617,6 @@ function withoutEntity(input: ExcelJourneyInput): ExcelJourneyInput {
     skugrId: "",
     skugrTitle: "",
     skugrImageUrl: "",
-    analogId: "",
-    analogTitle: "",
-    analogImageUrl: "",
     artikul: "",
     artTitle: "",
     artImageUrl: "",

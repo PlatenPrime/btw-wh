@@ -120,7 +120,7 @@ Glass читается на **surface-0 с ambient-градиентом**, не 
 | `detailTitle` | `text-base font-semibold` | Заголовок `DetailPanelCard` / `CardTitle` default |
 | `detailSubtitle` | `text-sm muted` | Подпись, meta в detail |
 | `body` | `text-sm` | Обычный текст, footer meta |
-| `caption` | `text-xs muted` | Даты, badges, KonkBanner |
+| `caption` | `text-xs muted` | Даты, badges, meta конкурента в карточках |
 | `label` / `value` | xs / sm medium | `SummaryField` |
 | `metric` | `text-lg font-semibold` | Chart KPI / summary stats на detail (остатки, продажи) |
 | `formLabel` | `text-sm font-medium` | `Label`, подписи полей в формах и excel-dialog |
@@ -188,7 +188,7 @@ Glass читается на **surface-0 с ambient-градиентом**, не 
 
 | Pattern | Компонент | Когда |
 | ------- | --------- | ----- |
-| `grid-tile` | `GridTileCard` | Сетки arts, sku, analog |
+| `grid-tile` | `GridTileCard` | Сетки arts, sku |
 | `list-row` | `ListRowCard` | Списки konks, asks, kasks |
 | `detail-panel` | `DetailPanelCard` | Детали сущности |
 

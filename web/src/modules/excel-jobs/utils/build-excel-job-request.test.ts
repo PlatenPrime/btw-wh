@@ -25,8 +25,6 @@ function draft(
     skuMatchedTotal: 0,
     skugrId: "",
     skugrTitle: "",
-    analogId: "",
-    analogTitle: "",
     artikul: "",
     artTitle: "",
     dateFrom: "2026-10-01",

@@ -10,7 +10,7 @@
 
 ## Шаг 1 — Cross-module UI → global shared
 
-- [x] `konk-banner/` → `components/shared/konk-banner/`
+- [x] `konk-banner/` → удалён (конкурент inline через `EntityLabel` / `MetricChip`)
 - [x] `sklad-list-pos/` → `components/shared/sklad-list-pos/`
 - [x] Обновить импорты
 

@@ -80,7 +80,7 @@ modules/{module-name}/
 
 ### Cross-module UI и изоляция модулей
 
-1. Компоненты, импортируемые из **двух и более модулей**, размещаются в `components/shared/<category>/` (например, `domain/konk-banner/`, `domain/sklad-list-pos/`).
+1. Компоненты, импортируемые из **двух и более модулей**, размещаются в `components/shared/<category>/` (например, `domain/sklad-list-pos/`, `entities/entity-label/`).
 2. **Запрещены** импорты вида `@/modules/{A}/...` из `@/modules/{B}/...` (кроме временной миграции; целевое состояние — ноль таких импортов).
 3. Импорты между модулями — только через `@/components/shared/` или общие `@/types/`, `@/lib/`.
 
@@ -297,7 +297,7 @@ export function useArtsQuery({ page, limit, search, ... }: UseArtsQueryParams) {
 | `controls/` | Entity selects, `SelectLimit`, `PaginationControls` |
 | `date/` | `CalendarDate`, `DateNavigation` |
 | `dialogs/` | `DialogActions`, `UrlDialogImage` |
-| `domain/` | Cross-module domain widgets (`konk-banner`, `sklad-list-pos`) |
+| `domain/` | Cross-module domain widgets (`sklad-list-pos`) |
 | `elements/` | `FetchIndicator`, `ModeToggle`, `Status`, `AnimatedMood`, `SummaryField`, `IconWell`, `MetricChip` |
 | `entities/` | `EntityLabel`, `EntityNotFound`, `UserAvatarName` |
 | `errors/` | `ErrorDisplay`, `ErrorBoundary`, `FormErrorDisplay`, … |

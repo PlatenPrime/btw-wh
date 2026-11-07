@@ -38,8 +38,6 @@ export interface ExcelReportOrderDraft {
   skuMatchedTotal: number;
   skugrId: string;
   skugrTitle: string;
-  analogId: string;
-  analogTitle: string;
   artikul: string;
   artTitle: string;
   dateFrom: string;
@@ -150,17 +148,6 @@ function withOptionalSkugrIds(
 ): ExcelJobParams {
   if (draft.skugrIds.length === 0) return params;
   return { ...params, skugrIds: [...draft.skugrIds] };
-}
-
-function withAbc(
-  draft: ExcelReportOrderDraft,
-  params: ExcelJobParams,
-): ExcelJobParams {
-  return {
-    ...params,
-    ...(draft.abc ? { abc: draft.abc } : {}),
-    ...(draft.sortByAbc ? { sortBy: "abc" } : {}),
-  };
 }
 
 function maybeWithImages(
@@ -282,15 +269,6 @@ function buildParams(
     case "art-stock":
     case "art-sales":
       return withRange(draft, { artikul: draft.artikul });
-    case "analog-comparison":
-    case "analog-sales-comparison":
-      return withRange(draft, { analogId: draft.analogId });
-    case "konk-btrade-comparison":
-    case "konk-btrade-sales-comparison":
-      return withAbc(
-        draft,
-        withRange(draft, { konk: draft.konk, prod: draft.prod }),
-      );
     case "poses-export-stocks":
       return draft.sklad ? { sklad: draft.sklad } : {};
     case "arts-export":
@@ -326,13 +304,8 @@ function subjectFor(kind: ExcelJobKind, draft: ExcelReportOrderDraft): string {
     case "art-stock":
     case "art-sales":
       return draft.artTitle.trim() || draft.artikul.trim();
-    case "analog-comparison":
-    case "analog-sales-comparison":
-      return draft.analogTitle.trim();
     case "sku-konk-stock":
     case "sku-konk-sales":
-    case "konk-btrade-comparison":
-    case "konk-btrade-sales-comparison":
       return draft.konk.trim();
     case "poses-export-stocks":
       return draft.sklad ? sklads[draft.sklad] : "";

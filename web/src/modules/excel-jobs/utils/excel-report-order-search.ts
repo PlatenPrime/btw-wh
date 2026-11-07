@@ -48,8 +48,6 @@ const OWNED_KEYS = [
   "skuMatched",
   "skugrId",
   "skugrTitle",
-  "analog",
-  "analogTitle",
   "art",
   "artTitle",
   "ack",

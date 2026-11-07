@@ -186,8 +186,6 @@ export function ExcelReportOrderContainer() {
       skuMatchedTotal: journey.skuMatchedTotal,
       skugrId: journey.skugrId,
       skugrTitle: journey.skugrTitle,
-      analogId: journey.analogId,
-      analogTitle: journey.analogTitle,
       artikul: journey.artikul,
       artTitle: journey.artTitle,
       dateFrom: state.dateFrom,

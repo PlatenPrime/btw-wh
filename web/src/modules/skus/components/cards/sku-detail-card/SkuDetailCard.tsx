@@ -3,7 +3,6 @@ import {
   URL_DIALOG_IMAGE_FALLBACK,
   UrlDialogImage,
 } from "@/components/shared/dialogs";
-import { KonkBanner } from "@/components/shared/domain/konk-banner";
 import { MetricChip } from "@/components/shared/elements";
 import { Image } from "@/components/shared/media/image/Image";
 import { CardTitle } from "@/components/ui/card";
@@ -19,6 +18,7 @@ import {
   Factory,
   Hash,
   Link2,
+  Store,
   Tags,
 } from "lucide-react";
 import type { ReactNode } from "react";
@@ -40,6 +40,7 @@ export function SkuDetailCard({ sku, konk, prod, skugrs }: SkuDetailCardProps) {
   const hasBtradeAnalog = Boolean(sku.btradeAnalog?.trim());
   const hasSkugrs = skugrs.length > 0;
   const prodValue = prod?.title ?? sku.prodName;
+  const konkValue = konk?.title ?? sku.konkName;
 
   let skuImageContent: ReactNode;
   if (hasImage) {
@@ -64,99 +65,100 @@ export function SkuDetailCard({ sku, konk, prod, skugrs }: SkuDetailCardProps) {
   }
 
   return (
-    <DetailPanelCard className="gap-0 overflow-hidden p-0">
-      <KonkBanner
-        konkName={sku.konkName}
-        imageUrl={konk?.imageUrl}
-        title={konk?.title}
-      />
-      <div className="grid gap-3 p-4 sm:p-5">
-        <div className="flex min-w-0 items-start gap-4">
-          {skuImageContent}
-          <CardTitle className={typography.detailTitle}>{sku.title}</CardTitle>
-        </div>
+    <DetailPanelCard className="gap-3 overflow-hidden p-4 sm:p-5">
+      <div className="flex min-w-0 items-start gap-4">
+        {skuImageContent}
+        <CardTitle className={typography.detailTitle}>{sku.title}</CardTitle>
+      </div>
 
-        <div className="grid gap-2 sm:grid-cols-2">
-          {prodValue ? (
-            <MetricChip
-              icon={Factory}
-              imageUrl={prod?.imageUrl}
-              tone="muted"
-              label="Виробник"
-              value={prodValue}
-              className="w-full"
-            />
-          ) : null}
+      <div className="grid gap-2 sm:grid-cols-2">
+        <MetricChip
+          icon={Store}
+          imageUrl={konk?.imageUrl}
+          tone="muted"
+          label="Конкурент"
+          value={konkValue}
+          className="w-full"
+        />
+        {prodValue ? (
           <MetricChip
-            icon={Hash}
+            icon={Factory}
+            imageUrl={prod?.imageUrl}
             tone="muted"
-            label="ID лістингу"
-            value={sku.productId}
+            label="Виробник"
+            value={prodValue}
             className="w-full"
           />
+        ) : null}
+        <MetricChip
+          icon={Hash}
+          tone="muted"
+          label="ID лістингу"
+          value={sku.productId}
+          className="w-full"
+        />
+        <MetricChip
+          icon={Barcode}
+          tone="info"
+          label="Артикул конкурента"
+          value={
+            artikul ? (
+              artikul
+            ) : (
+              <span className="text-muted-foreground">не вказано</span>
+            )
+          }
+          className="w-full"
+        />
+        {hasBtradeAnalog ? (
           <MetricChip
-            icon={Barcode}
+            icon={Link2}
             tone="info"
-            label="Артикул конкурента"
-            value={
-              artikul ? (
-                artikul
-              ) : (
-                <span className="text-muted-foreground">не вказано</span>
-              )
-            }
+            label="Аналог БТрейд"
+            value={sku.btradeAnalog}
             className="w-full"
           />
-          {hasBtradeAnalog ? (
+        ) : null}
+        {hasSkugrs ? (
+          skugrs.map((skugr) => (
             <MetricChip
-              icon={Link2}
-              tone="info"
-              label="Аналог БТрейд"
-              value={sku.btradeAnalog}
+              key={skugr._id}
+              icon={Tags}
+              tone="primary"
+              label="Група"
+              value={
+                <Link
+                  to={`/sku/skugrs/${skugr._id}`}
+                  className="text-primary hover:underline"
+                >
+                  {skugr.title}
+                </Link>
+              }
               className="w-full"
             />
-          ) : null}
-          {hasSkugrs ? (
-            skugrs.map((skugr) => (
-              <MetricChip
-                key={skugr._id}
-                icon={Tags}
-                tone="primary"
-                label="Група"
-                value={
-                  <Link
-                    to={`/sku/skugrs/${skugr._id}`}
-                    className="text-primary hover:underline"
-                  >
-                    {skugr.title}
-                  </Link>
-                }
-                className="w-full"
-              />
-            ))
-          ) : (
-            <span className={cn(typography.detailSubtitle, "sm:col-span-2")}>
-              Не входить до жодної товарної групи
-            </span>
-          )}
-          <SkuLiveStockContainer sku={sku} />
-          <MetricChip
-            icon={ExternalLink}
-            tone="primary"
-            label="Сайт конкурента"
-            value={
-              <a
-                href={sku.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary hover:underline"
-              >
-                Відкрити
-              </a>
-            }
-            className="w-full"
-          />
-        </div>
+          ))
+        ) : (
+          <span className={cn(typography.detailSubtitle, "sm:col-span-2")}>
+            Не входить до жодної товарної групи
+          </span>
+        )}
+        <SkuLiveStockContainer sku={sku} />
+        <MetricChip
+          icon={ExternalLink}
+          tone="primary"
+          label="Сайт конкурента"
+          value={
+            <a
+              href={sku.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary hover:underline"
+            >
+              Відкрити
+            </a>
+          }
+          className="w-full"
+        />
       </div>
     </DetailPanelCard>
   );

@@ -7,16 +7,17 @@ export function SkuMultiSelectControlSkeleton() {
       {Array.from({ length: 5 }).map((_, i) => (
         <div
           key={i}
-          className="grid gap-2 rounded-md border border-border p-2"
+          className="flex items-start gap-2 rounded-md border border-border p-2"
         >
-          <Skeleton className="h-6 w-24" />
-          <div className="flex items-start gap-2">
-            <Skeleton className="size-4 shrink-0 rounded-sm" />
-            <Skeleton className="size-12 shrink-0 rounded-lg" />
-            <div className="grid min-w-0 flex-1 gap-1">
-              <Skeleton className="h-4 w-3/4" />
-              <Skeleton className="h-4 w-1/2" />
+          <Skeleton className="mt-1 size-4 shrink-0 rounded-sm" />
+          <Skeleton className="size-12 shrink-0 rounded-lg" />
+          <div className="grid min-w-0 flex-1 gap-1">
+            <Skeleton className="h-4 w-3/4" />
+            <div className="flex items-center gap-1">
+              <Skeleton className="size-6 rounded" />
+              <Skeleton className="h-3 w-24" />
             </div>
+            <Skeleton className="h-3 w-1/2" />
           </div>
         </div>
       ))}

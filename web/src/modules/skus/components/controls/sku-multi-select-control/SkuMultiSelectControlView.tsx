@@ -3,7 +3,6 @@ import {
   URL_DIALOG_IMAGE_FALLBACK,
   UrlDialogImage,
 } from "@/components/shared/dialogs";
-import { KonkBanner } from "@/components/shared/domain/konk-banner";
 import { EntityLabel } from "@/components/shared/entities/entity-label";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -339,16 +338,11 @@ export function SkuMultiSelectControlView({
                 <div
                   key={sku._id}
                   className={cn(
-                    "overflow-hidden rounded-md border border-border",
+                    "rounded-md border border-border p-2",
                     selected ? "bg-accent/40" : "hover:bg-muted/60",
                   )}
                 >
-                  <KonkBanner
-                    konkName={sku.konkName}
-                    imageUrl={konk?.imageUrl}
-                    title={konk?.title}
-                  />
-                  <div className="flex items-start gap-2 p-2">
+                  <div className="flex items-start gap-2">
                     <Checkbox
                       id={checkboxId}
                       checked={selected}
@@ -393,11 +387,18 @@ export function SkuMultiSelectControlView({
                         {sku.title.trim() || sku.productId}
                       </span>
                       <EntityLabel
+                        imageUrl={konk?.imageUrl}
+                        title={konk?.title}
+                        fallbackLabel={sku.konkName}
+                        imageSize="xs"
+                        className={typography.caption}
+                      />
+                      <EntityLabel
                         imageUrl={prod?.imageUrl}
                         title={prod?.title}
                         fallbackLabel={sku.prodName}
                         imageSize="xs"
-                        className="text-xs"
+                        className={typography.gridSubtitle}
                       />
                       {sku.artikul?.trim() ? (
                         <span className={typography.caption}>

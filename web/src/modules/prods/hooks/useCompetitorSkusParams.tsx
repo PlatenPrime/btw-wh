@@ -2,7 +2,7 @@ import { getParam } from "@/utils/getParam";
 import { updateSearchParams } from "@/utils/updateSearchParams";
 import { useSearchParams } from "react-router";
 
-export function useAnalogsByProdParams() {
+export function useCompetitorSkusParams() {
   const [params, setParams] = useSearchParams();
 
   const page = Number(getParam(params, "page", "1"));

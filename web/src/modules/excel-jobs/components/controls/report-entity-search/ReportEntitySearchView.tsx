@@ -3,7 +3,6 @@ import {
   URL_DIALOG_IMAGE_FALLBACK,
   UrlDialogImage,
 } from "@/components/shared/dialogs";
-import { KonkBanner } from "@/components/shared/domain/konk-banner";
 import { EntityLabel } from "@/components/shared/entities/entity-label";
 import { Input } from "@/components/ui/input";
 import { useContainerInfiniteScroll } from "@/hooks/useContainerInfiniteScroll";
@@ -121,18 +120,11 @@ export function ReportEntitySearchView({
                     disabled={disabled}
                     onClick={() => onSelect(option)}
                     className={cn(
-                      "overflow-hidden rounded-md border border-border text-left",
+                      "rounded-md border border-border p-2 text-left",
                       isSelected ? "bg-accent" : "hover:bg-muted",
                     )}
                   >
-                    {option.konkName ? (
-                      <KonkBanner
-                        konkName={option.konkName}
-                        imageUrl={option.konkImageUrl}
-                        title={option.konkTitle}
-                      />
-                    ) : null}
-                    <div className="flex items-start gap-2 p-2">
+                    <div className="flex items-start gap-2">
                       {hasImage ? (
                         <UrlDialogImage
                           imageUrl={option.imageUrl!}
@@ -163,12 +155,21 @@ export function ReportEntitySearchView({
                         >
                           {option.title}
                         </span>
+                        {option.konkName ? (
+                          <EntityLabel
+                            imageUrl={option.konkImageUrl}
+                            title={option.konkTitle}
+                            fallbackLabel={option.konkName}
+                            imageSize="xs"
+                            className={typography.caption}
+                          />
+                        ) : null}
                         <EntityLabel
                           imageUrl={option.prodImageUrl}
                           title={option.prodTitle}
                           fallbackLabel={option.prodName || option.subtitle}
                           imageSize="xs"
-                          className="text-xs"
+                          className={typography.gridSubtitle}
                         />
                         {option.artikul ? (
                           <span className={typography.caption}>
