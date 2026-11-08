@@ -93,7 +93,7 @@
 
 ### GET `/api/sku-slices/client/air/pending`
 
-Очередь Air SKU для клиентского дозаполнения открытого среза. Ключ дня — `toOpenKyivSliceDate` (`Europe/Kiev`): до 20:00 это сегодняшний календарный день, с 20:00 — следующий. В выборку попадают только SKU из групп `Skugr` с `isSliced: true`. Позиция pending, если в `SkuSliceMonth` за этот ключ нет дня или `stock === -1` / `price === -1`.
+Очередь Air SKU для клиентского дозаполнения сегодняшнего среза (календарный день `Europe/Kiev`). В выборку попадают только SKU из групп `Skugr` с `isSliced: true`. Позиция pending, если в `SkuSliceMonth` за сегодня нет ключа дня или `stock === -1` / `price === -1`.
 
 **Ответ 200:**
 
@@ -118,7 +118,7 @@
 
 ### PUT `/api/sku-slices/client/air/sku/:skuId`
 
-Идемпотентная запись точки открытого Air-среза в `SkuSliceMonth` из HTML first-party страницы товара. Дата совпадает с `GET client/air/pending` (`toOpenKyivSliceDate`: с 20:00 Europe/Kiev — следующий календарный день). Backend парсит HTML тем же контрактом, что `readAirProductFromHtml`. Канал параллелен серверному scrape: сервер к сайту Air при этом PUT не ходит.
+Идемпотентная запись точки сегодняшнего Air в `SkuSliceMonth` из HTML first-party страницы товара. Backend парсит HTML тем же контрактом, что `readAirProductFromHtml`. Канал параллелен серверному scrape: сервер к сайту Air при этом PUT не ходит.
 
 **Path:** `skuId` — валидный ObjectId.
 
@@ -314,7 +314,7 @@
 
 ### POST `/api/sku-slices/sku/:skuId/correct-band-spike`
 
-Клиентский RTL-corrector sandwich-вспышки остатка для любого конкурента: небольшое (`< stockMin`) → `[stockMin, stockMax]` → небольшое. Не входит в nightly post-pass. Сервер догружает соседей ±1 дня к окну; dump band→small в продажи не берёт; внутри полосы продажи сохраняются (ход справа налево). Сначала preview (`apply: false`), затем confirm (`apply: true`). Гайд: [frontend: band-spike-correction](../frontend/band-spike-correction.md).
+Клиентский RTL-corrector sandwich-вспышки остатка для любого конкурента: небольшое (`< stockMin`) → `[stockMin, stockMax]` → небольшое. Правый якорь обязателен; левый — только если день с finite stock есть (товар, появившийся сразу в полосе: нет left + валидный right → патч RTL до первого дня run). Не входит в nightly post-pass. Сервер догружает соседей ±1 дня к окну; dump band→small в продажи не берёт; внутри полосы продажи сохраняются (ход справа налево). Сначала preview (`apply: false`), затем confirm (`apply: true`). Гайд: [frontend: band-spike-correction](../frontend/band-spike-correction.md).
 
 **Path:** `skuId` — ObjectId любого SKU с непустым `konkName` и `productId`.
 
@@ -352,6 +352,64 @@
 `applied` — true только если `apply: true` и был хотя бы один патч. Пустые `patches` при непустом `skipped` — не ошибка.
 
 **Ошибки:** 400 валидация; 401; 403; 404 нет SKU / нет konkName / нет productId; 500.
+
+---
+
+### POST `/api/sku-slices/stock-bands/:bandId/discover`
+
+Discover кандидатов по сохранённому диапазону ([sku-stock-bands](sku-stock-bands.md)): in-band run + sandwich по `normalMax` (right `≤ normalMax`; left отсутствует или тоже `≤ normalMax`). Старый `POST .../band-spike/discover` без `normalMax` не меняется (exit = stock вне band). Гайд: [frontend: sku-stock-bands](../frontend/sku-stock-bands.md).
+
+**Path:** `bandId` — ObjectId `SkuStockBand`.
+
+**Тело:**
+
+| Поле     | Тип    | Обязательно | Описание                   |
+| -------- | ------ | ----------- | -------------------------- |
+| dateFrom | string | да          | YYYY-MM-DD, UTC, inclusive |
+| dateTo   | string | да          | YYYY-MM-DD; диапазон ≤ 93  |
+
+**Ответ 200:**
+
+```text
+{
+  message: string,
+  data: {
+    bandId: string,
+    konkName: string,
+    window: { dateFrom: string, dateTo: string },
+    band: { min: number, max: number, normalMax: number },
+    items: Array<{
+      skuId: string | null,
+      productId: string,
+      title: string | null,
+      imageUrl: string | null,
+      runs: Array<{ dateFrom: string, dateTo: string, peakStock: number }>
+    }>
+  }
+}
+```
+
+**Ошибки:** 400; 401; 403; 404 нет band; 500.
+
+---
+
+### POST `/api/sku-slices/stock-bands/:bandId/batch-correct`
+
+Постановка ApiTask `sku-slices.stock-band.batch-correct`: RTL-apply для выбранных `productIds` с `normalMax` из band. Ответ **202**. Один активный batch на `bandId` (resourceKey).
+
+**Path:** `bandId` — ObjectId.
+
+**Тело:**
+
+| Поле       | Тип      | Обязательно | Описание      |
+| ---------- | -------- | ----------- | ------------- |
+| dateFrom   | string   | да          | YYYY-MM-DD    |
+| dateTo     | string   | да          | ≤ 366 дней    |
+| productIds | string[] | да          | unique, 1…500 |
+
+**Ответ 202:** как `POST /api/apitasks` (`taskId`, `pollIntervalMs`, …).
+
+**Ошибки:** 400; 401; 403; 409 дубль resourceKey; 429 лимит активных задач; 500.
 
 ---
 

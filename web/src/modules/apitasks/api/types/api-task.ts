@@ -1,6 +1,7 @@
 export const API_TASK_KINDS = [
   "sku-slices.skugr-run-today",
   "sku-slices.post-corrections.run",
+  "sku-slices.stock-band.batch-correct",
   "slice-compensation.run",
   "skugrs.fill-skus",
   "grabo-skus.sync",

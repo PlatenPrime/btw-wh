@@ -1,0 +1,1 @@
+export const STOCK_BAND_DISCOVER_MAX_RANGE_DAYS = 93;

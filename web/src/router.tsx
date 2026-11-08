@@ -199,6 +199,16 @@ const SkuBandSpike = lazyWithRetry(() =>
     default: module.SkuBandSpike,
   })),
 );
+const SkuStockBands = lazyWithRetry(() =>
+  import("./modules/sku-stock-bands/pages/sku-stock-bands").then((module) => ({
+    default: module.SkuStockBands,
+  })),
+);
+const SkuStockBand = lazyWithRetry(() =>
+  import("./modules/sku-stock-bands/pages/sku-stock-band").then((module) => ({
+    default: module.SkuStockBand,
+  })),
+);
 const BtradeSlices = lazyWithRetry(() =>
   import("./modules/btrade-slices/pages/btrade-slices").then((module) => ({
     default: module.BtradeSlices,
@@ -449,6 +459,24 @@ export const router = createHashRouter([
             errorElement: <RouteErrorBoundary />,
           },
           {
+            path: "stock-bands",
+            element: (
+              <ProtectedRoute allowedRoles={[RoleType.ADMIN]}>
+                <SkuStockBands />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "stock-bands/:id",
+            element: (
+              <ProtectedRoute allowedRoles={[RoleType.ADMIN]}>
+                <SkuStockBand />
+              </ProtectedRoute>
+            ),
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
             path: "btrade-slices",
             element: (
               <ProtectedRoute>
@@ -565,11 +593,7 @@ export const router = createHashRouter([
           },
           {
             path: "excel-reports",
-            element: (
-              <ProtectedRoute allowedRoles={[RoleType.ADMIN]}>
-                <ExcelReportsPage />
-              </ProtectedRoute>
-            ),
+            element: <Navigate to="/admin/excel-reports" replace />,
             errorElement: <RouteErrorBoundary />,
           },
           {
@@ -792,6 +816,15 @@ export const router = createHashRouter([
           {
             path: "events",
             element: <EventsPage />,
+            errorElement: <RouteErrorBoundary />,
+          },
+          {
+            path: "excel-reports",
+            element: (
+              <ProtectedRoute allowedRoles={[RoleType.ADMIN]}>
+                <ExcelReportsPage />
+              </ProtectedRoute>
+            ),
             errorElement: <RouteErrorBoundary />,
           },
         ],

@@ -1,9 +1,9 @@
+import { DialogActions } from "@/components/shared/dialogs/dialog-actions/DialogActions";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
   Dialog,
   DialogContent,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -98,23 +98,15 @@ export function ChartDateRangeToolbar({
             numberOfMonths={2}
           />
         </div>
-        <DialogFooter className={cn(!isInline && "gap-2 sm:gap-0")}>
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => setIsDialogOpen(false)}
-          >
-            Скасувати
-          </Button>
-          <Button
-            type="button"
-            variant={isInline ? "default" : "success"}
-            disabled={!isRangeComplete}
-            onClick={handleConfirm}
-          >
-            Обрати
-          </Button>
-        </DialogFooter>
+        <DialogActions
+          className="w-full"
+          onCancel={() => setIsDialogOpen(false)}
+          onSubmit={handleConfirm}
+          cancelText="Скасувати"
+          submitText="Обрати"
+          isDisabled={!isRangeComplete}
+          variant={isInline ? "default" : "success"}
+        />
       </DialogContent>
     </Dialog>
   );

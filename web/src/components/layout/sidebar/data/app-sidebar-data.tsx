@@ -27,6 +27,7 @@ import {
   Users,
   WandSparkles,
   Warehouse,
+  Ruler,
 } from "lucide-react";
 
 import { RoleType } from "@/constants/roles";
@@ -60,6 +61,7 @@ const icons = {
   WandSparkles,
   Upload,
   ListTodo,
+  Ruler,
 } as const;
 
 type SidebarIconName = keyof typeof icons;
@@ -101,6 +103,7 @@ const iconColorClasses: Record<SidebarIconName, string> = {
   FileSpreadsheet:
     "text-[oklch(0.58_0.14_150)] dark:text-[oklch(0.74_0.16_150)]",
   ListTodo: "text-[oklch(0.6_0.14_250)] dark:text-[oklch(0.74_0.16_250)]",
+  Ruler: "text-[oklch(0.62_0.14_280)] dark:text-[oklch(0.76_0.16_280)]",
 };
 
 export interface AppSidebarNavItem {
@@ -199,7 +202,7 @@ export const appSidebarData: { navMain: AppSidebarNavGroup[] } = {
     {
       title: "Аналітика",
       url: "/sku/konks",
-      pathOpenPrefix: "/sku",
+      pathOpenPrefix: "/sku/skus",
       items: [
         {
           title: "Конкуренти",
@@ -219,7 +222,6 @@ export const appSidebarData: { navMain: AppSidebarNavGroup[] } = {
           iconName: "Boxes",
           allowedRoles: [RoleType.ADMIN],
         },
-
         {
           title: "Продажі",
           url: "/sku/sales",
@@ -245,6 +247,18 @@ export const appSidebarData: { navMain: AppSidebarNavGroup[] } = {
           allowedRoles: [RoleType.ADMIN],
         },
         {
+          title: "Грабо",
+          url: "/sku/grabo",
+          iconName: "Sparkles",
+          allowedRoles: [RoleType.ADMIN],
+        },
+      ],
+    },
+    {
+      title: "Зрізи",
+      url: "/sku/sku-slices",
+      items: [
+        {
           title: "Зрізи конкуренти",
           url: "/sku/sku-slices",
           iconName: "Projector",
@@ -269,15 +283,9 @@ export const appSidebarData: { navMain: AppSidebarNavGroup[] } = {
           allowedRoles: [RoleType.ADMIN],
         },
         {
-          title: "Грабо",
-          url: "/sku/grabo",
-          iconName: "Sparkles",
-          allowedRoles: [RoleType.ADMIN],
-        },
-        {
-          title: "Excel звіти",
-          url: "/sku/excel-reports",
-          iconName: "FileSpreadsheet",
+          title: "Діапазони залишків",
+          url: "/sku/stock-bands",
+          iconName: "Ruler",
           allowedRoles: [RoleType.ADMIN],
         },
       ],
@@ -392,6 +400,12 @@ export const appSidebarData: { navMain: AppSidebarNavGroup[] } = {
           title: "Події",
           url: "/admin/events",
           iconName: "ScrollText",
+          allowedRoles: [RoleType.ADMIN],
+        },
+        {
+          title: "Excel звіти",
+          url: "/admin/excel-reports",
+          iconName: "FileSpreadsheet",
           allowedRoles: [RoleType.ADMIN],
         },
       ],

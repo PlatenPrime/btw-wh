@@ -16,6 +16,8 @@
 
 Backfill rollup: `npx tsx src/modules/sku-slices/scripts/runBackfillSkuSliceSales.ts --from YYYY-MM-DD --to YYYY-MM-DD [--konk name] [--apply]`.
 
+One-shot rescale фасовки dojdevik: `runRescaleDojdevikPackSlices.ts` сравнивает legacy packSize (старый regex по любой «кількість») с актуальным `extractDojdevikPackCount` по live HTML карточки и переписывает историю `SkuSliceMonth` формулой `stock' = stock × new/old`, `price' = price × old/new` (sentinel `-1` не трогает). Это не pack-flip: детект кратной инверсии между днями здесь не используется и для кейса коробка/набір опасен. После apply нужен backfill продаж за затронутый диапазон; правильный парсер на прод имеет смысл деплоить уже после выравнивания истории.
+
 ### SkuSliceDayMeta
 
 Slim документ `(konkName, date)` без точек: `rotationMeta`, `stats` (`filled` / `invalid` / `errorCount` / опционально `dueTotal`, `abortReason`). Пишется при scrape. Нужен для мониторинга «как прошёл день» без разворота всех month-доков.
@@ -40,12 +42,14 @@ Cron ежедневно 20:00 Europe/Kiev; конкуренты из `slices/con
 
 После срезов всех конкурентов — post-pass: pack-flip auto-apply (`perfect`), manufacturer rollup. Авто-коррекций всплесков остатка нет. ApiTask `sku-slices.post-corrections.run` повторяет тот же набор (со скоупом по `konkName`, если задан).
 
-Всплески остатка правятся вручную с клиента: discovery кандидатов (`POST .../band-spike/discover`) по `konkName` + `[stockMin, stockMax]` + даты, затем точечный RTL sandwich `small → band → small` на одном SKU (`POST .../sku/:skuId/correct-band-spike`, preview → apply). Массовой записи нет. Гайд: [frontend: band-spike-correction](../frontend/band-spike-correction.md).
+Всплески остатка правятся вручную с клиента: discovery кандидатов (`POST .../band-spike/discover`) по `konkName` + `[stockMin, stockMax]` + даты (exit вне band, без `normalMax`), затем точечный RTL sandwich `small → band → small` на одном SKU (`POST .../sku/:skuId/correct-band-spike`, preview → apply). Правый якорь обязателен; отсутствующий left при валидном right не блокирует патч.
+
+Параллельно — сохранённые диапазоны ([sku-stock-bands](sku-stock-bands.md)): `POST .../stock-bands/:bandId/discover` фильтрует sandwich через `normalMax` (left optional), batch ApiTask `sku-slices.stock-band.batch-correct` — тот же RTL. Гайд: [frontend: sku-stock-bands](../frontend/sku-stock-bands.md).
 
 ### Client-ingestion для Air
 
-1. `GET /client/air/pending` — очередь missing/`-1` среди sliced Air SKU по точкам открытого дня в months. Ключ — `toOpenKyivSliceDate`: до 20:00 Europe/Kiev это сегодняшний календарный день, с 20:00 — следующий (тот же день, что вечерний cron).
-2. `PUT /client/air/sku/:skuId` — HTML → запись в months на тот же открытый ключ, только если ключ отсутствует или `-1`; rollup manufacturer sales после `saved` — асинхронный coalesce (ответ PUT не ждёт full-day rematerialize).
+1. `GET /client/air/pending` — очередь missing/`-1` среди sliced Air SKU по сегодняшним точкам в months;
+2. `PUT /client/air/sku/:skuId` — HTML → запись в months только если ключ отсутствует или `-1`; rollup manufacturer sales после `saved` — асинхронный coalesce (ответ PUT не ждёт full-day rematerialize).
 
 Гайд: [frontend: air-client-sku-slices](../frontend/air-client-sku-slices.md).
 
@@ -59,6 +63,8 @@ Cron ежедневно 20:00 Europe/Kiev; конкуренты из `slices/con
 - `PATCH /api/sku-slices/sku/:skuId` — ручная запись stock/price (months upsert)
 - `POST /api/sku-slices/band-spike/discover` — список SKU с выходом из полосы остатка
 - `POST /api/sku-slices/sku/:skuId/correct-band-spike` — клиентский RTL-corrector band-spike любого konk (preview/apply)
+- `POST /api/sku-slices/stock-bands/:bandId/discover` — discover по сохранённому диапазону
+- `POST /api/sku-slices/stock-bands/:bandId/batch-correct` — batch RTL-apply (ApiTask, 202)
 - `POST /api/sku-slices/skugr/:skugrId/run-today` — ручной scrape группы за сегодня
 - `POST /api/sku-slices/post-corrections/run` — post-pass за период (ApiTask, 202): pack-flip + rollup; optional `konkName`
 - `GET /api/sku-slices/sku/:skuId/range` — плотный ряд с forward-fill

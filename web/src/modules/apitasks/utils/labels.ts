@@ -8,6 +8,7 @@ import type {
 const KIND_LABELS: Record<ApiTaskKind, string> = {
   "sku-slices.skugr-run-today": "Зрізи групи на сьогодні",
   "sku-slices.post-corrections.run": "Коригування залишків",
+  "sku-slices.stock-band.batch-correct": "Пакетне коригування діапазону",
   "slice-compensation.run": "Компенсуючий зріз",
   "skugrs.fill-skus": "Заповнення групи SKU",
   "grabo-skus.sync": "Синхронізація Grabo",

@@ -35,7 +35,7 @@ const ExcelJobsContext = createContext<ExcelJobsContextValue | null>(null);
 const DEFAULT_POLL_MS = 1000;
 const TOKEN_REFRESH_MS = 4 * 60 * 1000;
 const ACTIVE_STATUSES = ["queued", "running", "ready"] as const;
-const EXCEL_REPORTS_PATH = "/sku/excel-reports";
+const EXCEL_REPORTS_PATH = "/admin/excel-reports";
 
 function toTracked(
   job: ExcelJobDto,
